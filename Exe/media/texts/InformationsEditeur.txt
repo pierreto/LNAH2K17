@@ -1,0 +1,28 @@
+﻿Les flèches             Déplacement de la vue.
++ / -                   Zoom avant / arrière.
+DELETE                  Supprime les objets sélectionnés.
+D                       Choisit l’outil de déplacement.
+S                       Choisit l’outil de sélection.
+R                       Choisit l’outil de rotation.
+E                       Choisit l’outil de mise à échelle.
+C                       Choisit l’outil de duplication.
+Z                       Choisit l’outil de zoom.
+M                       Choisit l’outil de création de murets.
+P                       Choisit l’outil de création de portails.
+B                       Choisit l’outil de création de bonus accélérateur.
+G                       Choisit l’outil de gestion des points de contrôle.
+T                       Bascule en mode test.
+CTRL-S                  Sauvegarde la scène dans le fichier XML ou JSON courant.
+                        Si aucun fichier n’est courant, cette option a le même effet
+                        qu’Enregistrer sous. Un fichier XML ou JSON devient
+                        courant lorsqu’on enregistre dans ce fichier ou qu’on charge
+                        à partir de ce fichier.
+CTRL-N                  Réinitialise l’environnement d’édition avec une nouvelle
+                        scène.
+CTRL-O                  Ouvre une boite de dialogue qui offre à l’utilisateur de
+                        charger une zone de jeu contenue dans un fichier. Lit ce
+                        fichier, et remplace la scène actuelle par la scène contenue
+                        dans le fichier.
+CTRL-Q                  Retourne au menu principal.
+1                       Choisit la caméra orthographique.
+2                       Choisit la caméra orbite.

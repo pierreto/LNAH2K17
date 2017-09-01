@@ -1,0 +1,20 @@
+{
+  "player1Profile": "Défaut",
+  "player2Profile": "Défaut",
+  "player3Profile": "Défaut",
+  "player4Profile": "Défaut",
+  "player1Name": "Joueur 1",
+  "player2Name": "Joueur 2",
+  "player3Name": "Joueur 3",
+  "player4Name": "Joueur 4",
+  "player1Color": "Chartreuse",
+  "player2Color": "Blue",
+  "player3Color": "Fuchsia",
+  "player4Color": "DarkOrange",
+  "isPlayer1Virtual": false,
+  "isPlayer2Virtual": true,
+  "isPlayer3Virtual": true,
+  "isPlayer4Virtual": true,
+  "mapFilePath": "",
+  "mapFileName": "Défaut"
+}

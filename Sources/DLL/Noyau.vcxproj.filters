@@ -1,0 +1,554 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Application">
+      <UniqueIdentifier>{4a324388-bea8-423a-bc50-ccdf2fef915c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Interface">
+      <UniqueIdentifier>{c6bd3f9c-d667-48a1-8aae-154a5de4c711}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Configuration">
+      <UniqueIdentifier>{d4ef3242-13cf-45e7-a434-bdabacf4a324}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Arbre">
+      <UniqueIdentifier>{7472a721-0254-4bca-944a-d230f0ffb5ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Arbre\Usines">
+      <UniqueIdentifier>{ad5ae0d0-5415-47db-a98a-9a074962b455}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Arbre\Noeuds">
+      <UniqueIdentifier>{673b2491-ee8e-448a-877c-dcffa5036e36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Application">
+      <UniqueIdentifier>{c845f3fe-60ec-4b69-870e-1b94806be78e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Interface">
+      <UniqueIdentifier>{6c8e2c48-de9f-4091-bc76-fed408577f6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Configuration">
+      <UniqueIdentifier>{737950f1-92e0-48cc-99df-484ed3bae29b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Arbre">
+      <UniqueIdentifier>{824db547-4831-4bb7-b7f2-70d05299ed49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Arbre\Noeuds">
+      <UniqueIdentifier>{adf7252c-e0c2-4e7e-9194-a254f846e61d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Tests">
+      <UniqueIdentifier>{0dbbcffd-49b5-4878-a09c-22650c7a5093}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tests">
+      <UniqueIdentifier>{d13df2a5-057c-4e3f-b7b4-d458ca9ae3b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Application\States">
+      <UniqueIdentifier>{c057fcdb-b11d-4eed-8d73-d47d4b4d952e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Application\States">
+      <UniqueIdentifier>{e9cb42dc-f03d-4d46-9009-22fec170be2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Arbre\Visiteurs">
+      <UniqueIdentifier>{2dc5bae6-9b60-4c86-a2dd-d019b2e104ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Arbre\Visiteurs">
+      <UniqueIdentifier>{dd8f0fcb-0b84-4415-9725-eff63e8b0ee6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Arbre\Usines">
+      <UniqueIdentifier>{2d7e83f6-88e0-4835-a145-53a4c662829e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Arbre\Physique">
+      <UniqueIdentifier>{8fd0b008-1010-4c49-a085-12118109ac1b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Arbre\Physique">
+      <UniqueIdentifier>{2eb2e033-ee28-4fa2-9b40-8e6ac338f7e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Console">
+      <UniqueIdentifier>{4f7a42de-587a-45fa-8947-8e6b7e93d44a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Arbre\JoueurVirtuel">
+      <UniqueIdentifier>{f46b6d6a-c97a-4c69-b9b7-e616d42e43ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Arbre\JoueurVirtuel">
+      <UniqueIdentifier>{6b3086df-ed76-4a2d-bf5d-a7dcdd2a4a37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\UI">
+      <UniqueIdentifier>{6296133a-865a-4324-898e-9467a88eb99a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\UI">
+      <UniqueIdentifier>{8592cccf-e31a-48b9-8a79-62aafac6154f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Audio">
+      <UniqueIdentifier>{256ab1df-16c4-43e6-938b-0b8825b72d54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Audio">
+      <UniqueIdentifier>{9d4a9e54-5195-4113-9cc0-38b2cb3cc3ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Musique">
+      <UniqueIdentifier>{6d4e6092-2cc2-4e93-8591-08b811cfa03b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Effets">
+      <UniqueIdentifier>{a49256b6-35aa-4fbb-88cc-9676c0190e7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Lighting">
+      <UniqueIdentifier>{fc991179-8f00-45de-86ad-60f5154b8208}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Lighting">
+      <UniqueIdentifier>{985efdfb-faea-481e-8914-1157b8d6372c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Effects">
+      <UniqueIdentifier>{406cf50f-5d80-4326-a640-5c4a6e5d52a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Effects">
+      <UniqueIdentifier>{2cbe9868-c4cc-4a37-a0e9-5949f90e145d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Console">
+      <UniqueIdentifier>{7994da7e-9d20-4b20-bee6-0c34b58d8c5a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Application\FacadeModele.cpp">
+      <Filter>Source Files\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Configuration\ConfigScene.cpp">
+      <Filter>Source Files\Configuration</Filter>
+    </ClCompile>
+    <ClCompile Include="Arbre\ArbreRendu.cpp">
+      <Filter>Source Files\Arbre</Filter>
+    </ClCompile>
+    <ClCompile Include="Arbre\ArbreRenduINF2990.cpp">
+      <Filter>Source Files\Arbre</Filter>
+    </ClCompile>
+    <ClCompile Include="Arbre\Noeuds\NoeudAbstrait.cpp">
+      <Filter>Source Files\Arbre\Noeuds</Filter>
+    </ClCompile>
+    <ClCompile Include="Arbre\Noeuds\NoeudComposite.cpp">
+      <Filter>Source Files\Arbre\Noeuds</Filter>
+    </ClCompile>
+    <ClCompile Include="Interface\FacadeInterfaceNative.cpp">
+      <Filter>Source Files\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="Arbre\Noeuds\NoeudAccelerateur.cpp">
+      <Filter>Source Files\Arbre\Noeuds</Filter>
+    </ClCompile>
+    <ClCompile Include="Arbre\Noeuds\NoeudTable.cpp">
+      <Filter>Source Files\Arbre\Noeuds</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\States\ModeleEtat.cpp">
+      <Filter>Source Files\Application\States</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\States\ModeleEtatSelection.cpp">
+      <Filter>Source Files\Application\States</Filter>
+    </ClCompile>
+    <ClCompile Include="Arbre\Visiteurs\VisiteurDeplacement.cpp">
+      <Filter>Source Files\Arbre\Visiteurs</Filter>
+    </ClCompile>
+    <ClCompile Include="Arbre\Visiteurs\VisiteurSelection.cpp">
+      <Filter>Source Files\Arbre\Visiteurs</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\States\ModeleEtatCreerBoost.cpp">
+      <Filter>Source Files\Application\States</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\States\ModeleEtatCreerMuret.cpp">
+      <Filter>Source Files\Application\States</Filter>
+    </ClCompile>
+    <ClCompile Include="Arbre\Noeuds\NoeudMur.cpp">
+      <Filter>Source Files\Arbre\Noeuds</Filter>
+    </ClCompile>
+    <ClCompile Include="Arbre\Noeuds\NoeudPortail.cpp">
+      <Filter>Source Files\Arbre\Noeuds</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\States\ModeleEtatCreerPortail.cpp">
+      <Filter>Source Files\Application\States</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\States\ModeleEtatDeplacement.cpp">
+      <Filter>Source Files\Application\States</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\States\ModeleEtatZoom.cpp">
+      <Filter>Source Files\Application\States</Filter>
+    </ClCompile>
+    <ClCompile Include="Arbre\Noeuds\NoeudPointControl.cpp">
+      <Filter>Source Files\Arbre\Noeuds</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\States\ModeleEtatRotation.cpp">
+      <Filter>Source Files\Application\States</Filter>
+    </ClCompile>
+    <ClCompile Include="Arbre\Visiteurs\VisiteurObtenirSelection.cpp">
+      <Filter>Source Files\Arbre\Visiteurs</Filter>
+    </ClCompile>
+    <ClCompile Include="Arbre\Visiteurs\VisiteurInformation.cpp">
+      <Filter>Source Files\Arbre\Visiteurs</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\States\ModeleEtatScale.cpp">
+      <Filter>Source Files\Application\States</Filter>
+    </ClCompile>
+    <ClCompile Include="Arbre\Visiteurs\VisiteurScale.cpp">
+      <Filter>Source Files\Arbre\Visiteurs</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\States\ModeleEtatPointControl.cpp">
+      <Filter>Source Files\Application\States</Filter>
+    </ClCompile>
+    <ClCompile Include="Arbre\Visiteurs\VisiteurSelectionnable.cpp">
+      <Filter>Source Files\Arbre\Visiteurs</Filter>
+    </ClCompile>
+    <ClCompile Include="Arbre\Visiteurs\VisiteurDuplication.cpp">
+      <Filter>Source Files\Arbre\Visiteurs</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\States\ModeleEtatDuplication.cpp">
+      <Filter>Source Files\Application\States</Filter>
+    </ClCompile>
+    <ClCompile Include="Arbre\Visiteurs\VisiteurSurTable.cpp">
+      <Filter>Source Files\Arbre\Visiteurs</Filter>
+    </ClCompile>
+    <ClCompile Include="Arbre\Visiteurs\VisiteurSuppression.cpp">
+      <Filter>Source Files\Arbre\Visiteurs</Filter>
+    </ClCompile>
+    <ClCompile Include="Arbre\Noeuds\NoeudBut.cpp">
+      <Filter>Source Files\Arbre\Noeuds</Filter>
+    </ClCompile>
+    <ClCompile Include="Arbre\Visiteurs\VisiteurSauvegarde.cpp">
+      <Filter>Source Files\Arbre\Visiteurs</Filter>
+    </ClCompile>
+    <ClCompile Include="Arbre\Noeuds\NoeudRondelle.cpp">
+      <Filter>Source Files\Arbre\Noeuds</Filter>
+    </ClCompile>
+    <ClCompile Include="Arbre\Noeuds\Table.cpp">
+      <Filter>Source Files\Arbre\Noeuds</Filter>
+    </ClCompile>
+    <ClCompile Include="Arbre\Noeuds\NoeudMaillet.cpp">
+      <Filter>Source Files\Arbre\Noeuds</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\States\ModeleEtatJeu.cpp">
+      <Filter>Source Files\Application\States</Filter>
+    </ClCompile>
+    <ClCompile Include="Arbre\Visiteurs\VisiteurCollisionRondelle.cpp">
+      <Filter>Source Files\Arbre\Visiteurs</Filter>
+    </ClCompile>
+    <ClCompile Include="Arbre\Physique\RigidBody.cpp">
+      <Filter>Source Files\Arbre\Physique</Filter>
+    </ClCompile>
+    <ClCompile Include="Arbre\Physique\PhysProperties.cpp">
+      <Filter>Source Files\Arbre\Physique</Filter>
+    </ClCompile>
+    <ClCompile Include="Arbre\Noeuds\But.cpp">
+      <Filter>Source Files\Arbre\Noeuds</Filter>
+    </ClCompile>
+    <ClCompile Include="Arbre\VirtualPlayer.cpp">
+      <Filter>Source Files\Arbre\JoueurVirtuel</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\ArbreRenduTest.cpp">
+      <Filter>Source Files\Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\BancTests.cpp">
+      <Filter>Source Files\Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\CollisionTest.cpp">
+      <Filter>Source Files\Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\ConfigSceneTest.cpp">
+      <Filter>Source Files\Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\LoggerTest.cpp">
+      <Filter>Source Files\Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\NoeudAbstraitTest.cpp">
+      <Filter>Source Files\Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\NoeudTest.cpp">
+      <Filter>Source Files\Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\RigidBodyTest.cpp">
+      <Filter>Source Files\Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\VisiteurDuplicationTest.cpp">
+      <Filter>Source Files\Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\VisiteurInformationTest.cpp">
+      <Filter>Source Files\Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\VisiteurObtenirSelectionTest.cpp">
+      <Filter>Source Files\Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\VisiteurScaleTest.cpp">
+      <Filter>Source Files\Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\VisiteurSupressionTest.cpp">
+      <Filter>Source Files\Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\Text2D.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI\Panel2D.cpp">
+      <Filter>Source Files\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Raycast.cpp">
+      <Filter>Source Files\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Audio\Audio.cpp">
+      <Filter>Source Files\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Lighting\Light.cpp">
+      <Filter>Source Files\Lighting</Filter>
+    </ClCompile>
+    <ClCompile Include="Lighting\LightAnimation.cpp">
+      <Filter>Source Files\Lighting</Filter>
+    </ClCompile>
+    <ClCompile Include="Lighting\LightManager.cpp">
+      <Filter>Source Files\Lighting</Filter>
+    </ClCompile>
+    <ClCompile Include="Effects\FireEffect.cpp">
+      <Filter>Source Files\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="Arbre\Noeuds\NoeudBooster.cpp">
+      <Filter>Source Files\Arbre\Noeuds</Filter>
+    </ClCompile>
+    <ClCompile Include="Console\Logger.cpp">
+      <Filter>Source Files\Console</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Application\FacadeModele.h">
+      <Filter>Header Files\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Configuration\ConfigScene.h">
+      <Filter>Header Files\Configuration</Filter>
+    </ClInclude>
+    <ClInclude Include="Arbre\ArbreRendu.h">
+      <Filter>Header Files\Arbre</Filter>
+    </ClInclude>
+    <ClInclude Include="Arbre\ArbreRenduINF2990.h">
+      <Filter>Header Files\Arbre</Filter>
+    </ClInclude>
+    <ClInclude Include="Arbre\Usines\UsineNoeud.h">
+      <Filter>Header Files\Arbre\Usines</Filter>
+    </ClInclude>
+    <ClInclude Include="Arbre\Noeuds\NoeudAbstrait.h">
+      <Filter>Header Files\Arbre\Noeuds</Filter>
+    </ClInclude>
+    <ClInclude Include="Arbre\Noeuds\NoeudComposite.h">
+      <Filter>Header Files\Arbre\Noeuds</Filter>
+    </ClInclude>
+    <ClInclude Include="Arbre\Noeuds\NoeudTypes.h">
+      <Filter>Header Files\Arbre\Noeuds</Filter>
+    </ClInclude>
+    <ClInclude Include="Arbre\Noeuds\NoeudAccelerateur.h">
+      <Filter>Header Files\Arbre\Noeuds</Filter>
+    </ClInclude>
+    <ClInclude Include="Arbre\Noeuds\NoeudTable.h">
+      <Filter>Header Files\Arbre\Noeuds</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\States\ModeleEtat.h">
+      <Filter>Header Files\Application\States</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\States\ModeleEtatSelection.h">
+      <Filter>Header Files\Application\States</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface\FacadeInterfaceNative.h">
+      <Filter>Header Files\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Arbre\Visiteurs\VisiteurAbstrait.h">
+      <Filter>Header Files\Arbre\Visiteurs</Filter>
+    </ClInclude>
+    <ClInclude Include="Arbre\Visiteurs\VisiteurDeplacement.h">
+      <Filter>Header Files\Arbre\Visiteurs</Filter>
+    </ClInclude>
+    <ClInclude Include="Arbre\Visiteurs\VisiteurSelection.h">
+      <Filter>Header Files\Arbre\Visiteurs</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\States\ModeleEtatCreerBoost.h">
+      <Filter>Header Files\Application\States</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\States\ModeleEtatCreerMuret.h">
+      <Filter>Header Files\Application\States</Filter>
+    </ClInclude>
+    <ClInclude Include="Arbre\Noeuds\NoeudMur.h">
+      <Filter>Header Files\Arbre\Noeuds</Filter>
+    </ClInclude>
+    <ClInclude Include="Arbre\Noeuds\NoeudPortail.h">
+      <Filter>Header Files\Arbre\Noeuds</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\States\ModeleEtatCreerPortail.h">
+      <Filter>Header Files\Application\States</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\States\EtatTypes.h">
+      <Filter>Header Files\Application\States</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\States\ModeleEtatDeplacement.h">
+      <Filter>Header Files\Application\States</Filter>
+    </ClInclude>
+    <ClInclude Include="Arbre\Visiteurs\VisiteurTypes.h">
+      <Filter>Header Files\Arbre\Visiteurs</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\States\ModeleEtatZoom.h">
+      <Filter>Header Files\Application\States</Filter>
+    </ClInclude>
+    <ClInclude Include="Arbre\Noeuds\NoeudPointControl.h">
+      <Filter>Header Files\Arbre\Noeuds</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\States\ModeleEtatRotation.h">
+      <Filter>Header Files\Application\States</Filter>
+    </ClInclude>
+    <ClInclude Include="Arbre\Visiteurs\VisiteurObtenirSelection.h">
+      <Filter>Header Files\Arbre\Visiteurs</Filter>
+    </ClInclude>
+    <ClInclude Include="Arbre\Visiteurs\VisiteurInformation.h">
+      <Filter>Header Files\Arbre\Visiteurs</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\States\ModeleEtatScale.h">
+      <Filter>Header Files\Application\States</Filter>
+    </ClInclude>
+    <ClInclude Include="Arbre\Visiteurs\VisiteurScale.h">
+      <Filter>Header Files\Arbre\Visiteurs</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\States\ModeleEtatPointControl.h">
+      <Filter>Header Files\Application\States</Filter>
+    </ClInclude>
+    <ClInclude Include="Arbre\Visiteurs\VisiteurSelectionnable.h">
+      <Filter>Header Files\Arbre\Visiteurs</Filter>
+    </ClInclude>
+    <ClInclude Include="Arbre\Visiteurs\VisiteurDuplication.h">
+      <Filter>Header Files\Arbre\Visiteurs</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\States\ModeleEtatDuplication.h">
+      <Filter>Header Files\Application\States</Filter>
+    </ClInclude>
+    <ClInclude Include="Arbre\Visiteurs\VisiteurSurTable.h">
+      <Filter>Header Files\Arbre\Visiteurs</Filter>
+    </ClInclude>
+    <ClInclude Include="Arbre\Visiteurs\VisiteurSuppression.h">
+      <Filter>Header Files\Arbre\Visiteurs</Filter>
+    </ClInclude>
+    <ClInclude Include="Arbre\Noeuds\NoeudBut.h">
+      <Filter>Header Files\Arbre\Noeuds</Filter>
+    </ClInclude>
+    <ClInclude Include="Arbre\Visiteurs\VisiteurSauvegarde.h">
+      <Filter>Header Files\Arbre\Visiteurs</Filter>
+    </ClInclude>
+    <ClInclude Include="Arbre\Noeuds\NoeudRondelle.h">
+      <Filter>Header Files\Arbre\Noeuds</Filter>
+    </ClInclude>
+    <ClInclude Include="Arbre\Noeuds\Table.h">
+      <Filter>Header Files\Arbre\Noeuds</Filter>
+    </ClInclude>
+    <ClInclude Include="Arbre\Noeuds\NoeudMaillet.h">
+      <Filter>Header Files\Arbre\Noeuds</Filter>
+    </ClInclude>
+    <ClInclude Include="Arbre\Visiteurs\VisiteurCollisionRondelle.h">
+      <Filter>Header Files\Arbre\Visiteurs</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\States\ModeleEtatJeu.h">
+      <Filter>Header Files\Application\States</Filter>
+    </ClInclude>
+    <ClInclude Include="Arbre\Physique\RigidBody.h">
+      <Filter>Header Files\Arbre\Physique</Filter>
+    </ClInclude>
+    <ClInclude Include="Arbre\Physique\PhysProperties.h">
+      <Filter>Header Files\Arbre\Physique</Filter>
+    </ClInclude>
+    <ClInclude Include="Arbre\Noeuds\But.h">
+      <Filter>Header Files\Arbre\Noeuds</Filter>
+    </ClInclude>
+    <ClInclude Include="Console\Logger.h">
+      <Filter>Header Files\Console</Filter>
+    </ClInclude>
+    <ClInclude Include="Arbre\VirtualPlayer.h">
+      <Filter>Header Files\Arbre\JoueurVirtuel</Filter>
+    </ClInclude>
+    <ClInclude Include="Tests\ArbreRenduTest.h">
+      <Filter>Header Files\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="Tests\BancTests.h">
+      <Filter>Header Files\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="Tests\CollisionTest.h">
+      <Filter>Header Files\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="Tests\ConfigSceneTest.h">
+      <Filter>Header Files\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="Tests\LoggerTest.h">
+      <Filter>Header Files\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="Tests\NoeudAbstraitTest.h">
+      <Filter>Header Files\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="Tests\NoeudTest.h">
+      <Filter>Header Files\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="Tests\RigidBodyTest.h">
+      <Filter>Header Files\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="Tests\VisiteurDuplicationTest.h">
+      <Filter>Header Files\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="Tests\VisiteurInformationTest.h">
+      <Filter>Header Files\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="Tests\VisiteurObtenirSelectionTest.h">
+      <Filter>Header Files\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="Tests\VisiteurScaleTest.h">
+      <Filter>Header Files\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="Tests\VisiteurSuppressionTest.h">
+      <Filter>Header Files\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Text2D.h">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI\Panel2D.h">
+      <Filter>Header Files\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Raycast.h">
+      <Filter>Header Files\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Audio\Audio.h">
+      <Filter>Header Files\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Lighting\Light.h">
+      <Filter>Header Files\Lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="Lighting\LightAnimation.h">
+      <Filter>Header Files\Lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="Lighting\LightManager.h">
+      <Filter>Header Files\Lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="Effects\FireEffect.h">
+      <Filter>Header Files\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="Arbre\Noeuds\NoeudBooster.h">
+      <Filter>Header Files\Arbre\Noeuds</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Audio\Effets\But.mp3">
+      <Filter>Resource Files\Effets</Filter>
+    </Media>
+    <Media Include="Audio\Effets\CollisionBooster.mp3">
+      <Filter>Resource Files\Effets</Filter>
+    </Media>
+    <Media Include="Audio\Effets\CollisionMaillet.mp3">
+      <Filter>Resource Files\Effets</Filter>
+    </Media>
+    <Media Include="Audio\Effets\CollisionMur.mp3">
+      <Filter>Resource Files\Effets</Filter>
+    </Media>
+    <Media Include="Audio\Effets\CollisionPortail.mp3">
+      <Filter>Resource Files\Effets</Filter>
+    </Media>
+    <Media Include="Audio\Musique\Gameplay.mp3">
+      <Filter>Resource Files\Musique</Filter>
+    </Media>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,40 @@
+{
+  "moveUp_": "W",
+  "moveDown_": "S",
+  "moveLeft_": "A",
+  "moveRight_": "D",
+  "winGoals_": 2,
+  "p2Virtual_": true,
+  "debugMode_": true,
+  "collDebug_": true,
+  "spdDebug_": true,
+  "lgtDebug_": true,
+  "ptlDebug_": true,
+  "ppList_": [
+    {
+      "Name": "Hardest",
+      "Speed": 10,
+      "Passivity": 1
+    },
+	{
+      "Name": "Hard",
+      "Speed": 8,
+      "Passivity": 8
+    },
+	{
+      "Name": "Medium",
+      "Speed": 5,
+      "Passivity": 5
+    },
+	{
+      "Name": "Easy",
+      "Speed": 3,
+      "Passivity": 3
+    },
+    {
+      "Name": "Easiest",
+      "Speed": 1,
+      "Passivity": 10
+    }
+  ]
+}

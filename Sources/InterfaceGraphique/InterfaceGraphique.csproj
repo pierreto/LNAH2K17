@@ -1,0 +1,290 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B861DACD-1D37-4C9D-A1D0-3468C9072C74}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>InterfaceGraphique</RootNamespace>
+    <AssemblyName>InterfaceGraphique</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>x64</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\Exe\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\Exe\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>Always</RunPostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Release\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Menus\CreditsMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Menus\CreditsMenu.Designer.cs">
+      <DependentUpon>CreditsMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Menus\CheatCodesMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Menus\CheatCodesMenu.Designer.cs">
+      <DependentUpon>CheatCodesMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Game\TournementTree.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Game\TournementTree.Designer.cs">
+      <DependentUpon>TournementTree.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GlobalVariables.cs" />
+    <Compile Include="Menus\ErrorMessageDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Menus\ErrorMessageDialog.Designer.cs">
+      <DependentUpon>ErrorMessageDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FonctionsNatives.cs" />
+    <Compile Include="Menus\ConfigurationMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Menus\ConfigurationMenu.Designer.cs">
+      <DependentUpon>ConfigurationMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editor\Editeur.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editor\Editeur.Designer.cs">
+      <DependentUpon>Editeur.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Editor\GeneralProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editor\GeneralProperties.Designer.cs">
+      <DependentUpon>GeneralProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Game\QuickPlay.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Game\QuickPlay.Designer.cs">
+      <DependentUpon>QuickPlay.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Menus\MainMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Menus\MainMenu.Designer.cs">
+      <DependentUpon>MainMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Menus\HelpDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Menus\HelpDialog.Designer.cs">
+      <DependentUpon>HelpDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Menus\QuickPlayMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Menus\QuickPlayMenu.Designer.cs">
+      <DependentUpon>QuickPlayMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Menus\TournementMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Menus\TournementMenu.Designer.cs">
+      <DependentUpon>TournementMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="FormManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormManager.Designer.cs">
+      <DependentUpon>FormManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Game\TestMode.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Game\TestMode.Designer.cs">
+      <DependentUpon>TestMode.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Menus\CheatCodesMenu.resx">
+      <DependentUpon>CheatCodesMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Game\TestMode.resx">
+      <DependentUpon>TestMode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Game\TournementTree.resx">
+      <DependentUpon>TournementTree.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Menus\ConfigurationMenu.resx">
+      <DependentUpon>ConfigurationMenu.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editor\Editeur.resx">
+      <DependentUpon>Editeur.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editor\GeneralProperties.resx">
+      <DependentUpon>GeneralProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Game\QuickPlay.resx">
+      <DependentUpon>QuickPlay.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Menus\CreditsMenu.resx">
+      <DependentUpon>CreditsMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Menus\ErrorMessageDialog.resx">
+      <DependentUpon>ErrorMessageDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Menus\MainMenu.resx">
+      <DependentUpon>MainMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Menus\HelpDialog.resx">
+      <DependentUpon>HelpDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Menus\QuickPlayMenu.resx">
+      <DependentUpon>QuickPlayMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Menus\TournementMenu.resx">
+      <DependentUpon>TournementMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="AxWMPLib">
+      <Guid>{6BF52A50-394A-11D3-B153-00C04F79FAA6}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>aximp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+    <COMReference Include="stdole">
+      <Guid>{00020430-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="WMPLib">
+      <Guid>{6BF52A50-394A-11D3-B153-00C04F79FAA6}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5.1 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
