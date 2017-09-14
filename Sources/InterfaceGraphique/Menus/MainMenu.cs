@@ -100,5 +100,10 @@ namespace InterfaceGraphique {
         public void UnsuscribeEventHandlers() {
             Program.FormManager.SizeChanged -= new EventHandler(WindowSizeChanged);
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -29,6 +29,7 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.Button_Credits = new System.Windows.Forms.Button();
             this.Button_Cheats = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -151,12 +152,29 @@
             this.Button_Cheats.Text = "Cheat Codes";
             this.Button_Cheats.UseVisualStyleBackColor = true;
             // 
+            // button2
+            // 
+            this.button2.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.button2.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button2.ForeColor = System.Drawing.Color.Aquamarine;
+            this.button2.Location = new System.Drawing.Point(127, 325);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(150, 66);
+            this.button2.TabIndex = 10;
+            this.button2.TabStop = false;
+            this.button2.Text = "Prototype de chat";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // MainMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(784, 561);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.Button_Cheats);
             this.Controls.Add(this.Button_Credits);
             this.Controls.Add(this.buttonQuitter);
@@ -181,5 +199,6 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button Button_Credits;
         private System.Windows.Forms.Button Button_Cheats;
+        private System.Windows.Forms.Button button2;
     }
 }

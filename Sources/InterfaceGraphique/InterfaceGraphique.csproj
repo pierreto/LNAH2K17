@@ -83,6 +83,12 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Chat\Chat.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Chat\Chat.Designer.cs">
+      <DependentUpon>Chat.cs</DependentUpon>
+    </Compile>
     <Compile Include="Menus\CreditsMenu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -133,6 +139,12 @@
     <Compile Include="Game\QuickPlay.Designer.cs">
       <DependentUpon>QuickPlay.cs</DependentUpon>
     </Compile>
+    <Compile Include="Menus\Login.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Menus\Login.Designer.cs">
+      <DependentUpon>Login.cs</DependentUpon>
+    </Compile>
     <Compile Include="Menus\MainMenu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -171,6 +183,9 @@
     <Compile Include="Game\TestMode.Designer.cs">
       <DependentUpon>TestMode.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Chat\Chat.resx">
+      <DependentUpon>Chat.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Menus\CheatCodesMenu.resx">
       <DependentUpon>CheatCodesMenu.cs</DependentUpon>
     </EmbeddedResource>
@@ -198,6 +213,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Menus\ErrorMessageDialog.resx">
       <DependentUpon>ErrorMessageDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Menus\Login.resx">
+      <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Menus\MainMenu.resx">
       <DependentUpon>MainMenu.cs</DependentUpon>
