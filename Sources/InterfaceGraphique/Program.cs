@@ -69,8 +69,23 @@ namespace InterfaceGraphique
 
             ChatConnection chatConnection = new ChatConnection();
             chatConnection.EstablishConnection();
-            chatConnection.Send("supp<EOF>");
-            
+            ChatMessage temp = new ChatMessage()
+            {
+                MessageValue = "Allo cher bonhomme",
+                Recipient = "",
+                Sender = "",
+                TimeStamp = DateTime.Now
+            };
+            chatConnection.Send(temp);
+            ChatMessage temp2 = new ChatMessage()
+            {
+                MessageValue = "foo bar ssss",
+                Recipient = "",
+                Sender = "",
+                TimeStamp = DateTime.Now
+            };
+            chatConnection.Send(temp2);
+
             chrono.Start();
             Application.Idle += ExecuterQuandInactif;
             Application.EnableVisualStyles();

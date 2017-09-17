@@ -27,7 +27,7 @@ namespace AirHockeyServer
 
             Register(GlobalConfiguration.Configuration);
             ChatServer server = new ChatServer();
-            server.StartListening();
+            server.StartListeningAsync();
         }
 
         public static void Register(HttpConfiguration config)

@@ -1,5 +1,8 @@
-﻿using System;
+﻿using AirHockeyServer.Entities;
+using AirHockeyServer.Utilities;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -33,62 +36,22 @@ namespace AirHockeyServer.Services.ChatServiceServer
 
         private List<Socket> _clients = new List<Socket>();
 
-        Socket Socket { get; set; }
-        public void StartListening()
+        public ChatServer()
         {
-            // Data buffer for incoming data.  
-            byte[] bytes = new Byte[1024];
-
-            // Establish the local endpoint for the socket.  
-            // The DNS name of the computer  
-            // running the listener is "host.contoso.com".  
-            //IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
-            //IPAddress ipAddress = ipHostInfo.AddressList[0];
-            //IPEndPoint localEndPoint = new IPEndPoint(ipAddress, 11000);
-
-            //// Create a TCP/IP socket.  
-            //Socket listener = new Socket(AddressFamily.InterNetwork,
-            //    SocketType.Stream, ProtocolType.Tcp);
-
-            //// Bind the socket to the local endpoint and listen for incoming connections.  
-            //try
-            //{
-            //    listener.Bind(localEndPoint);
-            //    listener.Listen(100);
-
-            //    //while (true)
-            //    //{
-            //        // Set the event to nonsignaled state.  
-            //        //allDone.Reset();
-
-            //        // Start an asynchronous socket to listen for connections.  
-            //        //Console.WriteLine("Waiting for a connection...");
-            //        listener.BeginAccept(
-            //            new AsyncCallback(AcceptCallback),
-            //            listener);
-
-            //        // Wait until a connection is made before continuing.  
-            //        //allDone.WaitOne();
-            //    //}
-
-            //}
-            //catch (Exception e)
-            //{
-            //    Console.WriteLine(e.ToString());
-            //}
-
-            //Console.WriteLine("\nPress ENTER to continue...");
-            //Console.Read();
-
             Socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
             Socket.Bind(new IPEndPoint(IPAddress.Any, 8080));
             Socket.Listen(128);
-            Socket.BeginAccept(null, 0, OnAccept, null);
+        }
 
+        Socket Socket { get; set; }
+        public void StartListeningAsync()
+        {
+            Socket.BeginAccept(null, 0, new AsyncCallback(OnAccept), null);
         }
 
         private void OnAccept(IAsyncResult result)
         {
+            Debug.WriteLine("Server accepted a connection");
             // Get the socket that handles the client request.  
             //Socket listener = (Socket)result.AsyncState;
             Socket handler = Socket.EndAccept(result);
@@ -96,49 +59,11 @@ namespace AirHockeyServer.Services.ChatServiceServer
             // Create the state object.  
             StateObject state = new StateObject();
             state.workSocket = handler;
+
+            _clients.Add(handler);
+
             handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
                 new AsyncCallback(ReadCallback), state);
-            //try
-            //{
-            //    Socket client = null;
-            //    if (serverSocket != null && serverSocket.IsBound)
-            //    {
-            //        client = serverSocket.EndAccept(result);
-            //    }
-            //    if (client != null)
-            //    {
-            //        /* Handshaking and managing ClientSocket */
-            //    }
-            //}
-            //catch (SocketException exception)
-            //{
-
-            //}
-            //finally
-            //{
-            //    if (serverSocket != null && serverSocket.IsBound)
-            //    {
-            //        serverSocket.BeginAccept(null, 0, OnAccept, null);
-            //    }
-            //}
-        }
-
-        public static void AcceptCallback(IAsyncResult ar)
-        {
-            // Signal the main thread to continue.  
-            //allDone.Set();
-
-            //// Get the socket that handles the client request.  
-            //Socket listener = (Socket)ar.AsyncState;
-            //Socket handler = listener.EndAccept(ar);
-
-            //// Create the state object.  
-            //StateObject state = new StateObject();
-            //state.workSocket = handler;
-            //handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
-            //    new AsyncCallback(ReadCallback), state);
-
-            //_clients.Add(handler); // Maintain connected clients
         }
 
         public void ReadCallback(IAsyncResult ar)
@@ -149,60 +74,78 @@ namespace AirHockeyServer.Services.ChatServiceServer
             // from the asynchronous state object.  
             StateObject state = (StateObject)ar.AsyncState;
             Socket handler = state.workSocket;
-
-            // Read data from the client socket.   
-            int bytesRead = handler.EndReceive(ar);
-
-            if (bytesRead > 0)
+            try
             {
-                // There  might be more data, so store the data received so far.  
-                state.sb.Append(Encoding.ASCII.GetString(
-                    state.buffer, 0, bytesRead));
+                // Read data from the client socket.   
+                int bytesRead = handler.EndReceive(ar);
 
-                // Check for end-of-file tag. If it is not there, read   
-                // more data.  
-                content = state.sb.ToString();
-                if (content.IndexOf("<EOF>") > -1)
+                if (bytesRead > 0)
                 {
+                    // There  might be more data, so store the data received so far.  
+                    state.sb.Append(Encoding.ASCII.GetString(
+                        state.buffer, 0, bytesRead));
+
+                    // Check for end-of-file tag. If it is not there, read   
+                    // more data.  
+                    content = state.sb.ToString();
+                    Debug.WriteLine("Message received" + content);
+                    //if (content.IndexOf("<EOF>") > -1)
+                    //{
                     // All the data has been read from the   
                     // client. Display it on the console.  
-                    Console.WriteLine("Read {0} bytes from socket. \n Data : {1}",
-                        content.Length, content);
-                    // Echo the data back to the client.  
-                    Send(handler, content);
+                    // Echo the data back to the client.
+                    ChatMessage chatMessage = JsonParser.ParseStringToObject<ChatMessage>(content);
+                        Send(handler, chatMessage);
+                    //}
+                    //else
+                    //{
+                    //    // Not all data received. Get more.  
+                    //    handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
+                    //    new AsyncCallback(ReadCallback), state);
+                    //}
                 }
-                else
-                {
-                    // Not all data received. Get more.  
-                    handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
+            }
+            catch(Exception)
+            {
+
+            }
+            finally
+            {
+                state.buffer = new byte[1024];
+                state.sb = new StringBuilder();
+                handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
                     new AsyncCallback(ReadCallback), state);
-                }
             }
         }
 
-        private static void Send(Socket handler, String data)
+        private void Send(Socket handler, ChatMessage data)
         {
             // Convert the string data to byte data using ASCII encoding.  
-            byte[] byteData = Encoding.ASCII.GetBytes(data);
+            byte[] byteData = Encoding.ASCII.GetBytes(JsonParser.ParseObjectToString(data));
 
             // Begin sending the data to the remote device.  
             handler.BeginSend(byteData, 0, byteData.Length, 0,
                 new AsyncCallback(SendCallback), handler);
         }
 
-        private static void SendCallback(IAsyncResult ar)
+        private void SendCallback(IAsyncResult ar)
         {
             try
             {
+                StateObject state = (StateObject)ar.AsyncState;
+
                 // Retrieve the socket from the state object.  
                 Socket handler = (Socket)ar.AsyncState;
 
                 // Complete sending the data to the remote device.  
                 int bytesSent = handler.EndSend(ar);
-                Console.WriteLine("Sent {0} bytes to client.", bytesSent);
 
-                handler.Shutdown(SocketShutdown.Both);
-                handler.Close();
+                //handler.Shutdown(SocketShutdown.Both);
+                //handler.Close();
+                state.buffer = new byte[1024];
+                state.sb = new StringBuilder();
+                handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
+                new AsyncCallback(ReadCallback), state);
 
             }
             catch (Exception e)
