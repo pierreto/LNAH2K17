@@ -11,7 +11,7 @@
 		8F6AE2BE1F6592EB00A29E8B /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8F6AE2BD1F6592EB00A29E8B /* GameScene.sks */; };
 		8F6AE2C01F6592EB00A29E8B /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8F6AE2BF1F6592EB00A29E8B /* Actions.sks */; };
 		8F6AE2C21F6592EB00A29E8B /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6AE2C11F6592EB00A29E8B /* GameScene.swift */; };
-		8F6AE2C41F6592EB00A29E8B /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6AE2C31F6592EB00A29E8B /* GameViewController.swift */; };
+		8F6AE2C41F6592EB00A29E8B /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6AE2C31F6592EB00A29E8B /* ChatViewController.swift */; };
 		8F6AE2C71F6592EB00A29E8B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F6AE2C51F6592EB00A29E8B /* Main.storyboard */; };
 		8F6AE2C91F6592EB00A29E8B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8F6AE2C81F6592EB00A29E8B /* Assets.xcassets */; };
 		8F6AE2CC1F6592EB00A29E8B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F6AE2CA1F6592EB00A29E8B /* LaunchScreen.storyboard */; };
@@ -23,7 +23,7 @@
 		8F6AE2BD1F6592EB00A29E8B /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		8F6AE2BF1F6592EB00A29E8B /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
 		8F6AE2C11F6592EB00A29E8B /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
-		8F6AE2C31F6592EB00A29E8B /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		8F6AE2C31F6592EB00A29E8B /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		8F6AE2C61F6592EB00A29E8B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8F6AE2C81F6592EB00A29E8B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8F6AE2CB1F6592EB00A29E8B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -41,6 +41,46 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8F0FFED41F6EB8A600366D8E /* InterfaceGraphique */ = {
+			isa = PBXGroup;
+			children = (
+				8F6AE2C51F6592EB00A29E8B /* Main.storyboard */,
+				8F0FFED91F6EB96900366D8E /* Menus */,
+				8F0FFED71F6EB8C500366D8E /* Chat */,
+			);
+			name = InterfaceGraphique;
+			sourceTree = "<group>";
+		};
+		8F0FFED51F6EB8B100366D8E /* Noyau */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Noyau;
+			sourceTree = "<group>";
+		};
+		8F0FFED61F6EB8B800366D8E /* Utilitaire */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Utilitaire;
+			sourceTree = "<group>";
+		};
+		8F0FFED71F6EB8C500366D8E /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				8F6AE2C31F6592EB00A29E8B /* ChatViewController.swift */,
+			);
+			name = Chat;
+			sourceTree = "<group>";
+		};
+		8F0FFED91F6EB96900366D8E /* Menus */ = {
+			isa = PBXGroup;
+			children = (
+				8F6AE2CA1F6592EB00A29E8B /* LaunchScreen.storyboard */,
+			);
+			name = Menus;
+			sourceTree = "<group>";
+		};
 		8F6AE2AF1F6592EB00A29E8B = {
 			isa = PBXGroup;
 			children = (
@@ -60,14 +100,14 @@
 		8F6AE2BA1F6592EB00A29E8B /* AirHockeyLightClient */ = {
 			isa = PBXGroup;
 			children = (
+				8F0FFED61F6EB8B800366D8E /* Utilitaire */,
+				8F0FFED51F6EB8B100366D8E /* Noyau */,
+				8F0FFED41F6EB8A600366D8E /* InterfaceGraphique */,
 				8F6AE2BB1F6592EB00A29E8B /* AppDelegate.swift */,
 				8F6AE2BD1F6592EB00A29E8B /* GameScene.sks */,
 				8F6AE2BF1F6592EB00A29E8B /* Actions.sks */,
 				8F6AE2C11F6592EB00A29E8B /* GameScene.swift */,
-				8F6AE2C31F6592EB00A29E8B /* GameViewController.swift */,
-				8F6AE2C51F6592EB00A29E8B /* Main.storyboard */,
 				8F6AE2C81F6592EB00A29E8B /* Assets.xcassets */,
-				8F6AE2CA1F6592EB00A29E8B /* LaunchScreen.storyboard */,
 				8F6AE2CD1F6592EB00A29E8B /* Info.plist */,
 			);
 			path = AirHockeyLightClient;
@@ -149,7 +189,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8F6AE2C21F6592EB00A29E8B /* GameScene.swift in Sources */,
-				8F6AE2C41F6592EB00A29E8B /* GameViewController.swift in Sources */,
+				8F6AE2C41F6592EB00A29E8B /* ChatViewController.swift in Sources */,
 				8F6AE2BC1F6592EB00A29E8B /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -320,6 +360,7 @@
 				8F6AE2D21F6592EB00A29E8B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
