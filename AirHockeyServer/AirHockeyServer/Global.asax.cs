@@ -2,6 +2,7 @@
 using AirHockeyServer.Core;
 using AirHockeyServer.Repositories;
 using AirHockeyServer.Services;
+using AirHockeyServer.Services.ChatServiceServer;
 using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
@@ -25,13 +26,14 @@ namespace AirHockeyServer
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             Register(GlobalConfiguration.Configuration);
+            ChatServer server = new ChatServer();
+            server.StartListening();
         }
 
         public static void Register(HttpConfiguration config)
         {
             var container = new UnityContainer();
             // Repositories
-            container.RegisterType<IChatRepository, ChatRepository>(new HierarchicalLifetimeManager());
             container.RegisterType<IChannelRepository, ChannelRepository>(new HierarchicalLifetimeManager());
 
             // Services

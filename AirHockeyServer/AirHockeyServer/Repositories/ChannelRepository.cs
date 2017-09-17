@@ -10,16 +10,13 @@ namespace AirHockeyServer.Repositories
 {
     public class ChannelRepository : IChannelRepository
     {
-        public ChannelRepository(IChannelService ChannelService)
+        public ChannelRepository()
         {
-            this.ChannelService = ChannelService;
         }
-
-        public IChannelService ChannelService { get; }
 
         public async Task<List<Channel>> GetChannels()
         {
-            return await ChannelService.GetChannels();
+            return new List<Channel>();
         }
         
     }

@@ -5,6 +5,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using System.Net.WebSockets;
+using System.Text;
+using System.Net;
+using System.Net.Sockets;
+using System.Threading;
+using InterfaceGraphique.CommunicationInterface;
 
 namespace InterfaceGraphique
 {
@@ -48,6 +54,7 @@ namespace InterfaceGraphique
         /// <summary>
         /// Point d'entrée principal de l'application.
         /// </summary>
+
         [STAThread]
         static void Main(string[] args)
         {
@@ -60,6 +67,10 @@ namespace InterfaceGraphique
                         System.Console.WriteLine("Tests réussis.");
                 }
 
+            ChatConnection chatConnection = new ChatConnection();
+            chatConnection.EstablishConnection();
+            chatConnection.Send("supp<EOF>");
+            
             chrono.Start();
             Application.Idle += ExecuterQuandInactif;
             Application.EnableVisualStyles();
@@ -107,6 +118,7 @@ namespace InterfaceGraphique
                 }
             }
         }
+
     }
     static partial class FonctionsNatives
     {
@@ -128,4 +140,6 @@ namespace InterfaceGraphique
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern bool executerTests();
     }
+
+
 }
