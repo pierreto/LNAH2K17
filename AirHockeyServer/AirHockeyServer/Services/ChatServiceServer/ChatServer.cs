@@ -27,45 +27,63 @@ namespace AirHockeyServer.Services.ChatServiceServer
 
     public class ChatServer
     {
-        private string hostname { get; set; } = "";
+        // private string hostname { get; set; } = "";
+        // private int port { get; set; } = 0;
 
-        private int port { get; set; } = 0;
+        // Thread signal handler:  
+        public static ManualResetEvent _allDone = new ManualResetEvent(false);
 
-        // Thread signal.  
-        public static ManualResetEvent allDone = new ManualResetEvent(false);
-
+        // We define a socket for listening on an endpoint and
+        // accept (future) connections:
+        private Socket _listener { get; set; }
         private List<Socket> _clients = new List<Socket>();
 
         public ChatServer()
         {
-            Socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
-            Socket.Bind(new IPEndPoint(IPAddress.Any, 8080));
-            Socket.Listen(128);
+            _listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
+            _listener.Bind(new IPEndPoint(IPAddress.Any, 8080));
+            _listener.Listen(128); // Max of 128 (simultaneous) connections.
         }
 
-        Socket Socket { get; set; }
         public void StartListeningAsync()
         {
-            Socket.BeginAccept(null, 0, new AsyncCallback(OnAccept), null);
+            while (true)
+            {
+                _allDone.Reset();
+
+                Debug.WriteLine("Waiting for a connection...");
+
+                _listener.BeginAccept(new AsyncCallback(OnAccept), _listener);
+
+                // Blocking wait for waiting a new connection:
+                _allDone.WaitOne();
+            }
         }
 
         private void OnAccept(IAsyncResult result)
         {
+            // Notify the calling thread (while loop) that a new
+            // connection has been made and that we can continue to
+            // wait for other connections:
+            _allDone.Set();
+
             Debug.WriteLine("Server accepted a connection");
-            // Get the socket that handles the client request.  
-            //Socket listener = (Socket)result.AsyncState;
-            Socket handler = Socket.EndAccept(result);
 
-            // Create the state object.  
+            // We retrieve our _listener through result and we don't use
+            // directly _listener because we are in threads and the memory is
+            // shared (so using directly _listener could lead to undefined behavior
+            // while retrieving _listener from result is thread-safe):
+            Socket listener = (Socket) result.AsyncState;
+
+            Socket new_client = listener.EndAccept(result);
             StateObject state = new StateObject();
-            state.workSocket = handler;
+            state.workSocket = new_client;
+            _clients.Add(new_client);
 
-            _clients.Add(handler);
-
-            handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
+            new_client.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
                 new AsyncCallback(ReadCallback), state);
         }
-
+        
         public void ReadCallback(IAsyncResult ar)
         {
             String content = String.Empty;
@@ -153,6 +171,5 @@ namespace AirHockeyServer.Services.ChatServiceServer
                 Console.WriteLine(e.ToString());
             }
         }
-
     }
 }
