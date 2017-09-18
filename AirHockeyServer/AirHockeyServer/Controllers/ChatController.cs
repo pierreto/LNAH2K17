@@ -8,23 +8,24 @@ using System.Web.Http;
 using System.Net;
 using System.Threading.Tasks;
 using AirHockeyServer.Entities;
+using AirHockeyServer.Services;
 
 namespace AirHockeyServer.Controllers
 {
     public class ChatController : ApiController
     {
 
-        public ChatController(IChatRepository chatRepository)
+        public ChatController(IChatService chatService)
         {
-            ChatRepository = chatRepository;
+            ChatService = chatService;
         }
 
-        public IChatRepository ChatRepository { get; }
+        public IChatService ChatService { get; }
 
         [Route("api/chat")]
         public HttpResponseMessage Post([FromBody]ChatMessage chatMessage)
         {
-            ChatRepository.SendMessage(chatMessage);
+            ChatService.SendPrivateMessage(chatMessage);
             return new HttpResponseMessage(HttpStatusCode.OK);
         }
         
