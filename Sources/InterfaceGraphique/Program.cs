@@ -71,7 +71,7 @@ namespace InterfaceGraphique
             chatConnection.EstablishConnection();
             ChatMessage temp = new ChatMessage()
             {
-                MessageValue = "Allo cher bonhomme",
+                MessageValue = "Allô chère madame",
                 Recipient = "",
                 Sender = "",
                 TimeStamp = DateTime.Now

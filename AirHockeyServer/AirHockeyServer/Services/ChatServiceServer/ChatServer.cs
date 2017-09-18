@@ -82,7 +82,7 @@ namespace AirHockeyServer.Services.ChatServiceServer
                 if (bytesRead > 0)
                 {
                     // There  might be more data, so store the data received so far.  
-                    state.sb.Append(Encoding.ASCII.GetString(
+                    state.sb.Append(Encoding.UTF8.GetString(
                         state.buffer, 0, bytesRead));
 
                     // Check for end-of-file tag. If it is not there, read   
@@ -121,7 +121,7 @@ namespace AirHockeyServer.Services.ChatServiceServer
         private void Send(Socket handler, ChatMessage data)
         {
             // Convert the string data to byte data using ASCII encoding.  
-            byte[] byteData = Encoding.ASCII.GetBytes(JsonParser.ParseObjectToString(data));
+            byte[] byteData = Encoding.UTF8.GetBytes(JsonParser.ParseObjectToString(data));
 
             // Begin sending the data to the remote device.  
             handler.BeginSend(byteData, 0, byteData.Length, 0,
