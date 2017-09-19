@@ -78,7 +78,7 @@ namespace InterfaceGraphique.CommunicationInterface
             }
         }
 
-        public void Send(ChatMessage data)
+        public void Send(Object data)
         {
             // Convert the string data to byte data using ASCII encoding.  
             byte[] byteData = Encoding.ASCII.GetBytes(ParseObjectToString(data));

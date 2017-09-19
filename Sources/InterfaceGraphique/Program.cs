@@ -8,9 +8,12 @@ using System.Runtime.InteropServices;
 using System.Net.WebSockets;
 using System.Text;
 using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Net.Sockets;
 using System.Threading;
 using InterfaceGraphique.CommunicationInterface;
+using InterfaceGraphique.Menus;
 
 namespace InterfaceGraphique
 {
@@ -32,6 +35,7 @@ namespace InterfaceGraphique
         public static TournementTree TournementTree { get { return tournementTree; } }
         public static CreditsMenu CreditsMenu { get { return creditsMenu; } }
         public static Panel OpenGLPanel { get { return openGLPanel; } set { openGLPanel = value; } }
+        public static HttpClient client = new HttpClient();
 
         private static FormManager formManager;
         private static MainMenu mainMenu;
@@ -45,11 +49,14 @@ namespace InterfaceGraphique
         private static TournementTree tournementTree;
         private static CreditsMenu creditsMenu;
         private static Panel openGLPanel;
+        private static Login login;
 
         private static TimeSpan dernierTemps;
         private static TimeSpan tempsAccumule;
         private static Stopwatch chrono = Stopwatch.StartNew();
         private static TimeSpan tempsEcouleVoulu = TimeSpan.FromTicks(TimeSpan.TicksPerSecond / NB_IMAGES_PAR_SECONDE);
+
+
 
         /// <summary>
         /// Point d'entrée principal de l'application.
@@ -67,7 +74,7 @@ namespace InterfaceGraphique
                         System.Console.WriteLine("Tests réussis.");
                 }
 
-            ChatConnection chatConnection = new ChatConnection();
+           /* ChatConnection chatConnection = new ChatConnection();
             chatConnection.EstablishConnection();
             ChatMessage temp = new ChatMessage()
             {
@@ -84,13 +91,19 @@ namespace InterfaceGraphique
                 Sender = "",
                 TimeStamp = DateTime.Now
             };
-            chatConnection.Send(temp2);
+            chatConnection.Send(temp2);*/
 
             chrono.Start();
             Application.Idle += ExecuterQuandInactif;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            Program.client = new HttpClient();
+            Program.client.BaseAddress = new Uri("http://localhost:63056/");
+            Program.client.DefaultRequestHeaders.Accept.Clear();
+            Program.client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            login = new Login();
             openGLPanel = new Panel();
             formManager = new FormManager();
             mainMenu = new MainMenu();
@@ -106,7 +119,7 @@ namespace InterfaceGraphique
 
             FonctionsNatives.loadSounds();
 
-            formManager.CurrentForm = mainMenu;
+            formManager.CurrentForm = login;
             Application.Run(formManager);
         }
 

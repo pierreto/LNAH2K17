@@ -95,7 +95,7 @@ namespace AirHockeyServer.Services.ChatServiceServer
                     // client. Display it on the console.  
                     // Echo the data back to the client.
                     ChatMessage chatMessage = JsonParser.ParseStringToObject<ChatMessage>(content);
-                        Send(handler, chatMessage);
+                    Send(handler, chatMessage);
                     //}
                     //else
                     //{
