@@ -33,10 +33,10 @@ namespace InterfaceGraphique.Menus
         }
         private void InitializeEvents()
         {
-            this.LoginButton.Click += (sender, e) =>
+            this.LoginButton.Click += async (sender, e) =>
             {
 
-                runLogin().Wait();
+                await runLogin();
         
             };
         }
@@ -48,7 +48,7 @@ namespace InterfaceGraphique.Menus
             {
                 LoginName = "phlel"
             };
-            HttpStatusCode response =await  LoginClient.postLoginAsync(loginForm);
+            HttpStatusCode response = await LoginClient.postLoginAsync(loginForm);
             //We initiate the socket connection
             try
             {
