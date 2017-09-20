@@ -35,7 +35,8 @@ namespace InterfaceGraphique
         public static TournementTree TournementTree { get { return tournementTree; } }
         public static CreditsMenu CreditsMenu { get { return creditsMenu; } }
         public static Panel OpenGLPanel { get { return openGLPanel; } set { openGLPanel = value; } }
-        public static HttpClient client = new HttpClient();
+        public static Chat Chat { get { return chat; } set { chat = value; } }
+
 
         private static FormManager formManager;
         private static MainMenu mainMenu;
@@ -50,13 +51,14 @@ namespace InterfaceGraphique
         private static CreditsMenu creditsMenu;
         private static Panel openGLPanel;
         private static Login login;
-
+        private static Chat chat;
         private static TimeSpan dernierTemps;
         private static TimeSpan tempsAccumule;
         private static Stopwatch chrono = Stopwatch.StartNew();
         private static TimeSpan tempsEcouleVoulu = TimeSpan.FromTicks(TimeSpan.TicksPerSecond / NB_IMAGES_PAR_SECONDE);
 
 
+        public static HttpClient client = new HttpClient();
 
         /// <summary>
         /// Point d'entrée principal de l'application.

@@ -54,13 +54,11 @@ namespace InterfaceGraphique.Menus
             {
                 if (response.GetHashCode() == 200)
                 {
-                    ChatConnection chatConnection = new ChatConnection();
-                    chatConnection.EstablishConnection();
+                    Program.Chat = new Chat();
+               
+                    Program.FormManager.CurrentForm = Program.Chat;
 
-                    chatConnection.Send(loginForm);
-                    Program.FormManager.CurrentForm = Program.MainMenu;
-
-
+            
                 }
             }
             catch (Exception exception)
