@@ -46,15 +46,21 @@ namespace InterfaceGraphique.Menus
             //Before we actually connect, we check with the server if the login is taken-
             LoginFormMessage loginForm = new LoginFormMessage()
             {
-                LoginName = "phlel"
+                LoginName = UsernameTextBox.Text
             };
-            HttpStatusCode response = await LoginClient.postLoginAsync(loginForm);
+            HttpStatusCode response = await LoginClient.PostLoginAsync(loginForm);
             //We initiate the socket connection
             try
             {
                 if (response.GetHashCode() == 200)
                 {
-                    Program.Chat = new Chat();
+                    IPAddress ipAddress =null;
+                    if (!String.IsNullOrEmpty(ServerTextBox.Text))
+                    {
+                        ipAddress= IPAddress.Parse(ServerTextBox.Text);
+                    }
+
+                    Program.Chat = new Chat(loginForm,ipAddress);
                
                     Program.FormManager.CurrentForm = Program.Chat;
 
@@ -84,11 +90,18 @@ namespace InterfaceGraphique.Menus
     public class LoginFormMessage
     {
         private string loginName;
+        private string password;
 
         public string LoginName
         {
             get => loginName;
             set => loginName = value;
+        }
+
+        public string Password
+        {
+            get => password;
+            set => password = value;
         }
     }
 }

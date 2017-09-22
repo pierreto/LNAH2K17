@@ -7,6 +7,9 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web.Script.Serialization;
+using System.Windows.Forms;
+using InterfaceGraphique.Menus;
 
 namespace InterfaceGraphique.CommunicationInterface
 {
@@ -25,20 +28,33 @@ namespace InterfaceGraphique.CommunicationInterface
         }
 
         // ManualResetEvent instances signal completion.  
-        private static ManualResetEvent connectDone =
-            new ManualResetEvent(false);
-        private static ManualResetEvent sendDone =
-            new ManualResetEvent(false);
-        private static ManualResetEvent receiveDone =
-            new ManualResetEvent(false);
+        private static ManualResetEvent connectDone = new ManualResetEvent(false);
+        private static ManualResetEvent sendDone = new ManualResetEvent(false);
+        private static ManualResetEvent receiveDone = new ManualResetEvent(false);
 
         private Socket Server { get; set; }
+
+        public delegate void UpdateChatBoxDelegate(ChatMessage message);
+
+        private UpdateChatBoxDelegate updateChatBoxDelegate;
+        private IPAddress targetServerIp;
+
+
+        public ChatConnection(IPAddress targetServerIp, UpdateChatBoxDelegate UpdateChatBoxDelegate)
+        {
+            this.targetServerIp=targetServerIp;
+            this.updateChatBoxDelegate = UpdateChatBoxDelegate;
+        }
+
         public void EstablishConnection()
         {
             // Establish the remote endpoint for the socket.  
-            IPHostEntry ipHostInfo = Dns.Resolve("localhost");
-            IPAddress ipAddress = ipHostInfo.AddressList[0];
-            IPEndPoint remoteEP = new IPEndPoint(ipAddress, 8080);
+            if (targetServerIp==null)
+            {
+                IPHostEntry ipHostInfo = Dns.Resolve("localhost");
+                targetServerIp = ipHostInfo.AddressList[0];
+            }
+            IPEndPoint remoteEP = new IPEndPoint(targetServerIp, 8080);
 
             // Create a TCP/IP socket.  
             Server = new Socket(AddressFamily.InterNetwork,
@@ -112,7 +128,7 @@ namespace InterfaceGraphique.CommunicationInterface
                 Console.WriteLine(e.ToString());
             }
         }
-
+        
         private void Receive()
         {
             try
@@ -133,8 +149,8 @@ namespace InterfaceGraphique.CommunicationInterface
             }
 
         }
-
-        private static void ReceiveCallback(IAsyncResult ar)
+       
+        private  void ReceiveCallback(IAsyncResult ar)
         {
             String content = String.Empty;
 
@@ -157,7 +173,11 @@ namespace InterfaceGraphique.CommunicationInterface
                     // more data.  
                     content = state.sb.ToString();
                     Console.WriteLine("Message received : {0}", content);
-                    
+
+                    JavaScriptSerializer jss = new JavaScriptSerializer();
+                    ChatMessage chatMessage = jss.Deserialize<ChatMessage>(content);
+                    updateChatBoxDelegate(chatMessage);
+
                     receiveDone.Set();
                 }
             }
@@ -171,6 +191,9 @@ namespace InterfaceGraphique.CommunicationInterface
 
 
         }
+
+
+
 
         //TO MOVE
         public static string ParseObjectToString(object element)
@@ -208,9 +231,5 @@ namespace InterfaceGraphique.CommunicationInterface
         public string MessageValue { get; set; }
 
         public DateTime TimeStamp { get; set; }
-
-        public ChatMessage()
-        {
-        }
     }
 }
