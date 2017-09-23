@@ -19,7 +19,7 @@ namespace AirHockeyServer
 {
     public class WebApiApplication : System.Web.HttpApplication
     {
-        protected async void Application_Start()
+        protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
@@ -28,11 +28,11 @@ namespace AirHockeyServer
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             Register(GlobalConfiguration.Configuration);
-            ChatServer server = new ChatServer();
-            Task running_server = Task.Run(() => server.StartListeningAsync());
+            //ChatServer server = new ChatServer();
+            //Task running_server = Task.Run(() => server.StartListeningAsync());
             // We make the server running asynchronously so the REST API can
             // still continue to run:
-            await running_server;
+            //await running_server;
         }
 
         public static void Register(HttpConfiguration config)
@@ -51,7 +51,7 @@ namespace AirHockeyServer
             container.RegisterType<IDataProvider, DataProvider>(new HierarchicalLifetimeManager());
 
             config.DependencyResolver = new UnityResolver(container);
-            
+
         }
 
         /*

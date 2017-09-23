@@ -66,25 +66,26 @@ namespace InterfaceGraphique
                     else
                         System.Console.WriteLine("Tests réussis.");
                 }
-
-            ChatConnection chatConnection = new ChatConnection();
-            chatConnection.EstablishConnection();
-            ChatMessage temp = new ChatMessage()
-            {
-                MessageValue = "Allô chère madame",
-                Recipient = "",
-                Sender = "",
-                TimeStamp = DateTime.Now
-            };
-            chatConnection.Send(temp);
-            ChatMessage temp2 = new ChatMessage()
-            {
-                MessageValue = "foo bar ssss",
-                Recipient = "",
-                Sender = "",
-                TimeStamp = DateTime.Now
-            };
-            chatConnection.Send(temp2);
+            ChatHub chatHub = new ChatHub();
+            chatHub.EstablishConnection();
+            //ChatConnection chatConnection = new ChatConnection();
+            //chatConnection.EstablishConnection();
+            //ChatMessage temp = new ChatMessage()
+            //{
+            //    MessageValue = "Allô chère madame",
+            //    Recipient = "",
+            //    Sender = "",
+            //    TimeStamp = DateTime.Now
+            //};
+            //chatConnection.Send(temp);
+            //ChatMessage temp2 = new ChatMessage()
+            //{
+            //    MessageValue = "foo bar ssss",
+            //    Recipient = "",
+            //    Sender = "",
+            //    TimeStamp = DateTime.Now
+            //};
+            //chatConnection.Send(temp2);
 
             chrono.Start();
             Application.Idle += ExecuterQuandInactif;

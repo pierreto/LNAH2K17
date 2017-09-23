@@ -21,5 +21,11 @@ namespace AirHockeyServer.Services
         {
             return await DataProvider.GetEntities<Channel>("");
         }
+
+        public async Task<Channel> CreateChannel(Channel channel)
+        {
+            channel.Id = Guid.NewGuid();
+            return channel;
+        }
     }
 }
