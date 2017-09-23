@@ -10,6 +10,8 @@ namespace AirHockeyServer.Services.ChatServiceServer
 {
     public class ChatHub : Hub
     {
+        private readonly static Dictionary<Guid, string> ConnectionsMapping = new Dictionary<Guid, string>();
+
         public IChannelService ChannelService { get; }
 
         public ChatHub(IChannelService channelService)
@@ -17,9 +19,12 @@ namespace AirHockeyServer.Services.ChatServiceServer
             ChannelService = channelService;
         }
 
-        public void Subscribe(string userName)
+        public void Subscribe(Guid userId)
         {
-            // TODO
+            if(!ConnectionsMapping.ContainsKey(userId))
+            {
+                ConnectionsMapping.Add(userId, Context.ConnectionId);
+            }
         }
 
         public void SendBroadcast(string name, string message)
@@ -32,9 +37,12 @@ namespace AirHockeyServer.Services.ChatServiceServer
             await Clients.Group(channelName).ChatMessageReceived(message);
         }
 
-        public async void SendPrivateMessage(string message)
+        public void SendPrivateMessage(Guid userId, string message)
         {
-            // TODO
+            if(ConnectionsMapping.ContainsKey(userId))
+            {
+                Clients.Client(ConnectionsMapping[userId]).ChatMessageReceived(message);
+            }
         }
 
         public async Task<Channel> CreateChannel(Channel channel)
