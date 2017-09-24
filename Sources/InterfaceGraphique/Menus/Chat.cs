@@ -16,7 +16,7 @@ namespace InterfaceGraphique.Menus
     public partial class Chat : Form
     {
         private LoginFormMessage loginForm;
-        private ChatConnection chatConnection;
+        private ChatHub chatHub;
         public Chat(LoginFormMessage loginForm, IPAddress targetServerIp)
         {
             this.loginForm = loginForm;
@@ -31,11 +31,11 @@ namespace InterfaceGraphique.Menus
         {
             this.SendButton.Click += (sender, e) =>
             {
-                this.chatConnection.Send(new ChatMessage()
+                this.chatHub.SendMessage(new ChatMessage()
                 {
                     Sender = loginForm.LoginName,
                     MessageValue = InputTextBox.Text
-               
+
                 });
                 InputTextBox.Text = "";
 
@@ -51,10 +51,8 @@ namespace InterfaceGraphique.Menus
             {
                 this.CreateHandle();
             }
-            //this.chatConnection = new ChatConnection(targetServerIp,UpdateChatBoxDelegate);
-            //this.chatConnection.EstablishConnection();
 
-            ChatHub chatHub = new ChatHub();
+            chatHub = new ChatHub(targetServerIp, UpdateChatBoxDelegate);
             chatHub.EstablishConnection();
         }
         public void UnsuscribeEventHandlers()
@@ -72,7 +70,6 @@ namespace InterfaceGraphique.Menus
         }
         public void MettreAJour(double tempsInterAffichage)
         {
-            //CurrentForm.MettreAJour(tempsInterAffichage);
         }
 
         private void UpdateChatBoxDelegate(ChatMessage message)

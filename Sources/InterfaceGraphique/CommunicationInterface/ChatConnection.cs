@@ -7,7 +7,6 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Web.Script.Serialization;
 using System.Windows.Forms;
 using InterfaceGraphique.Menus;
 
@@ -173,10 +172,6 @@ namespace InterfaceGraphique.CommunicationInterface
                     // more data.  
                     content = state.sb.ToString();
                     Console.WriteLine("Message received : {0}", content);
-
-                    JavaScriptSerializer jss = new JavaScriptSerializer();
-                    ChatMessage chatMessage = jss.Deserialize<ChatMessage>(content);
-                    updateChatBoxDelegate(chatMessage);
 
                     receiveDone.Set();
                 }
