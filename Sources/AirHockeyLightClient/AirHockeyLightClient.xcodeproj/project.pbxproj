@@ -7,27 +7,33 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8F64C0111F7754EF00F14AC7 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F64C0101F7754EF00F14AC7 /* ChatViewController.swift */; };
+		8F64C0131F7754FD00F14AC7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F64C0121F7754FD00F14AC7 /* LaunchScreen.storyboard */; };
+		8F64C0151F77550800F14AC7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F64C0141F77550800F14AC7 /* Main.storyboard */; };
 		8F6AE2BC1F6592EB00A29E8B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6AE2BB1F6592EB00A29E8B /* AppDelegate.swift */; };
 		8F6AE2BE1F6592EB00A29E8B /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8F6AE2BD1F6592EB00A29E8B /* GameScene.sks */; };
 		8F6AE2C01F6592EB00A29E8B /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8F6AE2BF1F6592EB00A29E8B /* Actions.sks */; };
 		8F6AE2C21F6592EB00A29E8B /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6AE2C11F6592EB00A29E8B /* GameScene.swift */; };
-		8F6AE2C41F6592EB00A29E8B /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6AE2C31F6592EB00A29E8B /* ChatViewController.swift */; };
-		8F6AE2C71F6592EB00A29E8B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F6AE2C51F6592EB00A29E8B /* Main.storyboard */; };
 		8F6AE2C91F6592EB00A29E8B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8F6AE2C81F6592EB00A29E8B /* Assets.xcassets */; };
-		8F6AE2CC1F6592EB00A29E8B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F6AE2CA1F6592EB00A29E8B /* LaunchScreen.storyboard */; };
+		8FE1EB051F75A96900A01514 /* ClientConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE1EB041F75A96900A01514 /* ClientConnection.swift */; };
+		E7B7E3DDFEF5DC14C25C5EF5 /* Pods_AirHockeyLightClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7585740DC43877CD99CDDF6A /* Pods_AirHockeyLightClient.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4BC65514BAA095CA955FDC5C /* Pods-AirHockeyLightClient.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AirHockeyLightClient.release.xcconfig"; path = "Pods/Target Support Files/Pods-AirHockeyLightClient/Pods-AirHockeyLightClient.release.xcconfig"; sourceTree = "<group>"; };
+		628E0B24C7327005FBC765AC /* Pods-AirHockeyLightClient.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AirHockeyLightClient.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AirHockeyLightClient/Pods-AirHockeyLightClient.debug.xcconfig"; sourceTree = "<group>"; };
+		7585740DC43877CD99CDDF6A /* Pods_AirHockeyLightClient.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AirHockeyLightClient.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8F64C0101F7754EF00F14AC7 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatViewController.swift; path = InterfaceGraphique/Chat/ChatViewController.swift; sourceTree = "<group>"; };
+		8F64C0121F7754FD00F14AC7 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = InterfaceGraphique/Menus/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		8F64C0141F77550800F14AC7 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = InterfaceGraphique/Main.storyboard; sourceTree = "<group>"; };
 		8F6AE2B81F6592EB00A29E8B /* AirHockeyLightClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AirHockeyLightClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F6AE2BB1F6592EB00A29E8B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8F6AE2BD1F6592EB00A29E8B /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		8F6AE2BF1F6592EB00A29E8B /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
 		8F6AE2C11F6592EB00A29E8B /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
-		8F6AE2C31F6592EB00A29E8B /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
-		8F6AE2C61F6592EB00A29E8B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8F6AE2C81F6592EB00A29E8B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		8F6AE2CB1F6592EB00A29E8B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8F6AE2CD1F6592EB00A29E8B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8FE1EB041F75A96900A01514 /* ClientConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ClientConnection.swift; path = Noyau/Communication/ClientConnection.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,16 +41,34 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E7B7E3DDFEF5DC14C25C5EF5 /* Pods_AirHockeyLightClient.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3085577F2BC9CDF3683F45B9 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				628E0B24C7327005FBC765AC /* Pods-AirHockeyLightClient.debug.xcconfig */,
+				4BC65514BAA095CA955FDC5C /* Pods-AirHockeyLightClient.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		63B9F5E76BF43EF82631DFF3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7585740DC43877CD99CDDF6A /* Pods_AirHockeyLightClient.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		8F0FFED41F6EB8A600366D8E /* InterfaceGraphique */ = {
 			isa = PBXGroup;
 			children = (
-				8F6AE2C51F6592EB00A29E8B /* Main.storyboard */,
+				8F64C0141F77550800F14AC7 /* Main.storyboard */,
 				8F0FFED91F6EB96900366D8E /* Menus */,
 				8F0FFED71F6EB8C500366D8E /* Chat */,
 			);
@@ -54,6 +78,7 @@
 		8F0FFED51F6EB8B100366D8E /* Noyau */ = {
 			isa = PBXGroup;
 			children = (
+				8FE1EB031F75A90D00A01514 /* Communication */,
 			);
 			name = Noyau;
 			sourceTree = "<group>";
@@ -68,7 +93,7 @@
 		8F0FFED71F6EB8C500366D8E /* Chat */ = {
 			isa = PBXGroup;
 			children = (
-				8F6AE2C31F6592EB00A29E8B /* ChatViewController.swift */,
+				8F64C0101F7754EF00F14AC7 /* ChatViewController.swift */,
 			);
 			name = Chat;
 			sourceTree = "<group>";
@@ -76,7 +101,7 @@
 		8F0FFED91F6EB96900366D8E /* Menus */ = {
 			isa = PBXGroup;
 			children = (
-				8F6AE2CA1F6592EB00A29E8B /* LaunchScreen.storyboard */,
+				8F64C0121F7754FD00F14AC7 /* LaunchScreen.storyboard */,
 			);
 			name = Menus;
 			sourceTree = "<group>";
@@ -86,6 +111,8 @@
 			children = (
 				8F6AE2BA1F6592EB00A29E8B /* AirHockeyLightClient */,
 				8F6AE2B91F6592EB00A29E8B /* Products */,
+				3085577F2BC9CDF3683F45B9 /* Pods */,
+				63B9F5E76BF43EF82631DFF3 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -113,6 +140,14 @@
 			path = AirHockeyLightClient;
 			sourceTree = "<group>";
 		};
+		8FE1EB031F75A90D00A01514 /* Communication */ = {
+			isa = PBXGroup;
+			children = (
+				8FE1EB041F75A96900A01514 /* ClientConnection.swift */,
+			);
+			name = Communication;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -120,9 +155,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8F6AE2D01F6592EB00A29E8B /* Build configuration list for PBXNativeTarget "AirHockeyLightClient" */;
 			buildPhases = (
+				C275ADB4073C03BCC269C5BB /* [CP] Check Pods Manifest.lock */,
 				8F6AE2B41F6592EB00A29E8B /* Sources */,
 				8F6AE2B51F6592EB00A29E8B /* Frameworks */,
 				8F6AE2B61F6592EB00A29E8B /* Resources */,
+				9E82807AEFA30D063897DB68 /* [CP] Embed Pods Frameworks */,
+				C35C3B87ADACF750160F987B /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -173,47 +211,83 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8F6AE2C71F6592EB00A29E8B /* Main.storyboard in Resources */,
 				8F6AE2BE1F6592EB00A29E8B /* GameScene.sks in Resources */,
+				8F64C0151F77550800F14AC7 /* Main.storyboard in Resources */,
 				8F6AE2C91F6592EB00A29E8B /* Assets.xcassets in Resources */,
-				8F6AE2CC1F6592EB00A29E8B /* LaunchScreen.storyboard in Resources */,
+				8F64C0131F7754FD00F14AC7 /* LaunchScreen.storyboard in Resources */,
 				8F6AE2C01F6592EB00A29E8B /* Actions.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		9E82807AEFA30D063897DB68 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-AirHockeyLightClient/Pods-AirHockeyLightClient-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/SwiftR/SwiftR.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftR.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AirHockeyLightClient/Pods-AirHockeyLightClient-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C275ADB4073C03BCC269C5BB /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AirHockeyLightClient-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C35C3B87ADACF750160F987B /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AirHockeyLightClient/Pods-AirHockeyLightClient-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		8F6AE2B41F6592EB00A29E8B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8FE1EB051F75A96900A01514 /* ClientConnection.swift in Sources */,
 				8F6AE2C21F6592EB00A29E8B /* GameScene.swift in Sources */,
-				8F6AE2C41F6592EB00A29E8B /* ChatViewController.swift in Sources */,
+				8F64C0111F7754EF00F14AC7 /* ChatViewController.swift in Sources */,
 				8F6AE2BC1F6592EB00A29E8B /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		8F6AE2C51F6592EB00A29E8B /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				8F6AE2C61F6592EB00A29E8B /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		8F6AE2CA1F6592EB00A29E8B /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				8F6AE2CB1F6592EB00A29E8B /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		8F6AE2CE1F6592EB00A29E8B /* Debug */ = {
@@ -313,6 +387,7 @@
 		};
 		8F6AE2D11F6592EB00A29E8B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 628E0B24C7327005FBC765AC /* Pods-AirHockeyLightClient.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = BG3AZJL2HA;
@@ -328,6 +403,7 @@
 		};
 		8F6AE2D21F6592EB00A29E8B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4BC65514BAA095CA955FDC5C /* Pods-AirHockeyLightClient.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = BG3AZJL2HA;

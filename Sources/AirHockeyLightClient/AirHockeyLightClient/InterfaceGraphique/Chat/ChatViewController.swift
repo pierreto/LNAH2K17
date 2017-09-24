@@ -10,6 +10,8 @@ import UIKit
 import SpriteKit
 import GameplayKit
 
+import SwiftR
+
 struct Message {
     let bodyText: String!
 }
@@ -19,6 +21,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var chatInput: UITextField!
     @IBOutlet weak var messages: UITableView!
     var messagesData = [Message]()
+    var clientConnection = ClientConnection()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,30 +44,59 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         messages.delegate = self;
         messages.dataSource = self;
+        
+        clientConnection.EstablishConnection()
+        
+        // When a message is received from the server
+        clientConnection.getChatHub().on("ChatMessageReceived") { args in
+            let message = args![0] as! String
+            print("Message: \(message)\n")
+            
+            self.messagesData.append(Message(bodyText: message))
+            
+            DispatchQueue.main.async(execute: { () -> Void in
+                // Reload tableView
+                self.messages.reloadData()
+            })
+        }
     }
     
     // Send message to server on button click
     @IBAction func sendMessage(_ sender: UIButton) {
         if chatInput.text != "" {
             // Create POST request
-            var request = URLRequest(url: URL(string: "http://localhost:8080/api/chat/")!)
-            request.httpMethod = "POST"
+            //var request = URLRequest(url: URL(string: "http://localhost:8080/api/chat/")!)
+            //request.httpMethod = "POST"
             
             // Headers
-            request.allHTTPHeaderFields?["Content-Type"] = "application/json"
+            //request.allHTTPHeaderFields?["Content-Type"] = "application/json"
             
             // Body
-            let jsonObject: NSMutableDictionary = NSMutableDictionary()
+            /*let jsonObject: NSMutableDictionary = NSMutableDictionary()
             jsonObject.setValue("Server", forKey: "Recipient")
             jsonObject.setValue("Light-client", forKey: "Sender")
             jsonObject.setValue(chatInput.text, forKey: "MessageValue")
             
-            let requestBody = convertToJsonString(jsonObject: jsonObject)
-            request.httpBody = requestBody.data(using: .utf8)
+            let date = Date()
+            jsonObject.setValue(date.description, forKey:"TimeStamp")
+            
+            let jsonString = convertToJsonString(jsonObject: jsonObject)*/
+            //request.httpBody = requestBody.data(using: .utf8)
             
             // Send request
-            sendHttpRequest(request: request)
+            //sendHttpRequest(request: request)
             
+            // Convert json string to byte array
+            /*var str = jsonString
+            var byteArray = [UInt8]()
+            
+            for char in str.utf8 {
+                byteArray += [char]
+            }*/
+            
+            // Send message to server
+            clientConnection.SendBroadcast(username: "Username", message: self.chatInput.text!)
+
             // Clear chat box
             self.chatInput.text = ""
         }

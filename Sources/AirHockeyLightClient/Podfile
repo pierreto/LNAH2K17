@@ -1,0 +1,15 @@
+#
+#   Podfile
+#   AirHockeyLightClient
+#
+#   Created by Pierre To and Mikael Ferland on 19-09-10.
+#   Copyright © 2017 LOG3900 Équipe 03 - Les Décalés. All rights reserved.
+#
+
+target 'AirHockeyLightClient' do
+  # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for AirHockeyLightClient
+  pod 'SwiftR'
+end
