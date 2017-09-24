@@ -5,16 +5,16 @@ using System.Web;
 
 namespace AirHockeyServer.Entities
 {
-    public class Channel : Entity
+    public class ChannelEntity : Entity
     {
         public Guid Id { get; set; }
-        public List<Member> Members { get; set; }
+        public List<UserEntity> Members { get; set; }
 
         public string Name { get; set; }
 
-        public Channel()
+        public ChannelEntity()
         {
-            this.Members = new List<Member>();
+            this.Members = new List<UserEntity>();
         }
     }
 }

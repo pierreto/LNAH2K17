@@ -219,8 +219,6 @@ namespace InterfaceGraphique.CommunicationInterface
     // TO MOVE
     public class ChatMessage
     {
-        public string Recipient { get; set; }
-
         public string Sender { get; set; }
 
         public string MessageValue { get; set; }

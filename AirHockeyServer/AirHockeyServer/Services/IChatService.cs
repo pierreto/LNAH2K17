@@ -8,8 +8,8 @@ namespace AirHockeyServer.Services
 {
     public interface IChatService
     {
-        void SendPrivateMessage(ChatMessage message);
+        void SendPrivateMessage(ChatMessageEntity message);
 
-        void SendMessageToChannel(ChatMessage message, Channel channel);
+        void SendMessageToChannel(ChatMessageEntity message, ChannelEntity channel);
     }
 }

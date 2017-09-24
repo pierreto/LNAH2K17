@@ -23,7 +23,7 @@ namespace AirHockeyServer.Controllers
         public IChatService ChatService { get; }
 
         [Route("api/chat")]
-        public HttpResponseMessage Post([FromBody]ChatMessage chatMessage)
+        public HttpResponseMessage Post([FromBody]ChatMessageEntity chatMessage)
         {
             ChatService.SendPrivateMessage(chatMessage);
             return new HttpResponseMessage(HttpStatusCode.OK);

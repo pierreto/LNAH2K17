@@ -21,15 +21,15 @@ namespace AirHockeyServer.Services
 
         public void SendPrivateMessage(ChatMessageEntity message)
         {
-            RequestsManager.SendPostRequest(message.Recipient, message);
+           // RequestsManager.SendPostRequest(message.Recipient, message);
         }
 
         public void SendMessageToChannel(ChatMessageEntity message, ChannelEntity channel)
         {
-            foreach(var member in channel.Members)
-            {
-                RequestsManager.SendPostRequest(member.IpAdress, message);
-            }
+            //foreach(var member in channel.Members)
+            //{
+            //    RequestsManager.SendPostRequest(member.IpAdress, message);
+            //}
         }
     }
 }

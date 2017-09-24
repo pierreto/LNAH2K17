@@ -104,7 +104,7 @@ namespace AirHockeyServer.Services.ChatServiceServer
 
                     Debug.WriteLine("Message received" + content);
 
-                    ChatMessage chatMessage = JsonParser.ParseStringToObject<ChatMessage>(content);
+                    ChatMessageEntity chatMessage = JsonParser.ParseStringToObject<ChatMessageEntity>(content);
                     Send(client, chatMessage);
                 }
 
@@ -120,7 +120,7 @@ namespace AirHockeyServer.Services.ChatServiceServer
             }
         }
 
-        private void Send(Socket client, ChatMessage message)
+        private void Send(Socket client, ChatMessageEntity message)
         {
             byte[] bytes = Encoding.UTF8.GetBytes(JsonParser.ParseObjectToString(message));
             client.BeginSend(bytes, 0, bytes.Length, 0,

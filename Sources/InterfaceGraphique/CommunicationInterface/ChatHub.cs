@@ -39,41 +39,39 @@ namespace InterfaceGraphique.CommunicationInterface
             await chatHubProxy.Invoke("Subscribe", userId);
 
             // Inscription à l'event "ChatMessageReceived". Quand l'event est lancée du serveur on veut print le message
-            chatHubProxy.On<string>("ChatMessageReceived", message =>
+            chatHubProxy.On<ChatMessage>("ChatMessageReceived", message =>
             {
-                Console.WriteLine("ChatMessageReceived : " + message);
-                ChatMessage chatMessage = JsonConvert.DeserializeObject<ChatMessage>(message);
-                updateChatBoxDelegate(chatMessage);
+                Console.WriteLine("ChatMessageReceived : " + message.MessageValue);
+                updateChatBoxDelegate(message);
             });
-            ChatMessage message2 = new ChatMessage()
-            {
-                Recipient = "heelo"
-            };
-            await chatHubProxy.Invoke("SendBroadcast", message2);
+            //ChatMessage message2 = new ChatMessage()
+            //{
+            //    Sender = "user1"
+            //};
 
-            /*
-                        // Appel d'une methode "SendBroadcast" sur le serveur
-                        await chatHubProxy.Invoke("SendBroadcast", "", "BroadcastMessage");
+            
+            //             //Appel d'une methode "SendBroadcast" sur le serveur
+            //            await chatHubProxy.Invoke("SendBroadcast", message2);
 
-                        // Création d'un channel
-                        ChannelEntity channel = new ChannelEntity()
-                        {
-                            Name = "MySuperChannel"
-                        };
+            //             //Création d'un channel
+            //            ChannelEntity channel = new ChannelEntity()
+            //            {
+            //                Name = "MySuperChannel"
+            //            };
 
-                        var channelCreated = await chatHubProxy.Invoke<ChannelEntity>("CreateChannel", channel);
-                        Console.WriteLine("Channel Created : " + channelCreated.Name);
+            //            var channelCreated = await chatHubProxy.Invoke<ChannelEntity>("CreateChannel", channel);
+            //            Console.WriteLine("Channel Created : " + channelCreated.Name);
 
-                        // envoyer un message à un channel
-                        await chatHubProxy.Invoke("SendChannel", "MySuperChannel", "MySuperChannelMessage");
+            //             //envoyer un message à un channel
+            //            await chatHubProxy.Invoke("SendChannel", "MySuperChannel", message2);
 
-                        // envoyer un private message 
-                        await chatHubProxy.Invoke("SendPrivateMessage", userId, "hello dear friend");   */
+            //             //envoyer un private message 
+            //            await chatHubProxy.Invoke("SendPrivateMessage", userId, message2); 
         }
 
         public async void SendMessage(ChatMessage message)
         {
-            await chatHubProxy.Invoke("SendBroadcast", "", JsonConvert.SerializeObject(message));
+            await chatHubProxy.Invoke("SendBroadcast", message);
 
         }
 

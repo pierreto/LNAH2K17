@@ -9,6 +9,6 @@ namespace AirHockeyServer.Repositories
 {
     public interface IChannelRepository
     {
-        Task<List<Channel>> GetChannels();
+        Task<List<ChannelEntity>> GetChannels();
     }
 }

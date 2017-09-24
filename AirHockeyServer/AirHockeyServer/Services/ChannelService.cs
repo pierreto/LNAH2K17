@@ -17,12 +17,12 @@ namespace AirHockeyServer.Services
 
         public IDataProvider DataProvider { get; }
 
-        public async Task<List<Channel>> GetChannels()
+        public async Task<List<ChannelEntity>> GetChannels()
         {
-            return await DataProvider.GetEntities<Channel>("");
+            return await DataProvider.GetEntities<ChannelEntity>("");
         }
 
-        public async Task<Channel> CreateChannel(Channel channel)
+        public async Task<ChannelEntity> CreateChannel(ChannelEntity channel)
         {
             channel.Id = Guid.NewGuid();
             return channel;

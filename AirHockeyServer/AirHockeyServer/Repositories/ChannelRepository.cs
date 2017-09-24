@@ -14,9 +14,9 @@ namespace AirHockeyServer.Repositories
         {
         }
 
-        public async Task<List<Channel>> GetChannels()
+        public async Task<List<ChannelEntity>> GetChannels()
         {
-            return new List<Channel>();
+            return new List<ChannelEntity>();
         }
         
     }

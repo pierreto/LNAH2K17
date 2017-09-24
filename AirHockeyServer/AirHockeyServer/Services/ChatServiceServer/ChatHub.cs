@@ -27,17 +27,17 @@ namespace AirHockeyServer.Services.ChatServiceServer
             }
         }
 
-        public void SendBroadcast(ChatMessage chatMessage)
+        public void SendBroadcast(ChatMessageEntity chatMessage)
         {
             Clients.All.ChatMessageReceived(chatMessage);
         }
 
-        public async Task SendChannel(string channelName, string message)
+        public async Task SendChannel(string channelName, ChatMessageEntity message)
         {
             await Clients.Group(channelName).ChatMessageReceived(message);
         }
 
-        public void SendPrivateMessage(Guid userId, string message)
+        public void SendPrivateMessage(Guid userId, ChatMessageEntity message)
         {
             if(ConnectionsMapping.ContainsKey(userId))
             {
@@ -45,9 +45,9 @@ namespace AirHockeyServer.Services.ChatServiceServer
             }
         }
 
-        public async Task<Channel> CreateChannel(Channel channel)
+        public async Task<ChannelEntity> CreateChannel(ChannelEntity channel)
         {
-            Channel channelCreated = await this.ChannelService.CreateChannel(channel);
+            ChannelEntity channelCreated = await this.ChannelService.CreateChannel(channel);
             await Groups.Add(Context.ConnectionId, channel.Name);
             return channel;
         }
