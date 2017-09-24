@@ -21,7 +21,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var chatInput: UITextField!
     @IBOutlet weak var messages: UITableView!
     var messagesData = [Message]()
-    var clientConnection = ClientConnection()
+    let clientConnection = ClientConnection.sharedConnection
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -95,7 +95,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             }*/
             
             // Send message to server
-            clientConnection.SendBroadcast(username: "Username", message: self.chatInput.text!)
+            clientConnection.SendBroadcast(username: clientConnection.getUsername(), message: self.chatInput.text!)
 
             // Clear chat box
             self.chatInput.text = ""

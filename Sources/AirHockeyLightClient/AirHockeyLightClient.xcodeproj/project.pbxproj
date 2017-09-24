@@ -10,6 +10,7 @@
 		8F64C0111F7754EF00F14AC7 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F64C0101F7754EF00F14AC7 /* ChatViewController.swift */; };
 		8F64C0131F7754FD00F14AC7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F64C0121F7754FD00F14AC7 /* LaunchScreen.storyboard */; };
 		8F64C0151F77550800F14AC7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F64C0141F77550800F14AC7 /* Main.storyboard */; };
+		8F64C0171F775B2500F14AC7 /* AuthentificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F64C0161F775B2500F14AC7 /* AuthentificationViewController.swift */; };
 		8F6AE2BC1F6592EB00A29E8B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6AE2BB1F6592EB00A29E8B /* AppDelegate.swift */; };
 		8F6AE2BE1F6592EB00A29E8B /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8F6AE2BD1F6592EB00A29E8B /* GameScene.sks */; };
 		8F6AE2C01F6592EB00A29E8B /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8F6AE2BF1F6592EB00A29E8B /* Actions.sks */; };
@@ -26,6 +27,7 @@
 		8F64C0101F7754EF00F14AC7 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatViewController.swift; path = InterfaceGraphique/Chat/ChatViewController.swift; sourceTree = "<group>"; };
 		8F64C0121F7754FD00F14AC7 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = InterfaceGraphique/Menus/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8F64C0141F77550800F14AC7 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = InterfaceGraphique/Main.storyboard; sourceTree = "<group>"; };
+		8F64C0161F775B2500F14AC7 /* AuthentificationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthentificationViewController.swift; path = InterfaceGraphique/Menus/AuthentificationViewController.swift; sourceTree = "<group>"; };
 		8F6AE2B81F6592EB00A29E8B /* AirHockeyLightClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AirHockeyLightClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F6AE2BB1F6592EB00A29E8B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8F6AE2BD1F6592EB00A29E8B /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -102,6 +104,7 @@
 			isa = PBXGroup;
 			children = (
 				8F64C0121F7754FD00F14AC7 /* LaunchScreen.storyboard */,
+				8F64C0161F775B2500F14AC7 /* AuthentificationViewController.swift */,
 			);
 			name = Menus;
 			sourceTree = "<group>";
@@ -283,6 +286,7 @@
 				8FE1EB051F75A96900A01514 /* ClientConnection.swift in Sources */,
 				8F6AE2C21F6592EB00A29E8B /* GameScene.swift in Sources */,
 				8F64C0111F7754EF00F14AC7 /* ChatViewController.swift in Sources */,
+				8F64C0171F775B2500F14AC7 /* AuthentificationViewController.swift in Sources */,
 				8F6AE2BC1F6592EB00A29E8B /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

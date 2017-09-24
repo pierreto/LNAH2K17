@@ -10,11 +10,22 @@ import Foundation
 import SwiftR
 
 class ClientConnection {
+    static let sharedConnection = ClientConnection()
     private var connection: SignalR?
     private var chatHub: Hub?
     
+    private var username: String?
+    
     public func getChatHub() -> Hub {
-        return chatHub!;
+        return chatHub!
+    }
+    
+    public func getUsername() -> String {
+        return username!
+    }
+    
+    public func setUsername(username: String) {
+        self.username = username
     }
     
     public func EstablishConnection() {
