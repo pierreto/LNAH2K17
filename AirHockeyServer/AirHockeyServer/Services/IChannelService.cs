@@ -10,5 +10,7 @@ namespace AirHockeyServer.Services
     public interface IChannelService
     {
         Task<List<Channel>> GetChannels();
+
+        Task<Channel> CreateChannel(Channel channel);
     }
 }
