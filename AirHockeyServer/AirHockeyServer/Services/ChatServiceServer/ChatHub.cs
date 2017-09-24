@@ -27,9 +27,9 @@ namespace AirHockeyServer.Services.ChatServiceServer
             }
         }
 
-        public void SendBroadcast(string name, string message)
+        public void SendBroadcast(ChatMessage chatMessage)
         {
-            Clients.All.ChatMessageReceived(message);
+            Clients.All.ChatMessageReceived(chatMessage);
         }
 
         public async Task SendChannel(string channelName, string message)

@@ -45,24 +45,30 @@ namespace InterfaceGraphique.CommunicationInterface
                 ChatMessage chatMessage = JsonConvert.DeserializeObject<ChatMessage>(message);
                 updateChatBoxDelegate(chatMessage);
             });
-/*
-            // Appel d'une methode "SendBroadcast" sur le serveur
-            await chatHubProxy.Invoke("SendBroadcast", "", "BroadcastMessage");
-
-            // Création d'un channel
-            ChannelEntity channel = new ChannelEntity()
+            ChatMessage message2 = new ChatMessage()
             {
-                Name = "MySuperChannel"
+                Recipient = "heelo"
             };
+            await chatHubProxy.Invoke("SendBroadcast", message2);
 
-            var channelCreated = await chatHubProxy.Invoke<ChannelEntity>("CreateChannel", channel);
-            Console.WriteLine("Channel Created : " + channelCreated.Name);
+            /*
+                        // Appel d'une methode "SendBroadcast" sur le serveur
+                        await chatHubProxy.Invoke("SendBroadcast", "", "BroadcastMessage");
 
-            // envoyer un message à un channel
-            await chatHubProxy.Invoke("SendChannel", "MySuperChannel", "MySuperChannelMessage");
+                        // Création d'un channel
+                        ChannelEntity channel = new ChannelEntity()
+                        {
+                            Name = "MySuperChannel"
+                        };
 
-            // envoyer un private message 
-            await chatHubProxy.Invoke("SendPrivateMessage", userId, "hello dear friend");   */
+                        var channelCreated = await chatHubProxy.Invoke<ChannelEntity>("CreateChannel", channel);
+                        Console.WriteLine("Channel Created : " + channelCreated.Name);
+
+                        // envoyer un message à un channel
+                        await chatHubProxy.Invoke("SendChannel", "MySuperChannel", "MySuperChannelMessage");
+
+                        // envoyer un private message 
+                        await chatHubProxy.Invoke("SendPrivateMessage", userId, "hello dear friend");   */
         }
 
         public async void SendMessage(ChatMessage message)

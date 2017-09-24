@@ -19,12 +19,12 @@ namespace AirHockeyServer.Services
         
         public IRequestsManager RequestsManager { get; }
 
-        public void SendPrivateMessage(ChatMessage message)
+        public void SendPrivateMessage(ChatMessageEntity message)
         {
             RequestsManager.SendPostRequest(message.Recipient, message);
         }
 
-        public void SendMessageToChannel(ChatMessage message, Channel channel)
+        public void SendMessageToChannel(ChatMessageEntity message, ChannelEntity channel)
         {
             foreach(var member in channel.Members)
             {

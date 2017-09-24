@@ -2,10 +2,10 @@
 
 namespace AirHockeyServer.Entities
 {
-    public class Member : Entity
+    public class UserEntity : Entity
     {
         public Guid Id { get; set; }
-
-        public string IpAdress { get; set; }
+        
+        public string Name { get; set; }
     }
 }
