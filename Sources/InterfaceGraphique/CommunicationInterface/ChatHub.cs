@@ -51,5 +51,7 @@ namespace InterfaceGraphique.CommunicationInterface
             // envoyer un private message 
             await chatHubProxy.Invoke("SendPrivateMessage", userId, "hello dear friend");   
         }
+
+
     }
 }

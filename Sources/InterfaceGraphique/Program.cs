@@ -75,8 +75,7 @@ namespace InterfaceGraphique
                     else
                         System.Console.WriteLine("Tests réussis.");
                 }
-            ChatHub chatHub = new ChatHub();
-            chatHub.EstablishConnection();
+  
             //ChatConnection chatConnection = new ChatConnection();
             //chatConnection.EstablishConnection();
             //ChatMessage temp = new ChatMessage()

@@ -51,8 +51,11 @@ namespace InterfaceGraphique.Menus
             {
                 this.CreateHandle();
             }
-            this.chatConnection = new ChatConnection(targetServerIp,UpdateChatBoxDelegate);
-            this.chatConnection.EstablishConnection();
+            //this.chatConnection = new ChatConnection(targetServerIp,UpdateChatBoxDelegate);
+            //this.chatConnection.EstablishConnection();
+
+            ChatHub chatHub = new ChatHub();
+            chatHub.EstablishConnection();
         }
         public void UnsuscribeEventHandlers()
         {
