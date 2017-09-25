@@ -37,6 +37,7 @@
             // 
             // UsernameLabel
             // 
+            this.UsernameLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.UsernameLabel.AutoSize = true;
             this.UsernameLabel.Location = new System.Drawing.Point(32, 70);
             this.UsernameLabel.Name = "UsernameLabel";
@@ -47,6 +48,7 @@
             // 
             // ServerLabel
             // 
+            this.ServerLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.ServerLabel.AutoSize = true;
             this.ServerLabel.Location = new System.Drawing.Point(32, 34);
             this.ServerLabel.Name = "ServerLabel";
@@ -56,6 +58,7 @@
             // 
             // ServerTextBox
             // 
+            this.ServerTextBox.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.ServerTextBox.Location = new System.Drawing.Point(128, 34);
             this.ServerTextBox.Name = "ServerTextBox";
             this.ServerTextBox.Size = new System.Drawing.Size(100, 20);
@@ -63,6 +66,7 @@
             // 
             // UsernameTextBox
             // 
+            this.UsernameTextBox.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.UsernameTextBox.Location = new System.Drawing.Point(128, 67);
             this.UsernameTextBox.Name = "UsernameTextBox";
             this.UsernameTextBox.Size = new System.Drawing.Size(100, 20);
@@ -70,6 +74,7 @@
             // 
             // LoginButton
             // 
+            this.LoginButton.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.LoginButton.Location = new System.Drawing.Point(140, 100);
             this.LoginButton.Name = "LoginButton";
             this.LoginButton.Size = new System.Drawing.Size(75, 23);
