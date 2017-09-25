@@ -85,5 +85,9 @@ namespace InterfaceGraphique.Menus
    
         }
 
+        private void InputTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

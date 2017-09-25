@@ -22,6 +22,7 @@ namespace InterfaceGraphique.Menus
             InitializeEvents();
             this.ServerLabel.BackColor = System.Drawing.Color.Transparent;
             this.UsernameLabel.BackColor = System.Drawing.Color.Transparent;
+            this.sonicPuckLabel.BackColor = System.Drawing.Color.Transparent;
         }
         public void InitializeOpenGlPanel()
         {

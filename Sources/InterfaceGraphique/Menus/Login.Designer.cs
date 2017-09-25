@@ -34,6 +34,8 @@
             this.ServerTextBox = new System.Windows.Forms.TextBox();
             this.UsernameTextBox = new System.Windows.Forms.TextBox();
             this.LoginButton = new System.Windows.Forms.Button();
+            this.sonicPuckLabel = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.sonicPuckLabel)).BeginInit();
             this.SuspendLayout();
             // 
             // UsernameLabel
@@ -42,7 +44,7 @@
             this.UsernameLabel.AutoSize = true;
             this.UsernameLabel.Font = new System.Drawing.Font("Arial", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.UsernameLabel.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.UsernameLabel.Location = new System.Drawing.Point(321, 310);
+            this.UsernameLabel.Location = new System.Drawing.Point(321, 353);
             this.UsernameLabel.Name = "UsernameLabel";
             this.UsernameLabel.Size = new System.Drawing.Size(171, 37);
             this.UsernameLabel.TabIndex = 0;
@@ -55,7 +57,7 @@
             this.ServerLabel.AutoSize = true;
             this.ServerLabel.Font = new System.Drawing.Font("Arial", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ServerLabel.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.ServerLabel.Location = new System.Drawing.Point(258, 262);
+            this.ServerLabel.Location = new System.Drawing.Point(258, 305);
             this.ServerLabel.Name = "ServerLabel";
             this.ServerLabel.Size = new System.Drawing.Size(234, 37);
             this.ServerLabel.TabIndex = 1;
@@ -65,7 +67,7 @@
             // 
             this.ServerTextBox.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.ServerTextBox.Font = new System.Drawing.Font("Arial Narrow", 20F);
-            this.ServerTextBox.Location = new System.Drawing.Point(492, 262);
+            this.ServerTextBox.Location = new System.Drawing.Point(492, 305);
             this.ServerTextBox.Name = "ServerTextBox";
             this.ServerTextBox.Size = new System.Drawing.Size(177, 38);
             this.ServerTextBox.TabIndex = 2;
@@ -74,7 +76,7 @@
             // 
             this.UsernameTextBox.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.UsernameTextBox.Font = new System.Drawing.Font("Arial Narrow", 20F);
-            this.UsernameTextBox.Location = new System.Drawing.Point(492, 311);
+            this.UsernameTextBox.Location = new System.Drawing.Point(492, 354);
             this.UsernameTextBox.Name = "UsernameTextBox";
             this.UsernameTextBox.Size = new System.Drawing.Size(177, 38);
             this.UsernameTextBox.TabIndex = 3;
@@ -83,14 +85,28 @@
             // 
             this.LoginButton.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.LoginButton.BackColor = System.Drawing.Color.Brown;
+            this.LoginButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.LoginButton.Font = new System.Drawing.Font("Arial Narrow", 24F);
             this.LoginButton.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.LoginButton.Location = new System.Drawing.Point(492, 372);
+            this.LoginButton.Location = new System.Drawing.Point(491, 429);
             this.LoginButton.Name = "LoginButton";
             this.LoginButton.Size = new System.Drawing.Size(177, 49);
             this.LoginButton.TabIndex = 4;
             this.LoginButton.Text = "Login";
             this.LoginButton.UseVisualStyleBackColor = false;
+            // 
+            // sonicPuckLabel
+            // 
+            this.sonicPuckLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.sonicPuckLabel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.sonicPuckLabel.Image = ((System.Drawing.Image)(resources.GetObject("sonicPuckLabel.Image")));
+            this.sonicPuckLabel.ImageLocation = "";
+            this.sonicPuckLabel.Location = new System.Drawing.Point(288, -2);
+            this.sonicPuckLabel.Name = "sonicPuckLabel";
+            this.sonicPuckLabel.Size = new System.Drawing.Size(550, 350);
+            this.sonicPuckLabel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.sonicPuckLabel.TabIndex = 7;
+            this.sonicPuckLabel.TabStop = false;
             // 
             // Login
             // 
@@ -104,8 +120,10 @@
             this.Controls.Add(this.ServerTextBox);
             this.Controls.Add(this.ServerLabel);
             this.Controls.Add(this.UsernameLabel);
+            this.Controls.Add(this.sonicPuckLabel);
             this.Name = "Login";
             this.Text = "Login";
+            ((System.ComponentModel.ISupportInitialize)(this.sonicPuckLabel)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -118,5 +136,6 @@
         private System.Windows.Forms.TextBox ServerTextBox;
         private System.Windows.Forms.TextBox UsernameTextBox;
         private System.Windows.Forms.Button LoginButton;
+        private System.Windows.Forms.PictureBox sonicPuckLabel;
     }
 }
