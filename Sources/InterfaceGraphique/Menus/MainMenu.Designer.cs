@@ -28,7 +28,7 @@
             this.buttonQuitter = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.Button_Credits = new System.Windows.Forms.Button();
-            this.Button_Cheats = new System.Windows.Forms.Button();
+            this.chat = new InterfaceGraphique.Menus.Chat();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -39,7 +39,7 @@
             this.boutonPartieRapide.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.boutonPartieRapide.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.boutonPartieRapide.ForeColor = System.Drawing.Color.Chartreuse;
-            this.boutonPartieRapide.Location = new System.Drawing.Point(317, 205);
+            this.boutonPartieRapide.Location = new System.Drawing.Point(483, 207);
             this.boutonPartieRapide.Name = "boutonPartieRapide";
             this.boutonPartieRapide.Size = new System.Drawing.Size(150, 50);
             this.boutonPartieRapide.TabIndex = 1;
@@ -54,7 +54,7 @@
             this.boutonTournoi.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.boutonTournoi.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.boutonTournoi.ForeColor = System.Drawing.Color.Blue;
-            this.boutonTournoi.Location = new System.Drawing.Point(317, 265);
+            this.boutonTournoi.Location = new System.Drawing.Point(483, 263);
             this.boutonTournoi.Name = "boutonTournoi";
             this.boutonTournoi.Size = new System.Drawing.Size(150, 50);
             this.boutonTournoi.TabIndex = 2;
@@ -69,7 +69,7 @@
             this.buttonConfiguration.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonConfiguration.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonConfiguration.ForeColor = System.Drawing.Color.Fuchsia;
-            this.buttonConfiguration.Location = new System.Drawing.Point(317, 325);
+            this.buttonConfiguration.Location = new System.Drawing.Point(483, 319);
             this.buttonConfiguration.Name = "buttonConfiguration";
             this.buttonConfiguration.Size = new System.Drawing.Size(150, 50);
             this.buttonConfiguration.TabIndex = 3;
@@ -85,7 +85,7 @@
             this.buttonEditeur.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonEditeur.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonEditeur.ForeColor = System.Drawing.Color.Red;
-            this.buttonEditeur.Location = new System.Drawing.Point(317, 385);
+            this.buttonEditeur.Location = new System.Drawing.Point(483, 375);
             this.buttonEditeur.Name = "buttonEditeur";
             this.buttonEditeur.Size = new System.Drawing.Size(150, 50);
             this.buttonEditeur.TabIndex = 4;
@@ -100,7 +100,7 @@
             this.buttonQuitter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonQuitter.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonQuitter.ForeColor = System.Drawing.Color.Yellow;
-            this.buttonQuitter.Location = new System.Drawing.Point(317, 505);
+            this.buttonQuitter.Location = new System.Drawing.Point(483, 487);
             this.buttonQuitter.Name = "buttonQuitter";
             this.buttonQuitter.Size = new System.Drawing.Size(150, 50);
             this.buttonQuitter.TabIndex = 5;
@@ -128,7 +128,7 @@
             this.Button_Credits.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Button_Credits.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Button_Credits.ForeColor = System.Drawing.Color.DarkOrange;
-            this.Button_Credits.Location = new System.Drawing.Point(317, 445);
+            this.Button_Credits.Location = new System.Drawing.Point(483, 431);
             this.Button_Credits.Name = "Button_Credits";
             this.Button_Credits.Size = new System.Drawing.Size(150, 50);
             this.Button_Credits.TabIndex = 7;
@@ -136,20 +136,13 @@
             this.Button_Credits.Text = "Crédits";
             this.Button_Credits.UseVisualStyleBackColor = true;
             // 
-            // Button_Cheats
+            // chat
             // 
-            this.Button_Cheats.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button_Cheats.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.Button_Cheats.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Button_Cheats.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Button_Cheats.ForeColor = System.Drawing.Color.White;
-            this.Button_Cheats.Location = new System.Drawing.Point(629, 505);
-            this.Button_Cheats.Name = "Button_Cheats";
-            this.Button_Cheats.Size = new System.Drawing.Size(150, 50);
-            this.Button_Cheats.TabIndex = 8;
-            this.Button_Cheats.TabStop = false;
-            this.Button_Cheats.Text = "Cheat Codes";
-            this.Button_Cheats.UseVisualStyleBackColor = true;
+            this.chat.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.chat.Location = new System.Drawing.Point(127, 274);
+            this.chat.Name = "chat";
+            this.chat.Size = new System.Drawing.Size(283, 263);
+            this.chat.TabIndex = 8;
             // 
             // MainMenu
             // 
@@ -157,7 +150,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(784, 561);
-            this.Controls.Add(this.Button_Cheats);
+            this.Controls.Add(this.chat);
             this.Controls.Add(this.Button_Credits);
             this.Controls.Add(this.buttonQuitter);
             this.Controls.Add(this.buttonEditeur);
@@ -180,6 +173,6 @@
         private System.Windows.Forms.Button buttonQuitter;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button Button_Credits;
-        private System.Windows.Forms.Button Button_Cheats;
+        private Menus.Chat chat;
     }
 }

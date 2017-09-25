@@ -50,7 +50,7 @@ namespace InterfaceGraphique.CommunicationInterface
             // Establish the remote endpoint for the socket.  
             if (targetServerIp==null)
             {
-                IPHostEntry ipHostInfo = Dns.Resolve("localhost");
+                IPHostEntry ipHostInfo = Dns.GetHostEntry("localhost");
                 targetServerIp = ipHostInfo.AddressList[0];
             }
             IPEndPoint remoteEP = new IPEndPoint(targetServerIp, 8080);

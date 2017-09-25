@@ -60,9 +60,10 @@ namespace InterfaceGraphique.Menus
                         ipAddress= IPAddress.Parse(ServerTextBox.Text);
                     }
 
-                    Program.Chat = new Chat(loginForm,ipAddress);
-               
-                    Program.FormManager.CurrentForm = Program.Chat;
+                    //Program.ChatControl = new ChatControl(loginForm,ipAddress);
+                    Program.MainMenu.InitializeChat(loginForm, ipAddress);
+
+                    Program.FormManager.CurrentForm = Program.MainMenu;
 
             
                 }
