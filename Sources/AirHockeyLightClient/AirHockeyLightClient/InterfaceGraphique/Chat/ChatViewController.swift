@@ -13,11 +13,14 @@ import GameplayKit
 import SwiftR
 
 struct Message {
-    let bodyText: String!
+    let sender: String!
+    let messageValue: String!
+    let timestamp: String!
 }
 
 class ChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
+    @IBOutlet weak var chatBodyView: UIView!
     @IBOutlet weak var chatInput: UITextField!
     @IBOutlet weak var messages: UITableView!
     var messagesData = [Message]()
@@ -42,23 +45,37 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             view.showsNodeCount = true
         }*/
         
-        messages.delegate = self;
-        messages.dataSource = self;
+        messages.delegate = self
+        messages.dataSource = self
+        messages.transform = CGAffineTransform(rotationAngle: -(CGFloat)(Double.pi))
+        
+        //Adding notifies on keyboard appearing
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
         clientConnection.EstablishConnection()
         
         // When a message is received from the server
         clientConnection.getChatHub().on("ChatMessageReceived") { args in
-            let message = args![0] as! String
-            print("Message: \(message)\n")
+            let message = args![0] as! Dictionary<String, String>
+            let sender = message["Sender"]
+            let messageValue = message["MessageValue"]
+            let timestamp = message["TimeStamp"]
+            print("Message: \(String(describing: sender! + " (" + timestamp! + ") : " + messageValue!))\n")
             
-            self.messagesData.append(Message(bodyText: message))
+            self.messagesData.insert(Message(sender:sender, messageValue: messageValue, timestamp: timestamp), at: 0)
             
             DispatchQueue.main.async(execute: { () -> Void in
                 // Reload tableView
                 self.messages.reloadData()
             })
         }
+    }
+    
+    deinit {
+        //Removing notifies on keyboard appearing
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
     // Send message to server on button click
@@ -73,12 +90,9 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             // Body
             /*let jsonObject: NSMutableDictionary = NSMutableDictionary()
-            jsonObject.setValue("Server", forKey: "Recipient")
-            jsonObject.setValue("Light-client", forKey: "Sender")
+            jsonObject.setValue(clientConnection.getUsername(), forKey: "Sender")
             jsonObject.setValue(chatInput.text, forKey: "MessageValue")
-            
-            let date = Date()
-            jsonObject.setValue(date.description, forKey:"TimeStamp")
+            jsonObject.setValue(Date().description, forKey: "TimeStamp")
             
             let jsonString = convertToJsonString(jsonObject: jsonObject)*/
             //request.httpBody = requestBody.data(using: .utf8)
@@ -95,7 +109,14 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             }*/
             
             // Send message to server
-            clientConnection.SendBroadcast(username: clientConnection.getUsername(), message: self.chatInput.text!)
+            //let chatMessage = ChatMessageEntity(sender: clientConnection.getUsername(), messageValue: self.chatInput.text!, timeStamp: Date())
+            
+            let message = [
+                "Sender": clientConnection.getUsername(),
+                "MessageValue": self.chatInput.text!,
+                "TimeStamp": Date().description
+            ]
+            clientConnection.SendBroadcast(message : message)
 
             // Clear chat box
             self.chatInput.text = ""
@@ -136,17 +157,32 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             print("responseString = \(String(describing: responseString))")
             
             // Fake chat
-            self.messagesData.append(Message(bodyText: responseString))
+            //self.messagesData.append(Message(bodyText: responseString))
             
-            DispatchQueue.main.async(execute: { () -> Void in
+            /*DispatchQueue.main.async(execute: { () -> Void in
                 // Reload tableView
                 self.messages.reloadData()
-            })
+            })*/
         }
         
         task.resume()
     }
     
+    func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.chatBodyView.frame.origin.y == 76 {
+                self.chatBodyView.frame.origin.y -= keyboardSize.height
+            }
+        }
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.chatBodyView.frame.origin.y != 76 {
+                self.chatBodyView.frame.origin.y += keyboardSize.height
+            }
+        }
+    }
     
     // Table view delegate methods
     /*func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -154,16 +190,25 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }*/
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return messagesData.count;
+        return messagesData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = messages.dequeueReusableCell(withIdentifier: "Message", for: indexPath);
+        let cell = messages.dequeueReusableCell(withIdentifier: "Message", for: indexPath)
         
-        let textView = cell.viewWithTag(1) as! UITextView;
-        textView.text = messagesData[indexPath.row].bodyText;
+        let sender = cell.viewWithTag(1) as! UITextView
+        sender.text = messagesData[indexPath.row].sender
         
-        return cell;
+        let messageValue = cell.viewWithTag(2) as! UITextView
+        messageValue.text = messagesData[indexPath.row].messageValue
+        messageValue.textContainerInset.left = 10
+        
+        let timestamp = cell.viewWithTag(3) as! UITextView
+        timestamp.text = messagesData[indexPath.row].timestamp
+        
+        cell.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi));
+        
+        return cell
     }
 
     override var shouldAutorotate: Bool {

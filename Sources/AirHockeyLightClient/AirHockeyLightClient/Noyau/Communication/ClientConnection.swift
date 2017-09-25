@@ -43,16 +43,16 @@ class ClientConnection {
         connection!.start()
     }
     
-    public func SendBroadcast(username: String, message: String) {
+    public func SendBroadcast(message: Any) {
         do {
-            try chatHub!.invoke("SendBroadcast", arguments: [username, message])
+            try chatHub!.invoke("SendBroadcast", arguments: [message])
         }
         catch {
             print("Error SendBroadcast")
         }
     }
     
-    public func SendChannel(channelName: String, message: String) {
+    public func SendChannel(channelName: String, message: Any) {
         do {
             try chatHub!.invoke("SendChannel", arguments: [channelName, message])
         }
@@ -61,7 +61,7 @@ class ClientConnection {
         }
     }
     
-    public func SendPrivate(userId: guid_t, message: String) {
+    public func SendPrivate(userId: guid_t, message: Any) {
         do {
             try chatHub!.invoke("SendBroadcast", arguments: [userId, message])
         }
