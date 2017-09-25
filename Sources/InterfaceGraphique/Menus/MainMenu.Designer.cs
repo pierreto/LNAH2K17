@@ -138,10 +138,11 @@
             // 
             // chat
             // 
+            this.chat.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.chat.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.chat.Location = new System.Drawing.Point(127, 274);
+            this.chat.Location = new System.Drawing.Point(127, 263);
             this.chat.Name = "chat";
-            this.chat.Size = new System.Drawing.Size(283, 263);
+            this.chat.Size = new System.Drawing.Size(283, 274);
             this.chat.TabIndex = 8;
             // 
             // MainMenu
