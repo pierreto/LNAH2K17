@@ -20,7 +20,8 @@ namespace InterfaceGraphique.Menus
         {
             InitializeComponent();
             InitializeEvents();
-
+            this.ServerLabel.BackColor = System.Drawing.Color.Transparent;
+            this.UsernameLabel.BackColor = System.Drawing.Color.Transparent;
         }
         public void InitializeOpenGlPanel()
         {
