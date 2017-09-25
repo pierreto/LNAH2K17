@@ -31,10 +31,12 @@
             this.chatViewRichTextBox = new System.Windows.Forms.RichTextBox();
             this.InputTextBox = new System.Windows.Forms.TextBox();
             this.SendButton = new System.Windows.Forms.Button();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.SuspendLayout();
             // 
             // chatViewRichTextBox
             // 
+            this.chatViewRichTextBox.BackColor = System.Drawing.Color.Silver;
             this.chatViewRichTextBox.Location = new System.Drawing.Point(27, 28);
             this.chatViewRichTextBox.Name = "chatViewRichTextBox";
             this.chatViewRichTextBox.Size = new System.Drawing.Size(223, 171);
@@ -43,16 +45,17 @@
             // 
             // InputTextBox
             // 
+            this.InputTextBox.BackColor = System.Drawing.Color.White;
             this.InputTextBox.Location = new System.Drawing.Point(27, 205);
             this.InputTextBox.Name = "InputTextBox";
-            this.InputTextBox.Size = new System.Drawing.Size(223, 20);
+            this.InputTextBox.Size = new System.Drawing.Size(155, 20);
             this.InputTextBox.TabIndex = 1;
             // 
             // SendButton
             // 
-            this.SendButton.Location = new System.Drawing.Point(97, 231);
+            this.SendButton.Location = new System.Drawing.Point(181, 203);
             this.SendButton.Name = "SendButton";
-            this.SendButton.Size = new System.Drawing.Size(75, 23);
+            this.SendButton.Size = new System.Drawing.Size(69, 23);
             this.SendButton.TabIndex = 2;
             this.SendButton.Text = "Send";
             this.SendButton.UseVisualStyleBackColor = true;
@@ -61,12 +64,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.Controls.Add(this.SendButton);
             this.Controls.Add(this.InputTextBox);
             this.Controls.Add(this.chatViewRichTextBox);
             this.Name = "Chat";
-            this.Text = "Chat";
+            this.Size = new System.Drawing.Size(284, 261);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -77,5 +80,6 @@
         private System.Windows.Forms.RichTextBox chatViewRichTextBox;
         private System.Windows.Forms.TextBox InputTextBox;
         private System.Windows.Forms.Button SendButton;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }

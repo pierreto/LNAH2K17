@@ -4,9 +4,11 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using InterfaceGraphique.Menus;
 
 namespace InterfaceGraphique {
 
@@ -26,8 +28,14 @@ namespace InterfaceGraphique {
         public MainMenu() {
             InitializeComponent();
             InitializeEvents();
+
         }
 
+        public void InitializeChat(LoginFormMessage loginForm, IPAddress targetServerIp)
+        {
+           this.chat.InitializeChatSocket(loginForm, targetServerIp);
+
+        }
 
         ////////////////////////////////////////////////////////////////////////
         ///
@@ -43,7 +51,6 @@ namespace InterfaceGraphique {
             this.buttonEditeur.Click += (sender, e) => Program.FormManager.CurrentForm = Program.Editeur;
             this.Button_Credits.Click += (sender, e) => Program.FormManager.CurrentForm = Program.CreditsMenu;
             this.buttonQuitter.Click += (sender, e) => System.Windows.Forms.Application.Exit();
-            this.Button_Cheats.Click += (sender, e) => { CheatCodesMenu cheats = new CheatCodesMenu(); cheats.ShowDialog(); };
         }
 
 
