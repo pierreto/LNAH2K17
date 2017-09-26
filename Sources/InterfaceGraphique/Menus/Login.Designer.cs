@@ -44,11 +44,11 @@
             this.UsernameLabel.AutoSize = true;
             this.UsernameLabel.Font = new System.Drawing.Font("Arial", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.UsernameLabel.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.UsernameLabel.Location = new System.Drawing.Point(321, 353);
+            this.UsernameLabel.Location = new System.Drawing.Point(259, 355);
             this.UsernameLabel.Name = "UsernameLabel";
-            this.UsernameLabel.Size = new System.Drawing.Size(171, 37);
+            this.UsernameLabel.Size = new System.Drawing.Size(227, 37);
             this.UsernameLabel.TabIndex = 0;
-            this.UsernameLabel.Text = "Username";
+            this.UsernameLabel.Text = "Nom d\'usager";
             this.UsernameLabel.Click += new System.EventHandler(this.label1_Click);
             // 
             // ServerLabel
@@ -57,11 +57,11 @@
             this.ServerLabel.AutoSize = true;
             this.ServerLabel.Font = new System.Drawing.Font("Arial", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ServerLabel.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.ServerLabel.Location = new System.Drawing.Point(258, 305);
+            this.ServerLabel.Location = new System.Drawing.Point(170, 306);
             this.ServerLabel.Name = "ServerLabel";
-            this.ServerLabel.Size = new System.Drawing.Size(234, 37);
+            this.ServerLabel.Size = new System.Drawing.Size(316, 37);
             this.ServerLabel.TabIndex = 1;
-            this.ServerLabel.Text = "Server Adress";
+            this.ServerLabel.Text = "Adresse du serveur";
             // 
             // ServerTextBox
             // 
@@ -90,9 +90,9 @@
             this.LoginButton.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.LoginButton.Location = new System.Drawing.Point(491, 429);
             this.LoginButton.Name = "LoginButton";
-            this.LoginButton.Size = new System.Drawing.Size(177, 49);
+            this.LoginButton.Size = new System.Drawing.Size(188, 49);
             this.LoginButton.TabIndex = 4;
-            this.LoginButton.Text = "Login";
+            this.LoginButton.Text = "Se connecter";
             this.LoginButton.UseVisualStyleBackColor = false;
             // 
             // sonicPuckLabel

@@ -106,6 +106,7 @@
     <Compile Include="Controls\Chat.Designer.cs">
       <DependentUpon>Chat.cs</DependentUpon>
     </Compile>
+    <Compile Include="Exceptions\LoginException.cs" />
     <Compile Include="Menus\Login.cs">
       <SubType>Form</SubType>
     </Compile>

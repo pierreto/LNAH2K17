@@ -31,7 +31,7 @@ namespace InterfaceGraphique {
 
         }
 
-        public void InitializeChat(LoginFormMessage loginForm, IPAddress targetServerIp)
+        public void InitializeChat(LoginFormMessage loginForm, string targetServerIp)
         {
            this.chat.InitializeChatSocket(loginForm, targetServerIp);
 

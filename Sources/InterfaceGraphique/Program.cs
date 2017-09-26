@@ -72,35 +72,11 @@ namespace InterfaceGraphique
                     else
                         System.Console.WriteLine("Tests réussis.");
                 }
-  
-            //ChatConnection chatConnection = new ChatConnection();
-            //chatConnection.EstablishConnection();
-            //ChatMessage temp = new ChatMessage()
-            //{
-            //    MessageValue = "Allô chère madame",
-            //    Recipient = "",
-            //    Sender = "",
-            //    TimeStamp = DateTime.Now
-            //};
-            //chatConnection.Send(temp);
-            //ChatMessage temp2 = new ChatMessage()
-            //{
-            //    MessageValue = "foo bar ssss",
-            //    Recipient = "",
-            //    Sender = "",
-            //    TimeStamp = DateTime.Now
-            //};
-            //chatConnection.Send(temp2);
 
             chrono.Start();
             Application.Idle += ExecuterQuandInactif;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
-            Program.client = new HttpClient();
-            Program.client.BaseAddress = new Uri("http://localhost:63056/");
-            Program.client.DefaultRequestHeaders.Accept.Clear();
-            Program.client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             login = new Login();
             openGLPanel = new Panel();

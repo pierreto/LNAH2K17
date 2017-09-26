@@ -15,27 +15,21 @@ namespace InterfaceGraphique.Menus
             InitializeComponent();
             InitializeEvents();
 
+            this.chatViewRichTextBox.ReadOnly = true;
+
         }
 
 
         private void InitializeEvents()
         {
-            this.SendButton.Click += (sender, e) =>
-            {
-                this.chatHub.SendMessage(new ChatMessage()
-                {
-                    Sender = loginForm.LoginName,
-                    MessageValue = InputTextBox.Text
+            this.SendButton.Click += (sender, e) => this.SendMessage(sender, e);
+            this.InputTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(CheckEnterKeyPress);
 
-                });
-                InputTextBox.Text = "";
-
-            };
         }
 
         private static readonly string rtfStart = "{\\rtf1\\ansi\\ansicpg1252\\deff0\\deflang1033{\\fonttbl{\\f0\\fswiss\\fcharset0 Arial;}{\\f1\\fswiss\\fprq2\\fcharset0 Arial;}}{\\colortbl ;\\red0\\green0\\blue128;\\red0\\green128\\blue0;}\\viewkind4\\uc1";
 
-        public void InitializeChatSocket(LoginFormMessage loginForm,IPAddress targetServerIp)
+        public void InitializeChatSocket(LoginFormMessage loginForm, string targetServerIp)
         {
 
             this.loginForm = loginForm;
@@ -46,7 +40,15 @@ namespace InterfaceGraphique.Menus
             }
 
             chatHub = new ChatHub(targetServerIp, UpdateChatBoxDelegate);
-            chatHub.EstablishConnection();
+            try
+            {
+                chatHub.EstablishConnection();
+            }
+            catch (System.Exception e)
+            {
+                MessageBox.Show(@"La connexion au chat a échoué.", @"Erreur de connexion",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
         public void UnsuscribeEventHandlers()
         {
@@ -75,19 +77,46 @@ namespace InterfaceGraphique.Menus
             else
             {
                 // This will run on the UI thread
+                this.chatViewRichTextBox.ReadOnly = false;
                 string rtfMsgEncStart = "\\pard\\cf1\\b0\\f1 ";//Code RTF
                 string rtfMsgContent = "\\cf2 ";//code RTF
                 string formattedMsg = rtfMsgEncStart + message.Sender + " a écrit:" + rtfMsgContent +
                                       message.MessageValue + "\\par";
                 this.chatViewRichTextBox.Rtf = rtfStart + this.chatViewRichTextBox.Rtf + formattedMsg;
                 this.BringToFront();
+                this.chatViewRichTextBox.ReadOnly = true;
+
+                // set the current caret position to the end
+                this.chatViewRichTextBox.SelectionStart = this.chatViewRichTextBox.Text.Length;
+                // scroll it automatically
+                this.chatViewRichTextBox.ScrollToCaret();
+
             }
-   
+
         }
 
-        private void InputTextBox_TextChanged(object sender, EventArgs e)
+        private void CheckEnterKeyPress(object sender, System.Windows.Forms.KeyPressEventArgs e)
         {
+            if (e.KeyChar == (char)Keys.Return)
+            {
+                SendMessage(sender,e);
+                e.Handled = true;
 
+            }
+        }
+
+        private void SendMessage(object sender, EventArgs e)
+        {
+            if (InputTextBox.Text.Length > 0)
+            {
+                this.chatHub.SendMessage(new ChatMessage()
+                {
+                    Sender = loginForm.LoginName,
+                    MessageValue = InputTextBox.Text
+
+                });
+                InputTextBox.Text = "";
+            }
         }
     }
 }

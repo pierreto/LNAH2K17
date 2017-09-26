@@ -14,11 +14,11 @@ namespace InterfaceGraphique.CommunicationInterface
     {
         public delegate void UpdateChatBoxDelegate(ChatMessage message);
 
-        private IPAddress targetServerIp;
+        private string targetServerIp;
         private UpdateChatBoxDelegate updateChatBoxDelegate;
         private IHubProxy chatHubProxy;
 
-        public ChatHub(IPAddress targetServerIp, UpdateChatBoxDelegate updateChatBoxDelegate)
+        public ChatHub(string targetServerIp, UpdateChatBoxDelegate updateChatBoxDelegate)
         {
             this.targetServerIp = targetServerIp;
             this.updateChatBoxDelegate = updateChatBoxDelegate;
@@ -29,7 +29,7 @@ namespace InterfaceGraphique.CommunicationInterface
             // TODO : À TRANSFORMER EN INTERFACE POUR ACCEDER AUX FONCTIONS 
 
             // Connection au serveur
-            var hubConnection = new HubConnection("http://localhost:63056/signalr");
+            var hubConnection = new HubConnection("http://"+targetServerIp+":63056/signalr");
             // Ouverture d'une connexion au Hub "ChatHub" (classe du côté serveur)
             chatHubProxy = hubConnection.CreateHubProxy("ChatHub");
             hubConnection.Start().Wait();
