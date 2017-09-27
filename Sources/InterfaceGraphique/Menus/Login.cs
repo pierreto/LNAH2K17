@@ -93,6 +93,7 @@ namespace InterfaceGraphique.Menus
                 }
                 else
                 {
+                    UsernameTextBox.Clear();
                     throw new LoginException(@"Ce nom d'utilisateur est déjà pris. Veuillez en choisir un autre.");
                 }
             }
