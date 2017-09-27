@@ -58,7 +58,6 @@ namespace InterfaceGraphique.Menus
             this.LoginButton.Enabled = false;
             bool isValidIp = System.Net.IPAddress.TryParse(ServerTextBox.Text, out IPAddress ipAddress) || "localhost".Equals(ServerTextBox.Text);
 
-
             try
             {
                 if (!isValidIp)
@@ -79,24 +78,22 @@ namespace InterfaceGraphique.Menus
                     LoginName = UsernameTextBox.Text
                 };
 
+                // We first initialize the connection with the chat server:
+                await Program.MainMenu.GetChat().EstablishConnection(ServerTextBox.Text);
 
-                Program.client = new HttpClient();
-                Program.client.DefaultRequestHeaders.Accept.Clear();
-                Program.client.DefaultRequestHeaders.Accept.Add(
-                    new MediaTypeWithQualityHeaderValue("application/json"));
-                Program.client.BaseAddress = new Uri("http://" + ServerTextBox.Text + ":63056");
-
-                //Before we actually connect, we check with the server if the login is taken]\
-                HttpStatusCode response = await LoginClient.PostLoginAsync(loginForm);
-
-                //We initiate the chat connection
-                if (response.GetHashCode() == 200)
+                // Then we try to authenticate the user with the username he/she gave:
+                var authentication = Program.MainMenu.GetChat().AuthenticateUser(UsernameTextBox.Text);
+                await authentication;
+                if (authentication.Result)
                 {
-                    Program.MainMenu.InitializeChat(loginForm, ServerTextBox.Text);
-
+                    // We initialize the chat to activate broadcasting from the server:
+                    await Program.MainMenu.GetChat().InitializeChat(loginForm);
+                    // Finally we move from the login page to the main menu:
                     Program.FormManager.CurrentForm = Program.MainMenu;
-
-
+                }
+                else
+                {
+                    throw new LoginException(@"Ce nom d'utilisateur est déjà pris. Veuillez en choisir un autre.");
                 }
             }
             catch (LoginException e)

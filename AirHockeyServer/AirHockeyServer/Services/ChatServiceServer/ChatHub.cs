@@ -1,5 +1,6 @@
 ﻿using AirHockeyServer.Entities;
 using Microsoft.AspNet.SignalR;
+using Microsoft.AspNet.SignalR.Hubs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,13 +11,29 @@ namespace AirHockeyServer.Services.ChatServiceServer
 {
     public class ChatHub : Hub
     {
+        // Should be thread-safe?
         private readonly static Dictionary<Guid, string> ConnectionsMapping = new Dictionary<Guid, string>();
+        // Should be thread-safe?
+        private static HashSet<string> usernames = new HashSet<string>();
 
         public IChannelService ChannelService { get; }
 
         public ChatHub(IChannelService channelService)
         {
             ChannelService = channelService;
+        }
+
+        public bool Authenticate(string username)
+        {
+            if (usernames.Contains(username))
+            {
+                return false;
+            }
+            else
+            {
+                usernames.Add(username);
+                return true;
+            }
         }
 
         public void Subscribe(Guid userId)

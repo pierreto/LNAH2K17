@@ -31,10 +31,10 @@ namespace InterfaceGraphique {
 
         }
 
-        public void InitializeChat(LoginFormMessage loginForm, string targetServerIp)
+        // Renvoie une référence de l'instance Chat du menu principal:
+        public ref Chat GetChat()
         {
-           this.chat.InitializeChatSocket(loginForm, targetServerIp);
-
+            return ref this.chat;
         }
 
         ////////////////////////////////////////////////////////////////////////

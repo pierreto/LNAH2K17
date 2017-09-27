@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Net;
 using System.Windows.Forms;
+using System.Threading.Tasks;
 using InterfaceGraphique.CommunicationInterface;
 
 namespace InterfaceGraphique.Menus
@@ -10,13 +11,14 @@ namespace InterfaceGraphique.Menus
     {
         private LoginFormMessage loginForm;
         private ChatHub chatHub;
+
         public Chat()
         {
             InitializeComponent();
             InitializeEvents();
 
             this.chatViewRichTextBox.ReadOnly = true;
-
+            this.chatHub = new ChatHub(UpdateChatBoxDelegate);
         }
 
 
@@ -29,27 +31,31 @@ namespace InterfaceGraphique.Menus
 
         private static readonly string rtfStart = "{\\rtf1\\ansi\\ansicpg1252\\deff0\\deflang1033{\\fonttbl{\\f0\\fswiss\\fcharset0 Arial;}{\\f1\\fswiss\\fprq2\\fcharset0 Arial;}}{\\colortbl ;\\red0\\green0\\blue128;\\red0\\green128\\blue0;}\\viewkind4\\uc1";
 
-        public void InitializeChatSocket(LoginFormMessage loginForm, string targetServerIp)
+       // TODO: retourner un résultat pour savoir si la connexion a échouée ou pas.
+        public async Task EstablishConnection(string targetServerIp)
         {
+            await this.chatHub.EstablishConnection(targetServerIp);
+        }
 
+        public async Task<bool> AuthenticateUser(string username)
+        {
+            var auth = this.chatHub.AuthenticateUser(username);
+            await auth;
+            return auth.Result;
+        }
+
+        public async Task InitializeChat(LoginFormMessage loginForm)
+        {
+            await this.chatHub.InitializeChat();
+            
             this.loginForm = loginForm;
 
             if (!this.IsHandleCreated)
             {
                 this.CreateHandle();
             }
-
-            chatHub = new ChatHub(targetServerIp, UpdateChatBoxDelegate);
-            try
-            {
-                chatHub.EstablishConnection();
-            }
-            catch (System.Exception e)
-            {
-                MessageBox.Show(@"La connexion au chat a échoué.", @"Erreur de connexion",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
+
         public void UnsuscribeEventHandlers()
         {
             Program.FormManager.SizeChanged -= new EventHandler(WindowSizeChanged);
