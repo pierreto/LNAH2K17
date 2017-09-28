@@ -17,7 +17,7 @@ namespace InterfaceGraphique.Menus
 {
     public partial class Login : Form
     {
-
+        private readonly string LOCALHOST = "localhost";
         private readonly int MAX_INPUT_LENGTH = 15;
         public Login()
         {
@@ -56,11 +56,10 @@ namespace InterfaceGraphique.Menus
         private async Task RunLogin()
         {
             this.LoginButton.Enabled = false;
-            bool isValidIp = System.Net.IPAddress.TryParse(ServerTextBox.Text, out IPAddress ipAddress) || "localhost".Equals(ServerTextBox.Text);
-
+           
             try
             {
-                if (!isValidIp)
+                if (!ValidateIP(ServerTextBox.Text) && !LOCALHOST.Equals(ServerTextBox.Text))
                 {
                     throw new LoginException(@"Le format de l'adresse IP n'est pas valide.");
                 }
@@ -120,6 +119,22 @@ namespace InterfaceGraphique.Menus
                 this.LoginButton.Enabled = true;
             }
         }
+
+        private bool ValidateIP(string ipString)
+        {
+            if (String.IsNullOrWhiteSpace(ipString))
+            {
+                return false;
+            }
+
+            string[] splitValues = ipString.Split('.');
+            if (splitValues.Length != 4)
+            {
+                return false;
+            }
+            return splitValues.All(r => byte.TryParse(r, out byte tempForParsing));
+        }
+
         private void label1_Click(object sender, EventArgs e)
         {
 
