@@ -20,6 +20,8 @@
 		8F8706BB1F7892F2000E6824 /* ChatMessageEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8706BA1F7892F2000E6824 /* ChatMessageEntity.swift */; };
 		8F8706BD1F78A67F000E6824 /* ChannelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8706BC1F78A67F000E6824 /* ChannelViewController.swift */; };
 		8FE1EB051F75A96900A01514 /* ClientConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE1EB041F75A96900A01514 /* ClientConnection.swift */; };
+		8FFC5B481F7C90340031474F /* MessageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFC5B471F7C90340031474F /* MessageViewCell.swift */; };
+		8FFC5B4A1F7CA7170031474F /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFC5B491F7CA7170031474F /* PaddingLabel.swift */; };
 		E7B7E3DDFEF5DC14C25C5EF5 /* Pods_AirHockeyLightClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7585740DC43877CD99CDDF6A /* Pods_AirHockeyLightClient.framework */; };
 /* End PBXBuildFile section */
 
@@ -42,6 +44,8 @@
 		8F8706BA1F7892F2000E6824 /* ChatMessageEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatMessageEntity.swift; path = Noyau/Entities/ChatMessageEntity.swift; sourceTree = "<group>"; };
 		8F8706BC1F78A67F000E6824 /* ChannelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChannelViewController.swift; path = InterfaceGraphique/Chat/ChannelViewController.swift; sourceTree = "<group>"; };
 		8FE1EB041F75A96900A01514 /* ClientConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ClientConnection.swift; path = Noyau/Communication/ClientConnection.swift; sourceTree = "<group>"; };
+		8FFC5B471F7C90340031474F /* MessageViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageViewCell.swift; path = InterfaceGraphique/Chat/MessageViewCell.swift; sourceTree = "<group>"; };
+		8FFC5B491F7CA7170031474F /* PaddingLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PaddingLabel.swift; path = InterfaceGraphique/Chat/PaddingLabel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +106,7 @@
 		8F0FFED71F6EB8C500366D8E /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				8FFC5B4B1F7CAC0A0031474F /* UI */,
 				8F64C0101F7754EF00F14AC7 /* ChatViewController.swift */,
 				8F8706BC1F78A67F000E6824 /* ChannelViewController.swift */,
 			);
@@ -166,6 +171,15 @@
 				8FE1EB041F75A96900A01514 /* ClientConnection.swift */,
 			);
 			name = Communication;
+			sourceTree = "<group>";
+		};
+		8FFC5B4B1F7CAC0A0031474F /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				8FFC5B471F7C90340031474F /* MessageViewCell.swift */,
+				8FFC5B491F7CA7170031474F /* PaddingLabel.swift */,
+			);
+			name = UI;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -300,11 +314,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8FFC5B481F7C90340031474F /* MessageViewCell.swift in Sources */,
 				8F8706BB1F7892F2000E6824 /* ChatMessageEntity.swift in Sources */,
 				8FE1EB051F75A96900A01514 /* ClientConnection.swift in Sources */,
 				8F6AE2C21F6592EB00A29E8B /* GameScene.swift in Sources */,
 				8F8706B91F7892BB000E6824 /* Entity.swift in Sources */,
 				8F64C0111F7754EF00F14AC7 /* ChatViewController.swift in Sources */,
+				8FFC5B4A1F7CA7170031474F /* PaddingLabel.swift in Sources */,
 				8F64C0171F775B2500F14AC7 /* AuthentificationViewController.swift in Sources */,
 				8F8706BD1F78A67F000E6824 /* ChannelViewController.swift in Sources */,
 				8F6AE2BC1F6592EB00A29E8B /* AppDelegate.swift in Sources */,

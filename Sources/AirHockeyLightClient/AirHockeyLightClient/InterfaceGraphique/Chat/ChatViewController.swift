@@ -70,6 +70,9 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
                 self.messages.reloadData()
             })
         }
+        
+        messages.rowHeight = UITableViewAutomaticDimension
+        messages.estimatedRowHeight = 140
     }
     
     deinit {
@@ -194,16 +197,15 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = messages.dequeueReusableCell(withIdentifier: "Message", for: indexPath)
+        let cell = messages.dequeueReusableCell(withIdentifier: "Message", for: indexPath) as! MessageViewCell
         
-        let sender = cell.viewWithTag(1) as! UITextView
+        let sender = cell.viewWithTag(1) as! UILabel
         sender.text = messagesData[indexPath.row].sender
         
-        let messageValue = cell.viewWithTag(2) as! UITextView
+        let messageValue = cell.viewWithTag(2) as! PaddingLabel
         messageValue.text = messagesData[indexPath.row].messageValue
-        messageValue.textContainerInset.left = 10
         
-        let timestamp = cell.viewWithTag(3) as! UITextView
+        let timestamp = cell.viewWithTag(3) as! UILabel
         timestamp.text = messagesData[indexPath.row].timestamp
         
         cell.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi));
