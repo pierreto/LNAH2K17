@@ -2,7 +2,7 @@
 //  ClientConnection.swift
 //  AirHockeyLightClient
 //
-//  Created by Pierre To on 17-09-22.
+//  Created by Mikael Ferland and Pierre To on 17-09-22.
 //  Copyright © 2017 LOG3900 Équipe 03 - Les Décalés. All rights reserved.
 //
 
@@ -16,6 +16,10 @@ class ClientConnection {
     
     private var username: String?
     
+    public func getConnection() -> SignalR {
+        return connection!
+    }
+    
     public func getChatHub() -> Hub {
         return chatHub!
     }
@@ -28,9 +32,9 @@ class ClientConnection {
         self.username = username
     }
     
-    public func EstablishConnection() {
+    public func EstablishConnection(hubName: String) {
         connection = SignalR("http://192.168.0.118:63056")
-        chatHub = Hub("ChatHub")
+        chatHub = Hub(hubName)
         
         connection!.starting = { print("started") }
         connection!.connected = { print("connected: \(String(describing: self.connection!.connectionID))") }

@@ -21,7 +21,9 @@ struct Message {
 class ChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var chatBodyView: UIView!
+    @IBOutlet weak var connectionIndicator: UIActivityIndicatorView!
     @IBOutlet weak var chatInput: UITextField!
+    @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var messages: UITableView!
     var messagesData = [Message]()
     let clientConnection = ClientConnection.sharedConnection
@@ -53,10 +55,21 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
-        clientConnection.EstablishConnection()
+        clientConnection.EstablishConnection(hubName: "ChatHub")
+        
+        self.connectionIndicator.transform = CGAffineTransform(scaleX: 3, y: 3)
+        
+        // When the client has successfully connected to the server, activate chat box
+        clientConnection.getConnection().connected = {
+        self.clientConnection.getConnection().connected = {
+            print("connected: \(String(describing: self.clientConnection.getConnection().connectionID))") }
+            self.chatInput.isEnabled = true
+            self.sendButton.isEnabled = true
+            self.connectionIndicator.stopAnimating()
+        }
         
         // When a message is received from the server
-        clientConnection.getChatHub().on("ChatMessageReceived") { args in
+        self.clientConnection.getChatHub().on("ChatMessageReceived") { args in
             let message = args![0] as! Dictionary<String, String>
             let sender = message["Sender"]
             let messageValue = message["MessageValue"]
