@@ -33,7 +33,7 @@ class ClientConnection {
     }
     
     public func EstablishConnection(hubName: String) {
-        connection = SignalR("http://192.168.0.118:63056")
+        connection = SignalR("http://132.207.247.240:63056")
         chatHub = Hub(hubName)
         
         connection!.starting = { print("started") }

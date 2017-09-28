@@ -19,15 +19,14 @@ class AuthentificationViewController: UIViewController  {
         super.viewDidLoad()
         
         // Connect to server via SignalR
-        // TODO : connect
-        //clientConnection.EstablishConnection()
+        //clientConnection.EstablishConnection(hubName: "ChatHub")
     }
     
     // Set username
     @IBAction func userLogin(_ sender: UIButton) {
         if usernameInput.text != "" {
             // Create POST request
-            var request = URLRequest(url: URL(string: "http://192.168.0.118:63056/api/login")!)
+            var request = URLRequest(url: URL(string: "http://132.207.247.240:63056/api/login")!)
             request.httpMethod = "POST"
             
             // Headers
