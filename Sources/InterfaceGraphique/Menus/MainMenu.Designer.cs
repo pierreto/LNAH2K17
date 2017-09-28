@@ -141,10 +141,10 @@
             // wpfChatHost1
             // 
             this.wpfChatHost1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.wpfChatHost1.Location = new System.Drawing.Point(230, 288);
+            this.wpfChatHost1.Location = new System.Drawing.Point(1, 288);
             this.wpfChatHost1.Margin = new System.Windows.Forms.Padding(2);
             this.wpfChatHost1.Name = "wpfChatHost1";
-            this.wpfChatHost1.Size = new System.Drawing.Size(530, 330);
+            this.wpfChatHost1.Size = new System.Drawing.Size(778, 339);
             this.wpfChatHost1.TabIndex = 9;
             this.wpfChatHost1.Text = "wpfChatHost1";
             this.wpfChatHost1.Child = this.hostedComponent1;

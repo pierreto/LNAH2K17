@@ -155,7 +155,10 @@ namespace InterfaceGraphique.Controls
 
 
 
-
+        public void Logout()
+        {
+          //  this.chatHub.Logout(this.username);
+        }
 
 
 
