@@ -13,7 +13,7 @@ namespace AirHockeyServer.Services
         {
         }
 
-        public void login(LoginMessage message) 
+        public void Login(LoginMessage message) 
         {
             System.Diagnostics.Debug.WriteLine(message.username);
             System.Diagnostics.Debug.WriteLine(_usernames.Count);
@@ -24,9 +24,12 @@ namespace AirHockeyServer.Services
             _usernames.Add(message.username);
         }
 
-        public void disconnect()
+        public void Logout(LoginMessage message)
         {
-            throw new System.NotImplementedException();
+            if (_usernames.Contains(message.username))
+            {
+                _usernames.Remove(message.username);
+            }
         }
     }
 
