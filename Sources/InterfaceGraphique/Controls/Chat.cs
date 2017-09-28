@@ -30,7 +30,6 @@ namespace InterfaceGraphique.Menus
 
         }
 
-        private static readonly string rtfStart = "{\\rtf1\\ansi\\ansicpg1252\\deff0\\deflang1033{\\fonttbl{\\f0\\fswiss\\fcharset0 Arial;}{\\f1\\fswiss\\fprq2\\fcharset0 Arial;}}{\\colortbl ;\\red0\\green0\\blue128;\\red0\\green128\\blue0;}\\viewkind4\\uc1";
 
        // TODO: retourner un résultat pour savoir si la connexion a échouée ou pas.
         public async Task EstablishConnection(string targetServerIp)
@@ -86,15 +85,12 @@ namespace InterfaceGraphique.Menus
             {
                 // This will run on the UI thread
                 this.chatViewRichTextBox.ReadOnly = false;
-                string rtfMsgEncStart = "\\pard\\cf1\\b0\\f1 ";//Code RTF
-                string rtfMsgContent = "\\cf2 ";//code RTF
-                string formattedMsg = rtfMsgEncStart + message.Sender + " a écrit:" + rtfMsgContent +
-                                      message.MessageValue + "\\par";
-                this.chatViewRichTextBox.Rtf = rtfStart + this.chatViewRichTextBox.Rtf + formattedMsg;
+                this.AppendText(message.Sender + " a écrit: ", Color.Blue);
+                this.AppendText(message.MessageValue + "\r\n", Color.Green);
                 this.BringToFront();
                 this.chatViewRichTextBox.ReadOnly = true;
 
-                // set the current caret position to the end
+                // set the current cursor position to the end
                 this.chatViewRichTextBox.SelectionStart = this.chatViewRichTextBox.Text.Length;
                 // scroll it automatically
                 this.chatViewRichTextBox.ScrollToCaret();
@@ -103,6 +99,16 @@ namespace InterfaceGraphique.Menus
 
         }
 
+        private  void AppendText(string text, Color color)
+        {
+            this.chatViewRichTextBox.SelectionStart = this.chatViewRichTextBox.TextLength;
+            this.chatViewRichTextBox.SelectionLength = 0;
+
+            this.chatViewRichTextBox.SelectionColor = color;
+            this.chatViewRichTextBox.AppendText(text);
+            this.chatViewRichTextBox.SelectionColor = this.chatViewRichTextBox.ForeColor;
+        }
+        
         private void CheckEnterKeyPress(object sender, System.Windows.Forms.KeyPressEventArgs e)
         {
             if (e.KeyChar == (char)Keys.Return)

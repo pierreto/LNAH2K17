@@ -17,7 +17,7 @@ namespace InterfaceGraphique.Menus
 {
     public partial class Login : Form
     {
-
+        private readonly string LOCALHOST = "localhost";
         private readonly int MAX_INPUT_LENGTH = 15;
         public Login()
         {
@@ -56,22 +56,10 @@ namespace InterfaceGraphique.Menus
         private async Task RunLogin()
         {
             this.LoginButton.Enabled = false;
-            bool isValidIp = System.Net.IPAddress.TryParse(ServerTextBox.Text, out IPAddress ipAddress) || "localhost".Equals(ServerTextBox.Text);
-
+           
             try
             {
-                if (!isValidIp)
-                {
-                    throw new LoginException(@"Le format de l'adresse IP n'est pas valide.");
-                }
-                if (String.IsNullOrEmpty(UsernameTextBox.Text))
-                {
-                    throw new LoginException(@"Le champ du nom d'usager ne peut être vide.");
-                }
-                if (String.IsNullOrEmpty(ServerTextBox.Text))
-                {
-                    throw new LoginException(@"Le champ de l'adresse du serveur ne peut être vide.");
-                }
+                ValidateUserInput();
 
                 LoginFormMessage loginForm = new LoginFormMessage()
                 {
@@ -120,6 +108,38 @@ namespace InterfaceGraphique.Menus
                 this.LoginButton.Enabled = true;
             }
         }
+
+        private void ValidateUserInput()
+        {
+            if (!ValidateIP(ServerTextBox.Text) && !LOCALHOST.Equals(ServerTextBox.Text))
+            {
+                throw new LoginException(@"Le format de l'adresse IP n'est pas valide.");
+            }
+            if (String.IsNullOrEmpty(UsernameTextBox.Text))
+            {
+                throw new LoginException(@"Le champ du nom d'usager ne peut être vide.");
+            }
+            if (String.IsNullOrEmpty(ServerTextBox.Text))
+            {
+                throw new LoginException(@"Le champ de l'adresse du serveur ne peut être vide.");
+            }
+        }
+
+        private bool ValidateIP(string ipString)
+        {
+            if (String.IsNullOrWhiteSpace(ipString))
+            {
+                return false;
+            }
+
+            string[] splitValues = ipString.Split('.');
+            if (splitValues.Length != 4)
+            {
+                return false;
+            }
+            return splitValues.All(r => byte.TryParse(r, out byte tempForParsing));
+        }
+
         private void label1_Click(object sender, EventArgs e)
         {
 
