@@ -59,18 +59,7 @@ namespace InterfaceGraphique.Menus
            
             try
             {
-                if (!ValidateIP(ServerTextBox.Text) && !LOCALHOST.Equals(ServerTextBox.Text))
-                {
-                    throw new LoginException(@"Le format de l'adresse IP n'est pas valide.");
-                }
-                if (String.IsNullOrEmpty(UsernameTextBox.Text))
-                {
-                    throw new LoginException(@"Le champ du nom d'usager ne peut être vide.");
-                }
-                if (String.IsNullOrEmpty(ServerTextBox.Text))
-                {
-                    throw new LoginException(@"Le champ de l'adresse du serveur ne peut être vide.");
-                }
+                ValidateUserInput();
 
                 LoginFormMessage loginForm = new LoginFormMessage()
                 {
@@ -117,6 +106,22 @@ namespace InterfaceGraphique.Menus
             finally
             {
                 this.LoginButton.Enabled = true;
+            }
+        }
+
+        private void ValidateUserInput()
+        {
+            if (!ValidateIP(ServerTextBox.Text) && !LOCALHOST.Equals(ServerTextBox.Text))
+            {
+                throw new LoginException(@"Le format de l'adresse IP n'est pas valide.");
+            }
+            if (String.IsNullOrEmpty(UsernameTextBox.Text))
+            {
+                throw new LoginException(@"Le champ du nom d'usager ne peut être vide.");
+            }
+            if (String.IsNullOrEmpty(ServerTextBox.Text))
+            {
+                throw new LoginException(@"Le champ de l'adresse du serveur ne peut être vide.");
             }
         }
 
