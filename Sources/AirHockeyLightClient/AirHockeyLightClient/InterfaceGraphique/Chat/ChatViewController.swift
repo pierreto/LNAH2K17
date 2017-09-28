@@ -55,7 +55,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
-        clientConnection.EstablishConnection(hubName: "ChatHub")
+        //clientConnection.EstablishConnection(hubName: "ChatHub")
         
         self.connectionIndicator.transform = CGAffineTransform(scaleX: 3, y: 3)
         
@@ -67,6 +67,16 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             self.sendButton.isEnabled = true
             self.connectionIndicator.stopAnimating()
         }
+        
+        /*self.clientConnection.getConnection().disconnected = {
+            print("Disconnected...")
+            
+            // Try again after 5 seconds
+            let delayTime = DispatchTime.now() + .seconds(5)
+            DispatchQueue.main.asyncAfter(deadline: delayTime) { [weak self] in
+                self.clientConnection.getConnection().start()
+            }
+        }*/
         
         // When a message is received from the server
         self.clientConnection.getChatHub().on("ChatMessageReceived") { args in

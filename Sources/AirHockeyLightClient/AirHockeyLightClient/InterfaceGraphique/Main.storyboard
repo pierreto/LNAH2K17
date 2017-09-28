@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="d4o-dE-S39">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="d4o-dE-S39">
     <device id="ipad9_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -23,43 +23,80 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Nom d'utilisateur" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Xx7-T6-dvx" userLabel="usernameInput">
-                                <rect key="frame" x="115" y="497" width="428" height="30"/>
+                                <rect key="frame" x="170" y="497" width="428" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Adresse IP" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1Xw-v6-3wi" userLabel="ipAddressInput">
+                                <rect key="frame" x="170" y="419" width="428" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Bienvenue !" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ch8-Oa-RN0">
-                                <rect key="frame" x="264" y="191" width="240" height="74"/>
+                                <rect key="frame" x="270" y="199" width="228" height="74"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="40"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bAc-pQ-vdM" userLabel="connectButton">
-                                <rect key="frame" x="551" y="497" width="120" height="30"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="LNAH 2K17" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vMV-oA-YxN">
+                                <rect key="frame" x="276" y="77" width="216" height="74"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.85008340211243527" green="0.84123033901055766" blue="0.82525017970543657" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <state key="normal" title="Se connecter"/>
-                                <connections>
-                                    <action selector="userLogin:" destination="d4o-dE-S39" eventType="touchUpInside" id="BLe-HW-7L9"/>
-                                </connections>
-                            </button>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="40"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jqq-Zj-kfV" userLabel="connectButton">
-                                <rect key="frame" x="551" y="496" width="120" height="30"/>
+                                <rect key="frame" x="324" y="571" width="120" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.8500834021" green="0.84123033899999999" blue="0.82525017970000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="Se connecter"/>
                                 <connections>
                                     <action selector="userLogin:" destination="d4o-dE-S39" eventType="touchUpInside" id="23w-EC-Qqv"/>
-                                    <segue destination="xgG-d7-dxf" kind="show" id="NeJ-8L-7fl"/>
                                 </connections>
                             </button>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Le nom d'utilisateur n'est pas valide.              Max. 15 caractères alphanumériques et tiret-bas" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I2z-KT-HTt" userLabel="usernameInvalid">
+                                <rect key="frame" x="170" y="521" width="259" height="48"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                <color key="textColor" red="1" green="0.20043690427533878" blue="0.16195444997406594" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="L'adresse IP n'est pas valide.                                  Format : 123.123.123.123" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vyp-xF-3fK" userLabel="ipAddressInvalid">
+                                <rect key="frame" x="170" y="441" width="167" height="48"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                <color key="textColor" red="1" green="0.2004369043" blue="0.16195445" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Le nom d'utilisateur est déjà utilisé." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gNd-Ph-KMK" userLabel="usernameNotUnique">
+                                <rect key="frame" x="170" y="515" width="259" height="48"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                <color key="textColor" red="1" green="0.2004369043" blue="0.16195445" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="La connexion au serveur n'est pas possible avec l'adresse IP fournie." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bFd-Ef-OEu" userLabel="ipAddressNotConnected">
+                                <rect key="frame" x="170" y="435" width="359" height="48"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                <color key="textColor" red="1" green="0.2004369043" blue="0.16195445" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.50158477429710246" green="0.76474623044747803" blue="0.84018950670000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <connections>
-                        <outlet property="usernameInput" destination="Xx7-T6-dvx" id="3fd-sY-hbj"/>
+                        <outlet property="ipAddessInput" destination="1Xw-v6-3wi" id="Hfa-Ez-gka"/>
+                        <outlet property="ipAddressInvalidErrorMessage" destination="Vyp-xF-3fK" id="ZvN-kO-igc"/>
+                        <outlet property="ipAddressNotConnectedErrorMessage" destination="bFd-Ef-OEu" id="gQg-7G-KYz"/>
+                        <outlet property="usernameInput" destination="Xx7-T6-dvx" id="8wW-yh-0Dk"/>
+                        <outlet property="usernameInvalidErrorMessage" destination="I2z-KT-HTt" id="bTg-rI-aSR"/>
+                        <outlet property="usernameNotUniqueErrorMessage" destination="gNd-Ph-KMK" id="Cmv-BG-RUW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Y9B-rT-XBk" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -69,7 +106,7 @@
         <!--Channel View Controller-->
         <scene sceneID="5JX-U5-i6A">
             <objects>
-                <viewController id="xgG-d7-dxf" userLabel="Channel View Controller" customClass="ChannelViewController" customModule="AirHockeyLightClient" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ChannelViewController" id="xgG-d7-dxf" userLabel="Channel View Controller" customClass="ChannelViewController" customModule="AirHockeyLightClient" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="sgb-IH-tXy"/>
                         <viewControllerLayoutGuide type="bottom" id="i2n-VU-0OJ"/>
@@ -90,13 +127,6 @@
                                             <rect key="frame" x="0.0" y="0.0" width="768" height="132"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="10 utilisateurs" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L6Q-nh-Ixd">
-                                                    <rect key="frame" x="608" y="84" width="152" height="29"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5pX-MT-TgJ" userLabel="Separator">
                                                     <rect key="frame" x="0.0" y="129" width="768" height="3"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -323,7 +353,4 @@
             <point key="canvasLocation" x="1030.46875" y="38.671875"/>
         </scene>
     </scenes>
-    <inferredMetricsTieBreakers>
-        <segue reference="92U-Ps-lda"/>
-    </inferredMetricsTieBreakers>
 </document>
