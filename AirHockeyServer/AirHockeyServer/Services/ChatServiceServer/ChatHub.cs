@@ -79,5 +79,6 @@ namespace AirHockeyServer.Services.ChatServiceServer
                 usernames.Remove(username);
             }
         }
+        
     }
 }

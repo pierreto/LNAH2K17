@@ -29,7 +29,7 @@ namespace InterfaceGraphique.CommunicationInterface
         {
             this.targetServerIp = targetServerIp;
 
-            this.connection = new HubConnection("http://"+targetServerIp+":5001/signalr");
+            this.connection = new HubConnection("http://"+targetServerIp+":63056/signalr");
             chatHubProxy = this.connection.CreateHubProxy("ChatHub");
             await this.connection.Start();
         }
@@ -57,8 +57,11 @@ namespace InterfaceGraphique.CommunicationInterface
 
         public void Logout(string username)
         {
-            chatHubProxy.Invoke("Disconnect", username).Wait();
-            this.connection.Stop();
+            if(chatHubProxy != null)
+            {
+                chatHubProxy.Invoke("Disconnect", username).Wait();
+                this.connection.Stop();
+            }
         }
 
         public async void SendMessage(ChatMessage message)

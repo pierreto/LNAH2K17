@@ -221,7 +221,7 @@
     <Compile Include="Entities\ChannelEntity.cs" />
     <Compile Include="Entities\ChatMessageEntity.cs" />
     <Compile Include="Entities\Entity.cs" />
-    <Compile Include="Entities\LoginFormMessage.cs" />
+    <Compile Include="Entities\LoginMessage.cs" />
     <Compile Include="Entities\UserEntity.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -326,7 +326,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>63056</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

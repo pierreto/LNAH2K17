@@ -119,6 +119,10 @@ namespace InterfaceGraphique.Menus
             {
                 throw new LoginException(@"Le champ du nom d'usager ne peut être vide.");
             }
+            if(UsernameTextBox.Text.Any(c => !(Char.IsLetterOrDigit(c) || c.Equals('_'))))
+            {
+                throw new LoginException(@"Le nom d'usager peut seulement contenir des chiffre, des lettre et des tirets en bas (_)");
+            }
             if (String.IsNullOrEmpty(ServerTextBox.Text))
             {
                 throw new LoginException(@"Le champ de l'adresse du serveur ne peut être vide.");
@@ -167,10 +171,6 @@ namespace InterfaceGraphique.Menus
         {
            Program.MainMenu.GetChat().Logout();
             Program.FormManager.CurrentForm = Program.Login;
-            MessageBox.Show(
-                @"Vous êtes maintenant déconnecté.",
-                @"Déconnexion",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 

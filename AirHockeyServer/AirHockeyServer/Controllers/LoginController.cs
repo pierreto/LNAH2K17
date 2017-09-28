@@ -20,19 +20,30 @@ namespace AirHockeyServer.Controllers
         public IChatService ChatService { get; }
 
         [Route("api/login")]
-        public HttpResponseMessage Post([FromBody]LoginFormMessage loginForm)
+        public HttpResponseMessage Login([FromBody]LoginMessage message)
         {
             try
             {
-                this.loginService.login(loginForm);
+                this.loginService.Login(message);
+            }
+            catch (LoginException e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+                return Request.CreateResponse(HttpStatusCode.Forbidden);
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                System.Diagnostics.Debug.WriteLine(e);
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
             return Request.CreateResponse(HttpStatusCode.OK);
         }
 
+        [Route("api/logout")]
+        public HttpResponseMessage Logout([FromBody]LoginMessage message)
+        {
+            this.loginService.Logout(message);
+            return Request.CreateResponse(HttpStatusCode.OK);
+        }
     }
 }

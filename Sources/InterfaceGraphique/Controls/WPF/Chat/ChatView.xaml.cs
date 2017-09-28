@@ -144,8 +144,8 @@ namespace InterfaceGraphique.Controls
                 this.chatHub.SendMessage(new ChatMessage()
                 {
                     Sender = loginForm.LoginName,
-                    MessageValue = InputTextBox.Text
-
+                    MessageValue = InputTextBox.Text,
+                    TimeStamp = DateTime.Now
                 });
                 InputTextBox.Text = "";
             }*/
@@ -201,4 +201,3 @@ public class Messages
     }
 
 }
-
