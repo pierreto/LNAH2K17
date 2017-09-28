@@ -57,8 +57,11 @@ namespace InterfaceGraphique.CommunicationInterface
 
         public void Logout(string username)
         {
-            chatHubProxy.Invoke("Disconnect", username).Wait();
-            this.connection.Stop();
+            if(chatHubProxy != null)
+            {
+                chatHubProxy.Invoke("Disconnect", username).Wait();
+                this.connection.Stop();
+            }
         }
 
         public async void SendMessage(ChatMessage message)

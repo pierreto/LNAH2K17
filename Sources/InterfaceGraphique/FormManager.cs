@@ -51,6 +51,19 @@ namespace InterfaceGraphique {
             InitializeComponent();
             InitializeScreenSize();
             InitializeOpenGLPanel();
+            InitializeEvents();
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// Fonction permettant d'initialiser les évènements qu'on s'abonne
+        /// 
+        /// @return     Void
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        public void InitializeEvents()
+        {
+            this.FormClosing += (sender, e) => Program.Login.Logout();
         }
 
 

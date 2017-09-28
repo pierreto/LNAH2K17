@@ -47,6 +47,8 @@ namespace InterfaceGraphique
         private static QuickPlayMenu quickPlayMenu;
         private static TournementMenu tournementMenu;
         private static TournementTree tournementTree;
+     
+
         private static CreditsMenu creditsMenu;
         private static Panel openGLPanel;
         private static Login login;

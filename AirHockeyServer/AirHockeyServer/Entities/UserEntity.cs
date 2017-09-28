@@ -8,4 +8,12 @@ namespace AirHockeyServer.Entities
         
         public string Name { get; set; }
     }
+
+    //public class UserComparer : IComparable<UserEntity>
+    //{
+    //    public int CompareTo(UserEntity other)
+    //    {
+    //        return other.Id.GetHashCode();
+    //    }
+    //}
 }

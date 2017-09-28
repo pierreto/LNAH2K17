@@ -136,7 +136,10 @@ namespace InterfaceGraphique.Menus
         }
         public void Logout()
         {
-            this.chatHub.Logout(this.username);
+            if (this.chatHub != null)
+            {
+                this.chatHub.Logout(this.username);
+            }
         }
     }
 }
