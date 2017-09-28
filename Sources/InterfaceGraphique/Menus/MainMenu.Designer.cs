@@ -30,7 +30,6 @@
             this.Button_Credits = new System.Windows.Forms.Button();
             this.wpfChatHost1 = new InterfaceGraphique.Controls.WPFChatHost();
             this.hostedComponent1 = new InterfaceGraphique.Controls.WPFChatView();
-            this.chat = new InterfaceGraphique.Menus.Chat();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -141,21 +140,12 @@
             // wpfChatHost1
             // 
             this.wpfChatHost1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.wpfChatHost1.Location = new System.Drawing.Point(369, 199);
+            this.wpfChatHost1.Location = new System.Drawing.Point(28, 196);
             this.wpfChatHost1.Name = "wpfChatHost1";
-            this.wpfChatHost1.Size = new System.Drawing.Size(403, 282);
+            this.wpfChatHost1.Size = new System.Drawing.Size(428, 341);
             this.wpfChatHost1.TabIndex = 9;
             this.wpfChatHost1.Text = "wpfChatHost1";
             this.wpfChatHost1.Child = this.hostedComponent1;
-            // 
-            // chat
-            // 
-            this.chat.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.chat.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.chat.Location = new System.Drawing.Point(-56, 199);
-            this.chat.Name = "chat";
-            this.chat.Size = new System.Drawing.Size(419, 349);
-            this.chat.TabIndex = 8;
             // 
             // MainMenu
             // 
@@ -164,7 +154,6 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(784, 561);
             this.Controls.Add(this.wpfChatHost1);
-            this.Controls.Add(this.chat);
             this.Controls.Add(this.Button_Credits);
             this.Controls.Add(this.buttonQuitter);
             this.Controls.Add(this.buttonEditeur);
@@ -189,6 +178,5 @@
         private System.Windows.Forms.Button Button_Credits;
         private Controls.WPFChatHost wpfChatHost1;
         private Controls.WPFChatView hostedComponent1;
-        private Menus.Chat chat;
     }
 }
