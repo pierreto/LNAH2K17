@@ -4,7 +4,7 @@ namespace AirHockeyServer.Services
 {
     public interface ILoginService
     {
-        void login(LoginFormMessage message);
+        void login(LoginMessage message);
         void disconnect();
     }
 }

@@ -7,22 +7,21 @@ namespace AirHockeyServer.Services
 {
     public class LoginService : ILoginService, IService
     {
-        //This is for TESTING purpose only, we should not do this for remembering users that are connected
-        private List<string> membersList;
-
+        private static HashSet<string> _usernames = new HashSet<string>();
+ 
         public LoginService()
         {
-            membersList = new List<string>();
         }
 
-        public void login(LoginFormMessage loginForm) 
+        public void login(LoginMessage message) 
         {
-            if (membersList.Contains(loginForm.username))
+            System.Diagnostics.Debug.WriteLine(message.username);
+            System.Diagnostics.Debug.WriteLine(_usernames.Count);
+            if (_usernames.Contains(message.username))
             {
-                throw new LoginException("Login name already taken."); 
+                throw new LoginException("Username already taken."); 
             }
-            this.membersList.Add(loginForm.username);
-
+            _usernames.Add(message.username);
         }
 
         public void disconnect()
