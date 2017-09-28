@@ -1,10 +1,11 @@
 ﻿namespace AirHockeyServer.Entities
 {
-    public class LoginFormMessage : Entity
+    public class LoginMessage : Entity
     {
         public string username { get; set; }
+        public string password { get; set; }
 
-        public LoginFormMessage()
+        public LoginMessage()
         {
         }
     }
