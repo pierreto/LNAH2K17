@@ -28,7 +28,6 @@ namespace InterfaceGraphique {
         public MainMenu() {
             InitializeComponent();
             InitializeEvents();
-
         }
 
         // Renvoie une référence de l'instance Chat du menu principal:
