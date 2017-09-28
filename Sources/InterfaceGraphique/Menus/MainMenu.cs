@@ -8,6 +8,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using InterfaceGraphique.Controls;
 using InterfaceGraphique.Menus;
 
 namespace InterfaceGraphique {
@@ -31,9 +32,9 @@ namespace InterfaceGraphique {
         }
 
         // Renvoie une référence de l'instance Chat du menu principal:
-        public ref Chat GetChat()
+        public ref WPFChatView GetChat()
         {
-            return ref this.chat;
+            return ref this.hostedComponent1;
         }
 
         ////////////////////////////////////////////////////////////////////////

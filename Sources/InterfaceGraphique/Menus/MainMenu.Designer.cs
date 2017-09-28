@@ -28,9 +28,9 @@
             this.buttonQuitter = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.Button_Credits = new System.Windows.Forms.Button();
-            this.chat = new InterfaceGraphique.Menus.Chat();
             this.wpfChatHost1 = new InterfaceGraphique.Controls.WPFChatHost();
             this.hostedComponent1 = new InterfaceGraphique.Controls.WPFChatView();
+            this.chat = new InterfaceGraphique.Menus.Chat();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -138,23 +138,24 @@
             this.Button_Credits.Text = "Crédits";
             this.Button_Credits.UseVisualStyleBackColor = true;
             // 
-            // chat
-            // 
-            this.chat.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.chat.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.chat.Location = new System.Drawing.Point(58, 199);
-            this.chat.Name = "chat";
-            this.chat.Size = new System.Drawing.Size(419, 349);
-            this.chat.TabIndex = 8;
-            // 
             // wpfChatHost1
             // 
-            this.wpfChatHost1.Location = new System.Drawing.Point(74, 199);
+            this.wpfChatHost1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.wpfChatHost1.Location = new System.Drawing.Point(369, 199);
             this.wpfChatHost1.Name = "wpfChatHost1";
             this.wpfChatHost1.Size = new System.Drawing.Size(403, 282);
             this.wpfChatHost1.TabIndex = 9;
             this.wpfChatHost1.Text = "wpfChatHost1";
             this.wpfChatHost1.Child = this.hostedComponent1;
+            // 
+            // chat
+            // 
+            this.chat.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.chat.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.chat.Location = new System.Drawing.Point(-56, 199);
+            this.chat.Name = "chat";
+            this.chat.Size = new System.Drawing.Size(419, 349);
+            this.chat.TabIndex = 8;
             // 
             // MainMenu
             // 
@@ -186,8 +187,8 @@
         private System.Windows.Forms.Button buttonQuitter;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button Button_Credits;
-        private Menus.Chat chat;
         private Controls.WPFChatHost wpfChatHost1;
         private Controls.WPFChatView hostedComponent1;
+        private Menus.Chat chat;
     }
 }

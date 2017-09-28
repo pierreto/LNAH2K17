@@ -6,10 +6,13 @@
              xmlns:local="clr-namespace:InterfaceGraphique.Controls"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:communicationInterface="clr-namespace:InterfaceGraphique.CommunicationInterface"
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="600">
     <UserControl.Resources>
+        
         <DataTemplate x:Key="MessagesDataTemplate" >
+            
             <Border Name="MessageBorder" MinHeight="40" BorderThickness="1" Background="#EFEBE9" 
 
                     Margin="10,0,60,10" BorderBrush="#BCAAA4" CornerRadius="2" SnapsToDevicePixels="True">
@@ -38,6 +41,7 @@
         </DataTemplate>
     </UserControl.Resources>
     <Grid>
+        
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
@@ -66,9 +70,9 @@
         <!-- Messages -->
         <ItemsControl x:Name="MessagesItemsCtrl" Grid.Column="1" Margin="0,5,0,0" 
 
-                  ItemsSource="{Binding SelectedParticipant.Chatter}" 
-
-                  ItemTemplate="{DynamicResource MessagesDataTemplate}"
+             ItemsSource="{Binding ListOfItems}" 
+        
+            ItemTemplate="{DynamicResource MessagesDataTemplate}"
 
                   ScrollViewer.VerticalScrollBarVisibility="Auto">
             <i:Interaction.Behaviors>
