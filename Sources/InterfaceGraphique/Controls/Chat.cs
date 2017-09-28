@@ -11,6 +11,7 @@ namespace InterfaceGraphique.Menus
     {
         private LoginFormMessage loginForm;
         private ChatHub chatHub;
+        private string username;
 
         public Chat()
         {
@@ -49,6 +50,7 @@ namespace InterfaceGraphique.Menus
             await this.chatHub.InitializeChat();
             
             this.loginForm = loginForm;
+            this.username = loginForm.LoginName;
 
             if (!this.IsHandleCreated)
             {
@@ -123,6 +125,10 @@ namespace InterfaceGraphique.Menus
                 });
                 InputTextBox.Text = "";
             }
+        }
+        public void Logout()
+        {
+            this.chatHub.Logout(this.username);
         }
     }
 }

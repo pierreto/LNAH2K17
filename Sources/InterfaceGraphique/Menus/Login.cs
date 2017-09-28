@@ -142,6 +142,16 @@ namespace InterfaceGraphique.Menus
             }
 
         }
+
+        public void Logout()
+        {
+            Program.MainMenu.GetChat().Logout();
+            Program.FormManager.CurrentForm = Program.Login;
+            MessageBox.Show(
+                @"Vous êtes maintenant déconnecté.",
+                @"Déconnexion",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
     }
 
     public class LoginFormMessage

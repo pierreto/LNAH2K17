@@ -98,6 +98,7 @@
     <Compile Include="CommunicationInterface\ChatConnection.cs" />
     <Compile Include="CommunicationInterface\ChatHub.cs" />
     <Compile Include="Entities\ChannelEntity.cs" />
+    <Compile Include="Entities\LoginMessage.cs" />
     <Compile Include="Entities\MemberEntity.cs" />
     <Compile Include="CommunicationInterface\LoginClient.cs" />
     <Compile Include="Controls\Chat.cs">

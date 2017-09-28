@@ -51,6 +51,7 @@ namespace InterfaceGraphique {
             this.buttonEditeur.Click += (sender, e) => Program.FormManager.CurrentForm = Program.Editeur;
             this.Button_Credits.Click += (sender, e) => Program.FormManager.CurrentForm = Program.CreditsMenu;
             this.buttonQuitter.Click += (sender, e) => System.Windows.Forms.Application.Exit();
+            this.buttonLogout.Click += (sender, e) => Program.Login.Logout();
         }
 
 
@@ -106,6 +107,11 @@ namespace InterfaceGraphique {
         ////////////////////////////////////////////////////////////////////////
         public void UnsuscribeEventHandlers() {
             Program.FormManager.SizeChanged -= new EventHandler(WindowSizeChanged);
+        }
+
+        private void chat_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
