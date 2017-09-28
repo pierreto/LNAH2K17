@@ -29,7 +29,7 @@ namespace InterfaceGraphique.CommunicationInterface
         {
             this.targetServerIp = targetServerIp;
 
-            this.connection = new HubConnection("http://"+targetServerIp+":5001/signalr");
+            this.connection = new HubConnection("http://"+targetServerIp+":63056/signalr");
             chatHubProxy = this.connection.CreateHubProxy("ChatHub");
             await this.connection.Start();
         }

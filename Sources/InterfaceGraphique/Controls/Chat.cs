@@ -85,6 +85,7 @@ namespace InterfaceGraphique.Menus
             {
                 // This will run on the UI thread
                 this.chatViewRichTextBox.ReadOnly = false;
+                this.AppendText(message.TimeStamp.ToLongTimeString() + " ", Color.Black);
                 this.AppendText(message.Sender + " a écrit: ", Color.Blue);
                 this.AppendText(message.MessageValue + "\r\n", Color.Green);
                 this.BringToFront();
@@ -126,10 +127,11 @@ namespace InterfaceGraphique.Menus
                 this.chatHub.SendMessage(new ChatMessage()
                 {
                     Sender = loginForm.LoginName,
-                    MessageValue = InputTextBox.Text
-
+                    MessageValue = InputTextBox.Text,
+                    TimeStamp = DateTime.Now
                 });
                 InputTextBox.Text = "";
+                InputTextBox.Focus();
             }
         }
         public void Logout()
