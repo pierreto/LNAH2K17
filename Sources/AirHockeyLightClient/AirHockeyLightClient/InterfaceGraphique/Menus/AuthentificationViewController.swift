@@ -37,8 +37,12 @@ class AuthentificationViewController: UIViewController {
         super.viewDidLoad()
     }
     
+    @IBAction func triggerUserLogin(_ sender: Any) {
+        userLogin(nil)
+    }
+    
     // Set username
-    @IBAction func userLogin(_ sender: UIButton) {
+    @IBAction func userLogin(_ sender: UIButton?) {
         self.setIpAddressInputToDefaultUI()
         self.setUsernameInputToDefaultUI()
         
@@ -68,6 +72,17 @@ class AuthentificationViewController: UIViewController {
         }
     }
     
+    /*
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        
+        //textField code
+        
+        textField.resignFirstResponder()  //if desired
+        userLogin(nil)
+        return true
+    }
+ */
+    
     func validateIPAdress(ipAddress: String) -> Bool {
         print("IP address: " + ipAddress)
         
@@ -89,6 +104,8 @@ class AuthentificationViewController: UIViewController {
             return false
         }
     }
+    
+    
     
     func validateUsername(username: String) -> Bool {
         print("Username: " + username)
