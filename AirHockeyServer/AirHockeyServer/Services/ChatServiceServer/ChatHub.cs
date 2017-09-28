@@ -71,5 +71,13 @@ namespace AirHockeyServer.Services.ChatServiceServer
             //Channel channelCreated = await this.ChannelService.JoinChannel(channelName);
             await Groups.Add(Context.ConnectionId, channelName);
         }
+
+        public void Disconnect(string username)
+        {
+            if (usernames.Contains(username))
+            {
+                usernames.Remove(username);
+            }
+        }
     }
 }

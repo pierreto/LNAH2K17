@@ -17,6 +17,7 @@ namespace InterfaceGraphique.CommunicationInterface
         private string targetServerIp;
         private UpdateChatBoxDelegate updateChatBoxDelegate;
         private IHubProxy chatHubProxy;
+        private HubConnection connection;
 
         public ChatHub(UpdateChatBoxDelegate chatBoxDelegate)
         {
@@ -28,9 +29,9 @@ namespace InterfaceGraphique.CommunicationInterface
         {
             this.targetServerIp = targetServerIp;
 
-            var connection = new HubConnection("http://"+targetServerIp+":63056/signalr");
-            chatHubProxy = connection.CreateHubProxy("ChatHub");
-            await connection.Start();
+            this.connection = new HubConnection("http://"+targetServerIp+":5001/signalr");
+            chatHubProxy = this.connection.CreateHubProxy("ChatHub");
+            await this.connection.Start();
         }
 
         public async Task<bool> AuthenticateUser(string username)
@@ -52,6 +53,12 @@ namespace InterfaceGraphique.CommunicationInterface
                 Console.WriteLine("ChatMessageReceived : " + message.MessageValue);
                 updateChatBoxDelegate(message);
             });
+        }
+
+        public void Logout(string username)
+        {
+            chatHubProxy.Invoke("Disconnect", username).Wait();
+            this.connection.Stop();
         }
 
         public async void SendMessage(ChatMessage message)

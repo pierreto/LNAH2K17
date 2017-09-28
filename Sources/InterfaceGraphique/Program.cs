@@ -25,6 +25,7 @@ namespace InterfaceGraphique
 
         public static FormManager FormManager { get { return formManager; } }
         public static MainMenu MainMenu { get { return mainMenu; } }
+        public static Login Login {  get { return login; } }
         public static Editeur Editeur { get { return editeur; } }
         public static ConfigurationMenu ConfigurationMenu { get { return configurationMenu; } }
         public static QuickPlay QuickPlay { get { return quickPlay; } }
@@ -35,7 +36,6 @@ namespace InterfaceGraphique
         public static TournementTree TournementTree { get { return tournementTree; } }
         public static CreditsMenu CreditsMenu { get { return creditsMenu; } }
         public static Panel OpenGLPanel { get { return openGLPanel; } set { openGLPanel = value; } }
- 
 
         private static FormManager formManager;
         private static MainMenu mainMenu;
