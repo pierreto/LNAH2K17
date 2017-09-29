@@ -20,11 +20,11 @@ namespace AirHockeyServer.Controllers
         public IChatService ChatService { get; }
 
         [Route("api/login")]
-        public HttpResponseMessage Post([FromBody]LoginMessage message)
+        public HttpResponseMessage Login([FromBody]LoginMessage message)
         {
             try
             {
-                this.loginService.login(message);
+                this.loginService.Login(message);
             }
             catch (LoginException e)
             {
@@ -39,5 +39,11 @@ namespace AirHockeyServer.Controllers
             return Request.CreateResponse(HttpStatusCode.OK);
         }
 
+        [Route("api/logout")]
+        public HttpResponseMessage Logout([FromBody]LoginMessage message)
+        {
+            this.loginService.Logout(message);
+            return Request.CreateResponse(HttpStatusCode.OK);
+        }
     }
 }
