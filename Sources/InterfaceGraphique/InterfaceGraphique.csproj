@@ -112,6 +112,8 @@
     <Compile Include="Controls\WPF\Chat\ChatView.xaml.cs">
       <DependentUpon>ChatView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\WPF\Chat\ChatViewModel.cs" />
+    <Compile Include="Controls\WPF\RelayCommandAsync.cs" />
     <Compile Include="Entities\ChannelEntity.cs" />
     <Compile Include="Entities\LoginMessage.cs" />
     <Compile Include="Entities\MemberEntity.cs" />
