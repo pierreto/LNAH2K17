@@ -33,8 +33,12 @@ class AuthentificationViewController: UIViewController {
     @IBOutlet weak var ipAddressInvalidErrorMessage: UILabel!
     @IBOutlet weak var ipAddressNotConnectedErrorMessage: UILabel!
     
+    @IBOutlet weak var connectionIndicator: UIActivityIndicatorView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.connectionIndicator.transform = CGAffineTransform(scaleX: 2, y: 2)
     }
     
     @IBAction func triggerUserLogin(_ sender: Any) {
@@ -142,17 +146,45 @@ class AuthentificationViewController: UIViewController {
     func connectToServer(ipAddress: String, username: String) {
         // Connect to server via SignalR
         clientConnection.EstablishConnection(ipAddress: ipAddress, hubName: "ChatHub")
+        self.connectionIndicator.startAnimating()
+        g
+        let timerTask = DispatchWorkItem {
+            if !(ClientConnection.sharedConnection.getConnection().state == .connected) {
+                print("Connection timeout")
+                self.notifyErrorInput(textField: self.ipAddessInput)
+                self.ipAddressNotConnectedErrorMessage.isHidden = false
+                self.connectionIndicator.stopAnimating()
+                self.ipAddessInput.isEnabled = true
+                self.usernameInput.isEnabled = true
+            }
+        }
+        
+        let timer = DispatchTime.now() + 5 // start a timer
+        DispatchQueue.main.asyncAfter(deadline: timer, execute: timerTask)
+        
+        self.ipAddessInput.isEnabled = false
+        self.usernameInput.isEnabled = false
         
         clientConnection.getConnection().error = { error in
             print("Error: (error)")
             self.notifyErrorInput(textField: self.ipAddessInput)
             self.ipAddressNotConnectedErrorMessage.isHidden = false
+            self.connectionIndicator.stopAnimating()
+            self.ipAddessInput.isEnabled = true
+            self.usernameInput.isEnabled = true
+            
+            timerTask.cancel()
         }
         
         clientConnection.getConnection().connectionFailed = { error in
             print("Connection failed")
             self.notifyErrorInput(textField: self.ipAddessInput)
             self.ipAddressNotConnectedErrorMessage.isHidden = false
+            self.connectionIndicator.stopAnimating()
+            self.ipAddessInput.isEnabled = true
+            self.usernameInput.isEnabled = true
+            
+            timerTask.cancel()
         }
         
         // When a message is received from the server
@@ -168,8 +200,11 @@ class AuthentificationViewController: UIViewController {
         
         clientConnection.getConnection().connected = {
             print("Connected with ip: " + ipAddress)
+            self.connectionIndicator.stopAnimating()
             self.clientConnection.setIpAddress(ipAddress: ipAddress)
             self.registerUsername(ipAddress: ipAddress, username: username)
+            
+            timerTask.cancel()
         }
     }
     
@@ -211,6 +246,8 @@ class AuthentificationViewController: UIViewController {
                 DispatchQueue.main.async {
                     self.notifyErrorInput(textField: self.usernameInput)
                     self.usernameNotUniqueErrorMessage.isHidden = false
+                    self.ipAddessInput.isEnabled = true
+                    self.usernameInput.isEnabled = true
                 }
             }
             

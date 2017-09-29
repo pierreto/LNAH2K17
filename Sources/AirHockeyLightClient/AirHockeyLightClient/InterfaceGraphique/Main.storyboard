@@ -93,10 +93,15 @@
                                 <color key="textColor" red="1" green="0.2004369043" blue="0.16195445" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="FyT-jp-cUM" userLabel="connectionIndicator">
+                                <rect key="frame" x="0.0" y="634" width="768" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="0.50158477429710246" green="0.76474623044747803" blue="0.84018950670000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <connections>
+                        <outlet property="connectionIndicator" destination="FyT-jp-cUM" id="gNL-HV-aTv"/>
                         <outlet property="ipAddessInput" destination="1Xw-v6-3wi" id="Hfa-Ez-gka"/>
                         <outlet property="ipAddressInvalidErrorMessage" destination="Vyp-xF-3fK" id="ZvN-kO-igc"/>
                         <outlet property="ipAddressNotConnectedErrorMessage" destination="bFd-Ef-OEu" id="gQg-7G-KYz"/>
