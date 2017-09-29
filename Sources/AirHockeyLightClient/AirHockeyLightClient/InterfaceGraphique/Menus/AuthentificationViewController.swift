@@ -147,7 +147,7 @@ class AuthentificationViewController: UIViewController {
         // Connect to server via SignalR
         clientConnection.EstablishConnection(ipAddress: ipAddress, hubName: "ChatHub")
         self.connectionIndicator.startAnimating()
-        g
+        
         let timerTask = DispatchWorkItem {
             if !(ClientConnection.sharedConnection.getConnection().state == .connected) {
                 print("Connection timeout")
@@ -204,13 +204,48 @@ class AuthentificationViewController: UIViewController {
             self.clientConnection.setIpAddress(ipAddress: ipAddress)
             self.registerUsername(ipAddress: ipAddress, username: username)
             
+        
             timerTask.cancel()
         }
     }
     
     func registerUsername(ipAddress: String, username: String) {
+        do {
+            try clientConnection.getChatHub().invoke("Authenticate", arguments: [username])  { (result, error) in
+                if error != nil {
+                    print("Authentification error")
+                    self.notifyErrorInput(textField: self.usernameInput)
+                    self.usernameNotUniqueErrorMessage.isHidden = false
+                    self.ipAddessInput.isEnabled = true
+                    self.usernameInput.isEnabled = true
+                } else {
+                    if result != nil {
+                        if result as! Bool {
+                            print("Authentification success")
+                            self.clientConnection.setUsername(username: self.usernameInput.text!)
+                            self.setUsernameInputToDefaultUI()
+                            
+                            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                            let vc = storyboard.instantiateViewController(withIdentifier: "ChannelViewController")
+                            self.present(vc, animated: true, completion: nil)
+                        }
+                        else {
+                            print("Authentification error")
+                            self.notifyErrorInput(textField: self.usernameInput)
+                            self.usernameNotUniqueErrorMessage.isHidden = false
+                            self.ipAddessInput.isEnabled = true
+                            self.usernameInput.isEnabled = true
+                        }
+                    }
+                }
+            }
+        }
+        catch {
+            print("Error Authentication")
+        }
+        
         // Create POST request
-        var request = URLRequest(url: URL(string: "http://" + ipAddress + ":63056/api/login")!)
+        /*var request = URLRequest(url: URL(string: "http://" + ipAddress + ":63056/api/login")!)
         request.httpMethod = "POST"
         
         // Headers
@@ -224,7 +259,7 @@ class AuthentificationViewController: UIViewController {
         request.httpBody = jsonString.data(using: .utf8)
         
         // Send request
-        sendHttpRequest(request: request)
+        sendHttpRequest(request: request)*/
     }
     
     func sendHttpRequest(request: URLRequest) {

@@ -56,6 +56,10 @@ class ClientConnection {
         connection!.start()
     }
     
+    public func RegisterUsername(username: String) {
+        
+    }
+    
     public func Disconnect(username: String) {
         do {
             try chatHub!.invoke("Disconnect", arguments: [username], callback: { (response) in
