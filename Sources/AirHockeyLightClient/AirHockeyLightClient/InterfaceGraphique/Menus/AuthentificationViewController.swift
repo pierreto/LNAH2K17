@@ -168,6 +168,7 @@ class AuthentificationViewController: UIViewController {
         
         clientConnection.getConnection().connected = {
             print("Connected with ip: " + ipAddress)
+            self.clientConnection.setIpAddress(ipAddress: ipAddress)
             self.registerUsername(ipAddress: ipAddress, username: username)
         }
     }

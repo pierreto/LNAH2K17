@@ -14,6 +14,7 @@ class ClientConnection {
     private var connection: SignalR?
     private var chatHub: Hub?
     
+    private var ipAddress: String?
     private var username: String?
     
     public func getConnection() -> SignalR {
@@ -22,6 +23,14 @@ class ClientConnection {
     
     public func getChatHub() -> Hub {
         return chatHub!
+    }
+    
+    public func getIpAddress() -> String {
+        return ipAddress!
+    }
+    
+    public func setIpAddress(ipAddress: String) {
+        self.ipAddress = ipAddress
     }
     
     public func getUsername() -> String {
@@ -46,6 +55,22 @@ class ClientConnection {
         connection!.addHub(chatHub!)
         connection!.start()
     }
+    
+    public func Disconnect(username: String) {
+        do {
+            try chatHub!.invoke("Disconnect", arguments: [username], callback: { (response) in
+                self.StopConnection()
+            })
+        }
+        catch {
+            print("Error Disconnect")
+        }
+    }
+    
+    public func StopConnection() {
+        ClientConnection.sharedConnection.getConnection().stop()
+    }
+    
     
     public func SendBroadcast(message: Any) {
         do {

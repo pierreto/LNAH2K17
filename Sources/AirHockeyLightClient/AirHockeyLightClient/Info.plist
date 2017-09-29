@@ -51,6 +51,8 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>UIApplicationExitsOnSuspend</key>
+	<true/>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

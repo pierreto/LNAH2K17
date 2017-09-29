@@ -13,7 +13,7 @@
         <!--Authentification View Controller-->
         <scene sceneID="fxS-7r-Dhb">
             <objects>
-                <viewController id="d4o-dE-S39" userLabel="Authentification View Controller" customClass="AuthentificationViewController" customModule="AirHockeyLightClient" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AuthentificationViewController" id="d4o-dE-S39" userLabel="Authentification View Controller" customClass="AuthentificationViewController" customModule="AirHockeyLightClient" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="hyx-R6-M5b"/>
                         <viewControllerLayoutGuide type="bottom" id="o4j-xt-EaC"/>
@@ -187,6 +187,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="60"/>
                                 <state key="normal" title="&lt;"/>
                                 <connections>
+                                    <action selector="deregisterClient:" destination="xgG-d7-dxf" eventType="touchUpInside" id="r7n-do-kRD"/>
                                     <segue destination="d4o-dE-S39" kind="show" id="TXx-9H-7eU"/>
                                 </connections>
                             </button>
