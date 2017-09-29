@@ -19,7 +19,9 @@ struct Message {
 }
 
 class ChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-
+    
+    static var sharedChatViewController = ChatViewController()
+    
     @IBOutlet weak var chatBodyView: UIView!
     @IBOutlet weak var connectionIndicator: UIActivityIndicatorView!
     @IBOutlet weak var chatInput: UITextField!
@@ -55,18 +57,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
-        //clientConnection.EstablishConnection(hubName: "ChatHub")
-        
         self.connectionIndicator.transform = CGAffineTransform(scaleX: 3, y: 3)
-        
-        // When the client has successfully connected to the server, activate chat box
-        clientConnection.getConnection().connected = {
-        self.clientConnection.getConnection().connected = {
-            print("connected: \(String(describing: self.clientConnection.getConnection().connectionID))") }
-            self.chatInput.isEnabled = true
-            self.sendButton.isEnabled = true
-            self.connectionIndicator.stopAnimating()
-        }
         
         /*self.clientConnection.getConnection().disconnected = {
             print("Disconnected...")
@@ -78,9 +69,19 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
         }*/
         
-        // When a message is received from the server
-        self.clientConnection.getChatHub().on("ChatMessageReceived") { args in
-            let message = args![0] as! Dictionary<String, String>
+        messages.rowHeight = UITableViewAutomaticDimension
+        messages.estimatedRowHeight = 140
+        ChatViewController.sharedChatViewController = self
+    }
+    
+    deinit {
+        //Removing notifies on keyboard appearing
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
+    
+    func receiveMessage(message: Dictionary<String, String>) {
+            // When a message is received from the server
             let sender = message["Sender"]
             let messageValue = message["MessageValue"]
             let timestamp = message["TimeStamp"]
@@ -92,20 +93,15 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
                 // Reload tableView
                 self.messages.reloadData()
             })
-        }
-        
-        messages.rowHeight = UITableViewAutomaticDimension
-        messages.estimatedRowHeight = 140
     }
     
-    deinit {
-        //Removing notifies on keyboard appearing
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    @IBAction func triggerSendMessage(_ sender: Any) {
+        self.sendMessage(nil)
     }
+    
     
     // Send message to server on button click
-    @IBAction func sendMessage(_ sender: UIButton) {
+    @IBAction func sendMessage(_ sender: UIButton?) {
         if chatInput.text != "" {
             // Create POST request
             //var request = URLRequest(url: URL(string: "http://localhost:8080/api/chat/")!)

@@ -72,22 +72,10 @@ class AuthentificationViewController: UIViewController {
         }
     }
     
-    /*
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        
-        //textField code
-        
-        textField.resignFirstResponder()  //if desired
-        userLogin(nil)
-        return true
-    }
- */
-    
     func validateIPAdress(ipAddress: String) -> Bool {
         print("IP address: " + ipAddress)
         
         let validIpAddressRegex = "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"
-        //let validIpAddressRegex = "\\b\\d{3}.\\d{3}.\\d{3}.\\d{3}\\b"
         let ipMatches = ipAddress.range(of: validIpAddressRegex, options: .regularExpression)
         
         if ipAddress.isEmpty {
@@ -104,8 +92,6 @@ class AuthentificationViewController: UIViewController {
             return false
         }
     }
-    
-    
     
     func validateUsername(username: String) -> Bool {
         print("Username: " + username)
@@ -167,6 +153,11 @@ class AuthentificationViewController: UIViewController {
             print("Connection failed")
             self.notifyErrorInput(textField: self.ipAddessInput)
             self.ipAddressNotConnectedErrorMessage.isHidden = false
+        }
+        
+        // When a message is received from the server
+        clientConnection.getChatHub().on("ChatMessageReceived") { args in
+            ChatViewController.sharedChatViewController.receiveMessage(message: args?[0] as! Dictionary<String, String>)
         }
         
         clientConnection.getConnection().starting = { print("started") }
