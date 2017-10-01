@@ -19,8 +19,10 @@ namespace InterfaceGraphique.Menus
     {
         private readonly string LOCALHOST = "localhost";
         private readonly int MAX_INPUT_LENGTH = 15;
-        public Login()
+        private ChatHub chatHub;
+        public Login(ChatHub chatHub)
         {
+            this.chatHub = chatHub;
             InitializeComponent();
             InitializeEvents();
             this.ServerLabel.BackColor = System.Drawing.Color.Transparent;
@@ -67,15 +69,14 @@ namespace InterfaceGraphique.Menus
                 };
 
                 // We first initialize the connection with the chat server:
-                await Program.MainMenu.GetChat().EstablishConnection(ServerTextBox.Text);
-
+                await chatHub.EstablishConnection(ServerTextBox.Text);
                 // Then we try to authenticate the user with the username he/she gave:
-                var authentication = Program.MainMenu.GetChat().AuthenticateUser(UsernameTextBox.Text);
+                var authentication = chatHub.AuthenticateUser(UsernameTextBox.Text);
                 await authentication;
                 if (authentication.Result)
                 {
                     // We initialize the chat to activate broadcasting from the server:
-                    await Program.MainMenu.GetChat().InitializeChat(loginForm);
+                    await chatHub.InitializeChat();
                     // Finally we move from the login page to the main menu:
                     Program.FormManager.CurrentForm = Program.MainMenu;
                 }
@@ -84,6 +85,8 @@ namespace InterfaceGraphique.Menus
                     UsernameTextBox.Clear();
                     throw new LoginException(@"Ce nom d'utilisateur est déjà pris. Veuillez en choisir un autre.");
                 }
+                Program.FormManager.CurrentForm = Program.MainMenu;
+
             }
             catch (LoginException e)
             {
@@ -169,8 +172,8 @@ namespace InterfaceGraphique.Menus
 
         public void Logout()
         {
-            Program.MainMenu.GetChat().Logout();
-            Program.FormManager.CurrentForm = Program.Login;
+          /* Program.MainMenu.GetChat().Logout();
+            Program.FormManager.CurrentForm = Program.Login;*/
         }
     }
 

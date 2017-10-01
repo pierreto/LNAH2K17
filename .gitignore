@@ -26,6 +26,7 @@ bld/
 *.exe
 *.exp
 *.dll
+Exe/*.xml
 
 # Visual Studio 2015 cache/options directory
 .vs/
@@ -299,4 +300,5 @@ __pycache__/
 *.odx.cs
 *.xsd.cs
 
-exe/
+# Mac
+.DS_Store
