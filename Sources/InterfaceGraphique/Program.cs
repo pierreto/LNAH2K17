@@ -12,8 +12,14 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Sockets;
 using System.Threading;
+using System.Windows;
 using InterfaceGraphique.CommunicationInterface;
+using InterfaceGraphique.Controls;
+using InterfaceGraphique.Controls.WPF;
+using InterfaceGraphique.Controls.WPF.Chat;
 using InterfaceGraphique.Menus;
+using Microsoft.Practices.Unity;
+using Application = System.Windows.Forms.Application;
 
 namespace InterfaceGraphique
 {
@@ -59,6 +65,8 @@ namespace InterfaceGraphique
 
         public static HttpClient client = new HttpClient();
 
+        public static UnityContainer unityContainer;
+
         /// <summary>
         /// Point d'entrée principal de l'application.
         /// </summary>
@@ -79,8 +87,11 @@ namespace InterfaceGraphique
             Application.Idle += ExecuterQuandInactif;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            WPFApplication.Start();
 
-            login = new Login();
+            InitializeUnityDependencyInjection();
+
+            login = unityContainer.Resolve<Login>(); ;
             openGLPanel = new Panel();
             formManager = new FormManager();
             mainMenu = new MainMenu();
@@ -93,11 +104,22 @@ namespace InterfaceGraphique
             tournementMenu = new TournementMenu();
             tournementTree = new TournementTree();
             creditsMenu = new CreditsMenu();
-
+        
             FonctionsNatives.loadSounds();
 
+
+
+           
             formManager.CurrentForm = login;
             Application.Run(formManager);
+
+        }
+
+        private static void InitializeUnityDependencyInjection()
+        {
+            unityContainer = new UnityContainer();
+            unityContainer.RegisterType<IChatHub, ChatHub>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<ChatViewModel>();
         }
 
         static void ExecuterQuandInactif(object sender, EventArgs e)

@@ -219,6 +219,18 @@ namespace InterfaceGraphique.CommunicationInterface
     // TO MOVE
     public class ChatMessage
     {
+        public ChatMessage()
+        {
+        }
+
+
+        public ChatMessage(string sender, string messageValue, DateTime timeStamp)
+        {
+            Sender = sender;
+            MessageValue = messageValue;
+            TimeStamp = timeStamp;
+        }
+
         public string Sender { get; set; }
 
         public string MessageValue { get; set; }
