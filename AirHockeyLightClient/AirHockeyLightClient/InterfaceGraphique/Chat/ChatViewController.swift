@@ -26,7 +26,6 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     let clientConnection = ClientConnection.sharedConnection
     
     @IBOutlet weak var chatBodyView: UIView!
-    @IBOutlet weak var connectionIndicator: UIActivityIndicatorView!
     @IBOutlet weak var chatInput: UITextField!
     @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var messages: UITableView!
@@ -59,8 +58,6 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         /// Ajouter les notifications pour ajuster l'affichage lorsque le clavier virtuel apparait/disparait
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
-        
-        self.connectionIndicator.transform = CGAffineTransform(scaleX: 3, y: 3)
     
         ChatViewController.sharedChatViewController = self
     }

@@ -67,7 +67,7 @@ class ClientConnection {
     ///
     ////////////////////////////////////////////////////////////////////////
     public func EstablishConnection(ipAddress: String, hubName: String) {
-        self.connection = SignalR("http://" + ipAddress + ":8080")
+        self.connection = SignalR("http://" + ipAddress + ":63056")
         self.chatHub = Hub(hubName)
         
         self.connection!.starting = { print("started") }
