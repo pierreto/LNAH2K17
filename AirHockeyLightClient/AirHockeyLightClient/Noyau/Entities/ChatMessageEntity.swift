@@ -1,45 +1,61 @@
-//
-//  ChatMessageEntity.swift
-//  AirHockeyLightClient
-//
-//  Created by Pierre To on 17-09-24.
-//  Copyright © 2017 LOG3900 Équipe 03 - Les Décalés. All rights reserved.
-//
+///////////////////////////////////////////////////////////////////////////////
+/// @file ChatMessageEntity.swift
+/// @author Mikael Ferland et Pierre To
+/// @date 2017-09-24
+/// @version 1
+///
+/// @addtogroup log3900 LOG3990
+/// @{
+///////////////////////////////////////////////////////////////////////////////
 
 import Foundation
 
-class ChatMessageEntity : Entity{
-    private var Sender : String
-    private var MessageValue : String
-    private var TimeStamp : Date
+///////////////////////////////////////////////////////////////////////////
+/// @class ChatMessageEntity
+/// @brief Classe pour encapsuler un message
+///
+/// @author Mikael Ferland et Pierre To
+/// @date 2017-09-24
+///////////////////////////////////////////////////////////////////////////
+class ChatMessageEntity : Entity {
+
+    private var sender : String
+    private var messageValue : String
+    private var timestamp : String
+    
+    /// Constructeur
+    init(sender : String, messageValue : String, timestamp : String) {
+        self.sender = sender;
+        self.messageValue = messageValue;
+        self.timestamp = timestamp;
+    }
     
     public func getSender() -> String {
-        return self.Sender
+        return self.sender
     }
     
     public func setSender(sender: String) {
-        self.Sender = sender
+        self.sender = sender
     }
         
     public func getMessageValue() -> String {
-        return self.MessageValue
+        return self.messageValue
     }
     
     public func setMessageValue(messageValue: String) {
-        self.MessageValue = messageValue
+        self.messageValue = messageValue
     }
     
-    public func getTimeStamp() -> Date {
-        return self.TimeStamp
+    public func getTimestamp() -> String {
+        return self.timestamp
     }
     
-    public func setTimeStamp(timeStamp: Date) {
-        self.TimeStamp = timeStamp
+    public func setTimestamp(timestamp: String) {
+        self.timestamp = timestamp
     }
-    
-    init(sender : String, messageValue : String, timeStamp : Date) {
-        self.Sender = sender;
-        self.MessageValue = messageValue;
-        self.TimeStamp = timeStamp;
-    }
+
 }
+
+///////////////////////////////////////////////////////////////////////////////
+/// @}
+///////////////////////////////////////////////////////////////////////////////

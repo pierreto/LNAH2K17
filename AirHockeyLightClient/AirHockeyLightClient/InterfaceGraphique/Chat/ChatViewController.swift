@@ -1,34 +1,35 @@
-//
-//  ChatViewController.swift
-//  AirHockeyLightClient
-//
-//  Created by Pierre To and Mikael Ferland on 17-09-10.
-//  Copyright © 2017 LOG3900 Équipe 03 - Les Décalés. All rights reserved.
-//
+///////////////////////////////////////////////////////////////////////////////
+/// @file ChatViewController.swift
+/// @author Mikael Ferland et Pierre To
+/// @date 2017-09-10
+/// @version 1
+///
+/// @addtogroup log3900 LOG3990
+/// @{
+///////////////////////////////////////////////////////////////////////////////
 
 import UIKit
-import SpriteKit
-import GameplayKit
-
 import SwiftR
 
-struct Message {
-    let sender: String!
-    let messageValue: String!
-    let timestamp: String!
-}
-
+///////////////////////////////////////////////////////////////////////////
+/// @class ChatViewController
+/// @brief Controlleur de la vue de la messagerie
+///
+/// @author Mikael Ferland et Pierre To
+/// @date 2017-09-10
+///////////////////////////////////////////////////////////////////////////
 class ChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     static var sharedChatViewController = ChatViewController()
+    
+    var messagesData = [ChatMessageEntity]()
+    let clientConnection = ClientConnection.sharedConnection
     
     @IBOutlet weak var chatBodyView: UIView!
     @IBOutlet weak var connectionIndicator: UIActivityIndicatorView!
     @IBOutlet weak var chatInput: UITextField!
     @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var messages: UITableView!
-    var messagesData = [Message]()
-    let clientConnection = ClientConnection.sharedConnection
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,87 +53,47 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         messages.delegate = self
         messages.dataSource = self
         messages.transform = CGAffineTransform(rotationAngle: -(CGFloat)(Double.pi))
+        messages.rowHeight = UITableViewAutomaticDimension
+        messages.estimatedRowHeight = 140
         
-        //Adding notifies on keyboard appearing
+        /// Ajouter les notifications pour ajuster l'affichage lorsque le clavier virtuel apparait/disparait
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
         
         self.connectionIndicator.transform = CGAffineTransform(scaleX: 3, y: 3)
-        
-        /*self.clientConnection.getConnection().disconnected = {
-            print("Disconnected...")
-            
-            // Try again after 5 seconds
-            let delayTime = DispatchTime.now() + .seconds(5)
-            DispatchQueue.main.asyncAfter(deadline: delayTime) { [weak self] in
-                self.clientConnection.getConnection().start()
-            }
-        }*/
-        
-        messages.rowHeight = UITableViewAutomaticDimension
-        messages.estimatedRowHeight = 140
+    
         ChatViewController.sharedChatViewController = self
     }
     
     deinit {
-        //Removing notifies on keyboard appearing
+        /// Retirer les notifications pour ajuster l'affichage lorsque le clavier virtuel apparait/disparait
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
+    /// Enclenché lorsqu'un message est reçu
     func receiveMessage(message: Dictionary<String, String>) {
-            // When a message is received from the server
-            let sender = message["Sender"]
-            let messageValue = message["MessageValue"]
-            let timestamp = message["TimeStamp"]
-            print("Message: \(String(describing: sender! + " (" + timestamp! + ") : " + messageValue!))\n")
+        let sender = message["Sender"]
+        let messageValue = message["MessageValue"]
+        let timestamp = message["TimeStamp"]
+        print("Message: \(String(describing: sender! + " (" + timestamp! + ") : " + messageValue!))\n")
             
-            self.messagesData.insert(Message(sender:sender, messageValue: messageValue, timestamp: timestamp), at: 0)
+        self.messagesData.insert(ChatMessageEntity(sender:sender!, messageValue: messageValue!, timestamp: (timestamp?.description)!), at: 0)
             
-            DispatchQueue.main.async(execute: { () -> Void in
-                // Reload tableView
-                self.messages.reloadData()
-            })
+        DispatchQueue.main.async(execute: { () -> Void in
+            // Reload tableView
+            self.messages.reloadData()
+        })
     }
     
+    /// Enclenché lorsque l'utilisateur pèse sur la touche Enter du clavier
     @IBAction func triggerSendMessage(_ sender: Any) {
         self.sendMessage(nil)
     }
     
-    
-    // Send message to server on button click
+    /// Enclenché lorsque l'utilisateur envoie un message
     @IBAction func sendMessage(_ sender: UIButton?) {
         if chatInput.text != "" {
-            // Create POST request
-            //var request = URLRequest(url: URL(string: "http://localhost:8080/api/chat/")!)
-            //request.httpMethod = "POST"
-            
-            // Headers
-            //request.allHTTPHeaderFields?["Content-Type"] = "application/json"
-            
-            // Body
-            /*let jsonObject: NSMutableDictionary = NSMutableDictionary()
-            jsonObject.setValue(clientConnection.getUsername(), forKey: "Sender")
-            jsonObject.setValue(chatInput.text, forKey: "MessageValue")
-            jsonObject.setValue(Date().description, forKey: "TimeStamp")
-            
-            let jsonString = convertToJsonString(jsonObject: jsonObject)*/
-            //request.httpBody = requestBody.data(using: .utf8)
-            
-            // Send request
-            //sendHttpRequest(request: request)
-            
-            // Convert json string to byte array
-            /*var str = jsonString
-            var byteArray = [UInt8]()
-            
-            for char in str.utf8 {
-                byteArray += [char]
-            }*/
-            
-            // Send message to server
-            //let chatMessage = ChatMessageEntity(sender: clientConnection.getUsername(), messageValue: self.chatInput.text!, timeStamp: Date())
-            
             let message = [
                 "Sender": clientConnection.getUsername(),
                 "MessageValue": self.chatInput.text!,
@@ -145,51 +106,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
-    func convertToJsonString(jsonObject: NSMutableDictionary) -> String {
-        let jsonData: NSData
-        var jsonString: String?
-        
-        do {
-            jsonData = try JSONSerialization.data(withJSONObject: jsonObject, options: JSONSerialization.WritingOptions()) as NSData
-            jsonString = NSString(data: jsonData as Data, encoding: String.Encoding.utf8.rawValue)! as String
-            print("json string = \(String(describing: jsonString))")
-        } catch _ {
-            print ("JSON Failure")
-        }
-        
-        return jsonString!
-    }
-    
-    func sendHttpRequest(request: URLRequest) {
-        var responseString: String?
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let data = data, error == nil else {
-                // check for fundamental networking error
-                print("error=\(String(describing: error))")
-                return
-            }
-            
-            if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {
-                // check for http errors
-                print("statusCode should be 200, but is \(httpStatus.statusCode)")
-                print("response = \(String(describing: response))")
-            }
-            
-            responseString = String(data: data, encoding: .utf8)
-            print("responseString = \(String(describing: responseString))")
-            
-            // Fake chat
-            //self.messagesData.append(Message(bodyText: responseString))
-            
-            /*DispatchQueue.main.async(execute: { () -> Void in
-                // Reload tableView
-                self.messages.reloadData()
-            })*/
-        }
-        
-        task.resume()
-    }
-    
+    /// Enclenché lorsque le clavier virtuel apparait
     func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
             if self.chatBodyView.frame.origin.y == 76 {
@@ -198,6 +115,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
+    /// Enclenché lorsque le clavier virtuel disparait
     func keyboardWillHide(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
             if self.chatBodyView.frame.origin.y != 76 {
@@ -207,25 +125,23 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     // Table view delegate methods
-    /*func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
-    }*/
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return messagesData.count
     }
     
+    /// Afficher un message dans le tableau
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = messages.dequeueReusableCell(withIdentifier: "Message", for: indexPath) as! MessageViewCell
         
         let sender = cell.viewWithTag(1) as! UILabel
-        sender.text = messagesData[indexPath.row].sender
+        sender.text = messagesData[indexPath.row].getSender()
         
         let messageValue = cell.viewWithTag(2) as! PaddingLabel
-        messageValue.text = messagesData[indexPath.row].messageValue
+        messageValue.text = messagesData[indexPath.row].getMessageValue()
         
         let timestamp = cell.viewWithTag(3) as! UILabel
-        timestamp.text = messagesData[indexPath.row].timestamp
+        timestamp.text = messagesData[indexPath.row].getTimestamp()
         
         cell.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi));
         
@@ -253,3 +169,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         return true
     }
 }
+
+///////////////////////////////////////////////////////////////////////////////
+/// @}
+///////////////////////////////////////////////////////////////////////////////

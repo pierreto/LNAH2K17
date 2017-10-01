@@ -1,22 +1,27 @@
-//
-//  ChannelViewController.swift
-//  AirHockeyLightClient
-//
-//  Created by Mikael Ferland and Pierre To on 17-09-24.
-//  Copyright © 2017 LOG3900 Équipe 03 - Les Décalés. All rights reserved.
-//
-
+///////////////////////////////////////////////////////////////////////////////
+/// @file ChannelViewController.swift
+/// @author Mikael Ferland et Pierre To
+/// @date 2017-09-24
+/// @version 1
+///
+/// @addtogroup log3900 LOG3990
+/// @{
+///////////////////////////////////////////////////////////////////////////////
 
 import UIKit
 
-struct Channel {
-    let name: String!
-}
-
+///////////////////////////////////////////////////////////////////////////
+/// @class MessageViewCell
+/// @brief Label personnalisé pour afficher les messages
+///
+/// @author Mikael Ferland et Pierre To
+/// @date 2017-09-27
+///////////////////////////////////////////////////////////////////////////
 class ChannelViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    private var channelsData = [ChannelEntity]()
+    
     @IBOutlet weak var channels: UITableView!
-    var channelsData = [Channel]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,34 +29,32 @@ class ChannelViewController: UIViewController, UITableViewDelegate, UITableViewD
         channels.delegate = self;
         channels.dataSource = self;
         
-        self.channelsData.append(Channel(name: "Canal public"))
+        self.channelsData.append(ChannelEntity(name: "Canal public"))
         
         DispatchQueue.main.async(execute: { () -> Void in
             // Reload tableView
             self.channels.reloadData()
         })
-
     }
     
+    /// Enclenché lorsque l'utilisateur se déconnecte
     @IBAction func deregisterClient(_ sender: Any) {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.deregisterUsername(ipAddress: ClientConnection.sharedConnection.getIpAddress(), username: ClientConnection.sharedConnection.getUsername())
     }
     
     // Table view delegate methods
-    /*func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-     return 1
-     }*/
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return channelsData.count;
     }
     
+    /// Afficher un canal dans le tableau
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = channels.dequeueReusableCell(withIdentifier: "Channel", for: indexPath);
         
         let button = cell.viewWithTag(1) as! UIButton;
-        button.setTitle(channelsData[indexPath.row].name, for: UIControlState.normal)
+        button.setTitle(channelsData[indexPath.row].getName(), for: UIControlState.normal)
         button.titleEdgeInsets.left = 20;
         
         return cell;
@@ -77,4 +80,9 @@ class ChannelViewController: UIViewController, UITableViewDelegate, UITableViewD
     override var prefersStatusBarHidden: Bool {
         return true
     }
+    
 }
+
+///////////////////////////////////////////////////////////////////////////////
+/// @}
+///////////////////////////////////////////////////////////////////////////////

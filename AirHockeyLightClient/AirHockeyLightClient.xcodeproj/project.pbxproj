@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		253E088C1F81858E009F301B /* UIViewShake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253E088B1F81858E009F301B /* UIViewShake.swift */; };
+		253E088E1F818DD2009F301B /* JsonHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253E088D1F818DD2009F301B /* JsonHelper.swift */; };
+		253E08911F81913A009F301B /* ChannelEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253E08901F81913A009F301B /* ChannelEntity.swift */; };
 		8F64C0111F7754EF00F14AC7 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F64C0101F7754EF00F14AC7 /* ChatViewController.swift */; };
 		8F64C0131F7754FD00F14AC7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F64C0121F7754FD00F14AC7 /* LaunchScreen.storyboard */; };
 		8F64C0151F77550800F14AC7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F64C0141F77550800F14AC7 /* Main.storyboard */; };
@@ -26,6 +29,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		253E088B1F81858E009F301B /* UIViewShake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIViewShake.swift; path = InterfaceGraphique/Effects/UIViewShake.swift; sourceTree = "<group>"; };
+		253E088D1F818DD2009F301B /* JsonHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = JsonHelper.swift; path = Noyau/Helper/JsonHelper.swift; sourceTree = "<group>"; };
+		253E08901F81913A009F301B /* ChannelEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChannelEntity.swift; path = Noyau/Entities/ChannelEntity.swift; sourceTree = "<group>"; };
 		4BC65514BAA095CA955FDC5C /* Pods-AirHockeyLightClient.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AirHockeyLightClient.release.xcconfig"; path = "Pods/Target Support Files/Pods-AirHockeyLightClient/Pods-AirHockeyLightClient.release.xcconfig"; sourceTree = "<group>"; };
 		628E0B24C7327005FBC765AC /* Pods-AirHockeyLightClient.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AirHockeyLightClient.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AirHockeyLightClient/Pods-AirHockeyLightClient.debug.xcconfig"; sourceTree = "<group>"; };
 		7585740DC43877CD99CDDF6A /* Pods_AirHockeyLightClient.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AirHockeyLightClient.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -60,6 +66,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		253E088A1F818544009F301B /* Effects */ = {
+			isa = PBXGroup;
+			children = (
+				253E088B1F81858E009F301B /* UIViewShake.swift */,
+			);
+			name = Effects;
+			sourceTree = "<group>";
+		};
+		253E088F1F818DE1009F301B /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				253E088D1F818DD2009F301B /* JsonHelper.swift */,
+			);
+			name = Helper;
+			sourceTree = "<group>";
+		};
 		3085577F2BC9CDF3683F45B9 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -80,6 +102,7 @@
 		8F0FFED41F6EB8A600366D8E /* InterfaceGraphique */ = {
 			isa = PBXGroup;
 			children = (
+				253E088A1F818544009F301B /* Effects */,
 				8F64C0141F77550800F14AC7 /* Main.storyboard */,
 				8F0FFED91F6EB96900366D8E /* Menus */,
 				8F0FFED71F6EB8C500366D8E /* Chat */,
@@ -90,6 +113,7 @@
 		8F0FFED51F6EB8B100366D8E /* Noyau */ = {
 			isa = PBXGroup;
 			children = (
+				253E088F1F818DE1009F301B /* Helper */,
 				8F8706B71F789266000E6824 /* Entities */,
 				8FE1EB031F75A90D00A01514 /* Communication */,
 			);
@@ -161,6 +185,7 @@
 			children = (
 				8F8706B81F7892BB000E6824 /* Entity.swift */,
 				8F8706BA1F7892F2000E6824 /* ChatMessageEntity.swift */,
+				253E08901F81913A009F301B /* ChannelEntity.swift */,
 			);
 			name = Entities;
 			sourceTree = "<group>";
@@ -318,11 +343,14 @@
 				8F8706BB1F7892F2000E6824 /* ChatMessageEntity.swift in Sources */,
 				8FE1EB051F75A96900A01514 /* ClientConnection.swift in Sources */,
 				8F6AE2C21F6592EB00A29E8B /* GameScene.swift in Sources */,
+				253E088C1F81858E009F301B /* UIViewShake.swift in Sources */,
 				8F8706B91F7892BB000E6824 /* Entity.swift in Sources */,
 				8F64C0111F7754EF00F14AC7 /* ChatViewController.swift in Sources */,
 				8FFC5B4A1F7CA7170031474F /* PaddingLabel.swift in Sources */,
 				8F64C0171F775B2500F14AC7 /* AuthentificationViewController.swift in Sources */,
+				253E088E1F818DD2009F301B /* JsonHelper.swift in Sources */,
 				8F8706BD1F78A67F000E6824 /* ChannelViewController.swift in Sources */,
+				253E08911F81913A009F301B /* ChannelEntity.swift in Sources */,
 				8F6AE2BC1F6592EB00A29E8B /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -1,18 +1,27 @@
-//
-//  AppDelegate.swift
-//  AirHockeyLightClient
-//
-//  Created by Pierre To and Mikael Ferland on 17-09-10.
-//  Copyright © 2017 LOG3900 Équipe 03 - Les Décalés. All rights reserved.
-//
+///////////////////////////////////////////////////////////////////////////////
+/// @file AppDelegate.swift
+/// @author Mikael Ferland et Pierre To
+/// @date 2017-09-10
+/// @version 1
+///
+/// @addtogroup log3900 LOG3990
+/// @{
+///////////////////////////////////////////////////////////////////////////////
 
 import UIKit
 
+///////////////////////////////////////////////////////////////////////////
+/// @class AppDelegate
+/// @brief Class permettant de gérer le comportement de l'application selon
+///        différents états
+///
+/// @author Mikael Ferland et Pierre To
+/// @date 2017-09-10
+///////////////////////////////////////////////////////////////////////////
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -50,5 +59,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             ClientConnection.sharedConnection.Disconnect(username : username)
         }
     }
+    
 }
 
+///////////////////////////////////////////////////////////////////////////////
+/// @}
+///////////////////////////////////////////////////////////////////////////////

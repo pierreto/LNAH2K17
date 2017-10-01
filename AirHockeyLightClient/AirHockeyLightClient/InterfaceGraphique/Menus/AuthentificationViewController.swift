@@ -1,38 +1,32 @@
-//
-//  AuthentificationViewController.swift
-//  AirHockeyLightClient
-//
-//  Created by Mikael Ferland and Pierre To on 17-09-23.
-//  Copyright © 2017 LOG3900 Équipe 03 - Les Décalés. All rights reserved.
-//
+///////////////////////////////////////////////////////////////////////////////
+/// @file AuthentificationViewController.swift
+/// @author Mikael Ferland et Pierre To
+/// @date 2017-09-23
+/// @version 1
+///
+/// @addtogroup log3900 LOG3990
+/// @{
+///////////////////////////////////////////////////////////////////////////////
 
 import UIKit
-import SpriteKit
-import GameplayKit
 
-extension UIView {
-    func shake() {
-        let animation = CABasicAnimation(keyPath: "position")
-        animation.duration = 0.07
-        animation.repeatCount = 4
-        animation.autoreverses = true
-        animation.fromValue = NSValue(cgPoint: CGPoint(x: self.center.x - 10, y: self.center.y))
-        animation.toValue = NSValue(cgPoint: CGPoint(x: self.center.x + 10, y: self.center.y))
-        self.layer.add(animation, forKey: "position")
-    }
-}
-
+///////////////////////////////////////////////////////////////////////////
+/// @class AuthentificationViewController
+/// @brief Controlleur de la vue de l'authentification
+///
+/// @author Mikael Ferland et Pierre To
+/// @date 2017-09-23
+///////////////////////////////////////////////////////////////////////////
 class AuthentificationViewController: UIViewController {
     
-    let clientConnection = ClientConnection.sharedConnection
+    private let clientConnection = ClientConnection.sharedConnection
+    
     @IBOutlet weak var usernameInput: UITextField!
     @IBOutlet weak var ipAddessInput: UITextField!
-    
     @IBOutlet weak var usernameInvalidErrorMessage: UILabel!
     @IBOutlet weak var usernameNotUniqueErrorMessage: UILabel!
     @IBOutlet weak var ipAddressInvalidErrorMessage: UILabel!
     @IBOutlet weak var ipAddressNotConnectedErrorMessage: UILabel!
-    
     @IBOutlet weak var connectionIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
@@ -41,11 +35,12 @@ class AuthentificationViewController: UIViewController {
         self.connectionIndicator.transform = CGAffineTransform(scaleX: 2, y: 2)
     }
     
+    /// Enclenché lorsque l'utilisateur pèse sur la touche Enter du clavier
     @IBAction func triggerUserLogin(_ sender: Any) {
         userLogin(nil)
     }
     
-    // Set username
+    /// Enclenché lorsque l'utilisateur pèse sur le bouton de connexion
     @IBAction func userLogin(_ sender: UIButton?) {
         self.setIpAddressInputToDefaultUI()
         self.setUsernameInputToDefaultUI()
@@ -53,7 +48,7 @@ class AuthentificationViewController: UIViewController {
         let ipAddress = ipAddessInput.text!
         let username = usernameInput.text!
         
-        let validSyntaxIP = self.validateIPAdress(ipAddress: ipAddress)
+        let validSyntaxIP = self.validateIPAddress(ipAddress: ipAddress)
         let validSyntaxUsername = self.validateUsername(username: username)
         
         if validSyntaxIP {
@@ -70,13 +65,14 @@ class AuthentificationViewController: UIViewController {
             self.usernameInvalidErrorMessage.isHidden = false
         }
         
-        // Try to cone
+        /// Connecter l'usager si possible
         if (validSyntaxIP && validSyntaxUsername) {
             connectToServer(ipAddress: ipAddress, username: username)
         }
     }
     
-    func validateIPAdress(ipAddress: String) -> Bool {
+    /// Vérifier la syntaxe de l'adresse IP
+    private func validateIPAddress(ipAddress: String) -> Bool {
         print("IP address: " + ipAddress)
         
         let validIpAddressRegex = "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$"
@@ -97,7 +93,8 @@ class AuthentificationViewController: UIViewController {
         }
     }
     
-    func validateUsername(username: String) -> Bool {
+    /// Vérifier la syntaxe du nom de l'usager
+    private func validateUsername(username: String) -> Bool {
         print("Username: " + username)
         
         // Usernames must have 15 characters at most
@@ -121,9 +118,9 @@ class AuthentificationViewController: UIViewController {
         }
     }
     
-    func notifyErrorInput(textField: UITextField) {
+    /// Modifier l'apparence du input en cas d'erreur
+    private func notifyErrorInput(textField: UITextField) {
         textField.shake()
-        
         textField.text = ""
         
         let errorColor : UIColor = UIColor.red
@@ -131,23 +128,30 @@ class AuthentificationViewController: UIViewController {
         textField.layer.borderWidth = 1.0
     }
     
-    func setIpAddressInputToDefaultUI() {
+    /// Remettre l'apparence du input pour l'adresse IP à celle par défaut
+    private func setIpAddressInputToDefaultUI() {
         self.ipAddessInput.layer.borderWidth = 0.0
         self.ipAddressInvalidErrorMessage.isHidden = true
         self.ipAddressNotConnectedErrorMessage.isHidden = true
     }
     
-    func setUsernameInputToDefaultUI() {
+    /// Remettre l'apparence du input pour le nom d'usager à celle par défaut
+    private func setUsernameInputToDefaultUI() {
         self.usernameInput.layer.borderWidth = 0.0
         self.usernameInvalidErrorMessage.isHidden = true
         self.usernameNotUniqueErrorMessage.isHidden = true
     }
     
-    func connectToServer(ipAddress: String, username: String) {
-        // Connect to server via SignalR
+    /// Établir la connexion au serveur via SignalR
+    private func connectToServer(ipAddress: String, username: String) {
+        /// Désactiver les inputs
+        self.ipAddessInput.isEnabled = false
+        self.usernameInput.isEnabled = false
+        
         clientConnection.EstablishConnection(ipAddress: ipAddress, hubName: "ChatHub")
         self.connectionIndicator.startAnimating()
         
+        /// Avertir l'utilisateur s'il n'est pas possible de se connecter au serveur après 5 secondes
         let timerTask = DispatchWorkItem {
             if !(ClientConnection.sharedConnection.getConnection().state == .connected) {
                 print("Connection timeout")
@@ -162,9 +166,7 @@ class AuthentificationViewController: UIViewController {
         let timer = DispatchTime.now() + 5 // start a timer
         DispatchQueue.main.asyncAfter(deadline: timer, execute: timerTask)
         
-        self.ipAddessInput.isEnabled = false
-        self.usernameInput.isEnabled = false
-        
+        /// Avertir l'utilisateur en cas d'erreur au moment de la connexion
         clientConnection.getConnection().error = { error in
             print("Error: (error)")
             self.notifyErrorInput(textField: self.ipAddessInput)
@@ -187,28 +189,23 @@ class AuthentificationViewController: UIViewController {
             timerTask.cancel()
         }
         
-        // When a message is received from the server
+        /// Transmettre un message reçu du serveur au ChatViewController
         clientConnection.getChatHub().on("ChatMessageReceived") { args in
             ChatViewController.sharedChatViewController.receiveMessage(message: args?[0] as! Dictionary<String, String>)
         }
         
-        clientConnection.getConnection().starting = { print("started") }
-        clientConnection.getConnection().connectionSlow = { print("connectionSlow") }
-        clientConnection.getConnection().reconnecting = { print("reconnecting") }
-        clientConnection.getConnection().reconnected = { print("reconnected") }
-        clientConnection.getConnection().disconnected = { print("disconnected") }
-        
+        /// Connexion au serveur réussie
         clientConnection.getConnection().connected = {
             print("Connected with ip: " + ipAddress)
             self.connectionIndicator.stopAnimating()
             self.clientConnection.setIpAddress(ipAddress: ipAddress)
             self.registerUsername(ipAddress: ipAddress, username: username)
-            
         
             timerTask.cancel()
         }
     }
     
+    /// Authentifier l'utilisateur
     func registerUsername(ipAddress: String, username: String) {
         do {
             try clientConnection.getChatHub().invoke("Authenticate", arguments: [username])  { (result, error) in
@@ -230,6 +227,7 @@ class AuthentificationViewController: UIViewController {
                             self.present(vc, animated: true, completion: nil)
                         }
                         else {
+                            /// Si le nom d'usager entré n'est pas unique
                             print("Authentification error")
                             self.notifyErrorInput(textField: self.usernameInput)
                             self.usernameNotUniqueErrorMessage.isHidden = false
@@ -241,16 +239,17 @@ class AuthentificationViewController: UIViewController {
             }
         }
         catch {
-            print("Error Authentication")
+            print("Authentification error")
         }
         
+        /*
         // Create POST request
-        /*var request = URLRequest(url: URL(string: "http://" + ipAddress + ":63056/api/login")!)
+        var request = URLRequest(url: URL(string: "http://" + ipAddress + ":63056/api/login")!)
         request.httpMethod = "POST"
         
         // Headers
         request.allHTTPHeaderFields?["Content-Type"] = "application/json"
-        
+
         // Body
         let jsonObject: NSMutableDictionary = NSMutableDictionary()
         jsonObject.setValue(self.usernameInput.text, forKey: "username")
@@ -259,9 +258,11 @@ class AuthentificationViewController: UIViewController {
         request.httpBody = jsonString.data(using: .utf8)
         
         // Send request
-        sendHttpRequest(request: request)*/
+        sendHttpRequest(request: request)
+         */
     }
     
+    /*
     func sendHttpRequest(request: URLRequest) {
         var responseString: String?
         
@@ -303,21 +304,7 @@ class AuthentificationViewController: UIViewController {
         
         task.resume()
     }
-    
-    func convertToJsonString(jsonObject: NSMutableDictionary) -> String {
-        let jsonData: NSData
-        var jsonString: String?
-        
-        do {
-            jsonData = try JSONSerialization.data(withJSONObject: jsonObject, options: JSONSerialization.WritingOptions()) as NSData
-            jsonString = NSString(data: jsonData as Data, encoding: String.Encoding.utf8.rawValue)! as String
-            print("json string = \(String(describing: jsonString))")
-        } catch _ {
-            print ("JSON Failure")
-        }
-        
-        return jsonString!
-    }
+    */
     
     override var shouldAutorotate: Bool {
         return true
@@ -339,4 +326,9 @@ class AuthentificationViewController: UIViewController {
     override var prefersStatusBarHidden: Bool {
         return true
     }
+    
 }
+
+///////////////////////////////////////////////////////////////////////////////
+/// @}
+///////////////////////////////////////////////////////////////////////////////
