@@ -104,10 +104,5 @@ namespace InterfaceGraphique {
         public void UnsuscribeEventHandlers() {
             Program.FormManager.SizeChanged -= new EventHandler(WindowSizeChanged);
         }
-
-        private void chat_Load(object sender, EventArgs e)
-        {
-
-        }
     }
 }

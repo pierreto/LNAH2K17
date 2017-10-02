@@ -21,6 +21,7 @@ namespace InterfaceGraphique.Menus
         private readonly string LOCALHOST = "localhost";
         private readonly int MAX_INPUT_LENGTH = 15;
         private ChatHub chatHub;
+        private HubManager hubManager;
         public Login(ChatHub chatHub)
         {
             this.chatHub = chatHub;
@@ -68,7 +69,7 @@ namespace InterfaceGraphique.Menus
                 {
                     LoginName = UsernameTextBox.Text
                 };
-                HubManager hubManager = new HubManager();
+                this.hubManager = new HubManager();
 
                 // We first initialize the connection with the chat server:
                 await hubManager.EstablishConnection(ServerTextBox.Text,UsernameTextBox.Text );
@@ -174,8 +175,8 @@ namespace InterfaceGraphique.Menus
 
         public void Logout()
         {
-          /* Program.MainMenu.GetChat().Logout();
-            Program.FormManager.CurrentForm = Program.Login;*/
+            this.hubManager.Logout();
+            Program.FormManager.CurrentForm = Program.Login;
         }
     }
 

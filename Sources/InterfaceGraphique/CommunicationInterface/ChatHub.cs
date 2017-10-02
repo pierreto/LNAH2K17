@@ -20,8 +20,6 @@ namespace InterfaceGraphique.CommunicationInterface
         public event Action<ChatMessage> NewMessage;
         private string username;
         private IHubProxy chatHubProxy;
-        private HubConnection connection;
-
 
         private ChannelEntity mainChannel;
         private ObservableCollection<ChannelEntity> channels;
@@ -57,10 +55,7 @@ namespace InterfaceGraphique.CommunicationInterface
 
         public void Logout()
         {
-            if(chatHubProxy != null)
-            {
-                chatHubProxy.Invoke("Disconnect", this.username).Wait();
-            }
+            chatHubProxy?.Invoke("Disconnect", this.username).Wait();
         }
 
         public async void SendMessage(ChatMessage message)

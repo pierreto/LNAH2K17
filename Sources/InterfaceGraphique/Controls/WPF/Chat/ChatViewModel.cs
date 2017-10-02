@@ -69,11 +69,6 @@ namespace InterfaceGraphique.Controls.WPF.Chat
         {
         }
 
-        public void Logout()
-        {
-           this.chatHub.Logout();
-        }
-
         private ICommand sendMessageCommand;
         public ICommand SendMessageCommand
         {

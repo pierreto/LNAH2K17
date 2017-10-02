@@ -25,7 +25,7 @@ namespace InterfaceGraphique.CommunicationInterface
 
         public void Logout()
         {
-            throw new NotImplementedException();
+            //TODO: IMPLEMENT THE LOGOUT MECANISM
         }
 
         public async void test()
