@@ -23,22 +23,25 @@ namespace InterfaceGraphique.CommunicationInterface
         {
             this.connection = new HubConnection("http://" + serverIp + ":63056/signalr");
 
-            ChatHub chatHub = Program.unityContainer.Resolve<ChatHub>();
+            this.AddHubs();
 
-            this.hubs = new List<IBaseHub>();
-            this.hubs.Add(chatHub);
-            this.InitializeHubs(connection,username);
-
-
+            this.InitializeHubs(username);
 
             await this.connection.Start();
         }
 
-        private void InitializeHubs(HubConnection connection,string username)
+        private void AddHubs()
+        {
+            this.hubs = new List<IBaseHub>();
+            this.hubs.Add(Program.unityContainer.Resolve<ChatHub>());
+            this.hubs.Add(Program.unityContainer.Resolve<GameLobbyHub>());
+        }
+
+        private void InitializeHubs(string username)
         {
             foreach (IBaseHub hub in this.hubs)
             {
-                hub.InitializeHub(connection, username);
+                hub.InitializeHub(this.connection, username);
             }
         }
 

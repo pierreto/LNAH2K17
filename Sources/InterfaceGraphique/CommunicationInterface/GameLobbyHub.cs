@@ -9,17 +9,23 @@ using Microsoft.AspNet.SignalR.Client;
 
 namespace InterfaceGraphique.CommunicationInterface
 {
-    class GameLobbyHub
+    class GameLobbyHub : IBaseHub
     {
         private IHubProxy GameWaitingRoomProxy { get; set; }
 
         private HubConnection connection;
+        private string username;
 
-        public GameLobbyHub(HubConnection connection)
+        public void InitializeHub(HubConnection connection, string username)
         {
             this.connection = connection;
+            this.username = username;
             GameWaitingRoomProxy = this.connection.CreateHubProxy("GameWaitingRoomHub");
+        }
 
+        public void Logout()
+        {
+            throw new NotImplementedException();
         }
 
         public async void test()
@@ -76,5 +82,7 @@ namespace InterfaceGraphique.CommunicationInterface
 
             gameUpdated = await GameWaitingRoomProxy.Invoke<GameEntity>("UpdateMap", game);
         }
+
+  
     }
 }
