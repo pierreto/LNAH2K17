@@ -2,31 +2,35 @@
 using Microsoft.AspNet.SignalR.Client;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Data;
+using System.Windows.Threading;
 using Newtonsoft.Json;
 using System.Threading;
 
 namespace InterfaceGraphique.CommunicationInterface
 {
-    public class ChatHub
+    public class ChatHub : IChatHub
     {
         public delegate void UpdateChatBoxDelegate(ChatMessage message);
 
+        public event Action<ChatMessage> NewMessage;
         private string targetServerIp;
-        private UpdateChatBoxDelegate updateChatBoxDelegate;
+
+        private string username;
+        //private UpdateChatBoxDelegate updateChatBoxDelegate;
         private IHubProxy chatHubProxy;
 
         public IHubProxy GameWaitingRoomProxy { get; private set; }
 
         private HubConnection connection;
 
-        public ChatHub(UpdateChatBoxDelegate chatBoxDelegate)
-        {
-            this.updateChatBoxDelegate = chatBoxDelegate;
-        }
+        private ChannelEntity mainChannel;
+        private ObservableCollection<ChannelEntity> channels;
 
         // TODO: retourner un résultat pour savoir si la connexion a échouée ou pas.
         public async Task EstablishConnection(string targetServerIp)
@@ -96,9 +100,10 @@ namespace InterfaceGraphique.CommunicationInterface
 
         public async Task<bool> AuthenticateUser(string username)
         {
+            this.username = username;
             var authentication = chatHubProxy.Invoke<bool>("Authenticate", username);
             await authentication;
-            return authentication.Result;
+           return authentication.Result;
         }
 
         public async Task InitializeChat()
@@ -110,8 +115,7 @@ namespace InterfaceGraphique.CommunicationInterface
             // Inscription à l'event "ChatMessageReceived". Quand l'event est lancé du serveur on veut print le message:
             chatHubProxy.On<ChatMessage>("ChatMessageReceived", message =>
             {
-                Console.WriteLine("ChatMessageReceived : " + message.MessageValue);
-                updateChatBoxDelegate(message);
+                NewMessage?.Invoke(message);
             });
         }
 
@@ -126,6 +130,8 @@ namespace InterfaceGraphique.CommunicationInterface
 
         public async void SendMessage(ChatMessage message)
         {
+            message.Sender = this.username;
+            message.TimeStamp=DateTime.Now;
             await chatHubProxy.Invoke("SendBroadcast", message);
         }
     }

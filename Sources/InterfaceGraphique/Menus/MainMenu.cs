@@ -8,7 +8,9 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using InterfaceGraphique.Controls;
 using InterfaceGraphique.Menus;
+using Microsoft.Practices.Unity;
 
 namespace InterfaceGraphique {
 
@@ -25,16 +27,10 @@ namespace InterfaceGraphique {
         /// Constructeur de la classe MainMenu
         ///
         ////////////////////////////////////////////////////////////////////////
-        public MainMenu() {
+        public MainMenu()
+        {
             InitializeComponent();
             InitializeEvents();
-
-        }
-
-        // Renvoie une référence de l'instance Chat du menu principal:
-        public ref Chat GetChat()
-        {
-            return ref this.chat;
         }
 
         ////////////////////////////////////////////////////////////////////////
