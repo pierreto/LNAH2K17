@@ -41,6 +41,7 @@ namespace AirHockeyServer.Services
             }
         }
 
+        // TODO : refactor needed for tournaments
         private static Queue<GameEntity> _WaitingGames;
         private static Queue<GameEntity> WaitingGames
         {

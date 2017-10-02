@@ -44,6 +44,7 @@ namespace AirHockeyServer
             // Services
             container.RegisterType<IChatService, ChatService>(new HierarchicalLifetimeManager());
             container.RegisterType<IChannelService, ChannelService>(new HierarchicalLifetimeManager());
+            container.RegisterType<IMapService, MapService>(new HierarchicalLifetimeManager());
 
             //Core
             container.RegisterType<IConnector, Connector>(new HierarchicalLifetimeManager());

@@ -29,6 +29,10 @@ namespace AirHockeyServer.Entities
         public UserEntity[] Players { get; set; }
 
         public GameState GameState { get; set; }
+
+        public MapEntity SelectedMap { get; set; }
+
+        public ConfigurationEntity SelectedConfiguration { get; set; }
     }
 
     public enum GameState

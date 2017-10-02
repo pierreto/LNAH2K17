@@ -39,7 +39,7 @@ namespace InterfaceGraphique.CommunicationInterface
             await this.connection.Start();
         }
 
-        public void test()
+        public async void test()
         {
             GameEntity game = new GameEntity
             {
@@ -49,11 +49,31 @@ namespace InterfaceGraphique.CommunicationInterface
                 }
             };
 
-            GameWaitingRoomProxy.Invoke("CreateGame", game);
+            Console.WriteLine("Game created");
+            await GameWaitingRoomProxy.Invoke("CreateGame", game);
             
             GameWaitingRoomProxy.On<GameEntity>("OpponentFoundEvent", newgame =>
             {
                 Console.WriteLine("Opponent found");
+                GameWaitingRoomProxy.On<GameEntity>("GameStartingEvent", officialGame =>
+                {
+                    Console.WriteLine("Game is starting!");
+                });
+
+                GameWaitingRoomProxy.On<int>("WaitingRoomRemainingTime", remainingTime =>
+                {
+                    Console.WriteLine(remainingTime);
+                });
+
+                GameWaitingRoomProxy.On<GameEntity>("GameConfigurationUpdatedEvent", gameUpdated2 =>
+                {
+                    Console.WriteLine("configuration updated");
+                });
+
+                GameWaitingRoomProxy.On<GameEntity>("GameMapUpdatedEvent", mapUpdated =>
+                {
+                    Console.WriteLine("map updated");
+                });
             });
             
             Thread.Sleep(5000);
@@ -63,7 +83,15 @@ namespace InterfaceGraphique.CommunicationInterface
                 Id = Guid.NewGuid()
             };
 
-            GameWaitingRoomProxy.Invoke("JoinGame", user);
+            await GameWaitingRoomProxy.Invoke("JoinGame", user);
+
+            Thread.Sleep(5000);
+
+            var gameUpdated = await GameWaitingRoomProxy.Invoke<GameEntity>("UpdateConfiguration", game);
+
+            Thread.Sleep(2000);
+
+            gameUpdated = await GameWaitingRoomProxy.Invoke<GameEntity>("UpdateMap", game);
         }
 
         public async Task<bool> AuthenticateUser(string username)

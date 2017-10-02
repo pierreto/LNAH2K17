@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using AirHockeyServer.Entities;
 using AirHockeyServer.Core;
+using System.Threading.Tasks;
 
 namespace AirHockeyServer.Services
 {
@@ -26,7 +27,7 @@ namespace AirHockeyServer.Services
 
         ////////////////////////////////////////////////////////////////////////
         ///
-        /// @fn Guid CreateGame(GameEntity gameEntity)
+        /// @fn async Task<Guid> CreateGame(GameEntity gameEntity)
         ///
         /// Cette fonction gère la création d'une partie en ligne. Elle
         /// commence par créer la partie dans la bd puis ajoute la partie
@@ -35,7 +36,7 @@ namespace AirHockeyServer.Services
         /// @return Id du match créé
         ///
         ////////////////////////////////////////////////////////////////////////
-        public Guid CreateGame(GameEntity gameEntity)
+        public async Task<Guid> CreateGame(GameEntity gameEntity)
         {
             // TODO : call bd
             Guid gameCreatedId = new Guid();
@@ -59,6 +60,20 @@ namespace AirHockeyServer.Services
         {
             MatchMakerService.AddOpponent(userEntity);
         }
-        
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn async Task<GameEntity> UpdateGame(GameEntity gameEntity)
+        ///
+        /// Cette fonction permet d'updater une partie dans la base de données
+        /// 
+        /// @return la partie mise à jour
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        public async Task<GameEntity> UpdateGame(GameEntity gameEntity)
+        {
+            // update game bd
+            return gameEntity;
+        }
     }
 }

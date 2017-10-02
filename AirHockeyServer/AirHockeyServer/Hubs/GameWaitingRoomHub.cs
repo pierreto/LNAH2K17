@@ -57,7 +57,7 @@ namespace AirHockeyServer.Hubs
             // TO REMOVE, WAITING FOR AUTHENTIFICATION
             ConnectionMapper.AddConnection(gameEntity.Creator.Id, Context.ConnectionId);
             
-            Guid gameCreatedId = GameService.CreateGame(gameEntity);
+            Guid gameCreatedId = await GameService.CreateGame(gameEntity);
 
             await Groups.Add(Context.ConnectionId, gameCreatedId.ToString());
 
@@ -80,9 +80,42 @@ namespace AirHockeyServer.Hubs
             GameService.JoinGame(user);
         }
 
-        public void SelectMap()
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn async Task<GameEntity> UpdateMap(GameEntity gameEntity)
+        ///
+        /// Cette fonction permet d'updater la carte de 
+        /// partie et d'avertir les autres clients
+        /// 
+        /// @return la partie mise à jour
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        public async Task<GameEntity> UpdateMap(GameEntity gameEntity)
         {
+            var updatedGame = await GameService.UpdateGame(gameEntity);
 
+            Clients.Group(gameEntity.GameId.ToString()).GameMapUpdatedEvent(updatedGame);
+
+            return updatedGame;
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn async Task<GameEntity> UpdateConfiguration(GameEntity gameEntity)
+        ///
+        /// Cette fonction permet d'updater les paramètres de parties et
+        /// d'avertir les autres clients
+        /// 
+        /// @return la partie mise à jour
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        public async Task<GameEntity> UpdateConfiguration(GameEntity gameEntity)
+        {
+            var updatedGame = await GameService.UpdateGame(gameEntity);
+
+            Clients.Group(gameEntity.GameId.ToString()).GameConfigurationUpdatedEvent(updatedGame);
+
+            return updatedGame;
         }
         
     }
