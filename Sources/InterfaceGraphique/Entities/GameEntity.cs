@@ -1,19 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace AirHockeyServer.Entities
+namespace InterfaceGraphique.Entities
 {
-    ///////////////////////////////////////////////////////////////////////////////
-    /// @file GameEntity.cs
-    /// @author Ariane Tourangeau
-    /// @date 2017-10-02
-    /// @version 0.1
-    ///
-    /// Cette classe représente une partie en ligne
-    ///////////////////////////////////////////////////////////////////////////////
-    public class GameEntity : Entity
+    public class GameEntity
     {
         public GameEntity()
         {
@@ -35,7 +28,6 @@ namespace AirHockeyServer.Entities
     {
         Default,
         WaitingForOpponent,
-        SelectingParameters,
         InProgress,
         Ended
     }

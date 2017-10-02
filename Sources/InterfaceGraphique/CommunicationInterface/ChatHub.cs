@@ -7,6 +7,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using System.Threading;
 
 namespace InterfaceGraphique.CommunicationInterface
 {
@@ -17,6 +18,9 @@ namespace InterfaceGraphique.CommunicationInterface
         private string targetServerIp;
         private UpdateChatBoxDelegate updateChatBoxDelegate;
         private IHubProxy chatHubProxy;
+
+        public IHubProxy GameWaitingRoomProxy { get; private set; }
+
         private HubConnection connection;
 
         public ChatHub(UpdateChatBoxDelegate chatBoxDelegate)
@@ -31,7 +35,35 @@ namespace InterfaceGraphique.CommunicationInterface
 
             this.connection = new HubConnection("http://"+targetServerIp+":63056/signalr");
             chatHubProxy = this.connection.CreateHubProxy("ChatHub");
+            GameWaitingRoomProxy = this.connection.CreateHubProxy("GameWaitingRoomHub");
             await this.connection.Start();
+        }
+
+        public void test()
+        {
+            GameEntity game = new GameEntity
+            {
+                Creator = new UserEntity
+                {
+                    Id = Guid.NewGuid()
+                }
+            };
+
+            GameWaitingRoomProxy.Invoke("CreateGame", game);
+            
+            GameWaitingRoomProxy.On<GameEntity>("OpponentFoundEvent", newgame =>
+            {
+                Console.WriteLine("Opponent found");
+            });
+            
+            Thread.Sleep(5000);
+
+            UserEntity user = new UserEntity
+            {
+                Id = Guid.NewGuid()
+            };
+
+            GameWaitingRoomProxy.Invoke("JoinGame", user);
         }
 
         public async Task<bool> AuthenticateUser(string username)

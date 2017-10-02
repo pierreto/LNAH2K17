@@ -12,6 +12,8 @@ using System.Web.Routing;
 using System.Web.Optimization;
 using Microsoft.AspNet.SignalR;
 using AirHockeyServer.Services.ChatServiceServer;
+using AirHockeyServer.Hubs;
+using AirHockeyServer.Events.EventManagers;
 
 [assembly: OwinStartup(typeof(AirHockeyServer.App_Start.Startup))]
 
@@ -26,9 +28,17 @@ namespace AirHockeyServer.App_Start
                 typeof(ChatHub),
                 () => new ChatHub(new ChannelService(new DataProvider(new RequestsManager(new Connector())))));
 
+            GlobalHost.DependencyResolver.Register(
+                typeof(GameWaitingRoomHub),
+                () => new GameWaitingRoomHub(new GameService(new DataProvider(new RequestsManager(new Connector())))));
+
             app.MapSignalR("/signalr", new HubConfiguration());
             //Register(GlobalConfiguration.Configuration);
+
+            GameWaitingRoomEventManager gameWaitingRoomEventManager = new GameWaitingRoomEventManager();
         }
+        
+
         public static void Register(HttpConfiguration config)
         {
             var container = new UnityContainer();
