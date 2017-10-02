@@ -18,6 +18,7 @@ using InterfaceGraphique.Controls;
 using InterfaceGraphique.Controls.WPF;
 using InterfaceGraphique.Controls.WPF.Chat;
 using InterfaceGraphique.Menus;
+using Microsoft.AspNet.SignalR.Client;
 using Microsoft.Practices.Unity;
 using Application = System.Windows.Forms.Application;
 
@@ -118,7 +119,7 @@ namespace InterfaceGraphique
         private static void InitializeUnityDependencyInjection()
         {
             unityContainer = new UnityContainer();
-            unityContainer.RegisterType<IChatHub, ChatHub>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<IBaseHub, ChatHub>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<ChatViewModel>();
         }
 
@@ -167,6 +168,8 @@ namespace InterfaceGraphique
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern bool executerTests();
     }
+
+
 
 
 }

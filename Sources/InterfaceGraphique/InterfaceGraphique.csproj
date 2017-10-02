@@ -120,9 +120,10 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommunicationInterface\ChatConnection.cs" />
     <Compile Include="CommunicationInterface\ChatHub.cs" />
-    <Compile Include="CommunicationInterface\IChatHub.cs" />
+    <Compile Include="CommunicationInterface\GameLobbyHub.cs" />
+    <Compile Include="CommunicationInterface\HubManager.cs" />
+    <Compile Include="CommunicationInterface\IBaseHub.cs" />
     <Compile Include="Controls\WPF\BringNewItemIntoViewBehavior.cs" />
     <Compile Include="Controls\WPF\Chat\ChatView.xaml.cs">
       <DependentUpon>ChatView.xaml</DependentUpon>
@@ -132,12 +133,13 @@
     <Compile Include="Controls\WPF\ViewModelBase.cs" />
     <Compile Include="Controls\WPF\ViewModelLocator.cs" />
     <Compile Include="Entities\ChannelEntity.cs" />
+    <Compile Include="Entities\ChatMessage.cs" />
     <Compile Include="Entities\GameEntity.cs" />
     <Compile Include="Entities\LoginMessage.cs" />
     <Compile Include="Entities\MemberEntity.cs" />
     <Compile Include="CommunicationInterface\LoginClient.cs" />
     <Compile Include="Entities\UserEntity.cs" />
-	<Compile Include="Exceptions\LoginException.cs" />
+    <Compile Include="Exceptions\LoginException.cs" />
     <Compile Include="Menus\Login.cs">
       <SubType>Form</SubType>
     </Compile>

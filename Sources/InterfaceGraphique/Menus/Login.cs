@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using InterfaceGraphique.CommunicationInterface;
 using InterfaceGraphique.Exceptions;
+using Microsoft.AspNet.SignalR.Client;
 
 namespace InterfaceGraphique.Menus
 {
@@ -67,11 +68,12 @@ namespace InterfaceGraphique.Menus
                 {
                     LoginName = UsernameTextBox.Text
                 };
+                HubManager hubManager = new HubManager();
 
                 // We first initialize the connection with the chat server:
-                await chatHub.EstablishConnection(ServerTextBox.Text);
+                await hubManager.EstablishConnection(ServerTextBox.Text,UsernameTextBox.Text );
                 // Then we try to authenticate the user with the username he/she gave:
-                var authentication = chatHub.AuthenticateUser(UsernameTextBox.Text);
+                var authentication = chatHub.AuthenticateUser();
                 await authentication;
                 if (authentication.Result)
                 {
