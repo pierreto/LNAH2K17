@@ -3,6 +3,7 @@ using AirHockeyServer.Hubs;
 using AirHockeyServer.Services;
 using Microsoft.AspNet.SignalR;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -24,14 +25,16 @@ namespace AirHockeyServer.Events.EventManagers
     {
         private const int waitingRoomTimeoutTime = 15000;
 
-        private Dictionary<Guid, int> RemainingTime { get; set; }
+        //private static Mutex RemainingTimeMutex = new Mutex();
+
+        private ConcurrentDictionary<Guid, int> RemainingTime { get; set; }
 
         private IHubContext HubContext { get; set; }
 
         public GameWaitingRoomEventManager()
         {
             MatchMakerService.MatchFoundEvent += OnMatchFound;
-            this.RemainingTime = new Dictionary<Guid, int>();
+            this.RemainingTime = new ConcurrentDictionary<Guid, int>();
             HubContext = GlobalHost.ConnectionManager.GetHubContext<GameWaitingRoomHub>();
         }
 
@@ -55,7 +58,9 @@ namespace AirHockeyServer.Events.EventManagers
 
             HubContext.Clients.Group(args.GameEntity.GameId.ToString()).OpponentFoundEvent(args.GameEntity);
 
-            this.RemainingTime.Add(args.GameEntity.GameId, 0);
+            //RemainingTimeMutex.WaitOne();
+            this.RemainingTime[args.GameEntity.GameId] = 0;
+            //RemainingTimeMutex.ReleaseMutex();
 
             System.Timers.Timer timer = CreateTimeoutTimer(args.GameEntity.GameId);
             timer.Start();

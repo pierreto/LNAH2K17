@@ -24,12 +24,14 @@ namespace AirHockeyServer.Services
     {
         public static event EventHandler<MatchFoundArgs> MatchFoundEvent;
 
+        private static Mutex WaitingPlayersMutex = new Mutex();
+
         private static Queue<UserEntity> _WaitingPlayers;
         private static Queue<UserEntity> WaitingPlayers
         {
             get
             {
-                if(_WaitingPlayers == null)
+                if (_WaitingPlayers == null)
                 {
                     _WaitingPlayers = new Queue<UserEntity>();
                 }
@@ -40,6 +42,8 @@ namespace AirHockeyServer.Services
                 _WaitingPlayers = value;
             }
         }
+
+        private static Mutex WaitingGamesMutex = new Mutex();
 
         // TODO : refactor needed for tournaments
         private static Queue<GameEntity> _WaitingGames;
@@ -71,9 +75,18 @@ namespace AirHockeyServer.Services
         ////////////////////////////////////////////////////////////////////////
         public static UserEntity GetGameOpponent()
         {
+            WaitingPlayersMutex.WaitOne();
+
             if (WaitingPlayers.Count > 0)
             {
-                return WaitingPlayers.Dequeue();
+                var player = WaitingPlayers.Dequeue();
+                WaitingPlayersMutex.ReleaseMutex();
+
+                return player;
+            }
+            else
+            {
+                WaitingPlayersMutex.ReleaseMutex();
             }
 
             return null;
@@ -91,9 +104,18 @@ namespace AirHockeyServer.Services
         ////////////////////////////////////////////////////////////////////////
         public static IEnumerable<UserEntity> GetTournamentOpponents()
         {
+            WaitingPlayersMutex.WaitOne();
+
             if (WaitingPlayers.Count > 2)
             {
-                return WaitingPlayers.Take(3); 
+                var players = WaitingPlayers.Take(3);
+                WaitingPlayersMutex.ReleaseMutex();
+
+                return players;
+            }
+            else
+            {
+                WaitingPlayersMutex.ReleaseMutex();
             }
 
             return null;
@@ -108,7 +130,12 @@ namespace AirHockeyServer.Services
         ////////////////////////////////////////////////////////////////////////
         public static void AddOpponent(UserEntity user)
         {
+            WaitingPlayersMutex.WaitOne();
+
             WaitingPlayers.Enqueue(user);
+
+            WaitingPlayersMutex.ReleaseMutex();
+
             StartPlayersMatching();
         }
 
@@ -122,8 +149,14 @@ namespace AirHockeyServer.Services
         ////////////////////////////////////////////////////////////////////////
         public static void AddGame(GameEntity game)
         {
+            WaitingGamesMutex.WaitOne();
+
             WaitingGames.Enqueue(game);
+
+            WaitingGamesMutex.ReleaseMutex();
+
             StartPlayersMatching();
+
         }
 
         ///////////////////////////////////////////////////////////////////////
@@ -137,8 +170,10 @@ namespace AirHockeyServer.Services
         ////////////////////////////////////////////////////////////////////////
         private static void StartPlayersMatching()
         {
+
             Thread myThread = new Thread(new ThreadStart(ExecuteMatch));
             myThread.Start();
+
         }
 
         ///////////////////////////////////////////////////////////////////////
@@ -152,15 +187,28 @@ namespace AirHockeyServer.Services
         ////////////////////////////////////////////////////////////////////////
         private static void ExecuteMatch()
         {
+            WaitingGamesMutex.WaitOne();
+
             if (WaitingGames.Count > 0)
             {
+                WaitingGamesMutex.ReleaseMutex();
+
                 var opponent = GetGameOpponent();
-                if(opponent != null)
+                if (opponent != null)
                 {
+                    WaitingGamesMutex.WaitOne();
+
                     var game = WaitingGames.Dequeue();
+
+                    WaitingGamesMutex.ReleaseMutex();
+
                     game.Players[1] = opponent;
                     MatchFoundEvent?.Invoke(new UserEntity(), new MatchFoundArgs { GameEntity = game });
                 }
+            }
+            else
+            {
+                WaitingGamesMutex.ReleaseMutex();
             }
         }
     }

@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web;
 
 namespace AirHockeyServer.Hubs
@@ -18,14 +20,16 @@ namespace AirHockeyServer.Hubs
     ///////////////////////////////////////////////////////////////////////////////
     public class ConnectionMapper
     {
-        private static Dictionary<Guid, string> _ConnectionsMapping;
-        private static Dictionary<Guid, string> ConnectionsMapping
+        private static Mutex ConnectionMutex = new Mutex();
+
+        private static ConcurrentDictionary<Guid, string> _ConnectionsMapping;
+        private static ConcurrentDictionary<Guid, string> ConnectionsMapping
         {
             get
             {
                 if (_ConnectionsMapping == null)
                 {
-                    _ConnectionsMapping = new Dictionary<Guid, string>();
+                    _ConnectionsMapping = new ConcurrentDictionary<Guid, string>();
                 }
                 return _ConnectionsMapping;
             }
@@ -46,11 +50,15 @@ namespace AirHockeyServer.Hubs
         ////////////////////////////////////////////////////////////////////////
         public static bool AddConnection(Guid userId, string connection)
         {
+            //ConnectionMutex.WaitOne();
+
             if (!ConnectionsMapping.ContainsKey(userId))
             {
-                ConnectionsMapping.Add(userId, connection);
+                ConnectionsMapping[userId] = connection;
                 return true;
             }
+
+            //ConnectionMutex.ReleaseMutex();
 
             return false;
         }
@@ -67,10 +75,15 @@ namespace AirHockeyServer.Hubs
         ////////////////////////////////////////////////////////////////////////
         public static string GetConnection(Guid userId)
         {
+            //ConnectionMutex.WaitOne();
+
             if (ConnectionsMapping.ContainsKey(userId))
             {
                 return ConnectionsMapping[userId];
             }
+
+            //ConnectionMutex.ReleaseMutex();
+
             return string.Empty;
         }
     }

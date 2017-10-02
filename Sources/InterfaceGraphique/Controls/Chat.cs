@@ -35,7 +35,7 @@ namespace InterfaceGraphique.Menus
         public async Task EstablishConnection(string targetServerIp)
         {
             await this.chatHub.EstablishConnection(targetServerIp);
-            this.chatHub.test();
+            //this.chatHub.test();
         }
 
         public async Task<bool> AuthenticateUser(string username)
