@@ -31,6 +31,7 @@ class EditorViewController: UIViewController {
         self.initView()
         self.initScene()
         self.initCamera()
+        self.initObjects()
     }
     
     func initView() {
@@ -50,6 +51,10 @@ class EditorViewController: UIViewController {
         cameraNode = SCNNode()
         cameraNode.camera = SCNCamera()
         cameraNode.position = SCNVector3(x: 0, y: 5, z: 10)
+    }
+    
+    func initObjects() {
+        self.editorScene.rootNode.addChildNode(NoeudTable.init())
     }
     
     /*func addButToScene() {

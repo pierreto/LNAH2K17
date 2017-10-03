@@ -239,70 +239,70 @@ class Table
     /// @return les coordonnées de texture de la table.
     ///
     ////////////////////////////////////////////////////////////////////////
-    func obtenirTexCoords() -> [SCNVector3]
+    func obtenirTexCoords() -> [CGPoint]
     {
-        var texCoords: [SCNVector3] = [SCNVector3]();
+        var texCoords: [CGPoint] = [CGPoint]();
         // Middle
-        texCoords.append(SCNVector3(0.5, 0.5, 0.0));			    // 0
+        texCoords.append(CGPoint(x: 0.5, y: 0.5));			    // 0
         
         // Right
-        texCoords.append(SCNVector3(0.8, 0.5, 0.0));				// 1
-        texCoords.append(SCNVector3(0.8, 0.5, 0.0));				// 2
-        texCoords.append(SCNVector3(1.0, 0.5, 0.0));			    // 3
-        texCoords.append(SCNVector3(1.0, 0.5, 0.0));		        // 4
-        texCoords.append(SCNVector3(1.0, 0.5, 0.0));			    // 5
+        texCoords.append(CGPoint(x: 0.8, y: 0.5));				// 1
+        texCoords.append(CGPoint(x: 0.8, y: 0.5));				// 2
+        texCoords.append(CGPoint(x: 1.0, y: 0.5));			    // 3
+        texCoords.append(CGPoint(x: 1.0, y: 0.5));		        // 4
+        texCoords.append(CGPoint(x: 1.0, y: 0.5));			    // 5
         
         // Top Right
-        texCoords.append(SCNVector3(0.8, 0.8, 0.0));				// 6
-        texCoords.append(SCNVector3(0.8, 0.8, 0.0));				// 7
-        texCoords.append(SCNVector3(1.0, 1.0, 0.0));			    // 8
-        texCoords.append(SCNVector3(1.0, 1.0, 0.0));		        // 9
-        texCoords.append(SCNVector3(1.0, 1.0, 0.0));			    // 10
+        texCoords.append(CGPoint(x: 0.8, y: 0.8));				// 6
+        texCoords.append(CGPoint(x: 0.8, y: 0.8));				// 7
+        texCoords.append(CGPoint(x: 1.0, y: 1.0));			    // 8
+        texCoords.append(CGPoint(x: 1.0, y: 1.0));		        // 9
+        texCoords.append(CGPoint(x: 1.0, y: 1.0));			    // 10
         
         // Top
-        texCoords.append(SCNVector3(0.5, 0.8, 0.0));				// 11
-        texCoords.append(SCNVector3(0.5, 0.8, 0.0));				// 12
-        texCoords.append(SCNVector3(0.5, 1.0, 0.0));			    // 13
-        texCoords.append(SCNVector3(0.5, 1.0, 0.0));		        // 14
-        texCoords.append(SCNVector3(0.5, 1.0, 0.0));			    // 15
+        texCoords.append(CGPoint(x: 0.5, y: 0.8));				// 11
+        texCoords.append(CGPoint(x: 0.5, y: 0.8));				// 12
+        texCoords.append(CGPoint(x: 0.5, y: 1.0));			    // 13
+        texCoords.append(CGPoint(x: 0.5, y: 1.0));		        // 14
+        texCoords.append(CGPoint(x: 0.5, y: 1.0));			    // 15
         
         // Top Left
-        texCoords.append(SCNVector3(0.2, 0.8, 0.0));				// 16
-        texCoords.append(SCNVector3(0.2, 0.8, 0.0));				// 17
-        texCoords.append(SCNVector3(0.0, 1.0, 0.0));			    // 18
-        texCoords.append(SCNVector3(0.0, 1.0, 0.0));		        // 19
-        texCoords.append(SCNVector3(0.0, 1.0, 0.0));			    // 20
+        texCoords.append(CGPoint(x: 0.2, y: 0.8));				// 16
+        texCoords.append(CGPoint(x: 0.2, y: 0.8));				// 17
+        texCoords.append(CGPoint(x: 0.0, y: 1.0));			    // 18
+        texCoords.append(CGPoint(x: 0.0, y: 1.0));		        // 19
+        texCoords.append(CGPoint(x: 0.0, y: 1.0));			    // 20
         
         // Right
-        texCoords.append(SCNVector3(0.2, 0.5, 0.0));				// 21
-        texCoords.append(SCNVector3(0.2, 0.5, 0.0));				// 22
-        texCoords.append(SCNVector3(0.0, 0.5, 0.0));			    // 23
-        texCoords.append(SCNVector3(0.0, 0.5, 0.0));		        // 24
-        texCoords.append(SCNVector3(0.0, 0.5, 0.0));			    // 25
+        texCoords.append(CGPoint(x: 0.2, y: 0.5));				// 21
+        texCoords.append(CGPoint(x: 0.2, y: 0.5));				// 22
+        texCoords.append(CGPoint(x: 0.0, y: 0.5));			    // 23
+        texCoords.append(CGPoint(x: 0.0, y: 0.5));		        // 24
+        texCoords.append(CGPoint(x: 0.0, y: 0.5));			    // 25
         
         // Bottom Left
-        texCoords.append(SCNVector3(0.2, 0.2, 0.0));				// 26
-        texCoords.append(SCNVector3(0.2, 0.2, 0.0));				// 27
-        texCoords.append(SCNVector3(0.0, 0.0, 0.0));			    // 28
-        texCoords.append(SCNVector3(0.0, 0.0, 0.0));		        // 29
-        texCoords.append(SCNVector3(0.0, 0.0, 0.0));			    // 30
+        texCoords.append(CGPoint(x: 0.2, y: 0.2));				// 26
+        texCoords.append(CGPoint(x: 0.2, y: 0.2));				// 27
+        texCoords.append(CGPoint(x: 0.0, y: 0.0));			    // 28
+        texCoords.append(CGPoint(x: 0.0, y: 0.0));		        // 29
+        texCoords.append(CGPoint(x: 0.0, y: 0.0));			    // 30
         
         // Bottom
-        texCoords.append(SCNVector3(0.5, 0.2, 0.0));				// 31
-        texCoords.append(SCNVector3(0.5, 0.2, 0.0));				// 32
-        texCoords.append(SCNVector3(0.5, 0.0, 0.0));			    // 33
-        texCoords.append(SCNVector3(0.5, 0.0, 0.0));		        // 34
-        texCoords.append(SCNVector3(0.5, 0.0, 0.0));			    // 35
+        texCoords.append(CGPoint(x: 0.5, y: 0.2));				// 31
+        texCoords.append(CGPoint(x: 0.5, y: 0.2));				// 32
+        texCoords.append(CGPoint(x: 0.5, y: 0.0));			    // 33
+        texCoords.append(CGPoint(x: 0.5, y: 0.0));		        // 34
+        texCoords.append(CGPoint(x: 0.5, y: 0.0));			    // 35
         
         // Bottom Right
-        texCoords.append(SCNVector3(0.8, 0.2, 0.0));				// 36
-        texCoords.append(SCNVector3(0.8, 0.2, 0.0));				// 37
-        texCoords.append(SCNVector3(1.0, 0.0, 0.0));			    // 38
-        texCoords.append(SCNVector3(1.0, 0.0, 0.0));		        // 39
-        texCoords.append(SCNVector3(1.0, 0.0, 0.0));			    // 40
+        texCoords.append(CGPoint(x: 0.8, y: 0.2));				// 36
+        texCoords.append(CGPoint(x: 0.8, y: 0.2));				// 37
+        texCoords.append(CGPoint(x: 1.0, y: 0.0));			    // 38
+        texCoords.append(CGPoint(x: 1.0, y: 0.0));		        // 39
+        texCoords.append(CGPoint(x: 1.0, y: 0.0));			    // 40
         
         // Middle
-        texCoords.append(SCNVector3(1.0, 0.0, 0.0));			    // 41
+        texCoords.append(CGPoint(x: 1.0, y: 0.0));			    // 41
         
         return texCoords;
     }
