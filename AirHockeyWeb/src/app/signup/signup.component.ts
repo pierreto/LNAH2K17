@@ -105,7 +105,11 @@ onValueChanged(data?: any) {
     }
   }
 
+
   signup(): void {
-    this.signupService.signup(this.user);
+    this.signupService.signup(this.user).subscribe(
+      () => {},
+      () => {}
+    );
   }
 }

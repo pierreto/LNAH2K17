@@ -35,7 +35,6 @@ namespace AirHockeyServer.Services
     }
 
     public class LoginException : Exception
-
     {
         private string message;
         public LoginException(string message)
