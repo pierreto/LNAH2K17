@@ -9,7 +9,7 @@ using InterfaceGraphique.Entities;
 
 namespace InterfaceGraphique.Controls.WPF.Matchmaking
 {
-    public class MatchmakingViewModel
+    public class MatchmakingViewModel : ViewModelBase
     {
         private MatchmakingHub matchmakingHub;
         private bool isStarted;
@@ -21,39 +21,45 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
         }
 
       
-        private ICommand startMatchmakingCommand;
-        public ICommand StartMatchmakingCommand
+        private ICommand matchmakingCommand;
+        public ICommand MatchmakingCommand
         {
             get
             {
-                return startMatchmakingCommand ??
-                       (startMatchmakingCommand = new RelayCommandAsync(StartMatchmaking, (o) => CanStart()));
+                return matchmakingCommand ??
+                       (matchmakingCommand = new RelayCommandAsync(Matchmaking, (o) => CanStart()));
             }
         }
-        private async Task StartMatchmaking()
+        private async Task Matchmaking()
         {
-            this.matchmakingHub.Start();
-        }
-
-        private ICommand cancelMatchmakingCommand;
-        public ICommand CancelMatchmakingCommand
-        {
-            get
+            if (this.isStarted)
             {
-                return cancelMatchmakingCommand ?? (cancelMatchmakingCommand =
-                           new RelayCommandAsync(CancelMatchmaking, (o) => !CanStart()));
-            }
-        }
+                 this.matchmakingHub.Cancel();
+                this.IsStarted = false;
 
-        private async Task CancelMatchmaking()
-        {
-            this.matchmakingHub.Cancel();
+            }
+            else
+            {
+                 this.matchmakingHub.Start();
+                this.IsStarted = true;
+            }
+
         }
 
         private bool CanStart()
         {
 
-            return !this.isStarted;
+            return true;
+        }
+
+        public bool IsStarted
+        {
+            get => isStarted;
+            set
+            {
+                isStarted = value;
+                this.OnPropertyChanged();
+            }
         }
     }
 }

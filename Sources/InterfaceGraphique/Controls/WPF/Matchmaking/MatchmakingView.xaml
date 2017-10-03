@@ -5,13 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:InterfaceGraphique.Controls.WPF.Matchmaking"
              xmlns:wpf="clr-namespace:InterfaceGraphique.Controls.WPF"
-             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             mc:Ignorable="d" Height="92.799" Width="350.044">
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             mc:Ignorable="d" Height="92.799" Width="340.544">
     <UserControl.Resources>
         <ResourceDictionary>
 
-            <!--
-            <ResourceDictionary.MergedDictionaries >
+
+            <!--<ResourceDictionary.MergedDictionaries >
                 <ResourceDictionary Source="/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
                 <ResourceDictionary Source="/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
                 <ResourceDictionary Source="/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Blue.xaml" />
@@ -23,30 +24,48 @@
 
     </UserControl.Resources>
     <Grid DataContext="{Binding Source={StaticResource VMLocator}, Path=MatchmakingViewModel}" Background="#FF373A3E" >
+        <Grid.Resources>
+
+            <LinearGradientBrush x:Key="Cancel"  EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FFFB8484" Offset="0"/>
+                <GradientStop Color="#FFFF0C00" Offset="1" />
+            </LinearGradientBrush>
+
+
+            <LinearGradientBrush x:Key="Start"  EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FFE8A85B" Offset="0"/>
+                <GradientStop Color="#FFB8690A" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Resources>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="86*"/>
-            <ColumnDefinition Width="89*"/>
+            <ColumnDefinition Width="172*"/>
+            <ColumnDefinition Width="169*"/>
         </Grid.ColumnDefinitions>
         <TextBox HorizontalAlignment="Left" Height="23" Margin="0,54,0,0" TextWrapping="Wrap" Text="Temps restant :" VerticalAlignment="Top" Width="94" Background="{x:Null}" Foreground="White" FontWeight="Bold" BorderBrush="{x:Null}" RenderTransformOrigin="0.233,0.531"/>
         <TextBox HorizontalAlignment="Left" Height="23" Margin="0,10,0,0" TextWrapping="Wrap" Text="En attente d'un autre joueur..." VerticalAlignment="Top" Width="177" Foreground="White" Background="{x:Null}" BorderBrush="{x:Null}" FontWeight="Bold" Grid.ColumnSpan="2"/>
         <TextBox HorizontalAlignment="Left" Height="23" Margin="94,54,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="72" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" FontWeight="Bold"/>
-        <ToggleButton Margin="0,-1,0,0" Grid.Column="1" FontWeight="Bold" FontSize="24" Foreground="#FF494848" IsChecked="{Binding Path=PortViewModel.PortIsOpen, Mode=OneWay}">
-            <ToggleButton.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FFE8A85B" Offset="0"/>
-                    <GradientStop Color="#FFB8690A" Offset="1"/>
-                </LinearGradientBrush>
-            </ToggleButton.Background>
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="Checked">
-                    <i:InvokeCommandAction Command="{Binding Path=StartMatchmakingCommand}"/>
-                </i:EventTrigger>
-                <i:EventTrigger EventName="Unchecked">
-                    <i:InvokeCommandAction Command="{Binding Path=CancelMatchmakingCommand}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-            <Button Content="Partie rapide" Width="156" Background="{x:Null}" Foreground="#FF3E3A3A" BorderBrush="{x:Null}"/>
-        </ToggleButton>
+
+
+        <Button Command="{Binding MatchmakingCommand}" Content="Partie Rapide"  Margin="1,0,0,0" FontWeight="Bold" FontSize="24" Foreground="#FF494848" Grid.Column="1" Height="Auto" HorizontalAlignment="Left" Width="168">
+
+                <Button.Style>
+                <Style TargetType="Button">
+                    <Style.Triggers>
+  
+                        <DataTrigger Binding="{Binding IsStarted, UpdateSourceTrigger=PropertyChanged}" Value="false">
+                            <Setter Property="Background" Value="{StaticResource Start}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsStarted, UpdateSourceTrigger=PropertyChanged}" Value="true">
+                            <Setter Property="Background" Value="{StaticResource Cancel}" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+
+     
+
+
     </Grid>
 
 

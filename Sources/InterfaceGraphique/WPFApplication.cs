@@ -15,7 +15,7 @@ namespace InterfaceGraphique
             _wpfApp = new WPFApplication();
             _wpfApp.ShutdownMode = ShutdownMode.OnExplicitShutdown;
             ResourceDictionary appResources = new ResourceDictionary();
-            appResources.Source = new Uri("/InterfaceGraphique;component/appresources.xaml", UriKind.Relative);
+            appResources.Source = new Uri("/InterfaceGraphique;component/Resource/appresources.xaml", UriKind.Relative);
             _wpfApp.Resources.MergedDictionaries.Add(appResources);
         }
     }

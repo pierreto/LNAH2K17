@@ -16,13 +16,14 @@
     <UserControl.Resources>
         <ResourceDictionary>
 
-<!--
+            <!--
             <ResourceDictionary.MergedDictionaries >
                 <ResourceDictionary Source="/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
                 <ResourceDictionary Source="/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
                 <ResourceDictionary Source="/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Blue.xaml" />
                 <ResourceDictionary Source="/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Green.xaml" />
-            </ResourceDictionary.MergedDictionaries>-->
+            </ResourceDictionary.MergedDictionaries>
+            -->
             <wpf:ViewModelLocator x:Key="VMLocator" d:IsDataSource="True" />
             <DataTemplate x:Key="MessagesDataTemplate" DataType="entities:ChatMessage">
 

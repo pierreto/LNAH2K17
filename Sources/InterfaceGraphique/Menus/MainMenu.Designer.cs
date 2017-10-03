@@ -158,7 +158,7 @@
             // elementHost2
             // 
             this.elementHost2.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.elementHost2.Location = new System.Drawing.Point(820, 12);
+            this.elementHost2.Location = new System.Drawing.Point(681, 23);
             this.elementHost2.Name = "elementHost2";
             this.elementHost2.Size = new System.Drawing.Size(352, 100);
             this.elementHost2.TabIndex = 11;
