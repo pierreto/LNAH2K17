@@ -124,6 +124,12 @@
     <Compile Include="CommunicationInterface\MatchmakingHub.cs" />
     <Compile Include="CommunicationInterface\HubManager.cs" />
     <Compile Include="CommunicationInterface\IBaseHub.cs" />
+    <Compile Include="Controls\LobbyHost.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\LobbyHost.Designer.cs">
+      <DependentUpon>LobbyHost.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\WPF\BringNewItemIntoViewBehavior.cs" />
     <Compile Include="Controls\WPF\Chat\ChatView.xaml.cs">
       <DependentUpon>ChatView.xaml</DependentUpon>
@@ -239,6 +245,9 @@
       <DependentUpon>TestMode.cs</DependentUpon>
     </Compile>
     <Compile Include="WPFApplication.cs" />
+    <EmbeddedResource Include="Controls\LobbyHost.resx">
+      <DependentUpon>LobbyHost.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Menus\Login.resx">
       <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>

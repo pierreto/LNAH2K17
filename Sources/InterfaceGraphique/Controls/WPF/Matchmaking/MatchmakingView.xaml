@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="InterfaceGraphique.Controls.WPF.Matchmaking.MatchmakingView"
+﻿<UserControl
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -7,7 +7,8 @@
              xmlns:wpf="clr-namespace:InterfaceGraphique.Controls.WPF"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
-             mc:Ignorable="d" Height="92.799" Width="340.544">
+             xmlns:Controls="clr-namespace:InterfaceGraphique.Controls" x:Class="InterfaceGraphique.Controls.WPF.Matchmaking.MatchmakingView"
+             mc:Ignorable="d" d:DesignHeight="400" d:DesignWidth="600">
     <UserControl.Resources>
         <ResourceDictionary>
 
@@ -23,7 +24,7 @@
         </ResourceDictionary>
 
     </UserControl.Resources>
-    <Grid DataContext="{Binding Source={StaticResource VMLocator}, Path=MatchmakingViewModel}" Background="#FF373A3E" >
+    <Grid Background="#FF373A3E" >
         <Grid.Resources>
 
             <LinearGradientBrush x:Key="Cancel"  EndPoint="0.5,1" StartPoint="0.5,0">
@@ -37,21 +38,31 @@
                 <GradientStop Color="#FFB8690A" Offset="1"/>
             </LinearGradientBrush>
         </Grid.Resources>
+        <Grid.DataContext>
+            <Binding Path="MatchmakingViewModel" Source="{StaticResource VMLocator}"/>
+        </Grid.DataContext>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="37*"/>
+            <RowDefinition Height="69*"/>
+            <RowDefinition Height="94*"/>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="172*"/>
-            <ColumnDefinition Width="169*"/>
+            <ColumnDefinition Width="53*"/>
+            <ColumnDefinition Width="49*"/>
+            <ColumnDefinition Width="48*"/>
         </Grid.ColumnDefinitions>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="0,54,0,0" TextWrapping="Wrap" Text="Temps restant :" VerticalAlignment="Top" Width="94" Background="{x:Null}" Foreground="White" FontWeight="Bold" BorderBrush="{x:Null}" RenderTransformOrigin="0.233,0.531"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="0,10,0,0" TextWrapping="Wrap" Text="En attente d'un autre joueur..." VerticalAlignment="Top" Width="177" Foreground="White" Background="{x:Null}" BorderBrush="{x:Null}" FontWeight="Bold" Grid.ColumnSpan="2"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="94,54,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="72" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" FontWeight="Bold"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="20,54,0,0" TextWrapping="Wrap" Text="Temps restant :" VerticalAlignment="Top" Width="94" Background="{x:Null}" Foreground="White" FontWeight="Bold" BorderBrush="{x:Null}" RenderTransformOrigin="0.233,0.531" Grid.RowSpan="2"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="20,10,0,0" TextWrapping="Wrap" Text="En attente d'un autre joueur..." VerticalAlignment="Top" Width="177" Foreground="White" Background="{x:Null}" BorderBrush="{x:Null}" FontWeight="Bold"/>
+        <TextBox HorizontalAlignment="Left" Height="23" Margin="114,54,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="72" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" FontWeight="Bold" Grid.RowSpan="2"/>
 
+        <Button Command="{Binding MatchmakingCommand}" Content="Menu principal"  Margin="12,15,0,15" FontWeight="Bold" FontSize="16" Foreground="#FF494848" Grid.Column="2" Height="Auto" HorizontalAlignment="Left" Width="157"/>
 
-        <Button Command="{Binding MatchmakingCommand}" Content="Partie Rapide"  Margin="1,0,0,0" FontWeight="Bold" FontSize="24" Foreground="#FF494848" Grid.Column="1" Height="Auto" HorizontalAlignment="Left" Width="168">
+        <Button Command="{Binding MatchmakingCommand}" Content="Partie Rapide"  Margin="0,15,12,15" FontWeight="Bold" FontSize="16" Foreground="#FF494848" Grid.Column="1" Height="Auto" HorizontalAlignment="Right" Width="157">
 
-                <Button.Style>
-                <Style TargetType="Button">
+            <Button.Style>
+                <Style TargetType="{x:Type Button}">
                     <Style.Triggers>
-  
+
                         <DataTrigger Binding="{Binding IsStarted, UpdateSourceTrigger=PropertyChanged}" Value="false">
                             <Setter Property="Background" Value="{StaticResource Start}" />
                         </DataTrigger>
@@ -63,7 +74,14 @@
             </Button.Style>
         </Button>
 
-     
+
+
+
+        <Controls:ChatView Grid.Row="2" Grid.ColumnSpan="3"/>
+        <TextBox HorizontalAlignment="Left" Height="22" Margin="20,11,0,0" TextWrapping="Wrap" Text="Adversaire :" VerticalAlignment="Top" Width="177" Foreground="White" Background="{x:Null}" BorderBrush="{x:Null}" FontWeight="Bold" Grid.Row="1"/>
+        <TextBox HorizontalAlignment="Left" Height="22" Margin="20,11,0,0" TextWrapping="Wrap" Text="Configuration :" VerticalAlignment="Top" Width="176" Foreground="White" Background="{x:Null}" BorderBrush="{x:Null}" FontWeight="Bold" Grid.Row="1" Grid.Column="1"/>
+
+
 
 
     </Grid>
