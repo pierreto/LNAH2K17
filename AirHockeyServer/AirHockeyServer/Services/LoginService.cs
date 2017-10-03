@@ -16,6 +16,7 @@ namespace AirHockeyServer.Services
         public void Login(LoginMessage message) 
         {
             System.Diagnostics.Debug.WriteLine(message.username);
+            System.Diagnostics.Debug.WriteLine(message.password);
             System.Diagnostics.Debug.WriteLine(_usernames.Count);
             if (_usernames.Contains(message.username))
             {
