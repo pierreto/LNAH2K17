@@ -46,29 +46,8 @@ namespace InterfaceGraphique.Controls.WPF.Chat
                 Name = "Main"
             });
 
-            
-           // Task.Run(() => this.Authenticate()).Wait();
-
-
+       
         }
-
-        public void UnsuscribeEventHandlers()
-        {
-            Program.FormManager.SizeChanged -= new EventHandler(WindowSizeChanged);
-        }
-        private void WindowSizeChanged(object sender, EventArgs e)
-        {
-            //this.Size = new Size(Program.FormManager.ClientSize.Width, Program.FormManager.ClientSize.Height);
-        }
-        public void InitializeOpenGlPanel()
-        {
-            Program.FormManager.SizeChanged += new EventHandler(WindowSizeChanged);
-
-        }
-        public void MettreAJour(double tempsInterAffichage)
-        {
-        }
-
         private ICommand sendMessageCommand;
         public ICommand SendMessageCommand
         {

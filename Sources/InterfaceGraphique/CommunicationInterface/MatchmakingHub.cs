@@ -9,7 +9,7 @@ using Microsoft.AspNet.SignalR.Client;
 
 namespace InterfaceGraphique.CommunicationInterface
 {
-    class GameLobbyHub : IBaseHub
+    public class MatchmakingHub : IBaseHub
     {
         private IHubProxy GameWaitingRoomProxy { get; set; }
 
@@ -83,6 +83,15 @@ namespace InterfaceGraphique.CommunicationInterface
             gameUpdated = await GameWaitingRoomProxy.Invoke<GameEntity>("UpdateMap", game);
         }
 
-  
+
+        public void Cancel()
+        {
+            //TODO: IMPLEMENT THIS
+        }
+
+        public void Start()
+        {
+            //TODO: IMPLEMENT THIS
+        }
     }
 }

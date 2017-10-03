@@ -32,9 +32,11 @@ namespace InterfaceGraphique.CommunicationInterface
 
         private void AddHubs()
         {
-            this.hubs = new List<IBaseHub>();
-            this.hubs.Add(Program.unityContainer.Resolve<ChatHub>());
-            this.hubs.Add(Program.unityContainer.Resolve<GameLobbyHub>());
+            this.hubs = new List<IBaseHub>
+            {
+                Program.unityContainer.Resolve<ChatHub>(),
+                Program.unityContainer.Resolve<MatchmakingHub>()
+            };
         }
 
         private void InitializeHubs(string username)

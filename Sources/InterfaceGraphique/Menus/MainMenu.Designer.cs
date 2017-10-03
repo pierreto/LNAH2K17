@@ -29,6 +29,8 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.Button_Credits = new System.Windows.Forms.Button();
             this.buttonLogout = new System.Windows.Forms.Button();
+            this.elementHost2 = new System.Windows.Forms.Integration.ElementHost();
+            this.matchmakingView1 = new InterfaceGraphique.Controls.WPF.Matchmaking.MatchmakingView();
             this.elementHost1 = new System.Windows.Forms.Integration.ElementHost();
             this.chatView1 = new InterfaceGraphique.Controls.ChatView();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -41,7 +43,7 @@
             this.boutonPartieRapide.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.boutonPartieRapide.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.boutonPartieRapide.ForeColor = System.Drawing.Color.Red;
-            this.boutonPartieRapide.Location = new System.Drawing.Point(796, 228);
+            this.boutonPartieRapide.Location = new System.Drawing.Point(1022, 227);
             this.boutonPartieRapide.Name = "boutonPartieRapide";
             this.boutonPartieRapide.Size = new System.Drawing.Size(150, 50);
             this.boutonPartieRapide.TabIndex = 1;
@@ -56,7 +58,7 @@
             this.boutonTournoi.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.boutonTournoi.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.boutonTournoi.ForeColor = System.Drawing.Color.White;
-            this.boutonTournoi.Location = new System.Drawing.Point(796, 284);
+            this.boutonTournoi.Location = new System.Drawing.Point(1022, 283);
             this.boutonTournoi.Name = "boutonTournoi";
             this.boutonTournoi.Size = new System.Drawing.Size(150, 50);
             this.boutonTournoi.TabIndex = 2;
@@ -71,7 +73,7 @@
             this.buttonConfiguration.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonConfiguration.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonConfiguration.ForeColor = System.Drawing.Color.Red;
-            this.buttonConfiguration.Location = new System.Drawing.Point(796, 340);
+            this.buttonConfiguration.Location = new System.Drawing.Point(1022, 339);
             this.buttonConfiguration.Name = "buttonConfiguration";
             this.buttonConfiguration.Size = new System.Drawing.Size(150, 50);
             this.buttonConfiguration.TabIndex = 3;
@@ -87,7 +89,7 @@
             this.buttonEditeur.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonEditeur.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonEditeur.ForeColor = System.Drawing.Color.White;
-            this.buttonEditeur.Location = new System.Drawing.Point(796, 408);
+            this.buttonEditeur.Location = new System.Drawing.Point(1022, 407);
             this.buttonEditeur.Name = "buttonEditeur";
             this.buttonEditeur.Size = new System.Drawing.Size(150, 50);
             this.buttonEditeur.TabIndex = 4;
@@ -102,7 +104,7 @@
             this.buttonQuitter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonQuitter.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonQuitter.ForeColor = System.Drawing.Color.Red;
-            this.buttonQuitter.Location = new System.Drawing.Point(796, 585);
+            this.buttonQuitter.Location = new System.Drawing.Point(1022, 584);
             this.buttonQuitter.Name = "buttonQuitter";
             this.buttonQuitter.Size = new System.Drawing.Size(150, 50);
             this.buttonQuitter.TabIndex = 5;
@@ -116,9 +118,9 @@
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
             this.pictureBox1.ImageLocation = "";
-            this.pictureBox1.Location = new System.Drawing.Point(359, -51);
+            this.pictureBox1.Location = new System.Drawing.Point(-25, -35);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(550, 350);
+            this.pictureBox1.Size = new System.Drawing.Size(550, 300);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 6;
             this.pictureBox1.TabStop = false;
@@ -130,7 +132,7 @@
             this.Button_Credits.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Button_Credits.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Button_Credits.ForeColor = System.Drawing.Color.Red;
-            this.Button_Credits.Location = new System.Drawing.Point(796, 464);
+            this.Button_Credits.Location = new System.Drawing.Point(1022, 463);
             this.Button_Credits.Name = "Button_Credits";
             this.Button_Credits.Size = new System.Drawing.Size(150, 50);
             this.Button_Credits.TabIndex = 7;
@@ -145,7 +147,7 @@
             this.buttonLogout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonLogout.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonLogout.ForeColor = System.Drawing.Color.White;
-            this.buttonLogout.Location = new System.Drawing.Point(796, 529);
+            this.buttonLogout.Location = new System.Drawing.Point(1022, 528);
             this.buttonLogout.Name = "buttonLogout";
             this.buttonLogout.Size = new System.Drawing.Size(150, 50);
             this.buttonLogout.TabIndex = 9;
@@ -153,14 +155,24 @@
             this.buttonLogout.Text = "Déconnexion";
             this.buttonLogout.UseVisualStyleBackColor = true;
             // 
+            // elementHost2
+            // 
+            this.elementHost2.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.elementHost2.Location = new System.Drawing.Point(820, 12);
+            this.elementHost2.Name = "elementHost2";
+            this.elementHost2.Size = new System.Drawing.Size(352, 100);
+            this.elementHost2.TabIndex = 11;
+            this.elementHost2.Text = "elementHost2";
+            this.elementHost2.Child = this.matchmakingView1;
+            // 
             // elementHost1
             // 
             this.elementHost1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.elementHost1.Location = new System.Drawing.Point(12, 239);
+            this.elementHost1.Location = new System.Drawing.Point(12, 233);
             this.elementHost1.Name = "elementHost1";
-            this.elementHost1.Size = new System.Drawing.Size(760, 407);
+            this.elementHost1.Size = new System.Drawing.Size(1004, 407);
             this.elementHost1.TabIndex = 10;
-            this.elementHost1.Text = "elementHost1";
+            this.elementHost1.Text = "s";
             this.elementHost1.Child = this.chatView1;
             // 
             // MainMenu
@@ -169,6 +181,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(49)))), ((int)(((byte)(54)))));
             this.ClientSize = new System.Drawing.Size(1184, 648);
+            this.Controls.Add(this.elementHost2);
             this.Controls.Add(this.elementHost1);
             this.Controls.Add(this.buttonLogout);
             this.Controls.Add(this.Button_Credits);
@@ -196,5 +209,7 @@
         private System.Windows.Forms.Button buttonLogout;
         private System.Windows.Forms.Integration.ElementHost elementHost1;
         private Controls.ChatView chatView1;
+        private System.Windows.Forms.Integration.ElementHost elementHost2;
+        private Controls.WPF.Matchmaking.MatchmakingView matchmakingView1;
     }
 }

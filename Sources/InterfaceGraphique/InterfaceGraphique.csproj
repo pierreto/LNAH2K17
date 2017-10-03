@@ -121,7 +121,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommunicationInterface\ChatHub.cs" />
-    <Compile Include="CommunicationInterface\GameLobbyHub.cs" />
+    <Compile Include="CommunicationInterface\MatchmakingHub.cs" />
     <Compile Include="CommunicationInterface\HubManager.cs" />
     <Compile Include="CommunicationInterface\IBaseHub.cs" />
     <Compile Include="Controls\WPF\BringNewItemIntoViewBehavior.cs" />
@@ -129,6 +129,10 @@
       <DependentUpon>ChatView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\WPF\Chat\ChatViewModel.cs" />
+    <Compile Include="Controls\WPF\Matchmaking\MatchmakingView.xaml.cs">
+      <DependentUpon>MatchmakingView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WPF\Matchmaking\MatchmakingViewModel.cs" />
     <Compile Include="Controls\WPF\RelayCommandAsync.cs" />
     <Compile Include="Controls\WPF\ViewModelBase.cs" />
     <Compile Include="Controls\WPF\ViewModelLocator.cs" />
@@ -348,6 +352,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\WPF\Chat\ChatView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\WPF\Matchmaking\MatchmakingView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

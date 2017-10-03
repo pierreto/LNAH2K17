@@ -24,7 +24,7 @@
                 <ResourceDictionary Source="/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Green.xaml" />
             </ResourceDictionary.MergedDictionaries>-->
             <wpf:ViewModelLocator x:Key="VMLocator" d:IsDataSource="True" />
-            <DataTemplate x:Key="MessagesDataTemplate" DataType="communicationInterface:ChatMessage">
+            <DataTemplate x:Key="MessagesDataTemplate" DataType="entities:ChatMessage">
 
                 <Border Name="MessageBorder" MinHeight="40" BorderThickness="0 0 0 2" Background="#FF373A3E" 
                         Margin="10,0,10,0" BorderBrush="#FF3C3F44" CornerRadius="2" SnapsToDevicePixels="True"  >
