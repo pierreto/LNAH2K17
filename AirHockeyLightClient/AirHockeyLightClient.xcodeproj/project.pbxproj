@@ -14,7 +14,7 @@
 		3415E6C41F8547CE00DB1CAD /* ArbreRendu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3415E6C31F8547CE00DB1CAD /* ArbreRendu.swift */; };
 		3415E6C71F85649D00DB1CAD /* UsineAbstraite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3415E6C61F85649D00DB1CAD /* UsineAbstraite.swift */; };
 		3415E6C91F85659900DB1CAD /* UsineNoeud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3415E6C81F85659900DB1CAD /* UsineNoeud.swift */; };
-		3415E6CF1F8577D000DB1CAD /* controlPoint.dae in Resources */ = {isa = PBXBuildFile; fileRef = 3415E6CE1F8577D000DB1CAD /* controlPoint.dae */; };
+		3415E6D91F85A99500DB1CAD /* controlPoint.obj in Resources */ = {isa = PBXBuildFile; fileRef = 3415E6D81F85A99500DB1CAD /* controlPoint.obj */; };
 		34B66FD91F8428EA00A9CCB9 /* NoeudTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B66FD81F8428EA00A9CCB9 /* NoeudTable.swift */; };
 		34B66FDC1F843CD400A9CCB9 /* fire_texture.png in Resources */ = {isa = PBXBuildFile; fileRef = 34B66FDB1F843CD300A9CCB9 /* fire_texture.png */; };
 		34B66FE01F844C2100A9CCB9 /* table_texture.png in Resources */ = {isa = PBXBuildFile; fileRef = 34B66FDF1F844C2100A9CCB9 /* table_texture.png */; };
@@ -48,7 +48,7 @@
 		3415E6C31F8547CE00DB1CAD /* ArbreRendu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArbreRendu.swift; path = Noyau/Arbre/ArbreRendu.swift; sourceTree = "<group>"; };
 		3415E6C61F85649D00DB1CAD /* UsineAbstraite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UsineAbstraite.swift; path = Noyau/Arbre/Usines/UsineAbstraite.swift; sourceTree = "<group>"; };
 		3415E6C81F85659900DB1CAD /* UsineNoeud.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UsineNoeud.swift; path = Noyau/Arbre/Usines/UsineNoeud.swift; sourceTree = "<group>"; };
-		3415E6CE1F8577D000DB1CAD /* controlPoint.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; name = controlPoint.dae; path = ../../Exe/media/models/controlPoint.dae; sourceTree = "<group>"; };
+		3415E6D81F85A99500DB1CAD /* controlPoint.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = controlPoint.obj; path = ../../Exe/media/models/controlPoint.obj; sourceTree = "<group>"; };
 		34B66FD81F8428EA00A9CCB9 /* NoeudTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NoeudTable.swift; path = Noyau/Arbre/Noeuds/NoeudTable.swift; sourceTree = "<group>"; };
 		34B66FDB1F843CD300A9CCB9 /* fire_texture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fire_texture.png; path = ../../Exe/media/textures/fire_texture.png; sourceTree = "<group>"; };
 		34B66FDF1F844C2100A9CCB9 /* table_texture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = table_texture.png; path = ../../Exe/media/textures/table_texture.png; sourceTree = "<group>"; };
@@ -255,7 +255,7 @@
 		8FB6A9C41F81DCA800FAFFCF /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				3415E6CE1F8577D000DB1CAD /* controlPoint.dae */,
+				3415E6D81F85A99500DB1CAD /* controlPoint.obj */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -273,11 +273,11 @@
 		8FB6A9C81F81E36300FAFFCF /* Noeuds */ = {
 			isa = PBXGroup;
 			children = (
+				3415E6C11F8545B300DB1CAD /* NoeudCommun.swift */,
 				8FB6A9C91F81E38300FAFFCF /* Table.swift */,
 				34B66FD81F8428EA00A9CCB9 /* NoeudTable.swift */,
 				34B66FE11F84599100A9CCB9 /* But.swift */,
 				34B66FE31F84636900A9CCB9 /* NoeudBut.swift */,
-				3415E6C11F8545B300DB1CAD /* NoeudCommun.swift */,
 			);
 			name = Noeuds;
 			sourceTree = "<group>";
@@ -366,10 +366,10 @@
 				8F64C0151F77550800F14AC7 /* Main.storyboard in Resources */,
 				8F6AE2C91F6592EB00A29E8B /* Assets.xcassets in Resources */,
 				34B66FDC1F843CD400A9CCB9 /* fire_texture.png in Resources */,
+				3415E6D91F85A99500DB1CAD /* controlPoint.obj in Resources */,
 				34B66FE01F844C2100A9CCB9 /* table_texture.png in Resources */,
 				8F64C0131F7754FD00F14AC7 /* LaunchScreen.storyboard in Resources */,
 				8F6AE2C01F6592EB00A29E8B /* Actions.sks in Resources */,
-				3415E6CF1F8577D000DB1CAD /* controlPoint.dae in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

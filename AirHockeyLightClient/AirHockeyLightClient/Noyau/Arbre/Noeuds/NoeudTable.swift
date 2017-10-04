@@ -21,7 +21,11 @@ class NoeudTable : NoeudCommun {
     
     private let table = Table()
     
-    /// Constructeur
+    /// La table n'a pas un modèle obj
+    required init(type: String, geometry: SCNGeometry) {
+        fatalError("init(type:geometry:) has not been implemented")
+    }
+    
     required init(type: String) {
         super.init(type: type)
         
@@ -34,7 +38,6 @@ class NoeudTable : NoeudCommun {
         self.addMaterial()
     }
     
-    /* Xcode required this */
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

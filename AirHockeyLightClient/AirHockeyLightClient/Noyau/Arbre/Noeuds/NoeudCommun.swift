@@ -9,6 +9,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 import SceneKit
+import SceneKit.ModelIO
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class NoeudCommun
@@ -24,7 +25,14 @@ class NoeudCommun : SCNNode {
     /// Type du noeud
     private var type: String = ""
     
-    /// Constructeur
+    /// Constructeur avec géométrie
+    required init(type: String, geometry: SCNGeometry) {
+        super.init()
+        self.geometry = geometry
+        self.type = type
+    }
+    
+    /// Constructeur sans géométrie
     required init(type: String) {
         super.init()
         

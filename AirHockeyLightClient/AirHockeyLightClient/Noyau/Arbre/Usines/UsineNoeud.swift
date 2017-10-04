@@ -9,6 +9,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 import SceneKit
+import SceneKit.ModelIO
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class UsineNoeud
@@ -23,16 +24,20 @@ class UsineNoeud<T: NoeudCommun> : UsineAbstraite {
     // Nom de l'usine, à savoir le type d'un noeud créé par l'usine
     private var nom: String = ""
     
-    // Modèle du noeud
-    private var sceneModel: SCNScene?
+    // Modèle du noeud (certains noeuds n'ont pas un modèle)
+    private var model: SCNNode?
     
     /// Constructeur
     init(nomUsine: String, nomModele: String) {
         self.nom = nomUsine
         
-        // Charger le modèle depuis un fichier .dae
+        // Charger le modèle depuis un fichier .obj
         if nomModele != "noModel" {
-            self.sceneModel = SCNScene(named: nomModele)
+            let urlForAsset = Bundle.main.url(forResource: nomModele, withExtension: "obj")!
+            let asset = MDLAsset(url: urlForAsset).object(at: 0)
+            
+            // Créer un noeud de base avec le modèle
+            self.model = SCNNode(mdlObject: asset)
         }
     }
     
@@ -43,12 +48,9 @@ class UsineNoeud<T: NoeudCommun> : UsineAbstraite {
     
     /// Retourne un noeud nouvellement créé du type produit par cette usine
     func creerNoeud() -> SCNNode {
-        let newNode = T(type: self.nom)
-        
-        // Associer le modèle avec le noeud
-        if self.sceneModel != nil {
-            newNode.addChildNode((self.sceneModel?.rootNode.clone())!)
-        }
+        let newNode = (model != nil) ?
+            T(type: self.nom, geometry: (self.model?.geometry)!) :
+            T(type:self.nom)
         // TODO : ajouter le collider du noeud (voir SCNPhysicsBody)
         
         return newNode

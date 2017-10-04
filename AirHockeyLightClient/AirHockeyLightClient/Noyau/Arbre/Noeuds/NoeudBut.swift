@@ -16,7 +16,13 @@ class NoeudBut : NoeudCommun {
     private var sommets = [SCNVector3]()
     private var faces = [GLuint]()
     
-    required init(type : String) {
+    /// Le but n'a pas un modèle obj
+    required init(type : String, geometry: SCNGeometry) {
+        fatalError("init(type:) has not been implemented")
+        
+    }
+    
+    required init(type: String) {
         super.init(type: type)
         
         //let sources = self.initSources()
@@ -32,6 +38,8 @@ class NoeudBut : NoeudCommun {
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    
     
     ////////////////////////////////////////////////////////////////////////
     ///
