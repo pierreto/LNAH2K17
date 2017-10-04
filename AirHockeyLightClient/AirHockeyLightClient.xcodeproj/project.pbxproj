@@ -12,8 +12,10 @@
 		253E08911F81913A009F301B /* ChannelEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253E08901F81913A009F301B /* ChannelEntity.swift */; };
 		34B66FD91F8428EA00A9CCB9 /* NoeudTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B66FD81F8428EA00A9CCB9 /* NoeudTable.swift */; };
 		34B66FDC1F843CD400A9CCB9 /* fire_texture.png in Resources */ = {isa = PBXBuildFile; fileRef = 34B66FDB1F843CD300A9CCB9 /* fire_texture.png */; };
-		34B66FDE1F8441C400A9CCB9 /* test_texture.png in Resources */ = {isa = PBXBuildFile; fileRef = 34B66FDD1F8441C400A9CCB9 /* test_texture.png */; };
 		34B66FE01F844C2100A9CCB9 /* table_texture.png in Resources */ = {isa = PBXBuildFile; fileRef = 34B66FDF1F844C2100A9CCB9 /* table_texture.png */; };
+		34B66FE21F84599100A9CCB9 /* But.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B66FE11F84599100A9CCB9 /* But.swift */; };
+		34B66FE41F84636900A9CCB9 /* NoeudBut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B66FE31F84636900A9CCB9 /* NoeudBut.swift */; };
+		34B66FEC1F84725A00A9CCB9 /* controlPoint.dae in Resources */ = {isa = PBXBuildFile; fileRef = 34B66FEB1F84725A00A9CCB9 /* controlPoint.dae */; };
 		8F64C0111F7754EF00F14AC7 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F64C0101F7754EF00F14AC7 /* ChatViewController.swift */; };
 		8F64C0131F7754FD00F14AC7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F64C0121F7754FD00F14AC7 /* LaunchScreen.storyboard */; };
 		8F64C0151F77550800F14AC7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F64C0141F77550800F14AC7 /* Main.storyboard */; };
@@ -40,8 +42,10 @@
 		253E08901F81913A009F301B /* ChannelEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChannelEntity.swift; path = Noyau/Entities/ChannelEntity.swift; sourceTree = "<group>"; };
 		34B66FD81F8428EA00A9CCB9 /* NoeudTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NoeudTable.swift; path = Noyau/Arbre/Noeuds/NoeudTable.swift; sourceTree = "<group>"; };
 		34B66FDB1F843CD300A9CCB9 /* fire_texture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fire_texture.png; path = ../../Exe/media/textures/fire_texture.png; sourceTree = "<group>"; };
-		34B66FDD1F8441C400A9CCB9 /* test_texture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = test_texture.png; path = ../../Exe/media/textures/test_texture.png; sourceTree = "<group>"; };
 		34B66FDF1F844C2100A9CCB9 /* table_texture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = table_texture.png; path = ../../Exe/media/textures/table_texture.png; sourceTree = "<group>"; };
+		34B66FE11F84599100A9CCB9 /* But.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = But.swift; path = Noyau/Arbre/Noeuds/But.swift; sourceTree = "<group>"; };
+		34B66FE31F84636900A9CCB9 /* NoeudBut.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NoeudBut.swift; path = Noyau/Arbre/Noeuds/NoeudBut.swift; sourceTree = "<group>"; };
+		34B66FEB1F84725A00A9CCB9 /* controlPoint.dae */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml.dae; name = controlPoint.dae; path = ../../Exe/media/models/controlPoint.dae; sourceTree = "<group>"; };
 		4BC65514BAA095CA955FDC5C /* Pods-AirHockeyLightClient.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AirHockeyLightClient.release.xcconfig"; path = "Pods/Target Support Files/Pods-AirHockeyLightClient/Pods-AirHockeyLightClient.release.xcconfig"; sourceTree = "<group>"; };
 		628E0B24C7327005FBC765AC /* Pods-AirHockeyLightClient.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AirHockeyLightClient.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AirHockeyLightClient/Pods-AirHockeyLightClient.debug.xcconfig"; sourceTree = "<group>"; };
 		7585740DC43877CD99CDDF6A /* Pods_AirHockeyLightClient.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AirHockeyLightClient.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -108,7 +112,6 @@
 			children = (
 				34B66FDB1F843CD300A9CCB9 /* fire_texture.png */,
 				34B66FDF1F844C2100A9CCB9 /* table_texture.png */,
-				34B66FDD1F8441C400A9CCB9 /* test_texture.png */,
 			);
 			name = Textures;
 			sourceTree = "<group>";
@@ -235,6 +238,7 @@
 		8FB6A9C41F81DCA800FAFFCF /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				34B66FEB1F84725A00A9CCB9 /* controlPoint.dae */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -252,6 +256,8 @@
 			children = (
 				8FB6A9C91F81E38300FAFFCF /* Table.swift */,
 				34B66FD81F8428EA00A9CCB9 /* NoeudTable.swift */,
+				34B66FE11F84599100A9CCB9 /* But.swift */,
+				34B66FE31F84636900A9CCB9 /* NoeudBut.swift */,
 			);
 			name = Noeuds;
 			sourceTree = "<group>";
@@ -339,10 +345,10 @@
 				8F6AE2BE1F6592EB00A29E8B /* GameScene.sks in Resources */,
 				8F64C0151F77550800F14AC7 /* Main.storyboard in Resources */,
 				8F6AE2C91F6592EB00A29E8B /* Assets.xcassets in Resources */,
+				34B66FEC1F84725A00A9CCB9 /* controlPoint.dae in Resources */,
 				34B66FDC1F843CD400A9CCB9 /* fire_texture.png in Resources */,
 				34B66FE01F844C2100A9CCB9 /* table_texture.png in Resources */,
 				8F64C0131F7754FD00F14AC7 /* LaunchScreen.storyboard in Resources */,
-				34B66FDE1F8441C400A9CCB9 /* test_texture.png in Resources */,
 				8F6AE2C01F6592EB00A29E8B /* Actions.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -413,9 +419,11 @@
 				8F8706BB1F7892F2000E6824 /* ChatMessageEntity.swift in Sources */,
 				8FE1EB051F75A96900A01514 /* ClientConnection.swift in Sources */,
 				8F6AE2C21F6592EB00A29E8B /* GameScene.swift in Sources */,
+				34B66FE41F84636900A9CCB9 /* NoeudBut.swift in Sources */,
 				253E088C1F81858E009F301B /* UIViewShake.swift in Sources */,
 				8FB6A9CA1F81E38300FAFFCF /* Table.swift in Sources */,
 				8F8706B91F7892BB000E6824 /* Entity.swift in Sources */,
+				34B66FE21F84599100A9CCB9 /* But.swift in Sources */,
 				8F64C0111F7754EF00F14AC7 /* ChatViewController.swift in Sources */,
 				8FFC5B4A1F7CA7170031474F /* PaddingLabel.swift in Sources */,
 				8F64C0171F775B2500F14AC7 /* AuthentificationViewController.swift in Sources */,

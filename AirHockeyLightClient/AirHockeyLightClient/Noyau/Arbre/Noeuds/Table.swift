@@ -13,8 +13,6 @@ import GLKit
 
 class Table
 {
-    var sommets = [SCNVector3]()
-    
     /// Nombre de points par coin
     private let VERTEX_PER_CORNER = 5
     /// Largeur de la bordure
@@ -226,7 +224,7 @@ class Table
         materiau.shininess = 0;
         //materiau.shininessStrength_ = 0;
         materiau.transparency = 1;
-        materiau.emission.contents = SCNVector3(0.0, 0.0, 0.0);
+        materiau.emission.contents = SCNVector3Zero;
         return materiau;
     }
     

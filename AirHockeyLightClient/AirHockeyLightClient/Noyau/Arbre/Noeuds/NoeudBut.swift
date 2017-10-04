@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////////
-/// @file NoeudTable.swift
+/// @file NoeudBut.swift
 /// @author Mikael Ferland et Pierre To
 /// @date 2017-10-03
 /// @version 1
@@ -10,18 +10,20 @@
 
 import SceneKit
 
-class NoeudTable : SCNNode {
+class NoeudBut : SCNNode {
     
-    private let table = Table()
+    private let but = But()
+    private var sommets = [SCNVector3]()
+    private var faces = [GLuint]()
     
     override init() {
         super.init()
         
-        let sources = self.initSources()
+        //let sources = self.initSources()
         let elements = self.initElements()
         
         // Create geometry
-        self.geometry = SCNGeometry(sources: sources, elements: elements)
+        //self.geometry = SCNGeometry(sources: sources, elements: elements)
         
         self.addMaterial()
     }
@@ -40,7 +42,7 @@ class NoeudTable : SCNNode {
     /// @return La liste des sources
     ///
     ////////////////////////////////////////////////////////////////////////
-    func initSources() -> [SCNGeometrySource] {
+    /*func initSources() -> [SCNGeometrySource] {
         var sources = [SCNGeometrySource]()
         
         // Vertices
@@ -72,7 +74,7 @@ class NoeudTable : SCNNode {
         sources.append(uvSource)
         
         return sources
-    }
+    }*/
     
     ////////////////////////////////////////////////////////////////////////
     ///
@@ -86,7 +88,7 @@ class NoeudTable : SCNNode {
     func initElements() -> [SCNGeometryElement] {
         var elements = [SCNGeometryElement]()
         
-        let faces = table.obtenirFaces()
+        self.faces = but.obtenirFaces()
         let indexData = NSData(bytes: faces, length: faces.count * MemoryLayout<GLuint>.size)
         elements.append(SCNGeometryElement(data: indexData as Data, primitiveType: .triangles, primitiveCount: 80, bytesPerIndex: MemoryLayout<GLuint>.size))
         
@@ -103,11 +105,12 @@ class NoeudTable : SCNNode {
     ///
     ////////////////////////////////////////////////////////////////////////
     func addMaterial() {
-        let material = table.obtenirMateriau()
+        let material = but.obtenirMateriau()
         self.geometry?.firstMaterial = material
     }
     
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
