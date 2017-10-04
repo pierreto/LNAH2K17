@@ -16,8 +16,8 @@ class NoeudBut : NoeudCommun {
     private var sommets = [SCNVector3]()
     private var faces = [GLuint]()
     
-    override init() {
-        super.init()
+    required init(type : String) {
+        super.init(type: type)
         
         //let sources = self.initSources()
         let elements = self.initElements()

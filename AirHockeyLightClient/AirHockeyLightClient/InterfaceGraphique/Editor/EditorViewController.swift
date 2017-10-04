@@ -54,10 +54,15 @@ class EditorViewController: UIViewController {
     }
     
     func initObjects() {
-        self.editorScene.rootNode.addChildNode(NoeudTable.init())
+        self.editorScene.rootNode.addChildNode(ArbreRendu.instance.creerNoeud(typeNouveauNoeud: ArbreRendu.instance.NOM_TABLE))
+        self.editorScene.rootNode.addChildNode(ArbreRendu.instance.creerNoeud(typeNouveauNoeud: ArbreRendu.instance.NOM_BUT))
     }
     
     /*func addButToScene() {
+        let but = SCNScene(named: "but.dae")
+        let butNode = but?.rootNode
+        self.editorScene.rootNode.addChildNode(butNode!)
+     
         let but = SCNScene(named: "but.dae")
         let butNode = but?.rootNode.childNode(withName: "Cube", recursively: true)
         self.editorScene.rootNode.addChildNode(butNode!)

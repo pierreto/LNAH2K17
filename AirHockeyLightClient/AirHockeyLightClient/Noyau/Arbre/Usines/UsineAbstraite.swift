@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////////
-/// @file NoeudCommun.swift
+/// @file UsineAbstraite.swift
 /// @author Mikael Ferland et Pierre To
 /// @date 2017-10-04
 /// @version 1
@@ -11,29 +11,15 @@
 import SceneKit
 
 ///////////////////////////////////////////////////////////////////////////
-/// @class NoeudCommun
-/// @brief Classe de base du patron composite utilisée pour créer l'arbre de rendu
-///        Cette classe comprend l'interface de base que doivent implanter 
-///        tous les noeuds pouvant être présent dans l'arbre de rendu
+/// @class UsineAbstraite
+/// @brief Classe de base abstraite des usines qui seront utilisés pour 
+///        créer les différents noeuds de l'arbre de rendu.
 ///
 /// @author Mikael Ferland et Pierre To
 /// @date 2017-10-04
 ///////////////////////////////////////////////////////////////////////////
-class NoeudCommun : SCNNode {
-    
-    /// Type du noeud
-    private var type: String = ""
-    
-    /// Constructeur
-    required init(type: String) {
-        super.init()
-        
-        self.type = type
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+protocol UsineAbstraite {
+    func creerNoeud() -> SCNNode
 }
 
 ///////////////////////////////////////////////////////////////////////////////

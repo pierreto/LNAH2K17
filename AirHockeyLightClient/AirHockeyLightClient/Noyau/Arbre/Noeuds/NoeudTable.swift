@@ -10,12 +10,20 @@
 
 import SceneKit
 
+///////////////////////////////////////////////////////////////////////////
+/// @class NoeudTable
+/// @brief Classe pour afficher une table
+///
+/// @author Mikael Ferland et Pierre To
+/// @date 2017-10-03
+///////////////////////////////////////////////////////////////////////////
 class NoeudTable : NoeudCommun {
     
     private let table = Table()
     
-    override init() {
-        super.init()
+    /// Constructeur
+    required init(type: String) {
+        super.init(type: type)
         
         let sources = self.initSources()
         let elements = self.initElements()
@@ -31,15 +39,7 @@ class NoeudTable : NoeudCommun {
         fatalError("init(coder:) has not been implemented")
     }
     
-    ////////////////////////////////////////////////////////////////////////
-    ///
-    /// @fn initSources()
-    ///
     /// Crée la liste des sources de la géométrie
-    ///
-    /// @return La liste des sources
-    ///
-    ////////////////////////////////////////////////////////////////////////
     func initSources() -> [SCNGeometrySource] {
         var sources = [SCNGeometrySource]()
         
@@ -74,15 +74,7 @@ class NoeudTable : NoeudCommun {
         return sources
     }
     
-    ////////////////////////////////////////////////////////////////////////
-    ///
-    /// @fn initElements()
-    ///
     /// Crée la liste des éléments de la géométrie
-    ///
-    /// @return La liste des éléments
-    ///
-    ////////////////////////////////////////////////////////////////////////
     func initElements() -> [SCNGeometryElement] {
         var elements = [SCNGeometryElement]()
         
@@ -93,15 +85,7 @@ class NoeudTable : NoeudCommun {
         return elements
     }
     
-    ////////////////////////////////////////////////////////////////////////
-    ///
-    /// @fn addMaterial()
-    ///
     /// Ajoute le matériau de la table sur la géométrie
-    ///
-    /// @return Aucune
-    ///
-    ////////////////////////////////////////////////////////////////////////
     func addMaterial() {
         let material = table.obtenirMateriau()
         self.geometry?.firstMaterial = material

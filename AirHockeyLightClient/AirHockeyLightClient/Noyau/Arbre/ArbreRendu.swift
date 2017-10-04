@@ -12,7 +12,8 @@ import SceneKit
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class ArbreRendu
-/// @brief Représente l'arbre de rendu qui contient les noeuds et qui permet leur instanciation
+/// @brief Représente l'arbre de rendu qui contient les noeuds 
+///        et qui permet leur instanciation
 ///
 /// @author Mikael Ferland et Pierre To
 /// @date 2017-10-04
@@ -20,7 +21,7 @@ import SceneKit
 class ArbreRendu: SCNScene {
 
     // Singleton
-    static let arbreRendu = ArbreRendu()
+    static let instance = ArbreRendu()
     
     /// La chaine representant le type des maillets.
     public let NOM_MAILLET = "maillet"
@@ -42,14 +43,15 @@ class ArbreRendu: SCNScene {
     public let NOM_BOOSTER = "booster"
     
     // Usines
-    private var usines = [String: AnyObject]()
+    private var usines = [String: UsineAbstraite]()
     
     /// Constructeur
     override init() {
         super.init()
         
-        /// Construction des usines
-        //self.ajouterUsine(type: self.NOM_POINT_CONTROL, usine: UsineNoeud<NoeudPointControl>(self.NOM_POINT_CONTROL, "controlPoint.dae"))
+        /// Construction des usines (noModel correspond à aucun modèle Blender)
+        self.ajouterUsine(type: self.NOM_TABLE, usine: UsineNoeud<NoeudTable>(nomUsine: self.NOM_TABLE, nomModele: "noModel"))
+        self.ajouterUsine(type: self.NOM_BUT, usine: UsineNoeud<NoeudBut>(nomUsine: self.NOM_BUT, nomModele: "noModel"))
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -57,8 +59,14 @@ class ArbreRendu: SCNScene {
     }
     
     /// Ajoute une usine à noeud
-    func ajouterUsine(type: String, usine: AnyObject) {
+    func ajouterUsine(type: String, usine: UsineAbstraite) {
         self.usines[type] = usine
+    }
+    
+    /// Permet de créer un nouveau noeud, sans l'ajouter directement à l'arbre de rendu
+    func creerNoeud(typeNouveauNoeud: String) -> SCNNode {
+        assert(usines.keys.contains(typeNouveauNoeud), "Incapable de trouver l'usine")
+        return (usines[typeNouveauNoeud]?.creerNoeud())!
     }
     
 }

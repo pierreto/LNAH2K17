@@ -17,7 +17,7 @@ class But
     ///
     /// @fn std::vector<GLuint> obtenirFaces()
     ///
-    /// Cette fonction obtient toutes les faces de la table
+    /// Cette fonction obtient toutes les faces du but
     ///
     /// @return Les faces.
     ///
@@ -71,9 +71,7 @@ class But
         materiau.emission.contents = SCNVector3Zero;
         return materiau;
     }
-    
-    
-} // namespace but
+}
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////
