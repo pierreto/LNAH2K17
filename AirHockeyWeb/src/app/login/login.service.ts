@@ -15,7 +15,7 @@ export class LoginService {
             Password: user.Password
         };
 
-        return this.http.post('/api/login', body).map(
+        return this.http.post('/api/user', body).map(
             () =>  true,
             () =>  false
         );

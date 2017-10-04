@@ -5,7 +5,7 @@ namespace AirHockeyServer.Services
 {
     public class SignupService : ISignupService, IService
     {
-        public void Signup(SignupMessage message)
+        public void Signup(SignupEntity message)
         {
             //TODO: add to db
             System.Diagnostics.Debug.WriteLine(message.username);

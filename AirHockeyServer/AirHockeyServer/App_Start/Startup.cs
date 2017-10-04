@@ -12,6 +12,8 @@ using System.Web.Routing;
 using System.Web.Optimization;
 using Microsoft.AspNet.SignalR;
 using AirHockeyServer.Services.ChatServiceServer;
+using AirHockeyServer.DatabaseCore;
+using MySql.Data.MySqlClient;
 
 [assembly: OwinStartup(typeof(AirHockeyServer.App_Start.Startup))]
 
@@ -27,6 +29,22 @@ namespace AirHockeyServer.App_Start
                 () => new ChatHub(new ChannelService(new DataProvider(new RequestsManager(new Connector())))));
 
             app.MapSignalR("/signalr", new HubConfiguration());
+
+            var dbCon = DatabaseConnector.Instance();
+            dbCon.DatabaseName = "log3900";
+            if(dbCon.IsConnect())
+            {
+                string query = "SELECT id_user, username FROM test_users";
+                var cmd = new MySqlCommand(query, dbCon.Connection);
+                var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    string id = reader.GetString(0);
+                    string username = reader.GetString(1);
+                    System.Diagnostics.Debug.WriteLine(id);
+                    System.Diagnostics.Debug.WriteLine(username);
+                }
+            }
             //Register(GlobalConfiguration.Configuration);
         }
         public static void Register(HttpConfiguration config)
@@ -47,5 +65,7 @@ namespace AirHockeyServer.App_Start
             config.DependencyResolver = new UnityResolver(container);
 
         }
+
+
     }
 }

@@ -1,29 +1,33 @@
-﻿using System;
+﻿using AirHockeyServer.Entities;
+using AirHockeyServer.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
+using System.Web;
 using System.Web.Http;
-using AirHockeyServer.Entities;
-using AirHockeyServer.Services;
 
 namespace AirHockeyServer.Controllers
 {
-    public class SignupController : ApiController
+    public class UserController: ApiController
     {
-        public ISignupService signupService { get; }
+       
+        public UserService UserService { get; }
 
-        public SignupController()
+        public UserController()
         {
-            this.signupService = new SignupService();
+            this.UserService = new UserService();
         }
 
         //Comment on sait si c'est un post?
-        [Route("api/signup")]
-        public HttpResponseMessage Signup([FromBody]SignupEntity message)
+        [AcceptVerbs("POST")]
+        [Route("api/user")]
+        public HttpResponseMessage Usersds()
         {
             try
             {
-                this.signupService.Signup(message);
+                this.UserService.GetUser();
             }
             catch (SignupException e)
             {
