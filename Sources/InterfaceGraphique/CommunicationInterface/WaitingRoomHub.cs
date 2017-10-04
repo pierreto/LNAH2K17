@@ -9,12 +9,22 @@ using Microsoft.AspNet.SignalR.Client;
 
 namespace InterfaceGraphique.CommunicationInterface
 {
-    public class MatchmakingHub : IBaseHub
+    public class WaitingRoomHub : IBaseHub
     {
         private IHubProxy GameWaitingRoomProxy { get; set; }
 
         private HubConnection connection;
         private string username;
+
+        public event EventHandler<int> RemainingTimeEvent;
+
+        public event EventHandler<UserEntity> OpponentFoundEvent;
+
+        public event EventHandler<GameEntity> MapUpdatedEvent;
+
+        public event EventHandler<GameEntity> ConfigurationUpdatedEvent;
+
+        public event EventHandler<GameEntity> GameStartingEvent;
 
         public void InitializeHub(HubConnection connection, string username)
         {
@@ -28,22 +38,28 @@ namespace InterfaceGraphique.CommunicationInterface
             //TODO: IMPLEMENT THE LOGOUT MECANISM
         }
 
-        public async void test()
+        public void Cancel()
         {
-            GameEntity game = new GameEntity
+            //TODO: IMPLEMENT THIS
+        }
+
+        public async void JoinGame()
+        {
+            InitializeEvents();
+
+            UserEntity user = new UserEntity
             {
-                Creator = new UserEntity
-                {
-                    Id = Guid.NewGuid()
-                }
+                Id = Guid.NewGuid(),
+                Name = "pepe"
             };
+            await GameWaitingRoomProxy.Invoke("JoinGame", user);
+        }
 
-            Console.WriteLine("Game created");
-            await GameWaitingRoomProxy.Invoke("CreateGame", game);
-
+        private void InitializeEvents()
+        {
             GameWaitingRoomProxy.On<GameEntity>("OpponentFoundEvent", newgame =>
             {
-                Console.WriteLine("Opponent found");
+                this.OpponentFoundEvent.Invoke(this, newgame.Players[0]);
                 GameWaitingRoomProxy.On<GameEntity>("GameStartingEvent", officialGame =>
                 {
                     Console.WriteLine("Game is starting!");
@@ -51,7 +67,7 @@ namespace InterfaceGraphique.CommunicationInterface
 
                 GameWaitingRoomProxy.On<int>("WaitingRoomRemainingTime", remainingTime =>
                 {
-                    Console.WriteLine(remainingTime);
+                    this.RemainingTimeEvent.Invoke(this, remainingTime);
                 });
 
                 GameWaitingRoomProxy.On<GameEntity>("GameConfigurationUpdatedEvent", gameUpdated2 =>
@@ -64,34 +80,18 @@ namespace InterfaceGraphique.CommunicationInterface
                     Console.WriteLine("map updated");
                 });
             });
-
-            Thread.Sleep(5000);
-
-            UserEntity user = new UserEntity
-            {
-                Id = Guid.NewGuid()
-            };
-
-            await GameWaitingRoomProxy.Invoke("JoinGame", user);
-
-            Thread.Sleep(5000);
-
-            var gameUpdated = await GameWaitingRoomProxy.Invoke<GameEntity>("UpdateConfiguration", game);
-
-            Thread.Sleep(2000);
-
-            gameUpdated = await GameWaitingRoomProxy.Invoke<GameEntity>("UpdateMap", game);
         }
 
-
-        public void Cancel()
+        public async Task<GameEntity> UpdateSelectedMap(GameEntity game)
         {
-            //TODO: IMPLEMENT THIS
+            GameEntity gameUpdated = await GameWaitingRoomProxy.Invoke<GameEntity>("UpdateMap", game);
+            return gameUpdated;
         }
 
-        public void Start()
+        public async Task<GameEntity> UpdateSelectedConfiguration(GameEntity game)
         {
-            //TODO: IMPLEMENT THIS
+            GameEntity gameUpdated = await GameWaitingRoomProxy.Invoke<GameEntity>("UpdateConfiguration", game);
+            return gameUpdated;
         }
     }
 }

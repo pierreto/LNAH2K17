@@ -226,6 +226,7 @@
     <Compile Include="Entities\GameEntity.cs" />
     <Compile Include="Entities\LoginMessage.cs" />
     <Compile Include="Entities\MapEntity.cs" />
+    <Compile Include="Entities\PlayersMatchEntity.cs" />
     <Compile Include="Entities\UserEntity.cs" />
     <Compile Include="Events\EventManagers\GameWaitingRoomEventManager.cs" />
     <Compile Include="Events\MatchFoundArgs.cs" />

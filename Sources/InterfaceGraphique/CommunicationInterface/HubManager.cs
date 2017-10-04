@@ -35,7 +35,7 @@ namespace InterfaceGraphique.CommunicationInterface
             this.hubs = new List<IBaseHub>
             {
                 Program.unityContainer.Resolve<ChatHub>(),
-                Program.unityContainer.Resolve<MatchmakingHub>()
+                Program.unityContainer.Resolve<WaitingRoomHub>()
             };
         }
 

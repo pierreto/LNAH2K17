@@ -22,6 +22,8 @@ namespace InterfaceGraphique.Entities
         public UserEntity[] Players { get; set; }
 
         public GameState GameState { get; set; }
+
+        public MapEntity Map { get; internal set; }
     }
 
     public enum GameState

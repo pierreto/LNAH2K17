@@ -123,7 +123,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommunicationInterface\ChatHub.cs" />
-    <Compile Include="CommunicationInterface\MatchmakingHub.cs" />
+    <Compile Include="CommunicationInterface\RestInterface\HttpResponseParser.cs" />
+    <Compile Include="CommunicationInterface\RestInterface\MapsRepository.cs" />
+    <Compile Include="CommunicationInterface\RestInterface\Repository.cs" />
+    <Compile Include="CommunicationInterface\WaitingRoomHub.cs" />
     <Compile Include="CommunicationInterface\HubManager.cs" />
     <Compile Include="CommunicationInterface\IBaseHub.cs" />
     <Compile Include="Controls\LobbyHost.cs">
@@ -148,6 +151,7 @@
     <Compile Include="Entities\ChatMessage.cs" />
     <Compile Include="Entities\GameEntity.cs" />
     <Compile Include="Entities\LoginMessage.cs" />
+    <Compile Include="Entities\MapEntity.cs" />
     <Compile Include="Entities\MemberEntity.cs" />
     <Compile Include="CommunicationInterface\LoginClient.cs" />
     <Compile Include="Entities\UserEntity.cs" />

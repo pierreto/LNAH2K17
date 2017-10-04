@@ -43,25 +43,6 @@ namespace AirHockeyServer.Services
             }
         }
 
-        private static Mutex WaitingGamesMutex = new Mutex();
-
-        // TODO : refactor needed for tournaments
-        private static Queue<GameEntity> _WaitingGames;
-        private static Queue<GameEntity> WaitingGames
-        {
-            get
-            {
-                if (_WaitingGames == null)
-                {
-                    _WaitingGames = new Queue<GameEntity>();
-                }
-                return _WaitingGames;
-            }
-            set
-            {
-                _WaitingGames = value;
-            }
-        }
 
         ////////////////////////////////////////////////////////////////////////
         ///
@@ -73,16 +54,21 @@ namespace AirHockeyServer.Services
         /// @return le joueur en attente trouvé
         ///
         ////////////////////////////////////////////////////////////////////////
-        public static UserEntity GetGameOpponent()
+        public static List<UserEntity> GetGameOpponents()
         {
             WaitingPlayersMutex.WaitOne();
 
-            if (WaitingPlayers.Count > 0)
+            if (WaitingPlayers.Count > 1)
             {
-                var player = WaitingPlayers.Dequeue();
+                List<UserEntity> users = new List<UserEntity>()
+                {
+                    WaitingPlayers.Dequeue(),
+                    WaitingPlayers.Dequeue()
+                };
+                
                 WaitingPlayersMutex.ReleaseMutex();
 
-                return player;
+                return users;
             }
             else
             {
@@ -138,27 +124,7 @@ namespace AirHockeyServer.Services
 
             StartPlayersMatching();
         }
-
-        ///////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn static void AddGame(GameEntity game)
-        ///
-        /// Cette fonction ajoute une partie en attente de joueur(s) à la liste
-        /// d'attente
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        public static void AddGame(GameEntity game)
-        {
-            WaitingGamesMutex.WaitOne();
-
-            WaitingGames.Enqueue(game);
-
-            WaitingGamesMutex.ReleaseMutex();
-
-            StartPlayersMatching();
-
-        }
-
+        
         ///////////////////////////////////////////////////////////////////////
         ///
         /// @fn static void StartPlayersMatching()
@@ -187,28 +153,15 @@ namespace AirHockeyServer.Services
         ////////////////////////////////////////////////////////////////////////
         private static void ExecuteMatch()
         {
-            WaitingGamesMutex.WaitOne();
-
-            if (WaitingGames.Count > 0)
+            var opponents = GetGameOpponents();
+            if (opponents != null)
             {
-                WaitingGamesMutex.ReleaseMutex();
-
-                var opponent = GetGameOpponent();
-                if (opponent != null)
+                PlayersMatchEntity match = new PlayersMatchEntity()
                 {
-                    WaitingGamesMutex.WaitOne();
+                    PlayersMatch = opponents
+                };
 
-                    var game = WaitingGames.Dequeue();
-
-                    WaitingGamesMutex.ReleaseMutex();
-
-                    game.Players[1] = opponent;
-                    MatchFoundEvent?.Invoke(new UserEntity(), new MatchFoundArgs { GameEntity = game });
-                }
-            }
-            else
-            {
-                WaitingGamesMutex.ReleaseMutex();
+                MatchFoundEvent?.Invoke(new UserEntity(), new MatchFoundArgs { PlayersMatch = match });
             }
         }
     }

@@ -16,6 +16,6 @@ namespace AirHockeyServer.Events
     ///////////////////////////////////////////////////////////////////////////////
     public class MatchFoundArgs
     {
-        public GameEntity GameEntity { get; set; }
+        public PlayersMatchEntity PlayersMatch { get; set; }
     }
 }

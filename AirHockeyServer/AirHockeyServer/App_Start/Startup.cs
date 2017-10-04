@@ -33,8 +33,7 @@ namespace AirHockeyServer.App_Start
                 () => new GameWaitingRoomHub(new GameService(new DataProvider(new RequestsManager(new Connector())))));
 
             app.MapSignalR("/signalr", new HubConfiguration());
-
-            GameWaitingRoomEventManager gameWaitingRoomEventManager = new GameWaitingRoomEventManager();
+            
         }
     }
 }

@@ -9,7 +9,7 @@ namespace AirHockeyServer.Services
 {
     public interface IGameService
     {
-        Task<Guid> CreateGame(GameEntity gameEntity);
+        Task<GameEntity> CreateGame(GameEntity gameEntity);
 
         void JoinGame(UserEntity userEntity);
 

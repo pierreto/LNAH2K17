@@ -39,33 +39,6 @@ namespace AirHockeyServer.Hubs
 
         ////////////////////////////////////////////////////////////////////////
         ///
-        /// @fn async Task<Guid> CreateGame(GameEntity gameEntity)
-        ///
-        /// Cette fonction permet la création d'un match. Il crée la "room" contenant les
-        /// utilisateurs (opposants et spectacteurs) interessé à recevoir les notifications 
-        /// de la partie.
-        ///
-        /// @return id du gameEntity créé et enregistré dans
-        /// la bd. 
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        public async Task<Guid> CreateGame(GameEntity gameEntity)
-        {
-            gameEntity.CreationDate = DateTime.Now;
-            gameEntity.Players[0] = gameEntity.Creator;
-
-            // TO REMOVE, WAITING FOR AUTHENTIFICATION
-            ConnectionMapper.AddConnection(gameEntity.Creator.Id, Context.ConnectionId);
-            
-            Guid gameCreatedId = await GameService.CreateGame(gameEntity);
-
-            await Groups.Add(Context.ConnectionId, gameCreatedId.ToString());
-
-            return gameCreatedId;
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
         /// @fn void JoinGame(UserEntity user)
         ///
         /// Cette fonction permet de gérer la demande d'un utilisateur de se joindre à une partie. 
