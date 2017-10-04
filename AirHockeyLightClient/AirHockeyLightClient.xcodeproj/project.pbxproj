@@ -10,6 +10,8 @@
 		253E088C1F81858E009F301B /* UIViewShake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253E088B1F81858E009F301B /* UIViewShake.swift */; };
 		253E088E1F818DD2009F301B /* JsonHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253E088D1F818DD2009F301B /* JsonHelper.swift */; };
 		253E08911F81913A009F301B /* ChannelEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253E08901F81913A009F301B /* ChannelEntity.swift */; };
+		3415E6C21F8545B300DB1CAD /* NoeudCommun.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3415E6C11F8545B300DB1CAD /* NoeudCommun.swift */; };
+		3415E6C41F8547CE00DB1CAD /* ArbreRendu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3415E6C31F8547CE00DB1CAD /* ArbreRendu.swift */; };
 		34B66FD91F8428EA00A9CCB9 /* NoeudTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B66FD81F8428EA00A9CCB9 /* NoeudTable.swift */; };
 		34B66FDC1F843CD400A9CCB9 /* fire_texture.png in Resources */ = {isa = PBXBuildFile; fileRef = 34B66FDB1F843CD300A9CCB9 /* fire_texture.png */; };
 		34B66FE01F844C2100A9CCB9 /* table_texture.png in Resources */ = {isa = PBXBuildFile; fileRef = 34B66FDF1F844C2100A9CCB9 /* table_texture.png */; };
@@ -40,6 +42,8 @@
 		253E088B1F81858E009F301B /* UIViewShake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIViewShake.swift; path = InterfaceGraphique/Effects/UIViewShake.swift; sourceTree = "<group>"; };
 		253E088D1F818DD2009F301B /* JsonHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = JsonHelper.swift; path = Noyau/Helper/JsonHelper.swift; sourceTree = "<group>"; };
 		253E08901F81913A009F301B /* ChannelEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChannelEntity.swift; path = Noyau/Entities/ChannelEntity.swift; sourceTree = "<group>"; };
+		3415E6C11F8545B300DB1CAD /* NoeudCommun.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NoeudCommun.swift; path = Noyau/Arbre/Noeuds/NoeudCommun.swift; sourceTree = "<group>"; };
+		3415E6C31F8547CE00DB1CAD /* ArbreRendu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArbreRendu.swift; path = Noyau/Arbre/ArbreRendu.swift; sourceTree = "<group>"; };
 		34B66FD81F8428EA00A9CCB9 /* NoeudTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NoeudTable.swift; path = Noyau/Arbre/Noeuds/NoeudTable.swift; sourceTree = "<group>"; };
 		34B66FDB1F843CD300A9CCB9 /* fire_texture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fire_texture.png; path = ../../Exe/media/textures/fire_texture.png; sourceTree = "<group>"; };
 		34B66FDF1F844C2100A9CCB9 /* table_texture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = table_texture.png; path = ../../Exe/media/textures/table_texture.png; sourceTree = "<group>"; };
@@ -247,6 +251,7 @@
 			isa = PBXGroup;
 			children = (
 				8FB6A9C81F81E36300FAFFCF /* Noeuds */,
+				3415E6C31F8547CE00DB1CAD /* ArbreRendu.swift */,
 			);
 			name = Arbre;
 			sourceTree = "<group>";
@@ -258,6 +263,7 @@
 				34B66FD81F8428EA00A9CCB9 /* NoeudTable.swift */,
 				34B66FE11F84599100A9CCB9 /* But.swift */,
 				34B66FE31F84636900A9CCB9 /* NoeudBut.swift */,
+				3415E6C11F8545B300DB1CAD /* NoeudCommun.swift */,
 			);
 			name = Noeuds;
 			sourceTree = "<group>";
@@ -422,9 +428,11 @@
 				34B66FE41F84636900A9CCB9 /* NoeudBut.swift in Sources */,
 				253E088C1F81858E009F301B /* UIViewShake.swift in Sources */,
 				8FB6A9CA1F81E38300FAFFCF /* Table.swift in Sources */,
+				3415E6C21F8545B300DB1CAD /* NoeudCommun.swift in Sources */,
 				8F8706B91F7892BB000E6824 /* Entity.swift in Sources */,
 				34B66FE21F84599100A9CCB9 /* But.swift in Sources */,
 				8F64C0111F7754EF00F14AC7 /* ChatViewController.swift in Sources */,
+				3415E6C41F8547CE00DB1CAD /* ArbreRendu.swift in Sources */,
 				8FFC5B4A1F7CA7170031474F /* PaddingLabel.swift in Sources */,
 				8F64C0171F775B2500F14AC7 /* AuthentificationViewController.swift in Sources */,
 				253E088E1F818DD2009F301B /* JsonHelper.swift in Sources */,

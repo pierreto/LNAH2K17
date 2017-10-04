@@ -10,7 +10,7 @@
 
 import SceneKit
 
-class NoeudBut : SCNNode {
+class NoeudBut : NoeudCommun {
     
     private let but = But()
     private var sommets = [SCNVector3]()

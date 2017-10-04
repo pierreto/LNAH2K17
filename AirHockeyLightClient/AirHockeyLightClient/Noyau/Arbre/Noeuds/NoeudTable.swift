@@ -10,7 +10,7 @@
 
 import SceneKit
 
-class NoeudTable : SCNNode {
+class NoeudTable : NoeudCommun {
     
     private let table = Table()
     
