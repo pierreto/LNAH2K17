@@ -743,8 +743,8 @@ extern "C"
 	/// @return Aucune
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void aiStatus(bool enabled) {
-		ModeleEtatJeu::obtenirInstance()->aiStatus(enabled);
+	__declspec(dllexport) void setCurrentOpponentType(int opponentType) {
+		ModeleEtatJeu::obtenirInstance()->setCurrentOpponentType((ModeleEtatJeu::OpponentType) opponentType);
 	}
 
 

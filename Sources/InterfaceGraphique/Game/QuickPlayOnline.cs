@@ -378,7 +378,7 @@ namespace InterfaceGraphique {
                     return true;
 
                 case Keys.Space:
-                    Program.FormManager.CurrentForm = Program.QuickPlay;
+                    Program.FormManager.CurrentForm = Program.QuickPlayOnline;
                     return true;
 
                 case Keys.Up:

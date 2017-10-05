@@ -98,7 +98,7 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
         }
         private async Task MainMenu()
         {
-            Program.QuickPlayMenu.ShowDialog();
+            Program.FormManager.CurrentForm=Program.QuickPlay;
         }
 
         private bool CanStart()

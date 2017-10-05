@@ -30,6 +30,12 @@
 class ModeleEtatJeu : public ModeleEtat
 {
 public:
+
+	enum OpponentType{
+		LOCAL_PLAYER=0,
+		VIRTUAL_PLAYER=1,
+		ONLINE_PLAYER=2
+	};
 	/// Obtient l'instance unique de la classe.
 	static ModeleEtatJeu* obtenirInstance();
 	/// Libère l'instance unique de la classe.
@@ -53,11 +59,13 @@ public:
 	void toggleTestMode(bool isActive) { testMode_ = isActive; };
 	void setSpeedXMaillet(float speedZ) { speedMailletZ_ = speedZ; };
 	void setSpeedYMaillet(float speedX) { speedMailletX_ = speedX; };
-	void aiStatus(bool enabled) { aiIsActive_ = enabled; };
 	void player1Goal() { scorePlayer1_++; };
 	void player2Goal() { scorePlayer2_++; };
 	bool isGameStarted() { return gameStarted_; };
 
+
+	OpponentType currentOpponentType() const;
+	void setCurrentOpponentType(const OpponentType currentOpponentType);
 private:
 	/// Constructeur.
 	ModeleEtatJeu();
@@ -72,7 +80,6 @@ private:
 	bool gamePaused_;
 	bool gameEnded_;
 
-	bool aiIsActive_;
 	int aiSpeed_;
 	int aiPassivity_;
 	bool initiateOffense_;
@@ -117,6 +124,8 @@ private:
 	const glm::vec4 GREY = glm::vec4(0.25f, 0.25f, 0.25f, 1.0f);
 	const glm::vec4 BLACK_ALPHA50 = glm::vec4(0.0f, 0.0f, 0.0f, 0.5f);
 	const glm::vec4 DARK_VIOLET = glm::vec4(0.58f, 0.0f, 0.83f, 1.0f);
+
+	OpponentType currentOpponentType_;
 };
 
 

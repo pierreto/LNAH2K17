@@ -139,7 +139,7 @@ namespace InterfaceGraphique {
         public static extern void setLights(int lumType, bool lumEtat);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void aiStatus(bool enabled);
+        public static extern void setCurrentOpponentType(int opponentType);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void aiActiveProfile(int speed, int passivity);

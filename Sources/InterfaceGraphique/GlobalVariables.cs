@@ -97,4 +97,16 @@ namespace InterfaceGraphique {
         JEU = 11,
         JEU_ONLINE=12
     };
+
+    ///////////////////////////////////////////////////////////////////////////
+    /// 
+    /// Enum contenant les différents type d'adveraires
+    ///
+    ///////////////////////////////////////////////////////////////////////////
+    public enum OpponentType
+    {
+        LOCAL_PLAYER = 0,
+        VIRTUAL_PLAYER = 1,
+        ONLINE_PLAYER = 2
+    };
 }

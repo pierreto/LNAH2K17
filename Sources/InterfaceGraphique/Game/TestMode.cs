@@ -73,7 +73,18 @@ namespace InterfaceGraphique {
 
             PlayerProfile selectedProfile = Program.ConfigurationMenu.GetProfile(null);
             FonctionsNatives.aiActiveProfile(selectedProfile.Speed, selectedProfile.Passivity);
-            FonctionsNatives.aiStatus(Program.ConfigurationMenu.IsPlayer2Virtual);
+
+            OpponentType opponentType;
+            if (Program.ConfigurationMenu.IsPlayer2Virtual)
+            {
+                opponentType = OpponentType.VIRTUAL_PLAYER;
+            }
+            else
+            {
+                opponentType = OpponentType.LOCAL_PLAYER;
+            }
+
+            FonctionsNatives.setCurrentOpponentType((int) opponentType);
         }
 
 
