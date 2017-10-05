@@ -48,7 +48,6 @@ namespace AirHockeyServer
             //Core
             container.RegisterType<IConnector, Connector>(new HierarchicalLifetimeManager());
             container.RegisterType<IRequestsManager, RequestsManager>(new HierarchicalLifetimeManager());
-            container.RegisterType<IDataProvider, DataProvider>(new HierarchicalLifetimeManager());
 
             config.DependencyResolver = new UnityResolver(container);
 

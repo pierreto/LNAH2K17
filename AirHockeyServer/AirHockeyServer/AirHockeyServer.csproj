@@ -222,12 +222,11 @@
     <Compile Include="Controllers\SignupController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Core\Connector.cs" />
-    <Compile Include="Core\DataProvider.cs" />
     <Compile Include="Core\IConnector.cs" />
-    <Compile Include="Core\IDataProvider.cs" />
     <Compile Include="Core\IRequestsManager.cs" />
     <Compile Include="Core\RequestsManager.cs" />
     <Compile Include="DatabaseCore\DatabaseConnector.cs" />
+    <Compile Include="DatabaseCore\DataProvider.cs" />
     <Compile Include="Entities\ChannelEntity.cs" />
     <Compile Include="Entities\ChatMessageEntity.cs" />
     <Compile Include="Entities\Entity.cs" />
@@ -237,7 +236,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Mapping\MapperManager.cs" />
     <Compile Include="Pocos\LoginPoco.cs" />
+    <Compile Include="Pocos\Poco.cs" />
     <Compile Include="Pocos\UserPoco.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ChannelRepository.cs" />

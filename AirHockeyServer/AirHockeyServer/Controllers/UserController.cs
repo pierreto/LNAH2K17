@@ -21,13 +21,36 @@ namespace AirHockeyServer.Controllers
         }
 
         //Comment on sait si c'est un post?
-        [AcceptVerbs("POST")]
-        [Route("api/user")]
-        public HttpResponseMessage Usersds()
+        [HttpGet]
+        [Route("api/user/{id}")]
+        public UserEntity getUser(int id)
         {
             try
             {
-                this.UserService.GetUser();
+                return(this.UserService.GetUserById(id));
+            }
+            catch (SignupException e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+                return null;
+                //return Request.CreateResponse(HttpStatusCode.Forbidden);
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+                return null;
+                //return Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
+            //return Request.CreateResponse(HttpStatusCode.OK);
+        }
+
+        [HttpPost]
+        [Route("api/user")]
+        public HttpResponseMessage postUser()
+        {
+            try
+            {
+                //this.UserService.PostUser();
             }
             catch (SignupException e)
             {

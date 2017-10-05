@@ -1,4 +1,5 @@
-﻿using AirHockeyServer.Repositories;
+﻿using AirHockeyServer.Entities;
+using AirHockeyServer.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +14,15 @@ namespace AirHockeyServer.Services
         {
         }
 
-        public void GetUser()
+        public UserEntity GetUserById(int id)
         {
-            UserRepository.GetUsers();
+            return UserRepository.GetUserById(id);
+        }
+
+        public List<UserEntity> GetAllUsers()
+        {
+            return new List<UserEntity>();
+           // return UserRepository.GetAllUsers();
         }
     }
 }

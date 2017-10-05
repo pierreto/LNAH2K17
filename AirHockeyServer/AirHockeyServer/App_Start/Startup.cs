@@ -26,25 +26,9 @@ namespace AirHockeyServer.App_Start
             // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=316888
             GlobalHost.DependencyResolver.Register(
                 typeof(ChatHub),
-                () => new ChatHub(new ChannelService(new DataProvider(new RequestsManager(new Connector())))));
+                () => new ChatHub(new ChannelService()));
 
             app.MapSignalR("/signalr", new HubConfiguration());
-            /*
-            var dbCon = DatabaseConnector.Instance();
-            dbCon.DatabaseName = "log3900";
-            if(dbCon.IsConnect())
-            {
-                string query = "SELECT id_user, username FROM test_users";
-                var cmd = new MySqlCommand(query, dbCon.Connection);
-                var reader = cmd.ExecuteReader();
-                while (reader.Read())
-                {
-                    string id = reader.GetString(0);
-                    string username = reader.GetString(1);
-                    System.Diagnostics.Debug.WriteLine(id);
-                    System.Diagnostics.Debug.WriteLine(username);
-                }
-            }*/
             //Register(GlobalConfiguration.Configuration);
         }
         public static void Register(HttpConfiguration config)
@@ -60,7 +44,6 @@ namespace AirHockeyServer.App_Start
             //Core
             container.RegisterType<IConnector, Connector>(new HierarchicalLifetimeManager());
             container.RegisterType<IRequestsManager, RequestsManager>(new HierarchicalLifetimeManager());
-            container.RegisterType<IDataProvider, DataProvider>(new HierarchicalLifetimeManager());
 
             config.DependencyResolver = new UnityResolver(container);
 

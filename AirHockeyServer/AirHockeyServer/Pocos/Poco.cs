@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace AirHockeyServer.Mapping
+namespace AirHockeyServer.Pocos
 {
-    public class Mapper
+    public class Poco
     {
+
     }
 }
