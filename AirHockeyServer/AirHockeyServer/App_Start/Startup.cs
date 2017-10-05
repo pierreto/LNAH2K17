@@ -29,7 +29,7 @@ namespace AirHockeyServer.App_Start
                 () => new ChatHub(new ChannelService(new DataProvider(new RequestsManager(new Connector())))));
 
             app.MapSignalR("/signalr", new HubConfiguration());
-
+            /*
             var dbCon = DatabaseConnector.Instance();
             dbCon.DatabaseName = "log3900";
             if(dbCon.IsConnect())
@@ -44,7 +44,7 @@ namespace AirHockeyServer.App_Start
                     System.Diagnostics.Debug.WriteLine(id);
                     System.Diagnostics.Debug.WriteLine(username);
                 }
-            }
+            }*/
             //Register(GlobalConfiguration.Configuration);
         }
         public static void Register(HttpConfiguration config)

@@ -1,8 +1,10 @@
 ﻿using AirHockeyServer.DatabaseCore;
 using AirHockeyServer.Entities;
 using AirHockeyServer.Pocos;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Linq;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,12 +22,19 @@ namespace AirHockeyServer.Repositories
 
         public async Task<List<UserEntity>> GetUsers()
         {
-            var connectionString = @"Server=37.187.19.181;database=log3900;uid=log3900;password=labasedesdecales;";
-            DataContext dc = new DataContext(connectionString);
+            DataContext dc = new DataContext(new MySqlConnection(ConfigurationManager.ConnectionStrings["lnah"].ConnectionString));
             // Do the SQL call
-            IEnumerable<UserPoco> po = dc.ExecuteQuery<UserPoco>("SELECT username FROM test_users");
+            try
+            {
+                IEnumerable<UserPoco> po = dc.ExecuteQuery<UserPoco>("SELECT id_user, username FROM test_users");
+                List<UserPoco> poList = po.ToList();
+            }
+            catch (Exception e)
+            {
 
-            DataContext de = new DataContext(connectionString);
+            }
+            
+
             // UserPoco will be mapped to UserEntity?
             return new List<UserEntity>();
         }
