@@ -398,6 +398,9 @@ extern "C"
 		FacadeModele::obtenirInstance()->applyNodeInfos(infos);
 	}
 
+	__declspec(dllexport) void getMapJson(float coefficients[], char* map) {
+		FacadeModele::obtenirInstance()->getMapJson(coefficients, map);
+	}
 
 	////////////////////////////////////////////////////////////////////////
 	///

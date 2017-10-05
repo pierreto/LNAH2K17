@@ -25,7 +25,7 @@ namespace InterfaceGraphique.CommunicationInterface
         private ObservableCollection<ChannelEntity> channels;
 
      
-        public void InitializeHub(HubConnection connection ,string username)
+        public void InitializeHub(HubConnection connection, string username)
         {
             this.username = username;
             chatHubProxy = connection.CreateHubProxy("ChatHub");
@@ -44,6 +44,8 @@ namespace InterfaceGraphique.CommunicationInterface
 
 
             var userId = Guid.NewGuid();
+            Program.user = new UserEntity { Id = userId, Name = this.username };
+
             await chatHubProxy.Invoke("Subscribe", userId);
 
             // Inscription à l'event "ChatMessageReceived". Quand l'event est lancé du serveur on veut print le message:

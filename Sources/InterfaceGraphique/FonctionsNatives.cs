@@ -79,6 +79,9 @@ namespace InterfaceGraphique {
         public static extern void applyNodeInfos(float[] infos);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void getMapJson(float[] coefficients, StringBuilder map);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void enregistrerSous(StringBuilder filePath, float[] coefficients);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]

@@ -7,7 +7,7 @@ namespace AirHockeyServer.Entities
 {
     ///////////////////////////////////////////////////////////////////////////////
     /// @file MapEntity.cs
-    /// @author Ariane Tourangeau
+    /// @author Michael Sghaier
     /// @date 2017-10-02
     /// @version 0.1
     ///
@@ -15,5 +15,9 @@ namespace AirHockeyServer.Entities
     ///////////////////////////////////////////////////////////////////////////////
     public class MapEntity
     {
+        public UserEntity Creator { get; set; }
+        public string MapName { get; set; }
+        public DateTime LastBackup { get; set; }
+        public string Json { get; set; }
     }
 }

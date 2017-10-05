@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Net;
+using System.Net.Http;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.IO;
+using InterfaceGraphique.Entities;
 
 namespace InterfaceGraphique {
 
@@ -136,8 +139,10 @@ namespace InterfaceGraphique {
             this.Toolbar_Wall.Click += (sender, e) => changerEtatEdition(sender, e, MODELE_ETAT.CREATION_MURET);
 
             // Menu dropdown options events
-            this.Fichier_EnregistrerSous.Click += (sender, e) => SaveFileAs();
             this.Fichier_Enregistrer.Click += (sender, e) => SaveFile();
+            //this.Fichier_EnregistrerSous.Click += (sender, e) => SaveFileAs();
+            this.Fichier_EnregistrerSous_Ordinateur.Click += (sender, e) => SaveFileAs();
+            this.Fichier_EnregistrerSous_Serveur.Click += async (sender, e) => await SaveMapOnline(); 
             this.Fichier_Ouvrir.Click += (sender, e) => OpenFile();
             this.Fichier_Nouveau.Click += (sender, e) => ResetDefaultTable();
             this.Fichier_MenuPrincipal.Click += (sender, e) => { ResetDefaultTable(); Program.FormManager.CurrentForm = Program.MainMenu; };
@@ -422,6 +427,42 @@ namespace InterfaceGraphique {
             }
         }
 
+        private async Task SaveMapOnline()
+        {
+            Editor.SaveMapOnlineForm form = new Editor.SaveMapOnlineForm();
+
+            if (form.ShowDialog() == DialogResult.OK && form.Text_MapName.Text.Length > 0)
+            {
+                UserEntity creator = Program.user;
+                string mapName = form.Text_MapName.Text;
+                StringBuilder sb = new StringBuilder(2000);
+                FonctionsNatives.getMapJson(Program.GeneralProperties.GetCoefficientValues(), sb);
+                string json = sb.ToString();
+
+                MapEntity map = new MapEntity {
+                    Creator = creator,
+                    MapName = mapName,
+                    LastBackup = DateTime.Now,
+                    Json = json
+                };
+
+                HttpResponseMessage response = await Program.client.PostAsJsonAsync("api/maps/save", map);
+                if (!response.IsSuccessStatusCode)
+                {
+                    MessageBox.Show(
+                        @"Impossible de sauvegarder la carte. Veuillez ré-essayer plus tard.",
+                        @"Internal error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show(
+                    @"Le nom de carte ne peut être vide.",
+                    @"Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
         ////////////////////////////////////////////////////////////////////////
         ///
@@ -646,3 +687,4 @@ namespace InterfaceGraphique {
         private string openedSaveFile = null;
     }
 }
+ 

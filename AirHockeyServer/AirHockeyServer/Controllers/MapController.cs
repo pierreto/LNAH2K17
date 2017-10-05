@@ -34,5 +34,16 @@ namespace AirHockeyServer.Controllers
                 return HttpResponseGenerator.CreateErrorResponseMessage(HttpStatusCode.NotFound);
             }
         }
+
+        [Route("api/maps/save")]
+        public HttpResponseMessage SaveMap([FromBody]MapEntity message)
+        {
+            System.Diagnostics.Debug.WriteLine(message.Creator.Name);
+            System.Diagnostics.Debug.WriteLine(message.MapName);
+            System.Diagnostics.Debug.WriteLine(message.LastBackup);
+            System.Diagnostics.Debug.WriteLine(message.Json);
+
+            return Request.CreateResponse(HttpStatusCode.OK);
+        }
     }
 }
