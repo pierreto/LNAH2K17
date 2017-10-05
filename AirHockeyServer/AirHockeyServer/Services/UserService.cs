@@ -24,5 +24,10 @@ namespace AirHockeyServer.Services
             return new List<UserEntity>();
            // return UserRepository.GetAllUsers();
         }
+
+        public void PostUser()
+        {
+            //return UserRepository.PostUser();
+        }
     }
 }

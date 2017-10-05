@@ -20,37 +20,14 @@ namespace AirHockeyServer.Controllers
             this.UserService = new UserService();
         }
 
-        //Comment on sait si c'est un post?
+        //
         [HttpGet]
         [Route("api/user/{id}")]
-        public UserEntity getUser(int id)
+        public HttpResponseMessage getUser(int id)
         {
             try
             {
-                return(this.UserService.GetUserById(id));
-            }
-            catch (SignupException e)
-            {
-                System.Diagnostics.Debug.WriteLine(e);
-                return null;
-                //return Request.CreateResponse(HttpStatusCode.Forbidden);
-            }
-            catch (Exception e)
-            {
-                System.Diagnostics.Debug.WriteLine(e);
-                return null;
-                //return Request.CreateResponse(HttpStatusCode.InternalServerError);
-            }
-            //return Request.CreateResponse(HttpStatusCode.OK);
-        }
-
-        [HttpPost]
-        [Route("api/user")]
-        public HttpResponseMessage postUser()
-        {
-            try
-            {
-                //this.UserService.PostUser();
+                return Request.CreateResponse(HttpStatusCode.OK, UserService.GetUserById(id));
             }
             catch (SignupException e)
             {
@@ -62,7 +39,29 @@ namespace AirHockeyServer.Controllers
                 System.Diagnostics.Debug.WriteLine(e);
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
-            return Request.CreateResponse(HttpStatusCode.OK);
+            
+        }
+
+        [HttpPost]
+        [Route("api/user")]
+        public HttpResponseMessage postUser()
+        {
+            try
+            {
+                return Request.CreateResponse(HttpStatusCode.OK);
+
+                // return Request.CreateResponse(HttpStatusCode.OK, UserService.PostUser());
+            }
+            catch (SignupException e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+                return Request.CreateResponse(HttpStatusCode.Forbidden);
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
         }
     }
 }

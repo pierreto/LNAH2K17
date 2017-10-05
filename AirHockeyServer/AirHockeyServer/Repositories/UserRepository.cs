@@ -25,7 +25,6 @@ namespace AirHockeyServer.Repositories
             MapperManager = new MapperManager();
         }
 
-        //TODO: make sure to change the GetAll method to getBy
         //public async Task<UserEntity> GetUserById(int id)
         public UserEntity GetUserById(int id)
         {
@@ -42,6 +41,7 @@ namespace AirHockeyServer.Repositories
             
         }
 
+        //Ca marche sans le async... 
         public async Task<List<UserEntity>> GetAllUsers()
         {
             try
