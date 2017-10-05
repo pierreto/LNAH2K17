@@ -46,6 +46,7 @@ namespace InterfaceGraphique {
             this.Button_DefaultMap.Click += (sender, e) => { this.Button_DefaultMap.Enabled = false; this.Text_MapName.Text = DefaultValues.mapName; };
             this.Button_PlayerHuman.Click += (sender, e) => { SwitchButtonsState(this.Button_PlayerHuman, this.Button_PlayerVirtual); this.List_VirtualProfile.Enabled = false; };
             this.Button_PlayerVirtual.Click += (sender, e) => { SwitchButtonsState(this.Button_PlayerVirtual, this.Button_PlayerHuman); this.List_VirtualProfile.Enabled = true; };
+            this.Button_Online_Game.Click += (sender, e) => { PlayOnlineGame(this.Button_Online_Game, this.Button_Online_Game); };
 
             // Paint events
             this.Button_DefaultMap.Paint += new PaintEventHandler(StatePaintButton);
@@ -54,6 +55,12 @@ namespace InterfaceGraphique {
             this.Shown += (sender, e) => InitializeBaseSettings();
             this.List_VirtualProfile.DropDownClosed += (sender, e) => this.Text_VirtualProfile.Focus();
             this.fileDialog.FileOk += new CancelEventHandler(MapFileOpened);
+        }
+
+        private void PlayOnlineGame(Button button_Online_Game1, Button button_Online_Game2)
+        {
+            this.Close();
+            Program.FormManager.CurrentForm = Program.LobbyHost;
         }
 
 
