@@ -14,13 +14,15 @@ import GLKit
 class Table
 {
     /// Nombre de points par coin
-    private let VERTEX_PER_CORNER = 5
+    public let VERTEX_PER_CORNER = 5
     /// Largeur de la bordure
-    private let TABLE_BORDER_WIDTH = 11.5
+    public let TABLE_BORDER_WIDTH = 11.5
     /// Hauteur
-    private let TABLE_BORDER_HEIGHT = 3.5
+    public let TABLE_BORDER_HEIGHT = 3.5
     /// Hauteur de la base
-    private let TABLE_BASE_HEIGHT = 15.0
+    public let TABLE_BASE_HEIGHT = 15.0
+    /// Grandeur de la table maximale
+    public let MAX_TABLE_LENGTH = Float(300.0)
     
     ////////////////////////////////////////////////////////////////////////
     ///
@@ -219,7 +221,7 @@ class Table
     {
         let materiau: SCNMaterial = SCNMaterial();
         materiau.ambient.contents = SCNVector3(0.1, 0.1, 0.1);
-        materiau.diffuse.contents = SCNVector3(1.0, 1.0, 1.0);
+        materiau.diffuse.contents = UIImage(named: "table_texture.png")
         materiau.specular.contents = SCNVector3Zero;
         materiau.shininess = 0;
         //materiau.shininessStrength_ = 0;

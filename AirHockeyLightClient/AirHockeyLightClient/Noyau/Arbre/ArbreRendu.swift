@@ -52,6 +52,7 @@ class ArbreRendu: SCNScene {
         /// Construction des usines (noModel correspond à aucun modèle Blender)
         self.ajouterUsine(type: self.NOM_TABLE, usine: UsineNoeud<NoeudTable>(nomUsine: self.NOM_TABLE, nomModele: "noModel"))
         self.ajouterUsine(type: self.NOM_BUT, usine: UsineNoeud<NoeudBut>(nomUsine: self.NOM_BUT, nomModele: "noModel"))
+        self.ajouterUsine(type: self.NOM_POINT_CONTROL, usine: UsineNoeud<NoeudPointControl>(nomUsine: self.NOM_POINT_CONTROL, nomModele: "controlPoint"))
     }
     
     required init?(coder aDecoder: NSCoder) {

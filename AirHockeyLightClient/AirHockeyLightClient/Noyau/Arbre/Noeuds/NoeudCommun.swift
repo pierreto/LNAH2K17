@@ -25,6 +25,12 @@ class NoeudCommun : SCNNode {
     /// Type du noeud
     private var type: String = ""
     
+    /// Transformation relative du noeud
+    private var transformationRelative = GLKMatrix4()
+    
+    /// Vecteur spécifiant les axes bloqués pour le déplacement
+    private var axisLock: GLKVector3 = GLKVector3(v: (1.0, 0.0, 1.0))
+    
     /// Constructeur avec géométrie
     required init(type: String, geometry: SCNGeometry) {
         super.init()
@@ -42,6 +48,36 @@ class NoeudCommun : SCNNode {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    /// Obtient la position relative du noeud.
+    func obtenirPositionRelative() -> GLKVector3 {
+        let vector = GLKMatrix4GetColumn(self.transformationRelative, 3)
+        return GLKVector3(v: (vector[0], vector[1], vector[2]))
+    }
+    
+    /// Assigne la position relative du noeud.
+    func assignerPositionRelative(positionRelative: GLKVector3) {
+        var inverse = self.axisLock
+        
+        inverse.x = inverse.x == 0.0 ? 1.0 : 0.0
+        inverse.y = inverse.y == 0.0 ? 1.0 : 0.0
+        inverse.z = inverse.z == 0.0 ? 1.0 : 0.0
+        
+        let p = GLKVector3Add(GLKVector3Multiply(positionRelative, self.axisLock), GLKVector3Multiply(self.obtenirPositionRelative(), inverse))
+        
+        var translateMatrix = GLKMatrix4()
+        translateMatrix.m00 = 1.0
+        translateMatrix.m11 = 1.0
+        translateMatrix.m22 = 1.0
+        translateMatrix.m33 = 1.0
+        self.transformationRelative = GLKMatrix4Translate(translateMatrix, p[0], p[1], p[2])
+    }
+    
+    /// Permet de changer les axes de déplacement valide
+    func assignerAxisLock(axisLock: GLKVector3) {
+        self.axisLock = axisLock
+    }
+    
 }
 
 ///////////////////////////////////////////////////////////////////////////////
