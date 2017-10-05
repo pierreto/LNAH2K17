@@ -55,7 +55,7 @@
         <TextBox HorizontalAlignment="Left" Height="23" Margin="20,10,0,0" TextWrapping="Wrap" Text="En attente d'un autre joueur..." VerticalAlignment="Top" Width="177" Foreground="White" Background="{x:Null}" BorderBrush="{x:Null}" FontWeight="Bold"/>
         <TextBox HorizontalAlignment="Left" Height="23" Margin="114,54,0,0" TextWrapping="Wrap" Text="{Binding RemainingTime}" VerticalAlignment="Top" Width="72" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" FontWeight="Bold" Grid.RowSpan="2"/>
 
-        <Button Command="{Binding MatchmakingCommand}" Content="Menu principal"  Margin="12,15,0,15" FontWeight="Bold" FontSize="16" Foreground="#FF494848" Grid.Column="2" Height="Auto" HorizontalAlignment="Left" Width="157"/>
+        <Button Command="{Binding MainMenuCommand}" Content="Menu principal"  Margin="12,15,0,15" FontWeight="Bold" FontSize="16" Foreground="#FF494848" Grid.Column="2" Height="Auto" HorizontalAlignment="Left" Width="157"/>
 
         <Button Command="{Binding MatchmakingCommand}" Content="Partie Rapide"  Margin="0,15,12,15" FontWeight="Bold" FontSize="16" Foreground="#FF494848" Grid.Column="1" Height="Auto" HorizontalAlignment="Right" Width="157">
 

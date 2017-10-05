@@ -315,6 +315,9 @@
     <ClCompile Include="Console\Logger.cpp">
       <Filter>Source Files\Console</Filter>
     </ClCompile>
+    <ClCompile Include="ModeleEtatJeuOnline.cpp">
+      <Filter>Source Files\Application\States</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\FacadeModele.h">
@@ -530,6 +533,12 @@
     <ClInclude Include="Arbre\Noeuds\NoeudBooster.h">
       <Filter>Header Files\Arbre\Noeuds</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ModeleEtatJeuOnline.h">
+      <Filter>Header Files\Application\States</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Media Include="Audio\Effets\But.mp3">
@@ -550,5 +559,10 @@
     <Media Include="Audio\Musique\Gameplay.mp3">
       <Filter>Resource Files\Musique</Filter>
     </Media>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Noyau.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

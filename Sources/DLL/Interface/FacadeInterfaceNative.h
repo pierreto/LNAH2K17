@@ -32,6 +32,9 @@ extern "C" {
 	__declspec(dllexport) void mouseUpL();
 	__declspec(dllexport) void mouseUpR();
 	__declspec(dllexport) void mouseMove(int x, int y);
+	__declspec(dllexport) void mouseMoveOpponent(int x, int y);
+
+
 	__declspec(dllexport) void modifierKeys(bool alt, bool ctrl);
 	__declspec(dllexport) bool selectedNodeInfos(float infos[]);
 	__declspec(dllexport) void applyNodeInfos(float infos[]);

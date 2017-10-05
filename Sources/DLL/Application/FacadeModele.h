@@ -50,7 +50,8 @@ enum class MODELE_ETAT {
 	DUPLIQUER = 8,
 	ZOOM = 9,
 	POINTS_CONTROLE = 10,
-	JEU = 11
+	JEU = 11,
+	JEU_ONLINE=12
 };
 
 
