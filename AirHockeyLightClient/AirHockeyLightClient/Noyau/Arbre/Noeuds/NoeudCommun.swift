@@ -9,7 +9,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 import SceneKit
-import SceneKit.ModelIO
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class NoeudCommun
@@ -52,7 +51,7 @@ class NoeudCommun : SCNNode {
     /// Obtient la position relative du noeud.
     func obtenirPositionRelative() -> GLKVector3 {
         let vector = GLKMatrix4GetColumn(self.transformationRelative, 3)
-        return GLKVector3(v: (vector[0], vector[1], vector[2]))
+        return GLKVector3Make(vector[0], vector[1], vector[2])
     }
     
     /// Assigne la position relative du noeud.
@@ -71,6 +70,7 @@ class NoeudCommun : SCNNode {
         translateMatrix.m22 = 1.0
         translateMatrix.m33 = 1.0
         self.transformationRelative = GLKMatrix4Translate(translateMatrix, p[0], p[1], p[2])
+        self.transform = SCNMatrix4FromGLKMatrix4(self.transformationRelative)
     }
     
     /// Permet de changer les axes de déplacement valide

@@ -16,7 +16,7 @@ class Table
     /// Nombre de points par coin
     public let VERTEX_PER_CORNER = 5
     /// Largeur de la bordure
-    public let TABLE_BORDER_WIDTH = 11.5
+    public static let TABLE_BORDER_WIDTH = 11.5
     /// Hauteur
     public let TABLE_BORDER_HEIGHT = 3.5
     /// Hauteur de la base
@@ -43,57 +43,57 @@ class Table
             // Right
             table.append(SCNVector3(0, 0, 125));                                        // 1
             table.append(SCNVector3(0, TABLE_BORDER_HEIGHT, 125));						// 2
-            table.append(SCNVector3(0, TABLE_BORDER_HEIGHT, 125 + TABLE_BORDER_WIDTH));	// 3
-            table.append(SCNVector3(0, 0, 125 + TABLE_BORDER_WIDTH));					// 4
+            table.append(SCNVector3(0, TABLE_BORDER_HEIGHT, 125 + Table.TABLE_BORDER_WIDTH));	// 3
+            table.append(SCNVector3(0, 0, 125 + Table.TABLE_BORDER_WIDTH));					// 4
             table.append(SCNVector3(0, -TABLE_BASE_HEIGHT, 115));					    // 5
             
             // Top Right
             table.append(SCNVector3(60, 0, 125));																// 6
             table.append(SCNVector3(60, TABLE_BORDER_HEIGHT, 125));												// 7
-            table.append(SCNVector3(60 + TABLE_BORDER_WIDTH, TABLE_BORDER_HEIGHT, 125 + TABLE_BORDER_WIDTH));	// 8
-            table.append(SCNVector3(60 + TABLE_BORDER_WIDTH, 0, 125 + TABLE_BORDER_WIDTH));						// 9
+            table.append(SCNVector3(60 + Table.TABLE_BORDER_WIDTH, TABLE_BORDER_HEIGHT, 125 + Table.TABLE_BORDER_WIDTH));	// 8
+            table.append(SCNVector3(60 + Table.TABLE_BORDER_WIDTH, 0, 125 + Table.TABLE_BORDER_WIDTH));						// 9
             table.append(SCNVector3(50, -TABLE_BASE_HEIGHT, 115));												// 10
             
             // Top
             table.append(SCNVector3(60, 0, 0));											// 11
             table.append(SCNVector3(60, TABLE_BORDER_HEIGHT, 0));						// 12
-            table.append(SCNVector3(60 + TABLE_BORDER_WIDTH, TABLE_BORDER_HEIGHT, 0));	// 13
-            table.append(SCNVector3(60 + TABLE_BORDER_WIDTH, 0, 0));					// 14
+            table.append(SCNVector3(60 + Table.TABLE_BORDER_WIDTH, TABLE_BORDER_HEIGHT, 0));	// 13
+            table.append(SCNVector3(60 + Table.TABLE_BORDER_WIDTH, 0, 0));					// 14
             table.append(SCNVector3(50, -TABLE_BASE_HEIGHT, 0));						// 15
             
             // Top Left
             table.append(SCNVector3(60, 0, -125));																// 16
             table.append(SCNVector3(60, TABLE_BORDER_HEIGHT, -125));											// 17
-            table.append(SCNVector3(60 + TABLE_BORDER_WIDTH, TABLE_BORDER_HEIGHT, -125 - TABLE_BORDER_WIDTH));	// 18
-            table.append(SCNVector3(60 + TABLE_BORDER_WIDTH, 0, -125 - +TABLE_BORDER_WIDTH));					// 19
+            table.append(SCNVector3(60 + Table.TABLE_BORDER_WIDTH, TABLE_BORDER_HEIGHT, -125 - Table.TABLE_BORDER_WIDTH));	// 18
+            table.append(SCNVector3(60 + Table.TABLE_BORDER_WIDTH, 0, -125 - Table.TABLE_BORDER_WIDTH));					// 19
             table.append(SCNVector3(50, -TABLE_BASE_HEIGHT, -115));												// 20
             
             // Right
             table.append(SCNVector3(0, 0, -125));										// 21
             table.append(SCNVector3(0, TABLE_BORDER_HEIGHT, -125));						// 22
-            table.append(SCNVector3(0, TABLE_BORDER_HEIGHT, -125 - TABLE_BORDER_WIDTH));// 23
-            table.append(SCNVector3(0, 0, -125 - TABLE_BORDER_WIDTH));					// 24
+            table.append(SCNVector3(0, TABLE_BORDER_HEIGHT, -125 - Table.TABLE_BORDER_WIDTH));// 23
+            table.append(SCNVector3(0, 0, -125 - Table.TABLE_BORDER_WIDTH));					// 24
             table.append(SCNVector3(0, -TABLE_BASE_HEIGHT, -115));						// 25
             
             // Bottom Left
             table.append(SCNVector3(-60, 0, -125));																// 26
             table.append(SCNVector3(-60, TABLE_BORDER_HEIGHT, -125));											// 27
-            table.append(SCNVector3(-60 - TABLE_BORDER_WIDTH, TABLE_BORDER_HEIGHT, -125 - TABLE_BORDER_WIDTH)); // 28
-            table.append(SCNVector3(-60 - TABLE_BORDER_WIDTH, 0, -125 - TABLE_BORDER_WIDTH));					// 29
+            table.append(SCNVector3(-60 - Table.TABLE_BORDER_WIDTH, TABLE_BORDER_HEIGHT, -125 - Table.TABLE_BORDER_WIDTH)); // 28
+            table.append(SCNVector3(-60 - Table.TABLE_BORDER_WIDTH, 0, -125 - Table.TABLE_BORDER_WIDTH));					// 29
             table.append(SCNVector3(-50, -TABLE_BASE_HEIGHT, -115));											// 30
             
             // Bottom
             table.append(SCNVector3(-60, 0, 0));										// 31
             table.append(SCNVector3(-60, TABLE_BORDER_HEIGHT, 0));						// 32
-            table.append(SCNVector3(-60 - TABLE_BORDER_WIDTH, TABLE_BORDER_HEIGHT, 0));	// 33
-            table.append(SCNVector3(-60 - TABLE_BORDER_WIDTH, 0, 0));					// 34
+            table.append(SCNVector3(-60 - Table.TABLE_BORDER_WIDTH, TABLE_BORDER_HEIGHT, 0));	// 33
+            table.append(SCNVector3(-60 - Table.TABLE_BORDER_WIDTH, 0, 0));					// 34
             table.append(SCNVector3(-50, -TABLE_BASE_HEIGHT, 0));						// 35
             
             // Bottom Right
             table.append(SCNVector3(-60, 0, 125));																// 36
             table.append(SCNVector3(-60, TABLE_BORDER_HEIGHT, 125));											// 37
-            table.append(SCNVector3(-60 - TABLE_BORDER_WIDTH, TABLE_BORDER_HEIGHT, 125 + TABLE_BORDER_WIDTH));	// 38
-            table.append(SCNVector3(-60 - TABLE_BORDER_WIDTH, 0, 125 + TABLE_BORDER_WIDTH));					// 39
+            table.append(SCNVector3(-60 - Table.TABLE_BORDER_WIDTH, TABLE_BORDER_HEIGHT, 125 + Table.TABLE_BORDER_WIDTH));	// 38
+            table.append(SCNVector3(-60 - Table.TABLE_BORDER_WIDTH, 0, 125 + Table.TABLE_BORDER_WIDTH));					// 39
             table.append(SCNVector3(-50, -TABLE_BASE_HEIGHT, 115));												// 40
             
             // Middle

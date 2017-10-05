@@ -62,13 +62,12 @@ class NoeudPointControl : NoeudCommun {
         // Appel a l'implementation de la classe de base
         super.assignerPositionRelative(positionRelative: positionCorrigee)
         
-        // TODO : À implémenter
         // Update de la position des points openGl
-        /*if (voisins.count) {
+        if (!voisins.isEmpty) {
             ajusterPoints();
-            voisins[0]->ajusterPoints();
-            voisins[1]->ajusterPoints();
-        }*/
+            voisins[0].ajusterPoints();
+            voisins[1].ajusterPoints();
+        }
     }
     
     /// TODO : à mettre dans Utilitaire
@@ -76,46 +75,50 @@ class NoeudPointControl : NoeudCommun {
         return min(max(value, lower), upper)
     }
     
-    // TODO : A implementer
     /// Ajuste la position des points reliés au point de contrôle
-    /*void NoeudPointControl::ajusterPoints()
-    {
+    func ajusterPoints() {
         // Ajustment des points triviaux
-        glm::vec3 position = obtenirPositionRelative();
-        points_[0]->x = position.x; points_[0]->z = position.z;
-        points_[1]->x = position.x; points_[1]->z = position.z;
+        let position = super.obtenirPositionRelative();
+        self.points[0].x = position.x;
+        self.points[0].z = position.z;
+        self.points[1].x = position.x;
+        self.points[1].z = position.z;
     
-        glm::vec3 v1 = glm::normalize(voisins_[0]->obtenirPositionRelative() - position);
-        glm::vec3 v2 = glm::normalize(voisins_[1]->obtenirPositionRelative() - position);
+        let v1 = GLKVector3Normalize(GLKVector3Subtract(self.voisins[0].obtenirPositionRelative(), position));
+        let v2 = GLKVector3Normalize(GLKVector3Subtract(self.voisins[1].obtenirPositionRelative(), position));
     
         // Calcul de la bisectrice
-        glm::vec3 bisect;
-        if ( glm::length(v1 + v2) < 0.001f) { // Droite perpendiculaire
-            bisect = glm::normalize(glm::vec3(-v1.z, 0, v1.x));
+        var bisect: GLKVector3;
+        if (GLKVector3Length(GLKVector3Add(v1, v2)) < 0.001) { // Droite perpendiculaire
+            bisect = GLKVector3Normalize(GLKVector3Make(-v1.z, 0, v1.x));
         }
         else {
-            bisect = glm::normalize(v1 + v2);
+            bisect = GLKVector3Normalize(GLKVector3Add(v1, v2));
         }
     
         // Inverse bisect if needed
-        float dotProduct = glm::clamp(glm::dot(bisect, glm::normalize(position)),-1.0f,1.0f);
-        if (glm::acos(dotProduct) > utilitaire::PI/2)
-            bisect = -bisect;
+        let dotProduct = self.clamp(value: GLKVector3DotProduct(bisect, GLKVector3Normalize(position)), lower: -1.0, upper: 1.0);
+        if (acos(dotProduct) > Float.pi/2) {
+            bisect = GLKVector3Negate(bisect);
+        }
     
         // Calcul de la diagonale de la bordure
-        float angle = utilitaire::PI/2 - glm::acos(glm::clamp(glm::dot(v1, v2),-1.0f, 1.0f))/2;
-        float h =  TABLE_BORDER_WIDTH / glm::cos(angle);
+        let angle = Float.pi/2 - acos(self.clamp(value: GLKVector3DotProduct(v1, v2), lower: -1.0, upper: 1.0)) / 2;
+        let h =  Float(Table.TABLE_BORDER_WIDTH) / cos(angle);
     
         // Ajustement des points de la bordure interne
-        glm::vec3 p0 = position + (bisect * h);
-        points_[2]->x = p0.x; points_[2]->z = p0.z;
-        points_[3]->x = p0.x; points_[3]->z = p0.z;
+        let p0 = GLKVector3Add(position, GLKVector3MultiplyScalar(bisect, h));
+        self.points[2].x = p0.x;
+        self.points[2].z = p0.z;
+        self.points[3].x = p0.x;
+        self.points[3].z = p0.z;
     
-        glm::vec3 p4 = position + -bisect * 10.0f;
-        points_[4]->x = p4.x; points_[4]->z = p4.z;
+        let p4 = GLKVector3Add(position, GLKVector3MultiplyScalar(GLKVector3Negate(bisect), 10));
+        self.points[4].x = p4.x;
+        self.points[4].z = p4.z;
     
         // Update de la position du but
-        if (but_) {
+        /*if (but_) {
             but_->ajusterPoints();
         }
     
@@ -124,8 +127,8 @@ class NoeudPointControl : NoeudCommun {
         {
             glm::vec3 p5 = p4 - bisect * 5.0f;
             booster_->deplacer(p5);
-        }
-    }*/
+        }*/
+    }
     
     /// Assigne les points de la table au noeud
     func assignerPoints(points: [SCNVector3]) {

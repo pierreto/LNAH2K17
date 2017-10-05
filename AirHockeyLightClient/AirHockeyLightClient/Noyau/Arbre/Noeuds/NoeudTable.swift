@@ -137,10 +137,8 @@ class NoeudTable : NoeudCommun {
         // Assigner les voisins
         for l in 0..<noeuds.count {
             var voisins = [NoeudPointControl]()
-            
-            // TODO : CHANGER POUR LE MODULO CORRECT % ne fonctionne pas
-            voisins.append(noeuds[(l - 1) % noeuds.count])
-            voisins.append(noeuds[(l + 1) % noeuds.count])
+            voisins.append(noeuds[mod((l - 1), noeuds.count)])
+            voisins.append(noeuds[mod((l + 1), noeuds.count)])
             noeuds[l].assignerVoisins(voisins: voisins)
         }
         
@@ -166,12 +164,19 @@ class NoeudTable : NoeudCommun {
         
         // Ajout des noeuds à la table
         for noeud in noeuds {
+            noeud.ajusterPoints();
             self.addChildNode(noeud)
             
-            // TODO : implémenter la fonction
-            //noeud->ajusterPoints();
         }
     }
+    
+    // TODO: ajouter dans utilitaire
+    func mod(_ a: Int, _ n: Int) -> Int {
+        precondition(n > 0, "modulus must be positive")
+        let r = a % n
+        return r >= 0 ? r : r + n
+    }
+
     
     /// Initialiser le matériau de la table sur la géométrie
     func initialiserMateriau() {
