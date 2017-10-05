@@ -121,7 +121,7 @@ namespace InterfaceGraphique {
             FonctionsNatives.aiActiveProfile(selectedProfile.Speed, selectedProfile.Passivity);
             FonctionsNatives.aiStatus(this.List_VirtualProfile.Enabled);
 
-            Program.FormManager.CurrentForm = Program.QuickPlay;       
+            Program.FormManager.CurrentForm = Program.QuickPlayOnline;       
         }
 
 

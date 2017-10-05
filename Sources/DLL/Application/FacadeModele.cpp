@@ -46,6 +46,7 @@
 
 #include "glm/glm.hpp"
 #include "glm/gtc/type_ptr.hpp"
+#include "../ModeleEtatJeuOnline.h"
 
 
 /// Pointeur vers l'instance unique de la classe.
@@ -1044,6 +1045,9 @@ void FacadeModele::changerModeleEtat(MODELE_ETAT etat) {
 		break;
 	case MODELE_ETAT::JEU:
 		etat_ = ModeleEtatJeu::obtenirInstance();
+		break;
+	case MODELE_ETAT::JEU_ONLINE:
+		etat_ = ModeleEtatJeuOnline::obtenirInstance();
 		break;
 	case MODELE_ETAT::CREATION_ACCELERATEUR:
 		etat_ = ModeleEtatCreerBoost::obtenirInstance();

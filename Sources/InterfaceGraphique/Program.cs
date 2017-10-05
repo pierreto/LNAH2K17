@@ -44,6 +44,7 @@ namespace InterfaceGraphique
         public static CreditsMenu CreditsMenu { get { return creditsMenu; } }
         public static Panel OpenGLPanel { get { return openGLPanel; } set { openGLPanel = value; } }
         public static LobbyHost LobbyHost { get { return lobbyHost; } set { lobbyHost = value; } }
+        public static QuickPlayOnline QuickPlayOnline { get { return quickPlayOnline; } set { quickPlayOnline = value; } }
 
 
         private static FormManager formManager;
@@ -58,6 +59,7 @@ namespace InterfaceGraphique
         private static TournementTree tournementTree;
         private static CreditsMenu creditsMenu;
         private static LobbyHost lobbyHost;
+        private static QuickPlayOnline quickPlayOnline;
 
         private static Panel openGLPanel;
         private static Login login;
@@ -108,6 +110,7 @@ namespace InterfaceGraphique
             tournementTree = new TournementTree();
             creditsMenu = new CreditsMenu();
             lobbyHost = new LobbyHost();
+            quickPlayOnline = new QuickPlayOnline();
 
             FonctionsNatives.loadSounds();
 

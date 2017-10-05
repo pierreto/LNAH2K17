@@ -156,6 +156,12 @@
     <Compile Include="CommunicationInterface\LoginClient.cs" />
     <Compile Include="Entities\UserEntity.cs" />
     <Compile Include="Exceptions\LoginException.cs" />
+    <Compile Include="Game\QuickPlayOnline.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Game\QuickPlayOnline.Designer.cs">
+      <DependentUpon>QuickPlayOnline.cs</DependentUpon>
+    </Compile>
     <Compile Include="Menus\Login.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -253,6 +259,9 @@
     <Compile Include="WPFApplication.cs" />
     <EmbeddedResource Include="Controls\LobbyHost.resx">
       <DependentUpon>LobbyHost.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Game\QuickPlayOnline.resx">
+      <DependentUpon>QuickPlayOnline.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Menus\Login.resx">
       <DependentUpon>Login.cs</DependentUpon>

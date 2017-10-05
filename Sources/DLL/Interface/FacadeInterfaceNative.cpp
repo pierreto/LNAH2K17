@@ -27,6 +27,7 @@
 #include <iostream>
 #include <iomanip>
 #include "glm/gtc/type_ptr.hpp"
+#include "../ModeleEtatJeuOnline.h"
 
 extern "C"
 {
@@ -347,7 +348,23 @@ extern "C"
 		FacadeModele::obtenirInstance()->mouseMove(x, y);
 	}
 
+	///////////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void mouseMoveOpponent(int x, int y)
+	///
+	/// Cette fonction gère les évènements de mouvement de souris
+	///
+	/// @param[in] x : Position de la souris en x
+	/// @param[in] y : Position de la souris en y
+	///
+	/// @return Aucune
+	///
+	///////////////////////////////////////////////////////////////////////////////
+	void mouseMoveOpponent(int x, int y)
+	{
+		//TODO: IMPLEMENT
 
+	}
 	////////////////////////////////////////////////////////////////////////
 	///
 	/// @fn __declspec(dllexport) void modifierKeys(bool alt, bool ctrl)

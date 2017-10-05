@@ -86,6 +86,21 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
 
         }
 
+
+        private ICommand mainMenuCommand;
+        public ICommand MainMenuCommand
+        {
+            get
+            {
+                return mainMenuCommand ??
+                       (mainMenuCommand = new RelayCommandAsync(MainMenu, (o) => true));
+            }
+        }
+        private async Task MainMenu()
+        {
+            Program.QuickPlayMenu.ShowDialog();
+        }
+
         private bool CanStart()
         {
             return true;
