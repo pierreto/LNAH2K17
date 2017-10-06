@@ -57,7 +57,9 @@ namespace AirHockeyServer.Events.EventManagers
             GameEntity game = new GameEntity()
             {
                 CreationDate = DateTime.Now,
-                Players = new UserEntity[2] { args.PlayersMatch.PlayersMatch[0], args.PlayersMatch.PlayersMatch[0] }
+                Players = new UserEntity[2] { args.PlayersMatch.PlayersMatch[0], args.PlayersMatch.PlayersMatch[0] },
+                Master = args.PlayersMatch.PlayersMatch[0],
+                Slave = args.PlayersMatch.PlayersMatch[1]
             };
 
             GameEntity gameCreated = await GameService.CreateGame(game);

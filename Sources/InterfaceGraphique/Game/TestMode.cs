@@ -201,7 +201,7 @@ namespace InterfaceGraphique {
         ///
         ////////////////////////////////////////////////////////////////////////
         private void MouseMoved(object sender, MouseEventArgs e) {
-            FonctionsNatives.mouseMove(e.Location.X, e.Location.Y);
+            FonctionsNatives.playerMouseMove(e.Location.X, e.Location.Y);
         }
 
 

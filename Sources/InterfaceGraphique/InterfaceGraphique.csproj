@@ -123,6 +123,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommunicationInterface\ChatHub.cs" />
+    <Compile Include="CommunicationInterface\GameHub.cs" />
     <Compile Include="CommunicationInterface\RestInterface\HttpResponseParser.cs" />
     <Compile Include="CommunicationInterface\RestInterface\MapsRepository.cs" />
     <Compile Include="CommunicationInterface\RestInterface\Repository.cs" />
@@ -149,19 +150,18 @@
     <Compile Include="Controls\WPF\ViewModelLocator.cs" />
     <Compile Include="Entities\ChannelEntity.cs" />
     <Compile Include="Entities\ChatMessage.cs" />
+    <Compile Include="Entities\GameDataMessage.cs" />
     <Compile Include="Entities\GameEntity.cs" />
+    <Compile Include="Entities\GoalMessage.cs" />
     <Compile Include="Entities\LoginMessage.cs" />
     <Compile Include="Entities\MapEntity.cs" />
     <Compile Include="Entities\MemberEntity.cs" />
     <Compile Include="CommunicationInterface\LoginClient.cs" />
     <Compile Include="Entities\UserEntity.cs" />
     <Compile Include="Exceptions\LoginException.cs" />
-    <Compile Include="Game\QuickPlayOnline.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Game\QuickPlayOnline.Designer.cs">
-      <DependentUpon>QuickPlayOnline.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Game\GameState\AbstractGameState.cs" />
+    <Compile Include="Game\GameState\OfflineGameState.cs" />
+    <Compile Include="Game\GameState\SlaveGameState.cs" />
     <Compile Include="Menus\Login.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -259,9 +259,6 @@
     <Compile Include="WPFApplication.cs" />
     <EmbeddedResource Include="Controls\LobbyHost.resx">
       <DependentUpon>LobbyHost.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Game\QuickPlayOnline.resx">
-      <DependentUpon>QuickPlayOnline.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Menus\Login.resx">
       <DependentUpon>Login.cs</DependentUpon>

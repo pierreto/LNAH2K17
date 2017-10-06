@@ -11,6 +11,7 @@ namespace InterfaceGraphique.Entities
         public GameEntity()
         {
             this.Players = new UserEntity[2];
+
         }
 
         public Guid GameId { get; set; }
@@ -18,8 +19,11 @@ namespace InterfaceGraphique.Entities
         public UserEntity Creator { get; set; }
 
         public DateTime CreationDate { get; set; }
-
         public UserEntity[] Players { get; set; }
+
+        public UserEntity Master { get; set; }
+        public UserEntity Slave { get; set; }
+
 
         public GameState GameState { get; set; }
 

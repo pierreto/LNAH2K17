@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using InterfaceGraphique.Entities;
+using InterfaceGraphique.Game.GameState;
 using Microsoft.AspNet.SignalR.Client;
 
 namespace InterfaceGraphique.CommunicationInterface
@@ -14,6 +15,7 @@ namespace InterfaceGraphique.CommunicationInterface
         private IHubProxy GameWaitingRoomProxy { get; set; }
 
         private HubConnection connection;
+        private SlaveGameState slaveGameState;
         private string username;
 
         public event EventHandler<int> RemainingTimeEvent;
@@ -25,6 +27,11 @@ namespace InterfaceGraphique.CommunicationInterface
         public event EventHandler<GameEntity> ConfigurationUpdatedEvent;
 
         public event EventHandler<GameEntity> GameStartingEvent;
+
+        public WaitingRoomHub(SlaveGameState slaveGameState)
+        {
+            this.slaveGameState = slaveGameState;
+        }
 
         public void InitializeHub(HubConnection connection, string username)
         {
@@ -79,6 +86,18 @@ namespace InterfaceGraphique.CommunicationInterface
                 {
                     Console.WriteLine("map updated");
                 });
+                /*
+                if (this.username.Equals(newgame.Master.Name))
+                {
+                    Program.QuickPlay.CurrentGameState = this.slaveGameState;
+                }
+                else
+                {
+                    Program.QuickPlay.CurrentGameState = this.slaveGameState;
+        
+                }
+                Program.FormManager.CurrentForm = Program.QuickPlay;*/
+
             });
         }
 

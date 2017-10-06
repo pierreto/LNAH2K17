@@ -83,6 +83,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -223,6 +224,8 @@
     <Compile Include="Entities\ChatMessageEntity.cs" />
     <Compile Include="Entities\ConfigurationEntity.cs" />
     <Compile Include="Entities\Entity.cs" />
+    <Compile Include="Entities\GoalMessage.cs" />
+    <Compile Include="Entities\GameDataMessage.cs" />
     <Compile Include="Entities\GameEntity.cs" />
     <Compile Include="Entities\LoginMessage.cs" />
     <Compile Include="Entities\MapEntity.cs" />
@@ -233,6 +236,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Hubs\GameHub.cs" />
     <Compile Include="Hubs\GameWaitingRoomHub.cs" />
     <Compile Include="Hubs\ConnectionMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -241,7 +245,7 @@
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Services\ChannelService.cs" />
     <Compile Include="Services\ChatService.cs" />
-    <Compile Include="Services\ChatServiceServer\ChatHub.cs" />
+    <Compile Include="Hubs\ChatHub.cs" />
     <Compile Include="Services\ChatServiceServer\ChatServer.cs" />
     <Compile Include="Services\GameService.cs" />
     <Compile Include="Services\IChannelService.cs" />

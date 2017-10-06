@@ -109,8 +109,8 @@ namespace InterfaceGraphique {
                 mapFilePath = fileDialog.FileName;
 
             this.Close();
-            Program.QuickPlay.IsTournementMode = false;
-            Program.QuickPlay.MapFilePath = mapFilePath;
+            Program.QuickPlay.CurrentGameState.IsTournementMode = false;
+            Program.QuickPlay.CurrentGameState.MapFilePath = mapFilePath;
 
             StringBuilder player1Name = new StringBuilder(DefaultValues.playerLeftName.Length);
             StringBuilder player2Name = new StringBuilder(DefaultValues.playerRightName.Length);

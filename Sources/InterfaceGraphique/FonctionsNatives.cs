@@ -67,10 +67,10 @@ namespace InterfaceGraphique {
         public static extern void mouseUpR();
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void mouseMove(int x, int y);
+        public static extern void playerMouseMove(int x, int y);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void mouseMoveOpponent(int x, int y);
+        public static extern void opponentMouseMove(int x, int y);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void modifierKeys(bool alt, bool ctrl);
@@ -164,5 +164,8 @@ namespace InterfaceGraphique {
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void toggleOrbit(bool orbit);
+
+
+
     }
 }

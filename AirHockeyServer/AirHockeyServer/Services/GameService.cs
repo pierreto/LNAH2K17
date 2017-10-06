@@ -18,9 +18,13 @@ namespace AirHockeyServer.Services
     ///////////////////////////////////////////////////////////////////////////////
     public class GameService : IGameService
     {
+        private List<GameEntity> games;
+
+
         public GameService(IDataProvider dataProvider)
         {
             DataProvider = dataProvider;
+            this.games = new List<GameEntity>();
         }
 
         public IDataProvider DataProvider { get; set; }
@@ -38,8 +42,8 @@ namespace AirHockeyServer.Services
         ////////////////////////////////////////////////////////////////////////
         public async Task<GameEntity> CreateGame(GameEntity gameEntity)
         {
-            // TODO : call bd
             gameEntity.GameId = Guid.NewGuid();
+            this.games.Add(gameEntity);
 
             return gameEntity;
         }

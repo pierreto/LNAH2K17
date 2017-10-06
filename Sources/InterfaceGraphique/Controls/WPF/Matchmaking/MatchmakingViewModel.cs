@@ -33,7 +33,11 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
         {
             waitingRoomHub.RemainingTimeEvent += (sender, args) => { OnRemainingTimeEvent(args);  };
 
-            waitingRoomHub.OpponentFoundEvent += (sender, args) => { OpponentName = args.Name; };
+            waitingRoomHub.OpponentFoundEvent += (sender, args) =>
+            {
+                OpponentName = args.Name;
+                
+            };
 
             waitingRoomHub.MapUpdatedEvent += (sender, args) => { SelectedMap = args.Map; };
         }
