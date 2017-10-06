@@ -89,6 +89,7 @@ class NoeudTable : NoeudCommun {
         // création des noeuds
         var i = 1
         let max = self.sommets.count - 1
+    
         while (i < max) {
             let noeudPointControl = arbre.creerNoeud(typeNouveauNoeud: arbre.NOM_POINT_CONTROL) as! NoeudPointControl
             
@@ -103,7 +104,7 @@ class NoeudTable : NoeudCommun {
             for j in 0..<self.table.VERTEX_PER_CORNER {
                 points.append(self.sommets[i + j])
             }
-            
+
             noeudPointControl.assignerPoints(points: points)
             noeudPointControl.assignerAxisLock(axisLock: GLKVector3(v: (1.0, 1.0, 1.0)))
             // TODO: changer la classe table et mettre des GLKVector3
@@ -160,14 +161,31 @@ class NoeudTable : NoeudCommun {
     
         // TODO : AJOUTER LES BUTS
         // Creation des buts
-        //creerButs(noeuds[4], noeuds[0]);
+        // creerButs(noeuds[4], noeuds[0]);
         
+        // noeuds[7].assignerPositionRelative(positionRelative: noeuds[6].obtenirPositionRelative())
+        
+        var m = 1;
         // Ajout des noeuds à la table
         for noeud in noeuds {
             noeud.ajusterPoints();
+            for n in 0..<5 {
+                self.sommets[m] = noeud.points[n]
+                m += 1
+            }
             self.addChildNode(noeud)
-            
         }
+        
+        self.updateGeometry()
+    }
+    
+    // Remettre à jour la geometrie de la table
+    func updateGeometry() {
+        var sources = [SCNGeometrySource]()
+        sources.append(SCNGeometrySource(vertices: self.sommets))
+        sources.append(SCNGeometrySource(textureCoordinates: table.obtenirTexCoords()))
+        
+        self.geometry = SCNGeometry(sources: sources, elements: initElements())
     }
     
     // TODO: ajouter dans utilitaire
@@ -176,7 +194,6 @@ class NoeudTable : NoeudCommun {
         let r = a % n
         return r >= 0 ? r : r + n
     }
-
     
     /// Initialiser le matériau de la table sur la géométrie
     func initialiserMateriau() {

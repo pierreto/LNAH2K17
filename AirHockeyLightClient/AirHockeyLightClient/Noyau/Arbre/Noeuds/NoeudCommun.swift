@@ -24,9 +24,6 @@ class NoeudCommun : SCNNode {
     /// Type du noeud
     private var type: String = ""
     
-    /// Transformation relative du noeud
-    private var transformationRelative = GLKMatrix4()
-    
     /// Vecteur spécifiant les axes bloqués pour le déplacement
     private var axisLock: GLKVector3 = GLKVector3(v: (1.0, 0.0, 1.0))
     
@@ -50,7 +47,7 @@ class NoeudCommun : SCNNode {
     
     /// Obtient la position relative du noeud.
     func obtenirPositionRelative() -> GLKVector3 {
-        let vector = GLKMatrix4GetColumn(self.transformationRelative, 3)
+        let vector = GLKMatrix4GetColumn(SCNMatrix4ToGLKMatrix4(self.transform), 3)
         return GLKVector3Make(vector[0], vector[1], vector[2])
     }
     
@@ -69,8 +66,8 @@ class NoeudCommun : SCNNode {
         translateMatrix.m11 = 1.0
         translateMatrix.m22 = 1.0
         translateMatrix.m33 = 1.0
-        self.transformationRelative = GLKMatrix4Translate(translateMatrix, p[0], p[1], p[2])
-        self.transform = SCNMatrix4FromGLKMatrix4(self.transformationRelative)
+        let transform = GLKMatrix4Translate(translateMatrix, p[0], p[1], p[2])
+        self.transform = SCNMatrix4FromGLKMatrix4(transform)
     }
     
     /// Permet de changer les axes de déplacement valide
