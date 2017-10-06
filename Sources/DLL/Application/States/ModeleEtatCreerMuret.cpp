@@ -149,7 +149,7 @@ void ModeleEtatCreerMuret::mouseUpL() {
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void ModeleEtatCreerMuret::mouseMove(int x, int y)
+/// @fn void ModeleEtatCreerMuret::playerMouseMove(int x, int y)
 ///
 /// Évènement appelé lorsque la souris bouge.
 /// Cette fonction agrandit le mur avec le déplacement de la souris
@@ -160,8 +160,8 @@ void ModeleEtatCreerMuret::mouseUpL() {
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void ModeleEtatCreerMuret::mouseMove(int x, int y) {
-	ModeleEtat::mouseMove(x, y);
+void ModeleEtatCreerMuret::playerMouseMove(int x, int y) {
+	ModeleEtat::playerMouseMove(x, y);
 
 	if (noeud_ != nullptr) {
 		// Transformation du point dans l'esapce virtuelle

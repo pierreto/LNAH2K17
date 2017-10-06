@@ -14,7 +14,7 @@ public:
 
 	// Fonctions gérant les entrées de l'utilisateur
 	/// Évènement appelé lorsque la souris bouge
-	virtual void mouseMove(int x, int y);
+	virtual void playerMouseMove(int x, int y);
 	virtual void mouseMoveOpponent(int x, int y);
 
 	virtual void escape();

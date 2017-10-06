@@ -112,7 +112,7 @@ void ModeleEtatRotation::mouseDownL()
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void ModeleEtatRotation::mouseMove(int x, int y)
+/// @fn void ModeleEtatRotation::playerMouseMove(int x, int y)
 ///
 /// Évènement appelé lorsque la souris bouge.
 /// Cette fonction effectue la rotation sur les noeuds sélectionnés
@@ -123,8 +123,8 @@ void ModeleEtatRotation::mouseDownL()
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void ModeleEtatRotation::mouseMove(int x, int y) {
-	ModeleEtat::mouseMove(x, y);
+void ModeleEtatRotation::playerMouseMove(int x, int y) {
+	ModeleEtat::playerMouseMove(x, y);
 
 	if (mouseDownL_) 
 	{

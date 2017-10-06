@@ -97,7 +97,7 @@ void ModeleEtatJeuOnline::libererInstance() {
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void ModeleEtatJeuOnline::mouseMove(int x, int y) 
+/// @fn void ModeleEtatJeuOnline::playerMouseMove(int x, int y) 
 ///
 /// Évènement appelé lorsque la souris bouge. S'occupe de déplacer le
 /// maillet du joueur 1 lorsque le jeu n'est pas en pause.
@@ -108,8 +108,8 @@ void ModeleEtatJeuOnline::libererInstance() {
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void ModeleEtatJeuOnline::mouseMove(int x, int y) {
-	ModeleEtat::mouseMove(x, y);
+void ModeleEtatJeuOnline::playerMouseMove(int x, int y) {
+	ModeleEtat::playerMouseMove(x, y);
 
 	if (!gamePaused_ && gameStarted_ && !gameEnded_) {
 		glm::dvec3 mousePos;

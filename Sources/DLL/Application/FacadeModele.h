@@ -115,7 +115,7 @@ public:
    /// Clic droit relaché souris
    void mouseUpR();
    /// Le curseur souris est déplacé
-   void mouseMove(int x, int y);
+   void playerMouseMove(int x, int y);
    /// Ajuste l'état des touches modificatrices (alt et ctrl)
    void modifierKeys(bool alt, bool ctrl);
    /// Retourne l'information sur un noeud sélectionné

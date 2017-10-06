@@ -139,7 +139,7 @@ void ModeleEtatDuplication::mouseUpR() {
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void ModeleEtatDuplication::mouseMove(int x, int y) 
+/// @fn void ModeleEtatDuplication::playerMouseMove(int x, int y) 
 ///
 /// Évènement appelé lorsque la souris bouge. Entre autre,
 /// cette fonction déplace un fantome de la sélection
@@ -150,9 +150,9 @@ void ModeleEtatDuplication::mouseUpR() {
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void ModeleEtatDuplication::mouseMove(int x, int y) {
+void ModeleEtatDuplication::playerMouseMove(int x, int y) {
 	
-	ModeleEtat::mouseMove(x, y);
+	ModeleEtat::playerMouseMove(x, y);
 
 	if (!mouseDownR_)
 	{

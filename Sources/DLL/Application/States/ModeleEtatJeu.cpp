@@ -116,7 +116,7 @@ ModeleEtatJeu::~ModeleEtatJeu() {
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void ModeleEtatJeu::mouseMove(int x, int y) 
+/// @fn void ModeleEtatJeu::playerMouseMove(int x, int y) 
 ///
 /// Évènement appelé lorsque la souris bouge. S'occupe de déplacer le
 /// maillet du joueur 1 lorsque le jeu n'est pas en pause.
@@ -127,13 +127,22 @@ ModeleEtatJeu::~ModeleEtatJeu() {
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void ModeleEtatJeu::mouseMove(int x, int y) {
-	ModeleEtat::mouseMove(x, y);
+void ModeleEtatJeu::playerMouseMove(int x, int y) {
+	ModeleEtat::playerMouseMove(x, y);
 
 	if (!gamePaused_ && gameStarted_ && !gameEnded_) {
 		glm::dvec3 mousePos;
 		FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(mousePosX_, mousePosY_, mousePos);
 		tryNewPosition(maillet1_, mousePos, segmentsLeft_);
+	}
+}
+
+void ModeleEtatJeu::opponentMouseMove(int x, int y)
+{
+	if (!gamePaused_ && gameStarted_ && !gameEnded_) {
+		glm::dvec3 mousePos;
+		FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, mousePos);
+		tryNewPosition(maillet2_, mousePos, segmentsRight_);
 	}
 }
 

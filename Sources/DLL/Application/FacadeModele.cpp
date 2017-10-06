@@ -466,15 +466,15 @@ void FacadeModele::mouseUpR() {
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void FacadeModele::mouseMove()
+/// @fn void FacadeModele::playerMouseMove()
 ///
 /// Cette fonction permet de gérer 
 ///
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void FacadeModele::mouseMove(int x, int y) {
-	etat_->mouseMove(x, y);
+void FacadeModele::playerMouseMove(int x, int y) {
+	etat_->playerMouseMove(x, y);
 }
 
 ////////////////////////////////////////////////////////////////////////

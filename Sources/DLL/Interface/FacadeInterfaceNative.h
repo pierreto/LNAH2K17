@@ -31,8 +31,8 @@ extern "C" {
 	__declspec(dllexport) void mouseDownR();
 	__declspec(dllexport) void mouseUpL();
 	__declspec(dllexport) void mouseUpR();
-	__declspec(dllexport) void mouseMove(int x, int y);
-	__declspec(dllexport) void mouseMoveOpponent(int x, int y);
+	__declspec(dllexport) void playerMouseMove(int x, int y);
+	__declspec(dllexport) void opponentMouseMove(int x, int y);
 
 
 	__declspec(dllexport) void modifierKeys(bool alt, bool ctrl);

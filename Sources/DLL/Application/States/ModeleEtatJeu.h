@@ -43,7 +43,9 @@ public:
 
 	// Fonctions gérant les entrées de l'utilisateur
 	/// Évènement appelé lorsque la souris bouge
-	virtual void mouseMove(int x, int y);
+	virtual void playerMouseMove(int x, int y);
+	void opponentMouseMove(int i, int y);;
+
 	virtual void escape();
 	virtual void afficher();
 	void moveMaillet();
@@ -56,7 +58,7 @@ public:
 	bool isGameOver(const int& neededGoals);
 	void aiActiveProfile(int speed, int passivity);
 
-	void toggleTestMode(bool isActive) { testMode_ = isActive; };
+	void toggleTestMode(bool isActive) { testMode_ = isActive; }
 	void setSpeedXMaillet(float speedZ) { speedMailletZ_ = speedZ; };
 	void setSpeedYMaillet(float speedX) { speedMailletX_ = speedX; };
 	void player1Goal() { scorePlayer1_++; };

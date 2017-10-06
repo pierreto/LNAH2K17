@@ -161,7 +161,7 @@ void ModeleEtatSelection::mouseUpL() {
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void ModeleEtatSelection::mouseMove(int x, int y)
+/// @fn void ModeleEtatSelection::playerMouseMove(int x, int y)
 ///
 /// Évènement appelé lorsque la souris bouge. En autre, elle fait la mise
 /// jour du rectangle élastique si le bouton gauche de la souris est
@@ -173,8 +173,8 @@ void ModeleEtatSelection::mouseUpL() {
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void ModeleEtatSelection::mouseMove(int x, int y) {
-	ModeleEtat::mouseMove(x, y);
+void ModeleEtatSelection::playerMouseMove(int x, int y) {
+	ModeleEtat::playerMouseMove(x, y);
 
 	if (mouseDownL_ && dimensionsSuffisantes()) {
 		if (!rectangleInit_) {

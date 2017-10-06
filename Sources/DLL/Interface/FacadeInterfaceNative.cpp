@@ -334,7 +334,7 @@ extern "C"
 
 	////////////////////////////////////////////////////////////////////////
 	///
-	/// @fn __declspec(dllexport) void mouseMove(int x, int y)
+	/// @fn __declspec(dllexport) void playerMouseMove(int x, int y)
 	///
 	/// Cette fonction gère les évènements de mouvement de souris
 	///
@@ -344,13 +344,13 @@ extern "C"
 	/// @return Aucune
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void mouseMove(int x, int y) {
-		FacadeModele::obtenirInstance()->mouseMove(x, y);
+	__declspec(dllexport) void playerMouseMove(int x, int y) {
+		FacadeModele::obtenirInstance()->playerMouseMove(x, y);
 	}
 
 	///////////////////////////////////////////////////////////////////////////////
 	///
-	/// @fn __declspec(dllexport) void mouseMoveOpponent(int x, int y)
+	/// @fn __declspec(dllexport) void opponentMouseMove(int x, int y)
 	///
 	/// Cette fonction gère les évènements de mouvement de souris
 	///
@@ -360,10 +360,10 @@ extern "C"
 	/// @return Aucune
 	///
 	///////////////////////////////////////////////////////////////////////////////
-	void mouseMoveOpponent(int x, int y)
+	void opponentMouseMove(int x, int y)
 	{
 		//TODO: IMPLEMENT
-
+		ModeleEtatJeu::obtenirInstance()->opponentMouseMove(x, y);
 	}
 	////////////////////////////////////////////////////////////////////////
 	///

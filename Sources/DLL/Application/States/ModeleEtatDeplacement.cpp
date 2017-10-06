@@ -103,7 +103,7 @@ ModeleEtatDeplacement::~ModeleEtatDeplacement() {
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void ModeleEtatDeplacement::mouseMove(int x, int y)
+/// @fn void ModeleEtatDeplacement::playerMouseMove(int x, int y)
 ///
 /// Évènement appelé lorsque la souris bouge.
 /// Cette fonction déplace les objets selectionnés quand la souris glise
@@ -114,8 +114,8 @@ ModeleEtatDeplacement::~ModeleEtatDeplacement() {
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void ModeleEtatDeplacement::mouseMove(int x, int y) {
-	ModeleEtat::mouseMove(x, y);
+void ModeleEtatDeplacement::playerMouseMove(int x, int y) {
+	ModeleEtat::playerMouseMove(x, y);
 
 	if (mouseDownL_) {
 		glm::dvec3 end, start;
