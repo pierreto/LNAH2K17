@@ -38,7 +38,7 @@ namespace AirHockeyServer.Controllers
         [Route("api/maps/save")]
         public HttpResponseMessage SaveMap([FromBody]MapEntity message)
         {
-            System.Diagnostics.Debug.WriteLine(message.Creator.Name);
+            System.Diagnostics.Debug.WriteLine(message.Creator.Username);
             System.Diagnostics.Debug.WriteLine(message.MapName);
             System.Diagnostics.Debug.WriteLine(message.LastBackup);
             System.Diagnostics.Debug.WriteLine(message.Json);

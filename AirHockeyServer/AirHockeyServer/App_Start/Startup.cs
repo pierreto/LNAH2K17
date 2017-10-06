@@ -33,8 +33,24 @@ namespace AirHockeyServer.App_Start
                 () => new GameWaitingRoomHub(new GameService(new DataProvider(new RequestsManager(new Connector())))));
 
             app.MapSignalR("/signalr", new HubConfiguration());
+        }
 
-            GameWaitingRoomEventManager gameWaitingRoomEventManager = new GameWaitingRoomEventManager();
+        public static void Register(HttpConfiguration config)
+        {
+            var container = new UnityContainer();
+            // Repositories
+            container.RegisterType<IChannelRepository, ChannelRepository>(new HierarchicalLifetimeManager());
+
+            // Services
+            container.RegisterType<IChatService, ChatService>(new HierarchicalLifetimeManager());
+            container.RegisterType<IChannelService, ChannelService>(new HierarchicalLifetimeManager());
+
+            //Core
+            container.RegisterType<IConnector, Connector>(new HierarchicalLifetimeManager());
+            container.RegisterType<IRequestsManager, RequestsManager>(new HierarchicalLifetimeManager());
+            container.RegisterType<IDataProvider, DataProvider>(new HierarchicalLifetimeManager());
+
+            config.DependencyResolver = new UnityResolver(container);
         }
     }
 }

@@ -53,7 +53,7 @@ namespace AirHockeyServer.Events.EventManagers
             Thread.Sleep(3000);
             var stringGameId = args.GameEntity.GameId.ToString();
             
-            var connection = ConnectionMapper.GetConnection(args.GameEntity.Players[1].Id);
+            var connection = ConnectionMapper.GetConnection(args.GameEntity.Players[1].UserId);
             HubContext.Groups.Add(connection, stringGameId);
 
             HubContext.Clients.Group(args.GameEntity.GameId.ToString()).OpponentFoundEvent(args.GameEntity);

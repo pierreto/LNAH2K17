@@ -1,0 +1,24 @@
+.mainTitle {
+    margin: 0 auto;
+}
+
+.yearTitle {
+    color: red;
+    font-style: italic;
+}
+
+.title {
+    font-size : 95px;
+    font-weight: bold;
+    font-family: "Roboto";
+}
+
+.allTitle {
+    text-align: center;
+    top: 15%;
+    transform: translateY(50%);
+}
+
+.all {
+    margin-top: 0px;
+}

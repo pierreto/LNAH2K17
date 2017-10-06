@@ -55,7 +55,7 @@ namespace AirHockeyServer.Hubs
             gameEntity.Players[0] = gameEntity.Creator;
 
             // TO REMOVE, WAITING FOR AUTHENTIFICATION
-            ConnectionMapper.AddConnection(gameEntity.Creator.Id, Context.ConnectionId);
+            ConnectionMapper.AddConnection(gameEntity.Creator.UserId, Context.ConnectionId);
             
             Guid gameCreatedId = await GameService.CreateGame(gameEntity);
 
@@ -75,7 +75,7 @@ namespace AirHockeyServer.Hubs
         public void JoinGame(UserEntity user)
         {
             // TO REMOVE, WAITING FOR AUTHENTIFICATION
-            ConnectionMapper.AddConnection(user.Id, Context.ConnectionId);
+            ConnectionMapper.AddConnection(user.UserId, Context.ConnectionId);
 
             GameService.JoinGame(user);
         }

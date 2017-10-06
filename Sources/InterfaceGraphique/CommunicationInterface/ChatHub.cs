@@ -44,7 +44,7 @@ namespace InterfaceGraphique.CommunicationInterface
 
 
             var userId = Guid.NewGuid();
-            Program.user = new UserEntity { Id = userId, Name = this.username };
+            Program.user = new UserEntity { Id = userId, Username = this.username };
 
             await chatHubProxy.Invoke("Subscribe", userId);
 

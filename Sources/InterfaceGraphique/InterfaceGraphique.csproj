@@ -156,7 +156,6 @@
     <Compile Include="CommunicationInterface\LoginClient.cs" />
     <Compile Include="Entities\UserEntity.cs" />
     <Compile Include="Exceptions\LoginException.cs" />
-    <Compile Include="FacadeModele.cs" />
     <Compile Include="Menus\Login.cs">
       <SubType>Form</SubType>
     </Compile>
