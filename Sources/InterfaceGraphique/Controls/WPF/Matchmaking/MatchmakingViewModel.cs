@@ -6,54 +6,162 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using InterfaceGraphique.CommunicationInterface;
 using InterfaceGraphique.Entities;
+using InterfaceGraphique.CommunicationInterface.RestInterface;
 
 namespace InterfaceGraphique.Controls.WPF.Matchmaking
 {
-    public class MatchmakingViewModel
+    public class MatchmakingViewModel : ViewModelBase
     {
-        private MatchmakingHub matchmakingHub;
+        private WaitingRoomHub waitingRoomHub;
         private bool isStarted;
 
-        public MatchmakingViewModel(MatchmakingHub matchmakingHub)
+        protected MapsRepository MapsRepository { get; set; }
+
+        public MatchmakingViewModel(WaitingRoomHub matchmakingHub)
         {
-            this.matchmakingHub = matchmakingHub;
+
+            this.waitingRoomHub = matchmakingHub;
             this.isStarted = false;
+            this.MapsRepository = new MapsRepository();
+
+            InitializeEvents();
+
+            LoadData();
         }
 
-      
-        private ICommand startMatchmakingCommand;
-        public ICommand StartMatchmakingCommand
+        private void InitializeEvents()
+        {
+            waitingRoomHub.RemainingTimeEvent += (sender, args) => { OnRemainingTimeEvent(args);  };
+
+            waitingRoomHub.OpponentFoundEvent += (sender, args) =>
+            {
+                OpponentName = args.Username;
+                
+            };
+
+            waitingRoomHub.MapUpdatedEvent += (sender, args) => { SelectedMap = args.Map; };
+        }
+
+        private void OnRemainingTimeEvent(int remainingTime)
+        {
+            this.RemainingTime = remainingTime;
+        }
+
+        private async void LoadData()
+        {
+            //MapsAvailable = await MapsRepository.GetMaps();
+            MapsAvailable = new List<MapEntity>
+            {
+                new MapEntity
+                {
+                    MapName = "map1"
+                },
+                new MapEntity
+                {
+                    MapName = "map2"
+                }
+            };
+
+            RemainingTime = 15;
+        }
+
+        private ICommand matchmakingCommand;
+        public ICommand MatchmakingCommand
         {
             get
             {
-                return startMatchmakingCommand ??
-                       (startMatchmakingCommand = new RelayCommandAsync(StartMatchmaking, (o) => CanStart()));
+                return matchmakingCommand ??
+                       (matchmakingCommand = new RelayCommandAsync(Matchmaking, (o) => CanStart()));
             }
         }
-        private async Task StartMatchmaking()
+        private async Task Matchmaking()
         {
-            this.matchmakingHub.Start();
+            if (this.isStarted)
+            {
+                this.waitingRoomHub.Cancel();
+                this.IsStarted = false;
+
+            }
+            else
+            {
+                this.waitingRoomHub.JoinGame();
+                this.IsStarted = true;
+            }
+
         }
 
-        private ICommand cancelMatchmakingCommand;
-        public ICommand CancelMatchmakingCommand
+
+        private ICommand mainMenuCommand;
+        public ICommand MainMenuCommand
         {
             get
             {
-                return cancelMatchmakingCommand ?? (cancelMatchmakingCommand =
-                           new RelayCommandAsync(CancelMatchmaking, (o) => !CanStart()));
+                return mainMenuCommand ??
+                       (mainMenuCommand = new RelayCommandAsync(MainMenu, (o) => true));
             }
         }
-
-        private async Task CancelMatchmaking()
+        private async Task MainMenu()
         {
-            this.matchmakingHub.Cancel();
+            Program.FormManager.CurrentForm=Program.QuickPlay;
         }
 
         private bool CanStart()
         {
+            return true;
+        }
 
-            return !this.isStarted;
+        public bool IsStarted
+        {
+            get => isStarted;
+            set
+            {
+                isStarted = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        private List<MapEntity> mapsAvailable;
+        public List<MapEntity> MapsAvailable
+        {
+            get => mapsAvailable;
+            set
+            {
+                mapsAvailable = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        private MapEntity selectedMap;
+        public MapEntity SelectedMap
+        {
+            get => selectedMap;
+            set
+            {
+                selectedMap = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        private int remainingTime;
+        public int RemainingTime
+        {
+            get => remainingTime;
+            set
+            {
+                remainingTime = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        private string opponentName;
+        public string OpponentName
+        {
+            get => opponentName;
+            set
+            {
+                opponentName = value;
+                this.OnPropertyChanged();
+            }
         }
     }
 }

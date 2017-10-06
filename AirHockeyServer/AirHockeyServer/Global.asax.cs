@@ -14,6 +14,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using System.Web.SessionState;
 using System.Threading.Tasks;
+using AirHockeyServer.Events.EventManagers;
 
 namespace AirHockeyServer
 {
@@ -44,6 +45,7 @@ namespace AirHockeyServer
             // Services
             container.RegisterType<IChatService, ChatService>(new HierarchicalLifetimeManager());
             container.RegisterType<IChannelService, ChannelService>(new HierarchicalLifetimeManager());
+            container.RegisterType<IGameService, GameService>(new HierarchicalLifetimeManager());
             container.RegisterType<IMapService, MapService>(new HierarchicalLifetimeManager());
 
             //Core
@@ -52,6 +54,8 @@ namespace AirHockeyServer
             container.RegisterType<IDataProvider, DataProvider>(new HierarchicalLifetimeManager());
 
             config.DependencyResolver = new UnityResolver(container);
+
+            GameWaitingRoomEventManager gameWaitingRoomEventManager = container.Resolve<GameWaitingRoomEventManager>();
 
         }
 

@@ -50,7 +50,8 @@ enum class MODELE_ETAT {
 	DUPLIQUER = 8,
 	ZOOM = 9,
 	POINTS_CONTROLE = 10,
-	JEU = 11
+	JEU = 11,
+	JEU_ONLINE=12
 };
 
 
@@ -114,7 +115,7 @@ public:
    /// Clic droit relaché souris
    void mouseUpR();
    /// Le curseur souris est déplacé
-   void mouseMove(int x, int y);
+   void playerMouseMove(int x, int y);
    /// Ajuste l'état des touches modificatrices (alt et ctrl)
    void modifierKeys(bool alt, bool ctrl);
    /// Retourne l'information sur un noeud sélectionné

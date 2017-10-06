@@ -25,8 +25,10 @@ namespace AirHockeyServer.Entities
         public UserEntity Creator { get; set; }
 
         public DateTime CreationDate { get; set; }
-
         public UserEntity[] Players { get; set; }
+
+        public UserEntity Master { get; set; }
+        public UserEntity Slave { get; set; }
 
         public GameState GameState { get; set; }
 

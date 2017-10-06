@@ -27,6 +27,7 @@
 #include <iostream>
 #include <iomanip>
 #include "glm/gtc/type_ptr.hpp"
+#include "../ModeleEtatJeuOnline.h"
 
 extern "C"
 {
@@ -333,7 +334,7 @@ extern "C"
 
 	////////////////////////////////////////////////////////////////////////
 	///
-	/// @fn __declspec(dllexport) void mouseMove(int x, int y)
+	/// @fn __declspec(dllexport) void playerMouseMove(int x, int y)
 	///
 	/// Cette fonction gère les évènements de mouvement de souris
 	///
@@ -343,11 +344,27 @@ extern "C"
 	/// @return Aucune
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void mouseMove(int x, int y) {
-		FacadeModele::obtenirInstance()->mouseMove(x, y);
+	__declspec(dllexport) void playerMouseMove(int x, int y) {
+		FacadeModele::obtenirInstance()->playerMouseMove(x, y);
 	}
 
-
+	///////////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void opponentMouseMove(int x, int y)
+	///
+	/// Cette fonction gère les évènements de mouvement de souris
+	///
+	/// @param[in] x : Position de la souris en x
+	/// @param[in] y : Position de la souris en y
+	///
+	/// @return Aucune
+	///
+	///////////////////////////////////////////////////////////////////////////////
+	void opponentMouseMove(int x, int y)
+	{
+		//TODO: IMPLEMENT
+		ModeleEtatJeu::obtenirInstance()->opponentMouseMove(x, y);
+	}
 	////////////////////////////////////////////////////////////////////////
 	///
 	/// @fn __declspec(dllexport) void modifierKeys(bool alt, bool ctrl)
@@ -729,8 +746,8 @@ extern "C"
 	/// @return Aucune
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void aiStatus(bool enabled) {
-		ModeleEtatJeu::obtenirInstance()->aiStatus(enabled);
+	__declspec(dllexport) void setCurrentOpponentType(int opponentType) {
+		ModeleEtatJeu::obtenirInstance()->setCurrentOpponentType((ModeleEtatJeu::OpponentType) opponentType);
 	}
 
 

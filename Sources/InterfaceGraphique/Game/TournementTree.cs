@@ -199,18 +199,18 @@ namespace InterfaceGraphique {
         ///
         ////////////////////////////////////////////////////////////////////////
         public void SetVirtualProfile() {
-            FonctionsNatives.aiStatus(false);
+            FonctionsNatives.setCurrentOpponentType((int)OpponentType.LOCAL_PLAYER);
 
             if (currentRound == 1) {
                 if(this.Button_R1P1Type.Text == virtualPlayerText) {
                     PlayerProfile selectedProfile = Program.ConfigurationMenu.GetProfile(Program.TournementMenu.Player1Profile);
                     FonctionsNatives.aiActiveProfile(selectedProfile.Speed, selectedProfile.Passivity);
-                    FonctionsNatives.aiStatus(true);
+                    FonctionsNatives.setCurrentOpponentType((int)OpponentType.VIRTUAL_PLAYER);
                 }
                 else if (this.Button_R1P2Type.Text == virtualPlayerText) {
                     PlayerProfile selectedProfile = Program.ConfigurationMenu.GetProfile(Program.TournementMenu.Player2Profile);
                     FonctionsNatives.aiActiveProfile(selectedProfile.Speed, selectedProfile.Passivity);
-                    FonctionsNatives.aiStatus(true);
+                    FonctionsNatives.setCurrentOpponentType((int)OpponentType.VIRTUAL_PLAYER);
                 }
             }
 
@@ -218,12 +218,12 @@ namespace InterfaceGraphique {
                 if (this.Button_R1P3Type.Text == virtualPlayerText) {
                     PlayerProfile selectedProfile = Program.ConfigurationMenu.GetProfile(Program.TournementMenu.Player3Profile);
                     FonctionsNatives.aiActiveProfile(selectedProfile.Speed, selectedProfile.Passivity);
-                    FonctionsNatives.aiStatus(true);
+                    FonctionsNatives.setCurrentOpponentType((int)OpponentType.VIRTUAL_PLAYER);
                 }
                 else if (this.Button_R1P4Type.Text == virtualPlayerText) {
                     PlayerProfile selectedProfile = Program.ConfigurationMenu.GetProfile(Program.TournementMenu.Player4Profile);
                     FonctionsNatives.aiActiveProfile(selectedProfile.Speed, selectedProfile.Passivity);
-                    FonctionsNatives.aiStatus(true);
+                    FonctionsNatives.setCurrentOpponentType((int)OpponentType.VIRTUAL_PLAYER);
                 }
             }
 
@@ -231,12 +231,12 @@ namespace InterfaceGraphique {
                 if (this.Button_R2P1Type.Text == virtualPlayerText) {
                     PlayerProfile selectedProfile = Program.ConfigurationMenu.GetProfile(R2P1Profile);
                     FonctionsNatives.aiActiveProfile(selectedProfile.Speed, selectedProfile.Passivity);
-                    FonctionsNatives.aiStatus(true);
+                    FonctionsNatives.setCurrentOpponentType((int)OpponentType.VIRTUAL_PLAYER);
                 }
                 else if (this.Button_R2P2Type.Text == virtualPlayerText) {
                     PlayerProfile selectedProfile = Program.ConfigurationMenu.GetProfile(R2P2Profile);
                     FonctionsNatives.aiActiveProfile(selectedProfile.Speed, selectedProfile.Passivity);
-                    FonctionsNatives.aiStatus(true);
+                    FonctionsNatives.setCurrentOpponentType((int)OpponentType.VIRTUAL_PLAYER);
                 }
             }
         }

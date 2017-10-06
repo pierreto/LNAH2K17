@@ -30,12 +30,14 @@ namespace AirHockeyServer.Events.EventManagers
         private ConcurrentDictionary<Guid, int> RemainingTime { get; set; }
 
         private IHubContext HubContext { get; set; }
+        public IGameService GameService { get; }
 
-        public GameWaitingRoomEventManager()
+        public GameWaitingRoomEventManager(IGameService gameService)
         {
             MatchMakerService.MatchFoundEvent += OnMatchFound;
             this.RemainingTime = new ConcurrentDictionary<Guid, int>();
             HubContext = GlobalHost.ConnectionManager.GetHubContext<GameWaitingRoomHub>();
+            GameService = gameService;
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -47,22 +49,36 @@ namespace AirHockeyServer.Events.EventManagers
         /// avertir qu'un adversaire leur a été attribué.
         ///
         ////////////////////////////////////////////////////////////////////////
-        private void OnMatchFound(object sender, MatchFoundArgs args)
+        private async void OnMatchFound(object sender, MatchFoundArgs args)
         {
 
             Thread.Sleep(3000);
-            var stringGameId = args.GameEntity.GameId.ToString();
-            
-            var connection = ConnectionMapper.GetConnection(args.GameEntity.Players[1].UserId);
-            HubContext.Groups.Add(connection, stringGameId);
 
-            HubContext.Clients.Group(args.GameEntity.GameId.ToString()).OpponentFoundEvent(args.GameEntity);
+            GameEntity game = new GameEntity()
+            {
+                CreationDate = DateTime.Now,
+                Players = new UserEntity[2] { args.PlayersMatch.PlayersMatch[0], args.PlayersMatch.PlayersMatch[0] },
+                Master = args.PlayersMatch.PlayersMatch[0],
+                Slave = args.PlayersMatch.PlayersMatch[1]
+            };
+
+            GameEntity gameCreated = await GameService.CreateGame(game);
+
+            var stringGameId = gameCreated.GameId.ToString();
+            
+            foreach(var player in gameCreated.Players)
+            {
+                var connection = ConnectionMapper.GetConnection(player.UserId);
+                await HubContext.Groups.Add(connection, stringGameId);
+            }
+
+            HubContext.Clients.Group(stringGameId).OpponentFoundEvent(gameCreated);
 
             //RemainingTimeMutex.WaitOne();
-            this.RemainingTime[args.GameEntity.GameId] = 0;
+            this.RemainingTime[gameCreated.GameId] = 0;
             //RemainingTimeMutex.ReleaseMutex();
 
-            System.Timers.Timer timer = CreateTimeoutTimer(args.GameEntity.GameId);
+            System.Timers.Timer timer = CreateTimeoutTimer(gameCreated.GameId);
             timer.Start();
         }
 

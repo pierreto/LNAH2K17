@@ -41,7 +41,10 @@ namespace InterfaceGraphique {
         ///
         ////////////////////////////////////////////////////////////////////////
         private void InitializeEvents() {
+
             this.boutonPartieRapide.Click += (sender, e) => Program.QuickPlayMenu.ShowDialog();
+
+            //this.boutonPartieRapide.Click += (sender, e) => Program.FormManager.CurrentForm = Program.LobbyHost;
             this.boutonTournoi.Click += (sender, e) => Program.FormManager.CurrentForm = Program.TournementMenu;
             this.buttonConfiguration.Click += (sender, e) => Program.ConfigurationMenu.ShowDialog();
             this.buttonEditeur.Click += (sender, e) => Program.FormManager.CurrentForm = Program.Editeur;

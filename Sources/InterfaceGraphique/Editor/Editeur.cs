@@ -246,7 +246,7 @@ namespace InterfaceGraphique {
         ///
         ////////////////////////////////////////////////////////////////////////
         private void mouseMove(object sender, MouseEventArgs e) {
-            FonctionsNatives.mouseMove(e.Location.X, e.Location.Y - MenuBar.Size.Height);
+            FonctionsNatives.playerMouseMove(e.Location.X, e.Location.Y - MenuBar.Size.Height);
             if (outilCourrant == MODELE_ETAT.CREATION_ACCELERATEUR || outilCourrant == MODELE_ETAT.CREATION_PORTAIL || outilCourrant == MODELE_ETAT.CREATION_MURET)
                 this.Cursor = (FonctionsNatives.mouseOverTable()) ? Cursors.Default : Cursors.No;
             if(outilCourrant == MODELE_ETAT.POINTS_CONTROLE && e.Button != MouseButtons.Left)

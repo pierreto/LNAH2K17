@@ -255,8 +255,8 @@ namespace InterfaceGraphique {
                 mapFilePath = fileDialog.FileName;
 
             SaveGameSettings();
-            Program.QuickPlay.IsTournementMode = true;
-            Program.QuickPlay.MapFilePath = mapFilePath;
+            Program.QuickPlay.CurrentGameState.IsTournementMode = true;
+            Program.QuickPlay.CurrentGameState.MapFilePath = mapFilePath;
             Program.TournementTree.CurrentRound = 0;
             Program.FormManager.CurrentForm = Program.TournementTree;
         }

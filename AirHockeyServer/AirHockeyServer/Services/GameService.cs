@@ -18,16 +18,20 @@ namespace AirHockeyServer.Services
     ///////////////////////////////////////////////////////////////////////////////
     public class GameService : IGameService
     {
+        private List<GameEntity> games;
+
+
         public GameService(IDataProvider dataProvider)
         {
             DataProvider = dataProvider;
+            this.games = new List<GameEntity>();
         }
 
         public IDataProvider DataProvider { get; set; }
 
         ////////////////////////////////////////////////////////////////////////
         ///
-        /// @fn async Task<Guid> CreateGame(GameEntity gameEntity)
+        /// @fn async Task<GameEntity> CreateGame(GameEntity gameEntity)
         ///
         /// Cette fonction gère la création d'une partie en ligne. Elle
         /// commence par créer la partie dans la bd puis ajoute la partie
@@ -36,16 +40,12 @@ namespace AirHockeyServer.Services
         /// @return Id du match créé
         ///
         ////////////////////////////////////////////////////////////////////////
-        public async Task<Guid> CreateGame(GameEntity gameEntity)
+        public async Task<GameEntity> CreateGame(GameEntity gameEntity)
         {
-            // TODO : call bd
-            Guid gameCreatedId = new Guid();
+            gameEntity.GameId = Guid.NewGuid();
+            this.games.Add(gameEntity);
 
-            gameEntity.GameId = gameCreatedId;
-            
-            MatchMakerService.AddGame(gameEntity);
-
-            return gameCreatedId;
+            return gameEntity;
         }
 
         ////////////////////////////////////////////////////////////////////////

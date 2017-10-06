@@ -110,8 +110,6 @@ namespace InterfaceGraphique.Controls.WPF.Chat
             }
         }
 
-
-        #region "Event handlers"
         private void NewMessage(ChatMessage message)
         {
             ctxTaskFactory.StartNew(() =>
@@ -119,7 +117,6 @@ namespace InterfaceGraphique.Controls.WPF.Chat
                 this.messages.Add(message);
             }).Wait();     
         }
-        #endregion
 
         public ObservableCollection<ChatMessage> Messages
         {

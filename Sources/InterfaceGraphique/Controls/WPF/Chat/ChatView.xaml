@@ -16,15 +16,16 @@
     <UserControl.Resources>
         <ResourceDictionary>
 
-<!--
-            <ResourceDictionary.MergedDictionaries >
+            
+            <!--<ResourceDictionary.MergedDictionaries >
                 <ResourceDictionary Source="/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
                 <ResourceDictionary Source="/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
                 <ResourceDictionary Source="/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Blue.xaml" />
                 <ResourceDictionary Source="/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Green.xaml" />
             </ResourceDictionary.MergedDictionaries>-->
+            
             <wpf:ViewModelLocator x:Key="VMLocator" d:IsDataSource="True" />
-            <DataTemplate x:Key="MessagesDataTemplate" DataType="entities:ChatMessage">
+            <DataTemplate x:Key="MessagesDataTemplate" DataType="entities:ChatMessage" >
 
                 <Border Name="MessageBorder" MinHeight="40" BorderThickness="0 0 0 2" Background="#FF373A3E" 
                         Margin="10,0,10,0" BorderBrush="#FF3C3F44" CornerRadius="2" SnapsToDevicePixels="True"  >
@@ -43,13 +44,6 @@
                                Text="{Binding TimeStamp, StringFormat={}{0:t}}" Foreground="#FFACACAC"/>
                     </Grid>
                 </Border>
-                <DataTemplate.Triggers>
-                    <!--<DataTrigger Binding="{Binding IsOriginNative}" Value="True">
-                    <Setter TargetName="MessageBorder" Property="Margin" Value="60,0,10,10"/>
-                    <Setter TargetName="MessageBorder" Property="Background" Value="#BBDEFB"/>
-                    <Setter TargetName="MessageBorder" Property="BorderBrush" Value="#64B5F6"/>
-                </DataTrigger>-->
-                </DataTemplate.Triggers>
             </DataTemplate>
             <DataTemplate x:Key="ChannelsDataTemplate" DataType="entities:ChannelEntity">
                 <Border MinHeight="40" BorderThickness="0 0 0 2" Background="#FF373A3E" 

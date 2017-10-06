@@ -108,7 +108,7 @@ void ModeleEtatZoom::mouseDownL() {
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void ModeleEtatZoom::mouseMove(int x, int y)
+/// @fn void ModeleEtatZoom::playerMouseMove(int x, int y)
 ///
 /// Évènement appelé lorsque la souris bouge. Entre autre,
 /// cette fonction agrandi le rectangle élactique si la souris est pressée
@@ -119,8 +119,8 @@ void ModeleEtatZoom::mouseDownL() {
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void ModeleEtatZoom::mouseMove(int x, int y) {
-	ModeleEtat::mouseMove(x, y);
+void ModeleEtatZoom::playerMouseMove(int x, int y) {
+	ModeleEtat::playerMouseMove(x, y);
 
 	if (mouseDownL_ && rectangleActif_) {
 		aidegl::mettreAJourRectangleElastique(glm::ivec2(initMousePosX_, initMousePosY_), glm::ivec2(lastMousePosX_, lastMousePosY_), glm::ivec2(mousePosX_, mousePosY_));

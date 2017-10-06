@@ -45,6 +45,7 @@ namespace InterfaceGraphique
         public static CreditsMenu CreditsMenu { get { return creditsMenu; } }
         public static Panel OpenGLPanel { get { return openGLPanel; } set { openGLPanel = value; } }
         public static UserEntity user;
+        public static LobbyHost LobbyHost { get { return lobbyHost; } set { lobbyHost = value; } }
 
         private static FormManager formManager;
         private static MainMenu mainMenu;
@@ -56,9 +57,9 @@ namespace InterfaceGraphique
         private static QuickPlayMenu quickPlayMenu;
         private static TournementMenu tournementMenu;
         private static TournementTree tournementTree;
-     
-
         private static CreditsMenu creditsMenu;
+        private static LobbyHost lobbyHost;
+
         private static Panel openGLPanel;
         private static Login login;
         private static TimeSpan dernierTemps;
@@ -107,7 +108,8 @@ namespace InterfaceGraphique
             tournementMenu = new TournementMenu();
             tournementTree = new TournementTree();
             creditsMenu = new CreditsMenu();
-        
+            lobbyHost = new LobbyHost();
+
             FonctionsNatives.loadSounds();
 
 
@@ -122,7 +124,8 @@ namespace InterfaceGraphique
         {
             unityContainer = new UnityContainer();
             unityContainer.RegisterType<IBaseHub, ChatHub>(new ContainerControlledLifetimeManager());
-            unityContainer.RegisterType<IBaseHub,MatchmakingHub>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<IBaseHub,WaitingRoomHub>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<IBaseHub,GameHub>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<ChatViewModel>();
         }
 

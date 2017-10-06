@@ -143,7 +143,7 @@ void ModeleEtatPointControl::mouseDownL() {
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void ModeleEtatPointControl::mouseMove(int x, int y)
+/// @fn void ModeleEtatPointControl::playerMouseMove(int x, int y)
 ///
 /// Évènement appelé lorsque la souris bouge. Entre autre,
 /// cette fonction déplace un noeud sélectionneé
@@ -154,8 +154,8 @@ void ModeleEtatPointControl::mouseDownL() {
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void ModeleEtatPointControl::mouseMove(int x, int y) {
-	ModeleEtat::mouseMove(x, y);
+void ModeleEtatPointControl::playerMouseMove(int x, int y) {
+	ModeleEtat::playerMouseMove(x, y);
 
 	if (mouseDownL_) {
 		glm::dvec3 end, start;

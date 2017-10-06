@@ -181,6 +181,7 @@
     <ClCompile Include="Lighting\Light.cpp" />
     <ClCompile Include="Lighting\LightAnimation.cpp" />
     <ClCompile Include="Lighting\LightManager.cpp" />
+    <ClCompile Include="ModeleEtatJeuOnline.cpp" />
     <ClCompile Include="Tests\ArbreRenduTest.cpp" />
     <ClCompile Include="Tests\BancTests.cpp" />
     <ClCompile Include="Tests\CollisionTest.cpp" />
@@ -254,6 +255,8 @@
     <ClInclude Include="Lighting\Light.h" />
     <ClInclude Include="Lighting\LightAnimation.h" />
     <ClInclude Include="Lighting\LightManager.h" />
+    <ClInclude Include="ModeleEtatJeuOnline.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Tests\ArbreRenduTest.h" />
     <ClInclude Include="Tests\BancTests.h" />
     <ClInclude Include="Tests\CollisionTest.h" />
@@ -283,6 +286,9 @@
     <Media Include="Audio\Effets\CollisionMur.mp3" />
     <Media Include="Audio\Effets\CollisionPortail.mp3" />
     <Media Include="Audio\Musique\Gameplay.mp3" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Noyau.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

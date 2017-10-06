@@ -66,7 +66,7 @@ public:
 	/// Évènement appelé lorsque le bouton droit de la souris est levé
 	virtual void mouseUpR();
 	/// Évènement appelé lorsque la souris bouge
-	virtual void mouseMove(int x, int y);
+	virtual void playerMouseMove(int x, int y);
 	/// Évènement appelé lorsque les touches ctrl ou/et alt sont appuyées
 	virtual void modifierKeys(bool alt, bool ctrl);
 	/// Fonction pour déterminer si le curseur est au-dessus de la table

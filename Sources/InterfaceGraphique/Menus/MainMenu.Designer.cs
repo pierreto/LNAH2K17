@@ -29,8 +29,6 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.Button_Credits = new System.Windows.Forms.Button();
             this.buttonLogout = new System.Windows.Forms.Button();
-            this.elementHost2 = new System.Windows.Forms.Integration.ElementHost();
-            this.matchmakingView1 = new InterfaceGraphique.Controls.WPF.Matchmaking.MatchmakingView();
             this.elementHost1 = new System.Windows.Forms.Integration.ElementHost();
             this.chatView1 = new InterfaceGraphique.Controls.ChatView();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -155,20 +153,10 @@
             this.buttonLogout.Text = "Déconnexion";
             this.buttonLogout.UseVisualStyleBackColor = true;
             // 
-            // elementHost2
-            // 
-            this.elementHost2.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.elementHost2.Location = new System.Drawing.Point(820, 12);
-            this.elementHost2.Name = "elementHost2";
-            this.elementHost2.Size = new System.Drawing.Size(352, 100);
-            this.elementHost2.TabIndex = 11;
-            this.elementHost2.Text = "elementHost2";
-            this.elementHost2.Child = this.matchmakingView1;
-            // 
             // elementHost1
             // 
             this.elementHost1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.elementHost1.Location = new System.Drawing.Point(12, 233);
+            this.elementHost1.Location = new System.Drawing.Point(12, 227);
             this.elementHost1.Name = "elementHost1";
             this.elementHost1.Size = new System.Drawing.Size(1004, 407);
             this.elementHost1.TabIndex = 10;
@@ -181,7 +169,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(49)))), ((int)(((byte)(54)))));
             this.ClientSize = new System.Drawing.Size(1184, 648);
-            this.Controls.Add(this.elementHost2);
             this.Controls.Add(this.elementHost1);
             this.Controls.Add(this.buttonLogout);
             this.Controls.Add(this.Button_Credits);
@@ -209,7 +196,5 @@
         private System.Windows.Forms.Button buttonLogout;
         private System.Windows.Forms.Integration.ElementHost elementHost1;
         private Controls.ChatView chatView1;
-        private System.Windows.Forms.Integration.ElementHost elementHost2;
-        private Controls.WPF.Matchmaking.MatchmakingView matchmakingView1;
     }
 }

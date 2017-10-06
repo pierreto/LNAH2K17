@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace InterfaceGraphique.Entities
 {
-    class MapEntity
+    public class MapEntity
     {
         public UserEntity Creator { get; set; }
         public string MapName { get; set; }
