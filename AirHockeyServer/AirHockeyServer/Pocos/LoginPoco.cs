@@ -5,7 +5,7 @@ using System.Web;
 
 namespace AirHockeyServer.Pocos
 {
-    public class LoginPoco
+    public class LoginPoco: Poco
     {
         public int LoginId { get; private set; }
 

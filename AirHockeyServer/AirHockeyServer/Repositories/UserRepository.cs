@@ -1,6 +1,8 @@
 ﻿using AirHockeyServer.DatabaseCore;
 using AirHockeyServer.Entities;
+using AirHockeyServer.Mapping;
 using AirHockeyServer.Pocos;
+using AutoMapper;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -12,31 +14,46 @@ using System.Web;
 
 namespace AirHockeyServer.Repositories
 {
-    public class UserRepository
+    public class UserRepository //Inherits Repository
     {
+        protected DataProvider DataProvider { get; set; } //Move to Repository
 
-
+        protected MapperManager MapperManager { get; set; } 
         public UserRepository()
         {
+            DataProvider = new DataProvider();
+            MapperManager = new MapperManager();
         }
 
-        public async Task<List<UserEntity>> GetUsers()
+        //public async Task<UserEntity> GetUserById(int id)
+        public UserEntity GetUserById(int id)
         {
-            DataContext dc = new DataContext(new MySqlConnection(ConfigurationManager.ConnectionStrings["lnah"].ConnectionString));
-            // Do the SQL call
             try
             {
-                IEnumerable<UserPoco> po = dc.ExecuteQuery<UserPoco>("SELECT id_user, username FROM test_users");
-                List<UserPoco> poList = po.ToList();
+                UserPoco userPoco = DataProvider.GetById<UserPoco>("test_users", id);
+                UserEntity userEntity = MapperManager.Map<UserPoco, UserEntity>(userPoco);
+                return userEntity;
             }
-            catch (Exception e)
+            catch (Exception w)
             {
-
+                return null;
             }
             
+        }
 
-            // UserPoco will be mapped to UserEntity?
-            return new List<UserEntity>();
+        //Ca marche sans le async... 
+        public async Task<List<UserEntity>> GetAllUsers()
+        {
+            try
+            {
+                var userPocos = DataProvider.GetAll<UserPoco>("test_users");
+                List<UserEntity> userEntities = MapperManager.Map<UserPoco,UserEntity>(userPocos);
+                return userEntities;
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }

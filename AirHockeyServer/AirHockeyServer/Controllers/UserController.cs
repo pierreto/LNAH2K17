@@ -20,14 +20,14 @@ namespace AirHockeyServer.Controllers
             this.UserService = new UserService();
         }
 
-        //Comment on sait si c'est un post?
-        [AcceptVerbs("POST")]
-        [Route("api/user")]
-        public HttpResponseMessage Usersds()
+        //
+        [HttpGet]
+        [Route("api/user/{id}")]
+        public HttpResponseMessage getUser(int id)
         {
             try
             {
-                this.UserService.GetUser();
+                return Request.CreateResponse(HttpStatusCode.OK, UserService.GetUserById(id));
             }
             catch (SignupException e)
             {
@@ -39,7 +39,29 @@ namespace AirHockeyServer.Controllers
                 System.Diagnostics.Debug.WriteLine(e);
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
-            return Request.CreateResponse(HttpStatusCode.OK);
+            
+        }
+
+        [HttpPost]
+        [Route("api/user")]
+        public HttpResponseMessage postUser()
+        {
+            try
+            {
+                return Request.CreateResponse(HttpStatusCode.OK);
+
+                // return Request.CreateResponse(HttpStatusCode.OK, UserService.PostUser());
+            }
+            catch (SignupException e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+                return Request.CreateResponse(HttpStatusCode.Forbidden);
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
         }
     }
 }

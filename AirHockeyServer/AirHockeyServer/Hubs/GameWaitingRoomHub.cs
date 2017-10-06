@@ -46,7 +46,7 @@ namespace AirHockeyServer.Hubs
         public void JoinGame(UserEntity user)
         {
             // TO REMOVE, WAITING FOR AUTHENTIFICATION
-            ConnectionMapper.AddConnection(user.UserId, Context.ConnectionId);
+            ConnectionMapper.AddConnection(new Guid(user.UserId.ToString()), Context.ConnectionId);
 
             GameService.JoinGame(user);
         }

@@ -7,10 +7,10 @@ using System.Web;
 namespace AirHockeyServer.Pocos
 {
     [Table(Name = "test_users")]
-    public class UserPoco
+    public class UserPoco: Poco
     {
         [Column(IsPrimaryKey = true, Name = "id_user")]
-        public int IdUser { get; private set; }
+        public int UserId { get; private set; }
 
         [Column(Name = "username")]
         public string Username { get; private set; }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using AirHockeyServer.Entities;
 using AirHockeyServer.Core;
+using AirHockeyServer.Repositories;
 
 namespace AirHockeyServer.Services
 {
@@ -17,12 +18,10 @@ namespace AirHockeyServer.Services
     ///////////////////////////////////////////////////////////////////////////////
     public class MapService : IMapService
     {
-        public MapService(IDataProvider dataProvider)
-        {
-            DataProvider = dataProvider;
-        }
+        private static IMapRepository MapRepository = new MapRepository();
 
-        public IDataProvider DataProvider { get; }
+        public MapService()
+        {}
 
         ////////////////////////////////////////////////////////////////////////
         ///

@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using AirHockeyServer.Entities;
-using AirHockeyServer.Core;
 using System.Threading.Tasks;
+using AirHockeyServer.Repositories;
 
 namespace AirHockeyServer.Services
 {
@@ -19,15 +17,12 @@ namespace AirHockeyServer.Services
     public class GameService : IGameService
     {
         private List<GameEntity> games;
+        private static IGameRepository GameRepository = new GameRepository();
 
-
-        public GameService(IDataProvider dataProvider)
+        public GameService()
         {
-            DataProvider = dataProvider;
             this.games = new List<GameEntity>();
         }
-
-        public IDataProvider DataProvider { get; set; }
 
         ////////////////////////////////////////////////////////////////////////
         ///
