@@ -16,7 +16,7 @@ namespace AirHockeyServer.Repositories
         {
             try
             {
-                IEnumerable<UserPoco> userPocoEnum = await DataProvider.GetById<UserPoco>("test_users", id);
+                IEnumerable<UserPoco> userPocoEnum = await DataProvider.GetById<UserPoco>("test_users", "id_user", id);
                 UserPoco userPoco = userPocoEnum.ToList().First();
                 UserEntity userEntity = MapperManager.Map<UserPoco, UserEntity>(userPoco);
                 return userEntity;

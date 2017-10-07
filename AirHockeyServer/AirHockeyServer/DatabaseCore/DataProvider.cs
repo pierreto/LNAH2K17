@@ -31,11 +31,11 @@ namespace AirHockeyServer.DatabaseCore
             }
         }
 
-        public async Task<IEnumerable<T>> GetById<T>(string table, int id)
+        public async Task<IEnumerable<T>> GetById<T>(string table, string field, int id)
         {
             try
             {
-                string queryString = string.Format("SELECT * FROM {0} WHERE id_user={1}", table, id);
+                string queryString = string.Format("SELECT * FROM {0} WHERE {1}={2}", table, field, id);
                 return await DoQuery<T>(queryString);
             }
             catch (Exception e)

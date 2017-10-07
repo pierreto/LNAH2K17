@@ -221,6 +221,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MapController.cs" />
+    <Compile Include="Controllers\PasswordController.cs" />
     <Compile Include="Controllers\SignupController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Core\Connector.cs" />
@@ -238,6 +239,7 @@
     <Compile Include="Entities\GameEntity.cs" />
     <Compile Include="Entities\MapEntity.cs" />
     <Compile Include="Entities\LoginEntity.cs" />
+    <Compile Include="Entities\PasswordEntity.cs" />
     <Compile Include="Entities\SignupEntity.cs" />
     <Compile Include="Entities\PlayersMatchEntity.cs" />
     <Compile Include="Entities\UserEntity.cs" />
@@ -251,6 +253,7 @@
     <Compile Include="Hubs\ConnectionMapper.cs" />
     <Compile Include="Mapping\MapperManager.cs" />
     <Compile Include="Pocos\LoginPoco.cs" />
+    <Compile Include="Pocos\PasswordPoco.cs" />
     <Compile Include="Pocos\Poco.cs" />
     <Compile Include="Pocos\UserPoco.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -262,6 +265,7 @@
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Repositories\LoginRepository.cs" />
     <Compile Include="Repositories\MapRepository.cs" />
+    <Compile Include="Repositories\PasswordRepository.cs" />
     <Compile Include="Repositories\Repository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Services\ChannelService.cs" />
@@ -279,6 +283,7 @@
     <Compile Include="Services\LoginService.cs" />
     <Compile Include="Services\MapService.cs" />
     <Compile Include="Services\MatchMakerService.cs" />
+    <Compile Include="Services\PasswordService.cs" />
     <Compile Include="Utilities\HttpResponseGenerator.cs" />
     <Compile Include="Services\SignupService.cs" />
     <Compile Include="Services\UserService.cs" />
