@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Linq;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace AirHockeyServer.DatabaseCore
 {
@@ -16,33 +17,34 @@ namespace AirHockeyServer.DatabaseCore
             DC = new DataContext(new MySqlConnection(ConfigurationManager.ConnectionStrings["lnah"].ConnectionString));
         }
 
-        public List<T> GetAll<T>(string table)
+        public async Task<List<T>> GetAll<T>(string table)
         {
-            
             try
             {
-                string query = string.Format("SELECT * FROM {0}", table);
-                IEnumerable<T> po = DC.ExecuteQuery<T>(query);
-                return po.ToList();
-
+                string queryString = string.Format("SELECT * FROM {0}", table);
+                Task<IEnumerable<T>> query = new Task<IEnumerable<T>>(() => DC.ExecuteQuery<T>(queryString));
+                await query;
+                return query.Result.ToList();
             }
             catch (Exception e)
             {
+                System.Diagnostics.Debug.WriteLine("[DataProvider.GetAll] " + e.ToString());
                 return new List<T>();
             }
         }
 
-        public T GetById<T>(string table, int id)
+        public async Task<T> GetById<T>(string table, int id)
         {
             try
             {
-                string query = string.Format("SELECT * FROM {0} WHERE id_user={1}", table, id);
-                IEnumerable<T> po = DC.ExecuteQuery<T>(query);
-                return po.ToList().First();
-
+                string queryString = string.Format("SELECT * FROM {0} WHERE id_user={1}", table, id);
+                Task<IEnumerable<T>> query = new Task<IEnumerable<T>>(() => DC.ExecuteQuery<T>(queryString));
+                await query;
+                return query.Result.ToList().First();
             }
             catch (Exception e)
             {
+                System.Diagnostics.Debug.WriteLine("[DataProvider.GetById] " + e.ToString());
                 return default(T);
             }
         }

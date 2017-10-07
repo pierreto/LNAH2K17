@@ -2,6 +2,7 @@
 using AirHockeyServer.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AirHockeyServer.Services
 {
@@ -14,20 +15,21 @@ namespace AirHockeyServer.Services
             UserRepository = new UserRepository();
         }
 
-        public UserEntity GetUserById(int id)
+        public async Task<UserEntity> GetUserById(int id)
         {
-            return UserRepository.GetUserById(id);
+            return await UserRepository.GetUserById(id);
         }
 
-        public List<UserEntity> GetAllUsers()
+        public async Task<List<UserEntity>> GetAllUsers()
         {
-            return new List<UserEntity>();
-           // return UserRepository.GetAllUsers();
+           return await UserRepository.GetAllUsers();
         }
 
-        public void PostUser()
+        /*
+        public async Task PostUser()
         {
-            //return UserRepository.PostUser();
+            // TODO
         }
+        */
     }
 }
