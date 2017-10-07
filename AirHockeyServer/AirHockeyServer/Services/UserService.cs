@@ -7,10 +7,11 @@ namespace AirHockeyServer.Services
 {
     public class UserService
     {
-        private static UserRepository UserRepository = UserRepository.Instance();
+        private UserRepository UserRepository;
 
         public UserService()
         {
+            UserRepository = new UserRepository();
         }
 
         public UserEntity GetUserById(int id)

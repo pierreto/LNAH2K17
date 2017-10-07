@@ -6,18 +6,8 @@ namespace AirHockeyServer.Repositories
     public abstract class Repository<T> where T : class, new()
     {
 
-        protected static DataProvider DataProvider { get; set; }
-        protected static MapperManager MapperManager { get; set; }
-
-        private static T _instance = null;
-
-        public static T Instance()
-        {
-            if (_instance == null)
-                _instance = new T();
-            return _instance;
-        }
-
+        protected DataProvider DataProvider { get; set; }
+        protected MapperManager MapperManager { get; set; }
 
         public Repository()
         {
