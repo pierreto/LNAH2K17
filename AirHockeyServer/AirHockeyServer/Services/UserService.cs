@@ -9,7 +9,8 @@ namespace AirHockeyServer.Services
 {
     public class UserService
     {
-        private static UserRepository UserRepository = new UserRepository();
+        private static UserRepository UserRepository = UserRepository.Instance();
+
         public UserService()
         {
         }

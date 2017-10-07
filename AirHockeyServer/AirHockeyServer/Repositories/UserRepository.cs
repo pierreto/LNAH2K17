@@ -19,14 +19,22 @@ namespace AirHockeyServer.Repositories
         protected DataProvider DataProvider { get; set; } //Move to Repository
 
         protected MapperManager MapperManager { get; set; } 
-        public UserRepository()
+        private UserRepository()
         {
             DataProvider = new DataProvider();
             MapperManager = new MapperManager();
         }
 
-        //public async Task<UserEntity> GetUserById(int id)
-        public UserEntity GetUserById(int id)
+        private static UserRepository _instance = null;
+        public static UserRepository Instance()
+        {
+            if (_instance == null)
+                _instance = new UserRepository();
+            return _instance;
+        }
+
+    //public async Task<UserEntity> GetUserById(int id)
+    public UserEntity GetUserById(int id)
         {
             try
             {
@@ -41,7 +49,6 @@ namespace AirHockeyServer.Repositories
             
         }
 
-        //Ca marche sans le async... 
         public async Task<List<UserEntity>> GetAllUsers()
         {
             try
