@@ -30,12 +30,6 @@ namespace AirHockeyServer.DatabaseCore
                 return new List<T>();
             }
         }
-        private Task<IEnumerable<T>> DoQuery<T>(string queryString)
-        {
-            return Task<IEnumerable<T>>.Run(() =>
-                DC.ExecuteQuery<T>(queryString)
-            );
-        }
 
         public async Task<IEnumerable<T>> GetById<T>(string table, int id)
         {
@@ -49,6 +43,13 @@ namespace AirHockeyServer.DatabaseCore
                 System.Diagnostics.Debug.WriteLine("[DataProvider.GetById] " + e.ToString());
                 return default(IEnumerable<T>);
             }
+        }
+
+        private Task<IEnumerable<T>> DoQuery<T>(string queryString)
+        {
+            return Task<IEnumerable<T>>.Run(() =>
+                DC.ExecuteQuery<T>(queryString)
+            );
         }
     }
 }
