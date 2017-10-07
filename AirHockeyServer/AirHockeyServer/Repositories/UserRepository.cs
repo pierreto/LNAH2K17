@@ -5,6 +5,7 @@ using AirHockeyServer.Pocos;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace AirHockeyServer.Repositories
 {
@@ -15,7 +16,8 @@ namespace AirHockeyServer.Repositories
         {
             try
             {
-                UserPoco userPoco = await DataProvider.GetById<UserPoco>("test_users", id);
+                IEnumerable<UserPoco> userPocoEnum = await DataProvider.GetById<UserPoco>("test_users", id);
+                UserPoco userPoco = userPocoEnum.ToList().First();
                 UserEntity userEntity = MapperManager.Map<UserPoco, UserEntity>(userPoco);
                 return userEntity;
             }
@@ -30,7 +32,8 @@ namespace AirHockeyServer.Repositories
         {
             try
             {
-                var userPocos = await DataProvider.GetAll<UserPoco>("test_users");
+                IEnumerable<UserPoco> userPocoEnum = await DataProvider.GetAll<UserPoco>("test_users");
+                List<UserPoco> userPocos = userPocoEnum.ToList();
                 List<UserEntity> userEntities = MapperManager.Map<UserPoco, UserEntity>(userPocos);
                 return userEntities;
             }

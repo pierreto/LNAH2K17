@@ -17,14 +17,12 @@ namespace AirHockeyServer.DatabaseCore
             DC = new DataContext(new MySqlConnection(ConfigurationManager.ConnectionStrings["lnah"].ConnectionString));
         }
 
-        public async Task<List<T>> GetAll<T>(string table)
+        public async Task<IEnumerable<T>> GetAll<T>(string table)
         {
             try
             {
                 string queryString = string.Format("SELECT * FROM {0}", table);
-                Task<IEnumerable<T>> query = new Task<IEnumerable<T>>(() => DC.ExecuteQuery<T>(queryString));
-                await query;
-                return query.Result.ToList();
+                return await DoQuery<T>(queryString);
             }
             catch (Exception e)
             {
@@ -32,20 +30,24 @@ namespace AirHockeyServer.DatabaseCore
                 return new List<T>();
             }
         }
+        private Task<IEnumerable<T>> DoQuery<T>(string queryString)
+        {
+            return Task<IEnumerable<T>>.Run(() =>
+                DC.ExecuteQuery<T>(queryString)
+            );
+        }
 
-        public async Task<T> GetById<T>(string table, int id)
+        public async Task<IEnumerable<T>> GetById<T>(string table, int id)
         {
             try
             {
                 string queryString = string.Format("SELECT * FROM {0} WHERE id_user={1}", table, id);
-                Task<IEnumerable<T>> query = new Task<IEnumerable<T>>(() => DC.ExecuteQuery<T>(queryString));
-                await query;
-                return query.Result.ToList().First();
+                return await DoQuery<T>(queryString);
             }
             catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine("[DataProvider.GetById] " + e.ToString());
-                return default(T);
+                return default(IEnumerable<T>);
             }
         }
     }

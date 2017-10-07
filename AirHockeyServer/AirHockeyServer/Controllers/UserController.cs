@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 
@@ -23,11 +24,11 @@ namespace AirHockeyServer.Controllers
         //
         [HttpGet]
         [Route("api/user/{id}")]
-        public HttpResponseMessage getUser(int id)
+        public async Task<HttpResponseMessage> getUser(int id)
         {
             try
             {
-                return Request.CreateResponse(HttpStatusCode.OK, UserService.GetUserById(id));
+                return Request.CreateResponse(HttpStatusCode.OK, await UserService.GetUserById(id));
             }
             catch (SignupException e)
             {
