@@ -28,8 +28,8 @@ class NoeudPointControl : NoeudCommun {
     /// Voisins du point de contrôle
     var voisins = [NoeudPointControl]()
     
-    /// Les points de la table
-    var points = [SCNVector3]()
+    /// Les points de la table (index des sommets du parent NoeudTable)
+    var pointIndexes = [Int]()
     
     var noeudOppose: NoeudCommun?
     
@@ -77,12 +77,15 @@ class NoeudPointControl : NoeudCommun {
     
     /// Ajuste la position des points reliés au point de contrôle
     func ajusterPoints() {
+        // Trouver le noeud parent
+        let noeudTable = self.parent as! NoeudTable
+        
         // Ajustment des points triviaux
         let position = super.obtenirPositionRelative();
-        self.points[0].x = position.x;
-        self.points[0].z = position.z;
-        self.points[1].x = position.x;
-        self.points[1].z = position.z;
+        noeudTable.sommets[self.pointIndexes[0]].x = position.x
+        noeudTable.sommets[self.pointIndexes[0]].z = position.z;
+        noeudTable.sommets[self.pointIndexes[1]].x = position.x;
+        noeudTable.sommets[self.pointIndexes[1]].z = position.z;
     
         let v1 = GLKVector3Normalize(GLKVector3Subtract(self.voisins[0].obtenirPositionRelative(), position));
         let v2 = GLKVector3Normalize(GLKVector3Subtract(self.voisins[1].obtenirPositionRelative(), position));
@@ -108,14 +111,14 @@ class NoeudPointControl : NoeudCommun {
     
         // Ajustement des points de la bordure interne
         let p0 = GLKVector3Add(position, GLKVector3MultiplyScalar(bisect, h));
-        self.points[2].x = p0.x;
-        self.points[2].z = p0.z;
-        self.points[3].x = p0.x;
-        self.points[3].z = p0.z;
+        noeudTable.sommets[self.pointIndexes[2]].x = p0.x;
+        noeudTable.sommets[self.pointIndexes[2]].z = p0.z;
+        noeudTable.sommets[self.pointIndexes[3]].x = p0.x;
+        noeudTable.sommets[self.pointIndexes[3]].z = p0.z;
     
         let p4 = GLKVector3Add(position, GLKVector3MultiplyScalar(GLKVector3Negate(bisect), 10));
-        self.points[4].x = p4.x;
-        self.points[4].z = p4.z;
+        noeudTable.sommets[self.pointIndexes[4]].x = p4.x;
+        noeudTable.sommets[self.pointIndexes[4]].z = p4.z;
     
         // Update de la position du but
         /*if (but_) {
@@ -130,9 +133,9 @@ class NoeudPointControl : NoeudCommun {
         }*/
     }
     
-    /// Assigne les points de la table au noeud
-    func assignerPoints(points: [SCNVector3]) {
-        self.points = points
+    /// Assigne les index des sommets du NoeudTable
+    func assignerPointIndexes(pointIndexes: [Int]) {
+        self.pointIndexes = pointIndexes
     }
     
     /// Assigne un noeud opposé au noeud présent

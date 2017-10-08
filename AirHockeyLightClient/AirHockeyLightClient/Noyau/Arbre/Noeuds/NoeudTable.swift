@@ -93,20 +93,25 @@ class NoeudTable : NoeudCommun {
         while (i < max) {
             let noeudPointControl = arbre.creerNoeud(typeNouveauNoeud: arbre.NOM_POINT_CONTROL) as! NoeudPointControl
             
+            // Ajouter le NoeudPointControl aux enfants du NoeudTable
+            self.addChildNode(noeudPointControl)
+            
             // TODO : Ajouter noeud booster
             /*NoeudBooster* noeudBooster{ (NoeudBooster*)arbre->creerNoeud(ArbreRenduINF2990::NOM_BOOSTER) };
             noeudBooster->assignerAxisLock(glm::ivec3(1, 1, 1));
             noeudBooster->appliquerDeplacement(glm::vec3(0, -TABLE_BASE_HEIGHT, 0));
             noeudBooster->assignerAxisLock(glm::ivec3(1, 0, 1));*/
             
-            var points = [SCNVector3]()
+            /// Index des sommets de la table associés au point de contrôle
+            var pointIndexes = [Int]()
             
             for j in 0..<self.table.VERTEX_PER_CORNER {
-                points.append(self.sommets[i + j])
+                pointIndexes.append(i + j)
             }
 
-            noeudPointControl.assignerPoints(points: points)
+            noeudPointControl.assignerPointIndexes(pointIndexes: pointIndexes)
             noeudPointControl.assignerAxisLock(axisLock: GLKVector3(v: (1.0, 1.0, 1.0)))
+            
             // TODO: changer la classe table et mettre des GLKVector3
             let sommet = self.sommets[i + 1]
             let positionRelative = GLKVector3(v: (sommet.x, sommet.y, sommet.z))
@@ -163,19 +168,14 @@ class NoeudTable : NoeudCommun {
         // Creation des buts
         // creerButs(noeuds[4], noeuds[0]);
         
-        // noeuds[7].assignerPositionRelative(positionRelative: noeuds[6].obtenirPositionRelative())
+        noeuds[7].assignerPositionRelative(positionRelative: noeuds[6].obtenirPositionRelative())
         
-        var m = 1;
-        // Ajout des noeuds à la table
+        // Ajuster les sommets de la table
         for noeud in noeuds {
-            noeud.ajusterPoints();
-            for n in 0..<5 {
-                self.sommets[m] = noeud.points[n]
-                m += 1
-            }
-            self.addChildNode(noeud)
+            noeud.ajusterPoints()
         }
         
+        // Mettre à jour la géométrie de la table
         self.updateGeometry()
     }
     
