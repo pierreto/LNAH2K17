@@ -31,11 +31,20 @@ namespace AirHockeyServer.DatabaseCore
             }
         }
 
-        public async Task<IEnumerable<T>> GetById<T>(string table, string field, int id)
+        public async Task<IEnumerable<T>> GetBy<T,K>(string table, string field, K value)
         {
             try
             {
-                string queryString = string.Format("SELECT * FROM {0} WHERE {1}={2}", table, field, id);
+                //TODO: A Revoir le String format. P-e qu'il vaut mieux faire des classes pour chaque provider
+                string queryString = "";
+                if (typeof(K).Name.Equals("String"))
+                {
+                    queryString = string.Format("SELECT * FROM {0} WHERE {1}='{2}'", table, field, value);
+                }
+                else
+                {
+                    queryString = string.Format("SELECT * FROM {0} WHERE {1}={2}", table, field, value);
+                }
                 return await DoQuery<T>(queryString);
             }
             catch (Exception e)

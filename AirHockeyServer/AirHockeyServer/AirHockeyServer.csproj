@@ -252,7 +252,6 @@
     <Compile Include="Hubs\GameWaitingRoomHub.cs" />
     <Compile Include="Hubs\ConnectionMapper.cs" />
     <Compile Include="Mapping\MapperManager.cs" />
-    <Compile Include="Pocos\LoginPoco.cs" />
     <Compile Include="Pocos\PasswordPoco.cs" />
     <Compile Include="Pocos\Poco.cs" />
     <Compile Include="Pocos\UserPoco.cs" />
@@ -263,7 +262,6 @@
     <Compile Include="Repositories\IGameRepository.cs" />
     <Compile Include="Repositories\IMapRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
-    <Compile Include="Repositories\LoginRepository.cs" />
     <Compile Include="Repositories\MapRepository.cs" />
     <Compile Include="Repositories\PasswordRepository.cs" />
     <Compile Include="Repositories\Repository.cs" />

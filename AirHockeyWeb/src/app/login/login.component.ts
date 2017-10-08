@@ -70,10 +70,19 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    // TODO: get username and password, if valid login
     this.loginService.login(this.user).subscribe(
-      () => this.validUser = true,
-      () => this.validUser = false
+      (res) => {
+        if (res) {
+          this.validUser = true;
+          this.router.navigate(['GO TO PROFILE']);
+        } else {
+          this.validUser = false;
+        }
+
+      },
+      (err) => {
+        this.validUser = false;
+      }
     );
   }
 

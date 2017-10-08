@@ -12,11 +12,11 @@ namespace AirHockeyServer.Repositories
     public class UserRepository : Repository<UserRepository>
     {
 
-    public async Task<UserEntity> GetUserById(int id)
+        public async Task<UserEntity> GetUserById(int id)
         {
             try
             {
-                IEnumerable<UserPoco> userPocoEnum = await DataProvider.GetById<UserPoco>("test_users", "id_user", id);
+                IEnumerable<UserPoco> userPocoEnum = await DataProvider.GetBy<UserPoco, int>("test_users", "id_user", id);
                 UserPoco userPoco = userPocoEnum.ToList().First();
                 UserEntity userEntity = MapperManager.Map<UserPoco, UserEntity>(userPoco);
                 return userEntity;
@@ -24,6 +24,22 @@ namespace AirHockeyServer.Repositories
             catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine("[UserRepository.GetUserById] " + e.ToString());
+                return null;
+            }
+        }
+
+        public async Task<UserEntity> GetUserByUsername(string username)
+        {
+            try
+            {
+                IEnumerable<UserPoco> userPocoEnum = await DataProvider.GetBy<UserPoco, string>("test_users", "username", username);
+                UserPoco userPoco = userPocoEnum.ToList().First();
+                UserEntity userEntity = MapperManager.Map<UserPoco, UserEntity>(userPoco);
+                return userEntity;
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("[UserRepository.GetUserByUsername] " + e.ToString());
                 return null;
             }
         }

@@ -11,26 +11,44 @@ namespace AirHockeyServer.Repositories
 {
     public class PasswordRepository : Repository<PasswordRepository>
     {
+        UserRepository UserRepository;
 
+        public PasswordRepository()
+        {
+            UserRepository = new UserRepository();
+        }
+           
         public async Task<PasswordEntity> GetPasswordById(int id)
         {
             try
             {
-                IEnumerable<PasswordPoco> passwordPocoEnum = await DataProvider.GetById<PasswordPoco>("test_passwords", "id_password", id);
+                IEnumerable<PasswordPoco> passwordPocoEnum = await DataProvider.GetBy<PasswordPoco, int>("test_passwords", "id_password", id);
                 PasswordPoco passwordPoco = passwordPocoEnum.ToList().First();
                 PasswordEntity passwordEntity = MapperManager.Map<PasswordPoco, PasswordEntity>(passwordPoco);
 
                 //Est-ce que c'est vraiment comme ca que je suis suppose faire les nested objects? 
-                IEnumerable<UserPoco> userPocoEnum = await DataProvider.GetById<UserPoco>("test_users", "id_user", passwordEntity.UserId);
-                UserPoco userPoco = userPocoEnum.ToList().First();
-                UserEntity userEntity = MapperManager.Map<UserPoco, UserEntity>(userPoco);
-
-                passwordEntity.User = userEntity;
+                passwordEntity.User = await UserRepository.GetUserById(passwordEntity.UserId);
                 return passwordEntity;
             }
             catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine("[PasswordRepository.GetPasswordById] " + e.ToString());
+                return null;
+            }
+        }
+
+        public async Task<PasswordEntity> GetPasswordByUserId(int id)
+        {
+            try
+            {
+                IEnumerable<PasswordPoco> passwordPocoEnum = await DataProvider.GetBy<PasswordPoco, int>("test_passwords", "id_user", id);
+                PasswordPoco passwordPoco = passwordPocoEnum.ToList().First();
+                PasswordEntity passwordEntity = MapperManager.Map<PasswordPoco, PasswordEntity>(passwordPoco);
+                return passwordEntity;
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("[PasswordRepository.GetPasswordByUserId] " + e.ToString());
                 return null;
             }
         }
