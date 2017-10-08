@@ -3,6 +3,7 @@ import { User } from './../user';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { LoginService } from './login.service';
+import { AppService } from '../app.service';
 
 
 const SIGNUP_URL = '/signup';
@@ -33,7 +34,7 @@ export class LoginComponent implements OnInit {
   private loginForm: FormGroup;
   private user;
   private validUser: boolean;
-  constructor(private fb: FormBuilder, private router: Router, private loginService: LoginService) { }
+  constructor(private fb: FormBuilder, private router: Router, private loginService: LoginService, private appService: AppService) { }
 
   ngOnInit() {
     this.user = new User();
@@ -70,17 +71,21 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+    this.appService.loading = true;
     this.loginService.login(this.user).subscribe(
       (res) => {
         if (res) {
+          this.appService.loading = false;
           this.validUser = true;
           this.router.navigate(['GO TO PROFILE']);
         } else {
+          this.appService.loading = false;
           this.validUser = false;
         }
 
       },
       (err) => {
+        this.appService.loading = false;
         this.validUser = false;
       }
     );
