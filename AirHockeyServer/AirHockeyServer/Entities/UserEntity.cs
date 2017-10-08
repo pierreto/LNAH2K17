@@ -10,12 +10,7 @@ namespace AirHockeyServer.Entities
 
         public UserEntity()
         {
-        }
 
-        public UserEntity(UserEntity userEntity)
-        {
-            Id = userEntity.Id;
-            Username = userEntity.Username;
         }
     }
 

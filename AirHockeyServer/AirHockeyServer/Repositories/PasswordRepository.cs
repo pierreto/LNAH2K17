@@ -24,7 +24,7 @@ namespace AirHockeyServer.Repositories
             {
                 IEnumerable<PasswordPoco> passwordPocoEnum = await DataProvider.GetBy<PasswordPoco, int>("test_passwords", "id_password", id);
                 PasswordPoco passwordPoco = passwordPocoEnum.ToList().First();
-                PasswordEntity passwordEntity = MapperManager.Map<PasswordPoco, PasswordEntity>(passwordPoco);
+                PasswordEntity passwordEntity = MapperManager.Mapper.Map<PasswordPoco, PasswordEntity>(passwordPoco);
 
                 //Est-ce que c'est vraiment comme ca que je suis suppose faire les nested objects? 
                 passwordEntity.User = await UserRepository.GetUserById(passwordEntity.UserId);
@@ -43,13 +43,26 @@ namespace AirHockeyServer.Repositories
             {
                 IEnumerable<PasswordPoco> passwordPocoEnum = await DataProvider.GetBy<PasswordPoco, int>("test_passwords", "id_user", id);
                 PasswordPoco passwordPoco = passwordPocoEnum.ToList().First();
-                PasswordEntity passwordEntity = MapperManager.Map<PasswordPoco, PasswordEntity>(passwordPoco);
+                PasswordEntity passwordEntity = MapperManager.Mapper.Map<PasswordPoco, PasswordEntity>(passwordPoco);
                 return passwordEntity;
             }
             catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine("[PasswordRepository.GetPasswordByUserId] " + e.ToString());
                 return null;
+            }
+        }
+
+        public void PostPassword(PasswordEntity passwordEntity)
+        {
+            try
+            {
+                PasswordPoco pP = MapperManager.Mapper.Map<PasswordEntity, PasswordPoco>(passwordEntity);
+                DataProvider.Post(pP);
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("[PasswordRepository.PostPassword] " + e.ToString());
             }
         }
     }

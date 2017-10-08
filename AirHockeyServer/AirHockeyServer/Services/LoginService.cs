@@ -11,10 +11,6 @@ namespace AirHockeyServer.Services
         private static HashSet<string> _usernames = new HashSet<string>();
         private UserRepository UserRepository = new UserRepository();
         private PasswordRepository PasswordRepository = new PasswordRepository();
-        public LoginService()
-        {
-            PasswordRepository = new PasswordRepository();
-        }
 
         public async Task<bool> ValidateCredentials(LoginEntity loginEntity)
         {

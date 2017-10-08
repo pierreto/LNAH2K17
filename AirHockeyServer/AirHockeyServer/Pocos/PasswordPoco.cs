@@ -6,10 +6,10 @@ namespace AirHockeyServer.Pocos
     public class PasswordPoco : Poco
     {
         [System.Data.Linq.Mapping.Column(IsPrimaryKey = true, Name = "id_password")]
-        public int Id { get; private set; }
+        public override int? Id { get; set; }
         
         [ForeignKey("UserPoco"), System.Data.Linq.Mapping.Column(Name = "id_user")]
-        public int UserId { get; private set; }
+        public int UserId { get; set; }
 
         [System.Data.Linq.Mapping.Column(Name = "password")]
         public string Password { get; private set; }

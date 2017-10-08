@@ -18,7 +18,7 @@ namespace AirHockeyServer.Repositories
             {
                 IEnumerable<UserPoco> userPocoEnum = await DataProvider.GetBy<UserPoco, int>("test_users", "id_user", id);
                 UserPoco userPoco = userPocoEnum.ToList().First();
-                UserEntity userEntity = MapperManager.Map<UserPoco, UserEntity>(userPoco);
+                UserEntity userEntity = MapperManager.Mapper.Map<UserPoco, UserEntity>(userPoco);
                 return userEntity;
             }
             catch (Exception e)
@@ -34,7 +34,7 @@ namespace AirHockeyServer.Repositories
             {
                 IEnumerable<UserPoco> userPocoEnum = await DataProvider.GetBy<UserPoco, string>("test_users", "username", username);
                 UserPoco userPoco = userPocoEnum.ToList().First();
-                UserEntity userEntity = MapperManager.Map<UserPoco, UserEntity>(userPoco);
+                UserEntity userEntity = MapperManager.Mapper.Map<UserPoco, UserEntity>(userPoco);
                 return userEntity;
             }
             catch (Exception e)
@@ -50,13 +50,27 @@ namespace AirHockeyServer.Repositories
             {
                 IEnumerable<UserPoco> userPocoEnum = await DataProvider.GetAll<UserPoco>("test_users");
                 List<UserPoco> userPocos = userPocoEnum.ToList();
-                List<UserEntity> userEntities = MapperManager.Map<UserPoco, UserEntity>(userPocos);
+                List<UserEntity> userEntities = MapperManager.Mapper.Map<List<UserPoco>, List<UserEntity>>(userPocos);
                 return userEntities;
             }
             catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine("[UserRepository.GetAllUsers] " + e.ToString());
                 return null;
+            }
+        }
+
+        public void PostUser(UserEntity userEntity)
+        {
+            try
+            {
+                UserPoco uP = MapperManager.Mapper.Map<UserEntity, UserPoco>(userEntity);
+                DataProvider.Post(uP);
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("[UserRepository.PostUser] " + e.ToString());
+
             }
         }
     }

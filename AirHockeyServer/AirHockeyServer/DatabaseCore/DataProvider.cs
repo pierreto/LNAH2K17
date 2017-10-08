@@ -1,20 +1,21 @@
-﻿using MySql.Data.MySqlClient;
+﻿using AirHockeyServer.Pocos;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Linq;
-using System.Linq;
+using System.IO;
 using System.Threading.Tasks;
+using MySql.Data.MySqlClient;
 
 namespace AirHockeyServer.DatabaseCore
 {
     public class DataProvider : IDataProvider
     {
-        public DataContext DC { get; set; }
+        public MyDataContext DC { get; set; }
 
         public DataProvider()
         {
-            DC = new DataContext(new MySqlConnection(ConfigurationManager.ConnectionStrings["lnah"].ConnectionString));
+            DC = new MyDataContext();
         }
 
         public async Task<IEnumerable<T>> GetAll<T>(string table)
@@ -51,6 +52,21 @@ namespace AirHockeyServer.DatabaseCore
             {
                 System.Diagnostics.Debug.WriteLine("[DataProvider.GetById] " + e.ToString());
                 return default(IEnumerable<T>);
+            }
+        }
+
+        // Not async?
+        public void Post<T>(T poco) where T: Poco
+        {
+            try
+            {
+                DC.GetTable<T>().InsertOnSubmit(poco);
+                DC.SubmitChanges();
+                System.Diagnostics.Debug.WriteLine("Poco id : " + poco.Id);
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("[DataProvider.Post] " + e.ToString());
             }
         }
 

@@ -12,20 +12,20 @@ namespace AirHockeyServer.Mapping
 {
     public class MapperManager
     {
-        IMapper Mapper { get; set; }
+        public IMapper Mapper { get; set; }
 
         public UserRepository UserRepository;
         public DataProvider DataProvider;
 
         public MapperManager()
         {
-
-            DataProvider = new DataProvider();
             var config = new MapperConfiguration(cfg =>
             {
                 // A faire pour chaque pair poco/entity
                 cfg.CreateMap<PasswordPoco, PasswordEntity>();
+                cfg.CreateMap<PasswordEntity, PasswordPoco>();
                 cfg.CreateMap<UserPoco, UserEntity>();
+                cfg.CreateMap<UserEntity, UserPoco>();
                 //Not necessary if same attribute names from poco to entity
                 //cfg.CreateMap<UserPoco, UserEntity>()
                 //.ForMember(
@@ -38,15 +38,14 @@ namespace AirHockeyServer.Mapping
             Mapper = config.CreateMapper();
         }
 
-        public T Map<K, T>(K poco) where T : Entity where K : Poco
-        {
-            return Mapper.Map<K, T>(poco);
-        }
+        //public T Map<K, T>(K poco) where T : Entity where K : Poco
+        //{
+        //    return Mapper.Map<K, T>(poco);
+        //}
 
-        public List<T> Map<K, T>(List<K> pocos) where T : Entity where K : Poco
-        {
-            return Mapper.Map<List<K>, List<T>>(pocos);
-        }
-
+        //public K Map<K, T>(T entity) where T : Entity where K : Poco
+        //{
+        //    return Mapper.Map<T, K>(entity);
+        //}
     }
 }

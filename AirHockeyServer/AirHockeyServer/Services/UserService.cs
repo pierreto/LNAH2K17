@@ -25,11 +25,9 @@ namespace AirHockeyServer.Services
            return await UserRepository.GetAllUsers();
         }
 
-        /*
-        public async Task PostUser()
+        public void PostUser(UserEntity userEntity)
         {
-            // TODO
+            UserRepository.PostUser(userEntity);
         }
-        */
     }
 }

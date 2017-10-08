@@ -17,10 +17,9 @@ namespace AirHockeyServer.Controllers
             this.UserService = new UserService();
         }
 
-        //
         [HttpGet]
         [Route("api/user/{id}")]
-        public async Task<HttpResponseMessage> getUser(int id)
+        public async Task<HttpResponseMessage> GetUser(int id)
         {
             try
             {
@@ -36,12 +35,31 @@ namespace AirHockeyServer.Controllers
                 System.Diagnostics.Debug.WriteLine(e);
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
-            
+        }
+
+        [HttpGet]
+        [Route("api/user")]
+        public async Task<HttpResponseMessage> GetAllUsers()
+        {
+            try
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, await UserService.GetAllUsers());
+            }
+            catch (SignupException e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+                return Request.CreateResponse(HttpStatusCode.Forbidden);
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
         }
 
         [HttpPost]
         [Route("api/user")]
-        public HttpResponseMessage postUser()
+        public HttpResponseMessage PostUser()
         {
             try
             {
