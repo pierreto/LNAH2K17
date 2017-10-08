@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using InterfaceGraphique.Entities;
 using InterfaceGraphique.Game.GameState;
 using Microsoft.AspNet.SignalR.Client;
@@ -57,7 +58,7 @@ namespace InterfaceGraphique.CommunicationInterface
             UserEntity user = new UserEntity
             {
                 Id = Guid.NewGuid(),
-                Name = "pepe"
+                Name = username
             };
             await GameWaitingRoomProxy.Invoke("JoinGame", user);
         }
@@ -66,10 +67,24 @@ namespace InterfaceGraphique.CommunicationInterface
         {
             GameWaitingRoomProxy.On<GameEntity>("OpponentFoundEvent", newgame =>
             {
-                this.OpponentFoundEvent.Invoke(this, newgame.Players[0]);
+             //   this.OpponentFoundEvent.Invoke(this, newgame.Players[0]);
                 GameWaitingRoomProxy.On<GameEntity>("GameStartingEvent", officialGame =>
                 {
                     Console.WriteLine("Game is starting!");
+                    Program.LobbyHost.Invoke(new MethodInvoker(() =>
+                    {
+
+                        if (this.username.Equals(officialGame.Master.Name))
+                        {
+                            Program.QuickPlay.CurrentGameState = this.slaveGameState;
+                        }
+                        else
+                        {
+                            Program.QuickPlay.CurrentGameState = this.slaveGameState;
+
+                        }
+                        Program.FormManager.CurrentForm = Program.QuickPlay;
+                    }));
                 });
 
                 GameWaitingRoomProxy.On<int>("WaitingRoomRemainingTime", remainingTime =>
@@ -86,17 +101,8 @@ namespace InterfaceGraphique.CommunicationInterface
                 {
                     Console.WriteLine("map updated");
                 });
-                /*
-                if (this.username.Equals(newgame.Master.Name))
-                {
-                    Program.QuickPlay.CurrentGameState = this.slaveGameState;
-                }
-                else
-                {
-                    Program.QuickPlay.CurrentGameState = this.slaveGameState;
-        
-                }
-                Program.FormManager.CurrentForm = Program.QuickPlay;*/
+          
+   
 
             });
         }

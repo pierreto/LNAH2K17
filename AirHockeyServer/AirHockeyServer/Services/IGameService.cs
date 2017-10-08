@@ -14,5 +14,7 @@ namespace AirHockeyServer.Services
         void JoinGame(UserEntity userEntity);
 
         Task<GameEntity> UpdateGame(GameEntity gameEntity);
+
+        GameEntity GetGameEntityById(Guid id);
     }
 }
