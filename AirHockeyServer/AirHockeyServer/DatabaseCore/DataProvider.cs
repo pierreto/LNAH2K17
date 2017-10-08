@@ -6,6 +6,7 @@ using System.Data.Linq;
 using System.IO;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
+using AirHockeyServer.Services;
 
 namespace AirHockeyServer.DatabaseCore
 {
@@ -16,20 +17,6 @@ namespace AirHockeyServer.DatabaseCore
         public DataProvider()
         {
             DC = new MyDataContext();
-        }
-
-        public async Task<IEnumerable<T>> GetAll<T>(string table)
-        {
-            try
-            {
-                string queryString = string.Format("SELECT * FROM {0}", table);
-                return await DoQuery<T>(queryString);
-            }
-            catch (Exception e)
-            {
-                System.Diagnostics.Debug.WriteLine("[DataProvider.GetAll] " + e.ToString());
-                return new List<T>();
-            }
         }
 
         public async Task<IEnumerable<T>> GetBy<T,K>(string table, string field, K value)
@@ -51,7 +38,21 @@ namespace AirHockeyServer.DatabaseCore
             catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine("[DataProvider.GetById] " + e.ToString());
-                return default(IEnumerable<T>);
+                throw new UserException("Unable to find [" + typeof(T).Name + "] with [" + field + "] = [" + value + "] in table [" + table + "]");
+            }
+        }
+
+        public async Task<IEnumerable<T>> GetAll<T>(string table)
+        {
+            try
+            {
+                string queryString = string.Format("SELECT * FROM {0}", table);
+                return await DoQuery<T>(queryString);
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("[DataProvider.GetAll] " + e.ToString());
+                throw new UserException("Unable to find [" + typeof(T).Name + "s] in table [" + table + "]");
             }
         }
 
@@ -62,11 +63,11 @@ namespace AirHockeyServer.DatabaseCore
             {
                 DC.GetTable<T>().InsertOnSubmit(poco);
                 DC.SubmitChanges();
-                System.Diagnostics.Debug.WriteLine("Poco id : " + poco.Id);
             }
             catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine("[DataProvider.Post] " + e.ToString());
+                throw new UserException("Unable to post [" +typeof(T).Name + "]");
             }
         }
 

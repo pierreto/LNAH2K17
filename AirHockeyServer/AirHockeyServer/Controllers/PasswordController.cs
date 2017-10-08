@@ -19,7 +19,7 @@ namespace AirHockeyServer.Controllers
 
         [HttpGet]
         [Route("api/password/{id}")]
-        public async Task<HttpResponseMessage> getUser(int id)
+        public async Task<HttpResponseMessage> GetUser(int id)
         {
             try
             {

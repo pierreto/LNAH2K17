@@ -9,7 +9,7 @@ namespace AirHockeyServer.Pocos
     [Table(Name = "test_users")]
     public class UserPoco: Poco
     {
-        [Column(IsPrimaryKey = true, Name = "id_user", CanBeNull = false, UpdateCheck = UpdateCheck.WhenChanged)]
+        [Column(IsPrimaryKey = true, Name = "id_user")]
         public override int? Id { get; set; }
 
         [Column(Name = "username")]

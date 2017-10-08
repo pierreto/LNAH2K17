@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
+using AirHockeyServer.Services;
 
 namespace AirHockeyServer.Repositories
 {
@@ -17,14 +18,27 @@ namespace AirHockeyServer.Repositories
             try
             {
                 IEnumerable<UserPoco> userPocoEnum = await DataProvider.GetBy<UserPoco, int>("test_users", "id_user", id);
-                UserPoco userPoco = userPocoEnum.ToList().First();
-                UserEntity userEntity = MapperManager.Mapper.Map<UserPoco, UserEntity>(userPoco);
-                return userEntity;
+                if (userPocoEnum.Any())
+                {
+                    UserPoco userPoco = userPocoEnum.ToList().First();
+                    UserEntity userEntity = MapperManager.Mapper.Map<UserPoco, UserEntity>(userPoco);
+                    return userEntity;
+                }
+                else
+                {
+                    throw new UserException("Unable to get [user] by [id] = " + id);
+                }
+
+            }
+            catch (UserException e)
+            {
+                System.Diagnostics.Debug.WriteLine("[UserRepository.GetUserById] " + e.ToString());
+                throw e;
             }
             catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine("[UserRepository.GetUserById] " + e.ToString());
-                return null;
+                throw e;
             }
         }
 
@@ -33,14 +47,27 @@ namespace AirHockeyServer.Repositories
             try
             {
                 IEnumerable<UserPoco> userPocoEnum = await DataProvider.GetBy<UserPoco, string>("test_users", "username", username);
-                UserPoco userPoco = userPocoEnum.ToList().First();
-                UserEntity userEntity = MapperManager.Mapper.Map<UserPoco, UserEntity>(userPoco);
-                return userEntity;
+                if (userPocoEnum.Any())
+                {
+                    UserPoco userPoco = userPocoEnum.ToList().First();
+                    UserEntity userEntity = MapperManager.Mapper.Map<UserPoco, UserEntity>(userPoco);
+                    return userEntity;
+                }
+                else
+                {
+                    throw new UserException("Unable to get [user] by [username] = " + username);
+                }
+
+            }
+            catch (UserException e)
+            {
+                System.Diagnostics.Debug.WriteLine("[UserRepository.GetUserByUsername] " + e.ToString());
+                throw e;
             }
             catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine("[UserRepository.GetUserByUsername] " + e.ToString());
-                return null;
+                throw e;
             }
         }
 
@@ -56,7 +83,7 @@ namespace AirHockeyServer.Repositories
             catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine("[UserRepository.GetAllUsers] " + e.ToString());
-                return null;
+                throw new UserException("Unable to get all users");
             }
         }
 
@@ -70,7 +97,7 @@ namespace AirHockeyServer.Repositories
             catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine("[UserRepository.PostUser] " + e.ToString());
-
+                throw new UserException("Unable to create user");
             }
         }
     }

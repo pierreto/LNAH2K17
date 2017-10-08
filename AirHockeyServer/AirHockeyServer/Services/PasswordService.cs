@@ -1,7 +1,7 @@
-﻿using AirHockeyServer.Entities;
-using AirHockeyServer.Repositories;
-using System.Collections.Generic;
+﻿using System;
+using AirHockeyServer.Entities;
 using System.Threading.Tasks;
+using AirHockeyServer.Repositories;
 
 namespace AirHockeyServer.Services
 {
@@ -11,19 +11,75 @@ namespace AirHockeyServer.Services
 
         public PasswordService()
         {
-            PasswordRepository = new PasswordRepository();
+            try
+            {
+                PasswordRepository = new PasswordRepository();
+            }
+            catch (PasswordException e)
+            {
+                throw e;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
         public async Task<PasswordEntity> GetPasswordById(int id)
         {
-            return await PasswordRepository.GetPasswordById(id);
+            try
+            {
+                return await PasswordRepository.GetPasswordById(id);
+            }
+            catch (PasswordException e)
+            {
+                throw e;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
-        /*
-        public async Task PostUser()
+        public async Task<PasswordEntity> GetPasswordByUserId(int userId)
         {
-            // TODO
+            try
+            {
+                return await PasswordRepository.GetPasswordByUserId(userId);
+            }
+            catch (PasswordException e)
+            {
+                throw e;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
-        */
+
+        public void PostPassword(PasswordEntity passwordEntity)
+        {
+            try
+            {
+                PasswordRepository.PostPassword(passwordEntity);
+            }
+            catch (PasswordException e)
+            {
+                throw e;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+    }
+
+    public class PasswordException : Exception
+    {
+        public string ErrorMessage { get; set; }
+        public PasswordException(string message)
+        {
+            this.ErrorMessage = message;
+        }
     }
 }

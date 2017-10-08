@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
+using AirHockeyServer.Services;
 
 namespace AirHockeyServer.Repositories
 {
@@ -23,33 +24,57 @@ namespace AirHockeyServer.Repositories
             try
             {
                 IEnumerable<PasswordPoco> passwordPocoEnum = await DataProvider.GetBy<PasswordPoco, int>("test_passwords", "id_password", id);
-                PasswordPoco passwordPoco = passwordPocoEnum.ToList().First();
-                PasswordEntity passwordEntity = MapperManager.Mapper.Map<PasswordPoco, PasswordEntity>(passwordPoco);
+                if (passwordPocoEnum.Any())
+                {
+                    PasswordPoco passwordPoco = passwordPocoEnum.ToList().First();
+                    PasswordEntity passwordEntity = MapperManager.Mapper.Map<PasswordPoco, PasswordEntity>(passwordPoco);
 
-                //Est-ce que c'est vraiment comme ca que je suis suppose faire les nested objects? 
-                passwordEntity.User = await UserRepository.GetUserById(passwordEntity.UserId);
-                return passwordEntity;
+                    //Est-ce que c'est vraiment comme ca que je suis suppose faire les nested objects? 
+                    passwordEntity.User = await UserRepository.GetUserById(passwordEntity.UserId);
+                    return passwordEntity;
+                }
+                else
+                {
+                    throw new PasswordException("Unable to get [password] by [id] = " + id);
+                }
+            }
+            catch (LoginException e)
+            {
+                System.Diagnostics.Debug.WriteLine("[PasswordRepository.GetPasswordById] " + e.ToString());
+                throw e;
             }
             catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine("[PasswordRepository.GetPasswordById] " + e.ToString());
-                return null;
+                throw e;
             }
         }
 
-        public async Task<PasswordEntity> GetPasswordByUserId(int id)
+        public async Task<PasswordEntity> GetPasswordByUserId(int userId)
         {
             try
             {
-                IEnumerable<PasswordPoco> passwordPocoEnum = await DataProvider.GetBy<PasswordPoco, int>("test_passwords", "id_user", id);
-                PasswordPoco passwordPoco = passwordPocoEnum.ToList().First();
-                PasswordEntity passwordEntity = MapperManager.Mapper.Map<PasswordPoco, PasswordEntity>(passwordPoco);
-                return passwordEntity;
+                IEnumerable<PasswordPoco> passwordPocoEnum = await DataProvider.GetBy<PasswordPoco, int>("test_passwords", "id_user", userId);
+                if (passwordPocoEnum.Any())
+                {
+                    PasswordPoco passwordPoco = passwordPocoEnum.ToList().First();
+                    PasswordEntity passwordEntity = MapperManager.Mapper.Map<PasswordPoco, PasswordEntity>(passwordPoco);
+                    return passwordEntity;
+                }
+                else
+                {
+                    throw new PasswordException("Unable to get [password] by [id_user] = " + userId);
+                }
+            }
+            catch (PasswordException e)
+            {
+                System.Diagnostics.Debug.WriteLine("[PasswordRepository.GetPasswordByUserId] " + e.ToString());
+                throw e;
             }
             catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine("[PasswordRepository.GetPasswordByUserId] " + e.ToString());
-                return null;
+                throw e;
             }
         }
 
@@ -63,6 +88,7 @@ namespace AirHockeyServer.Repositories
             catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine("[PasswordRepository.PostPassword] " + e.ToString());
+                throw new LoginException("Unable to create password");
             }
         }
     }

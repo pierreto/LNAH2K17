@@ -9,15 +9,15 @@ namespace AirHockeyServer.Services
     public class LoginService : ILoginService, IService
     {
         private static HashSet<string> _usernames = new HashSet<string>();
-        private UserRepository UserRepository = new UserRepository();
-        private PasswordRepository PasswordRepository = new PasswordRepository();
+        private UserService UserService = new UserService();
+        private PasswordService PasswordService = new PasswordService();
 
         public async Task<bool> ValidateCredentials(LoginEntity loginEntity)
         {
             try
             {
-                UserEntity uE = await UserRepository.GetUserByUsername(loginEntity.Username);
-                PasswordEntity pE = await PasswordRepository.GetPasswordByUserId(uE.Id);
+                UserEntity uE = await UserService.GetUserByUsername(loginEntity.Username);
+                PasswordEntity pE = await PasswordService.GetPasswordByUserId(uE.Id);
                 if (uE.Username == loginEntity.Username && pE.Password == loginEntity.Password)
                 {
                     System.Diagnostics.Debug.WriteLine("Successful Login");
@@ -51,10 +51,10 @@ namespace AirHockeyServer.Services
 
     public class LoginException : Exception
     {
-        private string message;
+        public string ErrorMessage { get; set; }
         public LoginException(string message)
         {
-            this.message = message;
+            this.ErrorMessage = message;
         }
     }
 }

@@ -25,10 +25,10 @@ namespace AirHockeyServer.Controllers
             {
                 return Request.CreateResponse(HttpStatusCode.OK, await UserService.GetUserById(id));
             }
-            catch (SignupException e)
+            catch (UserException e)
             {
-                System.Diagnostics.Debug.WriteLine(e);
-                return Request.CreateResponse(HttpStatusCode.Forbidden);
+                System.Diagnostics.Debug.WriteLine(e.ErrorMessage);
+                return Request.CreateResponse(HttpStatusCode.NotFound, e.ErrorMessage);
             }
             catch (Exception e)
             {
@@ -45,10 +45,10 @@ namespace AirHockeyServer.Controllers
             {
                 return Request.CreateResponse(HttpStatusCode.OK, await UserService.GetAllUsers());
             }
-            catch (SignupException e)
+            catch (UserException e)
             {
-                System.Diagnostics.Debug.WriteLine(e);
-                return Request.CreateResponse(HttpStatusCode.Forbidden);
+                System.Diagnostics.Debug.WriteLine(e.ErrorMessage);
+                return Request.CreateResponse(HttpStatusCode.NotFound, e.ErrorMessage);
             }
             catch (Exception e)
             {
@@ -64,13 +64,11 @@ namespace AirHockeyServer.Controllers
             try
             {
                 return Request.CreateResponse(HttpStatusCode.OK);
-
-                // return Request.CreateResponse(HttpStatusCode.OK, UserService.PostUser());
             }
-            catch (SignupException e)
+            catch (UserException e)
             {
                 System.Diagnostics.Debug.WriteLine(e);
-                return Request.CreateResponse(HttpStatusCode.Forbidden);
+                return Request.CreateResponse(HttpStatusCode.Forbidden, e);
             }
             catch (Exception e)
             {
