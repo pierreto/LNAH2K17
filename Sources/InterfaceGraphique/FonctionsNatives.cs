@@ -67,7 +67,10 @@ namespace InterfaceGraphique {
         public static extern void mouseUpR();
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void mouseMove(int x, int y);
+        public static extern void playerMouseMove(int x, int y);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void opponentMouseMove(int x, int y);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void modifierKeys(bool alt, bool ctrl);
@@ -77,6 +80,9 @@ namespace InterfaceGraphique {
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void applyNodeInfos(float[] infos);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void getMapJson(float[] coefficients, StringBuilder map);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void enregistrerSous(StringBuilder filePath, float[] coefficients);
@@ -136,7 +142,7 @@ namespace InterfaceGraphique {
         public static extern void setLights(int lumType, bool lumEtat);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void aiStatus(bool enabled);
+        public static extern void setCurrentOpponentType(int opponentType);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void aiActiveProfile(int speed, int passivity);
@@ -161,5 +167,8 @@ namespace InterfaceGraphique {
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void toggleOrbit(bool orbit);
+
+
+
     }
 }

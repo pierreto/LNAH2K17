@@ -4,6 +4,7 @@ import { User } from './../user';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+import { AppService } from '../app.service';
 
 @Component({
   selector: 'app-signup',
@@ -40,7 +41,7 @@ export class SignupComponent implements OnInit {
   private signupForm: FormGroup;
   private user: User;
   private passwordConfirm: string;
-  constructor(private fb: FormBuilder, private router: Router, private signupService: SignupService) { }
+  constructor(private fb: FormBuilder, private router: Router, private signupService: SignupService, private appService: AppService) { }
 
   ngOnInit() {
     this.user = new User();
@@ -107,9 +108,14 @@ onValueChanged(data?: any) {
 
 
   signup(): void {
+    this.appService.loading = true;
     this.signupService.signup(this.user).subscribe(
-      () => {},
-      () => {}
+      () => {
+        this.appService.loading = false;
+      },
+      () => {
+        this.appService.loading = false;
+      }
     );
   }
 }

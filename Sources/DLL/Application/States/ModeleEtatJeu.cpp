@@ -64,6 +64,15 @@ void ModeleEtatJeu::libererInstance() {
 	instance_ = nullptr;
 }
 
+ModeleEtatJeu::OpponentType ModeleEtatJeu::currentOpponentType() const
+{
+	return currentOpponentType_;
+}
+
+void ModeleEtatJeu::setCurrentOpponentType(const OpponentType currentOpponentType)
+{
+	currentOpponentType_ = currentOpponentType;
+}
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -107,7 +116,7 @@ ModeleEtatJeu::~ModeleEtatJeu() {
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void ModeleEtatJeu::mouseMove(int x, int y) 
+/// @fn void ModeleEtatJeu::playerMouseMove(int x, int y) 
 ///
 /// Évènement appelé lorsque la souris bouge. S'occupe de déplacer le
 /// maillet du joueur 1 lorsque le jeu n'est pas en pause.
@@ -118,13 +127,22 @@ ModeleEtatJeu::~ModeleEtatJeu() {
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void ModeleEtatJeu::mouseMove(int x, int y) {
-	ModeleEtat::mouseMove(x, y);
+void ModeleEtatJeu::playerMouseMove(int x, int y) {
+	ModeleEtat::playerMouseMove(x, y);
 
 	if (!gamePaused_ && gameStarted_ && !gameEnded_) {
 		glm::dvec3 mousePos;
 		FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(mousePosX_, mousePosY_, mousePos);
 		tryNewPosition(maillet1_, mousePos, segmentsLeft_);
+	}
+}
+
+void ModeleEtatJeu::opponentMouseMove(int x, int y)
+{
+	if (!gamePaused_ && gameStarted_ && !gameEnded_) {
+		glm::dvec3 mousePos;
+		FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, mousePos);
+		tryNewPosition(maillet2_, mousePos, segmentsRight_);
 	}
 }
 
@@ -257,8 +275,8 @@ void ModeleEtatJeu::moveMaillet() {
 	if (!gamePaused_ && gameStarted_ && !gameEnded_) {
 		glm::vec3 position = maillet2_->obtenirPositionRelative();
 
-		// Human Player
-		if (!aiIsActive_) {
+		// Local Player
+		if (currentOpponentType_==LOCAL_PLAYER) {
 			if (speedMailletX_ != 0 && speedMailletZ_ != 0)
 				position += glm::vec3(copysign(sqrt(pow(speedMailletX_, 2.0f) / 2.0f), speedMailletX_), 0, copysign(sqrt(pow(speedMailletZ_, 2.0f) / 2.0f), speedMailletZ_));
 			else
@@ -267,7 +285,7 @@ void ModeleEtatJeu::moveMaillet() {
 			tryNewPosition(maillet2_, position, segmentsRight_);
 		}
 		// Virtual player
-		else {
+		else if(currentOpponentType_==VIRTUAL_PLAYER){
 			if (rondelle_->obtenirPositionRelative().z < 0)
 				initiateOffense_ = false;
 			else if (rondelle_->obtenirPositionRelative().z > -2 && rondelle_->obtenirPositionRelative().z < 2 && rondelle_->obtenirPositionRelative() != glm::vec3(0)) {
@@ -285,6 +303,14 @@ void ModeleEtatJeu::moveMaillet() {
 
 			position += glm::vec3(copysign(sqrt(pow(X, 2.0f) / 2.0f), X), 0, copysign(sqrt(pow(Z, 2.0f) / 2.0f), Z));
 			tryNewPosition(maillet2_, position, segmentsRight_);
+		}
+		else if(currentOpponentType_==ONLINE_PLAYER)
+		{
+			if (!gamePaused_ && gameStarted_ && !gameEnded_) {
+				glm::dvec3 mousePos;
+				FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(mousePosX_, mousePosY_, mousePos);
+				tryNewPosition(maillet2_, mousePos, segmentsLeft_);
+			}
 		}
 	}
 }

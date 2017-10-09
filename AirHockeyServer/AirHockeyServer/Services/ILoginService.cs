@@ -1,10 +1,11 @@
 ﻿using AirHockeyServer.Entities;
+using System.Threading.Tasks;
 
 namespace AirHockeyServer.Services
 {
     public interface ILoginService
     {
-        void Login(LoginMessage message);
-        void Logout(LoginMessage message);
+        Task<bool> ValidateCredentials(LoginEntity message);
+        void Logout(LoginEntity message);
     }
 }

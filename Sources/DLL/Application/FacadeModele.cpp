@@ -46,7 +46,7 @@
 
 #include "glm/glm.hpp"
 #include "glm/gtc/type_ptr.hpp"
-
+#include "../ModeleEtatJeuOnline.h"
 
 /// Pointeur vers l'instance unique de la classe.
 FacadeModele* FacadeModele::instance_{ nullptr };
@@ -465,15 +465,15 @@ void FacadeModele::mouseUpR() {
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void FacadeModele::mouseMove()
+/// @fn void FacadeModele::playerMouseMove()
 ///
 /// Cette fonction permet de gérer 
 ///
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void FacadeModele::mouseMove(int x, int y) {
-	etat_->mouseMove(x, y);
+void FacadeModele::playerMouseMove(int x, int y) {
+	etat_->playerMouseMove(x, y);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -589,21 +589,7 @@ void FacadeModele::deleteSelection() {
 }
 
 
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void FacadeModele::enregistrerSous(std::string filePath, float coefficients[])
-///
-/// Cette fonction permet d'enregistrer le patinoire dans un fichier .json 
-/// dont le chemin d'accès est spécifié en paramètre. Le fichier est 
-/// créé s'il n'existe pas.
-///
-/// @param[in] filePath : Nom du filepath choisi
-/// @param[in] coefficients[] : Coefficients de la carte
-///
-/// @return Aucune
-///
-////////////////////////////////////////////////////////////////////////
-void FacadeModele::enregistrerSous(std::string filePath, float coefficients[]) {
+std::string FacadeModele::_getMapJson(float coefficients[]) {
 	char json[] = " {} ";
 	char buffer[sizeof(json)];
 	memcpy(buffer, json, sizeof(json));
@@ -644,7 +630,31 @@ void FacadeModele::enregistrerSous(std::string filePath, float coefficients[]) {
 	rapidjson::Writer<rapidjson::StringBuffer>writer(buffer2);
 	docJSON_.Accept(writer);
 	std::string data(buffer2.GetString(), buffer2.GetSize());
-	std::ofstream(filePath) << data.c_str();
+	return data;
+}
+
+void FacadeModele::getMapJson(float coefficients[], char* map) {
+	std::string json = _getMapJson(coefficients);
+	std::strcpy(map, json.c_str());
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void FacadeModele::enregistrerSous(std::string filePath, float coefficients[])
+///
+/// Cette fonction permet d'enregistrer le patinoire dans un fichier .json 
+/// dont le chemin d'accès est spécifié en paramètre. Le fichier est 
+/// créé s'il n'existe pas.
+///
+/// @param[in] filePath : Nom du filepath choisi
+/// @param[in] coefficients[] : Coefficients de la carte
+///
+/// @return Aucune
+///
+////////////////////////////////////////////////////////////////////////
+void FacadeModele::enregistrerSous(std::string filePath, float coefficients[]) {
+	std::string json = _getMapJson(coefficients);
+	std::ofstream(filePath) << json.c_str();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -1044,6 +1054,9 @@ void FacadeModele::changerModeleEtat(MODELE_ETAT etat) {
 		break;
 	case MODELE_ETAT::JEU:
 		etat_ = ModeleEtatJeu::obtenirInstance();
+		break;
+	case MODELE_ETAT::JEU_ONLINE:
+		etat_ = ModeleEtatJeuOnline::obtenirInstance();
 		break;
 	case MODELE_ETAT::CREATION_ACCELERATEUR:
 		etat_ = ModeleEtatCreerBoost::obtenirInstance();

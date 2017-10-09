@@ -4,6 +4,6 @@ namespace AirHockeyServer.Services
 {
     public interface ISignupService
     {
-        void Signup(SignupMessage message);
+        void Signup(SignupEntity message);
     }
 }

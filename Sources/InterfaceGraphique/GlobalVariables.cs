@@ -94,6 +94,19 @@ namespace InterfaceGraphique {
         DUPLIQUER = 8,
         ZOOM = 9,
         POINTS_CONTROLE = 10,
-        JEU = 11
+        JEU = 11,
+        JEU_ONLINE=12
+    };
+
+    ///////////////////////////////////////////////////////////////////////////
+    /// 
+    /// Enum contenant les différents type d'adveraires
+    ///
+    ///////////////////////////////////////////////////////////////////////////
+    public enum OpponentType
+    {
+        LOCAL_PLAYER = 0,
+        VIRTUAL_PLAYER = 1,
+        ONLINE_PLAYER = 2
     };
 }

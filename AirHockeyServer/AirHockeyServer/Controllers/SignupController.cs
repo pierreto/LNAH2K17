@@ -19,7 +19,7 @@ namespace AirHockeyServer.Controllers
 
         //Comment on sait si c'est un post?
         [Route("api/signup")]
-        public HttpResponseMessage Signup([FromBody]SignupMessage message)
+        public HttpResponseMessage Signup([FromBody]SignupEntity message)
         {
             try
             {

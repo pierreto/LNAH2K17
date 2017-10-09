@@ -50,7 +50,8 @@ enum class MODELE_ETAT {
 	DUPLIQUER = 8,
 	ZOOM = 9,
 	POINTS_CONTROLE = 10,
-	JEU = 11
+	JEU = 11,
+	JEU_ONLINE=12
 };
 
 
@@ -114,13 +115,15 @@ public:
    /// Clic droit relaché souris
    void mouseUpR();
    /// Le curseur souris est déplacé
-   void mouseMove(int x, int y);
+   void playerMouseMove(int x, int y);
    /// Ajuste l'état des touches modificatrices (alt et ctrl)
    void modifierKeys(bool alt, bool ctrl);
    /// Retourne l'information sur un noeud sélectionné
    bool selectedNodeInfos(float infos[]);
    /// Applique l'information sur un noeud sélectionné
    void applyNodeInfos(float infos[]);
+   /// Remplis le parametre map avec la representation json d'une carte
+   void getMapJson(float coefficients[], char* map);
    /// Enregistrer l'arbre en cours dans un nouveau fichier
    void enregistrerSous(std::string filePath, float coefficients[]);
    /// Charger un fichier d'enregistrement de l'arbre
@@ -192,6 +195,9 @@ private:
    void creerNoeuds(char* type, std::string nomType);
    /// Permet de charge les points de contrôle sur la table
    void chargerPntCtrl();
+
+   /// Retourne la representation Json d'une carte
+   std::string _getMapJson(float coefficients[]);
 
    utilitaire::BoiteEnvironnement* skybox_;
 };

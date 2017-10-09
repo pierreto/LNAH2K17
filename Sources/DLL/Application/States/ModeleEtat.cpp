@@ -80,7 +80,7 @@ void ModeleEtat::fleches(double x, double y)
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void ModeleEtat::mouseMove(int x, int y)
+/// @fn void ModeleEtat::playerMouseMove(int x, int y)
 ///
 /// Évènement appelé lorsque la souris bouge. Elle met à jour la 
 /// position courante de la souris.
@@ -91,7 +91,7 @@ void ModeleEtat::fleches(double x, double y)
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void ModeleEtat::mouseMove(int x, int y) {
+void ModeleEtat::playerMouseMove(int x, int y) {
 	lastMousePosX_ = mousePosX_;
 	lastMousePosY_ = mousePosY_;
 	

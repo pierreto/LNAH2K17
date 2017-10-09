@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using InterfaceGraphique.CommunicationInterface;
 using InterfaceGraphique.Controls.WPF.Chat;
+using InterfaceGraphique.Controls.WPF.Matchmaking;
 using Microsoft.Practices.Unity;
 
 namespace InterfaceGraphique.Controls.WPF
@@ -23,6 +24,10 @@ namespace InterfaceGraphique.Controls.WPF
         public ChatViewModel ChatViewModel
         {
             get { return container.Resolve<ChatViewModel>(); }
+        }
+        public MatchmakingViewModel MatchmakingViewModel
+        {
+            get { return container.Resolve<MatchmakingViewModel>(); }
         }
     }
 }

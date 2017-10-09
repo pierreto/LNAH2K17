@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using InterfaceGraphique.Game.GameState;
 
 namespace InterfaceGraphique {
 
@@ -17,7 +18,7 @@ namespace InterfaceGraphique {
     /// @date 2016-09-13
     ///////////////////////////////////////////////////////////////////////////
     public partial class QuickPlay : Form {
-
+        private AbstractGameState currentGameState;
         ////////////////////////////////////////////////////////////////////////
         ///
         /// Constructeur de la classe QuickPlay
@@ -25,6 +26,9 @@ namespace InterfaceGraphique {
         ////////////////////////////////////////////////////////////////////////
         public QuickPlay() {
             InitializeComponent();
+
+            currentGameState = new OfflineGameState();
+
             InitializeEvents();
         }
 
@@ -46,7 +50,7 @@ namespace InterfaceGraphique {
 
             Program.FormManager.SizeChanged += new EventHandler(WindowSizeChanged);
             Program.FormManager.LocationChanged += new EventHandler(DessinerOpenGL);
-            Program.OpenGLPanel.MouseMove += new MouseEventHandler(MouseMoved);
+            Program.OpenGLPanel.MouseMove += new MouseEventHandler(currentGameState.MouseMoved);
             Program.OpenGLPanel.MouseWheel += new MouseEventHandler(MouseWheelScrolled);
 
             this.Panel_EndBack.Location = new Point((Program.OpenGLPanel.Width - this.Panel_EndBack.Width) / 2, (Program.OpenGLPanel.Height - this.Panel_EndBack.Height) / 2);
@@ -55,11 +59,11 @@ namespace InterfaceGraphique {
             this.Panel_EndBack.Visible = false;
             this.MenuStrip_MenuBar.Renderer = new Renderer_MenuBar();
 
-            keyUp = Program.ConfigurationMenu.MoveUpKey;
-            keyDown = Program.ConfigurationMenu.MoveDownKey;
-            keyLeft = Program.ConfigurationMenu.MoveLeftKey;
-            keyRight = Program.ConfigurationMenu.MoveRightKey;
-            neededGoalsToWin = Program.ConfigurationMenu.NeededGoalsToWin;
+            currentGameState.KeyUp = Program.ConfigurationMenu.MoveUpKey;
+            currentGameState.KeyDown = Program.ConfigurationMenu.MoveDownKey;
+            currentGameState.KeyLeft = Program.ConfigurationMenu.MoveLeftKey;
+            currentGameState.KeyRight = Program.ConfigurationMenu.MoveRightKey;
+            currentGameState.NeededGoalsToWin = Program.ConfigurationMenu.NeededGoalsToWin;
 
             LoadMap();
             ToggleOrbit(true);
@@ -91,8 +95,8 @@ namespace InterfaceGraphique {
             this.MenuItem_OrthoView.Click += (sender, e) => ToggleOrbit(false);
             this.Button_MainMenu.Click += (sender, e) => { ResetDefaultTable(); Program.FormManager.CurrentForm = Program.MainMenu; };
             this.Button_PlayAgain.Click += (sender, e) => Program.FormManager.CurrentForm = Program.QuickPlay;
-            this.KeyDown += new KeyEventHandler(KeyDownEvent);
-            this.KeyUp += new KeyEventHandler(KeyUpEvent);
+            this.KeyDown += new KeyEventHandler(currentGameState.KeyDownEvent);
+            this.KeyUp += new KeyEventHandler(currentGameState.KeyUpEvent);
         }
 
 
@@ -107,7 +111,7 @@ namespace InterfaceGraphique {
         public void UnsuscribeEventHandlers() {
             Program.FormManager.SizeChanged -= new EventHandler(WindowSizeChanged);
             Program.FormManager.LocationChanged -= new EventHandler(DessinerOpenGL);
-            Program.OpenGLPanel.MouseMove -= new MouseEventHandler(MouseMoved);
+            Program.OpenGLPanel.MouseMove -= new MouseEventHandler(currentGameState.MouseMoved);
             Program.OpenGLPanel.MouseWheel -= new MouseEventHandler(MouseWheelScrolled);
         }
 
@@ -123,11 +127,7 @@ namespace InterfaceGraphique {
         public void MettreAJour(double tempsInterAffichage) {
             try {
                 this.Invoke((MethodInvoker)delegate {
-                    FonctionsNatives.moveMaillet();
-                    FonctionsNatives.animer(tempsInterAffichage);
-                    FonctionsNatives.dessinerOpenGL();
-                    if (FonctionsNatives.isGameOver(neededGoalsToWin) == 1)
-                        EndGame();
+                    currentGameState.MettreAJour(tempsInterAffichage,currentGameState.NeededGoalsToWin);
                 });
             }
             catch (Exception) {
@@ -195,9 +195,9 @@ namespace InterfaceGraphique {
             ResetDefaultTable();
             FonctionsNatives.playMusic(true);
 
-            if (mapFilePath != null) {
-                StringBuilder filePath = new StringBuilder(mapFilePath.Length);
-                filePath.Append(mapFilePath);
+            if (currentGameState.MapFilePath != null) {
+                StringBuilder filePath = new StringBuilder(currentGameState.MapFilePath.Length);
+                filePath.Append(currentGameState.MapFilePath);
                 float[] coefficients = new float[3];
                 FonctionsNatives.ouvrir(filePath, coefficients);
                 Program.GeneralProperties.SetCoefficientValues(coefficients);
@@ -205,82 +205,9 @@ namespace InterfaceGraphique {
         }
 
 
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// Cette fonction suit le mouvement de la souris.
-        ///
-        /// @param[in]  sender : L'objet qui envoie l'événement
-        /// @param[in]  e      : Propriétés de l'événement
-        /// @return     Void 
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void MouseMoved(object sender, MouseEventArgs e){
-            FonctionsNatives.mouseMove(e.Location.X, e.Location.Y);
-        }
 
 
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// Cette fonction gère l'enfoncement des touches de déplacement du
-        /// joueur 2 et assigne une vitesse au maillet.
-        ///
-        /// @param[in]  sender : L'objet qui envoie l'événement
-        /// @param[in]  e      : Propriétés de l'événement
-        /// @return     Void 
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void KeyDownEvent(object sender, KeyEventArgs e) {
-            if (e.KeyCode == keyUp && !moveUpKeyDown) {
-                moveUpKeyDown = true;
-                moveDownKeyDown = false;
-                FonctionsNatives.setSpeedYMaillet(GlobalVariables.speedMaillet);
-            }
-            if (e.KeyCode == keyLeft && !moveLeftKeyDown) {
-                moveLeftKeyDown = true;
-                moveRightKeyDown = false;
-                FonctionsNatives.setSpeedXMaillet(-GlobalVariables.speedMaillet);
-            }
-            if (e.KeyCode == keyDown && !moveDownKeyDown) {
-                moveDownKeyDown = true;
-                moveUpKeyDown = false;
-                FonctionsNatives.setSpeedYMaillet(-GlobalVariables.speedMaillet);
-            }
-            if (e.KeyCode == keyRight && !moveRightKeyDown) {
-                moveRightKeyDown = true;
-                moveLeftKeyDown = false;
-                FonctionsNatives.setSpeedXMaillet(GlobalVariables.speedMaillet);
-            }
-        }
-
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// Cette fonction gère le relachement des touches de déplacement du
-        /// joueur 2 et retire la vitesse au maillet.
-        ///
-        /// @param[in]  sender : L'objet qui envoie l'événement
-        /// @param[in]  e      : Propriétés de l'événement
-        /// @return     Void 
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void KeyUpEvent(object sender, KeyEventArgs e) {
-            if (e.KeyCode == keyUp && moveUpKeyDown) {
-                moveUpKeyDown = false;
-                FonctionsNatives.setSpeedYMaillet(0);
-            }
-            if (e.KeyCode == keyLeft && moveLeftKeyDown) {
-                moveLeftKeyDown = false;
-                FonctionsNatives.setSpeedXMaillet(0);
-            }
-            if (e.KeyCode == keyDown && moveDownKeyDown) {
-                moveDownKeyDown = false;
-                FonctionsNatives.setSpeedYMaillet(0);
-            }
-            if (e.KeyCode == keyRight && moveRightKeyDown) {
-                moveRightKeyDown = false;
-                FonctionsNatives.setSpeedXMaillet(0);
-            }
-        }
+    
 
 
         ////////////////////////////////////////////////////////////////////////
@@ -308,25 +235,11 @@ namespace InterfaceGraphique {
         }
 
 
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// Cette fonction s'occupe de gérer la fin de partie.
-        ///
-        /// @return Void 
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void EndGame() {
+        public void EndGame() {
             int[] score = new int[2];
             FonctionsNatives.getGameScore(score);
-
-            if (isTournementMode) {      
-                Program.TournementTree.RoundScore = score;
-                Program.FormManager.CurrentForm = Program.TournementTree;
-            }
-            else {
-                this.Panel_EndBack.Visible = true;
-                this.Label_Score.Text = score[0] + " - " + score[1];        
-            }
+            this.Label_Score.Text = score[0] + " - " + score[1];        
+            
         }
 
 
@@ -421,28 +334,15 @@ namespace InterfaceGraphique {
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
+        public AbstractGameState CurrentGameState
+        {
+            get => currentGameState;
+            set => currentGameState = value;
+        }
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-        private bool moveUpKeyDown = false;
-        private bool moveDownKeyDown = false;
-        private bool moveLeftKeyDown = false;
-        private bool moveRightKeyDown = false;
-
-        private Keys keyUp = Keys.W;
-        private Keys keyDown = Keys.S;
-        private Keys keyLeft = Keys.A;
-        private Keys keyRight = Keys.D;
-
-        private int neededGoalsToWin = 2;
-        private bool isTournementMode;
-
-        private string mapFilePath;
-
-
-        // Accessors
-        public bool IsTournementMode { set { isTournementMode = value; } }
-        public string MapFilePath { set { mapFilePath = value; } }
+  
     }
 }

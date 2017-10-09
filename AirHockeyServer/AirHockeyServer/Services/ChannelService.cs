@@ -10,16 +10,14 @@ namespace AirHockeyServer.Services
 {
     public class ChannelService : IChannelService
     {
-        public ChannelService(IDataProvider dataProvider)
+        public ChannelService()
         {
-            DataProvider = dataProvider;
         }
-
-        public IDataProvider DataProvider { get; }
 
         public async Task<List<ChannelEntity>> GetChannels()
         {
-            return await DataProvider.GetEntities<ChannelEntity>("");
+            //return await DataProvider.GetEntities<ChannelEntity>("");
+            return null;
         }
 
         public async Task<ChannelEntity> CreateChannel(ChannelEntity channel)

@@ -10,38 +10,30 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Threading;
 using Newtonsoft.Json;
+using System.Threading;
 
 namespace InterfaceGraphique.CommunicationInterface
 {
-    public class ChatHub : IChatHub
+    public class ChatHub : IBaseHub
     {
-        public delegate void UpdateChatBoxDelegate(ChatMessage message);
 
         public event Action<ChatMessage> NewMessage;
-        private string targetServerIp;
-
         private string username;
-        //private UpdateChatBoxDelegate updateChatBoxDelegate;
         private IHubProxy chatHubProxy;
-        private HubConnection connection;
 
         private ChannelEntity mainChannel;
         private ObservableCollection<ChannelEntity> channels;
 
-        // TODO: retourner un résultat pour savoir si la connexion a échouée ou pas.
-        public async Task EstablishConnection(string targetServerIp)
-        {
-            this.targetServerIp = targetServerIp;
-
-            this.connection = new HubConnection("http://"+targetServerIp+":63056/signalr");
-            chatHubProxy = this.connection.CreateHubProxy("ChatHub");
-            await this.connection.Start();
-        }
-
-        public async Task<bool> AuthenticateUser(string username)
+     
+        public void InitializeHub(HubConnection connection, string username)
         {
             this.username = username;
-            var authentication = chatHubProxy.Invoke<bool>("Authenticate", username);
+            chatHubProxy = connection.CreateHubProxy("ChatHub");
+        }
+
+        public async Task<bool> AuthenticateUser()
+        {
+            var authentication = chatHubProxy.Invoke<bool>("Authenticate", this.username);
             await authentication;
            return authentication.Result;
         }
@@ -50,6 +42,8 @@ namespace InterfaceGraphique.CommunicationInterface
         {
             // Étape necessaire pour que le serveur sache que la connexion est reliée au bon userId:
             var userId = Guid.NewGuid();
+            Program.user = new UserEntity { Id = userId, Username = this.username };
+
             await chatHubProxy.Invoke("Subscribe", userId);
 
             // Inscription à l'event "ChatMessageReceived". Quand l'event est lancé du serveur on veut print le message:
@@ -59,13 +53,9 @@ namespace InterfaceGraphique.CommunicationInterface
             });
         }
 
-        public void Logout(string username)
+        public void Logout()
         {
-            if(chatHubProxy != null)
-            {
-                chatHubProxy.Invoke("Disconnect", username).Wait();
-                this.connection.Stop();
-            }
+            chatHubProxy?.Invoke("Disconnect", this.username).Wait();
         }
 
         public async void SendMessage(ChatMessage message)

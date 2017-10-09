@@ -5,26 +5,35 @@ using System.Net.Http.Headers;
 using System.Web.Http;
 using AirHockeyServer.Entities;
 using AirHockeyServer.Services;
+using System.Threading.Tasks;
 
 namespace AirHockeyServer.Controllers
 {
     public class LoginController : ApiController
     {
-        public ILoginService loginService { get; }
+        public ILoginService LoginService { get; }
 
         public LoginController()
         {
-            this.loginService = new LoginService();
+            this.LoginService = new LoginService();
         }
 
         public IChatService ChatService { get; }
 
+        [HttpPost]
         [Route("api/login")]
-        public HttpResponseMessage Login([FromBody]LoginMessage message)
+        public async Task<HttpResponseMessage> Login([FromBody]LoginEntity loginEntity)
         {
             try
             {
-                this.loginService.Login(message);
+                if (await this.LoginService.ValidateCredentials(loginEntity))
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, true);
+                } else
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, false);
+                }
+                
             }
             catch (LoginException e)
             {
@@ -36,13 +45,12 @@ namespace AirHockeyServer.Controllers
                 System.Diagnostics.Debug.WriteLine(e);
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
-            return Request.CreateResponse(HttpStatusCode.OK);
         }
 
         [Route("api/logout")]
-        public HttpResponseMessage Logout([FromBody]LoginMessage message)
+        public HttpResponseMessage Logout([FromBody]LoginEntity loginEntity)
         {
-            this.loginService.Logout(message);
+            this.LoginService.Logout(loginEntity);
             return Request.CreateResponse(HttpStatusCode.OK);
         }
     }

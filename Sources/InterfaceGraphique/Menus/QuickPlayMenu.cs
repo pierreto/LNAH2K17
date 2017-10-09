@@ -17,8 +17,9 @@ namespace InterfaceGraphique {
     /// @author Julien Charbonneau
     /// @date 2016-09-13
     ///////////////////////////////////////////////////////////////////////////
-    public partial class QuickPlayMenu : Form {
-
+    public partial class QuickPlayMenu : Form
+    {
+        private Button currentSelectedButton;
         ////////////////////////////////////////////////////////////////////////
         ///
         /// Constructeur de la classe QuickPlayMenu
@@ -44,8 +45,9 @@ namespace InterfaceGraphique {
             this.Button_Cancel.Click += (sender, e) => this.Close();
             this.Button_OpenMap.Click += (sender, e) => fileDialog.ShowDialog();
             this.Button_DefaultMap.Click += (sender, e) => { this.Button_DefaultMap.Enabled = false; this.Text_MapName.Text = DefaultValues.mapName; };
-            this.Button_PlayerHuman.Click += (sender, e) => { SwitchButtonsState(this.Button_PlayerHuman, this.Button_PlayerVirtual); this.List_VirtualProfile.Enabled = false; };
-            this.Button_PlayerVirtual.Click += (sender, e) => { SwitchButtonsState(this.Button_PlayerVirtual, this.Button_PlayerHuman); this.List_VirtualProfile.Enabled = true; };
+            this.Button_PlayerHuman.Click += (sender, e) => { SwitchButtonsState(this.Button_PlayerHuman); this.List_VirtualProfile.Enabled = false; };
+            this.Button_PlayerVirtual.Click += (sender, e) => { SwitchButtonsState(this.Button_PlayerVirtual); this.List_VirtualProfile.Enabled = true; };
+            this.Button_Online_Game.Click += (sender, e) => { SwitchButtonsState(this.Button_Online_Game); this.List_VirtualProfile.Enabled = false; };
 
             // Paint events
             this.Button_DefaultMap.Paint += new PaintEventHandler(StatePaintButton);
@@ -54,6 +56,15 @@ namespace InterfaceGraphique {
             this.Shown += (sender, e) => InitializeBaseSettings();
             this.List_VirtualProfile.DropDownClosed += (sender, e) => this.Text_VirtualProfile.Focus();
             this.fileDialog.FileOk += new CancelEventHandler(MapFileOpened);
+
+            this.currentSelectedButton = this.Button_PlayerVirtual;
+        }
+
+        private void PlayOnlineGame(Button button_Online_Game1, Button button_Online_Game2)
+        {
+            this.Close();
+            Program.FormManager.CurrentForm = Program.LobbyHost;
+
         }
 
 
@@ -98,8 +109,8 @@ namespace InterfaceGraphique {
                 mapFilePath = fileDialog.FileName;
 
             this.Close();
-            Program.QuickPlay.IsTournementMode = false;
-            Program.QuickPlay.MapFilePath = mapFilePath;
+            Program.QuickPlay.CurrentGameState.IsTournementMode = false;
+            Program.QuickPlay.CurrentGameState.MapFilePath = mapFilePath;
 
             StringBuilder player1Name = new StringBuilder(DefaultValues.playerLeftName.Length);
             StringBuilder player2Name = new StringBuilder(DefaultValues.playerRightName.Length);
@@ -112,9 +123,30 @@ namespace InterfaceGraphique {
 
             PlayerProfile selectedProfile = Program.ConfigurationMenu.GetProfile(this.List_VirtualProfile.Text);
             FonctionsNatives.aiActiveProfile(selectedProfile.Speed, selectedProfile.Passivity);
-            FonctionsNatives.aiStatus(this.List_VirtualProfile.Enabled);
 
-            Program.FormManager.CurrentForm = Program.QuickPlay;       
+            OpponentType opponentType = OpponentType.VIRTUAL_PLAYER;
+            if (this.currentSelectedButton.Equals(Button_PlayerVirtual))
+            {
+                opponentType = OpponentType.VIRTUAL_PLAYER;
+            }
+            if (this.currentSelectedButton.Equals(Button_PlayerHuman))
+            {
+                opponentType = OpponentType.LOCAL_PLAYER;
+            }
+            if (this.currentSelectedButton.Equals(Button_Online_Game))
+            {
+                opponentType = OpponentType.ONLINE_PLAYER;
+            }
+            FonctionsNatives.setCurrentOpponentType((int)opponentType);
+
+            if (opponentType != OpponentType.ONLINE_PLAYER)
+            {
+                Program.FormManager.CurrentForm = Program.QuickPlay;
+            }
+            else
+            {
+                Program.FormManager.CurrentForm = Program.LobbyHost;
+            }
         }
 
 
@@ -165,16 +197,19 @@ namespace InterfaceGraphique {
         /// @return     Void
         ///
         ////////////////////////////////////////////////////////////////////////
-        private void SwitchButtonsState(Button select, Button deselect) {
-            if (select.ForeColor == SystemColors.GrayText) {
+        private void SwitchButtonsState(Button select) {
+            if (!this.currentSelectedButton.Equals(select)) {
                 select.ForeColor = Color.White;
-                deselect.ForeColor = SystemColors.GrayText;
-                deselect.FlatAppearance.MouseDownBackColor = Color.Empty;
-                deselect.FlatAppearance.MouseOverBackColor = Color.Empty;
+
                 select.FlatAppearance.MouseDownBackColor = GlobalVariables.defaultGrey;
                 select.FlatAppearance.MouseOverBackColor = GlobalVariables.defaultGrey;
                 select.Cursor = Cursors.Default;
-                deselect.Cursor = Cursors.Hand;
+                currentSelectedButton.Cursor = Cursors.Hand;
+                currentSelectedButton.ForeColor = SystemColors.GrayText;
+                currentSelectedButton.FlatAppearance.MouseDownBackColor = Color.Empty;
+                currentSelectedButton.FlatAppearance.MouseOverBackColor = Color.Empty;
+
+                this.currentSelectedButton = select;
             }
         }
 

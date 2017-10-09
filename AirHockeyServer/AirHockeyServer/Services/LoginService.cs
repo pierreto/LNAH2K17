@@ -1,35 +1,54 @@
 ﻿using System;
 using System.Collections.Generic;
 using AirHockeyServer.Entities;
-using Microsoft.Ajax.Utilities;
+using AirHockeyServer.Repositories;
+using System.Threading.Tasks;
 
 namespace AirHockeyServer.Services
 {
     public class LoginService : ILoginService, IService
     {
         private static HashSet<string> _usernames = new HashSet<string>();
- 
+        private UserRepository UserRepository = new UserRepository();
+        private PasswordRepository PasswordRepository = new PasswordRepository();
         public LoginService()
         {
+            PasswordRepository = new PasswordRepository();
         }
 
-        public void Login(LoginMessage message) 
+        public async Task<bool> ValidateCredentials(LoginEntity loginEntity)
         {
-            System.Diagnostics.Debug.WriteLine(message.username);
-            System.Diagnostics.Debug.WriteLine(message.password);
-            System.Diagnostics.Debug.WriteLine(_usernames.Count);
-            if (_usernames.Contains(message.username))
+            try
             {
-                throw new LoginException("Username already taken."); 
+                UserEntity uE = await UserRepository.GetUserByUsername(loginEntity.Username);
+                PasswordEntity pE = await PasswordRepository.GetPasswordByUserId(uE.Id);
+                if (uE.Username == loginEntity.Username && pE.Password == loginEntity.Password)
+                {
+                    System.Diagnostics.Debug.WriteLine("Successful Login");
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+                //if (_usernames.Contains(loginEntity.Username))
+                //{
+                //    throw new LoginException("Username already taken.");
+                //}
+                //_usernames.Add(loginEntity.Username);
+                //return false;
             }
-            _usernames.Add(message.username);
+            catch (Exception e)
+            {
+                return false;
+            }
         }
 
-        public void Logout(LoginMessage message)
+        public void Logout(LoginEntity loginEntity)
         {
-            if (_usernames.Contains(message.username))
+            if (_usernames.Contains(loginEntity.Username))
             {
-                _usernames.Remove(message.username);
+                _usernames.Remove(loginEntity.Username);
             }
         }
     }

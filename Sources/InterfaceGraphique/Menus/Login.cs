@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using InterfaceGraphique.CommunicationInterface;
 using InterfaceGraphique.Exceptions;
+using Microsoft.AspNet.SignalR.Client;
 
 namespace InterfaceGraphique.Menus
 {
@@ -20,6 +21,7 @@ namespace InterfaceGraphique.Menus
         private readonly string LOCALHOST = "localhost";
         private readonly int MAX_INPUT_LENGTH = 15;
         private ChatHub chatHub;
+        private HubManager hubManager;
         public Login(ChatHub chatHub)
         {
             this.chatHub = chatHub;
@@ -67,14 +69,17 @@ namespace InterfaceGraphique.Menus
                 {
                     LoginName = UsernameTextBox.Text
                 };
+                this.hubManager = new HubManager();
 
                 // We first initialize the connection with the chat server:
-                await chatHub.EstablishConnection(ServerTextBox.Text);
+                await hubManager.EstablishConnection(ServerTextBox.Text,UsernameTextBox.Text );
                 // Then we try to authenticate the user with the username he/she gave:
-                var authentication = chatHub.AuthenticateUser(UsernameTextBox.Text);
+                var authentication = chatHub.AuthenticateUser();
                 await authentication;
                 if (authentication.Result)
                 {
+                    Program.client.BaseAddress = new System.Uri("http://" + ServerTextBox.Text+ ":63056/");
+
                     // We initialize the chat to activate broadcasting from the server:
                     await chatHub.InitializeChat();
                     // Finally we move from the login page to the main menu:
@@ -172,8 +177,8 @@ namespace InterfaceGraphique.Menus
 
         public void Logout()
         {
-          /* Program.MainMenu.GetChat().Logout();
-            Program.FormManager.CurrentForm = Program.Login;*/
+            this.hubManager.Logout();
+            Program.FormManager.CurrentForm = Program.Login;
         }
     }
 

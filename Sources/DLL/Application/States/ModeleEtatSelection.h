@@ -36,7 +36,7 @@ public:
 	/// Évènement appelé lorsque le bouton gauche de la souris est levé
 	virtual void mouseUpL();
 	/// Évènement appelé lorsque la souris bouge
-	virtual void mouseMove(int x, int y);
+	virtual void playerMouseMove(int x, int y);
 	/// Évènement appelé lorsque la touche escape est enfoncée
 	virtual void escape();
 
