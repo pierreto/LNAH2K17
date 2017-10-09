@@ -22,19 +22,19 @@ export class SignupComponent implements OnInit {
 
   validationMessages = {
     'username': {
-      'required':      'Userame is required.',
-      'minlength':     'Username must be at least 2 characters long.',
-      'maxlength':     'Username cannot be more than 15 characters long.',
-      'pattern':       'Username is invalid.'
+      'required':      'Nom d\'usager requis.',
+      'minlength':     'Nom d\'usager doit contenir au moins 2 caractères.',
+      'maxlength':     'Nom d\'usager doit contenir au plus 15 caractères.',
+      'pattern':       'Nom d\'usager invalide.'
     },
     'password': {
-      'required':      'Password is required.',
-      'minlength':     'Password must be at least 8 characters long.',
-      'pattern':       'Password must container at least an uppercase character, a lowercase character and a number.'
+      'required':      'Mot de passe requis.',
+      'minlength':     'Mot de passe doit contenir au moins 8 caractères.',
+      'pattern':       'Mot de passe doit contenir au moins une lettre minuscule, une lettre majuscule et un caractère spécial.'
     },
     'passwordConfirm': {
-      'required': 'Password Confirmation is required.',
-      'noMatch':  'Passwords do not match.'
+      'required': 'Confirmation du mot de passe requise.',
+      'noMatch':  'Les mots de passe doivent être identiques.'
     }
   };
 
