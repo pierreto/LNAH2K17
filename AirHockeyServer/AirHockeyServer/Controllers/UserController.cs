@@ -27,8 +27,8 @@ namespace AirHockeyServer.Controllers
             }
             catch (UserException e)
             {
-                System.Diagnostics.Debug.WriteLine(e.ErrorMessage);
-                return Request.CreateResponse(HttpStatusCode.NotFound, e.ErrorMessage);
+                System.Diagnostics.Debug.WriteLine(e);
+                return Request.CreateResponse(HttpStatusCode.NotFound, e);
             }
             catch (Exception e)
             {
@@ -47,8 +47,8 @@ namespace AirHockeyServer.Controllers
             }
             catch (UserException e)
             {
-                System.Diagnostics.Debug.WriteLine(e.ErrorMessage);
-                return Request.CreateResponse(HttpStatusCode.NotFound, e.ErrorMessage);
+                System.Diagnostics.Debug.WriteLine(e);
+                return Request.CreateResponse(HttpStatusCode.NotFound, e);
             }
             catch (Exception e)
             {

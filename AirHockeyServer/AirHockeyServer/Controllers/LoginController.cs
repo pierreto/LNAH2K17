@@ -29,7 +29,8 @@ namespace AirHockeyServer.Controllers
                 if (await this.LoginService.ValidateCredentials(loginEntity))
                 {
                     return Request.CreateResponse(HttpStatusCode.OK, true);
-                } else
+                }
+                else
                 {
                     return Request.CreateResponse(HttpStatusCode.OK, false);
                 }

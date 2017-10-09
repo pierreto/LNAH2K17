@@ -24,9 +24,10 @@ namespace AirHockeyServer.Repositories
             try
             {
                 IEnumerable<PasswordPoco> passwordPocoEnum = await DataProvider.GetBy<PasswordPoco, int>("test_passwords", "id_password", id);
-                if (passwordPocoEnum.Any())
+                List<PasswordPoco> passwordPocos = passwordPocoEnum.ToList();
+                if (passwordPocos.Any())
                 {
-                    PasswordPoco passwordPoco = passwordPocoEnum.ToList().First();
+                    PasswordPoco passwordPoco = passwordPocos.First();
                     PasswordEntity passwordEntity = MapperManager.Mapper.Map<PasswordPoco, PasswordEntity>(passwordPoco);
 
                     //Est-ce que c'est vraiment comme ca que je suis suppose faire les nested objects? 
@@ -35,7 +36,7 @@ namespace AirHockeyServer.Repositories
                 }
                 else
                 {
-                    throw new PasswordException("Unable to get [password] by [id] = " + id);
+                    return null;
                 }
             }
             catch (LoginException e)
@@ -55,9 +56,10 @@ namespace AirHockeyServer.Repositories
             try
             {
                 IEnumerable<PasswordPoco> passwordPocoEnum = await DataProvider.GetBy<PasswordPoco, int>("test_passwords", "id_user", userId);
-                if (passwordPocoEnum.Any())
+                List<PasswordPoco> passwordPocos = passwordPocoEnum.ToList();
+                if (passwordPocos.Any())
                 {
-                    PasswordPoco passwordPoco = passwordPocoEnum.ToList().First();
+                    PasswordPoco passwordPoco = passwordPocos.First();
                     PasswordEntity passwordEntity = MapperManager.Mapper.Map<PasswordPoco, PasswordEntity>(passwordPoco);
                     return passwordEntity;
                 }

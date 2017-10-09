@@ -18,9 +18,10 @@ namespace AirHockeyServer.Repositories
             try
             {
                 IEnumerable<UserPoco> userPocoEnum = await DataProvider.GetBy<UserPoco, int>("test_users", "id_user", id);
-                if (userPocoEnum.Any())
+                List<UserPoco> userPocos = userPocoEnum.ToList();
+                if (userPocos.Any())
                 {
-                    UserPoco userPoco = userPocoEnum.ToList().First();
+                    UserPoco userPoco = userPocos.First();
                     UserEntity userEntity = MapperManager.Mapper.Map<UserPoco, UserEntity>(userPoco);
                     return userEntity;
                 }
@@ -47,15 +48,16 @@ namespace AirHockeyServer.Repositories
             try
             {
                 IEnumerable<UserPoco> userPocoEnum = await DataProvider.GetBy<UserPoco, string>("test_users", "username", username);
-                if (userPocoEnum.Any())
+                List<UserPoco> userPocos = userPocoEnum.ToList();
+                if (userPocos.Any())
                 {
-                    UserPoco userPoco = userPocoEnum.ToList().First();
+                    UserPoco userPoco = userPocos.First();
                     UserEntity userEntity = MapperManager.Mapper.Map<UserPoco, UserEntity>(userPoco);
                     return userEntity;
                 }
                 else
                 {
-                    throw new UserException("Unable to get [user] by [username] = " + username);
+                    return null;
                 }
 
             }

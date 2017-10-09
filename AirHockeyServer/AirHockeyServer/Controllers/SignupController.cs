@@ -25,18 +25,18 @@ namespace AirHockeyServer.Controllers
             try
             {
                 await this.SignupService.Signup(signupEntity);
+                return Request.CreateResponse(HttpStatusCode.OK);
             }
             catch (SignupException e)
             {
                 System.Diagnostics.Debug.WriteLine(e);
-                return Request.CreateResponse(HttpStatusCode.Forbidden);
+                return Request.CreateResponse(HttpStatusCode.Forbidden, e);
             }
             catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine(e);
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
-            return Request.CreateResponse(HttpStatusCode.OK);
         }
     }
 }

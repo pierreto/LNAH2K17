@@ -17,11 +17,24 @@ namespace AirHockeyServer.Services
             try
             {
                 UserEntity uE = await UserService.GetUserByUsername(loginEntity.Username);
-                PasswordEntity pE = await PasswordService.GetPasswordByUserId(uE.Id);
-                if (uE.Username == loginEntity.Username && pE.Password == loginEntity.Password)
+                if(uE != null)
                 {
-                    System.Diagnostics.Debug.WriteLine("Successful Login");
-                    return true;
+                    PasswordEntity pE = await PasswordService.GetPasswordByUserId(uE.Id);
+                    if(pE != null)
+                    {
+                        if (uE.Username == loginEntity.Username && pE.Password == loginEntity.Password)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        throw new LoginException("Impossible de trouver votre mot de passe");
+                    }
                 }
                 else
                 {
@@ -34,9 +47,15 @@ namespace AirHockeyServer.Services
                 //_usernames.Add(loginEntity.Username);
                 //return false;
             }
+            catch(LoginException e)
+            {
+                System.Diagnostics.Debug.WriteLine("[LoginService.ValidateCredentials] " + e.ToString());
+                throw e;
+            }
             catch (Exception e)
             {
-                return false;
+                System.Diagnostics.Debug.WriteLine("[LoginService.ValidateCredentials] " + e.ToString());
+                throw e;
             }
         }
 
@@ -51,10 +70,8 @@ namespace AirHockeyServer.Services
 
     public class LoginException : Exception
     {
-        public string ErrorMessage { get; set; }
-        public LoginException(string message)
+        public LoginException(string message) : base(message)
         {
-            this.ErrorMessage = message;
         }
     }
 }

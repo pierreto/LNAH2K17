@@ -11,18 +11,7 @@ namespace AirHockeyServer.Services
 
         public PasswordService()
         {
-            try
-            {
-                PasswordRepository = new PasswordRepository();
-            }
-            catch (PasswordException e)
-            {
-                throw e;
-            }
-            catch (Exception e)
-            {
-                throw e;
-            }
+            PasswordRepository = new PasswordRepository();
         }
 
         public async Task<PasswordEntity> GetPasswordById(int id)
@@ -33,10 +22,12 @@ namespace AirHockeyServer.Services
             }
             catch (PasswordException e)
             {
+                System.Diagnostics.Debug.WriteLine("[PasswordService.GetPasswordById] " + e.ToString());
                 throw e;
             }
             catch (Exception e)
             {
+                System.Diagnostics.Debug.WriteLine("[PasswordService.GetPasswordById] " + e.ToString());
                 throw e;
             }
         }
@@ -49,10 +40,12 @@ namespace AirHockeyServer.Services
             }
             catch (PasswordException e)
             {
+                System.Diagnostics.Debug.WriteLine("[PasswordService.GetPasswordByUserId] " + e.ToString());
                 throw e;
             }
             catch (Exception e)
             {
+                System.Diagnostics.Debug.WriteLine("[PasswordService.GetPasswordByUserId] " + e.ToString());
                 throw e;
             }
         }
@@ -65,10 +58,12 @@ namespace AirHockeyServer.Services
             }
             catch (PasswordException e)
             {
+                System.Diagnostics.Debug.WriteLine("[PasswordService.PostPassword] " + e.ToString());
                 throw e;
             }
             catch (Exception e)
             {
+                System.Diagnostics.Debug.WriteLine("[PasswordService.PostPassword] " + e.ToString());
                 throw e;
             }
         }
@@ -76,10 +71,8 @@ namespace AirHockeyServer.Services
 
     public class PasswordException : Exception
     {
-        public string ErrorMessage { get; set; }
-        public PasswordException(string message)
+        public PasswordException(string message) : base(message)
         {
-            this.ErrorMessage = message;
         }
     }
 }

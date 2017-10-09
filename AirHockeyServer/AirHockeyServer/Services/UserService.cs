@@ -23,10 +23,12 @@ namespace AirHockeyServer.Services
             }
             catch(UserException e)
             {
+                System.Diagnostics.Debug.WriteLine("[UserService.GetUserById] " + e.ToString());
                 throw e;
             }
             catch (Exception e)
             {
+                System.Diagnostics.Debug.WriteLine("[UserService.GetUserById] " + e.ToString());
                 throw e;
             }
         }
@@ -39,10 +41,12 @@ namespace AirHockeyServer.Services
             }
             catch (UserException e)
             {
+                System.Diagnostics.Debug.WriteLine("[UserService.GetUserByUsername] " + e.ToString());
                 throw e;
             }
             catch (Exception e)
             {
+                System.Diagnostics.Debug.WriteLine("[UserService.GetUserByUsername] " + e.ToString());
                 throw e;
             }
         }
@@ -55,10 +59,12 @@ namespace AirHockeyServer.Services
             }
             catch (UserException e)
             {
+                System.Diagnostics.Debug.WriteLine("[UserService.GetAllUsers] " + e.ToString());
                 throw e;
             }
             catch (Exception e)
             {
+                System.Diagnostics.Debug.WriteLine("[UserService.GetAllUsers] " + e.ToString());
                 throw e;
             }
         }
@@ -71,10 +77,12 @@ namespace AirHockeyServer.Services
             }
             catch (UserException e)
             {
+                System.Diagnostics.Debug.WriteLine("[UserService.PostUser] " + e.ToString());
                 throw e;
             }
             catch (Exception e)
             {
+                System.Diagnostics.Debug.WriteLine("[UserService.PostUser] " + e.ToString());
                 throw e;
             }
         }
@@ -82,10 +90,8 @@ namespace AirHockeyServer.Services
 
     public class UserException : Exception
     {
-        public string ErrorMessage { get; set; }
-        public UserException(string message)
+        public UserException(string message): base(message)
         {
-            this.ErrorMessage = message;
         }
     }
 }
