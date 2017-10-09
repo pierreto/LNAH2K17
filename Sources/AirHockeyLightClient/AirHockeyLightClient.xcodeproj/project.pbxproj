@@ -217,7 +217,7 @@
 				TargetAttributes = {
 					8F6AE2B71F6592EB00A29E8B = {
 						CreatedOnToolsVersion = 8.3.3;
-						DevelopmentTeam = BG3AZJL2HA;
+						DevelopmentTeam = 764FR88T9F;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -430,14 +430,16 @@
 			baseConfigurationReference = 628E0B24C7327005FBC765AC /* Pods-AirHockeyLightClient.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = BG3AZJL2HA;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 764FR88T9F;
 				INFOPLIST_FILE = AirHockeyLightClient/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "ca.polymtl.A17-LOG3900-03.AirHockeyLightClient";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
 		};
@@ -446,14 +448,16 @@
 			baseConfigurationReference = 4BC65514BAA095CA955FDC5C /* Pods-AirHockeyLightClient.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = BG3AZJL2HA;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 764FR88T9F;
 				INFOPLIST_FILE = AirHockeyLightClient/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "ca.polymtl.A17-LOG3900-03.AirHockeyLightClient";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
 		};

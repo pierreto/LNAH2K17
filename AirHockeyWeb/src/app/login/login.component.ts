@@ -21,10 +21,10 @@ export class LoginComponent implements OnInit {
 
   validationMessages = {
     'username': {
-      'required':      'Username is required.'
+      'required':      'Nom d\'usager requis.'
     },
     'password': {
-      'required':      'Password is required.'
+      'required':      'Mot de passe requis.'
     }
   };
 

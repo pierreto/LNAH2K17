@@ -1,27 +1,27 @@
 <div class="container">
   <form [formGroup]="loginForm">
     <div class="field">
-      <label for="username">Username </label>
+      <label for="username">Nom d'usager </label>
       <input class="control-form" type="text" id="username" formControlName="username" [(ngModel)]="user.username" [ngClass]="{'invalidField': formErrors.username}">
       <div *ngIf="formErrors.username" class="errorMsg">
         {{ formErrors.username }}
       </div>
     </div>
     <div class="field">
-      <label for="password">Password </label>
+      <label for="password">Mot de passe </label>
       <input class="control-form" type="password" id="password" formControlName="password" [(ngModel)]="user.password" [ngClass]="{'invalidField': formErrors.password}">
       <div *ngIf="formErrors.password" class="errorMsg">
         {{ formErrors.password }}
       </div>
       <div *ngIf="!validUser" class="errorMsg centered">
-        Wrong username or password.
+        Nom d'usager ou mot de passe incorrect.
       </div>
     </div>
     <div class="loginDiv">
-      <button [ngClass]="{'buttonInvalid': !loginForm.valid}" id="login" [disabled]="!loginForm.valid" (click)="login()">LOGIN</button>
+      <button [ngClass]="{'buttonInvalid': !loginForm.valid}" id="login" [disabled]="!loginForm.valid" (click)="login()">SE CONNECTER</button>
     </div>
     <div class="signupDiv">
-      <button class="signUp" (click)="signup()">SIGN UP</button>
+      <button class="signUp" (click)="signup()">CRÉER COMPTE</button>
     </div>
   </form>
 </div>
