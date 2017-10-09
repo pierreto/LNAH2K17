@@ -20,14 +20,21 @@ import SceneKit
 ///////////////////////////////////////////////////////////////////////////
 class NoeudTable : NoeudCommun {
     
+    /// Le modèle de la table
     private let table = Table()
-    var sommets = [SCNVector3]()
+    
+    /// Les sommets du modèle de la table
+    public  var sommets = [SCNVector3]()
+    
+    /// Les buts associés à la table
+    private var buts = [NoeudBut]()
     
     /// La table n'a pas un modèle obj
     required init(type: String, geometry: SCNGeometry) {
         fatalError("init(type:geometry:) has not been implemented")
     }
     
+    /// Constructeur
     required init(type: String) {
         super.init(type: type)
         
@@ -72,9 +79,27 @@ class NoeudTable : NoeudCommun {
         
         let faces = table.obtenirFaces()
         let indexData = NSData(bytes: faces, length: faces.count * MemoryLayout<GLuint>.size)
-        elements.append(SCNGeometryElement(data: indexData as Data, primitiveType: .triangles, primitiveCount: 80, bytesPerIndex: MemoryLayout<GLuint>.size))
+        elements.append(SCNGeometryElement(data: indexData as Data,
+                                           primitiveType: .triangles,
+                                           primitiveCount: self.table.FACES_COUNT,
+                                           bytesPerIndex: MemoryLayout<GLuint>.size))
         
         return elements
+    }
+    
+    /// Initialiser le matériau de la table sur la géométrie
+    func initialiserMateriau() {
+        let material = table.obtenirMateriau()
+        self.geometry?.firstMaterial = material
+    }
+    
+    // Remettre à jour la geometrie de la table
+    func updateGeometry() {
+        var sources = [SCNGeometrySource]()
+        sources.append(SCNGeometrySource(vertices: self.sommets))
+        sources.append(SCNGeometrySource(textureCoordinates: table.obtenirTexCoords()))
+        
+        self.geometry = SCNGeometry(sources: sources, elements: initElements())
     }
     
     /// Créer et attacher les points de contrôle à la table
@@ -143,8 +168,8 @@ class NoeudTable : NoeudCommun {
         // Assigner les voisins
         for l in 0..<noeuds.count {
             var voisins = [NoeudPointControl]()
-            voisins.append(noeuds[mod((l - 1), noeuds.count)])
-            voisins.append(noeuds[mod((l + 1), noeuds.count)])
+            voisins.append(noeuds[MathHelper.mod((l - 1), noeuds.count)])
+            voisins.append(noeuds[MathHelper.mod((l + 1), noeuds.count)])
             noeuds[l].assignerVoisins(voisins: voisins)
         }
         
@@ -164,9 +189,8 @@ class NoeudTable : NoeudCommun {
         noeuds[6].assignerZoneDeplacement(zone: GLKVector4(v: (-self.table.MAX_TABLE_LENGTH, -30, 0, 0)))
         noeuds[7].assignerZoneDeplacement(zone: GLKVector4(v: (-self.table.MAX_TABLE_LENGTH, -30, 50, self.table.MAX_TABLE_LENGTH)))
     
-        // TODO : AJOUTER LES BUTS
         // Creation des buts
-        // creerButs(noeuds[4], noeuds[0]);
+        creerButs(pointGauche: noeuds[4], pointDroite: noeuds[0]);
         
         noeuds[7].assignerPositionRelative(positionRelative: noeuds[6].obtenirPositionRelative())
         
@@ -179,28 +203,33 @@ class NoeudTable : NoeudCommun {
         self.updateGeometry()
     }
     
-    // Remettre à jour la geometrie de la table
-    func updateGeometry() {
-        var sources = [SCNGeometrySource]()
-        sources.append(SCNGeometrySource(vertices: self.sommets))
-        sources.append(SCNGeometrySource(textureCoordinates: table.obtenirTexCoords()))
-        
-        self.geometry = SCNGeometry(sources: sources, elements: initElements())
-    }
+    /// Cette fonction permet de créer des buts
+    func creerButs(pointGauche: NoeudPointControl, pointDroite: NoeudPointControl) {
+        // obtention de l'arbre
+        let arbre = ArbreRendu.instance
+        let butGauche = arbre.creerNoeud(typeNouveauNoeud: arbre.NOM_BUT) as! NoeudBut
+        let butDroite = arbre.creerNoeud(typeNouveauNoeud: arbre.NOM_BUT) as! NoeudBut
     
-    // TODO: ajouter dans utilitaire
-    func mod(_ a: Int, _ n: Int) -> Int {
-        precondition(n > 0, "modulus must be positive")
-        let r = a % n
-        return r >= 0 ? r : r + n
-    }
+        // Deplacer les buts
+        // let offset: Float = 10.0
+        //butGauche.position = SCNVector3FromGLKVector3( GLKVector3Add(pointGauche.obtenirPositionRelative(), GLKVector3(v: (0.0, 0.0, offset))) )
+        //butDroite.position = SCNVector3FromGLKVector3( GLKVector3Add( pointDroite.obtenirPositionRelative(), GLKVector3(v: (0.0, 0.0, -offset))) )
+        // TODO : Vérifier que la fonction deplacer revient à faire .position. Pas besoin de déplacer les buts ?
+        //butGauche->deplacer(pointGauche->obtenirPositionRelative() + glm::vec3(0, 0, offset));
+        //butDroite->deplacer(pointDroite->obtenirPositionRelative() + glm::vec3(0, 0, -offset));
     
-    /// Initialiser le matériau de la table sur la géométrie
-    func initialiserMateriau() {
-        let material = table.obtenirMateriau()
-        self.geometry?.firstMaterial = material
-    }
+        // Associer avec un point controle
+        pointGauche.assignerBut(noeud: butGauche)
+        pointDroite.assignerBut(noeud: butDroite)
     
+        // Ajout dans l'arbre
+        self.addChildNode(butGauche)
+        self.addChildNode(butDroite)
+    
+        buts.append(butGauche)
+        buts.append(butDroite)
+    }
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////

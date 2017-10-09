@@ -11,17 +11,23 @@
 import SceneKit
 import GLKit
 
+///////////////////////////////////////////////////////////////////////////
+/// @class But
+/// @brief Modèle (seulement les faces) d'un but
+///
+/// @author Pierre To
+/// @date 2017-10-08
+///////////////////////////////////////////////////////////////////////////
 class But
 {
-    ////////////////////////////////////////////////////////////////////////
-    ///
-    /// @fn std::vector<GLuint> obtenirFaces()
-    ///
+    /// Largeur du but
+    public let GOAL_WIDTH: Float = 40.0
+    /// Nombre de faces
+    public let FACES_COUNT = 20
+    /// Couleur du but
+    public let BUT_COULEUR = UIColor(red: 109.0/255.0, green: 189.0/255.0, blue: 97.0/255.0, alpha: 1.0)
+    
     /// Cette fonction obtient toutes les faces du but
-    ///
-    /// @return Les faces.
-    ///
-    ////////////////////////////////////////////////////////////////////////
     func obtenirFaces() -> [GLuint]
     {
         let faces: [GLuint] = [
@@ -49,21 +55,14 @@ class But
         
         return faces
     }
-    
-    ////////////////////////////////////////////////////////////////////////
-    ///
-    /// @fn obtenirMateriau()
-    ///
+
     /// Cette fonction obtient le matériau d'un but
-    ///
-    /// @return Le matériau du but.
-    ///
-    ////////////////////////////////////////////////////////////////////////
     func obtenirMateriau() -> SCNMaterial
     {
+        let color = self.BUT_COULEUR
         let materiau: SCNMaterial = SCNMaterial();
         materiau.ambient.contents = SCNVector3(0.1, 0.1, 0.1);
-        materiau.diffuse.contents = SCNVector3(1.0, 1.0, 1.0);
+        materiau.diffuse.contents = color;
         materiau.specular.contents = SCNVector3Zero;
         materiau.shininess = 0;
         //materiau.shininessStrength_ = 0;
@@ -71,7 +70,9 @@ class But
         materiau.emission.contents = SCNVector3Zero;
         return materiau;
     }
+    
 }
+
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////

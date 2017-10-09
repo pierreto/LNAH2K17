@@ -25,6 +25,7 @@
 		8F64C0131F7754FD00F14AC7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F64C0121F7754FD00F14AC7 /* LaunchScreen.storyboard */; };
 		8F64C0151F77550800F14AC7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F64C0141F77550800F14AC7 /* Main.storyboard */; };
 		8F64C0171F775B2500F14AC7 /* AuthentificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F64C0161F775B2500F14AC7 /* AuthentificationViewController.swift */; };
+		8F69F4BF1F8AF871004D5129 /* MathHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F69F4BE1F8AF871004D5129 /* MathHelper.swift */; };
 		8F6AE2BC1F6592EB00A29E8B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6AE2BB1F6592EB00A29E8B /* AppDelegate.swift */; };
 		8F6AE2BE1F6592EB00A29E8B /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8F6AE2BD1F6592EB00A29E8B /* GameScene.sks */; };
 		8F6AE2C01F6592EB00A29E8B /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8F6AE2BF1F6592EB00A29E8B /* Actions.sks */; };
@@ -63,6 +64,7 @@
 		8F64C0121F7754FD00F14AC7 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = InterfaceGraphique/Menus/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8F64C0141F77550800F14AC7 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = InterfaceGraphique/Main.storyboard; sourceTree = "<group>"; };
 		8F64C0161F775B2500F14AC7 /* AuthentificationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthentificationViewController.swift; path = InterfaceGraphique/Menus/AuthentificationViewController.swift; sourceTree = "<group>"; };
+		8F69F4BE1F8AF871004D5129 /* MathHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MathHelper.swift; path = Noyau/Helper/MathHelper.swift; sourceTree = "<group>"; };
 		8F6AE2B81F6592EB00A29E8B /* AirHockeyLightClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AirHockeyLightClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F6AE2BB1F6592EB00A29E8B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8F6AE2BD1F6592EB00A29E8B /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				253E088D1F818DD2009F301B /* JsonHelper.swift */,
+				8F69F4BE1F8AF871004D5129 /* MathHelper.swift */,
 			);
 			name = Helper;
 			sourceTree = "<group>";
@@ -458,6 +461,7 @@
 				8F8706BD1F78A67F000E6824 /* ChannelViewController.swift in Sources */,
 				3415E6C91F85659900DB1CAD /* UsineNoeud.swift in Sources */,
 				253E08911F81913A009F301B /* ChannelEntity.swift in Sources */,
+				8F69F4BF1F8AF871004D5129 /* MathHelper.swift in Sources */,
 				34B66FD91F8428EA00A9CCB9 /* NoeudTable.swift in Sources */,
 				8F6AE2BC1F6592EB00A29E8B /* AppDelegate.swift in Sources */,
 			);

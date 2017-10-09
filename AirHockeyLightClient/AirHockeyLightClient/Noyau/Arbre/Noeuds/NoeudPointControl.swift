@@ -19,28 +19,35 @@ import SceneKit
 ///////////////////////////////////////////////////////////////////////////
 class NoeudPointControl : NoeudCommun {
     
-    // TODO : Ajouter la symétrie et le rayon du modèle
-    
     /// Zone de déplacement (-x, x, -z, z)
-    var possedeZoneDeplacement: Bool = false
-    var zoneDeplacement: GLKVector4 = GLKVector4()
+    private var possedeZoneDeplacement: Bool = false
+    private var zoneDeplacement: GLKVector4 = GLKVector4()
     
     /// Voisins du point de contrôle
-    var voisins = [NoeudPointControl]()
+    private var voisins = [NoeudPointControl]()
     
     /// Les points de la table (index des sommets du parent NoeudTable)
-    var pointIndexes = [Int]()
+    private var pointIndexes = [Int]()
     
-    var noeudOppose: NoeudCommun?
+    /// Point de contrôle opposé sur la table
+    private var noeudOppose: NoeudCommun?
+    
+    /// But associé au point de contrôle
+    private var but: NoeudBut?
     
     /// Vecteur applicant la symétrie au déplacement du noeud opposé
-    var symetrie = GLKVector3()
+    private var symetrie = GLKVector3()
     
+    /// Rayon du modèle 3D
+    private var rayonModele3D = -1.0
+    
+    /// Constructeur
     required init(type: String, geometry: SCNGeometry) {
         super.init(type: type, geometry: geometry)
-        //self.addMaterial()
+        self.symetrie = GLKVector3(v: (1.0, 1.0, 1.0))
     }
     
+    /// Le point de contrôle a un modèle obj
     required init(type: String) {
         fatalError("init(type:geometry:) has not been implemented")
     }
@@ -49,14 +56,19 @@ class NoeudPointControl : NoeudCommun {
         fatalError("init(coder:) has not been implemented")
     }
     
+    /// Surchage de la fonction assignerPositionRelative
     override func assignerPositionRelative(positionRelative: GLKVector3) {
         //let anciennePosition = obtenirPositionRelative()
         var positionCorrigee = positionRelative
         
         // Limiter les points selon leur zone de deplacement
         if (self.possedeZoneDeplacement) {
-            positionCorrigee.x = self.clamp(value: positionCorrigee.x, lower: self.zoneDeplacement[0], upper: self.zoneDeplacement[1])
-            positionCorrigee.z = self.clamp(value: positionCorrigee.z, lower: self.zoneDeplacement[2], upper: self.zoneDeplacement[3])
+            positionCorrigee.x = MathHelper.clamp(value: positionCorrigee.x,
+                                                  lower: self.zoneDeplacement[0],
+                                                  upper: self.zoneDeplacement[1])
+            positionCorrigee.z = MathHelper.clamp(value: positionCorrigee.z,
+                                                  lower: self.zoneDeplacement[2],
+                                                  upper: self.zoneDeplacement[3])
         }
         
         // Appel a l'implementation de la classe de base
@@ -68,11 +80,6 @@ class NoeudPointControl : NoeudCommun {
             voisins[0].ajusterPoints();
             voisins[1].ajusterPoints();
         }
-    }
-    
-    /// TODO : à mettre dans Utilitaire
-    func clamp<T: Comparable>(value: T, lower: T, upper: T) -> T {
-        return min(max(value, lower), upper)
     }
     
     /// Ajuste la position des points reliés au point de contrôle
@@ -100,13 +107,13 @@ class NoeudPointControl : NoeudCommun {
         }
     
         // Inverse bisect if needed
-        let dotProduct = self.clamp(value: GLKVector3DotProduct(bisect, GLKVector3Normalize(position)), lower: -1.0, upper: 1.0);
+        let dotProduct = MathHelper.clamp(value: GLKVector3DotProduct(bisect, GLKVector3Normalize(position)), lower: -1.0, upper: 1.0);
         if (acos(dotProduct) > Float.pi/2) {
             bisect = GLKVector3Negate(bisect);
         }
     
         // Calcul de la diagonale de la bordure
-        let angle = Float.pi/2 - acos(self.clamp(value: GLKVector3DotProduct(v1, v2), lower: -1.0, upper: 1.0)) / 2;
+        let angle = Float.pi/2 - acos(MathHelper.clamp(value: GLKVector3DotProduct(v1, v2), lower: -1.0, upper: 1.0)) / 2;
         let h =  Float(Table.TABLE_BORDER_WIDTH) / cos(angle);
     
         // Ajustement des points de la bordure interne
@@ -121,12 +128,12 @@ class NoeudPointControl : NoeudCommun {
         noeudTable.sommets[self.pointIndexes[4]].z = p4.z;
     
         // Update de la position du but
-        /*if (but_) {
-            but_->ajusterPoints();
+        if (self.but != nil) {
+            self.but?.ajusterPoints();
         }
     
         // Update de la position du booster
-        if (booster_ != nullptr)
+        /*if (booster_ != nullptr)
         {
             glm::vec3 p5 = p4 - bisect * 5.0f;
             booster_->deplacer(p5);
@@ -144,15 +151,44 @@ class NoeudPointControl : NoeudCommun {
         self.symetrie = symetrie
     }
     
+    /// Cette fonction renvoie la symmetrie
+    func obtenirSymmetrie() -> GLKVector3
+    {
+        return self.symetrie;
+    }
+
+    /// Cette fonction retourne un pointeur vers le noeud oppose
+    func obtenirNoeudOppose() -> NoeudPointControl
+    {
+        return self.noeudOppose as! NoeudPointControl;
+    }
+    
     /// Assigne des voisins au point de contrôle
     func assignerVoisins(voisins: [NoeudPointControl]) {
         self.voisins = voisins
+    }
+
+    /// Retourne les voisins du point de contrôle
+    func obtenirVoisins() -> [NoeudPointControl]
+    {
+        return self.voisins;
     }
     
     /// Assigne une zone dans lequel un noeud peut se déplacer
     func assignerZoneDeplacement(zone: GLKVector4) {
         self.possedeZoneDeplacement = true
         self.zoneDeplacement = zone
+    }
+    
+    /// Cette fonction assigne un but au point de controle
+    func assignerBut(noeud: NoeudBut) {
+        self.but = noeud
+        noeud.assignerPointControl(pointControl: self)
+    }
+    
+    /// Cette fonction retourne le but auquel le noeud est associe
+    func obtenirBut() -> NoeudBut {
+        return but!
     }
 
 }

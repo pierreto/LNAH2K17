@@ -11,6 +11,13 @@
 import SceneKit
 import GLKit
 
+///////////////////////////////////////////////////////////////////////////
+/// @class Table
+/// @brief Modèle d'une table
+///
+/// @author Mikael Ferland et Pierre To
+/// @date 2017-10-01
+///////////////////////////////////////////////////////////////////////////
 class Table
 {
     /// Nombre de points par coin
@@ -23,94 +30,80 @@ class Table
     public let TABLE_BASE_HEIGHT = 15.0
     /// Grandeur de la table maximale
     public let MAX_TABLE_LENGTH = Float(300.0)
+    /// Nombre de faces
+    public let FACES_COUNT = 80
     
-    ////////////////////////////////////////////////////////////////////////
-    ///
-    /// @fn obtenirSommets()
-    ///
     /// Cette fonction obtient tous les sommets de la table
-    ///
-    /// @return Les sommets.
-    ///
-    ////////////////////////////////////////////////////////////////////////
     func obtenirSommets() -> [SCNVector3]
     {
             var table: [SCNVector3] = [SCNVector3]();
             
             // Middle
-            table.append(SCNVector3Zero);						// 0
+            table.append(SCNVector3Zero);   // 0
             
             // Right
-            table.append(SCNVector3(0, 0, 125));                                        // 1
-            table.append(SCNVector3(0, TABLE_BORDER_HEIGHT, 125));						// 2
+            table.append(SCNVector3(0, 0, 125));                                                // 1
+            table.append(SCNVector3(0, TABLE_BORDER_HEIGHT, 125));                              // 2
             table.append(SCNVector3(0, TABLE_BORDER_HEIGHT, 125 + Table.TABLE_BORDER_WIDTH));	// 3
-            table.append(SCNVector3(0, 0, 125 + Table.TABLE_BORDER_WIDTH));					// 4
-            table.append(SCNVector3(0, -TABLE_BASE_HEIGHT, 115));					    // 5
+            table.append(SCNVector3(0, 0, 125 + Table.TABLE_BORDER_WIDTH));                     // 4
+            table.append(SCNVector3(0, -TABLE_BASE_HEIGHT, 115));                               // 5
             
             // Top Right
-            table.append(SCNVector3(60, 0, 125));																// 6
-            table.append(SCNVector3(60, TABLE_BORDER_HEIGHT, 125));												// 7
+            table.append(SCNVector3(60, 0, 125));                                                                           // 6
+            table.append(SCNVector3(60, TABLE_BORDER_HEIGHT, 125));                                                         // 7
             table.append(SCNVector3(60 + Table.TABLE_BORDER_WIDTH, TABLE_BORDER_HEIGHT, 125 + Table.TABLE_BORDER_WIDTH));	// 8
             table.append(SCNVector3(60 + Table.TABLE_BORDER_WIDTH, 0, 125 + Table.TABLE_BORDER_WIDTH));						// 9
-            table.append(SCNVector3(50, -TABLE_BASE_HEIGHT, 115));												// 10
+            table.append(SCNVector3(50, -TABLE_BASE_HEIGHT, 115));                                                          // 10
             
             // Top
-            table.append(SCNVector3(60, 0, 0));											// 11
-            table.append(SCNVector3(60, TABLE_BORDER_HEIGHT, 0));						// 12
+            table.append(SCNVector3(60, 0, 0));                                                 // 11
+            table.append(SCNVector3(60, TABLE_BORDER_HEIGHT, 0));                               // 12
             table.append(SCNVector3(60 + Table.TABLE_BORDER_WIDTH, TABLE_BORDER_HEIGHT, 0));	// 13
-            table.append(SCNVector3(60 + Table.TABLE_BORDER_WIDTH, 0, 0));					// 14
-            table.append(SCNVector3(50, -TABLE_BASE_HEIGHT, 0));						// 15
+            table.append(SCNVector3(60 + Table.TABLE_BORDER_WIDTH, 0, 0));                      // 14
+            table.append(SCNVector3(50, -TABLE_BASE_HEIGHT, 0));                                // 15
             
             // Top Left
-            table.append(SCNVector3(60, 0, -125));																// 16
-            table.append(SCNVector3(60, TABLE_BORDER_HEIGHT, -125));											// 17
+            table.append(SCNVector3(60, 0, -125));                                                                          // 16
+            table.append(SCNVector3(60, TABLE_BORDER_HEIGHT, -125));                                                        // 17
             table.append(SCNVector3(60 + Table.TABLE_BORDER_WIDTH, TABLE_BORDER_HEIGHT, -125 - Table.TABLE_BORDER_WIDTH));	// 18
             table.append(SCNVector3(60 + Table.TABLE_BORDER_WIDTH, 0, -125 - Table.TABLE_BORDER_WIDTH));					// 19
-            table.append(SCNVector3(50, -TABLE_BASE_HEIGHT, -115));												// 20
+            table.append(SCNVector3(50, -TABLE_BASE_HEIGHT, -115));                                                         // 20
             
             // Right
-            table.append(SCNVector3(0, 0, -125));										// 21
-            table.append(SCNVector3(0, TABLE_BORDER_HEIGHT, -125));						// 22
-            table.append(SCNVector3(0, TABLE_BORDER_HEIGHT, -125 - Table.TABLE_BORDER_WIDTH));// 23
+            table.append(SCNVector3(0, 0, -125));                                               // 21
+            table.append(SCNVector3(0, TABLE_BORDER_HEIGHT, -125));                             // 22
+            table.append(SCNVector3(0, TABLE_BORDER_HEIGHT, -125 - Table.TABLE_BORDER_WIDTH));  // 23
             table.append(SCNVector3(0, 0, -125 - Table.TABLE_BORDER_WIDTH));					// 24
-            table.append(SCNVector3(0, -TABLE_BASE_HEIGHT, -115));						// 25
+            table.append(SCNVector3(0, -TABLE_BASE_HEIGHT, -115));                              // 25
             
             // Bottom Left
-            table.append(SCNVector3(-60, 0, -125));																// 26
-            table.append(SCNVector3(-60, TABLE_BORDER_HEIGHT, -125));											// 27
+            table.append(SCNVector3(-60, 0, -125));                                                                         // 26
+            table.append(SCNVector3(-60, TABLE_BORDER_HEIGHT, -125));                                                       // 27
             table.append(SCNVector3(-60 - Table.TABLE_BORDER_WIDTH, TABLE_BORDER_HEIGHT, -125 - Table.TABLE_BORDER_WIDTH)); // 28
             table.append(SCNVector3(-60 - Table.TABLE_BORDER_WIDTH, 0, -125 - Table.TABLE_BORDER_WIDTH));					// 29
-            table.append(SCNVector3(-50, -TABLE_BASE_HEIGHT, -115));											// 30
+            table.append(SCNVector3(-50, -TABLE_BASE_HEIGHT, -115));                                                        // 30
             
             // Bottom
-            table.append(SCNVector3(-60, 0, 0));										// 31
-            table.append(SCNVector3(-60, TABLE_BORDER_HEIGHT, 0));						// 32
+            table.append(SCNVector3(-60, 0, 0));                                                // 31
+            table.append(SCNVector3(-60, TABLE_BORDER_HEIGHT, 0));                              // 32
             table.append(SCNVector3(-60 - Table.TABLE_BORDER_WIDTH, TABLE_BORDER_HEIGHT, 0));	// 33
-            table.append(SCNVector3(-60 - Table.TABLE_BORDER_WIDTH, 0, 0));					// 34
-            table.append(SCNVector3(-50, -TABLE_BASE_HEIGHT, 0));						// 35
+            table.append(SCNVector3(-60 - Table.TABLE_BORDER_WIDTH, 0, 0));                     // 34
+            table.append(SCNVector3(-50, -TABLE_BASE_HEIGHT, 0));                               // 35
             
             // Bottom Right
-            table.append(SCNVector3(-60, 0, 125));																// 36
-            table.append(SCNVector3(-60, TABLE_BORDER_HEIGHT, 125));											// 37
+            table.append(SCNVector3(-60, 0, 125));                                                                          // 36
+            table.append(SCNVector3(-60, TABLE_BORDER_HEIGHT, 125));                                                        // 37
             table.append(SCNVector3(-60 - Table.TABLE_BORDER_WIDTH, TABLE_BORDER_HEIGHT, 125 + Table.TABLE_BORDER_WIDTH));	// 38
             table.append(SCNVector3(-60 - Table.TABLE_BORDER_WIDTH, 0, 125 + Table.TABLE_BORDER_WIDTH));					// 39
-            table.append(SCNVector3(-50, -TABLE_BASE_HEIGHT, 115));												// 40
+            table.append(SCNVector3(-50, -TABLE_BASE_HEIGHT, 115));                                                         // 40
             
             // Middle
-            table.append(SCNVector3(0, -TABLE_BASE_HEIGHT, 0));			    // 41
+            table.append(SCNVector3(0, -TABLE_BASE_HEIGHT, 0)); // 41
             
             return table;
     }
     
-    ////////////////////////////////////////////////////////////////////////
-    ///
-    /// @fn obtenirFaces()
-    ///
     /// Cette fonction obtient toutes les faces de la table
-    ///
-    /// @return Les faces.
-    ///
-    ////////////////////////////////////////////////////////////////////////
     func obtenirFaces() -> [GLuint]
     {
         let faces: [GLuint] = [
@@ -208,15 +201,7 @@ class Table
         return faces
     }
     
-    ////////////////////////////////////////////////////////////////////////
-    ///
-    /// @fn obtenirMateriau()
-    ///
     /// Cette fonction obtient le matériau de la table
-    ///
-    /// @return Le matériau de la table.
-    ///
-    ////////////////////////////////////////////////////////////////////////
     func obtenirMateriau() -> SCNMaterial
     {
         let materiau: SCNMaterial = SCNMaterial();
@@ -229,16 +214,8 @@ class Table
         materiau.emission.contents = SCNVector3Zero;
         return materiau;
     }
-    
-    ////////////////////////////////////////////////////////////////////////
-    ///
-    /// @fn obtenirTexCoords()
-    ///
+
     /// Cette fonction obtient les coordonnées de texture de la table
-    ///
-    /// @return les coordonnées de texture de la table.
-    ///
-    ////////////////////////////////////////////////////////////////////////
     func obtenirTexCoords() -> [CGPoint]
     {
         var texCoords: [CGPoint] = [CGPoint]();
