@@ -1003,6 +1003,11 @@ void FacadeModele::toggleOrbit(bool orbit) {
 	FacadeModele::resetCameraPosition();
 }
 
+void FacadeModele::rotateCamera(float angle)
+{
+	vue_->obtenirCamera().orbiterXY(0, angle);
+}
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn void FacadeModele::changerModeleEtat(MODELE_ETAT etat)

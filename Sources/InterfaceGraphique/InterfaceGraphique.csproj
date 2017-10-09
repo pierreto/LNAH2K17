@@ -160,6 +160,7 @@
     <Compile Include="Entities\UserEntity.cs" />
     <Compile Include="Exceptions\LoginException.cs" />
     <Compile Include="Game\GameState\AbstractGameState.cs" />
+    <Compile Include="Game\GameState\MasterGameState.cs" />
     <Compile Include="Game\GameState\OfflineGameState.cs" />
     <Compile Include="Game\GameState\SlaveGameState.cs" />
     <Compile Include="Menus\Login.cs">

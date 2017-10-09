@@ -22,12 +22,18 @@ namespace InterfaceGraphique.CommunicationInterface
         public void InitializeHub(HubConnection connection, string username)
         {
             this.username = username;
-            gameHubProxy = connection.CreateHubProxy("GameHub");
+         //   gameHubProxy = connection.CreateHubProxy("GameWaitingRoomHub");
+         gameHubProxy= WaitingRoomHub.GameWaitingRoomProxy;
         }
+
+
         //For the slave
-        public void InitializeSlaveGameHub(Guid gameGuid)
+        public  void InitializeSlaveGameHub(Guid gameGuid)
         {
             this.gameGuid = gameGuid;
+
+            // Étape necessaire pour que le serveur sache que la connexion est reliée au bon userId:
+           // await gameHubProxy.Invoke("JoinRoom", gameGuid);
 
             gameHubProxy.On<GameDataMessage>("ReceivedGameData", message =>
             {
@@ -56,6 +62,8 @@ namespace InterfaceGraphique.CommunicationInterface
         public void InitializeMasterGameHub(Guid gameGuid)
         {
             this.gameGuid = gameGuid;
+            // Étape necessaire pour que le serveur sache que la connexion est reliée au bon userId:
+            //await gameHubProxy.Invoke("JoinRoom", gameGuid);
 
             gameHubProxy.On<GameDataMessage>("ReceivedGameData", message =>
             {
@@ -72,13 +80,14 @@ namespace InterfaceGraphique.CommunicationInterface
 
         public void SendGameOver()
         {
-            gameHubProxy.Invoke("SendGameOver", gameGuid);
-
+            gameHubProxy.Invoke("GameOver", gameGuid);
         }
 
 
         public void Logout()
         {
+            gameHubProxy.Invoke("LeaveRoom", gameGuid);
+
             gameHubProxy?.Invoke("Disconnect", this.username).Wait();
         }
     }

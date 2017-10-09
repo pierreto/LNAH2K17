@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -12,14 +13,16 @@ namespace InterfaceGraphique.Game.GameState
     {
         public override void InitializeGameState(GameEntity gameEntity)
         {
-         
+
         }
 
         public override void MettreAJour(double tempsInterAffichage,int neededGoalsToWin)
         {
+
             FonctionsNatives.moveMaillet();
             FonctionsNatives.animer(tempsInterAffichage);
             FonctionsNatives.dessinerOpenGL();
+
             if (FonctionsNatives.isGameOver(neededGoalsToWin) == 1)
                 EndGame();
     }

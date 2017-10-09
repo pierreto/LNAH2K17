@@ -66,6 +66,16 @@ extern "C" {
 	__declspec(dllexport) void loadSounds();
 	__declspec(dllexport) void playMusic(bool quickPlay);
 	__declspec(dllexport) void toggleOrbit(bool orbit);
+
+
+	__declspec(dllexport) void getGameElementPositions(float* slavePosition, float* masterPosition, float* puckPosition);
+	__declspec(dllexport) void setSlaveGameElementPositions(float* slavePosition, float* masterPosition, float* puckPosition);
+	__declspec(dllexport) void setMasterGameElementPositions(float* slavePosition);
+
+	__declspec(dllexport) void rotateCamera(float angle);
+	__declspec(dllexport) void getSlavePosition(float* position);
+
+	__declspec(dllexport) void setOnlineClientType(int clientType);
 }
 
 #endif // __FACADE_INTERFACE_NATIVE_H__

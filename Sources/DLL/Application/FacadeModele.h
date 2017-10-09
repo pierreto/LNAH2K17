@@ -150,7 +150,10 @@ public:
    ///Active ou desactive le mode orbite de la caméra
    void toggleOrbit(bool orbit);
 
+   void rotateCamera(float angle);
+
    bool modeOrbite_;
+
 
    /// Document rapidJSON
    rapidjson::Document docJSON_;

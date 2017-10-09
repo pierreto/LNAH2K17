@@ -536,9 +536,6 @@
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ModeleEtatJeuOnline.h">
-      <Filter>Header Files\Application\States</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Media Include="Audio\Effets\But.mp3">

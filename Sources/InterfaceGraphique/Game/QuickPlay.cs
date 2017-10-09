@@ -78,6 +78,7 @@ namespace InterfaceGraphique {
             FonctionsNatives.setLights(1, true);
             FonctionsNatives.setLights(2, true);
             FonctionsNatives.resetGame();
+
         }
 
 

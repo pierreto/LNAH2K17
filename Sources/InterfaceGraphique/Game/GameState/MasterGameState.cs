@@ -9,35 +9,39 @@ using InterfaceGraphique.Entities;
 
 namespace InterfaceGraphique.Game.GameState
 {
-    public class SlaveGameState : AbstractGameState
+    public class MasterGameState : AbstractGameState
     {
 
         private GameHub gameHub;
 
-        public SlaveGameState(GameHub gameHub)
+        public MasterGameState(GameHub gameHub)
         {
             this.gameHub = gameHub;
         }
 
         public override void InitializeGameState(GameEntity gameEntity)
         {
-            FonctionsNatives.setOnlineClientType((int)OnlineClientType.SLAVE);
-
-            this.gameHub.InitializeSlaveGameHub(gameEntity.GameId);
+            FonctionsNatives.setOnlineClientType((int) OnlineClientType.MASTER);
+            this.gameHub.InitializeMasterGameHub(gameEntity.GameId);
             this.gameHub.NewPositions += OnNewGamePositions;
-            //this.gameHub.NewPositions =;
-            //this.gameHub.NewPositions =;
+
         }
 
         public override void MettreAJour(double tempsInterAffichage, int neededGoalsToWin)
         {
-            //FonctionsNatives.moveMaillet();
+            FonctionsNatives.moveMaillet();
             FonctionsNatives.animer(tempsInterAffichage);
             FonctionsNatives.dessinerOpenGL();
- 
 
-            /* if (FonctionsNatives.isGameOver(neededGoalsToWin) == 1)
-                EndGame();*/
+            float[] slavePosition = new float[3];
+            float[] masterPosition = new float[3];
+            float[] puckPosition = new float[3];
+
+            FonctionsNatives.getGameElementPositions(slavePosition,masterPosition,puckPosition);
+
+           gameHub.SendMasterPosition(slavePosition, masterPosition, puckPosition);
+            if (FonctionsNatives.isGameOver(neededGoalsToWin) == 1)
+                EndGame();
         }
         ////////////////////////////////////////////////////////////////////////
         ///
@@ -50,10 +54,10 @@ namespace InterfaceGraphique.Game.GameState
         ////////////////////////////////////////////////////////////////////////
         public override void MouseMoved(object sender, MouseEventArgs e)
         {
-            FonctionsNatives.opponentMouseMove(e.Location.X, e.Location.Y);
-            float[] slavePosition = new float[3];
-            FonctionsNatives.getSlavePosition(slavePosition);
-            this.gameHub.SendSlavePosition(slavePosition);
+            FonctionsNatives.playerMouseMove(e.Location.X, e.Location.Y);
+
+
+
         }
         ////////////////////////////////////////////////////////////////////////
         ///
@@ -106,10 +110,9 @@ namespace InterfaceGraphique.Game.GameState
                 Program.QuickPlay.EndGame();
             }
         }
-
         private void OnNewGamePositions(GameDataMessage gameData)
         {
-            FonctionsNatives.setSlaveGameElementPositions(gameData.SlavePosition,gameData.MasterPosition,gameData.PuckPosition);
+            FonctionsNatives.setMasterGameElementPositions(gameData.SlavePosition);
         }
     }
 }

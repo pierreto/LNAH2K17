@@ -74,6 +74,16 @@ void ModeleEtatJeu::setCurrentOpponentType(const OpponentType currentOpponentTyp
 	currentOpponentType_ = currentOpponentType;
 }
 
+ModeleEtatJeu::OnlineClientType ModeleEtatJeu::currentOnlineClientType() const
+{
+	return onlineClientType_;
+}
+
+void ModeleEtatJeu::setCurrentOnlineClientType(const OnlineClientType currentOnlineClientType_)
+{
+	onlineClientType_ = currentOnlineClientType_;
+}
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn ModeleEtatJeu::ModeleEtatJeu()
@@ -303,14 +313,6 @@ void ModeleEtatJeu::moveMaillet() {
 
 			position += glm::vec3(copysign(sqrt(pow(X, 2.0f) / 2.0f), X), 0, copysign(sqrt(pow(Z, 2.0f) / 2.0f), Z));
 			tryNewPosition(maillet2_, position, segmentsRight_);
-		}
-		else if(currentOpponentType_==ONLINE_PLAYER)
-		{
-			if (!gamePaused_ && gameStarted_ && !gameEnded_) {
-				glm::dvec3 mousePos;
-				FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(mousePosX_, mousePosY_, mousePos);
-				tryNewPosition(maillet2_, mousePos, segmentsLeft_);
-			}
 		}
 	}
 }

@@ -744,7 +744,7 @@ extern "C"
 	///
 	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void setCurrentOpponentType(int opponentType) {
-		ModeleEtatJeu::obtenirInstance()->setCurrentOpponentType((ModeleEtatJeu::OpponentType) opponentType);
+		ModeleEtatJeu::obtenirInstance()->setCurrentOpponentType(static_cast<ModeleEtatJeu::OpponentType>(opponentType));
 	}
 
 
@@ -881,3 +881,51 @@ extern "C"
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////
+__declspec(dllexport) void getGameElementPositions(float* slavePosition, float* masterPosition, float* puckPosition)
+{
+
+	glm::vec3 slaveVec = ModeleEtatJeu::obtenirInstance()->getOpponentPosition();
+	glm::vec3 masterVec = ModeleEtatJeu::obtenirInstance()->getPlayerPosition();
+	glm::vec3 puckVec = ModeleEtatJeu::obtenirInstance()->getPuckPosition();
+
+
+	for (int i = 0; i <3; i++)
+	{
+		slavePosition[i] = slaveVec[i];
+		masterPosition[i] = masterVec[i];
+		puckPosition[i] = puckVec[i];
+	}
+}
+__declspec(dllexport) void setSlaveGameElementPositions(float* slavePosition, float* masterPosition, float* puckPosition)
+{
+	
+	// ModeleEtatJeu::obtenirInstance()->setOpponentPosition(slavePosition);
+	 ModeleEtatJeu::obtenirInstance()->setPlayerPosition(masterPosition);
+	 ModeleEtatJeu::obtenirInstance()->setPuckPosition(puckPosition);
+
+}
+__declspec(dllexport) void setMasterGameElementPositions(float* slavePosition)
+{
+
+	ModeleEtatJeu::obtenirInstance()->setOpponentPosition(slavePosition);
+}
+__declspec(dllexport) void rotateCamera(float angle)
+{
+	return FacadeModele::obtenirInstance()->rotateCamera(angle);
+
+}
+
+
+void getSlavePosition(float* position)
+{
+	glm::vec3 pos =ModeleEtatJeu::obtenirInstance()->getOpponentPosition();
+	for(int i = 0 ; i<3; i++)
+	{
+		position[i] = pos[i];
+	}
+}
+
+void setOnlineClientType(int clientType)
+{
+	ModeleEtatJeu::obtenirInstance()->setCurrentOnlineClientType(static_cast<ModeleEtatJeu::OnlineClientType>(clientType));
+}

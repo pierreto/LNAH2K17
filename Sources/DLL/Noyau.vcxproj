@@ -255,7 +255,6 @@
     <ClInclude Include="Lighting\Light.h" />
     <ClInclude Include="Lighting\LightAnimation.h" />
     <ClInclude Include="Lighting\LightManager.h" />
-    <ClInclude Include="ModeleEtatJeuOnline.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Tests\ArbreRenduTest.h" />
     <ClInclude Include="Tests\BancTests.h" />

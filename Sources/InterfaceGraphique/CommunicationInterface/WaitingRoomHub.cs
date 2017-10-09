@@ -13,10 +13,12 @@ namespace InterfaceGraphique.CommunicationInterface
 {
     public class WaitingRoomHub : IBaseHub
     {
-        private IHubProxy GameWaitingRoomProxy { get; set; }
+        public static IHubProxy GameWaitingRoomProxy { get; set; }
 
         private HubConnection connection;
         private SlaveGameState slaveGameState;
+        private MasterGameState masterGameState;
+
         private string username;
 
         public event EventHandler<int> RemainingTimeEvent;
@@ -29,9 +31,10 @@ namespace InterfaceGraphique.CommunicationInterface
 
         public event EventHandler<GameEntity> GameStartingEvent;
 
-        public WaitingRoomHub(SlaveGameState slaveGameState)
+        public WaitingRoomHub(SlaveGameState slaveGameState,MasterGameState masterGameState)
         {
             this.slaveGameState = slaveGameState;
+            this.masterGameState = masterGameState;
         }
 
         public void InitializeHub(HubConnection connection, string username)
@@ -76,14 +79,24 @@ namespace InterfaceGraphique.CommunicationInterface
 
                         if (this.username.Equals(officialGame.Master.Name))
                         {
-                            Program.QuickPlay.CurrentGameState = this.slaveGameState;
+                            this.masterGameState.InitializeGameState(officialGame);
+
+                            Program.QuickPlay.CurrentGameState = this.masterGameState;
+                            Program.FormManager.CurrentForm = Program.QuickPlay;
+
+
                         }
                         else
                         {
+                            this.slaveGameState.InitializeGameState(officialGame);
+
                             Program.QuickPlay.CurrentGameState = this.slaveGameState;
+                            Program.FormManager.CurrentForm = Program.QuickPlay;
+
+                            FonctionsNatives.rotateCamera(180);
+
 
                         }
-                        Program.FormManager.CurrentForm = Program.QuickPlay;
                     }));
                 });
 

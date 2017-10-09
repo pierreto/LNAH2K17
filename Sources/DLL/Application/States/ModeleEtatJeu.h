@@ -36,6 +36,11 @@ public:
 		VIRTUAL_PLAYER=1,
 		ONLINE_PLAYER=2
 	};
+
+	enum OnlineClientType {
+		SLAVE = 0,
+		MASTER = 1,
+	};
 	/// Obtient l'instance unique de la classe.
 	static ModeleEtatJeu* obtenirInstance();
 	/// Libère l'instance unique de la classe.
@@ -66,8 +71,20 @@ public:
 	bool isGameStarted() { return gameStarted_; };
 
 
+	glm::vec3 getPlayerPosition() const { return maillet1_->obtenirPositionRelative();};
+	glm::vec3 getOpponentPosition() const { return maillet2_->obtenirPositionRelative(); };
+	glm::vec3 getPuckPosition() const { return rondelle_->obtenirPositionRelative(); };
+
+	void setPlayerPosition(float* newPositions) const {  maillet1_->assignerPositionRelative(glm::make_vec3(newPositions)); };
+	void setOpponentPosition(float* newPositions)  const {  maillet2_->assignerPositionRelative(glm::make_vec3(newPositions)); };
+	void setPuckPosition(float* newPositions) const {  rondelle_->assignerPositionRelative(glm::make_vec3(newPositions)); };
+
 	OpponentType currentOpponentType() const;
 	void setCurrentOpponentType(const OpponentType currentOpponentType);
+
+	OnlineClientType currentOnlineClientType() const;
+	void setCurrentOnlineClientType(const OnlineClientType currentOnlineClientType_);
+
 private:
 	/// Constructeur.
 	ModeleEtatJeu();
@@ -128,6 +145,8 @@ private:
 	const glm::vec4 DARK_VIOLET = glm::vec4(0.58f, 0.0f, 0.83f, 1.0f);
 
 	OpponentType currentOpponentType_;
+	OnlineClientType onlineClientType_;
+
 };
 
 
