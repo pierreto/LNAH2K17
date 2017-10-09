@@ -13,6 +13,7 @@ namespace InterfaceGraphique.Game.GameState
     {
 
         private GameHub gameHub;
+        private bool gameHasEnded = false;
 
         public SlaveGameState(GameHub gameHub)
         {
@@ -25,19 +26,13 @@ namespace InterfaceGraphique.Game.GameState
 
             this.gameHub.InitializeSlaveGameHub(gameEntity.GameId);
             this.gameHub.NewPositions += OnNewGamePositions;
-            //this.gameHub.NewPositions =;
-            //this.gameHub.NewPositions =;
+            this.gameHub.NewGameOver += EndGame;
         }
 
         public override void MettreAJour(double tempsInterAffichage, int neededGoalsToWin)
         {
-            //FonctionsNatives.moveMaillet();
             FonctionsNatives.animer(tempsInterAffichage);
             FonctionsNatives.dessinerOpenGL();
- 
-
-            /* if (FonctionsNatives.isGameOver(neededGoalsToWin) == 1)
-                EndGame();*/
         }
         ////////////////////////////////////////////////////////////////////////
         ///
@@ -93,23 +88,17 @@ namespace InterfaceGraphique.Game.GameState
         ////////////////////////////////////////////////////////////////////////
         public override void EndGame()
         {
-            int[] score = new int[2];
-            FonctionsNatives.getGameScore(score);
-
-            if (this.IsTournementMode)
-            {
-                Program.TournementTree.RoundScore = score;
-                Program.FormManager.CurrentForm = Program.TournementTree;
-            }
-            else
-            {
-                Program.QuickPlay.EndGame();
-            }
+            gameHasEnded = true;
+            Program.QuickPlay.EndGame();
         }
 
         private void OnNewGamePositions(GameDataMessage gameData)
         {
-            FonctionsNatives.setSlaveGameElementPositions(gameData.SlavePosition,gameData.MasterPosition,gameData.PuckPosition);
+            if (!gameHasEnded)
+            {
+                 FonctionsNatives.setSlaveGameElementPositions(gameData.SlavePosition,gameData.MasterPosition,gameData.PuckPosition);
+            }
         }
+
     }
 }

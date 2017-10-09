@@ -13,6 +13,7 @@ namespace InterfaceGraphique.Game.GameState
     {
 
         private GameHub gameHub;
+        private bool gameHasEnded = false;
 
         public MasterGameState(GameHub gameHub)
         {
@@ -29,6 +30,11 @@ namespace InterfaceGraphique.Game.GameState
 
         public override void MettreAJour(double tempsInterAffichage, int neededGoalsToWin)
         {
+            if (FonctionsNatives.isGameOver(neededGoalsToWin) == 1)
+            {
+                EndGame();
+                return;
+            }
             FonctionsNatives.moveMaillet();
             FonctionsNatives.animer(tempsInterAffichage);
             FonctionsNatives.dessinerOpenGL();
@@ -39,9 +45,9 @@ namespace InterfaceGraphique.Game.GameState
 
             FonctionsNatives.getGameElementPositions(slavePosition,masterPosition,puckPosition);
 
-           gameHub.SendMasterPosition(slavePosition, masterPosition, puckPosition);
-            if (FonctionsNatives.isGameOver(neededGoalsToWin) == 1)
-                EndGame();
+             gameHub.SendMasterPosition(slavePosition, masterPosition, puckPosition);
+       
+
         }
         ////////////////////////////////////////////////////////////////////////
         ///
@@ -95,24 +101,17 @@ namespace InterfaceGraphique.Game.GameState
         /// @return Void 
         ///
         ////////////////////////////////////////////////////////////////////////
-        public override void EndGame()
-        {
-            int[] score = new int[2];
-            FonctionsNatives.getGameScore(score);
-
-            if (this.IsTournementMode)
-            {
-                Program.TournementTree.RoundScore = score;
-                Program.FormManager.CurrentForm = Program.TournementTree;
-            }
-            else
-            {
-                Program.QuickPlay.EndGame();
-            }
+        public override void EndGame() {
+            gameHasEnded = true;
+            gameHub.SendGameOver();
+            Program.QuickPlay.EndGame(); 
         }
         private void OnNewGamePositions(GameDataMessage gameData)
         {
-            FonctionsNatives.setMasterGameElementPositions(gameData.SlavePosition);
+            if (!gameHasEnded)
+            {
+                FonctionsNatives.setMasterGameElementPositions(gameData.SlavePosition);
+            }
         }
     }
 }
