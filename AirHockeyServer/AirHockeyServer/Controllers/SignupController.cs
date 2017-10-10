@@ -25,7 +25,7 @@ namespace AirHockeyServer.Controllers
             try
             {
                 await this.SignupService.Signup(signupEntity);
-                return Request.CreateResponse(HttpStatusCode.OK);
+                return Request.CreateResponse(HttpStatusCode.OK, true);
             }
             catch (SignupException e)
             {

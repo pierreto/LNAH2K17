@@ -41,12 +41,16 @@ export class SignupComponent implements OnInit {
   private signupForm: FormGroup;
   private user: User;
   private passwordConfirm: string;
+  private errorMessage: string;
+  private signupOk: boolean;
   constructor(private fb: FormBuilder, private router: Router, private signupService: SignupService, private appService: AppService) { }
 
   ngOnInit() {
     this.user = new User();
     console.log(this.user);
     this.passwordConfirm = '';
+    this.errorMessage = '';
+    this.signupOk = true;
     this.buildForm();
   }
 
@@ -110,10 +114,18 @@ onValueChanged(data?: any) {
   signup(): void {
     this.appService.loading = true;
     this.signupService.signup(this.user).subscribe(
-      () => {
+      res => {
+        console.log('Res : ', res);
+        console.log('OK');
+        this.signupOk = true;
         this.appService.loading = false;
+        this.router.navigate(['GO TO PROFILE']);
       },
-      () => {
+      err => {
+        console.log(err);
+        console.log('ERROR');
+        this.signupOk = false;
+        this.errorMessage = err.json().Message;
         this.appService.loading = false;
       }
     );
