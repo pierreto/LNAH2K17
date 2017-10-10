@@ -37,27 +37,26 @@ enum MODELE_ETAT : Int {
 class FacadeModele {
     
     /// Instance singleton
-    static let instance = FacadeModele()
+    static var instance = FacadeModele()
     
     /// Vue courante de la scène.
-    var vue: EditorViewController?
+    private var vue: EditorViewController?
     
     /// Arbre de rendu contenant les différents objets de la scène.
-    var arbre: ArbreRendu?
+    private var arbre: ArbreRendu?
     
     /// Etat du modèle
-    var etat: ModeleEtat?
+    private var etat: ModeleEtat?
     
-    /// Constructeur
-    init() {
-        self.vue = EditorViewController.instance
-        
+    /// Initialise la vue, l'arbre et l'état
+    func initialiser() {
         self.arbre = ArbreRendu.instance
         self.arbre?.initialiser()
         
         self.etat = ModeleEtatSelection.instance
         self.etat?.initialiser()
         
+        self.vue = EditorViewController.instance
         self.initVue()
     }
     
@@ -68,7 +67,7 @@ class FacadeModele {
     
     /// Retourne l'arbre de rendu.
     func obtenirArbreRendu() -> ArbreRendu {
-        return ArbreRendu.instance
+        return self.arbre!
     }
     
     func initVue() {
@@ -92,34 +91,32 @@ class FacadeModele {
             case .SELECTION:
                 self.etat = ModeleEtatSelection.instance
                 break;
-            /*case .DEPLACEMENT:
-                self.etat = ModeleEtatDeplacement.instance
+            case .DEPLACEMENT:
+                //self.etat = ModeleEtatDeplacement.instance
                 break;
             case .ROTATION:
-                self.etat = ModeleEtatRotation.instance
+                //self.etat = ModeleEtatRotation.instance
                 break;
             case .MISE_A_ECHELLE:
-                self.etat = ModeleEtatScale.instance
+                //self.etat = ModeleEtatScale.instance
                 break;
             case .ZOOM:
-                self.etat = ModeleEtatZoom.instance
+                //self.etat = ModeleEtatZoom.instance
                 break;
             case .DUPLIQUER:
-                self.etat = ModeleEtatDuplication.instance
+                //self.etat = ModeleEtatDuplication.instance
                 break;
             case .POINTS_CONTROLE:
                 self.etat = ModeleEtatPointControl.instance
                 break;
             case .CREATION_ACCELERATEUR:
-                self.etat = ModeleEtatCreerBoost.instance
+                //self.etat = ModeleEtatCreerBoost.instance
                 break;
             case .CREATION_MURET:
-                self.etat = ModeleEtatCreerMuret.instance
+                //self.etat = ModeleEtatCreerMuret.instance
                 break;
             case .CREATION_PORTAIL:
-                self.etat = ModeleEtatCreerPortail.instance
-                break;*/
-            default:
+                //self.etat = ModeleEtatCreerPortail.instance
                 break;
         }
         

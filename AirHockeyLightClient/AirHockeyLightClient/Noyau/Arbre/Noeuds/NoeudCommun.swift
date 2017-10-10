@@ -21,9 +21,6 @@ import SceneKit
 ///////////////////////////////////////////////////////////////////////////
 class NoeudCommun : SCNNode {
     
-    /// Type du noeud
-    private var type: String = ""
-    
     /// Vecteur spécifiant les axes bloqués pour le déplacement
     private var axisLock: GLKVector3 = GLKVector3(v: (1.0, 0.0, 1.0))
     
@@ -34,23 +31,30 @@ class NoeudCommun : SCNNode {
     required init(type: String, geometry: SCNGeometry) {
         super.init()
         self.geometry = geometry
-        self.type = type
+        self.name = type
     }
     
     /// Constructeur sans géométrie
     required init(type: String) {
         super.init()
-        
-        self.type = type
+        self.name = type
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    /// Cette fonction permet d'itérer à travers tous les noeuds enfants avec le visiteur
+    func accepterVisiteur(visiteur: VisiteurAbstrait) {
+        for child in self.childNodes {
+            let noeud = child as! NoeudCommun
+            noeud.accepterVisiteur(visiteur: visiteur)
+        }
+    }
+    
     /// Obtient le type du noeud
     func obtenirType() -> String {
-        return self.type
+        return self.name!
     }
     
     /// Écrit si le noeud peut être sélectionné ou non.
@@ -93,11 +97,15 @@ class NoeudCommun : SCNNode {
         self.axisLock = axisLock
     }
     
-    /// Cette fonction permet d'itérer à travers tous les noeuds enfants avec le visiteur
-    func accepterVisiteur(visiteur: VisiteurAbstrait) {
-        for child in self.childNodes {
-            let noeud = child as! NoeudCommun
-            noeud.accepterVisiteur(visiteur: visiteur)
+    /// Cette fonction applique une autre couleur sur le noeud
+    func useOtherColor(activer: Bool, color: UIColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)) {
+        let material = self.geometry?.firstMaterial
+        
+        if (activer) {
+            material?.diffuse.contents = color
+        } else {
+            let defaultColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+            material?.diffuse.contents = defaultColor
         }
     }
     

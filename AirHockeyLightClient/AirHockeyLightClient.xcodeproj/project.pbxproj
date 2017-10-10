@@ -26,6 +26,7 @@
 		8F0B94B21F8D4BCE007F0E82 /* ModeleEtat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0B94B11F8D4BCE007F0E82 /* ModeleEtat.swift */; };
 		8F0B94B41F8D4EC1007F0E82 /* ModeleEtatSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0B94B31F8D4EC1007F0E82 /* ModeleEtatSelection.swift */; };
 		8F0B94B61F8D5C25007F0E82 /* FacadeModele.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0B94B51F8D5C25007F0E82 /* FacadeModele.swift */; };
+		8F0B94B81F8D7F11007F0E82 /* ModeleEtatPointControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0B94B71F8D7F11007F0E82 /* ModeleEtatPointControl.swift */; };
 		8F64C0111F7754EF00F14AC7 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F64C0101F7754EF00F14AC7 /* ChatViewController.swift */; };
 		8F64C0131F7754FD00F14AC7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F64C0121F7754FD00F14AC7 /* LaunchScreen.storyboard */; };
 		8F64C0151F77550800F14AC7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F64C0141F77550800F14AC7 /* Main.storyboard */; };
@@ -70,6 +71,7 @@
 		8F0B94B11F8D4BCE007F0E82 /* ModeleEtat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ModeleEtat.swift; path = Noyau/Application/States/ModeleEtat.swift; sourceTree = "<group>"; };
 		8F0B94B31F8D4EC1007F0E82 /* ModeleEtatSelection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ModeleEtatSelection.swift; path = Noyau/Application/States/ModeleEtatSelection.swift; sourceTree = "<group>"; };
 		8F0B94B51F8D5C25007F0E82 /* FacadeModele.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FacadeModele.swift; path = Noyau/Application/FacadeModele.swift; sourceTree = "<group>"; };
+		8F0B94B71F8D7F11007F0E82 /* ModeleEtatPointControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ModeleEtatPointControl.swift; path = Noyau/Application/States/ModeleEtatPointControl.swift; sourceTree = "<group>"; };
 		8F64C0101F7754EF00F14AC7 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatViewController.swift; path = InterfaceGraphique/Chat/ChatViewController.swift; sourceTree = "<group>"; };
 		8F64C0121F7754FD00F14AC7 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = InterfaceGraphique/Menus/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8F64C0141F77550800F14AC7 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = InterfaceGraphique/Main.storyboard; sourceTree = "<group>"; };
@@ -179,6 +181,7 @@
 			children = (
 				8F0B94B11F8D4BCE007F0E82 /* ModeleEtat.swift */,
 				8F0B94B31F8D4EC1007F0E82 /* ModeleEtatSelection.swift */,
+				8F0B94B71F8D7F11007F0E82 /* ModeleEtatPointControl.swift */,
 			);
 			name = States;
 			sourceTree = "<group>";
@@ -479,6 +482,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8F0B94B81F8D7F11007F0E82 /* ModeleEtatPointControl.swift in Sources */,
 				8FB6A9951F81B9C800FAFFCF /* EditorViewController.swift in Sources */,
 				8FFC5B481F7C90340031474F /* MessageViewCell.swift in Sources */,
 				8F0B94B41F8D4EC1007F0E82 /* ModeleEtatSelection.swift in Sources */,

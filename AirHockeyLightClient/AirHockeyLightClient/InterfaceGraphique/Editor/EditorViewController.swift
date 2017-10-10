@@ -59,7 +59,8 @@ class EditorViewController: UIViewController {
     }
     
     func initFacadeModele() {
-        _ = FacadeModele.instance
+        let facade = FacadeModele.instance
+        facade.initialiser()
     }
     
     override var shouldAutorotate: Bool {
