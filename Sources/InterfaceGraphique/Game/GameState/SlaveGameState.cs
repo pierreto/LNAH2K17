@@ -24,6 +24,12 @@ namespace InterfaceGraphique.Game.GameState
         {
             FonctionsNatives.setOnlineClientType((int)OnlineClientType.SLAVE);
 
+            StringBuilder player1Name = new StringBuilder(gameEntity.Slave.Name.Length);
+            StringBuilder player2Name = new StringBuilder(gameEntity.Master.Name.Length);
+            player1Name.Append(gameEntity.Slave.Name);
+            player2Name.Append(gameEntity.Master.Name);
+            FonctionsNatives.setPlayerNames(player1Name, player2Name);
+
             this.gameHub.InitializeSlaveGameHub(gameEntity.GameId);
             this.gameHub.NewPositions += OnNewGamePositions;
             this.gameHub.NewGoal += OnNewGoal;
@@ -34,11 +40,11 @@ namespace InterfaceGraphique.Game.GameState
         {
             if (goalMessage.PlayerNumber == 1)
             {
-                FonctionsNatives.masterGoal();
+                FonctionsNatives.slaveGoal();
             }
             else if (goalMessage.PlayerNumber == 2)
             {
-                FonctionsNatives.slaveGoal();
+                FonctionsNatives.masterGoal();
             }
         }
 

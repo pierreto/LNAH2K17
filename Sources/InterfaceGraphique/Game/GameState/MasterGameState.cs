@@ -35,6 +35,12 @@ namespace InterfaceGraphique.Game.GameState
 
         
             FonctionsNatives.setOnGoalCallback(callback);
+
+            StringBuilder player1Name = new StringBuilder(gameEntity.Master.Name.Length);
+            StringBuilder player2Name = new StringBuilder(gameEntity.Slave.Name.Length);
+            player1Name.Append(gameEntity.Master.Name);
+            player2Name.Append(gameEntity.Slave.Name);
+            FonctionsNatives.setPlayerNames(player1Name, player2Name);
         }
 
         public override void MettreAJour(double tempsInterAffichage, int neededGoalsToWin)
