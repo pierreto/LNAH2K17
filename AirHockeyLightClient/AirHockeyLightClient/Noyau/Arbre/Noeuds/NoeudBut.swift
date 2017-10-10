@@ -34,7 +34,6 @@ class NoeudBut : NoeudCommun {
     /// Le but n'a pas un modèle obj
     required init(type : String, geometry: SCNGeometry) {
         fatalError("init(type:) has not been implemented")
-        
     }
     
     /// Constructeur

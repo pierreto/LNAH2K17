@@ -47,6 +47,14 @@ class NoeudTable : NoeudCommun {
         fatalError("init(coder:) has not been implemented")
     }
     
+    /// Cette fonction accepte un visiteur et effectue la bonne methode selon le type
+    override func accepterVisiteur(visiteur: VisiteurAbstrait) {
+        // Envoie le visiteur aux enfants
+        super.accepterVisiteur(visiteur: visiteur)
+        
+        visiteur.visiterTable(noeud: self)
+    }
+    
     /// Initialiser la géométrie de la table
     func initialiserTable() {
         let sources = self.initSources()
@@ -192,7 +200,7 @@ class NoeudTable : NoeudCommun {
         // Creation des buts
         creerButs(pointGauche: noeuds[4], pointDroite: noeuds[0]);
         
-        noeuds[7].assignerPositionRelative(positionRelative: noeuds[6].obtenirPositionRelative())
+        // noeuds[7].assignerPositionRelative(positionRelative: noeuds[6].obtenirPositionRelative())
         
         // Ajuster les sommets de la table
         for noeud in noeuds {
@@ -211,9 +219,9 @@ class NoeudTable : NoeudCommun {
         let butDroite = arbre.creerNoeud(typeNouveauNoeud: arbre.NOM_BUT) as! NoeudBut
     
         // Deplacer les buts
-        // let offset: Float = 10.0
+        //let offset: Float = 10.0
         //butGauche.position = SCNVector3FromGLKVector3( GLKVector3Add(pointGauche.obtenirPositionRelative(), GLKVector3(v: (0.0, 0.0, offset))) )
-        //butDroite.position = SCNVector3FromGLKVector3( GLKVector3Add( pointDroite.obtenirPositionRelative(), GLKVector3(v: (0.0, 0.0, -offset))) )
+        //butDroite.position = SCNVector3FromGLKVector3( GLKVector3Add(pointDroite.obtenirPositionRelative(), GLKVector3(v: (0.0, 0.0, -offset))) )
         // TODO : Vérifier que la fonction deplacer revient à faire .position. Pas besoin de déplacer les buts ?
         //butGauche->deplacer(pointGauche->obtenirPositionRelative() + glm::vec3(0, 0, offset));
         //butDroite->deplacer(pointDroite->obtenirPositionRelative() + glm::vec3(0, 0, -offset));

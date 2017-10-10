@@ -21,6 +21,11 @@
 		34B66FE01F844C2100A9CCB9 /* table_texture.png in Resources */ = {isa = PBXBuildFile; fileRef = 34B66FDF1F844C2100A9CCB9 /* table_texture.png */; };
 		34B66FE21F84599100A9CCB9 /* But.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B66FE11F84599100A9CCB9 /* But.swift */; };
 		34B66FE41F84636900A9CCB9 /* NoeudBut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B66FE31F84636900A9CCB9 /* NoeudBut.swift */; };
+		8F0B94AC1F8D3EEE007F0E82 /* VisiteurAbstrait.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0B94AB1F8D3EEE007F0E82 /* VisiteurAbstrait.swift */; };
+		8F0B94AE1F8D450B007F0E82 /* VisiteurSelectionnable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0B94AD1F8D450B007F0E82 /* VisiteurSelectionnable.swift */; };
+		8F0B94B21F8D4BCE007F0E82 /* ModeleEtat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0B94B11F8D4BCE007F0E82 /* ModeleEtat.swift */; };
+		8F0B94B41F8D4EC1007F0E82 /* ModeleEtatSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0B94B31F8D4EC1007F0E82 /* ModeleEtatSelection.swift */; };
+		8F0B94B61F8D5C25007F0E82 /* FacadeModele.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0B94B51F8D5C25007F0E82 /* FacadeModele.swift */; };
 		8F64C0111F7754EF00F14AC7 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F64C0101F7754EF00F14AC7 /* ChatViewController.swift */; };
 		8F64C0131F7754FD00F14AC7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F64C0121F7754FD00F14AC7 /* LaunchScreen.storyboard */; };
 		8F64C0151F77550800F14AC7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F64C0141F77550800F14AC7 /* Main.storyboard */; };
@@ -60,6 +65,11 @@
 		4BC65514BAA095CA955FDC5C /* Pods-AirHockeyLightClient.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AirHockeyLightClient.release.xcconfig"; path = "Pods/Target Support Files/Pods-AirHockeyLightClient/Pods-AirHockeyLightClient.release.xcconfig"; sourceTree = "<group>"; };
 		628E0B24C7327005FBC765AC /* Pods-AirHockeyLightClient.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AirHockeyLightClient.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AirHockeyLightClient/Pods-AirHockeyLightClient.debug.xcconfig"; sourceTree = "<group>"; };
 		7585740DC43877CD99CDDF6A /* Pods_AirHockeyLightClient.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AirHockeyLightClient.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8F0B94AB1F8D3EEE007F0E82 /* VisiteurAbstrait.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VisiteurAbstrait.swift; path = Noyau/Arbre/Visiteurs/VisiteurAbstrait.swift; sourceTree = "<group>"; };
+		8F0B94AD1F8D450B007F0E82 /* VisiteurSelectionnable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VisiteurSelectionnable.swift; path = Noyau/Arbre/Visiteurs/VisiteurSelectionnable.swift; sourceTree = "<group>"; };
+		8F0B94B11F8D4BCE007F0E82 /* ModeleEtat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ModeleEtat.swift; path = Noyau/Application/States/ModeleEtat.swift; sourceTree = "<group>"; };
+		8F0B94B31F8D4EC1007F0E82 /* ModeleEtatSelection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ModeleEtatSelection.swift; path = Noyau/Application/States/ModeleEtatSelection.swift; sourceTree = "<group>"; };
+		8F0B94B51F8D5C25007F0E82 /* FacadeModele.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FacadeModele.swift; path = Noyau/Application/FacadeModele.swift; sourceTree = "<group>"; };
 		8F64C0101F7754EF00F14AC7 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatViewController.swift; path = InterfaceGraphique/Chat/ChatViewController.swift; sourceTree = "<group>"; };
 		8F64C0121F7754FD00F14AC7 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = InterfaceGraphique/Menus/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8F64C0141F77550800F14AC7 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = InterfaceGraphique/Main.storyboard; sourceTree = "<group>"; };
@@ -146,6 +156,33 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		8F0B94AA1F8D3ECA007F0E82 /* Visiteurs */ = {
+			isa = PBXGroup;
+			children = (
+				8F0B94AB1F8D3EEE007F0E82 /* VisiteurAbstrait.swift */,
+				8F0B94AD1F8D450B007F0E82 /* VisiteurSelectionnable.swift */,
+			);
+			name = Visiteurs;
+			sourceTree = "<group>";
+		};
+		8F0B94AF1F8D4B9D007F0E82 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				8F0B94B01F8D4BA4007F0E82 /* States */,
+				8F0B94B51F8D5C25007F0E82 /* FacadeModele.swift */,
+			);
+			name = Application;
+			sourceTree = "<group>";
+		};
+		8F0B94B01F8D4BA4007F0E82 /* States */ = {
+			isa = PBXGroup;
+			children = (
+				8F0B94B11F8D4BCE007F0E82 /* ModeleEtat.swift */,
+				8F0B94B31F8D4EC1007F0E82 /* ModeleEtatSelection.swift */,
+			);
+			name = States;
+			sourceTree = "<group>";
+		};
 		8F0FFED41F6EB8A600366D8E /* InterfaceGraphique */ = {
 			isa = PBXGroup;
 			children = (
@@ -162,6 +199,7 @@
 		8F0FFED51F6EB8B100366D8E /* Noyau */ = {
 			isa = PBXGroup;
 			children = (
+				8F0B94AF1F8D4B9D007F0E82 /* Application */,
 				8FB6A9C71F81E35D00FAFFCF /* Arbre */,
 				253E088F1F818DE1009F301B /* Helper */,
 				8F8706B71F789266000E6824 /* Entities */,
@@ -268,6 +306,7 @@
 		8FB6A9C71F81E35D00FAFFCF /* Arbre */ = {
 			isa = PBXGroup;
 			children = (
+				8F0B94AA1F8D3ECA007F0E82 /* Visiteurs */,
 				3415E6C51F85646B00DB1CAD /* Usines */,
 				8FB6A9C81F81E36300FAFFCF /* Noeuds */,
 				3415E6C31F8547CE00DB1CAD /* ArbreRendu.swift */,
@@ -442,8 +481,10 @@
 			files = (
 				8FB6A9951F81B9C800FAFFCF /* EditorViewController.swift in Sources */,
 				8FFC5B481F7C90340031474F /* MessageViewCell.swift in Sources */,
+				8F0B94B41F8D4EC1007F0E82 /* ModeleEtatSelection.swift in Sources */,
 				8F8706BB1F7892F2000E6824 /* ChatMessageEntity.swift in Sources */,
 				3415E6C71F85649D00DB1CAD /* UsineAbstraite.swift in Sources */,
+				8F0B94AE1F8D450B007F0E82 /* VisiteurSelectionnable.swift in Sources */,
 				8FE1EB051F75A96900A01514 /* ClientConnection.swift in Sources */,
 				8F6AE2C21F6592EB00A29E8B /* GameScene.swift in Sources */,
 				34B66FE41F84636900A9CCB9 /* NoeudBut.swift in Sources */,
@@ -456,12 +497,15 @@
 				8F64C0111F7754EF00F14AC7 /* ChatViewController.swift in Sources */,
 				3415E6C41F8547CE00DB1CAD /* ArbreRendu.swift in Sources */,
 				8FFC5B4A1F7CA7170031474F /* PaddingLabel.swift in Sources */,
+				8F0B94B61F8D5C25007F0E82 /* FacadeModele.swift in Sources */,
 				8F64C0171F775B2500F14AC7 /* AuthentificationViewController.swift in Sources */,
 				253E088E1F818DD2009F301B /* JsonHelper.swift in Sources */,
 				8F8706BD1F78A67F000E6824 /* ChannelViewController.swift in Sources */,
+				8F0B94AC1F8D3EEE007F0E82 /* VisiteurAbstrait.swift in Sources */,
 				3415E6C91F85659900DB1CAD /* UsineNoeud.swift in Sources */,
 				253E08911F81913A009F301B /* ChannelEntity.swift in Sources */,
 				8F69F4BF1F8AF871004D5129 /* MathHelper.swift in Sources */,
+				8F0B94B21F8D4BCE007F0E82 /* ModeleEtat.swift in Sources */,
 				34B66FD91F8428EA00A9CCB9 /* NoeudTable.swift in Sources */,
 				8F6AE2BC1F6592EB00A29E8B /* AppDelegate.swift in Sources */,
 			);

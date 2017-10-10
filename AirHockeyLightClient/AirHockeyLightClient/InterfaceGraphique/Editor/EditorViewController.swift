@@ -21,52 +21,46 @@ import SceneKit
 ///////////////////////////////////////////////////////////////////////////
 class EditorViewController: UIViewController {
     
-    var editorView: SCNView!
-    var editorScene: SCNScene!
-    var cameraNode: SCNNode!
+    /// Instance singleton
+    static var instance = EditorViewController()
+    
+    public var editorView: SCNView!
+    public var editorScene: SCNScene!
+    public var cameraNode: SCNNode!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        EditorViewController.instance = self
+        
         self.initView()
         self.initScene()
         self.initCamera()
-        self.initObjects()
+        self.initFacadeModele()
     }
     
     func initView() {
-        editorView = self.view as! SCNView
-        editorView.allowsCameraControl = true
-        editorView.autoenablesDefaultLighting = true
+        self.editorView = self.view as! SCNView
+        self.editorView.allowsCameraControl = true
+        self.editorView.autoenablesDefaultLighting = true
     }
     
     func initScene() {
-        editorScene = SCNScene()
-        editorView.scene = editorScene
+        self.editorScene = SCNScene()
+        self.editorView.scene = editorScene
         
-        editorView.isPlaying = true
+        self.editorView.isPlaying = true
     }
     
     func initCamera() {
-        cameraNode = SCNNode()
-        cameraNode.camera = SCNCamera()
-        cameraNode.position = SCNVector3(x: 0, y: 5, z: 10)
+        self.cameraNode = SCNNode()
+        self.cameraNode.camera = SCNCamera()
+        self.cameraNode.position = SCNVector3(x: 0, y: 5, z: 10)
     }
     
-    func initObjects() {
-        self.editorScene.rootNode.addChildNode(ArbreRendu.instance.creerNoeud(typeNouveauNoeud: ArbreRendu.instance.NOM_TABLE))
-        self.editorScene.rootNode.addChildNode(ArbreRendu.instance.creerNoeud(typeNouveauNoeud: ArbreRendu.instance.NOM_BUT))
+    func initFacadeModele() {
+        _ = FacadeModele.instance
     }
-    
-    /*func addButToScene() {
-        let but = SCNScene(named: "but.dae")
-        let butNode = but?.rootNode
-        self.editorScene.rootNode.addChildNode(butNode!)
-     
-        let but = SCNScene(named: "but.dae")
-        let butNode = but?.rootNode.childNode(withName: "Cube", recursively: true)
-        self.editorScene.rootNode.addChildNode(butNode!)
-    }*/
     
     override var shouldAutorotate: Bool {
         return true

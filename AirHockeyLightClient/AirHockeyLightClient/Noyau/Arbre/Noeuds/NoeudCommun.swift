@@ -27,6 +27,9 @@ class NoeudCommun : SCNNode {
     /// Vecteur spécifiant les axes bloqués pour le déplacement
     private var axisLock: GLKVector3 = GLKVector3(v: (1.0, 0.0, 1.0))
     
+    /// Vrai si le noeud est sélectionnable.
+    private var selectionnable: Bool = true
+    
     /// Constructeur avec géométrie
     required init(type: String, geometry: SCNGeometry) {
         super.init()
@@ -43,6 +46,21 @@ class NoeudCommun : SCNNode {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    /// Obtient le type du noeud
+    func obtenirType() -> String {
+        return self.type
+    }
+    
+    /// Écrit si le noeud peut être sélectionné ou non.
+    func assignerEstSelectionnable(selectionnable: Bool) {
+        self.selectionnable = selectionnable
+    }
+    
+    /// Vérifie si le noeud est sélectionnable.
+    func estSelectionnable() -> Bool {
+        return self.selectionnable
     }
     
     /// Obtient la position relative du noeud.
@@ -73,6 +91,14 @@ class NoeudCommun : SCNNode {
     /// Permet de changer les axes de déplacement valide
     func assignerAxisLock(axisLock: GLKVector3) {
         self.axisLock = axisLock
+    }
+    
+    /// Cette fonction permet d'itérer à travers tous les noeuds enfants avec le visiteur
+    func accepterVisiteur(visiteur: VisiteurAbstrait) {
+        for child in self.childNodes {
+            let noeud = child as! NoeudCommun
+            noeud.accepterVisiteur(visiteur: visiteur)
+        }
     }
     
 }

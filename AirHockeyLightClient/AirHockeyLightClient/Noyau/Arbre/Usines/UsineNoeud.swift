@@ -50,7 +50,7 @@ class UsineNoeud<T: NoeudCommun> : UsineAbstraite {
     func creerNoeud() -> SCNNode {
         let newNode = (model != nil) ?
             T(type: self.nom, geometry: (self.model?.geometry)!) :
-            T(type:self.nom)
+            T(type: self.nom)
         // TODO : ajouter le collider du noeud (voir SCNPhysicsBody)
         
         return newNode

@@ -56,6 +56,14 @@ class NoeudPointControl : NoeudCommun {
         fatalError("init(coder:) has not been implemented")
     }
     
+    /// Cette fonction accepte un visiteur et effectue la bonne methode selon le type
+    override func accepterVisiteur(visiteur: VisiteurAbstrait) {
+        // Envoie le visiteur aux enfants
+        super.accepterVisiteur(visiteur: visiteur)
+        
+        visiteur.visiterPointControl(noeud: self)
+    }
+    
     /// Surchage de la fonction assignerPositionRelative
     override func assignerPositionRelative(positionRelative: GLKVector3) {
         //let anciennePosition = obtenirPositionRelative()
