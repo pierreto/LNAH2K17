@@ -929,3 +929,20 @@ void setOnlineClientType(int clientType)
 {
 	ModeleEtatJeu::obtenirInstance()->setCurrentOnlineClientType(static_cast<ModeleEtatJeu::OnlineClientType>(clientType));
 }
+
+void setOnGoalCallback(GoalCallback goalCallback)
+{
+	ModeleEtatJeu::obtenirInstance()->setOnGoalCallback(goalCallback);
+}
+
+void slaveGoal()
+{
+	ModeleEtatJeu::obtenirInstance()->player2Goal();
+
+}
+
+void masterGoal()
+{
+	ModeleEtatJeu::obtenirInstance()->player1Goal();
+
+}

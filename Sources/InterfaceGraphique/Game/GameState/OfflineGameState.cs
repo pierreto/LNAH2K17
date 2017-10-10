@@ -18,7 +18,6 @@ namespace InterfaceGraphique.Game.GameState
 
         public override void MettreAJour(double tempsInterAffichage,int neededGoalsToWin)
         {
-
             FonctionsNatives.moveMaillet();
             FonctionsNatives.animer(tempsInterAffichage);
             FonctionsNatives.dessinerOpenGL();

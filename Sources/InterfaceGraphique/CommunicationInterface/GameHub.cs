@@ -83,6 +83,13 @@ namespace InterfaceGraphique.CommunicationInterface
             gameHubProxy.Invoke("GameOver", gameGuid);
         }
 
+        public void SendGoal(int player)
+        {
+            GoalMessage goalMessage = new GoalMessage(player);
+            gameHubProxy.Invoke("SendGoal", gameGuid, goalMessage);
+
+        }
+
 
         public void Logout()
         {

@@ -14,10 +14,17 @@ namespace InterfaceGraphique.Game.GameState
 
         private GameHub gameHub;
         private bool gameHasEnded = false;
+        private FonctionsNatives.GoalCallback callback;
 
         public MasterGameState(GameHub gameHub)
         {
             this.gameHub = gameHub;
+            this.callback =
+                (player) =>
+                {
+                    Console.WriteLine("Player {0} scored", player);
+                    this.gameHub.SendGoal(player);
+                };
         }
 
         public override void InitializeGameState(GameEntity gameEntity)
@@ -26,6 +33,8 @@ namespace InterfaceGraphique.Game.GameState
             this.gameHub.InitializeMasterGameHub(gameEntity.GameId);
             this.gameHub.NewPositions += OnNewGamePositions;
 
+        
+            FonctionsNatives.setOnGoalCallback(callback);
         }
 
         public override void MettreAJour(double tempsInterAffichage, int neededGoalsToWin)

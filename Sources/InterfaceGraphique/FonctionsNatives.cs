@@ -182,5 +182,18 @@ namespace InterfaceGraphique {
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void setOnlineClientType(int clientType);
+
+        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+        public delegate void GoalCallback(int player);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void setOnGoalCallback(GoalCallback goalCallback);
+
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void slaveGoal();
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void masterGoal();
     }
 }

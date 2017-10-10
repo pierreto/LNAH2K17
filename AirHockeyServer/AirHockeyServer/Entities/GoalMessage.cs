@@ -8,6 +8,17 @@ namespace AirHockeyServer.Entities
 {
     public class GoalMessage : Entity
     {
-        private string playerNameWhoScored;
+        private int playerNumber;
+
+        public GoalMessage(int playerNumber)
+        {
+            this.playerNumber = playerNumber;
+        }
+
+        public int PlayerNumber
+        {
+            get => playerNumber;
+            set => playerNumber = value;
+        }
     }
 }

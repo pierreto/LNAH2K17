@@ -26,7 +26,20 @@ namespace InterfaceGraphique.Game.GameState
 
             this.gameHub.InitializeSlaveGameHub(gameEntity.GameId);
             this.gameHub.NewPositions += OnNewGamePositions;
+            this.gameHub.NewGoal += OnNewGoal;
             this.gameHub.NewGameOver += EndGame;
+        }
+
+        private void OnNewGoal(GoalMessage goalMessage)
+        {
+            if (goalMessage.PlayerNumber == 1)
+            {
+                FonctionsNatives.masterGoal();
+            }
+            else if (goalMessage.PlayerNumber == 2)
+            {
+                FonctionsNatives.slaveGoal();
+            }
         }
 
         public override void MettreAJour(double tempsInterAffichage, int neededGoalsToWin)

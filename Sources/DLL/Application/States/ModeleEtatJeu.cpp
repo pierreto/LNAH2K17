@@ -461,6 +461,26 @@ void ModeleEtatJeu::aiActiveProfile(int speed, int passivity) {
 	aiPassivity_ = passivity;
 }
 
+void ModeleEtatJeu::player1Goal()
+{
+	scorePlayer1_++;
+	if (onlineClientType_ == OnlineClientType::MASTER)
+	{
+		goalCallback_(1);
+
+	}
+
+}
+
+void ModeleEtatJeu::player2Goal()
+{
+	scorePlayer2_++;
+	if (onlineClientType_ == OnlineClientType::MASTER)
+	{
+		goalCallback_(2);
+
+	}
+};
 
 ////////////////////////////////////////////////////////////////////////
 ///

@@ -26,6 +26,7 @@
 #include "Text2D.h"
 #include "Panel2D.h"
 #include <time.h>
+#include "FacadeInterfaceNative.h"
 
 class ModeleEtatJeu : public ModeleEtat
 {
@@ -66,8 +67,9 @@ public:
 	void toggleTestMode(bool isActive) { testMode_ = isActive; }
 	void setSpeedXMaillet(float speedZ) { speedMailletZ_ = speedZ; };
 	void setSpeedYMaillet(float speedX) { speedMailletX_ = speedX; };
-	void player1Goal() { scorePlayer1_++; };
-	void player2Goal() { scorePlayer2_++; };
+	void player1Goal();
+	void player2Goal();
+
 	bool isGameStarted() { return gameStarted_; };
 
 
@@ -84,6 +86,7 @@ public:
 
 	OnlineClientType currentOnlineClientType() const;
 	void setCurrentOnlineClientType(const OnlineClientType currentOnlineClientType_);
+	void setOnGoalCallback(GoalCallback goalCallback) { goalCallback_ = goalCallback; };
 
 private:
 	/// Constructeur.
@@ -146,7 +149,7 @@ private:
 
 	OpponentType currentOpponentType_;
 	OnlineClientType onlineClientType_;
-
+	GoalCallback goalCallback_;
 };
 
 
