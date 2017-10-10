@@ -464,7 +464,7 @@ void ModeleEtatJeu::aiActiveProfile(int speed, int passivity) {
 void ModeleEtatJeu::player1Goal()
 {
 	scorePlayer1_++;
-	if (onlineClientType_ == OnlineClientType::MASTER)
+	if (currentOpponentType_ == OpponentType::ONLINE_PLAYER && onlineClientType_ == OnlineClientType::MASTER)
 	{
 		goalCallback_(1);
 
@@ -475,10 +475,9 @@ void ModeleEtatJeu::player1Goal()
 void ModeleEtatJeu::player2Goal()
 {
 	scorePlayer2_++;
-	if (onlineClientType_ == OnlineClientType::MASTER)
+	if (currentOpponentType_ == OpponentType::ONLINE_PLAYER && onlineClientType_ == OnlineClientType::MASTER)
 	{
 		goalCallback_(2);
-
 	}
 };
 
