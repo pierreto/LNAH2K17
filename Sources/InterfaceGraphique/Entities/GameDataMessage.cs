@@ -12,6 +12,10 @@ namespace InterfaceGraphique.Entities
         private float[] masterPosition;
         private float[] puckPosition;
 
+        public GameDataMessage()
+        {
+        }
+
         public GameDataMessage(float[] slavePosition, float[] masterPosition, float[] puckPosition)
         {
             this.slavePosition = slavePosition;
@@ -21,6 +25,24 @@ namespace InterfaceGraphique.Entities
         public GameDataMessage(float[] slavePosition)
         {
             this.slavePosition = slavePosition;
+        }
+
+        public float[] SlavePosition
+        {
+            get => slavePosition;
+            set => slavePosition = value;
+        }
+
+        public float[] MasterPosition
+        {
+            get => masterPosition;
+            set => masterPosition = value;
+        }
+
+        public float[] PuckPosition
+        {
+            get => puckPosition;
+            set => puckPosition = value;
         }
     }
 }

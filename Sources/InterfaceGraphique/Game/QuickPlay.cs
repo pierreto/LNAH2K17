@@ -78,6 +78,7 @@ namespace InterfaceGraphique {
             FonctionsNatives.setLights(1, true);
             FonctionsNatives.setLights(2, true);
             FonctionsNatives.resetGame();
+
         }
 
 
@@ -235,11 +236,25 @@ namespace InterfaceGraphique {
         }
 
 
-        public void EndGame() {
-            int[] score = new int[2];
-            FonctionsNatives.getGameScore(score);
-            this.Label_Score.Text = score[0] + " - " + score[1];        
-            
+        public void EndGame()
+        {
+            this.BeginInvoke(new MethodInvoker(delegate
+            {
+                int[] score = new int[2];
+                FonctionsNatives.getGameScore(score);
+
+                if (currentGameState.IsTournementMode)
+                {
+                    Program.TournementTree.RoundScore = score;
+                    Program.FormManager.CurrentForm = Program.TournementTree;
+                }
+                else
+                {
+                    this.Panel_EndBack.Visible = true;
+                    this.Label_Score.Text = score[0] + " - " + score[1];
+                }
+            }));
+
         }
 
 

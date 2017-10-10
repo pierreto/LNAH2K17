@@ -168,7 +168,35 @@ namespace InterfaceGraphique {
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void toggleOrbit(bool orbit);
 
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void getGameElementPositions([Out] float[] slavePosition, [Out] float[] masterPosition, [Out] float[] puckPosition);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void setSlaveGameElementPositions(float[] slavePosition, float[] masterPosition, float[] puckPosition);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void setMasterGameElementPositions(float[] slavePosition);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void rotateCamera(float angle);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void getSlavePosition([Out] float[] position);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void setOnlineClientType(int clientType);
+
+        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+        public delegate void GoalCallback(int player);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void setOnGoalCallback(GoalCallback goalCallback);
 
 
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void slaveGoal();
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void masterGoal();
     }
 }

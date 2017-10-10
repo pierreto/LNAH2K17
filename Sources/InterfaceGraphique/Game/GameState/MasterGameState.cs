@@ -9,49 +9,60 @@ using InterfaceGraphique.Entities;
 
 namespace InterfaceGraphique.Game.GameState
 {
-    public class SlaveGameState : AbstractGameState
+    public class MasterGameState : AbstractGameState
     {
 
         private GameHub gameHub;
         private bool gameHasEnded = false;
+        private FonctionsNatives.GoalCallback callback;
 
-        public SlaveGameState(GameHub gameHub)
+        public MasterGameState(GameHub gameHub)
         {
             this.gameHub = gameHub;
+            this.callback =
+                (player) =>
+                {
+                    Console.WriteLine("Player {0} scored", player);
+                    this.gameHub.SendGoal(player);
+                };
         }
 
         public override void InitializeGameState(GameEntity gameEntity)
         {
-            FonctionsNatives.setOnlineClientType((int)OnlineClientType.SLAVE);
-
-            StringBuilder player1Name = new StringBuilder(gameEntity.Slave.Username.Length);
-            StringBuilder player2Name = new StringBuilder(gameEntity.Master.Username.Length);
-            player1Name.Append(gameEntity.Slave.Username);
-            player2Name.Append(gameEntity.Master.Username);
-            FonctionsNatives.setPlayerNames(player1Name, player2Name);
-
-            this.gameHub.InitializeSlaveGameHub(gameEntity.GameId);
+            FonctionsNatives.setOnlineClientType((int) OnlineClientType.MASTER);
+            this.gameHub.InitializeMasterGameHub(gameEntity.GameId);
             this.gameHub.NewPositions += OnNewGamePositions;
-            this.gameHub.NewGoal += OnNewGoal;
-            this.gameHub.NewGameOver += EndGame;
-        }
 
-        private void OnNewGoal(GoalMessage goalMessage)
-        {
-            if (goalMessage.PlayerNumber == 1)
-            {
-                FonctionsNatives.slaveGoal();
-            }
-            else if (goalMessage.PlayerNumber == 2)
-            {
-                FonctionsNatives.masterGoal();
-            }
+        
+            FonctionsNatives.setOnGoalCallback(callback);
+
+            StringBuilder player1Name = new StringBuilder(gameEntity.Master.Username.Length);
+            StringBuilder player2Name = new StringBuilder(gameEntity.Slave.Username.Length);
+            player1Name.Append(gameEntity.Master.Username);
+            player2Name.Append(gameEntity.Slave.Username);
+            FonctionsNatives.setPlayerNames(player1Name, player2Name);
         }
 
         public override void MettreAJour(double tempsInterAffichage, int neededGoalsToWin)
         {
+            if (FonctionsNatives.isGameOver(neededGoalsToWin) == 1)
+            {
+                EndGame();
+                return;
+            }
+            FonctionsNatives.moveMaillet();
             FonctionsNatives.animer(tempsInterAffichage);
             FonctionsNatives.dessinerOpenGL();
+
+            float[] slavePosition = new float[3];
+            float[] masterPosition = new float[3];
+            float[] puckPosition = new float[3];
+
+            FonctionsNatives.getGameElementPositions(slavePosition,masterPosition,puckPosition);
+
+             gameHub.SendMasterPosition(slavePosition, masterPosition, puckPosition);
+       
+
         }
         ////////////////////////////////////////////////////////////////////////
         ///
@@ -64,10 +75,10 @@ namespace InterfaceGraphique.Game.GameState
         ////////////////////////////////////////////////////////////////////////
         public override void MouseMoved(object sender, MouseEventArgs e)
         {
-            FonctionsNatives.opponentMouseMove(e.Location.X, e.Location.Y);
-            float[] slavePosition = new float[3];
-            FonctionsNatives.getSlavePosition(slavePosition);
-            this.gameHub.SendSlavePosition(slavePosition);
+            FonctionsNatives.playerMouseMove(e.Location.X, e.Location.Y);
+
+
+
         }
         ////////////////////////////////////////////////////////////////////////
         ///
@@ -105,19 +116,17 @@ namespace InterfaceGraphique.Game.GameState
         /// @return Void 
         ///
         ////////////////////////////////////////////////////////////////////////
-        public override void EndGame()
-        {
+        public override void EndGame() {
             gameHasEnded = true;
-            Program.QuickPlay.EndGame();
+            gameHub.SendGameOver();
+            Program.QuickPlay.EndGame(); 
         }
-
         private void OnNewGamePositions(GameDataMessage gameData)
         {
             if (!gameHasEnded)
             {
-                 FonctionsNatives.setSlaveGameElementPositions(gameData.SlavePosition,gameData.MasterPosition,gameData.PuckPosition);
+                FonctionsNatives.setMasterGameElementPositions(gameData.SlavePosition);
             }
         }
-
     }
 }

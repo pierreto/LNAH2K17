@@ -19,6 +19,7 @@
 
 #include "Modele3D.h"
 #include "OpenGL_VBO.h"
+#include "ModeleEtatJeu.h"
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -92,26 +93,30 @@ void NoeudRondelle::afficherConcret(const glm::mat4& vueProjection) const
 ////////////////////////////////////////////////////////////////////////
 void NoeudRondelle::animer(float temps)
 {
-	// Obtenir l'arbre de rendu
-	auto arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
+	if(!(ModeleEtatJeu::obtenirInstance()->currentOpponentType() == ModeleEtatJeu::OpponentType::ONLINE_PLAYER &&
+		ModeleEtatJeu::obtenirInstance()->currentOnlineClientType()==ModeleEtatJeu::OnlineClientType::SLAVE))
+	{
+		// Obtenir l'arbre de rendu
+		auto arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
 
-	// Calculer la force de collision
-	VisiteurCollisionRondelle visiteur(this);
-	arbre->accepterVisiteur(&visiteur);
-	
-	// Ajoute les forces a l'objet
-	glm::vec3 vitesse = visiteur.calculerVitesseFinale();
-	rigidbody_.assignerVitesse(vitesse);
-	rigidbody_.ajouterForce(visiteur.obtenirForce());
+		// Calculer la force de collision
+		VisiteurCollisionRondelle visiteur(this);
+		arbre->accepterVisiteur(&visiteur);
 
-	if (visiteur.obtenirNombreCollisions() > 0)
-		Logger::obtenirInstance()->afficherVitesse(glm::length(rigidbody_.obtenirVitesse()));
-	
-	savePosition();
-	appliquerDeplacement(rigidbody_.calculerDeplacement(temps));
-	
-	if (!visiteur.rondelleSurTable(obtenirPositionRelative()))
-		revertPosition();
+		// Ajoute les forces a l'objet
+		glm::vec3 vitesse = visiteur.calculerVitesseFinale();
+		rigidbody_.assignerVitesse(vitesse);
+		rigidbody_.ajouterForce(visiteur.obtenirForce());
+
+		if (visiteur.obtenirNombreCollisions() > 0)
+			Logger::obtenirInstance()->afficherVitesse(glm::length(rigidbody_.obtenirVitesse()));
+
+		savePosition();
+		appliquerDeplacement(rigidbody_.calculerDeplacement(temps));
+
+		if (!visiteur.rondelleSurTable(obtenirPositionRelative()))
+			revertPosition();
+	}
 }
 
 

@@ -26,6 +26,7 @@
 #include "Text2D.h"
 #include "Panel2D.h"
 #include <time.h>
+#include "FacadeInterfaceNative.h"
 
 class ModeleEtatJeu : public ModeleEtat
 {
@@ -35,6 +36,11 @@ public:
 		LOCAL_PLAYER=0,
 		VIRTUAL_PLAYER=1,
 		ONLINE_PLAYER=2
+	};
+
+	enum OnlineClientType {
+		SLAVE = 0,
+		MASTER = 1,
 	};
 	/// Obtient l'instance unique de la classe.
 	static ModeleEtatJeu* obtenirInstance();
@@ -61,13 +67,27 @@ public:
 	void toggleTestMode(bool isActive) { testMode_ = isActive; }
 	void setSpeedXMaillet(float speedZ) { speedMailletZ_ = speedZ; };
 	void setSpeedYMaillet(float speedX) { speedMailletX_ = speedX; };
-	void player1Goal() { scorePlayer1_++; };
-	void player2Goal() { scorePlayer2_++; };
+	void player1Goal();
+	void player2Goal();
+
 	bool isGameStarted() { return gameStarted_; };
 
 
+	glm::vec3 getPlayerPosition() const { return maillet1_->obtenirPositionRelative();};
+	glm::vec3 getOpponentPosition() const { return maillet2_->obtenirPositionRelative(); };
+	glm::vec3 getPuckPosition() const { return rondelle_->obtenirPositionRelative(); };
+
+	void setPlayerPosition(float* newPositions) const {  maillet1_->assignerPositionRelative(glm::make_vec3(newPositions)); };
+	void setOpponentPosition(float* newPositions)  const {  maillet2_->assignerPositionRelative(glm::make_vec3(newPositions)); };
+	void setPuckPosition(float* newPositions) const {  rondelle_->assignerPositionRelative(glm::make_vec3(newPositions)); };
+
 	OpponentType currentOpponentType() const;
 	void setCurrentOpponentType(const OpponentType currentOpponentType);
+
+	OnlineClientType currentOnlineClientType() const;
+	void setCurrentOnlineClientType(const OnlineClientType currentOnlineClientType_);
+	void setOnGoalCallback(GoalCallback goalCallback) { goalCallback_ = goalCallback; };
+
 private:
 	/// Constructeur.
 	ModeleEtatJeu();
@@ -128,6 +148,8 @@ private:
 	const glm::vec4 DARK_VIOLET = glm::vec4(0.58f, 0.0f, 0.83f, 1.0f);
 
 	OpponentType currentOpponentType_;
+	OnlineClientType onlineClientType_;
+	GoalCallback goalCallback_;
 };
 
 

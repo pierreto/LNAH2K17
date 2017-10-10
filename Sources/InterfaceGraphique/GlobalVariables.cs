@@ -109,4 +109,10 @@ namespace InterfaceGraphique {
         VIRTUAL_PLAYER = 1,
         ONLINE_PLAYER = 2
     };
+
+    public enum OnlineClientType
+    {
+        SLAVE = 0,
+        MASTER = 1,
+    };
 }
