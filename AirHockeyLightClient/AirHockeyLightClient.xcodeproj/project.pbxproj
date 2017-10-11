@@ -27,6 +27,8 @@
 		8F0B94B41F8D4EC1007F0E82 /* ModeleEtatSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0B94B31F8D4EC1007F0E82 /* ModeleEtatSelection.swift */; };
 		8F0B94B61F8D5C25007F0E82 /* FacadeModele.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0B94B51F8D5C25007F0E82 /* FacadeModele.swift */; };
 		8F0B94B81F8D7F11007F0E82 /* ModeleEtatPointControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0B94B71F8D7F11007F0E82 /* ModeleEtatPointControl.swift */; };
+		8F0B94BA1F8D8C95007F0E82 /* ModeleEtatDeplacement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0B94B91F8D8C95007F0E82 /* ModeleEtatDeplacement.swift */; };
+		8F0B94BC1F8D8EA6007F0E82 /* VisiteurDeplacement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0B94BB1F8D8EA6007F0E82 /* VisiteurDeplacement.swift */; };
 		8F64C0111F7754EF00F14AC7 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F64C0101F7754EF00F14AC7 /* ChatViewController.swift */; };
 		8F64C0131F7754FD00F14AC7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F64C0121F7754FD00F14AC7 /* LaunchScreen.storyboard */; };
 		8F64C0151F77550800F14AC7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F64C0141F77550800F14AC7 /* Main.storyboard */; };
@@ -72,6 +74,8 @@
 		8F0B94B31F8D4EC1007F0E82 /* ModeleEtatSelection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ModeleEtatSelection.swift; path = Noyau/Application/States/ModeleEtatSelection.swift; sourceTree = "<group>"; };
 		8F0B94B51F8D5C25007F0E82 /* FacadeModele.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FacadeModele.swift; path = Noyau/Application/FacadeModele.swift; sourceTree = "<group>"; };
 		8F0B94B71F8D7F11007F0E82 /* ModeleEtatPointControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ModeleEtatPointControl.swift; path = Noyau/Application/States/ModeleEtatPointControl.swift; sourceTree = "<group>"; };
+		8F0B94B91F8D8C95007F0E82 /* ModeleEtatDeplacement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ModeleEtatDeplacement.swift; path = Noyau/Application/States/ModeleEtatDeplacement.swift; sourceTree = "<group>"; };
+		8F0B94BB1F8D8EA6007F0E82 /* VisiteurDeplacement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VisiteurDeplacement.swift; path = Noyau/Arbre/Visiteurs/VisiteurDeplacement.swift; sourceTree = "<group>"; };
 		8F64C0101F7754EF00F14AC7 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatViewController.swift; path = InterfaceGraphique/Chat/ChatViewController.swift; sourceTree = "<group>"; };
 		8F64C0121F7754FD00F14AC7 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = InterfaceGraphique/Menus/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8F64C0141F77550800F14AC7 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = InterfaceGraphique/Main.storyboard; sourceTree = "<group>"; };
@@ -163,6 +167,7 @@
 			children = (
 				8F0B94AB1F8D3EEE007F0E82 /* VisiteurAbstrait.swift */,
 				8F0B94AD1F8D450B007F0E82 /* VisiteurSelectionnable.swift */,
+				8F0B94BB1F8D8EA6007F0E82 /* VisiteurDeplacement.swift */,
 			);
 			name = Visiteurs;
 			sourceTree = "<group>";
@@ -182,6 +187,7 @@
 				8F0B94B11F8D4BCE007F0E82 /* ModeleEtat.swift */,
 				8F0B94B31F8D4EC1007F0E82 /* ModeleEtatSelection.swift */,
 				8F0B94B71F8D7F11007F0E82 /* ModeleEtatPointControl.swift */,
+				8F0B94B91F8D8C95007F0E82 /* ModeleEtatDeplacement.swift */,
 			);
 			name = States;
 			sourceTree = "<group>";
@@ -499,6 +505,7 @@
 				34B66FE21F84599100A9CCB9 /* But.swift in Sources */,
 				3415E6DB1F85C1F300DB1CAD /* NoeudPointControl.swift in Sources */,
 				8F64C0111F7754EF00F14AC7 /* ChatViewController.swift in Sources */,
+				8F0B94BC1F8D8EA6007F0E82 /* VisiteurDeplacement.swift in Sources */,
 				3415E6C41F8547CE00DB1CAD /* ArbreRendu.swift in Sources */,
 				8FFC5B4A1F7CA7170031474F /* PaddingLabel.swift in Sources */,
 				8F0B94B61F8D5C25007F0E82 /* FacadeModele.swift in Sources */,
@@ -509,6 +516,7 @@
 				3415E6C91F85659900DB1CAD /* UsineNoeud.swift in Sources */,
 				253E08911F81913A009F301B /* ChannelEntity.swift in Sources */,
 				8F69F4BF1F8AF871004D5129 /* MathHelper.swift in Sources */,
+				8F0B94BA1F8D8C95007F0E82 /* ModeleEtatDeplacement.swift in Sources */,
 				8F0B94B21F8D4BCE007F0E82 /* ModeleEtat.swift in Sources */,
 				34B66FD91F8428EA00A9CCB9 /* NoeudTable.swift in Sources */,
 				8F6AE2BC1F6592EB00A29E8B /* AppDelegate.swift in Sources */,

@@ -58,6 +58,9 @@ class FacadeModele {
         
         self.vue = EditorViewController.instance
         self.initVue()
+        
+        // TODO : A enlever
+        self.changerModeleEtat(etat: .DEPLACEMENT)
     }
     
     /// Retourne la vue courante.
@@ -92,7 +95,7 @@ class FacadeModele {
                 self.etat = ModeleEtatSelection.instance
                 break;
             case .DEPLACEMENT:
-                //self.etat = ModeleEtatDeplacement.instance
+                self.etat = ModeleEtatDeplacement.instance
                 break;
             case .ROTATION:
                 //self.etat = ModeleEtatRotation.instance

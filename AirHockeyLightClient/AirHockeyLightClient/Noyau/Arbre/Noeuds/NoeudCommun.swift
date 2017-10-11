@@ -24,6 +24,9 @@ class NoeudCommun : SCNNode {
     /// Vecteur spécifiant les axes bloqués pour le déplacement
     private var axisLock: GLKVector3 = GLKVector3(v: (1.0, 0.0, 1.0))
     
+    /// Sélection du noeud.
+    private var selectionne: Bool = false
+    
     /// Vrai si le noeud est sélectionnable.
     private var selectionnable: Bool = true
     
@@ -55,6 +58,27 @@ class NoeudCommun : SCNNode {
     /// Obtient le type du noeud
     func obtenirType() -> String {
         return self.name!
+    }
+    
+    /// Cette fonction permet d'assigner l'état d'être sélectionné ou non du noeud.
+    func assignerSelection(selectionne: Bool)
+    {
+        // Un objet non sélectionnable n'est jamais sélectionné.
+        self.selectionne = (self.selectionne && self.selectionnable);
+    
+        if (self.selectionne) {
+            self.effetFantome(activer: true);
+        }
+        else {
+            self.effetFantome(activer: false);
+        }
+    }
+
+    /// Cette fonction retourne l'état d'être sélectionné ou non du noeud.
+    func estSelectionne() -> Bool
+    {
+        // Un objet non sélectionnable n'est jamais sélectionné.
+        return (self.selectionne && self.selectionnable);
     }
     
     /// Écrit si le noeud peut être sélectionné ou non.
@@ -92,6 +116,22 @@ class NoeudCommun : SCNNode {
         self.transform = SCNMatrix4FromGLKMatrix4(transform)
     }
     
+    /// Cette fonction permet de changer la position relative en conservant
+    /// le scaling et la rotation
+    func deplacer(position: GLKVector3) {
+        self.assignerPositionRelative(positionRelative: position)
+        
+        //let glkRotation = SCNVector4ToGLKVector4(self.rotation)
+        //let glkScale = GLKVector4MakeWithVector3(SCNVector3ToGLKVector3(self.scale), 0.0)
+        //var glkTransform = SCNMatrix4ToGLKMatrix4(self.transform)
+        //glkTransform = GLKMatrix4MultiplyVector4(glkTransform, GLKVector4Multiply(glkRotation, glkScale))
+        
+        //self.transform = SCNMatrix4FromGLKMatrix4(glkTransform)
+        //transformationRelative_ *= rotation_ * scale_;
+        
+        //self.position = SCNVector3FromGLKVector3(position)
+    }
+    
     /// Permet de changer les axes de déplacement valide
     func assignerAxisLock(axisLock: GLKVector3) {
         self.axisLock = axisLock
@@ -107,6 +147,23 @@ class NoeudCommun : SCNNode {
             let defaultColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
             material?.diffuse.contents = defaultColor
         }
+    }
+    
+    /// Cette fonction active un effet fantome sur le mur
+    func effetFantome(activer: Bool) {
+        let material = self.geometry?.firstMaterial
+        
+        let color = material?.diffuse.contents as! UIColor
+        var fRed : CGFloat = 0
+        var fGreen : CGFloat = 0
+        var fBlue : CGFloat = 0
+        var fAlpha: CGFloat = 0
+        color.getRed(&fRed, green: &fGreen, blue: &fBlue, alpha: &fAlpha)
+        
+        fAlpha = activer ? 0.25 : 1.0
+        
+        let newColor = UIColor(red: fRed, green: fGreen, blue: fBlue, alpha: fAlpha)
+        material?.diffuse.contents = newColor
     }
     
 }
