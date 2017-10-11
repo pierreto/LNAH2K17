@@ -94,6 +94,45 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1DB6708E1F8DC4FF0066B071 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				1DB670921F8DC5710066B071 /* Model */,
+				1DB670911F8DC5690066B071 /* View */,
+				1DB670901F8DC5660066B071 /* ViewModel */,
+				1DB6708F1F8DC5220066B071 /* Services */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
+		1DB6708F1F8DC5220066B071 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Services;
+			sourceTree = "<group>";
+		};
+		1DB670901F8DC5660066B071 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = ViewModel;
+			sourceTree = "<group>";
+		};
+		1DB670911F8DC5690066B071 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		1DB670921F8DC5710066B071 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		253E088A1F818544009F301B /* Effects */ = {
 			isa = PBXGroup;
 			children = (
@@ -217,6 +256,7 @@
 		8F6AE2BA1F6592EB00A29E8B /* AirHockeyLightClient */ = {
 			isa = PBXGroup;
 			children = (
+				1DB6708E1F8DC4FF0066B071 /* UI */,
 				8F0FFED61F6EB8B800366D8E /* Utilitaire */,
 				8F0FFED51F6EB8B100366D8E /* Noyau */,
 				8F0FFED41F6EB8A600366D8E /* InterfaceGraphique */,

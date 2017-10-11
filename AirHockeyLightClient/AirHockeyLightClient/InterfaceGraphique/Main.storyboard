@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="d4o-dE-S39">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="d4o-dE-S39">
     <device id="ipad9_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -57,7 +57,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jqq-Zj-kfV" userLabel="connectButton">
-                                <rect key="frame" x="324" y="571" width="120" height="30"/>
+                                <rect key="frame" x="324" y="639" width="120" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.8500834021" green="0.84123033899999999" blue="0.82525017970000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="Se connecter"/>
@@ -94,7 +94,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="FyT-jp-cUM" userLabel="connectionIndicator">
-                                <rect key="frame" x="0.0" y="634" width="768" height="20"/>
+                                <rect key="frame" x="0.0" y="679" width="768" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </activityIndicatorView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8t5-NI-lOL">
@@ -106,6 +106,16 @@
                                     <segue destination="a5z-US-HJw" kind="show" id="wIc-pZ-QH3"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Mot de passe" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZBa-lS-IhZ" userLabel="usernameInput">
+                                <rect key="frame" x="170" y="577" width="428" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="triggerUserLogin:" destination="d4o-dE-S39" eventType="primaryActionTriggered" id="tnV-B9-Evz"/>
+                                </connections>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" red="0.50158477429710246" green="0.76474623044747803" blue="0.84018950670000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
@@ -114,6 +124,7 @@
                         <outlet property="ipAddessInput" destination="1Xw-v6-3wi" id="Hfa-Ez-gka"/>
                         <outlet property="ipAddressInvalidErrorMessage" destination="Vyp-xF-3fK" id="ZvN-kO-igc"/>
                         <outlet property="ipAddressNotConnectedErrorMessage" destination="bFd-Ef-OEu" id="gQg-7G-KYz"/>
+                        <outlet property="passwordInput" destination="ZBa-lS-IhZ" id="GKE-QE-fob"/>
                         <outlet property="usernameInput" destination="Xx7-T6-dvx" id="8wW-yh-0Dk"/>
                         <outlet property="usernameInvalidErrorMessage" destination="I2z-KT-HTt" id="bTg-rI-aSR"/>
                         <outlet property="usernameNotUniqueErrorMessage" destination="gNd-Ph-KMK" id="Cmv-BG-RUW"/>

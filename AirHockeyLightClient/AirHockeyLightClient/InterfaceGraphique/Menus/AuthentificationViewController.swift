@@ -22,6 +22,7 @@ class AuthentificationViewController: UIViewController {
     private let clientConnection = ClientConnection.sharedConnection
     
     @IBOutlet weak var usernameInput: UITextField!
+    @IBOutlet weak var passwordInput: UITextField!
     @IBOutlet weak var ipAddessInput: UITextField!
     @IBOutlet weak var usernameInvalidErrorMessage: UILabel!
     @IBOutlet weak var usernameNotUniqueErrorMessage: UILabel!
@@ -47,9 +48,11 @@ class AuthentificationViewController: UIViewController {
         
         let ipAddress = ipAddessInput.text!
         let username = usernameInput.text!
+        let password = passwordInput.text!
         
         let validSyntaxIP = self.validateIPAddress(ipAddress: ipAddress)
         let validSyntaxUsername = self.validateUsername(username: username)
+        let validSyntaxPassword = self.validatePassword(password: password)
         
         if validSyntaxIP {
             self.setIpAddressInputToDefaultUI()
@@ -65,9 +68,15 @@ class AuthentificationViewController: UIViewController {
             self.usernameInvalidErrorMessage.isHidden = false
         }
         
+        if validSyntaxPassword {
+            self.setPasswordInputToDefaultUI()
+        } else {
+            self.notifyErrorInput(textField: self.passwordInput)
+            //self.passwordInvalidErrorMessage.isHidden = false
+        }
         /// Connecter l'usager si possible
-        if (validSyntaxIP && validSyntaxUsername) {
-            connectToServer(ipAddress: ipAddress, username: username)
+        if (validSyntaxIP && validSyntaxUsername && validSyntaxPassword) {
+            connectToServer(ipAddress: ipAddress, username: username, password: password)
         }
     }
     
@@ -103,13 +112,10 @@ class AuthentificationViewController: UIViewController {
         }
         
         // Usernames contain only alphanumeric characters and underscore
-        let validUsernameRegex = "^[a-zA-Z0-9_]*$"
+        let validUsernameRegex = "^[a-zA-Z0-9_]{2,16}$"
         let userNameMatches = username.range(of: validUsernameRegex, options: .regularExpression)
         
-        if username.isEmpty {
-            print("no input!")
-            return false
-        } else if (userNameMatches != nil) {
+        if (userNameMatches != nil) {
             print("\(String(describing: username)) is a valid username")
             return true
         } else {
@@ -118,6 +124,18 @@ class AuthentificationViewController: UIViewController {
         }
     }
     
+    private func validatePassword(password: String) -> Bool {
+        let validPasswordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,16}$"
+        let passwordMatches = password.range(of: validPasswordRegex, options: .regularExpression)
+        
+        if(passwordMatches != nil){
+            print("\(password) is valid")
+            return true;
+        } else {
+            print("\(password) is not valid")
+            return false;
+        }
+    }
     /// Modifier l'apparence du input en cas d'erreur
     private func notifyErrorInput(textField: UITextField) {
         textField.shake()
@@ -142,11 +160,17 @@ class AuthentificationViewController: UIViewController {
         self.usernameNotUniqueErrorMessage.isHidden = true
     }
     
+    /// Remettre l'apparence du input pour le mot de passe à celle par défaut
+    private func setPasswordInputToDefaultUI() {
+        self.passwordInput.layer.borderWidth = 0.0
+    }
+    
     /// Établir la connexion au serveur via SignalR
-    private func connectToServer(ipAddress: String, username: String) {
+    private func connectToServer(ipAddress: String, username: String, password: String) {
         /// Désactiver les inputs
         self.ipAddessInput.isEnabled = false
         self.usernameInput.isEnabled = false
+        self.passwordInput.isEnabled = false
         
         clientConnection.EstablishConnection(ipAddress: ipAddress, hubName: "ChatHub")
         self.connectionIndicator.startAnimating()
