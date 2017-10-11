@@ -73,7 +73,8 @@ namespace AirHockeyServer.Services
 
         public GameEntity GetGameEntityById(Guid id)
         {
-            return this.games.First(a => a.GameId.Equals(id));
-        }  
+            return null;
+            //return this.games.First(a => a.GameId.Equals(id));
+        } 
     }
 }

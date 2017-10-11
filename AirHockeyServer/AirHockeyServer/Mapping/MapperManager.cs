@@ -10,7 +10,7 @@ namespace AirHockeyServer.Mapping
 {
     public class MapperManager
     {
-        IMapper Mapper { get; set; } 
+        public IMapper Mapper { get; private set; } 
 
         public MapperManager()
         {
@@ -20,22 +20,31 @@ namespace AirHockeyServer.Mapping
                 cfg.CreateMap<UserPoco, UserEntity>()
                 .ForMember(
                     dest => dest.UserId,
-                    opt => opt.MapFrom(src => src.UserId)
-                );
+                    opt => opt.MapFrom(src => src.UserId));
+
+                cfg.CreateMap<MapPoco, MapEntity>()
+                .ForMember(
+                    dest => dest.LastBackup,
+                    opt => opt.MapFrom(src => src.CreationDate))
+                .ForMember(
+                    dest => dest.MapName,
+                    opt => opt.MapFrom(src => src.Name));
+
+                cfg.CreateMap<MapEntity, MapPoco>()
+                .ForMember(
+                    dest => dest.CreationDate,
+                    opt => opt.MapFrom(src => src.LastBackup))
+                .ForMember(
+                    dest => dest.Name,
+                    opt => opt.MapFrom(src => src.MapName));
             });
 
             Mapper = config.CreateMapper();
         }
 
-        public T Map<K, T>(K poco) where T: Entity where K: Poco
+        public TDest Map<TSource, TDest>(TSource source)
         {
-            return Mapper.Map<K,T>(poco);
+            return Mapper.Map<TSource, TDest>(source);
         }
-
-        public List<T> Map<K, T>(List<K> pocos) where T : Entity where K : Poco
-        {
-            return Mapper.Map<List<K>, List<T>>(pocos);
-        }
-
     }
 }

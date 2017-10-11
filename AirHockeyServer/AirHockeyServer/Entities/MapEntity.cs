@@ -13,9 +13,9 @@ namespace AirHockeyServer.Entities
     ///
     /// Cette classe représente une carte de jeu
     ///////////////////////////////////////////////////////////////////////////////
-    public class MapEntity
+    public class MapEntity : Entity
     {
-        public UserEntity Creator { get; set; }
+        public string Creator { get; set; }
         public string MapName { get; set; }
         public DateTime LastBackup { get; set; }
         public string Json { get; set; }

@@ -250,6 +250,7 @@
     <Compile Include="Hubs\ConnectionMapper.cs" />
     <Compile Include="Mapping\MapperManager.cs" />
     <Compile Include="Pocos\LoginPoco.cs" />
+    <Compile Include="Pocos\MapPoco.cs" />
     <Compile Include="Pocos\Poco.cs" />
     <Compile Include="Pocos\UserPoco.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

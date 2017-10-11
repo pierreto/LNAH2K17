@@ -34,7 +34,7 @@ namespace AirHockeyServer.Repositories
             {
                 IEnumerable<UserPoco> userPocoEnum = await DataProvider.GetAll<UserPoco>("test_users");
                 List<UserPoco> userPocos = userPocoEnum.ToList();
-                List<UserEntity> userEntities = MapperManager.Map<UserPoco, UserEntity>(userPocos);
+                List<UserEntity> userEntities = MapperManager.Map<List<UserPoco>, List<UserEntity>>(userPocos);
                 return userEntities;
             }
             catch (Exception e)

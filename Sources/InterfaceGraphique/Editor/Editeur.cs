@@ -433,14 +433,13 @@ namespace InterfaceGraphique {
 
             if (form.ShowDialog() == DialogResult.OK && form.Text_MapName.Text.Length > 0)
             {
-                UserEntity creator = Program.user;
                 string mapName = form.Text_MapName.Text;
                 StringBuilder sb = new StringBuilder(2000);
                 FonctionsNatives.getMapJson(Program.GeneralProperties.GetCoefficientValues(), sb);
                 string json = sb.ToString();
 
                 MapEntity map = new MapEntity {
-                    Creator = creator,
+                    Creator = Program.user.Username,
                     MapName = mapName,
                     LastBackup = DateTime.Now,
                     Json = json

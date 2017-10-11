@@ -9,6 +9,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
+using System.Threading.Tasks;
 
 namespace AirHockeyServer.Controllers
 {
@@ -36,13 +37,23 @@ namespace AirHockeyServer.Controllers
         }
 
         [Route("api/maps/save")]
-        public HttpResponseMessage SaveMap([FromBody]MapEntity message)
+        public async Task<HttpResponseMessage> SaveMap([FromBody]MapEntity map)
         {
-            System.Diagnostics.Debug.WriteLine(message.Creator.Username);
-            System.Diagnostics.Debug.WriteLine(message.MapName);
-            System.Diagnostics.Debug.WriteLine(message.LastBackup);
-            System.Diagnostics.Debug.WriteLine(message.Json);
+            try
+            {
+                await MapService.SaveMap(map);
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
+        }
 
+        [Route("api/maps/get/{name}")]
+        public async Task<HttpResponseMessage> GetMapByName(string name)
+        {
+            MapEntity map = await MapService.GetMapByName("misg", name);
             return Request.CreateResponse(HttpStatusCode.OK);
         }
     }
