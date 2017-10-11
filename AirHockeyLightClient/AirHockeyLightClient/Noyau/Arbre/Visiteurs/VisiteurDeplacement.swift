@@ -27,17 +27,17 @@ class VisiteurDeplacement: VisiteurAbstrait {
         self.delta = delta
     }
     
-    /// Visiter un accélérateur pour le déplacer
+    /// Visiter un accélérateur pour le déplacement
     //virtual void visiterAccelerateur(NoeudAccelerateur* noeud);
     
-    /// Visiter un maillet pour le déplacer
+    /// Visiter un maillet pour le déplacement
     //virtual void visiterMaillet(NoeudMaillet* noeud);
     
-    /// Visiter une table pour le déplacer
+    /// Visiter une table pour le déplacement
     func visiterTable(noeud: NoeudTable) {
     }
     
-    /// Visiter un point de contrôle pour le déplacer
+    /// Visiter un point de contrôle pour le déplacement
     func visiterPointControl(noeud: NoeudPointControl) {
         // TODO : implémenter la sélection
         if (noeud.estSelectionne()) {
@@ -50,16 +50,21 @@ class VisiteurDeplacement: VisiteurAbstrait {
             // Deplacer son opposé
             let posNoeudOppose = GLKVector3Multiply(pos, noeud.obtenirSymmetrie())
             noeud.obtenirNoeudOppose().deplacer(position: posNoeudOppose)
+            
+            // TODO : À vérifier si on change la géométrie de la table ici ou non
+            let table = noeud.parent as! NoeudTable
+            table.updateGeometry()
         }
     }
     
-    /// Visiter un mur pour le déplacer
+    /// Visiter un mur pour le déplacement
     //virtual void visiterMur(NoeudMur* noeud);
     
-    /// Visiter un portail pour le déplacer
+    /// Visiter un portail pour le déplacement
     //virtual void visiterPortail(NoeudPortail* noeud);
     
     //virtual void visiterRondelle(NoeudRondelle* noeud);
+    
 }
 
 ///////////////////////////////////////////////////////////////////////////////

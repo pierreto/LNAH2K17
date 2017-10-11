@@ -62,6 +62,14 @@ class ModeleEtatPointControl : ModeleEtat {
             }
         }
     }
+    
+    // Fonctions gérant les entrées de l'utilisateur
+    override func tapGesture(point: CGPoint) {
+        super.tapGesture(point: point)
+        
+        let visiteur = VisiteurSelection(point: self.positionTap)
+        FacadeModele.instance.obtenirArbreRendu().accepterVisiteur(visiteur: visiteur)
+    }
 
 }
 

@@ -40,7 +40,9 @@ class NoeudTable : NoeudCommun {
         
         self.initialiserTable()
         self.creerPointsDeControle()
-        self.initialiserMateriau()
+        
+        // Mettre à jour la géométrie de la table
+        self.updateGeometry()
     }
     
     required init(coder aDecoder: NSCoder) {
@@ -95,12 +97,6 @@ class NoeudTable : NoeudCommun {
         return elements
     }
     
-    /// Initialiser le matériau de la table sur la géométrie
-    func initialiserMateriau() {
-        let material = table.obtenirMateriau()
-        self.geometry?.firstMaterial = material
-    }
-    
     // Remettre à jour la geometrie de la table
     func updateGeometry() {
         var sources = [SCNGeometrySource]()
@@ -108,6 +104,13 @@ class NoeudTable : NoeudCommun {
         sources.append(SCNGeometrySource(textureCoordinates: table.obtenirTexCoords()))
         
         self.geometry = SCNGeometry(sources: sources, elements: initElements())
+        self.initialiserMateriau()
+    }
+    
+    /// Initialiser le matériau de la table sur la géométrie
+    func initialiserMateriau() {
+        let material = table.obtenirMateriau()
+        self.geometry?.firstMaterial = material
     }
     
     /// Créer et attacher les points de contrôle à la table
@@ -206,9 +209,6 @@ class NoeudTable : NoeudCommun {
         for noeud in noeuds {
             noeud.ajusterPoints()
         }
-        
-        // Mettre à jour la géométrie de la table
-        self.updateGeometry()
     }
     
     /// Cette fonction permet de créer des buts

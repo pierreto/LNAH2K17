@@ -49,7 +49,7 @@ class UsineNoeud<T: NoeudCommun> : UsineAbstraite {
     /// Retourne un noeud nouvellement créé du type produit par cette usine
     func creerNoeud() -> SCNNode {
         let newNode = (model != nil) ?
-            T(type: self.nom, geometry: (self.model?.geometry)!) :
+            T(type: self.nom, geometry: (self.model?.geometry?.copy())! as! SCNGeometry) :
             T(type: self.nom)
         // TODO : ajouter le collider du noeud (voir SCNPhysicsBody)
         

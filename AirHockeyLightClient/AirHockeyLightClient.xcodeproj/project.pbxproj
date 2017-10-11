@@ -29,6 +29,7 @@
 		8F0B94B81F8D7F11007F0E82 /* ModeleEtatPointControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0B94B71F8D7F11007F0E82 /* ModeleEtatPointControl.swift */; };
 		8F0B94BA1F8D8C95007F0E82 /* ModeleEtatDeplacement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0B94B91F8D8C95007F0E82 /* ModeleEtatDeplacement.swift */; };
 		8F0B94BC1F8D8EA6007F0E82 /* VisiteurDeplacement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0B94BB1F8D8EA6007F0E82 /* VisiteurDeplacement.swift */; };
+		8F0B94BE1F8DC0F1007F0E82 /* VisiteurSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0B94BD1F8DC0F1007F0E82 /* VisiteurSelection.swift */; };
 		8F64C0111F7754EF00F14AC7 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F64C0101F7754EF00F14AC7 /* ChatViewController.swift */; };
 		8F64C0131F7754FD00F14AC7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F64C0121F7754FD00F14AC7 /* LaunchScreen.storyboard */; };
 		8F64C0151F77550800F14AC7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F64C0141F77550800F14AC7 /* Main.storyboard */; };
@@ -76,6 +77,7 @@
 		8F0B94B71F8D7F11007F0E82 /* ModeleEtatPointControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ModeleEtatPointControl.swift; path = Noyau/Application/States/ModeleEtatPointControl.swift; sourceTree = "<group>"; };
 		8F0B94B91F8D8C95007F0E82 /* ModeleEtatDeplacement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ModeleEtatDeplacement.swift; path = Noyau/Application/States/ModeleEtatDeplacement.swift; sourceTree = "<group>"; };
 		8F0B94BB1F8D8EA6007F0E82 /* VisiteurDeplacement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VisiteurDeplacement.swift; path = Noyau/Arbre/Visiteurs/VisiteurDeplacement.swift; sourceTree = "<group>"; };
+		8F0B94BD1F8DC0F1007F0E82 /* VisiteurSelection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VisiteurSelection.swift; path = Noyau/Arbre/Visiteurs/VisiteurSelection.swift; sourceTree = "<group>"; };
 		8F64C0101F7754EF00F14AC7 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatViewController.swift; path = InterfaceGraphique/Chat/ChatViewController.swift; sourceTree = "<group>"; };
 		8F64C0121F7754FD00F14AC7 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = InterfaceGraphique/Menus/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8F64C0141F77550800F14AC7 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = InterfaceGraphique/Main.storyboard; sourceTree = "<group>"; };
@@ -167,6 +169,7 @@
 			children = (
 				8F0B94AB1F8D3EEE007F0E82 /* VisiteurAbstrait.swift */,
 				8F0B94AD1F8D450B007F0E82 /* VisiteurSelectionnable.swift */,
+				8F0B94BD1F8DC0F1007F0E82 /* VisiteurSelection.swift */,
 				8F0B94BB1F8D8EA6007F0E82 /* VisiteurDeplacement.swift */,
 			);
 			name = Visiteurs;
@@ -488,6 +491,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8F0B94BE1F8DC0F1007F0E82 /* VisiteurSelection.swift in Sources */,
 				8F0B94B81F8D7F11007F0E82 /* ModeleEtatPointControl.swift in Sources */,
 				8FB6A9951F81B9C800FAFFCF /* EditorViewController.swift in Sources */,
 				8FFC5B481F7C90340031474F /* MessageViewCell.swift in Sources */,

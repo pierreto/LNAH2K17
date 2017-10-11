@@ -64,7 +64,7 @@ class NoeudCommun : SCNNode {
     func assignerSelection(selectionne: Bool)
     {
         // Un objet non sélectionnable n'est jamais sélectionné.
-        self.selectionne = (self.selectionne && self.selectionnable);
+        self.selectionne = (selectionne && self.selectionnable);
     
         if (self.selectionne) {
             self.effetFantome(activer: true);
@@ -151,19 +151,23 @@ class NoeudCommun : SCNNode {
     
     /// Cette fonction active un effet fantome sur le mur
     func effetFantome(activer: Bool) {
-        let material = self.geometry?.firstMaterial
+        let material = self.geometry?.firstMaterial?.copy() as! SCNMaterial
         
-        let color = material?.diffuse.contents as! UIColor
-        var fRed : CGFloat = 0
-        var fGreen : CGFloat = 0
-        var fBlue : CGFloat = 0
-        var fAlpha: CGFloat = 0
-        color.getRed(&fRed, green: &fGreen, blue: &fBlue, alpha: &fAlpha)
+        if (material.diffuse.contents is UIColor) {
+            let color = material.diffuse.contents as! UIColor
+            var fRed : CGFloat = 0
+            var fGreen : CGFloat = 0
+            var fBlue : CGFloat = 0
+            var fAlpha: CGFloat = 0
+            color.getRed(&fRed, green: &fGreen, blue: &fBlue, alpha: &fAlpha)
         
-        fAlpha = activer ? 0.25 : 1.0
+            fAlpha = activer ? 0.25 : 1.0
         
-        let newColor = UIColor(red: fRed, green: fGreen, blue: fBlue, alpha: fAlpha)
-        material?.diffuse.contents = newColor
+            let newColor = UIColor(red: fRed, green: fGreen, blue: fBlue, alpha: fAlpha)
+            material.diffuse.contents = newColor
+        
+            self.geometry?.firstMaterial = material
+        }
     }
     
 }

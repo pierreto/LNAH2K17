@@ -36,8 +36,12 @@ class ModeleEtatSelection: ModeleEtat {
     }
     
     // Fonctions gérant les entrées de l'utilisateur
-    
-    /// Évènement appelé lorsque le bouton gauche de la souris est descendu
+    override func tapGesture(point: CGPoint) {
+        super.tapGesture(point: point)
+        
+        let visiteur = VisiteurSelection(point: self.positionTap)
+        FacadeModele.instance.obtenirArbreRendu().accepterVisiteur(visiteur: visiteur)
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////

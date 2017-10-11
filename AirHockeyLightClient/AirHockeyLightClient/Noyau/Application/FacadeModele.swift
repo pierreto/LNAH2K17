@@ -40,7 +40,7 @@ class FacadeModele {
     static var instance = FacadeModele()
     
     /// Vue courante de la scène.
-    private var vue: EditorViewController?
+    private var viewController: EditorViewController?
     
     /// Arbre de rendu contenant les différents objets de la scène.
     private var arbre: ArbreRendu?
@@ -56,16 +56,16 @@ class FacadeModele {
         self.etat = ModeleEtatSelection.instance
         self.etat?.initialiser()
         
-        self.vue = EditorViewController.instance
+        self.viewController = EditorViewController.instance
         self.initVue()
         
         // TODO : A enlever
-        self.changerModeleEtat(etat: .DEPLACEMENT)
+        self.changerModeleEtat(etat: .POINTS_CONTROLE)
     }
     
     /// Retourne la vue courante.
     func obtenirVue() -> UIViewController {
-        return self.vue!
+        return self.viewController!
     }
     
     /// Retourne l'arbre de rendu.
@@ -74,7 +74,14 @@ class FacadeModele {
     }
     
     func initVue() {
-        self.vue?.editorScene.rootNode.addChildNode(self.arbre!)
+        self.viewController?.editorScene.rootNode.addChildNode(self.arbre!)
+        
+        let gesture = UITapGestureRecognizer(target: self, action:  #selector (self.tapGesture (_:)))
+        self.viewController?.editorView.addGestureRecognizer(gesture)
+    }
+    
+    @objc func tapGesture(_ sender: UITapGestureRecognizer) {
+        self.etat?.tapGesture(point: sender.location(in: sender.view))
     }
     
     /// Réinitialise la scène.

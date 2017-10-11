@@ -20,6 +20,9 @@ import UIKit
 ///////////////////////////////////////////////////////////////////////////
 class ModeleEtat {
     
+    /// Position du tap
+    var positionTap = CGPoint()
+    
     func initialiser() {}
     
     /// Annule l'action en cours
@@ -27,7 +30,10 @@ class ModeleEtat {
     
     // Fonctions gérant les entrées de l'utilisateur
 
-    /// Évènement appelé lorsque le bouton gauche de la souris est descendu
+    /// Évènement appelé lorsque l'utilisateur tap sur l'écran
+    func tapGesture(point: CGPoint) {
+        self.positionTap = point
+    }
     
     /// Fonction pour obtenir la vue rapidement
     func obtenirVue() -> UIViewController {
