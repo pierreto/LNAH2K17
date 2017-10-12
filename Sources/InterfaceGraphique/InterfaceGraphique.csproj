@@ -133,6 +133,7 @@
     <Compile Include="CommunicationInterface\RestInterface\HttpResponseParser.cs" />
     <Compile Include="CommunicationInterface\RestInterface\MapsRepository.cs" />
     <Compile Include="CommunicationInterface\RestInterface\Repository.cs" />
+    <Compile Include="CommunicationInterface\TournamentHub.cs" />
     <Compile Include="CommunicationInterface\WaitingRoomHub.cs" />
     <Compile Include="CommunicationInterface\HubManager.cs" />
     <Compile Include="CommunicationInterface\IBaseHub.cs" />
@@ -179,6 +180,7 @@
     <Compile Include="Entities\MapEntity.cs" />
     <Compile Include="Entities\MemberEntity.cs" />
     <Compile Include="CommunicationInterface\LoginClient.cs" />
+    <Compile Include="Entities\TournamentOpponentMessage.cs" />
     <Compile Include="Entities\UserEntity.cs" />
     <Compile Include="Exceptions\LoginException.cs" />
     <Compile Include="Game\GameState\AbstractGameState.cs" />
