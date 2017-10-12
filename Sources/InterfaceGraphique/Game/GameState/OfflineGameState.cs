@@ -121,18 +121,8 @@ namespace InterfaceGraphique.Game.GameState
         ////////////////////////////////////////////////////////////////////////
         public override void EndGame()
         {
-            int[] score = new int[2];
-            FonctionsNatives.getGameScore(score);
-
-            if (this.IsTournementMode)
-            {
-                Program.TournementTree.RoundScore = score;
-                Program.FormManager.CurrentForm = Program.TournementTree;
-            }
-            else
-            {
-                Program.QuickPlay.EndGame();
-            }
+            Program.QuickPlay.GetReplayButton().Visible = true;
+            Program.QuickPlay.EndGame();
         }
     }
 }

@@ -8,6 +8,9 @@ namespace InterfaceGraphique.Entities
 {
     public class MapEntity
     {
-        public string Name { get; set; }
+        public string Creator { get; set; }
+        public string MapName { get; set; }
+        public DateTime LastBackup { get; set; }
+        public string Json { get; set; }
     }
 }

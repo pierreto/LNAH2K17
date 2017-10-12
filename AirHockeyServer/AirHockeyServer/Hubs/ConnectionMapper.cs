@@ -22,14 +22,14 @@ namespace AirHockeyServer.Hubs
     {
         private static Mutex ConnectionMutex = new Mutex();
 
-        private static ConcurrentDictionary<Guid, string> _ConnectionsMapping;
-        private static ConcurrentDictionary<Guid, string> ConnectionsMapping
+        private static ConcurrentDictionary<int, string> _ConnectionsMapping;
+        private static ConcurrentDictionary<int, string> ConnectionsMapping
         {
             get
             {
                 if (_ConnectionsMapping == null)
                 {
-                    _ConnectionsMapping = new ConcurrentDictionary<Guid, string>();
+                    _ConnectionsMapping = new ConcurrentDictionary<int, string>();
                 }
                 return _ConnectionsMapping;
             }
@@ -48,7 +48,7 @@ namespace AirHockeyServer.Hubs
         /// @return true si la connection a été ajoutée
         ///
         ////////////////////////////////////////////////////////////////////////
-        public static bool AddConnection(Guid userId, string connection)
+        public static bool AddConnection(int userId, string connection)
         {
             //ConnectionMutex.WaitOne();
 
@@ -73,7 +73,7 @@ namespace AirHockeyServer.Hubs
         /// @return retourne la connection 
         ///
         ////////////////////////////////////////////////////////////////////////
-        public static string GetConnection(Guid userId)
+        public static string GetConnection(int userId)
         {
             //ConnectionMutex.WaitOne();
 

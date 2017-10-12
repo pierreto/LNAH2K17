@@ -90,7 +90,7 @@
                         <DataTemplate>
                             <TextBlock>
                                 <TextBlock.Text >
-                                    <Binding Path="Name" />
+                                    <Binding Path="MapName" />
                                 </TextBlock.Text>
                             </TextBlock>
                         </DataTemplate>

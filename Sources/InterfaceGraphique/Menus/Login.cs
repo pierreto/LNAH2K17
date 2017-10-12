@@ -78,6 +78,8 @@ namespace InterfaceGraphique.Menus
                 await authentication;
                 if (authentication.Result)
                 {
+                    Program.client.BaseAddress = new System.Uri("http://" + ServerTextBox.Text+ ":63056/");
+
                     // We initialize the chat to activate broadcasting from the server:
                     await chatHub.InitializeChat();
                     // Finally we move from the login page to the main menu:

@@ -38,8 +38,8 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
 
             waitingRoomHub.OpponentFoundEvent += (sender, args) =>
             {
-                OpponentName = args.Players[0].Name;
-                PlayerName = args.Players[1].Name;
+                OpponentName = args.Players[0].Username;
+                PlayerName = args.Players[1].Username;
             };
 
             waitingRoomHub.MapUpdatedEvent += (sender, args) => { SelectedMap = args; };
@@ -58,11 +58,11 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
             {
                 new MapEntity
                 {
-                    Name = "map1"
+                    MapName = "map1"
                 },
                 new MapEntity
                 {
-                    Name = "map2"
+                    MapName = "map2"
                 }
             };
 
@@ -123,7 +123,7 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
             get => selectedMap;
             set
             {
-                if (!string.Equals(selectedMap?.Name, value?.Name))
+                if (!string.Equals(selectedMap?.MapName, value?.MapName))
                 {
                     selectedMap = value;
                     waitingRoomHub.UpdateSelectedMap(value);

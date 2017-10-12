@@ -122,6 +122,8 @@ public:
    bool selectedNodeInfos(float infos[]);
    /// Applique l'information sur un noeud sélectionné
    void applyNodeInfos(float infos[]);
+   /// Remplis le parametre map avec la representation json d'une carte
+   void getMapJson(float coefficients[], char* map);
    /// Enregistrer l'arbre en cours dans un nouveau fichier
    void enregistrerSous(std::string filePath, float coefficients[]);
    /// Charger un fichier d'enregistrement de l'arbre
@@ -196,6 +198,9 @@ private:
    void creerNoeuds(char* type, std::string nomType);
    /// Permet de charge les points de contrôle sur la table
    void chargerPntCtrl();
+
+   /// Retourne la representation Json d'une carte
+   std::string _getMapJson(float coefficients[]);
 
    utilitaire::BoiteEnvironnement* skybox_;
 };
