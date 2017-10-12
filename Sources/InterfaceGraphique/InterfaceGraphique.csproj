@@ -152,6 +152,10 @@
     </Compile>
     <Compile Include="Controls\WPF\Matchmaking\MatchmakingViewModel.cs" />
     <Compile Include="Controls\WPF\RelayCommandAsync.cs" />
+    <Compile Include="Controls\WPF\Tournament\TournamentView.xaml.cs">
+      <DependentUpon>TournamentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WPF\Tournament\TournamentViewModel.cs" />
     <Compile Include="Controls\WPF\ViewModelBase.cs" />
     <Compile Include="Controls\WPF\ViewModelLocator.cs" />
     <Compile Include="Editor\SaveMapForm.cs">
@@ -398,6 +402,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\WPF\Matchmaking\MatchmakingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\WPF\Tournament\TournamentView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

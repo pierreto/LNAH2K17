@@ -23,6 +23,7 @@ using Microsoft.AspNet.SignalR.Client;
 using Microsoft.Practices.Unity;
 using Application = System.Windows.Forms.Application;
 using InterfaceGraphique.Controls.WPF.Matchmaking;
+using InterfaceGraphique.Controls.WPF.Tournament;
 
 namespace InterfaceGraphique
 {
@@ -130,6 +131,8 @@ namespace InterfaceGraphique
             unityContainer.RegisterType<IBaseHub,GameHub>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<MatchmakingViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<ChatViewModel>();
+            unityContainer.RegisterType<TournamentViewModel>(new ContainerControlledLifetimeManager());
+
         }
 
         static void ExecuterQuandInactif(object sender, EventArgs e)
