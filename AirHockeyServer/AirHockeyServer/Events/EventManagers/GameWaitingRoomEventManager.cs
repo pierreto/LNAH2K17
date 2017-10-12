@@ -23,7 +23,7 @@ namespace AirHockeyServer.Events.EventManagers
     ///////////////////////////////////////////////////////////////////////////////
     public class GameWaitingRoomEventManager
     {
-        private const int waitingRoomTimeoutTime = 5000;
+        private const int waitingRoomTimeoutTime = 30000;
 
         //private static Mutex RemainingTimeMutex = new Mutex();
 
@@ -51,9 +51,7 @@ namespace AirHockeyServer.Events.EventManagers
         ////////////////////////////////////////////////////////////////////////
         private async void OnMatchFound(object sender, MatchFoundArgs args)
         {
-
-            Thread.Sleep(3000);
-
+            
             GameEntity game = new GameEntity()
             {
                 CreationDate = DateTime.Now,

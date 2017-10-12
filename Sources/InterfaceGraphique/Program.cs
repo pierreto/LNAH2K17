@@ -21,6 +21,7 @@ using InterfaceGraphique.Menus;
 using Microsoft.AspNet.SignalR.Client;
 using Microsoft.Practices.Unity;
 using Application = System.Windows.Forms.Application;
+using InterfaceGraphique.Controls.WPF.Matchmaking;
 
 namespace InterfaceGraphique
 {
@@ -118,6 +119,7 @@ namespace InterfaceGraphique
             Application.Run(formManager);
 
         }
+        
 
         private static void InitializeUnityDependencyInjection()
         {
@@ -125,6 +127,7 @@ namespace InterfaceGraphique
             unityContainer.RegisterType<IBaseHub, ChatHub>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<IBaseHub,WaitingRoomHub>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<IBaseHub,GameHub>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<MatchmakingViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<ChatViewModel>();
         }
 

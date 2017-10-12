@@ -23,13 +23,11 @@ namespace InterfaceGraphique.CommunicationInterface
 
         public event EventHandler<int> RemainingTimeEvent;
 
-        public event EventHandler<UserEntity> OpponentFoundEvent;
+        public event EventHandler<GameEntity> OpponentFoundEvent;
 
-        public event EventHandler<GameEntity> MapUpdatedEvent;
+        public event EventHandler<MapEntity> MapUpdatedEvent;
 
         public event EventHandler<GameEntity> ConfigurationUpdatedEvent;
-
-        public event EventHandler<GameEntity> GameStartingEvent;
 
         public WaitingRoomHub(SlaveGameState slaveGameState,MasterGameState masterGameState)
         {
@@ -70,7 +68,7 @@ namespace InterfaceGraphique.CommunicationInterface
         {
             GameWaitingRoomProxy.On<GameEntity>("OpponentFoundEvent", newgame =>
             {
-             //   this.OpponentFoundEvent.Invoke(this, newgame.Players[0]);
+                this.OpponentFoundEvent.Invoke(this, newgame);
                 GameWaitingRoomProxy.On<GameEntity>("GameStartingEvent", officialGame =>
                 {
                     Console.WriteLine("Game is starting!");
@@ -112,12 +110,17 @@ namespace InterfaceGraphique.CommunicationInterface
 
                 GameWaitingRoomProxy.On<GameEntity>("GameMapUpdatedEvent", mapUpdated =>
                 {
-                    Console.WriteLine("map updated");
+                    this.MapUpdatedEvent.Invoke(this, mapUpdated.Map);
                 });
           
    
 
             });
+        }
+
+        public void MapUpdated(MapEntity map)
+        {
+            GameWaitingRoomProxy.Invoke("UpdateMap", map);
         }
 
         public async Task<GameEntity> UpdateSelectedMap(GameEntity game)
