@@ -44,7 +44,7 @@ namespace InterfaceGraphique.CommunicationInterface
             Random random = new Random();
             var userId = random.Next();
 
-            Program.user = new UserEntity { UserId = userId, Username = this.username };
+            Program.user = new UserEntity { Id = userId, Username = this.username };
 
             await chatHubProxy.Invoke("Subscribe", userId);
 

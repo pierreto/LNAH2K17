@@ -60,7 +60,7 @@ namespace InterfaceGraphique.CommunicationInterface
             Random random= new Random();
             UserEntity user = new UserEntity
             {
-                UserId = random.Next(),
+                Id = random.Next(),
                 Username = username
             };
             await GameWaitingRoomProxy.Invoke("JoinGame", user);
