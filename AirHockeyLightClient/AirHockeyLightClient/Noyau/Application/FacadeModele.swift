@@ -9,6 +9,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 import UIKit
+import SceneKit
+import UIKit.UIGestureRecognizerSubclass
 
 /// Les différents états du modèle
 enum MODELE_ETAT : Int {
@@ -23,6 +25,7 @@ enum MODELE_ETAT : Int {
     case DUPLIQUER = 8
     case ZOOM = 9
     case POINTS_CONTROLE = 10
+    case CAMERA_CONTROLE = 11
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -33,7 +36,6 @@ enum MODELE_ETAT : Int {
 /// @author Mikael Ferland et Pierre To
 /// @date 2017-10-10
 ///////////////////////////////////////////////////////////////////////////
-
 class FacadeModele {
     
     /// Instance singleton
@@ -45,26 +47,29 @@ class FacadeModele {
     /// Arbre de rendu contenant les différents objets de la scène.
     private var arbre: ArbreRendu?
     
+    /// Gesture recognizer
+    var tapGestureRecognizer: UITapGestureRecognizer?
+    var panGestureRecognizer: ImmediatePanGestureRecognizer?
+    
     /// Etat du modèle
     private var etat: ModeleEtat?
     
     /// Initialise la vue, l'arbre et l'état
     func initialiser() {
         self.arbre = ArbreRendu.instance
-        self.arbre?.initialiser()
-        
-        self.etat = ModeleEtatSelection.instance
-        self.etat?.initialiser()
-        
         self.viewController = EditorViewController.instance
-        self.initVue()
+        self.etat = ModeleEtatCameraControl.instance
         
-        // TODO : A enlever
-        self.changerModeleEtat(etat: .POINTS_CONTROLE)
+        self.tapGestureRecognizer = UITapGestureRecognizer(target: self, action:  #selector (self.tapGesture (_:)))
+        self.panGestureRecognizer = ImmediatePanGestureRecognizer(target: self, action: #selector (FacadeModele.instance.panGesture(_:)))
+        
+        self.arbre?.initialiser()
+        self.etat?.initialiser()
+        self.initVue()
     }
     
     /// Retourne la vue courante.
-    func obtenirVue() -> UIViewController {
+    func obtenirVue() -> EditorViewController {
         return self.viewController!
     }
     
@@ -73,15 +78,25 @@ class FacadeModele {
         return self.arbre!
     }
     
+    /// Retourne l'état courant
+    func obtenirEtat() -> ModeleEtat {
+        return self.etat!
+    }
+    
     func initVue() {
         self.viewController?.editorScene.rootNode.addChildNode(self.arbre!)
         
-        let gesture = UITapGestureRecognizer(target: self, action:  #selector (self.tapGesture (_:)))
-        self.viewController?.editorView.addGestureRecognizer(gesture)
+        /// Entrées de l'utilisateur
+        self.viewController?.editorView.addGestureRecognizer(self.tapGestureRecognizer!)
     }
     
+    /// Réaction aux entrées de l'utilisateur
     @objc func tapGesture(_ sender: UITapGestureRecognizer) {
         self.etat?.tapGesture(point: sender.location(in: sender.view))
+    }
+    
+    @objc func panGesture(_ sender: ImmediatePanGestureRecognizer) {
+        self.etat?.panGesture(sender: sender)
     }
     
     /// Réinitialise la scène.
@@ -127,6 +142,9 @@ class FacadeModele {
                 break;
             case .CREATION_PORTAIL:
                 //self.etat = ModeleEtatCreerPortail.instance
+                break;
+            case .CAMERA_CONTROLE:
+                self.etat = ModeleEtatCameraControl.instance
                 break;
         }
         

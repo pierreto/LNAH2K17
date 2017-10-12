@@ -81,6 +81,17 @@ class NoeudCommun : SCNNode {
         return (self.selectionne && self.selectionnable);
     }
     
+    /// Désélectonne tous les noeuds qui sont sélectitonnés parmi les descendants de ce noeud, lui-même étant inclus
+    func deselectionnerTout() {
+        self.selectionne = false
+        self.effetFantome(activer: false)
+        
+        for child in self.childNodes {
+            let noeud = child as! NoeudCommun
+            noeud.deselectionnerTout()
+        }
+    }
+    
     /// Écrit si le noeud peut être sélectionné ou non.
     func assignerEstSelectionnable(selectionnable: Bool) {
         self.selectionnable = selectionnable
@@ -149,24 +160,14 @@ class NoeudCommun : SCNNode {
         }
     }
     
-    /// Cette fonction active un effet fantome sur le mur
+    /// Cette fonction active ou désactive un effet fantome sur le mur
     func effetFantome(activer: Bool) {
         let material = self.geometry?.firstMaterial?.copy() as! SCNMaterial
         
         if (material.diffuse.contents is UIColor) {
-            let color = material.diffuse.contents as! UIColor
-            var fRed : CGFloat = 0
-            var fGreen : CGFloat = 0
-            var fBlue : CGFloat = 0
-            var fAlpha: CGFloat = 0
-            color.getRed(&fRed, green: &fGreen, blue: &fBlue, alpha: &fAlpha)
-        
-            fAlpha = activer ? 0.25 : 1.0
-        
-            let newColor = UIColor(red: fRed, green: fGreen, blue: fBlue, alpha: fAlpha)
-            material.diffuse.contents = newColor
-        
             self.geometry?.firstMaterial = material
+            self.geometry?.firstMaterial?.lightingModel = SCNMaterial.LightingModel.phong
+            self.geometry?.firstMaterial?.transparency = activer ? 0.25 : 1.0
         }
     }
     

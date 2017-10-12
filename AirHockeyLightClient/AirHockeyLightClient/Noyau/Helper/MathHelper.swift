@@ -9,6 +9,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 import Foundation
+import SceneKit
 
 class MathHelper {
     
@@ -20,6 +21,13 @@ class MathHelper {
         precondition(n > 0, "modulus must be positive")
         let r = a % n
         return r >= 0 ? r : r + n
+    }
+    
+    /// Transformer un point (données en coordonnées d'affichage) en coordonnées virtuelles
+    static func CGPointToSCNVector3(view: SCNView, depth: Float, point: CGPoint) -> SCNVector3 {
+        let projectedOrigin = view.projectPoint(SCNVector3Make(0, 0, depth))
+        let locationWithz   = SCNVector3Make(Float(point.x), Float(point.y), projectedOrigin.z)
+        return view.unprojectPoint(locationWithz)
     }
     
 }

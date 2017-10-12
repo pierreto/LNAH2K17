@@ -20,8 +20,11 @@ import UIKit
 ///////////////////////////////////////////////////////////////////////////
 class ModeleEtat {
     
-    /// Position du tap
-    var positionTap = CGPoint()
+    /// Dernière position
+    var lastPosition = CGPoint()
+    
+    /// Position du toucher
+    var position = CGPoint()
     
     func initialiser() {}
     
@@ -32,7 +35,12 @@ class ModeleEtat {
 
     /// Évènement appelé lorsque l'utilisateur tap sur l'écran
     func tapGesture(point: CGPoint) {
-        self.positionTap = point
+        self.position = point
+    }
+    
+    func panGesture(sender: ImmediatePanGestureRecognizer) {
+        self.lastPosition = self.position
+        self.position = sender.location(in: sender.view)
     }
     
     /// Fonction pour obtenir la vue rapidement

@@ -9,6 +9,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 import GLKit
+import SceneKit
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class VisiteurDeplacement
@@ -20,11 +21,18 @@ import GLKit
 class VisiteurDeplacement: VisiteurAbstrait {
     
     /// Vecteur trois dimensions pour le changement de position de l'objet
-    var delta: GLKVector3
+    var delta: GLKVector3?
+    
+    /// Dernière position du toucher
+    var lastPosition: CGPoint?
+    
+    /// Position du toucher
+    var position: CGPoint?
     
     /// Constructeur
-    init(delta: GLKVector3) {
-        self.delta = delta
+    init(lastPosition: CGPoint, position: CGPoint) {
+        self.lastPosition = lastPosition
+        self.position = position
     }
     
     /// Visiter un accélérateur pour le déplacement
@@ -39,10 +47,14 @@ class VisiteurDeplacement: VisiteurAbstrait {
     
     /// Visiter un point de contrôle pour le déplacement
     func visiterPointControl(noeud: NoeudPointControl) {
-        // TODO : implémenter la sélection
         if (noeud.estSelectionne()) {
             var pos = noeud.obtenirPositionRelative()
-            pos = GLKVector3Add(pos, self.delta)
+            
+            let start = MathHelper.CGPointToSCNVector3(view: FacadeModele.instance.obtenirVue().editorView, depth: pos.z, point: self.lastPosition!)
+            let end = MathHelper.CGPointToSCNVector3(view: FacadeModele.instance.obtenirVue().editorView, depth: pos.z, point: self.position!)
+            self.delta = GLKVector3Make(end.x - start.x, end.y - start.y, end.z - start.z)
+            
+            pos = GLKVector3Add(pos, self.delta!)
             
             // Deplacer le premier noeud
             noeud.deplacer(position: pos)

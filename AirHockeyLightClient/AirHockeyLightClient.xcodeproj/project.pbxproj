@@ -16,6 +16,20 @@
 		3415E6C91F85659900DB1CAD /* UsineNoeud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3415E6C81F85659900DB1CAD /* UsineNoeud.swift */; };
 		3415E6D91F85A99500DB1CAD /* controlPoint.obj in Resources */ = {isa = PBXBuildFile; fileRef = 3415E6D81F85A99500DB1CAD /* controlPoint.obj */; };
 		3415E6DB1F85C1F300DB1CAD /* NoeudPointControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3415E6DA1F85C1F300DB1CAD /* NoeudPointControl.swift */; };
+		3475C2291F8FAF8D00E8BF86 /* EditorHUDScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3475C2271F8FAF8D00E8BF86 /* EditorHUDScene.sks */; };
+		3475C22A1F8FAF8D00E8BF86 /* EditorHUDScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3475C2281F8FAF8D00E8BF86 /* EditorHUDScene.swift */; };
+		3475C2381F8FB9A100E8BF86 /* Booster.png in Resources */ = {isa = PBXBuildFile; fileRef = 3475C22E1F8FB9A100E8BF86 /* Booster.png */; };
+		3475C2391F8FB9A100E8BF86 /* ControlPoint.png in Resources */ = {isa = PBXBuildFile; fileRef = 3475C22F1F8FB9A100E8BF86 /* ControlPoint.png */; };
+		3475C23A1F8FB9A100E8BF86 /* Duplicate.png in Resources */ = {isa = PBXBuildFile; fileRef = 3475C2301F8FB9A100E8BF86 /* Duplicate.png */; };
+		3475C23B1F8FB9A100E8BF86 /* Move.png in Resources */ = {isa = PBXBuildFile; fileRef = 3475C2311F8FB9A100E8BF86 /* Move.png */; };
+		3475C23C1F8FB9A100E8BF86 /* Portal.png in Resources */ = {isa = PBXBuildFile; fileRef = 3475C2321F8FB9A100E8BF86 /* Portal.png */; };
+		3475C23D1F8FB9A100E8BF86 /* Resize.png in Resources */ = {isa = PBXBuildFile; fileRef = 3475C2331F8FB9A100E8BF86 /* Resize.png */; };
+		3475C23E1F8FB9A100E8BF86 /* Rotate.png in Resources */ = {isa = PBXBuildFile; fileRef = 3475C2341F8FB9A100E8BF86 /* Rotate.png */; };
+		3475C23F1F8FB9A100E8BF86 /* Select.png in Resources */ = {isa = PBXBuildFile; fileRef = 3475C2351F8FB9A100E8BF86 /* Select.png */; };
+		3475C2401F8FB9A100E8BF86 /* Wall.png in Resources */ = {isa = PBXBuildFile; fileRef = 3475C2361F8FB9A100E8BF86 /* Wall.png */; };
+		3475C2411F8FB9A100E8BF86 /* Zoom.png in Resources */ = {isa = PBXBuildFile; fileRef = 3475C2371F8FB9A100E8BF86 /* Zoom.png */; };
+		3475C2431F8FE71800E8BF86 /* ModeleEtatCameraControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3475C2421F8FE71800E8BF86 /* ModeleEtatCameraControl.swift */; };
+		3475C2461F90144300E8BF86 /* ImmediatePanGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3475C2451F90144300E8BF86 /* ImmediatePanGestureRecognizer.swift */; };
 		34B66FD91F8428EA00A9CCB9 /* NoeudTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B66FD81F8428EA00A9CCB9 /* NoeudTable.swift */; };
 		34B66FDC1F843CD400A9CCB9 /* fire_texture.png in Resources */ = {isa = PBXBuildFile; fileRef = 34B66FDB1F843CD300A9CCB9 /* fire_texture.png */; };
 		34B66FE01F844C2100A9CCB9 /* table_texture.png in Resources */ = {isa = PBXBuildFile; fileRef = 34B66FDF1F844C2100A9CCB9 /* table_texture.png */; };
@@ -61,6 +75,20 @@
 		3415E6C81F85659900DB1CAD /* UsineNoeud.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UsineNoeud.swift; path = Noyau/Arbre/Usines/UsineNoeud.swift; sourceTree = "<group>"; };
 		3415E6D81F85A99500DB1CAD /* controlPoint.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = controlPoint.obj; path = ../../Exe/media/models/controlPoint.obj; sourceTree = "<group>"; };
 		3415E6DA1F85C1F300DB1CAD /* NoeudPointControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NoeudPointControl.swift; path = Noyau/Arbre/Noeuds/NoeudPointControl.swift; sourceTree = "<group>"; };
+		3475C2271F8FAF8D00E8BF86 /* EditorHUDScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = EditorHUDScene.sks; path = InterfaceGraphique/Editor/EditorHUDScene.sks; sourceTree = "<group>"; };
+		3475C2281F8FAF8D00E8BF86 /* EditorHUDScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditorHUDScene.swift; path = InterfaceGraphique/Editor/EditorHUDScene.swift; sourceTree = "<group>"; };
+		3475C22E1F8FB9A100E8BF86 /* Booster.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Booster.png; path = ../../Sources/Icons/Booster.png; sourceTree = "<group>"; };
+		3475C22F1F8FB9A100E8BF86 /* ControlPoint.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ControlPoint.png; path = ../../Sources/Icons/ControlPoint.png; sourceTree = "<group>"; };
+		3475C2301F8FB9A100E8BF86 /* Duplicate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Duplicate.png; path = ../../Sources/Icons/Duplicate.png; sourceTree = "<group>"; };
+		3475C2311F8FB9A100E8BF86 /* Move.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Move.png; path = ../../Sources/Icons/Move.png; sourceTree = "<group>"; };
+		3475C2321F8FB9A100E8BF86 /* Portal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Portal.png; path = ../../Sources/Icons/Portal.png; sourceTree = "<group>"; };
+		3475C2331F8FB9A100E8BF86 /* Resize.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Resize.png; path = ../../Sources/Icons/Resize.png; sourceTree = "<group>"; };
+		3475C2341F8FB9A100E8BF86 /* Rotate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Rotate.png; path = ../../Sources/Icons/Rotate.png; sourceTree = "<group>"; };
+		3475C2351F8FB9A100E8BF86 /* Select.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Select.png; path = ../../Sources/Icons/Select.png; sourceTree = "<group>"; };
+		3475C2361F8FB9A100E8BF86 /* Wall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Wall.png; path = ../../Sources/Icons/Wall.png; sourceTree = "<group>"; };
+		3475C2371F8FB9A100E8BF86 /* Zoom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Zoom.png; path = ../../Sources/Icons/Zoom.png; sourceTree = "<group>"; };
+		3475C2421F8FE71800E8BF86 /* ModeleEtatCameraControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ModeleEtatCameraControl.swift; path = Noyau/Application/States/ModeleEtatCameraControl.swift; sourceTree = "<group>"; };
+		3475C2451F90144300E8BF86 /* ImmediatePanGestureRecognizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImmediatePanGestureRecognizer.swift; path = InterfaceGraphique/Gestures/ImmediatePanGestureRecognizer.swift; sourceTree = "<group>"; };
 		34B66FD81F8428EA00A9CCB9 /* NoeudTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NoeudTable.swift; path = Noyau/Arbre/Noeuds/NoeudTable.swift; sourceTree = "<group>"; };
 		34B66FDB1F843CD300A9CCB9 /* fire_texture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fire_texture.png; path = ../../Exe/media/textures/fire_texture.png; sourceTree = "<group>"; };
 		34B66FDF1F844C2100A9CCB9 /* table_texture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = table_texture.png; path = ../../Exe/media/textures/table_texture.png; sourceTree = "<group>"; };
@@ -147,6 +175,31 @@
 			name = Usines;
 			sourceTree = "<group>";
 		};
+		3475C22D1F8FB98500E8BF86 /* Icons */ = {
+			isa = PBXGroup;
+			children = (
+				3475C22E1F8FB9A100E8BF86 /* Booster.png */,
+				3475C22F1F8FB9A100E8BF86 /* ControlPoint.png */,
+				3475C2301F8FB9A100E8BF86 /* Duplicate.png */,
+				3475C2311F8FB9A100E8BF86 /* Move.png */,
+				3475C2321F8FB9A100E8BF86 /* Portal.png */,
+				3475C2331F8FB9A100E8BF86 /* Resize.png */,
+				3475C2341F8FB9A100E8BF86 /* Rotate.png */,
+				3475C2351F8FB9A100E8BF86 /* Select.png */,
+				3475C2361F8FB9A100E8BF86 /* Wall.png */,
+				3475C2371F8FB9A100E8BF86 /* Zoom.png */,
+			);
+			name = Icons;
+			sourceTree = "<group>";
+		};
+		3475C2441F90142600E8BF86 /* Gestures */ = {
+			isa = PBXGroup;
+			children = (
+				3475C2451F90144300E8BF86 /* ImmediatePanGestureRecognizer.swift */,
+			);
+			name = Gestures;
+			sourceTree = "<group>";
+		};
 		34B66FDA1F843CC100A9CCB9 /* Textures */ = {
 			isa = PBXGroup;
 			children = (
@@ -188,6 +241,7 @@
 			isa = PBXGroup;
 			children = (
 				8F0B94B11F8D4BCE007F0E82 /* ModeleEtat.swift */,
+				3475C2421F8FE71800E8BF86 /* ModeleEtatCameraControl.swift */,
 				8F0B94B31F8D4EC1007F0E82 /* ModeleEtatSelection.swift */,
 				8F0B94B71F8D7F11007F0E82 /* ModeleEtatPointControl.swift */,
 				8F0B94B91F8D8C95007F0E82 /* ModeleEtatDeplacement.swift */,
@@ -198,6 +252,7 @@
 		8F0FFED41F6EB8A600366D8E /* InterfaceGraphique */ = {
 			isa = PBXGroup;
 			children = (
+				3475C2441F90142600E8BF86 /* Gestures */,
 				8FB6A9C31F81DCA000FAFFCF /* Assets */,
 				8FB6A9931F81B9AA00FAFFCF /* Editor */,
 				253E088A1F818544009F301B /* Effects */,
@@ -294,6 +349,8 @@
 			isa = PBXGroup;
 			children = (
 				8FB6A9941F81B9C800FAFFCF /* EditorViewController.swift */,
+				3475C2271F8FAF8D00E8BF86 /* EditorHUDScene.sks */,
+				3475C2281F8FAF8D00E8BF86 /* EditorHUDScene.swift */,
 			);
 			name = Editor;
 			sourceTree = "<group>";
@@ -301,6 +358,7 @@
 		8FB6A9C31F81DCA000FAFFCF /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				3475C22D1F8FB98500E8BF86 /* Icons */,
 				34B66FDA1F843CC100A9CCB9 /* Textures */,
 				8FB6A9C41F81DCA800FAFFCF /* Models */,
 			);
@@ -419,13 +477,24 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3475C23B1F8FB9A100E8BF86 /* Move.png in Resources */,
 				8F6AE2BE1F6592EB00A29E8B /* GameScene.sks in Resources */,
 				8F64C0151F77550800F14AC7 /* Main.storyboard in Resources */,
 				8F6AE2C91F6592EB00A29E8B /* Assets.xcassets in Resources */,
 				34B66FDC1F843CD400A9CCB9 /* fire_texture.png in Resources */,
 				3415E6D91F85A99500DB1CAD /* controlPoint.obj in Resources */,
 				34B66FE01F844C2100A9CCB9 /* table_texture.png in Resources */,
+				3475C23D1F8FB9A100E8BF86 /* Resize.png in Resources */,
+				3475C2291F8FAF8D00E8BF86 /* EditorHUDScene.sks in Resources */,
+				3475C2401F8FB9A100E8BF86 /* Wall.png in Resources */,
+				3475C2411F8FB9A100E8BF86 /* Zoom.png in Resources */,
+				3475C23F1F8FB9A100E8BF86 /* Select.png in Resources */,
+				3475C23A1F8FB9A100E8BF86 /* Duplicate.png in Resources */,
+				3475C23C1F8FB9A100E8BF86 /* Portal.png in Resources */,
 				8F64C0131F7754FD00F14AC7 /* LaunchScreen.storyboard in Resources */,
+				3475C23E1F8FB9A100E8BF86 /* Rotate.png in Resources */,
+				3475C2391F8FB9A100E8BF86 /* ControlPoint.png in Resources */,
+				3475C2381F8FB9A100E8BF86 /* Booster.png in Resources */,
 				8F6AE2C01F6592EB00A29E8B /* Actions.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -502,6 +571,7 @@
 				8FE1EB051F75A96900A01514 /* ClientConnection.swift in Sources */,
 				8F6AE2C21F6592EB00A29E8B /* GameScene.swift in Sources */,
 				34B66FE41F84636900A9CCB9 /* NoeudBut.swift in Sources */,
+				3475C2461F90144300E8BF86 /* ImmediatePanGestureRecognizer.swift in Sources */,
 				253E088C1F81858E009F301B /* UIViewShake.swift in Sources */,
 				8FB6A9CA1F81E38300FAFFCF /* Table.swift in Sources */,
 				3415E6C21F8545B300DB1CAD /* NoeudCommun.swift in Sources */,
@@ -514,6 +584,7 @@
 				8FFC5B4A1F7CA7170031474F /* PaddingLabel.swift in Sources */,
 				8F0B94B61F8D5C25007F0E82 /* FacadeModele.swift in Sources */,
 				8F64C0171F775B2500F14AC7 /* AuthentificationViewController.swift in Sources */,
+				3475C22A1F8FAF8D00E8BF86 /* EditorHUDScene.swift in Sources */,
 				253E088E1F818DD2009F301B /* JsonHelper.swift in Sources */,
 				8F8706BD1F78A67F000E6824 /* ChannelViewController.swift in Sources */,
 				8F0B94AC1F8D3EEE007F0E82 /* VisiteurAbstrait.swift in Sources */,
@@ -522,6 +593,7 @@
 				8F69F4BF1F8AF871004D5129 /* MathHelper.swift in Sources */,
 				8F0B94BA1F8D8C95007F0E82 /* ModeleEtatDeplacement.swift in Sources */,
 				8F0B94B21F8D4BCE007F0E82 /* ModeleEtat.swift in Sources */,
+				3475C2431F8FE71800E8BF86 /* ModeleEtatCameraControl.swift in Sources */,
 				34B66FD91F8428EA00A9CCB9 /* NoeudTable.swift in Sources */,
 				8F6AE2BC1F6592EB00A29E8B /* AppDelegate.swift in Sources */,
 			);

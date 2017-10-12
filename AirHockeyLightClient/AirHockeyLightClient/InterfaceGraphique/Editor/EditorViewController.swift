@@ -24,7 +24,8 @@ class EditorViewController: UIViewController {
     /// Instance singleton
     static var instance = EditorViewController()
     
-    public var editorView: SCNView!
+    //public var editorView: SCNView!
+    @IBOutlet weak var editorView: SCNView!
     public var editorScene: SCNScene!
     public var cameraNode: SCNNode!
     
@@ -36,11 +37,18 @@ class EditorViewController: UIViewController {
         self.initView()
         self.initScene()
         self.initCamera()
+        
         self.initFacadeModele()
+        
+        // Load the SKScene from 'EditorHUDScene.sks'
+        if let scene = SKScene(fileNamed: "EditorHUDScene") {
+            // Set the scale mode to scale to fit the window
+            scene.scaleMode = .aspectFill
+            self.editorView.overlaySKScene = scene
+        }
     }
     
     func initView() {
-        self.editorView = self.view as! SCNView
         self.editorView.allowsCameraControl = true
         self.editorView.autoenablesDefaultLighting = true
     }
@@ -55,7 +63,6 @@ class EditorViewController: UIViewController {
     func initCamera() {
         self.cameraNode = SCNNode()
         self.cameraNode.camera = SCNCamera()
-        self.cameraNode.position = SCNVector3(x: 0, y: 5, z: 10)
     }
     
     func initFacadeModele() {

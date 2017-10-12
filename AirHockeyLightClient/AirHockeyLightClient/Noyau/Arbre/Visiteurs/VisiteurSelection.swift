@@ -45,7 +45,7 @@ class VisiteurSelection: VisiteurAbstrait {
     /// Visiter une table pour la sélection
     func visiterTable(noeud: NoeudTable) {
         if (!self.multiSelection && noeud.estSelectionnable()) {
-            let vue = FacadeModele.instance.obtenirVue() as! EditorViewController
+            let vue = FacadeModele.instance.obtenirVue()
             let options = [SCNHitTestOption.sortResults: NSNumber(value: true)]
             
             let hitResults = vue.editorView.hitTest(self.point, options: options)

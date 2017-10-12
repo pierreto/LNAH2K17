@@ -39,7 +39,7 @@ class ModeleEtatSelection: ModeleEtat {
     override func tapGesture(point: CGPoint) {
         super.tapGesture(point: point)
         
-        let visiteur = VisiteurSelection(point: self.positionTap)
+        let visiteur = VisiteurSelection(point: self.position)
         FacadeModele.instance.obtenirArbreRendu().accepterVisiteur(visiteur: visiteur)
     }
 }

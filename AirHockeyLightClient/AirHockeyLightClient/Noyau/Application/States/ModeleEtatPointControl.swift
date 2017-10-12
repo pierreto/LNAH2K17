@@ -9,6 +9,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 import GLKit
+import SceneKit
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class ModeleEtatPointControl
@@ -67,8 +68,30 @@ class ModeleEtatPointControl : ModeleEtat {
     override func tapGesture(point: CGPoint) {
         super.tapGesture(point: point)
         
-        let visiteur = VisiteurSelection(point: self.positionTap)
+        let visiteur = VisiteurSelection(point: self.position)
         FacadeModele.instance.obtenirArbreRendu().accepterVisiteur(visiteur: visiteur)
+    }
+    
+    // Fonctions gérant les entrées de l'utilisateur
+    override func panGesture(sender: ImmediatePanGestureRecognizer) {
+        super.panGesture(sender: sender)
+        
+        // Sélectionner le point de contrôle
+        if sender.state == UIGestureRecognizerState.began {
+            let visiteurSelection = VisiteurSelection(point: self.position)
+            FacadeModele.instance.obtenirArbreRendu().accepterVisiteur(visiteur: visiteurSelection)
+        }
+        // Déselectionner le point de contrôle
+        else if sender.state == UIGestureRecognizerState.ended {
+            let arbre = FacadeModele.instance.obtenirArbreRendu()
+            let table = arbre.childNode(withName: arbre.NOM_TABLE, recursively: true) as! NoeudCommun
+            table.deselectionnerTout()
+        }
+        // Bouger le point de contrôle
+        else {
+            let visiteur = VisiteurDeplacement(lastPosition: self.lastPosition, position: self.position)
+            FacadeModele.instance.obtenirArbreRendu().accepterVisiteur(visiteur: visiteur)
+        }
     }
 
 }
