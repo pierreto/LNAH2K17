@@ -5,6 +5,7 @@ using System.Net.Http.Headers;
 using System.Web.Http;
 using AirHockeyServer.Entities;
 using AirHockeyServer.Services;
+using System.Threading.Tasks;
 
 namespace AirHockeyServer.Controllers
 {
@@ -19,13 +20,21 @@ namespace AirHockeyServer.Controllers
 
         public IChatService ChatService { get; }
 
-        [AcceptVerbs("POST")]
+        [HttpPost]
         [Route("api/login")]
-        public HttpResponseMessage Login([FromBody]LoginEntity loginEntity)
+        public async Task<HttpResponseMessage> Login([FromBody]LoginEntity loginEntity)
         {
             try
             {
-                this.LoginService.Login(loginEntity);
+                if (await this.LoginService.ValidateCredentials(loginEntity))
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, true);
+                }
+                else
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, false);
+                }
+                
             }
             catch (LoginException e)
             {
@@ -37,7 +46,6 @@ namespace AirHockeyServer.Controllers
                 System.Diagnostics.Debug.WriteLine(e);
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
-            return Request.CreateResponse(HttpStatusCode.OK);
         }
 
         [Route("api/logout")]

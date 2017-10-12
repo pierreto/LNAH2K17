@@ -5,8 +5,7 @@ using System.Web;
 
 namespace AirHockeyServer.Pocos
 {
-    public class Poco
+    public abstract class Poco
     {
-
     }
 }

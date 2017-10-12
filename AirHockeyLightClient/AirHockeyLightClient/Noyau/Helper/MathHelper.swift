@@ -1,0 +1,30 @@
+///////////////////////////////////////////////////////////////////////////////
+/// @file MathHelper.swift
+/// @author Pierre To
+/// @date 2017-10-08
+/// @version 1
+///
+/// @addtogroup log3900 LOG3990
+/// @{
+///////////////////////////////////////////////////////////////////////////////
+
+import Foundation
+
+class MathHelper {
+    
+    static func clamp<T: Comparable>(value: T, lower: T, upper: T) -> T {
+        return min(max(value, lower), upper)
+    }
+    
+    static func mod(_ a: Int, _ n: Int) -> Int {
+        precondition(n > 0, "modulus must be positive")
+        let r = a % n
+        return r >= 0 ? r : r + n
+    }
+    
+}
+
+///////////////////////////////////////////////////////////////////////////////
+/// @}
+///////////////////////////////////////////////////////////////////////////////
+

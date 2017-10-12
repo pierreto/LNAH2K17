@@ -10,10 +10,11 @@ namespace AirHockeyServer.Pocos
     public class UserPoco: Poco
     {
         [Column(IsPrimaryKey = true, Name = "id_user")]
-        public int UserId { get; private set; }
+        public int? Id { get; set; }
 
         [Column(Name = "username")]
-        public string Username { get; private set; }
+        public string Username { get; set; }
+
     }
 }
 

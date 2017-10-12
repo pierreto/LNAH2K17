@@ -78,7 +78,6 @@ namespace InterfaceGraphique.Controls.WPF.Chat
                 if (enterKeyCommand == null)
                 {
                     enterKeyCommand = new RelayCommandAsync(SendMessage, (o) => CanSendMessage());
-
                 }
                 return enterKeyCommand;
             }
