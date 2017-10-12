@@ -16,13 +16,13 @@ namespace AirHockeyServer.Services
         {
             try
             {
-                UserEntity uE = await UserService.GetUserByUsername(loginEntity.Username);
+                UserEntity uE = await UserService.GetUserByUsername(loginEntity.User.Username);
                 if (uE != null)
                 {
                     PasswordEntity pE = await PasswordService.GetPasswordByUserId(uE.Id);
                     if (pE != null)
                     {
-                        if (uE.Username == loginEntity.Username && pE.Password == loginEntity.Password)
+                        if (uE.Username == loginEntity.User.Username && pE.Password == loginEntity.Password)
                         {
                             return true;
                         }
@@ -61,9 +61,9 @@ namespace AirHockeyServer.Services
 
         public void Logout(LoginEntity loginEntity)
         {
-            if (_usernames.Contains(loginEntity.Username))
+            if (_usernames.Contains(loginEntity.User.Username))
             {
-                _usernames.Remove(loginEntity.Username);
+                _usernames.Remove(loginEntity.User.Username);
             }
         }
     }

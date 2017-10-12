@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AirHockeyServer.Services
 {
-    public class SignupService
+    public class SignupService: ISignupService, IService
     {
         private UserService UserService = new UserService();
         private PasswordService PasswordService = new PasswordService();
