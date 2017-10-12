@@ -123,7 +123,7 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
             set
             {
                 selectedMap = value;
-                if(string.Equals(selectedMap.Name, value.Name))
+                if(string.Equals(selectedMap.MapName, value.MapName))
                 {
                     waitingRoomHub.MapUpdated(value);
                 }
