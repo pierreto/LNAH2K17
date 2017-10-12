@@ -1,0 +1,47 @@
+﻿using AirHockeyServer.DatabaseCore;
+using AirHockeyServer.Entities;
+using AirHockeyServer.Mapping;
+using AirHockeyServer.Pocos;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Linq;
+
+namespace AirHockeyServer.Repositories
+{
+    public class UserRepository : Repository<UserRepository>
+    {
+
+    public async Task<UserEntity> GetUserById(int id)
+        {
+            try
+            {
+                IEnumerable<UserPoco> userPocoEnum = await DataProvider.GetById<UserPoco>("test_users", id);
+                UserPoco userPoco = userPocoEnum.ToList().First();
+                UserEntity userEntity = MapperManager.Map<UserPoco, UserEntity>(userPoco);
+                return userEntity;
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("[UserRepository.GetUserById] " + e.ToString());
+                return null;
+            }
+        }
+
+        public async Task<List<UserEntity>> GetAllUsers()
+        {
+            try
+            {
+                IEnumerable<UserPoco> userPocoEnum = await DataProvider.GetAll<UserPoco>("test_users");
+                List<UserPoco> userPocos = userPocoEnum.ToList();
+                List<UserEntity> userEntities = MapperManager.Map<List<UserPoco>, List<UserEntity>>(userPocos);
+                return userEntities;
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("[UserRepository.GetAllUsers] " + e.ToString());
+                return null;
+            }
+        }
+    }
+}

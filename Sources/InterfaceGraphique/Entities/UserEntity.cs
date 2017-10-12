@@ -8,8 +8,8 @@ namespace InterfaceGraphique.Entities
 {
     public class UserEntity
     {
-        public Guid Id { get; set; }
+        public int UserId { get; set; }
 
-        public string Name { get; set; }
+        public string Username { get; set; }
     }
 }

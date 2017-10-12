@@ -4,9 +4,9 @@ namespace AirHockeyServer.Entities
 {
     public class UserEntity : Entity
     {
-        public Guid Id { get; set; }
+        public int UserId { get; set; }
         
-        public string Name { get; set; }
+        public string Username { get; set; }
     }
 
     //public class UserComparer : IComparable<UserEntity>

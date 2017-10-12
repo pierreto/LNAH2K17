@@ -59,11 +59,11 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
             {
                 new MapEntity
                 {
-                    Name = "map1"
+                    MapName = "map1"
                 },
                 new MapEntity
                 {
-                    Name = "map2"
+                    MapName = "map2"
                 }
             };
 

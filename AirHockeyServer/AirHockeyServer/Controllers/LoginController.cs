@@ -10,21 +10,22 @@ namespace AirHockeyServer.Controllers
 {
     public class LoginController : ApiController
     {
-        public ILoginService loginService { get; }
+        public ILoginService LoginService { get; }
 
         public LoginController()
         {
-            this.loginService = new LoginService();
+            this.LoginService = new LoginService();
         }
 
         public IChatService ChatService { get; }
 
+        [AcceptVerbs("POST")]
         [Route("api/login")]
-        public HttpResponseMessage Login([FromBody]LoginMessage message)
+        public HttpResponseMessage Login([FromBody]LoginEntity loginEntity)
         {
             try
             {
-                this.loginService.Login(message);
+                this.LoginService.Login(loginEntity);
             }
             catch (LoginException e)
             {
@@ -40,9 +41,9 @@ namespace AirHockeyServer.Controllers
         }
 
         [Route("api/logout")]
-        public HttpResponseMessage Logout([FromBody]LoginMessage message)
+        public HttpResponseMessage Logout([FromBody]LoginEntity loginEntity)
         {
-            this.loginService.Logout(message);
+            this.LoginService.Logout(loginEntity);
             return Request.CreateResponse(HttpStatusCode.OK);
         }
     }
