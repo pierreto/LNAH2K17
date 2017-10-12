@@ -40,8 +40,8 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
 
             waitingRoomHub.OpponentFoundEvent += (sender, args) =>
             {
-                OpponentName = args.Players[0].Name;
-                PlayerName = args.Players[1].Name;
+                OpponentName = args.Players[0].Username;
+                PlayerName = args.Players[1].Username;
             };
 
             waitingRoomHub.MapUpdatedEvent += (sender, args) => { SelectedMap = args; };
