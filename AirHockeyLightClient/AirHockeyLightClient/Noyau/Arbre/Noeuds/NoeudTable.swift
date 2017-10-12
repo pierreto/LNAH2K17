@@ -40,6 +40,7 @@ class NoeudTable : NoeudCommun {
         
         self.initialiserTable()
         self.creerPointsDeControle()
+        self.updateLigneCentre(sommetA: self.sommets[31], sommetB: self.sommets[11])
         
         // Mettre à jour la géométrie de la table
         self.updateGeometry()
@@ -105,6 +106,8 @@ class NoeudTable : NoeudCommun {
         
         self.geometry = SCNGeometry(sources: sources, elements: initElements())
         self.initialiserMateriau()
+        
+        self.updateLigneCentre(sommetA: self.sommets[31], sommetB: self.sommets[11])
     }
     
     /// Initialiser le matériau de la table sur la géométrie
@@ -236,6 +239,25 @@ class NoeudTable : NoeudCommun {
     
         buts.append(butGauche)
         buts.append(butDroite)
+    }
+    
+    /// Cette fonction crée la ligne du cente
+    func updateLigneCentre(sommetA: SCNVector3, sommetB: SCNVector3) {
+        let vecteurRectangle = GLKVector3Make(sommetA.x - sommetB.x, sommetA.y - sommetB.y, sommetA.z - sommetB.z)
+        let rectangle = SCNPlane(width: 2.5, height: CGFloat(GLKVector3Length(vecteurRectangle)))
+        
+        rectangle.firstMaterial?.diffuse.contents = UIColor(red: 1.0, green: 0, blue: 0, alpha: 1.0)
+        
+        let rectangleNode = SCNNode(geometry: rectangle)
+        
+        let xAngle = SCNMatrix4MakeRotation(Float(Double.pi / 2.0), 0, 1, 0)
+        let yAngle = SCNMatrix4MakeRotation(Float(Double.pi / 2.0), 0, 0, 1)
+        let zAngle = SCNMatrix4MakeRotation(0, 1, 0, 0)
+        let rotationMatrix = SCNMatrix4Mult(SCNMatrix4Mult(xAngle, yAngle), zAngle)
+        rectangleNode.transform = SCNMatrix4Mult(rotationMatrix, rectangleNode.transform)
+        rectangleNode.transform = SCNMatrix4Translate(rectangleNode.transform, 0, 0.1, 0)
+        
+        self.addChildNode(rectangleNode)
     }
 
 }

@@ -50,8 +50,10 @@ class NoeudCommun : SCNNode {
     /// Cette fonction permet d'itérer à travers tous les noeuds enfants avec le visiteur
     func accepterVisiteur(visiteur: VisiteurAbstrait) {
         for child in self.childNodes {
-            let noeud = child as! NoeudCommun
-            noeud.accepterVisiteur(visiteur: visiteur)
+            if (child is NoeudCommun) {
+                let noeud = child as! NoeudCommun
+                noeud.accepterVisiteur(visiteur: visiteur)
+            }
         }
     }
     
@@ -87,8 +89,10 @@ class NoeudCommun : SCNNode {
         self.effetFantome(activer: false)
         
         for child in self.childNodes {
-            let noeud = child as! NoeudCommun
-            noeud.deselectionnerTout()
+            if child is NoeudCommun {
+                let noeud = child as! NoeudCommun
+                noeud.deselectionnerTout()
+            }
         }
     }
     
