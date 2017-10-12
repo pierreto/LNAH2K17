@@ -57,10 +57,10 @@ namespace InterfaceGraphique.CommunicationInterface
         public async void JoinGame()
         {
             InitializeEvents();
-
+            Random random= new Random();
             UserEntity user = new UserEntity
             {
-                Id = Guid.NewGuid(),
+                UserId = random.Next(),
                 Username = username
             };
             await GameWaitingRoomProxy.Invoke("JoinGame", user);
@@ -70,7 +70,6 @@ namespace InterfaceGraphique.CommunicationInterface
         {
             GameWaitingRoomProxy.On<GameEntity>("OpponentFoundEvent", newgame =>
             {
-             //   this.OpponentFoundEvent.Invoke(this, newgame.Players[0]);
                 GameWaitingRoomProxy.On<GameEntity>("GameStartingEvent", officialGame =>
                 {
                     Console.WriteLine("Game is starting!");

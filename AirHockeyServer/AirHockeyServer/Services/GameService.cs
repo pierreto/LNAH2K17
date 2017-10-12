@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using AirHockeyServer.Entities;
 using System.Threading.Tasks;
 using AirHockeyServer.Repositories;
@@ -73,8 +74,7 @@ namespace AirHockeyServer.Services
 
         public GameEntity GetGameEntityById(Guid id)
         {
-            return null;
-            //return this.games.First(a => a.GameId.Equals(id));
+            return this.games.First(a => a.GameId.Equals(id));
         } 
     }
 }

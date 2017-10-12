@@ -7,7 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using InterfaceGraphique.Controls.WPF.Matchmaking;
 using InterfaceGraphique.Game.GameState;
+using Microsoft.Practices.Unity;
 
 namespace InterfaceGraphique {
 
@@ -57,6 +59,7 @@ namespace InterfaceGraphique {
 
             this.MenuStrip_MenuBar.Visible = false;
             this.Panel_EndBack.Visible = false;
+            this.Button_PlayAgain.Visible = false;
             this.MenuStrip_MenuBar.Renderer = new Renderer_MenuBar();
 
             currentGameState.KeyUp = Program.ConfigurationMenu.MoveUpKey;
@@ -134,6 +137,7 @@ namespace InterfaceGraphique {
             catch (Exception) {
 
             }
+            Program.unityContainer.Resolve<MatchmakingViewModel>();
         }
 
 
@@ -256,6 +260,10 @@ namespace InterfaceGraphique {
             }));
 
         }
+        public Button GetReplayButton()
+        {
+            return this.Button_PlayAgain;
+        }
 
 
         ////////////////////////////////////////////////////////////////////////
@@ -354,7 +362,6 @@ namespace InterfaceGraphique {
             get => currentGameState;
             set => currentGameState = value;
         }
-
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
