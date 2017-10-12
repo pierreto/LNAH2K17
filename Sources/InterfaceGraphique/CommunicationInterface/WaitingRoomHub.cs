@@ -20,6 +20,7 @@ namespace InterfaceGraphique.CommunicationInterface
         private MasterGameState masterGameState;
 
         private string username;
+        private GameEntity CurrentGame;
 
         public event EventHandler<int> RemainingTimeEvent;
 
@@ -69,6 +70,8 @@ namespace InterfaceGraphique.CommunicationInterface
             GameWaitingRoomProxy.On<GameEntity>("OpponentFoundEvent", newgame =>
             {
                 this.OpponentFoundEvent.Invoke(this, newgame);
+                this.CurrentGame = newgame;
+
                 GameWaitingRoomProxy.On<GameEntity>("GameStartingEvent", officialGame =>
                 {
                     Console.WriteLine("Game is starting!");
@@ -110,6 +113,7 @@ namespace InterfaceGraphique.CommunicationInterface
 
                 GameWaitingRoomProxy.On<GameEntity>("GameMapUpdatedEvent", mapUpdated =>
                 {
+                    this.CurrentGame = mapUpdated;
                     this.MapUpdatedEvent.Invoke(this, mapUpdated.Map);
                 });
           
@@ -120,7 +124,8 @@ namespace InterfaceGraphique.CommunicationInterface
 
         public void MapUpdated(MapEntity map)
         {
-            GameWaitingRoomProxy.Invoke("UpdateMap", map);
+            CurrentGame.Map = map;
+            GameWaitingRoomProxy.Invoke("UpdateMap", CurrentGame);
         }
 
         public async Task<GameEntity> UpdateSelectedMap(GameEntity game)

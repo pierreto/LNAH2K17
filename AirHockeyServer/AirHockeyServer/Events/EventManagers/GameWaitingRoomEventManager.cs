@@ -76,8 +76,8 @@ namespace AirHockeyServer.Events.EventManagers
             this.RemainingTime[gameCreated.GameId] = 0;
             //RemainingTimeMutex.ReleaseMutex();
 
-            System.Timers.Timer timer = CreateTimeoutTimer(gameCreated.GameId);
-            timer.Start();
+            //System.Timers.Timer timer = CreateTimeoutTimer(gameCreated.GameId);
+            //timer.Start();
         }
 
         ////////////////////////////////////////////////////////////////////////

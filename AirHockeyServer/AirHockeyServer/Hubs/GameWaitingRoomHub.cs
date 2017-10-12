@@ -67,6 +67,8 @@ namespace AirHockeyServer.Hubs
         {
             var updatedGame = await GameService.UpdateGame(gameEntity);
 
+            var test = Clients.Group(gameEntity.GameId.ToString());
+
             Clients.Group(gameEntity.GameId.ToString()).GameMapUpdatedEvent(updatedGame);
 
             return updatedGame;
