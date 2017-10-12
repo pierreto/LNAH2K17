@@ -14,6 +14,8 @@ namespace AirHockeyServer.Pocos
         private DateTime _CreationDate;
         private string _Json;
 
+        public override int? Id { get; set; }
+
         [Column(Name="creator", DbType="varchar(128) NOT NULL", IsPrimaryKey=true, CanBeNull=false, Storage="_Creator")]
         public string Creator
         {

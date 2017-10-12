@@ -17,19 +17,81 @@ namespace AirHockeyServer.Services
 
         public async Task<UserEntity> GetUserById(int id)
         {
-            return await UserRepository.GetUserById(id);
+            try
+            {
+                return await UserRepository.GetUserById(id);
+            }
+            catch (UserException e)
+            {
+                System.Diagnostics.Debug.WriteLine("[UserService.GetUserById] " + e.ToString());
+                throw e;
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("[UserService.GetUserById] " + e.ToString());
+                throw e;
+            }
+        }
+
+        public async Task<UserEntity> GetUserByUsername(string username)
+        {
+            try
+            {
+                return await UserRepository.GetUserByUsername(username);
+            }
+            catch (UserException e)
+            {
+                System.Diagnostics.Debug.WriteLine("[UserService.GetUserByUsername] " + e.ToString());
+                throw e;
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("[UserService.GetUserByUsername] " + e.ToString());
+                throw e;
+            }
         }
 
         public async Task<List<UserEntity>> GetAllUsers()
         {
-           return await UserRepository.GetAllUsers();
+            try
+            {
+                return await UserRepository.GetAllUsers();
+            }
+            catch (UserException e)
+            {
+                System.Diagnostics.Debug.WriteLine("[UserService.GetAllUsers] " + e.ToString());
+                throw e;
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("[UserService.GetAllUsers] " + e.ToString());
+                throw e;
+            }
         }
 
-        /*
-        public async Task PostUser()
+        public void PostUser(UserEntity userEntity)
         {
-            // TODO
+            try
+            {
+                UserRepository.PostUser(userEntity);
+            }
+            catch (UserException e)
+            {
+                System.Diagnostics.Debug.WriteLine("[UserService.PostUser] " + e.ToString());
+                throw e;
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("[UserService.PostUser] " + e.ToString());
+                throw e;
+            }
         }
-        */
+    }
+
+    public class UserException : Exception
+    {
+        public UserException(string message) : base(message)
+        {
+        }
     }
 }
