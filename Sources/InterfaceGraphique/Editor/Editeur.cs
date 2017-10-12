@@ -24,6 +24,10 @@ namespace InterfaceGraphique {
     ///////////////////////////////////////////////////////////////////////////
     public partial class Editeur : Form {
 
+        private MODELE_ETAT outilCourrant = MODELE_ETAT.AUCUN;
+        private string nameSavedMap;
+        private bool savedOnline;
+
         ////////////////////////////////////////////////////////////////////////
         ///
         /// Constructeur de la classe Editeur
@@ -34,6 +38,9 @@ namespace InterfaceGraphique {
         public Editeur() {
             InitializeComponent();
             InitializeEvents();
+
+            nameSavedMap = null;
+            savedOnline = false;
         }
 
 
@@ -139,8 +146,7 @@ namespace InterfaceGraphique {
             this.Toolbar_Wall.Click += (sender, e) => changerEtatEdition(sender, e, MODELE_ETAT.CREATION_MURET);
 
             // Menu dropdown options events
-            this.Fichier_Enregistrer.Click += (sender, e) => SaveFile();
-            //this.Fichier_EnregistrerSous.Click += (sender, e) => SaveFileAs();
+            this.Fichier_Enregistrer.Click += async (sender, e) => await SaveFile();
             this.Fichier_EnregistrerSous_Ordinateur.Click += (sender, e) => SaveFileAs();
             this.Fichier_EnregistrerSous_Serveur.Click += async (sender, e) => await SaveMapOnline(); 
             this.Fichier_Ouvrir.Click += (sender, e) => OpenFile();
@@ -379,7 +385,7 @@ namespace InterfaceGraphique {
                 float[] coefficients = new float[3];
                 FonctionsNatives.ouvrir(filePath, coefficients);
                 Program.GeneralProperties.SetCoefficientValues(coefficients);
-                openedSaveFile = ofd.FileName;
+                nameSavedMap = ofd.FileName;
             }
         }
 
@@ -393,14 +399,33 @@ namespace InterfaceGraphique {
         /// @return Void 
         ///
         ////////////////////////////////////////////////////////////////////////
-        private void SaveFile() {
-            if (openedSaveFile != null && File.Exists(openedSaveFile)) {
-                StringBuilder filePath = new StringBuilder(openedSaveFile.Length);
-                filePath.Append(openedSaveFile);
-                FonctionsNatives.enregistrerSous(filePath, Program.GeneralProperties.GetCoefficientValues());
+        private async Task SaveFile() {
+            if (nameSavedMap != null)
+            {
+                if (savedOnline)
+                {
+                    await _SaveMapOnline(nameSavedMap);
+                }
+                else if (File.Exists(nameSavedMap))
+                {
+                    StringBuilder filePath = new StringBuilder(nameSavedMap.Length);
+                    filePath.Append(nameSavedMap);
+                    FonctionsNatives.enregistrerSous(filePath, Program.GeneralProperties.GetCoefficientValues());
+                }
             }
             else
-                SaveFileAs();
+            {
+                Editor.SaveMapForm form = new Editor.SaveMapForm();
+                form.ShowDialog();
+                if (form.SaveOnline)
+                {
+                    await SaveMapOnline();
+                }
+                else
+                {
+                    SaveFileAs();
+                }
+            }
         }
 
 
@@ -423,17 +448,12 @@ namespace InterfaceGraphique {
                 StringBuilder filePath = new StringBuilder(sfd.FileName.Length);
                 filePath.Append(sfd.FileName);
                 FonctionsNatives.enregistrerSous(filePath, Program.GeneralProperties.GetCoefficientValues());
-                openedSaveFile = sfd.FileName;
+                nameSavedMap = sfd.FileName;
             }
         }
 
-        private async Task SaveMapOnline()
+        private async Task _SaveMapOnline(string mapName)
         {
-            Editor.SaveMapOnlineForm form = new Editor.SaveMapOnlineForm();
-
-            if (form.ShowDialog() == DialogResult.OK && form.Text_MapName.Text.Length > 0)
-            {
-                string mapName = form.Text_MapName.Text;
                 StringBuilder sb = new StringBuilder(2000);
                 FonctionsNatives.getMapJson(Program.GeneralProperties.GetCoefficientValues(), sb);
                 string json = sb.ToString();
@@ -453,6 +473,20 @@ namespace InterfaceGraphique {
                         @"Internal error",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+                else
+                {
+                    nameSavedMap = mapName;
+                    savedOnline = true;
+                }
+        }
+
+        private async Task SaveMapOnline()
+        {
+            Editor.SaveMapOnlineForm form = new Editor.SaveMapOnlineForm();
+
+            if (form.ShowDialog() == DialogResult.OK && form.Text_MapName.Text.Length > 0)
+            {
+                await _SaveMapOnline(form.Text_MapName.Text);
             }
             else
             {
@@ -477,7 +511,7 @@ namespace InterfaceGraphique {
             FonctionsNatives.redimensionnerFenetre(this.Size.Width + Toolbar.Size.Width, this.Size.Height - MenuBar.Size.Height);
             Program.GeneralProperties.ResetProperties();
             changerEtatEdition(this.Toolbar_Select, null, MODELE_ETAT.SELECTION);
-            openedSaveFile = null;
+            nameSavedMap = null;
         }
 
 
@@ -681,9 +715,6 @@ namespace InterfaceGraphique {
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-        private MODELE_ETAT outilCourrant = MODELE_ETAT.AUCUN;
-        private string openedSaveFile = null;
     }
 }
  
