@@ -55,20 +55,15 @@ namespace InterfaceGraphique.CommunicationInterface
 
         public async void JoinGame()
         {
-<<<<<<< HEAD
-            //InitializeEvents();
-
-=======
             InitializeEvents();
             Random random= new Random();
->>>>>>> ef85bd0ddbc9638c96bd6dadca91ec82bf0e8ddb
             UserEntity user = new UserEntity
             {
                 UserId = random.Next(),
                 Username = username
             };
-            //await GameWaitingRoomProxy.Invoke("JoinGame", user);
-            await GameWaitingRoomProxy.Invoke("Test");
+            await GameWaitingRoomProxy.Invoke("JoinGame", user);
+
         }
 
         private void InitializeEvents()
@@ -76,10 +71,12 @@ namespace InterfaceGraphique.CommunicationInterface
             GameWaitingRoomProxy.On<GameEntity>("OpponentFoundEvent", newgame =>
             {
                 this.CurrentGame = newgame;
+                this.OpponentFoundEvent.Invoke(this, newgame);
 
                 GameWaitingRoomProxy.On<GameEntity>("GameStartingEvent", officialGame =>
                 {
                     Console.WriteLine("Game is starting!");
+
                     Program.LobbyHost.Invoke(new MethodInvoker(() =>
                     {
 
@@ -119,27 +116,21 @@ namespace InterfaceGraphique.CommunicationInterface
                 GameWaitingRoomProxy.On<GameEntity>("GameMapUpdatedEvent", mapUpdated =>
                 {
                     this.CurrentGame = mapUpdated;
-                    this.MapUpdatedEvent.Invoke(this, mapUpdated.Map);
+                    this.MapUpdatedEvent.Invoke(this, mapUpdated.SelectedMap);
                 });
           
    
 
             });
         }
-
-        public void MapUpdated(MapEntity map)
+        
+        public async void UpdateSelectedMap(MapEntity map)
         {
             if(CurrentGame != null)
             {
-                CurrentGame.Map = map;
-                GameWaitingRoomProxy.Invoke("UpdateMap", CurrentGame);
+                CurrentGame.SelectedMap = map;
+                var t = await GameWaitingRoomProxy.Invoke<GameEntity>("UpdateMap", CurrentGame);
             }
-        }
-
-        public async Task<GameEntity> UpdateSelectedMap(GameEntity game)
-        {
-            GameEntity gameUpdated = await GameWaitingRoomProxy.Invoke<GameEntity>("UpdateMap", game);
-            return gameUpdated;
         }
 
         public async Task<GameEntity> UpdateSelectedConfiguration(GameEntity game)
