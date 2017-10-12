@@ -1,40 +1,17 @@
-﻿using AirHockeyServer.Services;
-using System;
+﻿using System;
 using System.Net;
 using System.Net.Http;
-using System.Threading.Tasks;
+using System.Net.Http.Headers;
 using System.Web.Http;
+using AirHockeyServer.Entities;
+using AirHockeyServer.Services;
 
 namespace AirHockeyServer.Controllers
 {
     public class PasswordController : ApiController
     {
-
-        public PasswordService PasswordService { get; }
-
         public PasswordController()
         {
-            this.PasswordService = new PasswordService();
-        }
-
-        [HttpGet]
-        [Route("api/password/{id}")]
-        public async Task<HttpResponseMessage> GetUser(int id)
-        {
-            try
-            {
-                return Request.CreateResponse(HttpStatusCode.OK, await PasswordService.GetPasswordById(id));
-            }
-            catch (SignupException e)
-            {
-                System.Diagnostics.Debug.WriteLine(e);
-                return Request.CreateResponse(HttpStatusCode.Forbidden);
-            }
-            catch (Exception e)
-            {
-                System.Diagnostics.Debug.WriteLine(e);
-                return Request.CreateResponse(HttpStatusCode.InternalServerError);
-            }
         }
     }
 }

@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { LoadingModule } from 'ngx-loading';
 
 import { AppComponent } from './app.component';
 
@@ -17,7 +16,6 @@ import { MapComponent } from './map/map.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { HeaderComponent } from './header/header.component';
 import { LoginService } from './login/login.service';
-import { AppService } from './app.service';
 
 @NgModule({
     imports: [
@@ -25,8 +23,7 @@ import { AppService } from './app.service';
     FormsModule,
     HttpModule,
     AppRoutingModule,
-    ReactiveFormsModule,
-    LoadingModule
+    ReactiveFormsModule
   ],
   declarations: [
     AppComponent,
@@ -38,7 +35,7 @@ import { AppService } from './app.service';
     PageNotFoundComponent,
     HeaderComponent
   ],
-  providers: [SignupService, LoginService, AppService],
+  providers: [SignupService, LoginService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

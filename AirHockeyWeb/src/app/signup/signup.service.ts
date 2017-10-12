@@ -16,7 +16,8 @@ export class SignupService {
         };
 
         return this.http.post('/api/signup', body).map(
-            (res) => res.json()
+            () =>  true,
+            () =>  false
         );
     }
 }

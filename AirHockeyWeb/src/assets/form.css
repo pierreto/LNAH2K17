@@ -1,7 +1,7 @@
 label {
     display: inline-block;
+    width: 200px;
     text-align: right;
-    width: 245px;
 }
 
 input {
@@ -18,7 +18,7 @@ input {
 .signUp {
     font-size: 24px;
     font-weight: bold;
-    width: 220px;
+    width: 125px;
     height: 40px;
     background-color: #3ccc71;
     color: #fff;

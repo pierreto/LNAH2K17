@@ -4,7 +4,6 @@ import { User } from './../user';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import { AppService } from '../app.service';
 
 @Component({
   selector: 'app-signup',
@@ -22,35 +21,31 @@ export class SignupComponent implements OnInit {
 
   validationMessages = {
     'username': {
-      'required':      'Nom d\'usager requis.',
-      'minlength':     'Nom d\'usager doit contenir au moins 2 caractères.',
-      'maxlength':     'Nom d\'usager doit contenir au plus 15 caractères.',
-      'pattern':       'Nom d\'usager invalide.'
+      'required':      'Userame is required.',
+      'minlength':     'Username must be at least 2 characters long.',
+      'maxlength':     'Username cannot be more than 15 characters long.',
+      'pattern':       'Username is invalid.'
     },
     'password': {
-      'required':      'Mot de passe requis.',
-      'minlength':     'Mot de passe doit contenir au moins 8 caractères.',
-      'pattern':       'Mot de passe doit contenir au moins une lettre minuscule, une lettre majuscule et un caractère spécial.'
+      'required':      'Password is required.',
+      'minlength':     'Password must be at least 8 characters long.',
+      'pattern':       'Password must container at least an uppercase character, a lowercase character and a number.'
     },
     'passwordConfirm': {
-      'required': 'Confirmation du mot de passe requise.',
-      'noMatch':  'Les mots de passe doivent être identiques.'
+      'required': 'Password Confirmation is required.',
+      'noMatch':  'Passwords do not match.'
     }
   };
 
   private signupForm: FormGroup;
   private user: User;
   private passwordConfirm: string;
-  private errorMessage: string;
-  private signupOk: boolean;
-  constructor(private fb: FormBuilder, private router: Router, private signupService: SignupService, private appService: AppService) { }
+  constructor(private fb: FormBuilder, private router: Router, private signupService: SignupService) { }
 
   ngOnInit() {
     this.user = new User();
     console.log(this.user);
     this.passwordConfirm = '';
-    this.errorMessage = '';
-    this.signupOk = true;
     this.buildForm();
   }
 
@@ -112,18 +107,9 @@ onValueChanged(data?: any) {
 
 
   signup(): void {
-    this.appService.loading = true;
     this.signupService.signup(this.user).subscribe(
-      res => {
-        this.signupOk = true;
-        this.appService.loading = false;
-        this.router.navigate(['GO TO PROFILE']);
-      },
-      err => {
-        this.signupOk = false;
-        this.errorMessage = err.json().Message;
-        this.appService.loading = false;
-      }
+      () => {},
+      () => {}
     );
   }
 }
