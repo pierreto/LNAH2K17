@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using InterfaceGraphique.Entities;
 using InterfaceGraphique.Game.GameState;
 using Microsoft.AspNet.SignalR.Client;
@@ -12,10 +13,12 @@ namespace InterfaceGraphique.CommunicationInterface
 {
     public class WaitingRoomHub : IBaseHub
     {
-        private IHubProxy GameWaitingRoomProxy { get; set; }
+        public static IHubProxy GameWaitingRoomProxy { get; set; }
 
         private HubConnection connection;
         private SlaveGameState slaveGameState;
+        private MasterGameState masterGameState;
+
         private string username;
 
         public event EventHandler<int> RemainingTimeEvent;
@@ -28,9 +31,10 @@ namespace InterfaceGraphique.CommunicationInterface
 
         public event EventHandler<GameEntity> GameStartingEvent;
 
-        public WaitingRoomHub(SlaveGameState slaveGameState)
+        public WaitingRoomHub(SlaveGameState slaveGameState,MasterGameState masterGameState)
         {
             this.slaveGameState = slaveGameState;
+            this.masterGameState = masterGameState;
         }
 
         public void InitializeHub(HubConnection connection, string username)
@@ -57,7 +61,7 @@ namespace InterfaceGraphique.CommunicationInterface
             UserEntity user = new UserEntity
             {
                 Id = Guid.NewGuid(),
-                Username = "pepe"
+                Username = username
             };
             await GameWaitingRoomProxy.Invoke("JoinGame", user);
         }
@@ -66,10 +70,34 @@ namespace InterfaceGraphique.CommunicationInterface
         {
             GameWaitingRoomProxy.On<GameEntity>("OpponentFoundEvent", newgame =>
             {
-                this.OpponentFoundEvent.Invoke(this, newgame.Players[0]);
+             //   this.OpponentFoundEvent.Invoke(this, newgame.Players[0]);
                 GameWaitingRoomProxy.On<GameEntity>("GameStartingEvent", officialGame =>
                 {
                     Console.WriteLine("Game is starting!");
+                    Program.LobbyHost.Invoke(new MethodInvoker(() =>
+                    {
+
+                        if (this.username.Equals(officialGame.Master.Username))
+                        {
+                            this.masterGameState.InitializeGameState(officialGame);
+
+                            Program.QuickPlay.CurrentGameState = this.masterGameState;
+                            Program.FormManager.CurrentForm = Program.QuickPlay;
+
+
+                        }
+                        else
+                        {
+                            this.slaveGameState.InitializeGameState(officialGame);
+
+                            Program.QuickPlay.CurrentGameState = this.slaveGameState;
+                            Program.FormManager.CurrentForm = Program.QuickPlay;
+
+                            FonctionsNatives.rotateCamera(180);
+
+
+                        }
+                    }));
                 });
 
                 GameWaitingRoomProxy.On<int>("WaitingRoomRemainingTime", remainingTime =>
@@ -86,17 +114,8 @@ namespace InterfaceGraphique.CommunicationInterface
                 {
                     Console.WriteLine("map updated");
                 });
-                /*
-                if (this.username.Equals(newgame.Master.Name))
-                {
-                    Program.QuickPlay.CurrentGameState = this.slaveGameState;
-                }
-                else
-                {
-                    Program.QuickPlay.CurrentGameState = this.slaveGameState;
-        
-                }
-                Program.FormManager.CurrentForm = Program.QuickPlay;*/
+          
+   
 
             });
         }

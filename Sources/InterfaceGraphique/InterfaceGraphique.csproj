@@ -111,7 +111,7 @@
       <HintPath>..\packages\System.Net.Http.Formatting.Extension.5.2.3.0\lib\System.Net.Http.Primitives.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-			<HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll</HintPath>
+      <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Expression.Blend.Sdk.1.0.2\lib\net45\System.Windows.Interactivity.dll</HintPath>
@@ -154,6 +154,12 @@
     <Compile Include="Controls\WPF\RelayCommandAsync.cs" />
     <Compile Include="Controls\WPF\ViewModelBase.cs" />
     <Compile Include="Controls\WPF\ViewModelLocator.cs" />
+    <Compile Include="Editor\SaveMapForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editor\SaveMapForm.Designer.cs">
+      <DependentUpon>SaveMapForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Editor\SaveMapOnlineForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -172,6 +178,7 @@
     <Compile Include="Entities\UserEntity.cs" />
     <Compile Include="Exceptions\LoginException.cs" />
     <Compile Include="Game\GameState\AbstractGameState.cs" />
+    <Compile Include="Game\GameState\MasterGameState.cs" />
     <Compile Include="Game\GameState\OfflineGameState.cs" />
     <Compile Include="Game\GameState\SlaveGameState.cs" />
     <Compile Include="Menus\Login.cs">
@@ -269,6 +276,9 @@
       <DependentUpon>TestMode.cs</DependentUpon>
     </Compile>
     <Compile Include="WPFApplication.cs" />
+    <EmbeddedResource Include="Editor\SaveMapForm.resx">
+      <DependentUpon>SaveMapForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Editor\SaveMapOnlineForm.resx">
       <DependentUpon>SaveMapOnlineForm.cs</DependentUpon>
     </EmbeddedResource>

@@ -70,5 +70,11 @@ namespace AirHockeyServer.Services
             // update game bd
             return gameEntity;
         }
+
+        public GameEntity GetGameEntityById(Guid id)
+        {
+            return null;
+            //return this.games.First(a => a.GameId.Equals(id));
+        } 
     }
 }

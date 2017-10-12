@@ -5,38 +5,37 @@ using System.Net.Http.Headers;
 using System.Web.Http;
 using AirHockeyServer.Entities;
 using AirHockeyServer.Services;
-using System.Threading.Tasks;
 
 namespace AirHockeyServer.Controllers
 {
     public class SignupController : ApiController
     {
-        public SignupService SignupService { get; }
+        public ISignupService signupService { get; }
 
         public SignupController()
         {
-            this.SignupService = new SignupService();
+            this.signupService = new SignupService();
         }
 
-        [HttpPost]
+        //Comment on sait si c'est un post?
         [Route("api/signup")]
-        public async Task<HttpResponseMessage> Signup([FromBody]SignupEntity signupEntity)
+        public HttpResponseMessage Signup([FromBody]SignupEntity message)
         {
             try
             {
-                await this.SignupService.Signup(signupEntity);
-                return Request.CreateResponse(HttpStatusCode.OK, true);
+                this.signupService.Signup(message);
             }
             catch (SignupException e)
             {
                 System.Diagnostics.Debug.WriteLine(e);
-                return Request.CreateResponse(HttpStatusCode.Forbidden, e);
+                return Request.CreateResponse(HttpStatusCode.Forbidden);
             }
             catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine(e);
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
+            return Request.CreateResponse(HttpStatusCode.OK);
         }
     }
 }

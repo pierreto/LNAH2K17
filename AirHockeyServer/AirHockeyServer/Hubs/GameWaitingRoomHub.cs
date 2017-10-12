@@ -46,7 +46,7 @@ namespace AirHockeyServer.Hubs
         public void JoinGame(UserEntity user)
         {
             // TO REMOVE, WAITING FOR AUTHENTIFICATION
-            ConnectionMapper.AddConnection(new Guid(user.Id.ToString()), Context.ConnectionId);
+            ConnectionMapper.AddConnection(new Guid(user.UserId.ToString()), Context.ConnectionId);
 
             GameService.JoinGame(user);
         }
@@ -88,6 +88,23 @@ namespace AirHockeyServer.Hubs
 
             return updatedGame;
         }
-        
+
+
+
+        public void SendGameData(Guid gameId, GameDataMessage gameData)
+        {
+             Clients.Group(gameId.ToString(), Context.ConnectionId).ReceivedGameData(gameData);
+        }
+
+        public void SendGoal(Guid gameId, GoalMessage goal)
+        {
+             Clients.Group(gameId.ToString(), Context.ConnectionId).ReceivedGoal(goal);
+        }
+
+        public void GameOver(Guid gameId)
+        {
+             Clients.Group(gameId.ToString(), Context.ConnectionId).ReceivedGameOver();
+        }
+
     }
 }

@@ -180,11 +180,6 @@ namespace InterfaceGraphique.Menus
             this.hubManager.Logout();
             Program.FormManager.CurrentForm = Program.Login;
         }
-
-        private void label1_Click_1(object sender, EventArgs e)
-        {
-
-        }
     }
 
     public class LoginFormMessage

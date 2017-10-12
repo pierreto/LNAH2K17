@@ -8,11 +8,17 @@ namespace InterfaceGraphique.Entities
 {
     public class GoalMessage
     {
-        private string playerNameWhoScored;
+        private int playerNumber;
 
-        public GoalMessage(string playerNameWhoScored)
+        public GoalMessage(int playerNumber)
         {
-            this.playerNameWhoScored = playerNameWhoScored;
+            this.playerNumber = playerNumber;
+        }
+
+        public int PlayerNumber
+        {
+            get => playerNumber;
+            set => playerNumber = value;
         }
     }
 }

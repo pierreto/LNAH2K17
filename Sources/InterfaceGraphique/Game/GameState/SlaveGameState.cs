@@ -13,6 +13,7 @@ namespace InterfaceGraphique.Game.GameState
     {
 
         private GameHub gameHub;
+        private bool gameHasEnded = false;
 
         public SlaveGameState(GameHub gameHub)
         {
@@ -21,16 +22,36 @@ namespace InterfaceGraphique.Game.GameState
 
         public override void InitializeGameState(GameEntity gameEntity)
         {
+            FonctionsNatives.setOnlineClientType((int)OnlineClientType.SLAVE);
+
+            StringBuilder player1Name = new StringBuilder(gameEntity.Slave.Username.Length);
+            StringBuilder player2Name = new StringBuilder(gameEntity.Master.Username.Length);
+            player1Name.Append(gameEntity.Slave.Username);
+            player2Name.Append(gameEntity.Master.Username);
+            FonctionsNatives.setPlayerNames(player1Name, player2Name);
+
             this.gameHub.InitializeSlaveGameHub(gameEntity.GameId);
+            this.gameHub.NewPositions += OnNewGamePositions;
+            this.gameHub.NewGoal += OnNewGoal;
+            this.gameHub.NewGameOver += EndGame;
+        }
+
+        private void OnNewGoal(GoalMessage goalMessage)
+        {
+            if (goalMessage.PlayerNumber == 1)
+            {
+                FonctionsNatives.slaveGoal();
+            }
+            else if (goalMessage.PlayerNumber == 2)
+            {
+                FonctionsNatives.masterGoal();
+            }
         }
 
         public override void MettreAJour(double tempsInterAffichage, int neededGoalsToWin)
         {
-            FonctionsNatives.moveMaillet();
             FonctionsNatives.animer(tempsInterAffichage);
             FonctionsNatives.dessinerOpenGL();
-            /* if (FonctionsNatives.isGameOver(neededGoalsToWin) == 1)
-                EndGame();*/
         }
         ////////////////////////////////////////////////////////////////////////
         ///
@@ -43,8 +64,10 @@ namespace InterfaceGraphique.Game.GameState
         ////////////////////////////////////////////////////////////////////////
         public override void MouseMoved(object sender, MouseEventArgs e)
         {
-            FonctionsNatives.playerMouseMove(e.Location.X, e.Location.Y);
-
+            FonctionsNatives.opponentMouseMove(e.Location.X, e.Location.Y);
+            float[] slavePosition = new float[3];
+            FonctionsNatives.getSlavePosition(slavePosition);
+            this.gameHub.SendSlavePosition(slavePosition);
         }
         ////////////////////////////////////////////////////////////////////////
         ///
@@ -84,18 +107,17 @@ namespace InterfaceGraphique.Game.GameState
         ////////////////////////////////////////////////////////////////////////
         public override void EndGame()
         {
-            int[] score = new int[2];
-            FonctionsNatives.getGameScore(score);
+            gameHasEnded = true;
+            Program.QuickPlay.EndGame();
+        }
 
-            if (this.IsTournementMode)
+        private void OnNewGamePositions(GameDataMessage gameData)
+        {
+            if (!gameHasEnded)
             {
-                Program.TournementTree.RoundScore = score;
-                Program.FormManager.CurrentForm = Program.TournementTree;
-            }
-            else
-            {
-                Program.QuickPlay.EndGame();
+                 FonctionsNatives.setSlaveGameElementPositions(gameData.SlavePosition,gameData.MasterPosition,gameData.PuckPosition);
             }
         }
+
     }
 }

@@ -23,7 +23,7 @@ namespace AirHockeyServer.Events.EventManagers
     ///////////////////////////////////////////////////////////////////////////////
     public class GameWaitingRoomEventManager
     {
-        private const int waitingRoomTimeoutTime = 15000;
+        private const int waitingRoomTimeoutTime = 5000;
 
         //private static Mutex RemainingTimeMutex = new Mutex();
 
@@ -57,7 +57,7 @@ namespace AirHockeyServer.Events.EventManagers
             GameEntity game = new GameEntity()
             {
                 CreationDate = DateTime.Now,
-                Players = new UserEntity[2] { args.PlayersMatch.PlayersMatch[0], args.PlayersMatch.PlayersMatch[0] },
+                Players = new UserEntity[2] { args.PlayersMatch.PlayersMatch[0], args.PlayersMatch.PlayersMatch[1] },
                 Master = args.PlayersMatch.PlayersMatch[0],
                 Slave = args.PlayersMatch.PlayersMatch[1]
             };
@@ -68,7 +68,7 @@ namespace AirHockeyServer.Events.EventManagers
             
             foreach(var player in gameCreated.Players)
             {
-                var connection = ConnectionMapper.GetConnection(new Guid(player.Id.ToString()));
+                var connection = ConnectionMapper.GetConnection(new Guid(player.UserId.ToString()));
                 await HubContext.Groups.Add(connection, stringGameId);
             }
 
@@ -125,7 +125,7 @@ namespace AirHockeyServer.Events.EventManagers
                 timer.Stop();
 
                 // TODO : get game from db
-                GameEntity game = new GameEntity();
+                GameEntity game = GameService.GetGameEntityById(gameId);
 
                 if (game == null)
                 {

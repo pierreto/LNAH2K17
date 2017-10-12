@@ -1,15 +1,12 @@
-<div class="my-container">
-  <ngx-loading [show]="appService.loading" [config]="{ backdropBorderRadius: '14px' }"></ngx-loading>    
-  <app-header></app-header>
-  <div class="all">
-    <div class="allTitle">
-      <span class="mainTitle title">
-        {{title}}
-      </span>
-      <span class="yearTitle title">
-        {{year}}
-      </span>
-    <div>
-    <router-outlet></router-outlet>
-  </div>
+<app-header></app-header>
+<div class="all">
+  <div class="allTitle">
+    <span class="mainTitle title">
+      {{title}}
+    </span>
+    <span class="yearTitle title">
+      {{year}}
+    </span>
+  <div>
+  <router-outlet></router-outlet>
 </div>

@@ -10,11 +10,10 @@ namespace AirHockeyServer.Pocos
     public class UserPoco: Poco
     {
         [Column(IsPrimaryKey = true, Name = "id_user")]
-        public override int? Id { get; set; }
+        public int UserId { get; private set; }
 
         [Column(Name = "username")]
-        public string Username { get; set; }
-
+        public string Username { get; private set; }
     }
 }
 
