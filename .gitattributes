@@ -1,0 +1,13 @@
+* text=auto
+
+*.cpp text
+*.h text
+*.cs text
+*.resx text
+
+*.sln text eol=crlf
+
+*.png binary
+*.dll binary
+*.jpg binary
+*.exe binary
