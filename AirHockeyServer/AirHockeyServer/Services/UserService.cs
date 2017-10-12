@@ -21,7 +21,7 @@ namespace AirHockeyServer.Services
             {
                 return await UserRepository.GetUserById(id);
             }
-            catch(UserException e)
+            catch (UserException e)
             {
                 System.Diagnostics.Debug.WriteLine("[UserService.GetUserById] " + e.ToString());
                 throw e;
@@ -90,7 +90,7 @@ namespace AirHockeyServer.Services
 
     public class UserException : Exception
     {
-        public UserException(string message): base(message)
+        public UserException(string message) : base(message)
         {
         }
     }

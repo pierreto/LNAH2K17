@@ -18,7 +18,7 @@ namespace AirHockeyServer.Repositories
         {
             UserRepository = new UserRepository();
         }
-           
+
         public async Task<PasswordEntity> GetPasswordById(int id)
         {
             try

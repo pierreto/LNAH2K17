@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AirHockeyServer.Services
 {
-    public class LoginService : ILoginService, IService
+    public class LoginService : IService
     {
         private static HashSet<string> _usernames = new HashSet<string>();
         private UserService UserService = new UserService();
@@ -17,10 +17,10 @@ namespace AirHockeyServer.Services
             try
             {
                 UserEntity uE = await UserService.GetUserByUsername(loginEntity.Username);
-                if(uE != null)
+                if (uE != null)
                 {
                     PasswordEntity pE = await PasswordService.GetPasswordByUserId(uE.Id);
-                    if(pE != null)
+                    if (pE != null)
                     {
                         if (uE.Username == loginEntity.Username && pE.Password == loginEntity.Password)
                         {
@@ -47,7 +47,7 @@ namespace AirHockeyServer.Services
                 //_usernames.Add(loginEntity.Username);
                 //return false;
             }
-            catch(LoginException e)
+            catch (LoginException e)
             {
                 System.Diagnostics.Debug.WriteLine("[LoginService.ValidateCredentials] " + e.ToString());
                 throw e;

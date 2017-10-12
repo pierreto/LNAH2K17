@@ -1,7 +1,7 @@
 <div class="container">
   <form [formGroup]="signupForm">
     <div class="field">
-      <label for="username">Nom d'usager </label>
+      <label for="username">Username </label>
       <input class="control-form" type="text" id="username" formControlName="username" [(ngModel)]="user.username" [ngClass]="{'invalidField': formErrors.username}">
       <div *ngIf="formErrors.username" class="errorMsg">
         {{ formErrors.username }}
@@ -9,14 +9,14 @@
     </div>
     <div class="form-group" formGroupName="passwords">
       <div class="field">
-        <label for="password">Mot de passe </label>
+        <label for="password">Password </label>
         <input class="control-form" type="password" id="password" formControlName="password" [(ngModel)]="user.password" [ngClass]="{'invalidField': formErrors.passwords.password || (signupForm.get('passwords').touched && signupForm.get('passwords').hasError('noMatch'))}">
         <div *ngIf="formErrors.passwords.password" class="errorMsg">
           {{ formErrors.passwords.password }}
         </div>
       </div>
       <div class="field">
-        <label for="passwordConfirm">Confirmation mot de passe </label>
+        <label for="passwordConfirm">Confirm Password </label>
         <input class="control-form" type="password" id="passwordConfirm" formControlName="passwordConfirm" [ngClass]="{'invalidField': formErrors.passwords.passwordConfirm || (signupForm.get('passwords').touched && signupForm.get('passwords').hasError('noMatch'))}">
         <div *ngIf="formErrors.passwords.passwordConfirm" class="errorMsg">
           {{ formErrors.passwords.passwordConfirm }}
@@ -24,13 +24,10 @@
         <div *ngIf="signupForm.get('passwords').touched && signupForm.get('passwords').hasError('noMatch')" class="errorMsg">
           {{ validationMessages.passwordConfirm.noMatch }}
         </div>
-        <div *ngIf="!signupOk" class="errorMsg centered">
-            {{errorMessage}}
-        </div>
       </div>
     </div>
     <div class="signupDiv">
-      <button class="signUp" [ngClass]="{'buttonInvalid': !signupForm.valid}" [disabled]="!signupForm.valid" (click)="signup()">CRÉER COMPTE</button>
+      <button class="signUp" [ngClass]="{'buttonInvalid': !signupForm.valid}" [disabled]="!signupForm.valid" (click)="signup()">SIGN UP</button>
     </div>
   </form>
 </div>

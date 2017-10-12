@@ -5,7 +5,8 @@ using System.Data.Linq;
 
 public class MyDataContext : DataContext
 {
-    public MyDataContext() : base(new MySqlConnection(ConfigurationManager.ConnectionStrings["lnah"].ConnectionString)) { }
+    public MyDataContext() : base(new MySqlConnection(ConfigurationManager.ConnectionStrings["lnah"].ConnectionString)) {
+    }
 
     public Table<UserPoco> Users
     {

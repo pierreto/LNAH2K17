@@ -11,7 +11,7 @@ namespace AirHockeyServer.Controllers
 {
     public class LoginController : ApiController
     {
-        public ILoginService LoginService { get; }
+        public LoginService LoginService { get; }
 
         public LoginController()
         {
@@ -34,7 +34,7 @@ namespace AirHockeyServer.Controllers
                 {
                     return Request.CreateResponse(HttpStatusCode.OK, false);
                 }
-                
+
             }
             catch (LoginException e)
             {

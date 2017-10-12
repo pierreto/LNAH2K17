@@ -35,8 +35,6 @@
             this.UsernameTextBox = new System.Windows.Forms.TextBox();
             this.LoginButton = new System.Windows.Forms.Button();
             this.sonicPuckLabel = new System.Windows.Forms.PictureBox();
-            this.PasswordTextBox = new System.Windows.Forms.TextBox();
-            this.Passwordlabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.sonicPuckLabel)).BeginInit();
             this.SuspendLayout();
             // 
@@ -90,7 +88,7 @@
             this.LoginButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.LoginButton.Font = new System.Drawing.Font("Arial Narrow", 24F);
             this.LoginButton.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.LoginButton.Location = new System.Drawing.Point(491, 457);
+            this.LoginButton.Location = new System.Drawing.Point(491, 429);
             this.LoginButton.Name = "LoginButton";
             this.LoginButton.Size = new System.Drawing.Size(188, 49);
             this.LoginButton.TabIndex = 4;
@@ -110,28 +108,6 @@
             this.sonicPuckLabel.TabIndex = 7;
             this.sonicPuckLabel.TabStop = false;
             // 
-            // PasswordTextBox
-            // 
-            this.PasswordTextBox.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.PasswordTextBox.Font = new System.Drawing.Font("Arial Narrow", 20F);
-            this.PasswordTextBox.Location = new System.Drawing.Point(492, 401);
-            this.PasswordTextBox.Name = "PasswordTextBox";
-            this.PasswordTextBox.Size = new System.Drawing.Size(177, 38);
-            this.PasswordTextBox.TabIndex = 8;
-            // 
-            // Passwordlabel
-            // 
-            this.Passwordlabel.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.Passwordlabel.AutoSize = true;
-            this.Passwordlabel.Font = new System.Drawing.Font("Arial", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Passwordlabel.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.Passwordlabel.Location = new System.Drawing.Point(266, 402);
-            this.Passwordlabel.Name = "Passwordlabel";
-            this.Passwordlabel.Size = new System.Drawing.Size(220, 37);
-            this.Passwordlabel.TabIndex = 9;
-            this.Passwordlabel.Text = "Mot de passe";
-            this.Passwordlabel.Click += new System.EventHandler(this.label1_Click_1);
-            // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -139,8 +115,6 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.ClientSize = new System.Drawing.Size(1030, 622);
-            this.Controls.Add(this.Passwordlabel);
-            this.Controls.Add(this.PasswordTextBox);
             this.Controls.Add(this.LoginButton);
             this.Controls.Add(this.UsernameTextBox);
             this.Controls.Add(this.ServerTextBox);
@@ -163,7 +137,5 @@
         private System.Windows.Forms.TextBox UsernameTextBox;
         private System.Windows.Forms.Button LoginButton;
         private System.Windows.Forms.PictureBox sonicPuckLabel;
-        private System.Windows.Forms.TextBox PasswordTextBox;
-        private System.Windows.Forms.Label Passwordlabel;
     }
 }

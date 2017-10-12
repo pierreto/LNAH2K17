@@ -16,7 +16,7 @@ namespace AirHockeyServer.Services
             try
             {
                 UserEntity uE = await UserService.GetUserByUsername(signupEntity.Username);
-                if(uE == null) //Username not already taken
+                if (uE == null) //Username not already taken
                 {
                     //TODO: englober tout ceci dans une transaction au cas ou le postUser fonctionne, mais pas le postPassword
                     uE = new UserEntity { Username = signupEntity.Username };
@@ -31,12 +31,12 @@ namespace AirHockeyServer.Services
                     throw new SignupException("Ce nom d'utilisateur existe déjà");
                 }
             }
-            catch(SignupException e)
+            catch (SignupException e)
             {
                 System.Diagnostics.Debug.WriteLine("[SignupService.Signup] " + e.ToString());
                 throw e;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine("[SignupService.Signup] " + e.ToString());
                 throw e;

@@ -7,9 +7,9 @@ using System.Web.Http;
 
 namespace AirHockeyServer.Controllers
 {
-    public class UserController: ApiController
+    public class UserController : ApiController
     {
-       
+
         public UserService UserService { get; }
 
         public UserController()

@@ -57,17 +57,18 @@ namespace AirHockeyServer.DatabaseCore
         }
 
         // Not async?
-        public void Post<T>(T poco) where T: Poco
+        public void Post<T>(T poco) where T : Poco
         {
             try
             {
                 DC.GetTable<T>().InsertOnSubmit(poco);
                 DC.SubmitChanges();
+                System.Diagnostics.Debug.WriteLine("POCO ID: " + poco.Id);
             }
             catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine("[DataProvider.Post] " + e.ToString());
-                throw new UserException("Unable to post [" +typeof(T).Name + "]");
+                throw new UserException("Unable to post [" + typeof(T).Name + "]");
             }
         }
 

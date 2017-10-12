@@ -7,5 +7,6 @@ namespace AirHockeyServer.Pocos
 {
     public abstract class Poco
     {
+        abstract public int? Id { get; set; }
     }
 }
