@@ -36,10 +36,10 @@ namespace InterfaceGraphique.Game.GameState
         
             FonctionsNatives.setOnGoalCallback(callback);
 
-            StringBuilder player1Name = new StringBuilder(gameEntity.Master.Name.Length);
-            StringBuilder player2Name = new StringBuilder(gameEntity.Slave.Name.Length);
-            player1Name.Append(gameEntity.Master.Name);
-            player2Name.Append(gameEntity.Slave.Name);
+            StringBuilder player1Name = new StringBuilder(gameEntity.Master.Username.Length);
+            StringBuilder player2Name = new StringBuilder(gameEntity.Slave.Username.Length);
+            player1Name.Append(gameEntity.Master.Username);
+            player2Name.Append(gameEntity.Slave.Username);
             FonctionsNatives.setPlayerNames(player1Name, player2Name);
         }
 

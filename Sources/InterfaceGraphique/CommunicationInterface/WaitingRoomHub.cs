@@ -55,12 +55,17 @@ namespace InterfaceGraphique.CommunicationInterface
 
         public async void JoinGame()
         {
+<<<<<<< HEAD
             //InitializeEvents();
 
+=======
+            InitializeEvents();
+            Random random= new Random();
+>>>>>>> ef85bd0ddbc9638c96bd6dadca91ec82bf0e8ddb
             UserEntity user = new UserEntity
             {
-                Id = Guid.NewGuid(),
-                Name = username
+                UserId = random.Next(),
+                Username = username
             };
             //await GameWaitingRoomProxy.Invoke("JoinGame", user);
             await GameWaitingRoomProxy.Invoke("Test");
@@ -70,7 +75,6 @@ namespace InterfaceGraphique.CommunicationInterface
         {
             GameWaitingRoomProxy.On<GameEntity>("OpponentFoundEvent", newgame =>
             {
-                this.OpponentFoundEvent.Invoke(this, newgame);
                 this.CurrentGame = newgame;
 
                 GameWaitingRoomProxy.On<GameEntity>("GameStartingEvent", officialGame =>
@@ -79,7 +83,7 @@ namespace InterfaceGraphique.CommunicationInterface
                     Program.LobbyHost.Invoke(new MethodInvoker(() =>
                     {
 
-                        if (this.username.Equals(officialGame.Master.Name))
+                        if (this.username.Equals(officialGame.Master.Username))
                         {
                             this.masterGameState.InitializeGameState(officialGame);
 

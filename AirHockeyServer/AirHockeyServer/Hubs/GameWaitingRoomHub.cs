@@ -52,7 +52,6 @@ namespace AirHockeyServer.Hubs
         {
             Clients.Group(gameEntity.GameId.ToString()).GameMapUpdatedEvent(gameEntity);
             return await GameService.UpdateGame(gameEntity);
-
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -66,7 +65,7 @@ namespace AirHockeyServer.Hubs
         public void JoinGame(UserEntity user)
         {
             // TO REMOVE, WAITING FOR AUTHENTIFICATION
-            ConnectionMapper.AddConnection(user.Id, Context.ConnectionId);
+            ConnectionMapper.AddConnection(user.UserId, Context.ConnectionId);
 
             GameService.JoinGame(user);
         }
