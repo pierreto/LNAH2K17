@@ -23,12 +23,10 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
             this.waitingRoomHub = matchmakingHub;
             this.isStarted = false;
             this.MapsRepository = new MapsRepository();
-            this.opponentName = "test";
         }
 
         public void Initialize()
         {
-            this.OpponentName = "lal";
             LoadData();
             InitializeEvents();
             this.waitingRoomHub.JoinGame();
@@ -54,6 +52,7 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
 
         private async void LoadData()
         {
+            GameEntity gg = new GameEntity();
             //MapsAvailable = await MapsRepository.GetMaps();
             MapsAvailable = new List<MapEntity>
             {
@@ -66,6 +65,8 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
                     Name = "map2"
                 }
             };
+
+            SelectedMap = mapsAvailable[0];
 
             RemainingTime = 15;
         }
@@ -122,12 +123,12 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
             get => selectedMap;
             set
             {
-                selectedMap = value;
-                if(string.Equals(selectedMap.Name, value.Name))
+                if (!string.Equals(selectedMap?.Name, value?.Name))
                 {
-                    waitingRoomHub.MapUpdated(value);
+                    selectedMap = value;
+                    waitingRoomHub.UpdateSelectedMap(value);
+                    this.OnPropertyChanged();
                 }
-                this.OnPropertyChanged();
             }
         }
 

@@ -96,7 +96,7 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
-                <Image Grid.Row="2" Source="../Exe/media/image/No_image_available.png" Height="200" Width="200" Margin="-90,20,0,0"></Image>
+                <Image Grid.Row="2" Source="C:/TEMP/log3900-03/Exe/media/image/No_image_available.png" Height="200" Width="200" Margin="-90,20,0,0"></Image>
             </Grid>
         </Grid>
 

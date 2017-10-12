@@ -27,7 +27,7 @@ namespace InterfaceGraphique.Entities
 
         public GameState GameState { get; set; }
 
-        public MapEntity Map { get; internal set; }
+        public MapEntity SelectedMap { get; set; }
     }
 
     public enum GameState
