@@ -28,10 +28,10 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
 
         public void Initialize()
         {
+            this.waitingRoomHub.JoinGame();
             this.OpponentName = "lal";
             LoadData();
             InitializeEvents();
-            this.waitingRoomHub.JoinGame();
         }
 
         private void InitializeEvents()

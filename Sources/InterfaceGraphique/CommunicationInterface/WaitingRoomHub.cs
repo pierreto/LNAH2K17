@@ -55,14 +55,15 @@ namespace InterfaceGraphique.CommunicationInterface
 
         public async void JoinGame()
         {
-            InitializeEvents();
+            //InitializeEvents();
 
             UserEntity user = new UserEntity
             {
                 Id = Guid.NewGuid(),
                 Name = username
             };
-            await GameWaitingRoomProxy.Invoke("JoinGame", user);
+            //await GameWaitingRoomProxy.Invoke("JoinGame", user);
+            await GameWaitingRoomProxy.Invoke("Test");
         }
 
         private void InitializeEvents()
@@ -124,8 +125,11 @@ namespace InterfaceGraphique.CommunicationInterface
 
         public void MapUpdated(MapEntity map)
         {
-            CurrentGame.Map = map;
-            GameWaitingRoomProxy.Invoke("UpdateMap", CurrentGame);
+            if(CurrentGame != null)
+            {
+                CurrentGame.Map = map;
+                GameWaitingRoomProxy.Invoke("UpdateMap", CurrentGame);
+            }
         }
 
         public async Task<GameEntity> UpdateSelectedMap(GameEntity game)

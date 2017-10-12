@@ -7,6 +7,7 @@ using AirHockeyServer.Services;
 using AirHockeyServer.Entities;
 using System.Threading.Tasks;
 using AirHockeyServer.Events;
+using System.Diagnostics;
 
 namespace AirHockeyServer.Hubs
 {
@@ -39,6 +40,23 @@ namespace AirHockeyServer.Hubs
 
         ////////////////////////////////////////////////////////////////////////
         ///
+        /// @fn async Task<GameEntity> UpdateMap(GameEntity gameEntity)
+        ///
+        /// Cette fonction permet d'updater la carte de 
+        /// partie et d'avertir les autres clients
+        /// 
+        /// @return la partie mise à jour
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        public async Task<GameEntity> UpdateMap(GameEntity gameEntity)
+        {
+            Clients.Group(gameEntity.GameId.ToString()).GameMapUpdatedEvent(gameEntity);
+            return await GameService.UpdateGame(gameEntity);
+
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
         /// @fn void JoinGame(UserEntity user)
         ///
         /// Cette fonction permet de gérer la demande d'un utilisateur de se joindre à une partie. 
@@ -51,27 +69,6 @@ namespace AirHockeyServer.Hubs
             ConnectionMapper.AddConnection(user.Id, Context.ConnectionId);
 
             GameService.JoinGame(user);
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn async Task<GameEntity> UpdateMap(GameEntity gameEntity)
-        ///
-        /// Cette fonction permet d'updater la carte de 
-        /// partie et d'avertir les autres clients
-        /// 
-        /// @return la partie mise à jour
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        public async Task<GameEntity> UpdateMap(GameEntity gameEntity)
-        {
-            var updatedGame = await GameService.UpdateGame(gameEntity);
-
-            var test = Clients.Group(gameEntity.GameId.ToString());
-
-            Clients.Group(gameEntity.GameId.ToString()).GameMapUpdatedEvent(updatedGame);
-
-            return updatedGame;
         }
 
         ////////////////////////////////////////////////////////////////////////
