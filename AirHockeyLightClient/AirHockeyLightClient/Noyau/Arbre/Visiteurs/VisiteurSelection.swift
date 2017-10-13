@@ -55,7 +55,7 @@ class VisiteurSelection: VisiteurAbstrait {
                 if  result is SCNHitTestResult {
                     let hitResult = result as! SCNHitTestResult
                     
-                    if noeud is NoeudCommun {
+                    if hitResult.node is NoeudCommun {
                         let noeud = hitResult.node as! NoeudCommun
                         noeud.assignerSelection(selectionne: true)
                     }

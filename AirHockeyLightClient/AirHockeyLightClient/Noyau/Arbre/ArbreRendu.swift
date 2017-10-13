@@ -41,6 +41,8 @@ class ArbreRendu: SCNNode {
     public let NOM_RONDELLE = "rondelle"
     /// La chaine representant le type des boosters.
     public let NOM_BOOSTER = "booster"
+    /// La chaine representant le type des boosters.
+    public let NOM_LIGNE_CENTRE = "ligne_centre"
     
     // Usines
     private var usines = [String: UsineAbstraite]()
