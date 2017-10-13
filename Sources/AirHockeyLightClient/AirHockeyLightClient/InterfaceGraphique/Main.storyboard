@@ -97,6 +97,15 @@
                                 <rect key="frame" x="0.0" y="634" width="768" height="20"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </activityIndicatorView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8t5-NI-lOL">
+                                <rect key="frame" x="292" y="328" width="184" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.77939104000000003" green="0.78759515629999999" blue="0.78759515629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Mode édition hors-ligne"/>
+                                <connections>
+                                    <segue destination="a5z-US-HJw" kind="show" id="wIc-pZ-QH3"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.50158477429710246" green="0.76474623044747803" blue="0.84018950670000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
@@ -200,6 +209,33 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4d1-7J-zMt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="164.84375" y="38.671875"/>
+        </scene>
+        <!--Editor View Controller-->
+        <scene sceneID="afO-0W-eS6">
+            <objects>
+                <viewController id="a5z-US-HJw" customClass="EditorViewController" customModule="AirHockeyLightClient" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="cky-9E-tiW"/>
+                        <viewControllerLayoutGuide type="bottom" id="jo1-Ew-TQp"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Cpz-p6-4Eh" customClass="SCNView">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <sceneKitView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nQ0-Ye-2E0">
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </sceneKitView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="editorView" destination="nQ0-Ye-2E0" id="lFW-mx-rzE"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="n15-76-e5h" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="164.6484375" y="-811.71875"/>
         </scene>
         <!--Chat View Controller-->
         <scene sceneID="tXr-a1-R10">
@@ -311,10 +347,6 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="ADD-fv-4gJ">
-                                <rect key="frame" x="0.0" y="502" width="768" height="20"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </activityIndicatorView>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1zH-fZ-OMk" userLabel="Header">
                                 <rect key="frame" x="0.0" y="1" width="768" height="79"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -348,16 +380,10 @@
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="ADD-fv-4gJ"/>
-                            </mask>
-                        </variation>
                     </view>
                     <connections>
                         <outlet property="chatBodyView" destination="VJb-em-I2o" id="TL6-HK-WCo"/>
                         <outlet property="chatInput" destination="KC7-Pv-Lt9" id="J1n-DP-a8K"/>
-                        <outlet property="connectionIndicator" destination="ADD-fv-4gJ" id="nQt-oJ-fa1"/>
                         <outlet property="messages" destination="AUd-Bg-2Hb" id="c9D-Lj-0BG"/>
                         <outlet property="sendButton" destination="0nh-i6-rlw" id="wy2-6F-K7z"/>
                     </connections>
