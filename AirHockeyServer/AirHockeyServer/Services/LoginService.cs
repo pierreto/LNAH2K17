@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AirHockeyServer.Services
 {
-    public class LoginService : IService
+    public class LoginService : ILoginService, IService
     {
         private static HashSet<string> _usernames = new HashSet<string>();
         private UserService UserService = new UserService();
@@ -16,13 +16,13 @@ namespace AirHockeyServer.Services
         {
             try
             {
-                UserEntity uE = await UserService.GetUserByUsername(loginEntity.User.Username);
+                UserEntity uE = await UserService.GetUserByUsername(loginEntity.Username);
                 if (uE != null)
                 {
                     PasswordEntity pE = await PasswordService.GetPasswordByUserId(uE.Id);
                     if (pE != null)
                     {
-                        if (uE.Username == loginEntity.User.Username && pE.Password == loginEntity.Password)
+                        if (uE.Username == loginEntity.Username && pE.Password == loginEntity.Password)
                         {
                             return true;
                         }
@@ -61,9 +61,9 @@ namespace AirHockeyServer.Services
 
         public void Logout(LoginEntity loginEntity)
         {
-            if (_usernames.Contains(loginEntity.User.Username))
+            if (_usernames.Contains(loginEntity.Username))
             {
-                _usernames.Remove(loginEntity.User.Username);
+                _usernames.Remove(loginEntity.Username);
             }
         }
     }

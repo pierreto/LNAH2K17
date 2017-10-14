@@ -11,7 +11,7 @@ namespace AirHockeyServer.Controllers
 {
     public class LoginController : ApiController
     {
-        public LoginService LoginService { get; }
+        public ILoginService LoginService { get; }
 
         public LoginController()
         {
