@@ -1,0 +1,6 @@
+framework module Pods_AirHockeyLightClient {
+  umbrella header "Pods-AirHockeyLightClient-umbrella.h"
+
+  export *
+  module * { export * }
+}
