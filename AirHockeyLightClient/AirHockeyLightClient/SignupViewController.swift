@@ -20,34 +20,52 @@ class SignupViewController: UIViewController {
     @IBOutlet weak var passwordErrorLabel: UILabel!
     @IBOutlet weak var confirmPasswordErrorLabel: UILabel!
     
+    @IBOutlet weak var loadingSpinner: UIActivityIndicatorView!
     // Mark: Actions
     @IBAction func createAccount(_ sender: Any) {
+        deactivateInputs()
+        loadingSpinner.startAnimating()
         viewModel?.signup(username: usernameInput.text!, password: passwordInput.text!, confirmPassword: confirmPasswordInput.text!)
-        //Laisse le temps au message d'erreur d'apparaitre avant le shake
-        let when = DispatchTime.now() + 0.1
-        DispatchQueue.main.asyncAfter(deadline: when) {
-            if(self.usernameErrorLabel.text != ""){
-                self.notifyErrorInput(textField: self.usernameInput)
-            }
-            if(self.passwordErrorLabel.text != ""){
-                self.notifyErrorInput(textField: self.passwordInput)
-            }
-            if(self.confirmPasswordErrorLabel.text != ""){
-                self.notifyErrorInput(textField: self.confirmPasswordInput)
-            }
+            .then{
+                data -> Void in
+                if(data) {
+                    self.loadingSpinner.stopAnimating()
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    let vc = storyboard.instantiateViewController(withIdentifier: "ChannelViewController")
+                    self.present(vc, animated: true, completion: nil)
+                } else {
+                    self.connectionError()
+                }
+            }.always {
+                //Laisse le temps au message d'erreur d'apparaitre avant le shake
+                let when = DispatchTime.now() + 0.1
+                DispatchQueue.main.asyncAfter(deadline: when) {
+                    if(self.usernameErrorLabel.text != ""){
+                        self.notifyErrorInput(textField: self.usernameInput)
+                    }
+                    if(self.passwordErrorLabel.text != ""){
+                        self.notifyErrorInput(textField: self.passwordInput)
+                    }
+                    if(self.confirmPasswordErrorLabel.text != ""){
+                        self.notifyErrorInput(textField: self.confirmPasswordInput)
+                    }
+                }
         }
     }
-
+    
     @IBAction func editUsernameInput(_ sender: Any) {
         self.resetStyle(textField: self.usernameInput)
+        self.usernameErrorLabel.text = ""
     }
     
     @IBAction func editPasswordInput(_ sender: Any) {
         self.resetStyle(textField: self.passwordInput)
+        self.passwordErrorLabel.text = ""
     }
     
     @IBAction func editConfirmPasswordInput(_ sender: Any) {
         self.resetStyle(textField: self.confirmPasswordInput)
+        self.confirmPasswordErrorLabel.text = ""
     }
     
     // Mark: Functions
@@ -95,4 +113,18 @@ class SignupViewController: UIViewController {
     private func resetStyle(textField: UITextField) {
         textField.layer.borderWidth = 0.0
     }
+    
+    private func deactivateInputs(){
+        self.usernameInput.isEnabled = false
+        self.passwordInput.isEnabled = false
+        self.confirmPasswordInput.isEnabled = false
+    }
+    
+    private func connectionError() {
+        self.loadingSpinner.stopAnimating()
+        self.usernameInput.isEnabled = true
+        self.passwordInput.isEnabled = true
+        self.confirmPasswordInput.isEnabled = true
+    }
 }
+

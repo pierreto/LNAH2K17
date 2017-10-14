@@ -12,4 +12,7 @@ target 'AirHockeyLightClient' do
 
   # Pods for AirHockeyLightClient
   pod 'SwiftR'
+  pod 'PromiseKit', '~> 4.4'
+  pod 'Alamofire', '~> 4.5'
+  pod 'SwiftyJSON'
 end
