@@ -68,7 +68,7 @@ namespace AirHockeyServer.Events.EventManagers
             
             foreach(var player in gameCreated.Players)
             {
-                var connection = ConnectionMapper.GetConnection(new Guid(player.UserId.ToString()));
+                var connection = ConnectionMapper.GetConnection(player.Id);
                 await HubContext.Groups.Add(connection, stringGameId);
             }
 

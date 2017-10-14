@@ -1,47 +1,77 @@
 ﻿using System;
 using System.Collections.Generic;
 using AirHockeyServer.Entities;
-using Microsoft.Ajax.Utilities;
 using AirHockeyServer.Repositories;
+using System.Threading.Tasks;
 
 namespace AirHockeyServer.Services
 {
     public class LoginService : ILoginService, IService
     {
         private static HashSet<string> _usernames = new HashSet<string>();
-        private static LoginRepository LoginRepository = new LoginRepository();
-        public LoginService()
-        {
-        }
+        private UserService UserService = new UserService();
+        private PasswordService PasswordService = new PasswordService();
 
-        public void Login(LoginEntity loginEntity) 
+        public async Task<bool> ValidateCredentials(LoginEntity loginEntity)
         {
-            LoginRepository.GetLogins();
-            System.Diagnostics.Debug.WriteLine(loginEntity.User);
-            System.Diagnostics.Debug.WriteLine(loginEntity.Password);
-            System.Diagnostics.Debug.WriteLine(_usernames.Count);
-            if (_usernames.Contains(loginEntity.User.Username))
+            try
             {
-                throw new LoginException("Username already taken."); 
+                UserEntity uE = await UserService.GetUserByUsername(loginEntity.Username);
+                if (uE != null)
+                {
+                    PasswordEntity pE = await PasswordService.GetPasswordByUserId(uE.Id);
+                    if (pE != null)
+                    {
+                        if (uE.Username == loginEntity.Username && pE.Password == loginEntity.Password)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        throw new LoginException("Impossible de trouver votre mot de passe");
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+                //if (_usernames.Contains(loginEntity.Username))
+                //{
+                //    throw new LoginException("Username already taken.");
+                //}
+                //_usernames.Add(loginEntity.Username);
+                //return false;
             }
-            _usernames.Add(loginEntity.User.Username);
+            catch (LoginException e)
+            {
+                System.Diagnostics.Debug.WriteLine("[LoginService.ValidateCredentials] " + e.ToString());
+                throw e;
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("[LoginService.ValidateCredentials] " + e.ToString());
+                throw e;
+            }
         }
 
         public void Logout(LoginEntity loginEntity)
         {
-            if (_usernames.Contains(loginEntity.User.Username))
+            if (_usernames.Contains(loginEntity.Username))
             {
-                _usernames.Remove(loginEntity.User.Username);
+                _usernames.Remove(loginEntity.Username);
             }
         }
     }
 
     public class LoginException : Exception
     {
-        private string message;
-        public LoginException(string message)
+        public LoginException(string message) : base(message)
         {
-            this.message = message;
         }
     }
 }

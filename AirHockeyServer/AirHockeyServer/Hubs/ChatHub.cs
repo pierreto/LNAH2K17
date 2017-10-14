@@ -9,7 +9,7 @@ namespace AirHockeyServer.Services.ChatServiceServer
     public class ChatHub : Hub
     {
         // Should be thread-safe?
-        private readonly static Dictionary<Guid, string> ConnectionsMapping = new Dictionary<Guid, string>();
+        private readonly static Dictionary<int, string> ConnectionsMapping = new Dictionary<int, string>();
         // Should be thread-safe?
         private static HashSet<string> usernames = new HashSet<string>();
 
@@ -33,7 +33,7 @@ namespace AirHockeyServer.Services.ChatServiceServer
             }
         }
 
-        public void Subscribe(Guid userId)
+        public void Subscribe(int userId)
         {
             if(!ConnectionsMapping.ContainsKey(userId))
             {
@@ -51,7 +51,7 @@ namespace AirHockeyServer.Services.ChatServiceServer
             await Clients.Group(channelName).ChatMessageReceived(message);
         }
 
-        public void SendPrivateMessage(Guid userId, ChatMessageEntity message)
+        public void SendPrivateMessage(int userId, ChatMessageEntity message)
         {
             if(ConnectionsMapping.ContainsKey(userId))
             {

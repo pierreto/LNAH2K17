@@ -7,7 +7,7 @@ namespace AirHockeyServer.Pocos
 {
     public class LoginPoco: Poco
     {
-        public int LoginId { get; private set; }
+        public override int? Id { get; set; }
 
         public int UserId { get; private set; }
 

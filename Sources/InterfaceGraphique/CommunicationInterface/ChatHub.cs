@@ -41,7 +41,9 @@ namespace InterfaceGraphique.CommunicationInterface
         public async Task InitializeChat()
         {
             // Étape necessaire pour que le serveur sache que la connexion est reliée au bon userId:
-            var userId = Guid.NewGuid();
+            Random random = new Random();
+            var userId = random.Next();
+
             Program.user = new UserEntity { Id = userId, Username = this.username };
 
             await chatHubProxy.Invoke("Subscribe", userId);
