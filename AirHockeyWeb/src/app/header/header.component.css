@@ -1,0 +1,57 @@
+@import url("../../assets/form.css");
+
+.header {
+    position: fixed;
+    top: 0;
+    height: 80px;
+    width: 100%;
+    background-color: #aaa;
+}
+
+#login {
+    font-size: 24px;
+    font-weight: bold;
+    width: 220px;
+    height: 40px;
+    background-color: #54C3FF;
+    color: #fff;
+    border-radius: 5px;  
+    margin: 10px auto;  
+    padding: 3px;
+}
+
+#login:hover {
+    background-color: #3EABE6;
+;
+}
+
+.buttons {
+    margin-top: 8px;
+    margin-right: 40px;
+    text-align: right;
+}
+
+button {
+    margin: 10px !important;
+}
+
+span {
+    position: absolute;
+    vertical-align: middle;
+    margin: 10px !important;
+    left: 120px;
+    font-size: 34px;
+    font-weight: bold;
+}
+
+span.year {
+    position: absolute;
+    vertical-align: middle;
+    margin: 10px !important;
+    left: 220px;
+    font-size: 34px;
+    font-weight: bold;
+    font-style: italic;
+    color: red;
+}
+

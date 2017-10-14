@@ -1,0 +1,50 @@
+/* You can add global styles to this file, and also import other style files */
+body {
+    font-family: "Roboto";
+    font-size: 20px;
+    margin: 0px !important;
+    background-color: #eee;
+    color: #2f2f2f;
+}
+
+button {
+    background: none;
+    border: 0;
+}
+
+.buttonInvalid {
+    background-color: #aaa !important;
+}
+
+.errorMsg {
+    color: #ff5050;
+    text-align: center;
+    margin-bottom: 3px;
+}
+
+.centered {
+    margin-top: 10px;
+    text-align: center !important;
+}
+input {
+    direction: ltr;
+    padding: 5px;
+    margin-right: 30px;
+}
+input:focus {
+    outline: none;
+}
+
+button:focus {
+    outline: none;
+}
+
+label {
+    margin-right: 20px;
+}
+
+.container {
+    width: 700px;
+    text-align: center;
+    margin: 0 auto;
+}

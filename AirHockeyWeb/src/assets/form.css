@@ -1,0 +1,40 @@
+label {
+    display: inline-block;
+    text-align: right;
+    width: 245px;
+}
+
+input {
+    border-radius: 3px;
+    height: 20px;
+    width: 200px;
+    font-size: 20px;
+}
+
+.signupDiv {
+    text-align: center;
+}
+
+.signUp {
+    font-size: 24px;
+    font-weight: bold;
+    width: 220px;
+    height: 40px;
+    background-color: #3ccc71;
+    color: #fff;
+    border-radius: 5px;
+    margin: 10px auto;  
+    padding: 3px;
+}
+
+.signUp:hover {
+    background-color: mediumseagreen;
+}
+
+.field {
+    margin: 10px;
+}
+
+input.invalidField {
+    border: 1px solid #ff5050;
+}
