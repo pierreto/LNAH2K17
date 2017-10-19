@@ -30,6 +30,17 @@ class ClientConnection {
     private var ipAddress: String?
     private var username: String?
     
+    private var _connected: Bool?
+    
+    var connected: Bool? {
+        get {
+            return _connected
+        }
+        set {
+            _connected = newValue
+        }
+    }
+    
     public func getConnection() -> SignalR {
         return self.connection!
     }
