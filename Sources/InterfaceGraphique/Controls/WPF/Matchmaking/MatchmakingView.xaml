@@ -105,14 +105,14 @@
                 <ComboBox Name="mapList" 
                   Grid.Row="1"
                   ItemsSource="{Binding MapsAvailable}" 
-                  SelectedItem="{Binding SelectedMap}"
+                  SelectedItem="{Binding SelectedMap, UpdateSourceTrigger=PropertyChanged}"
                   IsSynchronizedWithCurrentItem="True"
                   IsEnabled="{Binding OpponentFound}" Margin="0,0,86,0">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock>
                                 <TextBlock.Text >
-                                    <Binding Path="MapName" />
+                                    <Binding Path="MapName" UpdateSourceTrigger="PropertyChanged" />
                                 </TextBlock.Text>
                             </TextBlock>
                         </DataTemplate>

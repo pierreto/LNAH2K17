@@ -8,6 +8,7 @@ using System.Windows.Input;
 using InterfaceGraphique.CommunicationInterface;
 using InterfaceGraphique.Entities;
 using InterfaceGraphique.CommunicationInterface.RestInterface;
+using System.Collections.ObjectModel;
 
 namespace InterfaceGraphique.Controls.WPF.Matchmaking
 {
@@ -44,7 +45,9 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
                 SetVisibility(false);
             };
 
-            waitingRoomHub.MapUpdatedEvent += (sender, args) => { selectedMap = args; OnPropertyChanged(); };
+            waitingRoomHub.MapUpdatedEvent += (sender, args) => {selectedMap.MapName = args.MapName; OnPropertyChanged("SelectedMap"); };
+            //waitingRoomHub.MapUpdatedEvent += (sender, args) => { SelectedMap = args; };
+
         }
 
         private void SetVisibility(bool isWaitingForOpponentValue)
@@ -62,7 +65,7 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
         {
             GameEntity gg = new GameEntity();
             //MapsAvailable = await MapsRepository.GetMaps();
-            MapsAvailable = new List<MapEntity>
+            MapsAvailable = new ObservableCollection<MapEntity>
             {
                 new MapEntity
                 {
@@ -74,7 +77,7 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
                 }
             };
 
-            SelectedMap = mapsAvailable[0];
+            SelectedMap = mapsAvailable[1];
 
             RemainingTime = 30;
         }
@@ -114,8 +117,8 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
             }
         }
 
-        private List<MapEntity> mapsAvailable;
-        public List<MapEntity> MapsAvailable
+        private ObservableCollection<MapEntity> mapsAvailable;
+        public ObservableCollection<MapEntity> MapsAvailable
         {
             get => mapsAvailable;
             set
@@ -125,17 +128,23 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
             }
         }
 
-        private MapEntity selectedMap;
-        public MapEntity SelectedMap
+        private string selectedMap;
+        public string SelectedMap
         {
             get => selectedMap;
             set
             {
-                if (!string.Equals(selectedMap?.MapName, value?.MapName))
+                if (!string.Equals(selectedMap, value))
                 {
-                    selectedMap = value;
-                    waitingRoomHub.UpdateSelectedMap(value);
+                    foreach(MapEntity map in mapsAvailable)
+                    {
+                        if(string.Equals(map, value))
+                        {
+                            selectedMap = map.MapName ;
+                        }
+                    }
                     this.OnPropertyChanged();
+                    waitingRoomHub.UpdateSelectedMap(value);
                 }
             }
         }
