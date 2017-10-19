@@ -51,20 +51,21 @@ class ModeleEtatCreerBoost: ModeleEtat {
         // Déplacement du noeud
         // Transformation du point dans l'espace virtuelle
         let arbre = FacadeModele.instance.obtenirArbreRendu()
-        
         let convertedPoint = MathHelper.GetHitTestSceneViewCoordinates(point: self.position)
-        let position = GLKVector3.init(v: (convertedPoint.x, convertedPoint.y, convertedPoint.z))
-        noeud.assignerPositionRelative(positionRelative: position)
         
-        // Ajout du noeud à l'arbre de rendu
-        arbre.addChildNode(noeud)
+        if convertedPoint != nil {
+            let position = GLKVector3.init(v: ((convertedPoint?.x)!, (convertedPoint?.y)!, (convertedPoint?.z)!))
+            noeud.assignerPositionRelative(positionRelative: position)
+            
+            // Ajout du noeud à l'arbre de rendu
+            arbre.addChildNode(noeud)
+        }
         
         // Verification que les noeuds soient sur la table
-        // TODO : implémenter VisiteurSurTable
-        //if (noeudsSurLaTable()) {
-        //    Annulation de la commande
-        //    noeud.removeFromParentNode()
-        //}
+        if (!self.noeudsSurLaTable()) {
+            // Annulation de la commande
+            noeud.removeFromParentNode()
+        }
     }
     
 }

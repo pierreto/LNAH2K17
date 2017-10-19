@@ -27,6 +27,8 @@
 		344A6E201F990ECA00CFFBEB /* accelerateur.obj in Resources */ = {isa = PBXBuildFile; fileRef = 344A6E1F1F990ECA00CFFBEB /* accelerateur.obj */; };
 		344A6E221F99101700CFFBEB /* ModeleEtatCreerBoost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 344A6E211F99101700CFFBEB /* ModeleEtatCreerBoost.swift */; };
 		344A6E241F99112000CFFBEB /* NoeudAccelerateur.swift in Sources */ = {isa = PBXBuildFile; fileRef = 344A6E231F99112000CFFBEB /* NoeudAccelerateur.swift */; };
+		344A6E2A1F994E0100CFFBEB /* VisiteurSurTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 344A6E291F994E0100CFFBEB /* VisiteurSurTable.swift */; };
+		344A6E2C1F994E0D00CFFBEB /* CollisionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 344A6E2B1F994E0D00CFFBEB /* CollisionHelper.swift */; };
 		3475C2291F8FAF8D00E8BF86 /* EditorHUDScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3475C2271F8FAF8D00E8BF86 /* EditorHUDScene.sks */; };
 		3475C22A1F8FAF8D00E8BF86 /* EditorHUDScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3475C2281F8FAF8D00E8BF86 /* EditorHUDScene.swift */; };
 		3475C2381F8FB9A100E8BF86 /* Booster.png in Resources */ = {isa = PBXBuildFile; fileRef = 3475C22E1F8FB9A100E8BF86 /* Booster.png */; };
@@ -97,6 +99,8 @@
 		344A6E1F1F990ECA00CFFBEB /* accelerateur.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = accelerateur.obj; path = ../../Exe/media/models/accelerateur.obj; sourceTree = "<group>"; };
 		344A6E211F99101700CFFBEB /* ModeleEtatCreerBoost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ModeleEtatCreerBoost.swift; path = Noyau/Application/States/ModeleEtatCreerBoost.swift; sourceTree = "<group>"; };
 		344A6E231F99112000CFFBEB /* NoeudAccelerateur.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NoeudAccelerateur.swift; path = Noyau/Arbre/Noeuds/NoeudAccelerateur.swift; sourceTree = "<group>"; };
+		344A6E291F994E0100CFFBEB /* VisiteurSurTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VisiteurSurTable.swift; path = Noyau/Arbre/Visiteurs/VisiteurSurTable.swift; sourceTree = "<group>"; };
+		344A6E2B1F994E0D00CFFBEB /* CollisionHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CollisionHelper.swift; path = Noyau/Helper/CollisionHelper.swift; sourceTree = "<group>"; };
 		3475C2271F8FAF8D00E8BF86 /* EditorHUDScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = EditorHUDScene.sks; path = InterfaceGraphique/Editor/EditorHUDScene.sks; sourceTree = "<group>"; };
 		3475C2281F8FAF8D00E8BF86 /* EditorHUDScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditorHUDScene.swift; path = InterfaceGraphique/Editor/EditorHUDScene.swift; sourceTree = "<group>"; };
 		3475C22E1F8FB9A100E8BF86 /* Booster.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Booster.png; path = ../../Sources/Icons/Booster.png; sourceTree = "<group>"; };
@@ -173,6 +177,7 @@
 		253E088F1F818DE1009F301B /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				344A6E2B1F994E0D00CFFBEB /* CollisionHelper.swift */,
 				253E088D1F818DD2009F301B /* JsonHelper.swift */,
 				8F69F4BE1F8AF871004D5129 /* MathHelper.swift */,
 			);
@@ -244,6 +249,7 @@
 		8F0B94AA1F8D3ECA007F0E82 /* Visiteurs */ = {
 			isa = PBXGroup;
 			children = (
+				344A6E291F994E0100CFFBEB /* VisiteurSurTable.swift */,
 				8F0B94AB1F8D3EEE007F0E82 /* VisiteurAbstrait.swift */,
 				8F0B94AD1F8D450B007F0E82 /* VisiteurSelectionnable.swift */,
 				8F0B94BD1F8DC0F1007F0E82 /* VisiteurSelection.swift */,
@@ -598,6 +604,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				344A6E2C1F994E0D00CFFBEB /* CollisionHelper.swift in Sources */,
 				8F0B94BE1F8DC0F1007F0E82 /* VisiteurSelection.swift in Sources */,
 				0EED627F1F982B3B00CD8C56 /* ModeleEtatCreerMuret.swift in Sources */,
 				8F0B94B81F8D7F11007F0E82 /* ModeleEtatPointControl.swift in Sources */,
@@ -631,6 +638,7 @@
 				3475C22A1F8FAF8D00E8BF86 /* EditorHUDScene.swift in Sources */,
 				253E088E1F818DD2009F301B /* JsonHelper.swift in Sources */,
 				8F8706BD1F78A67F000E6824 /* ChannelViewController.swift in Sources */,
+				344A6E2A1F994E0100CFFBEB /* VisiteurSurTable.swift in Sources */,
 				8F0B94AC1F8D3EEE007F0E82 /* VisiteurAbstrait.swift in Sources */,
 				3415E6C91F85659900DB1CAD /* UsineNoeud.swift in Sources */,
 				253E08911F81913A009F301B /* ChannelEntity.swift in Sources */,

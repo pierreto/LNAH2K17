@@ -48,6 +48,13 @@ class ModeleEtat {
     func obtenirVue() -> UIViewController {
         return FacadeModele.instance.obtenirVue()
     }
+    
+    /// Vérifie que les objets sont sur la table.
+    func noeudsSurLaTable() -> Bool {
+        let visiteur = VisiteurSurTable()
+        FacadeModele.instance.obtenirArbreRendu().accepterVisiteur(visiteur: visiteur)
+        return visiteur.obtenirSontSurTable()
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
