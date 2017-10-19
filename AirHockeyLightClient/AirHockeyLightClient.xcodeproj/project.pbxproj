@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0EED627D1F9825B500CD8C56 /* NoeudMur.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EED627C1F9825B500CD8C56 /* NoeudMur.swift */; };
+		0EED627F1F982B3B00CD8C56 /* ModeleEtatCreerMuret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EED627E1F982B3B00CD8C56 /* ModeleEtatCreerMuret.swift */; };
+		0EED62811F98301C00CD8C56 /* mur.obj in Resources */ = {isa = PBXBuildFile; fileRef = 0EED62801F98301C00CD8C56 /* mur.obj */; };
 		253E088C1F81858E009F301B /* UIViewShake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253E088B1F81858E009F301B /* UIViewShake.swift */; };
 		253E088E1F818DD2009F301B /* JsonHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253E088D1F818DD2009F301B /* JsonHelper.swift */; };
 		253E08911F81913A009F301B /* ChannelEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253E08901F81913A009F301B /* ChannelEntity.swift */; };
@@ -66,6 +69,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0EED627C1F9825B500CD8C56 /* NoeudMur.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NoeudMur.swift; path = Noyau/Arbre/Noeuds/NoeudMur.swift; sourceTree = "<group>"; };
+		0EED627E1F982B3B00CD8C56 /* ModeleEtatCreerMuret.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ModeleEtatCreerMuret.swift; path = Noyau/Application/States/ModeleEtatCreerMuret.swift; sourceTree = "<group>"; };
+		0EED62801F98301C00CD8C56 /* mur.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mur.obj; sourceTree = "<group>"; };
 		253E088B1F81858E009F301B /* UIViewShake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIViewShake.swift; path = InterfaceGraphique/Effects/UIViewShake.swift; sourceTree = "<group>"; };
 		253E088D1F818DD2009F301B /* JsonHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = JsonHelper.swift; path = Noyau/Helper/JsonHelper.swift; sourceTree = "<group>"; };
 		253E08901F81913A009F301B /* ChannelEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChannelEntity.swift; path = Noyau/Entities/ChannelEntity.swift; sourceTree = "<group>"; };
@@ -245,6 +251,7 @@
 				8F0B94B31F8D4EC1007F0E82 /* ModeleEtatSelection.swift */,
 				8F0B94B71F8D7F11007F0E82 /* ModeleEtatPointControl.swift */,
 				8F0B94B91F8D8C95007F0E82 /* ModeleEtatDeplacement.swift */,
+				0EED627E1F982B3B00CD8C56 /* ModeleEtatCreerMuret.swift */,
 			);
 			name = States;
 			sourceTree = "<group>";
@@ -368,6 +375,7 @@
 		8FB6A9C41F81DCA800FAFFCF /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				0EED62801F98301C00CD8C56 /* mur.obj */,
 				3415E6D81F85A99500DB1CAD /* controlPoint.obj */,
 			);
 			name = Models;
@@ -393,6 +401,7 @@
 				34B66FE11F84599100A9CCB9 /* But.swift */,
 				34B66FE31F84636900A9CCB9 /* NoeudBut.swift */,
 				3415E6DA1F85C1F300DB1CAD /* NoeudPointControl.swift */,
+				0EED627C1F9825B500CD8C56 /* NoeudMur.swift */,
 			);
 			name = Noeuds;
 			sourceTree = "<group>";
@@ -489,6 +498,7 @@
 				3475C2401F8FB9A100E8BF86 /* Wall.png in Resources */,
 				3475C2411F8FB9A100E8BF86 /* Zoom.png in Resources */,
 				3475C23F1F8FB9A100E8BF86 /* Select.png in Resources */,
+				0EED62811F98301C00CD8C56 /* mur.obj in Resources */,
 				3475C23A1F8FB9A100E8BF86 /* Duplicate.png in Resources */,
 				3475C23C1F8FB9A100E8BF86 /* Portal.png in Resources */,
 				8F64C0131F7754FD00F14AC7 /* LaunchScreen.storyboard in Resources */,
@@ -561,6 +571,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8F0B94BE1F8DC0F1007F0E82 /* VisiteurSelection.swift in Sources */,
+				0EED627F1F982B3B00CD8C56 /* ModeleEtatCreerMuret.swift in Sources */,
 				8F0B94B81F8D7F11007F0E82 /* ModeleEtatPointControl.swift in Sources */,
 				8FB6A9951F81B9C800FAFFCF /* EditorViewController.swift in Sources */,
 				8FFC5B481F7C90340031474F /* MessageViewCell.swift in Sources */,
@@ -581,6 +592,7 @@
 				8F64C0111F7754EF00F14AC7 /* ChatViewController.swift in Sources */,
 				8F0B94BC1F8D8EA6007F0E82 /* VisiteurDeplacement.swift in Sources */,
 				3415E6C41F8547CE00DB1CAD /* ArbreRendu.swift in Sources */,
+				0EED627D1F9825B500CD8C56 /* NoeudMur.swift in Sources */,
 				8FFC5B4A1F7CA7170031474F /* PaddingLabel.swift in Sources */,
 				8F0B94B61F8D5C25007F0E82 /* FacadeModele.swift in Sources */,
 				8F64C0171F775B2500F14AC7 /* AuthentificationViewController.swift in Sources */,
