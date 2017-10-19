@@ -25,6 +25,7 @@ enum MODELE_ETAT : Int {
     case DUPLIQUER = 8
     case ZOOM = 9
     case POINTS_CONTROLE = 10
+    // TODO : Avoir une caméra libre en tout temps
     case CAMERA_CONTROLE = 11
 }
 
@@ -61,7 +62,7 @@ class FacadeModele {
         self.etat = ModeleEtatCameraControl.instance
         
         self.tapGestureRecognizer = UITapGestureRecognizer(target: self, action:  #selector (self.tapGesture (_:)))
-        self.panGestureRecognizer = ImmediatePanGestureRecognizer(target: self, action: #selector (FacadeModele.instance.panGesture(_:)))
+        self.panGestureRecognizer = ImmediatePanGestureRecognizer(target: self, action: #selector (self.panGesture(_:)))
         
         self.arbre?.initialiser()
         self.etat?.initialiser()
@@ -138,10 +139,10 @@ class FacadeModele {
                 //self.etat = ModeleEtatCreerBoost.instance
                 break;
             case .CREATION_MURET:
-                //self.etat = ModeleEtatCreerMuret.instance
+                self.etat = ModeleEtatCreerMuret.instance
                 break;
             case .CREATION_PORTAIL:
-                //self.etat = ModeleEtatCreerPortail.instance
+                self.etat = ModeleEtatCreerPortail.instance
                 break;
             case .CAMERA_CONTROLE:
                 self.etat = ModeleEtatCameraControl.instance

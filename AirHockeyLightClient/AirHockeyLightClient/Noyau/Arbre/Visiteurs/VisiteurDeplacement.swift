@@ -70,10 +70,12 @@ class VisiteurDeplacement: VisiteurAbstrait {
     }
     
     /// Visiter un mur pour le déplacement
-    //virtual void visiterMur(NoeudMur* noeud);
+    func visiterMur(noeud: NoeudMur) {
+    }
     
     /// Visiter un portail pour le déplacement
-    //virtual void visiterPortail(NoeudPortail* noeud);
+    func visiterPortail(noeud: NoeudPortail) {
+    }
     
     //virtual void visiterRondelle(NoeudRondelle* noeud);
     

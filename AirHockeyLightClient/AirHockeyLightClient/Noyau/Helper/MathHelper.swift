@@ -30,6 +30,23 @@ class MathHelper {
         return view.unprojectPoint(locationWithz)
     }
     
+    /// Transformer un point (données en coordonnées d'affichage d'après un TAP) en coordonnées virtuelles    
+    static func GetHitTestSceneViewCoordinates(point: CGPoint) -> SCNVector3 {
+        let hits = FacadeModele.instance.obtenirVue().editorView.hitTest(point, options: nil)
+
+        if (hits.count > 0) {
+            let result: AnyObject = hits[0]
+            if  result is SCNHitTestResult {
+                let hitResult = result as! SCNHitTestResult
+                
+                // localCoordinates corresponds to the table coordinates
+                return hitResult.localCoordinates
+            }
+        }
+        
+        return SCNVector3()
+    }
+    
 }
 
 ///////////////////////////////////////////////////////////////////////////////

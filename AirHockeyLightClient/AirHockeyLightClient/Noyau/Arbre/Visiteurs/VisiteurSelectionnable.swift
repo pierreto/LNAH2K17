@@ -57,10 +57,14 @@ class VisiteurSelectionnable : VisiteurAbstrait {
     }
     
     /// Visiter un mur pour le rendre sélectionnable
-    //virtual void visiterMur(NoeudMur* noeud);
+    func visiterMur(noeud: NoeudMur) {
+        self.implementationDefaut(noeud: noeud)
+    }
     
     /// Visiter un portail pour le rendre sélectionnable
-    //virtual void visiterPortail(NoeudPortail* noeud);
+    func visiterPortail(noeud: NoeudPortail) {
+        self.implementationDefaut(noeud: noeud)
+    }
 
     //virtual void visiterRondelle(NoeudRondelle* noeud);
     
