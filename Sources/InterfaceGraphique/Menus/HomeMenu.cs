@@ -15,6 +15,20 @@ namespace InterfaceGraphique.Menus
         public HomeMenu()
         {
             InitializeComponent();
+            InitializeEvents();
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// Initialise les events sur la form courrante
+        ///
+        /// @return Void
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        private void InitializeEvents()
+        {
+            this.onlineButton.Click += (sender, e) => Program.FormManager.CurrentForm = Program.ConnectServerMenu;
+            this.offlineButton.Click += (sender, e) => Program.FormManager.CurrentForm = Program.MainMenu;
         }
 
         ////////////////////////////////////////////////////////////////////////

@@ -33,6 +33,7 @@ namespace InterfaceGraphique
 
         public static FormManager FormManager { get { return formManager; } }
         public static MainMenu MainMenu { get { return mainMenu; } }
+        public static ConnectServerMenu ConnectServerMenu { get { return connectServerMenu; } }
         public static Login Login {  get { return login; } }
         public static Editeur Editeur { get { return editeur; } }
         public static ConfigurationMenu ConfigurationMenu { get { return configurationMenu; } }
@@ -50,6 +51,7 @@ namespace InterfaceGraphique
         private static FormManager formManager;
         private static HomeMenu homeMenu;
         private static MainMenu mainMenu;
+        private static ConnectServerMenu connectServerMenu;
         private static Editeur editeur;
         private static ConfigurationMenu configurationMenu;
         private static QuickPlay quickPlay;
@@ -101,6 +103,7 @@ namespace InterfaceGraphique
             formManager = new FormManager();
             mainMenu = new MainMenu();
             homeMenu = new HomeMenu();
+            connectServerMenu = new ConnectServerMenu();
             editeur = new Editeur();
             configurationMenu = new ConfigurationMenu();
             quickPlay = new QuickPlay();

@@ -72,7 +72,7 @@ namespace InterfaceGraphique.Menus
                 this.hubManager = new HubManager();
 
                 // We first initialize the connection with the chat server:
-                await hubManager.EstablishConnection(ServerTextBox.Text,UsernameTextBox.Text );
+                //await hubManager.EstablishConnection(ServerTextBox.Text,UsernameTextBox.Text );
                 // Then we try to authenticate the user with the username he/she gave:
                 var authentication = chatHub.AuthenticateUser();
                 await authentication;

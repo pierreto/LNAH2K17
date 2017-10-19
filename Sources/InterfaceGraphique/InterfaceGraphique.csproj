@@ -181,6 +181,12 @@
     <Compile Include="Game\GameState\MasterGameState.cs" />
     <Compile Include="Game\GameState\OfflineGameState.cs" />
     <Compile Include="Game\GameState\SlaveGameState.cs" />
+    <Compile Include="Menus\ConnectServerMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Menus\ConnectServerMenu.Designer.cs">
+      <DependentUpon>ConnectServerMenu.cs</DependentUpon>
+    </Compile>
     <Compile Include="Menus\HomeMenu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -290,6 +296,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\LobbyHost.resx">
       <DependentUpon>LobbyHost.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Menus\ConnectServerMenu.resx">
+      <DependentUpon>ConnectServerMenu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Menus\HomeMenu.resx">
       <DependentUpon>HomeMenu.cs</DependentUpon>

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using InterfaceGraphique.CommunicationInterface;
 using InterfaceGraphique.Controls.WPF.Chat;
 using InterfaceGraphique.Controls.WPF.Matchmaking;
+using InterfaceGraphique.Controls.WPF.ConnectServer;
 using Microsoft.Practices.Unity;
 
 namespace InterfaceGraphique.Controls.WPF
@@ -19,6 +20,11 @@ namespace InterfaceGraphique.Controls.WPF
         public ViewModelLocator()
         {
             container = Program.unityContainer;
+        }
+
+        public ConnectServerViewModel ConnectServerViewModel
+        {
+            get { return container.Resolve<ConnectServerViewModel>(); }
         }
 
         public ChatViewModel ChatViewModel

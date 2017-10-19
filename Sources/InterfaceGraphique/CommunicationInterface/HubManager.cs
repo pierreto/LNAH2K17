@@ -19,16 +19,22 @@ namespace InterfaceGraphique.CommunicationInterface
 
         private List<IBaseHub> hubs;
 
-        public async Task EstablishConnection(string serverIp, string username)
+        public async Task EstablishConnection(string serverIp)
         {
             this.connection = new HubConnection("http://" + serverIp + ":63056/signalr");
-
-            this.AddHubs();
-
-            this.InitializeHubs(username);
-
             await this.connection.Start();
         }
+
+        //public async Task EstablishConnection(string serverIp, string username)
+        //{
+        //    this.connection = new HubConnection("http://" + serverIp + ":63056/signalr");
+
+        //    this.AddHubs();
+
+        //    this.InitializeHubs(username);
+
+        //    await this.connection.Start();
+        //}
 
         private void AddHubs()
         {
