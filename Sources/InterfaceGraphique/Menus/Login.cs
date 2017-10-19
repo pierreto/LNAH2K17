@@ -199,7 +199,6 @@ namespace InterfaceGraphique.Menus
             set => password = value;
         }
 
-
     }
 
 }

@@ -48,6 +48,7 @@ namespace InterfaceGraphique
         public static LobbyHost LobbyHost { get { return lobbyHost; } set { lobbyHost = value; } }
 
         private static FormManager formManager;
+        private static HomeMenu homeMenu;
         private static MainMenu mainMenu;
         private static Editeur editeur;
         private static ConfigurationMenu configurationMenu;
@@ -99,6 +100,7 @@ namespace InterfaceGraphique
             openGLPanel = new Panel();
             formManager = new FormManager();
             mainMenu = new MainMenu();
+            homeMenu = new HomeMenu();
             editeur = new Editeur();
             configurationMenu = new ConfigurationMenu();
             quickPlay = new QuickPlay();
@@ -112,10 +114,8 @@ namespace InterfaceGraphique
 
             FonctionsNatives.loadSounds();
 
-
-
-           
-            formManager.CurrentForm = login;
+            formManager.CurrentForm = homeMenu;
+            // formManager.CurrentForm = login;
             Application.Run(formManager);
 
         }
