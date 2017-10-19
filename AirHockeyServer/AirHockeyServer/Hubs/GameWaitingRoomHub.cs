@@ -7,6 +7,7 @@ using AirHockeyServer.Services;
 using AirHockeyServer.Entities;
 using System.Threading.Tasks;
 using AirHockeyServer.Events;
+using System.Diagnostics;
 
 namespace AirHockeyServer.Hubs
 {
@@ -37,11 +38,6 @@ namespace AirHockeyServer.Hubs
             GameService = gameService;
         }
 
-        /// @fn void JoinGame(UserEntity user)
-        ///
-        /// Cette fonction permet de gérer la demande d'un utilisateur de se joindre à une partie. 
-        /// On appel simplement la classe GameService
-        ///
         ////////////////////////////////////////////////////////////////////////
         public void JoinGame(UserEntity user)
         {
@@ -63,11 +59,24 @@ namespace AirHockeyServer.Hubs
         ////////////////////////////////////////////////////////////////////////
         public async Task<GameEntity> UpdateMap(GameEntity gameEntity)
         {
-            var updatedGame = await GameService.UpdateGame(gameEntity);
+            Clients.Group(gameEntity.GameId.ToString()).GameMapUpdatedEvent(gameEntity);
+            return await GameService.UpdateGame(gameEntity);
+        }
 
-            Clients.Group(gameEntity.GameId.ToString()).GameMapUpdatedEvent(updatedGame);
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn void JoinGame(UserEntity user)
+        ///
+        /// Cette fonction permet de gérer la demande d'un utilisateur de se joindre à une partie. 
+        /// On appel simplement la classe GameService
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        public void JoinGame(UserEntity user)
+        {
+            // TO REMOVE, WAITING FOR AUTHENTIFICATION
+            ConnectionMapper.AddConnection(user.UserId, Context.ConnectionId);
 
-            return updatedGame;
+            GameService.JoinGame(user);
         }
 
         ////////////////////////////////////////////////////////////////////////

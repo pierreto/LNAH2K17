@@ -42,24 +42,69 @@
             <Binding Path="MatchmakingViewModel" Source="{StaticResource VMLocator}"/>
         </Grid.DataContext>
         <Grid.RowDefinitions>
-            <RowDefinition Height="37*"/>
-            <RowDefinition Height="69*"/>
-            <RowDefinition Height="94*"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="53*"/>
-            <ColumnDefinition Width="49*"/>
-            <ColumnDefinition Width="48*"/>
+            <ColumnDefinition Width="50*"/>
+            <ColumnDefinition Width="50*"/>
         </Grid.ColumnDefinitions>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="20,54,0,0" TextWrapping="Wrap" Text="Temps restant :" VerticalAlignment="Top" Width="94" Background="{x:Null}" Foreground="White" FontWeight="Bold" BorderBrush="{x:Null}" RenderTransformOrigin="0.233,0.531" Grid.RowSpan="2"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="20,10,0,0" TextWrapping="Wrap" Text="En attente d'un autre joueur..." VerticalAlignment="Top" Width="177" Foreground="White" Background="{x:Null}" BorderBrush="{x:Null}" FontWeight="Bold"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="114,54,0,0" TextWrapping="Wrap" Text="{Binding RemainingTime}" VerticalAlignment="Top" Width="72" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" FontWeight="Bold" Grid.RowSpan="2"/>
 
-        <Button Command="{Binding MainMenuCommand}" Content="Menu principal"  Margin="12,15,0,15" FontWeight="Bold" FontSize="16" Foreground="#FF494848" Grid.Column="2" Height="Auto" HorizontalAlignment="Left" Width="157"/>
+        <Grid Grid.Row="0" Grid.Column="0" Margin="50, 75, 50, 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" HorizontalAlignment="Center" Text="Temps avant la partie :" FontSize="18" Foreground="White"></TextBlock>
+            <TextBlock Grid.Row="1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding RemainingTime}" FontSize="100" Foreground="White" FontWeight="Bold" />
+        </Grid>
 
-        <Button Command="{Binding MatchmakingCommand}" Content="Partie Rapide"  Margin="0,15,12,15" FontWeight="Bold" FontSize="16" Foreground="#FF494848" Grid.Column="1" Height="Auto" HorizontalAlignment="Right" Width="157">
+        <Grid Grid.Row="0" Grid.Column="1" Margin="10, 20, 0, 0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="33*"/>
+                    <ColumnDefinition Width="33*"/>
+                    <ColumnDefinition Width="33*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding OpponentName}" FontSize="20" Foreground="White" FontWeight="Bold" />
+                <TextBlock Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="VS" Foreground="White" FontSize="30" FontWeight="Bold" />
+                <TextBlock Grid.Column="2" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding PlayerName}" FontSize="20" Foreground="White" FontWeight="Bold" />
+            </Grid>
+            <Grid Grid.Row="1" Grid.Column="1" Margin="0, 20, 0, 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" TextWrapping="Wrap" Text="Maps" FontSize="20" Foreground="White"/>
+                <ComboBox Name="mapList" 
+                  Grid.Row="1"
+                  ItemsSource="{Binding MapsAvailable}" 
+                  SelectedItem="{Binding SelectedMap}"
+                  IsSynchronizedWithCurrentItem="True"
+                  IsEnabled="{Binding Path = IsChecked, ElementName=rbAssignedTo}" Margin="0,0,86,0">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock>
+                                <TextBlock.Text >
+                                    <Binding Path="MapName" />
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <Image Grid.Row="2" Source="C:/TEMP/log3900-03/Exe/media/image/No_image_available.png" Height="200" Width="200" Margin="-90,20,0,0"></Image>
+            </Grid>
+        </Grid>
 
-            <Button.Style>
+        <!--<Button Command="{Binding MainMenuCommand}" Content="Menu principal"  Margin="12,15,0,15" FontWeight="Bold" FontSize="16" Foreground="#FF494848" Grid.Column="2" Height="Auto" HorizontalAlignment="Left" Width="157"/>
+
+        <Button Command="{Binding MatchmakingCommand}" Content="Partie Rapide"  Margin="0,15,12,15" FontWeight="Bold" FontSize="16" Foreground="#FF494848" Grid.Column="1" Height="Auto" HorizontalAlignment="Right" Width="157">-->
+
+        <!--<Button.Style>
                 <Style TargetType="{x:Type Button}">
                     <Style.Triggers>
 
@@ -72,35 +117,9 @@
                     </Style.Triggers>
                 </Style>
             </Button.Style>
-        </Button>
+        </Button>-->
 
-
-
-
-        <Controls:ChatView Grid.Row="2" Grid.ColumnSpan="3"/>
-        <TextBox HorizontalAlignment="Left" Height="22" Margin="20,11,0,0" TextWrapping="Wrap" Text="{Binding OpponentName}" VerticalAlignment="Top" Width="177" Foreground="White" Background="{x:Null}" BorderBrush="{x:Null}" FontWeight="Bold" Grid.Row="1"/>
-        <TextBox HorizontalAlignment="Left" Height="22" Margin="20,11,0,0" TextWrapping="Wrap" Text="Configuration :" VerticalAlignment="Top" Width="176" Foreground="White" Background="{x:Null}" BorderBrush="{x:Null}" FontWeight="Bold" Grid.Row="1" Grid.Column="1"/>
-
-        <TextBox HorizontalAlignment="Left" Margin="20,38,0,0" TextWrapping="Wrap" Text="Maps" VerticalAlignment="Top" Width="176" Foreground="White" Background="{x:Null}" BorderBrush="{x:Null}" FontWeight="Bold" Grid.Row="1" Grid.Column="1"/>
-        <ComboBox Name="mapList" 
-                  ItemsSource="{Binding MapsAvailable}" 
-                  SelectedItem="{Binding SelectedMap}"
-                  IsSynchronizedWithCurrentItem="True"
-                  IsEnabled="{Binding Path = IsChecked, ElementName=rbAssignedTo}" 
-                  Grid.ColumnSpan="2" 
-                  Margin="20,61,156,45" 
-                  Grid.Row="1" Grid.Column="1">
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock>
-                        <TextBlock.Text >
-                            <Binding Path="Name" />
-                        </TextBlock.Text>
-                    </TextBlock>
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
-        </ComboBox>
-
+        <!--<Controls:ChatView Grid.Row="1"/>-->
 
     </Grid>
 

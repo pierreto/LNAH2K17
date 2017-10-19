@@ -7,6 +7,7 @@ using InterfaceGraphique.CommunicationInterface;
 using InterfaceGraphique.Controls.WPF.Chat;
 using InterfaceGraphique.Controls.WPF.Matchmaking;
 using Microsoft.Practices.Unity;
+using InterfaceGraphique.Controls.WPF.Tournament;
 
 namespace InterfaceGraphique.Controls.WPF
 {
@@ -28,6 +29,10 @@ namespace InterfaceGraphique.Controls.WPF
         public MatchmakingViewModel MatchmakingViewModel
         {
             get { return container.Resolve<MatchmakingViewModel>(); }
+        }
+        public TournamentViewModel TournamentViewModel
+        {
+            get { return container.Resolve<TournamentViewModel>(); }
         }
     }
 }

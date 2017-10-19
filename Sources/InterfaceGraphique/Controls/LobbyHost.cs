@@ -73,6 +73,7 @@ namespace InterfaceGraphique.Controls
         {
             Program.FormManager.SizeChanged -= new EventHandler(WindowSizeChanged);
         }
+        
     }
 
 }

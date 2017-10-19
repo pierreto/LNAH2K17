@@ -1,0 +1,28 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:InterfaceGraphique.Controls.WPF.Tournament"
+             xmlns:Controls="clr-namespace:InterfaceGraphique.Controls" x:Class="InterfaceGraphique.Controls.WPF.Tournament.TournamentView"
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="600">
+    <Grid Background="#FF373A3E">
+
+        <Controls:ChatView HorizontalAlignment="Left" Height="174" Margin="10,226,0,0" VerticalAlignment="Top" Width="385"/>
+        <TextBox HorizontalAlignment="Left" Height="36" Margin="32,21,0,0" TextWrapping="Wrap" Text="En attente d'un joueur..." VerticalAlignment="Top" Width="143"/>
+        <TextBox HorizontalAlignment="Left" Height="36" Margin="32,62,0,0" TextWrapping="Wrap" Text="En attente d'un joueur..." VerticalAlignment="Top" Width="143"/>
+
+        <TextBox HorizontalAlignment="Left" Height="36" Margin="32,144,0,0" TextWrapping="Wrap" Text="En attente d'un joueur..." VerticalAlignment="Top" Width="143"/>
+        <TextBox HorizontalAlignment="Left" Height="36" Margin="32,185,0,0" TextWrapping="Wrap" Text="En attente d'un joueur..." VerticalAlignment="Top" Width="143"/>
+
+        <TextBox HorizontalAlignment="Left" Height="36" Margin="227,48,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="143"/>
+        <TextBox HorizontalAlignment="Left" Height="36" Margin="227,166,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="143"/>
+
+        <TextBox HorizontalAlignment="Left" Height="36" Margin="418,110,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="143"/>
+
+        <TextBox HorizontalAlignment="Left" Height="32" Margin="400,226,0,0" TextWrapping="Wrap" Text="Carte courante : " VerticalAlignment="Top" Width="181" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" FontSize="20" FontWeight="Bold"/>
+
+
+    </Grid>
+</UserControl>

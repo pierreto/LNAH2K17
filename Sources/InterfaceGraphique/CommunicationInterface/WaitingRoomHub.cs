@@ -20,16 +20,15 @@ namespace InterfaceGraphique.CommunicationInterface
         private MasterGameState masterGameState;
 
         private string username;
+        private GameEntity CurrentGame;
 
         public event EventHandler<int> RemainingTimeEvent;
 
-        public event EventHandler<UserEntity> OpponentFoundEvent;
+        public event EventHandler<GameEntity> OpponentFoundEvent;
 
-        public event EventHandler<GameEntity> MapUpdatedEvent;
+        public event EventHandler<MapEntity> MapUpdatedEvent;
 
         public event EventHandler<GameEntity> ConfigurationUpdatedEvent;
-
-        public event EventHandler<GameEntity> GameStartingEvent;
 
         public WaitingRoomHub(SlaveGameState slaveGameState,MasterGameState masterGameState)
         {
@@ -64,15 +63,20 @@ namespace InterfaceGraphique.CommunicationInterface
                 Username = username
             };
             await GameWaitingRoomProxy.Invoke("JoinGame", user);
+
         }
 
         private void InitializeEvents()
         {
             GameWaitingRoomProxy.On<GameEntity>("OpponentFoundEvent", newgame =>
             {
+                this.CurrentGame = newgame;
+                this.OpponentFoundEvent.Invoke(this, newgame);
+
                 GameWaitingRoomProxy.On<GameEntity>("GameStartingEvent", officialGame =>
                 {
                     Console.WriteLine("Game is starting!");
+
                     Program.LobbyHost.Invoke(new MethodInvoker(() =>
                     {
 
@@ -111,18 +115,22 @@ namespace InterfaceGraphique.CommunicationInterface
 
                 GameWaitingRoomProxy.On<GameEntity>("GameMapUpdatedEvent", mapUpdated =>
                 {
-                    Console.WriteLine("map updated");
+                    this.CurrentGame = mapUpdated;
+                    this.MapUpdatedEvent.Invoke(this, mapUpdated.SelectedMap);
                 });
           
    
 
             });
         }
-
-        public async Task<GameEntity> UpdateSelectedMap(GameEntity game)
+        
+        public async void UpdateSelectedMap(MapEntity map)
         {
-            GameEntity gameUpdated = await GameWaitingRoomProxy.Invoke<GameEntity>("UpdateMap", game);
-            return gameUpdated;
+            if(CurrentGame != null)
+            {
+                CurrentGame.SelectedMap = map;
+                var t = await GameWaitingRoomProxy.Invoke<GameEntity>("UpdateMap", CurrentGame);
+            }
         }
 
         public async Task<GameEntity> UpdateSelectedConfiguration(GameEntity game)

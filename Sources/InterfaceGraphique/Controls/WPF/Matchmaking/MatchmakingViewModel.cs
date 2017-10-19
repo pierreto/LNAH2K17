@@ -23,10 +23,13 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
             this.waitingRoomHub = matchmakingHub;
             this.isStarted = false;
             this.MapsRepository = new MapsRepository();
+        }
 
-            InitializeEvents();
-
+        public void Initialize()
+        {
             LoadData();
+            InitializeEvents();
+            this.waitingRoomHub.JoinGame();
         }
 
         private void InitializeEvents()
@@ -35,11 +38,11 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
 
             waitingRoomHub.OpponentFoundEvent += (sender, args) =>
             {
-                OpponentName = args.Username;
-                
+                OpponentName = args.Players[0].Username;
+                PlayerName = args.Players[1].Username;
             };
 
-            waitingRoomHub.MapUpdatedEvent += (sender, args) => { SelectedMap = args.Map; };
+            waitingRoomHub.MapUpdatedEvent += (sender, args) => { SelectedMap = args; };
         }
 
         private void OnRemainingTimeEvent(int remainingTime)
@@ -49,6 +52,7 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
 
         private async void LoadData()
         {
+            GameEntity gg = new GameEntity();
             //MapsAvailable = await MapsRepository.GetMaps();
             MapsAvailable = new List<MapEntity>
             {
@@ -62,34 +66,10 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
                 }
             };
 
+            SelectedMap = mapsAvailable[0];
+
             RemainingTime = 15;
         }
-
-        private ICommand matchmakingCommand;
-        public ICommand MatchmakingCommand
-        {
-            get
-            {
-                return matchmakingCommand ??
-                       (matchmakingCommand = new RelayCommandAsync(Matchmaking, (o) => CanStart()));
-            }
-        }
-        private async Task Matchmaking()
-        {
-            if (this.isStarted)
-            {
-                this.waitingRoomHub.Cancel();
-                this.IsStarted = false;
-
-            }
-            else
-            {
-                this.waitingRoomHub.JoinGame();
-                this.IsStarted = true;
-            }
-
-        }
-
 
         private ICommand mainMenuCommand;
         public ICommand MainMenuCommand
@@ -100,9 +80,15 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
                        (mainMenuCommand = new RelayCommandAsync(MainMenu, (o) => true));
             }
         }
+
         private async Task MainMenu()
         {
-            Program.FormManager.CurrentForm=Program.QuickPlay;
+            Program.FormManager.CurrentForm=Program.MainMenu;
+        }
+
+        private void StartGame()
+        {
+            Program.FormManager.CurrentForm = Program.QuickPlay;
         }
 
         private bool CanStart()
@@ -137,8 +123,12 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
             get => selectedMap;
             set
             {
-                selectedMap = value;
-                this.OnPropertyChanged();
+                if (!string.Equals(selectedMap?.MapName, value?.MapName))
+                {
+                    selectedMap = value;
+                    waitingRoomHub.UpdateSelectedMap(value);
+                    this.OnPropertyChanged();
+                }
             }
         }
 
@@ -160,6 +150,17 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
             set
             {
                 opponentName = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        private string playerName;
+        public string PlayerName
+        {
+            get => playerName;
+            set
+            {
+                playerName = value;
                 this.OnPropertyChanged();
             }
         }

@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿
+using System;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Practices.Unity;
 
-namespace InterfaceGraphique {
+namespace InterfaceGraphique
+{
 
     ///////////////////////////////////////////////////////////////////////////
     /// @class QuickPlayMenu
@@ -146,6 +145,8 @@ namespace InterfaceGraphique {
             else
             {
                 Program.FormManager.CurrentForm = Program.LobbyHost;
+                var vm = Program.unityContainer.Resolve<Controls.WPF.Matchmaking.MatchmakingViewModel>();
+                vm.Initialize();
             }
         }
 
