@@ -11,7 +11,7 @@
 import GLKit
 
 ///////////////////////////////////////////////////////////////////////////
-/// @class ModeleEtat
+/// @class ModeleEtatDeplacement
 /// @brief Cette classe représente l'état de déplacement. Implémente aussi le
 ///        patron Singleton.
 ///

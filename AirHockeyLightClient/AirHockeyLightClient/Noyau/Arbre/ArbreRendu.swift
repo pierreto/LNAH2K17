@@ -55,6 +55,7 @@ class ArbreRendu: SCNNode {
         self.ajouterUsine(type: self.NOM_TABLE, usine: UsineNoeud<NoeudTable>(nomUsine: self.NOM_TABLE, nomModele: "noModel"))
         self.ajouterUsine(type: self.NOM_BUT, usine: UsineNoeud<NoeudBut>(nomUsine: self.NOM_BUT, nomModele: "noModel"))
         self.ajouterUsine(type: self.NOM_POINT_CONTROL, usine: UsineNoeud<NoeudPointControl>(nomUsine: self.NOM_POINT_CONTROL, nomModele: "controlPoint"))
+        self.ajouterUsine(type: self.NOM_PORTAIL, usine: UsineNoeud<NoeudPortail>(nomUsine: self.NOM_PORTAIL, nomModele: "portail"))
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -75,8 +76,7 @@ class ArbreRendu: SCNNode {
     /// Cette fonction crée la structure de base de l'arbre de rendu, c'est-à-dire
     /// avec les noeuds structurants (pour les objets, les murs, les billes,
     /// les parties statiques, etc.)
-    func initialiser()
-    {
+    func initialiser() {
         // On vide l'arbre
         self.vider()
         // On ajoute les noeud de base
@@ -89,8 +89,7 @@ class ArbreRendu: SCNNode {
     /// destructeur, par exemple si deux objets ne peuvent pas exister l'un
     /// sans l'autre.  Elle peut toutefois entrer en boucle infinie si un
     /// enfant ajoute un nouveau noeud lorsqu'il se fait effacer.
-    func vider()
-    {
+    func vider() {
         // L'itération doit être faite ainsi pour éviter les problèmes lorsque
         // le desctructeur d'un noeud modifie l'arbre, par exemple en retirant
         // d'autres noeuds.  Il pourrait y avoir une boucle infinie si la

@@ -43,6 +43,9 @@ class ModeleEtatPointControl : ModeleEtat {
                 pointControl.useOtherColor(activer: true, color: color)
             }
         }
+        
+        // Le déplacement des points de contrôle s'effectue par un gesture pan
+        FacadeModele.instance.obtenirVue().editorView.addGestureRecognizer(FacadeModele.instance.panGestureRecognizer!)
     }
 
     /// Cette fonction nettoie l'état des changements apportes
@@ -62,6 +65,8 @@ class ModeleEtatPointControl : ModeleEtat {
                 pointControl.useOtherColor(activer: false)
             }
         }
+        
+        FacadeModele.instance.obtenirVue().editorView.removeGestureRecognizer(FacadeModele.instance.panGestureRecognizer!)
     }
     
     // Fonctions gérant les entrées de l'utilisateur

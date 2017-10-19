@@ -69,10 +69,12 @@ class VisiteurSelection: VisiteurAbstrait {
     }
     
     /// Visiter un mur pour la sélection
-    //virtual void visiterMur(NoeudMur* noeud);
+    func visiterMur(noeud: NoeudMur) {
+    }
     
     /// Visiter un portail pour la sélection
-    //virtual void visiterPortail(NoeudPortail* noeud);
+    func visiterPortail(noeud: NoeudPortail) {
+    }
     
     //virtual void visiterRondelle(NoeudRondelle* noeud);
 }

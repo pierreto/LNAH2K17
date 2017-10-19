@@ -24,6 +24,7 @@ class EditorHUDScene: SKScene {
     private var selectionButton: SKSpriteNode?
     private var deplacementButton: SKSpriteNode?
     private var pointControlButton: SKSpriteNode?
+    private var portalButton: SKSpriteNode?
     
     override func sceneDidLoad() {
         super.sceneDidLoad()
@@ -33,11 +34,13 @@ class EditorHUDScene: SKScene {
         self.selectionButton = (self.childNode(withName: "//selectionButton") as? SKSpriteNode)!
         self.deplacementButton = (self.childNode(withName: "//deplacementButton") as? SKSpriteNode)!
         self.pointControlButton = (self.childNode(withName: "//pointControlButton") as? SKSpriteNode)!
+        self.portalButton = (self.childNode(withName: "//portalButton") as? SKSpriteNode)!
         
         // Charger les images
         self.selectionButton?.texture = SKTexture(imageNamed: "Select")
         self.deplacementButton?.texture = SKTexture(imageNamed: "Move")
         self.pointControlButton?.texture = SKTexture(imageNamed: "ControlPoint")
+        self.portalButton?.texture = SKTexture(imageNamed: "Portal")
     }
     
     override func didMove(to view: SKView) {
@@ -73,7 +76,10 @@ class EditorHUDScene: SKScene {
             print("PointControl")
             FacadeModele.instance.changerModeleEtat(etat: .POINTS_CONTROLE)
         }
-        
+        else if touchedNode?.name == "portalButton"{
+            print("Portal")
+            FacadeModele.instance.changerModeleEtat(etat: .CREATION_PORTAIL)
+        }
         for t in touches { self.touchDown(atPoint: t.location(in: self)) }
     }
     

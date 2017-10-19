@@ -32,7 +32,7 @@ class ModeleEtatCreerMuret: ModeleEtat {
     private var pointInitial = GLKVector3()
     
     /// Détermine si l'action est débutée
-    private var actionCommencee : boolean?
+    private var actionCommencee : Bool?
     
     /// Fonction qui initialise l'état de déplacement
     override func initialiser() {
@@ -49,7 +49,8 @@ class ModeleEtatCreerMuret: ModeleEtat {
     override func tapGesture(point: CGPoint) {
         super.tapGesture(point: point)
         
-        self.noeud = FacadeModel.instance.obtenirArbreRendu().creerNoeud(typeNouveauNoeud: arbre.NOM_MUR) as! NoeudMur
+        let arbre = FacadeModele.instance.obtenirArbreRendu()
+        self.noeud = FacadeModele.instance.obtenirArbreRendu().creerNoeud(typeNouveauNoeud: arbre.NOM_MUR) as! NoeudMur
     }
     
     /// Évènement appelé lorsque le bouton gauche de la souris est descendu

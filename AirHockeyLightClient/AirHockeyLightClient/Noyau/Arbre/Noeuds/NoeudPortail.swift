@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
-/// @file NoeudMur.swift
-/// @author Mikael Ferland
+/// @file NoeudPortail.swift
+/// @author Pierre To
 /// @date 2017-10-18
 /// @version 1
 ///
@@ -10,27 +10,24 @@
 
 import SceneKit
 
-// TODO : Déplacer dans utilitaire
-struct BoiteEnglobante {
-    var coinMin: GLKVector3?
-    var coinMax: GLKVector3?
-}
-
 ///////////////////////////////////////////////////////////////////////////
-/// @class NoeudMur
-/// @brief Classe pour afficher un point de contrôle
+/// @class NoeudPortail
+/// @brief Classe pour afficher un portail
 ///
-/// @author Mikael Ferland
+/// @author Pierre To
 /// @date 2017-10-18
 ///////////////////////////////////////////////////////////////////////////
-class NoeudMur : NoeudCommun {
-
-    private var collider: BoiteEnglobante?
+class NoeudPortail : NoeudCommun {
+    
+    /// Le portail opposé
+    var portailOppose: NoeudPortail?
+    
+    /// Retient si le portail est actif
+    var desactiver: Bool = false
     
     /// Constructeur
     required init(type: String, geometry: SCNGeometry) {
         super.init(type: type, geometry: geometry)
-        self.collider = BoiteEnglobante(coinMin: GLKVector3.init(v: (0, 0, 0)), coinMax: GLKVector3.init(v : (0,0,0)));
     }
     
     /// Le point de contrôle a un modèle obj
@@ -42,21 +39,33 @@ class NoeudMur : NoeudCommun {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func obtenirCollider() -> BoiteEnglobante {
-        return self.collider!;
-    }
-    
-    // TODO : implémenter collider
-    func calculerCollider() { }
-    
     /// Cette fonction accepte un visiteur et effectue la bonne methode selon le type
     override func accepterVisiteur(visiteur: VisiteurAbstrait) {
         // Envoie le visiteur aux enfants
         super.accepterVisiteur(visiteur: visiteur)
         
-        visiteur.visiterMur(noeud: self)
+        visiteur.visiterPortail(noeud: self)
     }
     
+    /// Cette fonction assigne un noeud opposé à un portail
+    func assignerOppose(portail: NoeudPortail) {
+        self.portailOppose = portail
+    }
+    
+    /// Cette fonction permet d'obtenir le portail opposé
+    func obtenirOppose() -> NoeudPortail {
+        return self.portailOppose!
+    }
+    
+    /// Activer/Désactiver le portail opposé
+    func assignerDesactiver(desactiver: Bool) {
+        self.desactiver = desactiver
+    }
+    
+    /// Savoir si le noeud est désactivé
+    func estDesactiver() -> Bool {
+        return self.desactiver;
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////

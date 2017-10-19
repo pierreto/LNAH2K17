@@ -142,7 +142,7 @@ class FacadeModele {
                 //self.etat = ModeleEtatCreerMuret.instance
                 break;
             case .CREATION_PORTAIL:
-                //self.etat = ModeleEtatCreerPortail.instance
+                self.etat = ModeleEtatCreerPortail.instance
                 break;
             case .CAMERA_CONTROLE:
                 self.etat = ModeleEtatCameraControl.instance
