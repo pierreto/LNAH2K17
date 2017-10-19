@@ -139,7 +139,7 @@ class FacadeModele {
                 //self.etat = ModeleEtatCreerBoost.instance
                 break;
             case .CREATION_MURET:
-                //self.etat = ModeleEtatCreerMuret.instance
+                self.etat = ModeleEtatCreerMuret.instance
                 break;
             case .CREATION_PORTAIL:
                 self.etat = ModeleEtatCreerPortail.instance

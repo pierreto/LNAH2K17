@@ -56,6 +56,7 @@ class ArbreRendu: SCNNode {
         self.ajouterUsine(type: self.NOM_BUT, usine: UsineNoeud<NoeudBut>(nomUsine: self.NOM_BUT, nomModele: "noModel"))
         self.ajouterUsine(type: self.NOM_POINT_CONTROL, usine: UsineNoeud<NoeudPointControl>(nomUsine: self.NOM_POINT_CONTROL, nomModele: "controlPoint"))
         self.ajouterUsine(type: self.NOM_PORTAIL, usine: UsineNoeud<NoeudPortail>(nomUsine: self.NOM_PORTAIL, nomModele: "portail"))
+        self.ajouterUsine(type: self.NOM_MUR, usine: UsineNoeud<NoeudMur>(nomUsine: self.NOM_MUR, nomModele: "mur"))
     }
     
     required init?(coder aDecoder: NSCoder) {
