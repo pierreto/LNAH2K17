@@ -53,7 +53,7 @@ namespace InterfaceGraphique.CommunicationInterface
             //TODO: IMPLEMENT THIS
         }
 
-        public async void JoinGame()
+        public void JoinGame()
         {
             InitializeEvents();
             Random random= new Random();
@@ -62,7 +62,7 @@ namespace InterfaceGraphique.CommunicationInterface
                 UserId = random.Next(),
                 Username = username
             };
-            await GameWaitingRoomProxy.Invoke("JoinGame", user);
+            GameWaitingRoomProxy.Invoke("JoinGame", user);
 
         }
 

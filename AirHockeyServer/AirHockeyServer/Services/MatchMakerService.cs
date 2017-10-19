@@ -122,7 +122,7 @@ namespace AirHockeyServer.Services
 
             WaitingPlayersMutex.ReleaseMutex();
 
-            StartPlayersMatching();
+            ExecuteMatch();
         }
         
         ///////////////////////////////////////////////////////////////////////
@@ -134,13 +134,13 @@ namespace AirHockeyServer.Services
         /// partie est ajouté dans la file d'attente
         ///
         ////////////////////////////////////////////////////////////////////////
-        private static void StartPlayersMatching()
-        {
+        //private static void StartPlayersMatching()
+        //{
 
-            Thread myThread = new Thread(new ThreadStart(ExecuteMatch));
-            myThread.Start();
+        //    Thread myThread = new Thread(new ThreadStart(ExecuteMatch));
+        //    myThread.Start();
 
-        }
+        //}
 
         ///////////////////////////////////////////////////////////////////////
         ///

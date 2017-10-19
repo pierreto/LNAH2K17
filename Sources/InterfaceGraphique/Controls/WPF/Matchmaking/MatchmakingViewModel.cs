@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using InterfaceGraphique.CommunicationInterface;
@@ -164,5 +165,15 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
                 this.OnPropertyChanged();
             }
         }
+
+        public string ImageSrc
+        {
+            get
+            {
+                var test = Directory.GetCurrentDirectory() + "\\media\\image\\No_image_available.png";
+                return test;
+            }
+        }
+        
     }
 }
