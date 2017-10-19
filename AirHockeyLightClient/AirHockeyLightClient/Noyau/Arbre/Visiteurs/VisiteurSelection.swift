@@ -37,7 +37,8 @@ class VisiteurSelection: VisiteurAbstrait {
     }
     
     /// Visiter un accélérateur pour la sélection
-    //virtual void visiterAccelerateur(NoeudAccelerateur* noeud);
+    func visiterAccelerateur(noeud: NoeudAccelerateur) {
+    }
     
     /// Visiter un maillet pour la sélection
     //virtual void visiterMaillet(NoeudMaillet* noeud);

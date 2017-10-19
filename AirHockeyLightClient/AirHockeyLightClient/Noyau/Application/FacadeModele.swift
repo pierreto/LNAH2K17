@@ -136,7 +136,7 @@ class FacadeModele {
                 self.etat = ModeleEtatPointControl.instance
                 break;
             case .CREATION_ACCELERATEUR:
-                //self.etat = ModeleEtatCreerBoost.instance
+                self.etat = ModeleEtatCreerBoost.instance
                 break;
             case .CREATION_MURET:
                 self.etat = ModeleEtatCreerMuret.instance

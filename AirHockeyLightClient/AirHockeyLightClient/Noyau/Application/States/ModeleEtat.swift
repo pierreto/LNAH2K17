@@ -31,15 +31,14 @@ class ModeleEtat {
     /// Annule l'action en cours
     func nettoyerEtat() {}
     
-    ///
-    
     // Fonctions gérant les entrées de l'utilisateur
 
-    /// Évènement appelé lorsque l'utilisateur tap sur l'écran
+    // TAP
     func tapGesture(point: CGPoint) {
         self.position = point
     }
     
+    // PAN
     func panGesture(sender: ImmediatePanGestureRecognizer) {
         self.lastPosition = self.position
         self.position = sender.location(in: sender.view)

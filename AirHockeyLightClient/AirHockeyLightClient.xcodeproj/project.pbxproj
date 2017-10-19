@@ -24,6 +24,9 @@
 		342E7C561F985AD50062017A /* portail.obj in Resources */ = {isa = PBXBuildFile; fileRef = 342E7C551F985AD50062017A /* portail.obj */; };
 		344A6E1C1F9908EB00CFFBEB /* Camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 344A6E1B1F9908EB00CFFBEB /* Camera.png */; };
 		344A6E1E1F9908F500CFFBEB /* Cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = 344A6E1D1F9908F500CFFBEB /* Cancel.png */; };
+		344A6E201F990ECA00CFFBEB /* accelerateur.obj in Resources */ = {isa = PBXBuildFile; fileRef = 344A6E1F1F990ECA00CFFBEB /* accelerateur.obj */; };
+		344A6E221F99101700CFFBEB /* ModeleEtatCreerBoost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 344A6E211F99101700CFFBEB /* ModeleEtatCreerBoost.swift */; };
+		344A6E241F99112000CFFBEB /* NoeudAccelerateur.swift in Sources */ = {isa = PBXBuildFile; fileRef = 344A6E231F99112000CFFBEB /* NoeudAccelerateur.swift */; };
 		3475C2291F8FAF8D00E8BF86 /* EditorHUDScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3475C2271F8FAF8D00E8BF86 /* EditorHUDScene.sks */; };
 		3475C22A1F8FAF8D00E8BF86 /* EditorHUDScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3475C2281F8FAF8D00E8BF86 /* EditorHUDScene.swift */; };
 		3475C2381F8FB9A100E8BF86 /* Booster.png in Resources */ = {isa = PBXBuildFile; fileRef = 3475C22E1F8FB9A100E8BF86 /* Booster.png */; };
@@ -91,6 +94,9 @@
 		342E7C551F985AD50062017A /* portail.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = portail.obj; path = ../../Exe/media/models/portail.obj; sourceTree = "<group>"; };
 		344A6E1B1F9908EB00CFFBEB /* Camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Camera.png; path = ../../Sources/Icons/Camera.png; sourceTree = "<group>"; };
 		344A6E1D1F9908F500CFFBEB /* Cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Cancel.png; path = ../../Sources/Icons/Cancel.png; sourceTree = "<group>"; };
+		344A6E1F1F990ECA00CFFBEB /* accelerateur.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = accelerateur.obj; path = ../../Exe/media/models/accelerateur.obj; sourceTree = "<group>"; };
+		344A6E211F99101700CFFBEB /* ModeleEtatCreerBoost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ModeleEtatCreerBoost.swift; path = Noyau/Application/States/ModeleEtatCreerBoost.swift; sourceTree = "<group>"; };
+		344A6E231F99112000CFFBEB /* NoeudAccelerateur.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NoeudAccelerateur.swift; path = Noyau/Arbre/Noeuds/NoeudAccelerateur.swift; sourceTree = "<group>"; };
 		3475C2271F8FAF8D00E8BF86 /* EditorHUDScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = EditorHUDScene.sks; path = InterfaceGraphique/Editor/EditorHUDScene.sks; sourceTree = "<group>"; };
 		3475C2281F8FAF8D00E8BF86 /* EditorHUDScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditorHUDScene.swift; path = InterfaceGraphique/Editor/EditorHUDScene.swift; sourceTree = "<group>"; };
 		3475C22E1F8FB9A100E8BF86 /* Booster.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Booster.png; path = ../../Sources/Icons/Booster.png; sourceTree = "<group>"; };
@@ -265,6 +271,7 @@
 				8F0B94B91F8D8C95007F0E82 /* ModeleEtatDeplacement.swift */,
 				342E7C511F9859620062017A /* ModeleEtatCreerPortail.swift */,
 				0EED627E1F982B3B00CD8C56 /* ModeleEtatCreerMuret.swift */,
+				344A6E211F99101700CFFBEB /* ModeleEtatCreerBoost.swift */,
 			);
 			name = States;
 			sourceTree = "<group>";
@@ -388,9 +395,10 @@
 		8FB6A9C41F81DCA800FAFFCF /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				342E7C551F985AD50062017A /* portail.obj */,
-				0EED62801F98301C00CD8C56 /* mur.obj */,
+				344A6E1F1F990ECA00CFFBEB /* accelerateur.obj */,
 				3415E6D81F85A99500DB1CAD /* controlPoint.obj */,
+				0EED62801F98301C00CD8C56 /* mur.obj */,
+				342E7C551F985AD50062017A /* portail.obj */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -409,7 +417,6 @@
 		8FB6A9C81F81E36300FAFFCF /* Noeuds */ = {
 			isa = PBXGroup;
 			children = (
-				342E7C531F9859770062017A /* NoeudPortail.swift */,
 				3415E6C11F8545B300DB1CAD /* NoeudCommun.swift */,
 				8FB6A9C91F81E38300FAFFCF /* Table.swift */,
 				34B66FD81F8428EA00A9CCB9 /* NoeudTable.swift */,
@@ -417,6 +424,8 @@
 				34B66FE31F84636900A9CCB9 /* NoeudBut.swift */,
 				3415E6DA1F85C1F300DB1CAD /* NoeudPointControl.swift */,
 				0EED627C1F9825B500CD8C56 /* NoeudMur.swift */,
+				342E7C531F9859770062017A /* NoeudPortail.swift */,
+				344A6E231F99112000CFFBEB /* NoeudAccelerateur.swift */,
 			);
 			name = Noeuds;
 			sourceTree = "<group>";
@@ -509,6 +518,7 @@
 				34B66FE01F844C2100A9CCB9 /* table_texture.png in Resources */,
 				3475C23D1F8FB9A100E8BF86 /* Resize.png in Resources */,
 				3475C2291F8FAF8D00E8BF86 /* EditorHUDScene.sks in Resources */,
+				344A6E201F990ECA00CFFBEB /* accelerateur.obj in Resources */,
 				3475C2401F8FB9A100E8BF86 /* Wall.png in Resources */,
 				3475C2411F8FB9A100E8BF86 /* Zoom.png in Resources */,
 				342E7C561F985AD50062017A /* portail.obj in Resources */,
@@ -594,6 +604,7 @@
 				8FFC5B481F7C90340031474F /* MessageViewCell.swift in Sources */,
 				8F0B94B41F8D4EC1007F0E82 /* ModeleEtatSelection.swift in Sources */,
 				8F8706BB1F7892F2000E6824 /* ChatMessageEntity.swift in Sources */,
+				344A6E241F99112000CFFBEB /* NoeudAccelerateur.swift in Sources */,
 				3415E6C71F85649D00DB1CAD /* UsineAbstraite.swift in Sources */,
 				8F0B94AE1F8D450B007F0E82 /* VisiteurSelectionnable.swift in Sources */,
 				8FE1EB051F75A96900A01514 /* ClientConnection.swift in Sources */,
@@ -607,6 +618,7 @@
 				34B66FE21F84599100A9CCB9 /* But.swift in Sources */,
 				3415E6DB1F85C1F300DB1CAD /* NoeudPointControl.swift in Sources */,
 				342E7C521F9859620062017A /* ModeleEtatCreerPortail.swift in Sources */,
+				344A6E221F99101700CFFBEB /* ModeleEtatCreerBoost.swift in Sources */,
 				8F64C0111F7754EF00F14AC7 /* ChatViewController.swift in Sources */,
 				8F0B94BC1F8D8EA6007F0E82 /* VisiteurDeplacement.swift in Sources */,
 				3415E6C41F8547CE00DB1CAD /* ArbreRendu.swift in Sources */,

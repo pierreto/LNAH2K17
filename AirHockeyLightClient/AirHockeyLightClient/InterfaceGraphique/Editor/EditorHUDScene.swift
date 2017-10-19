@@ -26,6 +26,7 @@ class EditorHUDScene: SKScene {
     private var pointControlButton: SKSpriteNode?
     private var portalButton: SKSpriteNode?
     private var wallButton: SKSpriteNode?
+    private var boosterButton: SKSpriteNode?
     private var cancelButton: SKSpriteNode?
     
     override func sceneDidLoad() {
@@ -38,9 +39,10 @@ class EditorHUDScene: SKScene {
         self.pointControlButton = (self.childNode(withName: "//pointControlButton") as? SKSpriteNode)!
         self.portalButton = (self.childNode(withName: "//portalButton") as? SKSpriteNode)!
         self.wallButton = (self.childNode(withName: "//wallButton") as? SKSpriteNode)!
+        self.boosterButton = (self.childNode(withName: "//boosterButton") as? SKSpriteNode)!
         self.cancelButton = (self.childNode(withName: "//cancelButton") as? SKSpriteNode)!
         
-        /// Cacher le bouton cancer
+        /// Cacher le bouton cancel
         self.cancelButton?.isHidden = true
         
         // Charger les images
@@ -50,6 +52,7 @@ class EditorHUDScene: SKScene {
         self.pointControlButton?.texture = SKTexture(imageNamed: "ControlPoint")
         self.portalButton?.texture = SKTexture(imageNamed: "Portal")
         self.wallButton?.texture = SKTexture(imageNamed: "Wall");
+        self.boosterButton?.texture = SKTexture(imageNamed: "Booster");
         self.cancelButton?.texture = SKTexture(imageNamed: "Cancel");
     }
     
@@ -98,6 +101,10 @@ class EditorHUDScene: SKScene {
         else if touchedNode?.name == "wallButton"{
             print("Wall")
             FacadeModele.instance.changerModeleEtat(etat: .CREATION_MURET)
+        }
+        else if touchedNode?.name == "boosterButton"{
+            print("Booster")
+            FacadeModele.instance.changerModeleEtat(etat: .CREATION_ACCELERATEUR)
         }
         else if touchedNode?.name == "cancelButton"{
             print("Annuler")

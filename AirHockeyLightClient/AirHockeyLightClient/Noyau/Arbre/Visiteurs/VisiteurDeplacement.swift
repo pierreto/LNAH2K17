@@ -36,7 +36,8 @@ class VisiteurDeplacement: VisiteurAbstrait {
     }
     
     /// Visiter un accélérateur pour le déplacement
-    //virtual void visiterAccelerateur(NoeudAccelerateur* noeud);
+    func visiterAccelerateur(noeud: NoeudAccelerateur) {
+    }
     
     /// Visiter un maillet pour le déplacement
     //virtual void visiterMaillet(NoeudMaillet* noeud);

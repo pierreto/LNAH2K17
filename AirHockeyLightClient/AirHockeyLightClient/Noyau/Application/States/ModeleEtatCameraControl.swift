@@ -27,10 +27,6 @@ class ModeleEtatCameraControl: ModeleEtat {
     override func initialiser() {
         FacadeModele.instance.obtenirVue().editorView.removeGestureRecognizer(FacadeModele.instance.panGestureRecognizer!)
     }
-    
-    /// Active la gesture pan (désactive le pan de la caméra)
-    override func nettoyerEtat() {
-    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
