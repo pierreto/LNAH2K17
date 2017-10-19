@@ -26,6 +26,7 @@ class EditorHUDScene: SKScene {
     private var pointControlButton: SKSpriteNode?
     private var portalButton: SKSpriteNode?
     private var wallButton: SKSpriteNode?
+    private var cancelButton: SKSpriteNode?
     
     override func sceneDidLoad() {
         super.sceneDidLoad()
@@ -37,13 +38,24 @@ class EditorHUDScene: SKScene {
         self.pointControlButton = (self.childNode(withName: "//pointControlButton") as? SKSpriteNode)!
         self.portalButton = (self.childNode(withName: "//portalButton") as? SKSpriteNode)!
         self.wallButton = (self.childNode(withName: "//wallButton") as? SKSpriteNode)!
+        self.cancelButton = (self.childNode(withName: "//cancelButton") as? SKSpriteNode)!
+        
+        /// Cacher le bouton cancer
+        self.cancelButton?.isHidden = true
         
         // Charger les images
+        self.cameraControlButton?.texture = SKTexture(imageNamed: "Camera");
         self.selectionButton?.texture = SKTexture(imageNamed: "Select")
         self.deplacementButton?.texture = SKTexture(imageNamed: "Move")
         self.pointControlButton?.texture = SKTexture(imageNamed: "ControlPoint")
         self.portalButton?.texture = SKTexture(imageNamed: "Portal")
         self.wallButton?.texture = SKTexture(imageNamed: "Wall");
+        self.cancelButton?.texture = SKTexture(imageNamed: "Cancel");
+    }
+    
+    /// Activer/Desactiver le bouton d'annulation
+    func showCancelButton(activer: Bool) {
+        self.cancelButton?.isHidden = !activer
     }
     
     override func didMove(to view: SKView) {
@@ -87,6 +99,11 @@ class EditorHUDScene: SKScene {
             print("Wall")
             FacadeModele.instance.changerModeleEtat(etat: .CREATION_MURET)
         }
+        else if touchedNode?.name == "cancelButton"{
+            print("Annuler")
+            FacadeModele.instance.obtenirEtat().nettoyerEtat()
+        }
+        
         for t in touches { self.touchDown(atPoint: t.location(in: self)) }
     }
     

@@ -22,6 +22,8 @@
 		342E7C521F9859620062017A /* ModeleEtatCreerPortail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342E7C511F9859620062017A /* ModeleEtatCreerPortail.swift */; };
 		342E7C541F9859770062017A /* NoeudPortail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342E7C531F9859770062017A /* NoeudPortail.swift */; };
 		342E7C561F985AD50062017A /* portail.obj in Resources */ = {isa = PBXBuildFile; fileRef = 342E7C551F985AD50062017A /* portail.obj */; };
+		344A6E1C1F9908EB00CFFBEB /* Camera.png in Resources */ = {isa = PBXBuildFile; fileRef = 344A6E1B1F9908EB00CFFBEB /* Camera.png */; };
+		344A6E1E1F9908F500CFFBEB /* Cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = 344A6E1D1F9908F500CFFBEB /* Cancel.png */; };
 		3475C2291F8FAF8D00E8BF86 /* EditorHUDScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 3475C2271F8FAF8D00E8BF86 /* EditorHUDScene.sks */; };
 		3475C22A1F8FAF8D00E8BF86 /* EditorHUDScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3475C2281F8FAF8D00E8BF86 /* EditorHUDScene.swift */; };
 		3475C2381F8FB9A100E8BF86 /* Booster.png in Resources */ = {isa = PBXBuildFile; fileRef = 3475C22E1F8FB9A100E8BF86 /* Booster.png */; };
@@ -87,6 +89,8 @@
 		342E7C511F9859620062017A /* ModeleEtatCreerPortail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ModeleEtatCreerPortail.swift; path = Noyau/Application/States/ModeleEtatCreerPortail.swift; sourceTree = "<group>"; };
 		342E7C531F9859770062017A /* NoeudPortail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NoeudPortail.swift; path = Noyau/Arbre/Noeuds/NoeudPortail.swift; sourceTree = "<group>"; };
 		342E7C551F985AD50062017A /* portail.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = portail.obj; path = ../../Exe/media/models/portail.obj; sourceTree = "<group>"; };
+		344A6E1B1F9908EB00CFFBEB /* Camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Camera.png; path = ../../Sources/Icons/Camera.png; sourceTree = "<group>"; };
+		344A6E1D1F9908F500CFFBEB /* Cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Cancel.png; path = ../../Sources/Icons/Cancel.png; sourceTree = "<group>"; };
 		3475C2271F8FAF8D00E8BF86 /* EditorHUDScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = EditorHUDScene.sks; path = InterfaceGraphique/Editor/EditorHUDScene.sks; sourceTree = "<group>"; };
 		3475C2281F8FAF8D00E8BF86 /* EditorHUDScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditorHUDScene.swift; path = InterfaceGraphique/Editor/EditorHUDScene.swift; sourceTree = "<group>"; };
 		3475C22E1F8FB9A100E8BF86 /* Booster.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Booster.png; path = ../../Sources/Icons/Booster.png; sourceTree = "<group>"; };
@@ -191,6 +195,8 @@
 			isa = PBXGroup;
 			children = (
 				3475C22E1F8FB9A100E8BF86 /* Booster.png */,
+				344A6E1B1F9908EB00CFFBEB /* Camera.png */,
+				344A6E1D1F9908F500CFFBEB /* Cancel.png */,
 				3475C22F1F8FB9A100E8BF86 /* ControlPoint.png */,
 				3475C2301F8FB9A100E8BF86 /* Duplicate.png */,
 				3475C2311F8FB9A100E8BF86 /* Move.png */,
@@ -252,12 +258,12 @@
 		8F0B94B01F8D4BA4007F0E82 /* States */ = {
 			isa = PBXGroup;
 			children = (
-				342E7C511F9859620062017A /* ModeleEtatCreerPortail.swift */,
 				8F0B94B11F8D4BCE007F0E82 /* ModeleEtat.swift */,
 				3475C2421F8FE71800E8BF86 /* ModeleEtatCameraControl.swift */,
 				8F0B94B31F8D4EC1007F0E82 /* ModeleEtatSelection.swift */,
 				8F0B94B71F8D7F11007F0E82 /* ModeleEtatPointControl.swift */,
 				8F0B94B91F8D8C95007F0E82 /* ModeleEtatDeplacement.swift */,
+				342E7C511F9859620062017A /* ModeleEtatCreerPortail.swift */,
 				0EED627E1F982B3B00CD8C56 /* ModeleEtatCreerMuret.swift */,
 			);
 			name = States;
@@ -506,6 +512,7 @@
 				3475C2401F8FB9A100E8BF86 /* Wall.png in Resources */,
 				3475C2411F8FB9A100E8BF86 /* Zoom.png in Resources */,
 				342E7C561F985AD50062017A /* portail.obj in Resources */,
+				344A6E1C1F9908EB00CFFBEB /* Camera.png in Resources */,
 				3475C23F1F8FB9A100E8BF86 /* Select.png in Resources */,
 				0EED62811F98301C00CD8C56 /* mur.obj in Resources */,
 				3475C23A1F8FB9A100E8BF86 /* Duplicate.png in Resources */,
@@ -515,6 +522,7 @@
 				3475C2391F8FB9A100E8BF86 /* ControlPoint.png in Resources */,
 				3475C2381F8FB9A100E8BF86 /* Booster.png in Resources */,
 				8F6AE2C01F6592EB00A29E8B /* Actions.sks in Resources */,
+				344A6E1E1F9908F500CFFBEB /* Cancel.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

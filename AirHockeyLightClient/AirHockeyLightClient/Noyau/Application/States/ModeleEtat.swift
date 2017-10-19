@@ -31,6 +31,8 @@ class ModeleEtat {
     /// Annule l'action en cours
     func nettoyerEtat() {}
     
+    ///
+    
     // Fonctions gérant les entrées de l'utilisateur
 
     /// Évènement appelé lorsque l'utilisateur tap sur l'écran

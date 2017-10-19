@@ -47,13 +47,18 @@ class ModeleEtatCreerPortail: ModeleEtat {
     }
     
     func annulerCreation() {
+        /// Ignorer le tap associé au bouton pour la création de portails
+        FacadeModele.instance.obtenirVue().editorView.removeGestureRecognizer(FacadeModele.instance.tapGestureRecognizer!)
+        
         if (self.premierNoeud != nil) {
             // Supprimer le noeud ajouté
-            //FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->effacer(premierNoeud_);
             self.premierNoeud?.removeFromParentNode()
-            self.premierNoeud?.effetFantome(activer: false)
             self.premierNoeud = nil
+            FacadeModele.instance.obtenirVue().editorHUDScene?.showCancelButton(activer: false)
         }
+        
+        // Activer la reconnaissance de tap pour la création de portails
+        FacadeModele.instance.obtenirVue().editorView.addGestureRecognizer(FacadeModele.instance.tapGestureRecognizer!)
     }
     
     // Fonctions gérant les entrées de l'utilisateur
@@ -83,6 +88,7 @@ class ModeleEtatCreerPortail: ModeleEtat {
         if (self.premierNoeud == nil) {
             self.premierNoeud = noeud
             self.premierNoeud?.effetFantome(activer: true)
+            FacadeModele.instance.obtenirVue().editorHUDScene?.showCancelButton(activer: true)
         }
         else {
             // Verification que les noeuds soient sur la table
@@ -93,6 +99,7 @@ class ModeleEtatCreerPortail: ModeleEtat {
                 self.premierNoeud?.assignerOppose(portail: noeud);
                 self.premierNoeud?.effetFantome(activer: false);
                 self.premierNoeud = nil;
+                FacadeModele.instance.obtenirVue().editorHUDScene?.showCancelButton(activer: false)
             //}
             //else { // Annulation de la commande
             //    self.annulerCreation()
