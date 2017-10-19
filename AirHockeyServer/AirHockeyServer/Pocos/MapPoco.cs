@@ -13,6 +13,8 @@ namespace AirHockeyServer.Pocos
         private string _Name;
         private DateTime _CreationDate;
         private string _Json;
+        private bool _Private;
+        private string _Password;
 
         public override int? Id { get; set; }
 
@@ -65,6 +67,32 @@ namespace AirHockeyServer.Pocos
             set
             {
                 this._Json = value;
+            }
+        }
+
+        [Column(Name="private", DbType="tinyint(1)", CanBeNull=false, Storage="_Private")]
+        public bool Private
+        {
+            get
+            {
+                return this._Private;
+            }
+            set
+            {
+                this._Private = value;
+            }
+        }
+
+        [Column(Name="password", DbType="varchar(255)", CanBeNull=true, Storage="_Password")]
+        public string Password
+        {
+            get
+            {
+                return this._Password;
+            }
+            set
+            {
+                this._Password = value;
             }
         }
     }

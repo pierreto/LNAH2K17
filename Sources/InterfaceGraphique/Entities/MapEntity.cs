@@ -12,5 +12,7 @@ namespace InterfaceGraphique.Entities
         public string MapName { get; set; }
         public DateTime LastBackup { get; set; }
         public string Json { get; set; }
+        public bool Private { get; set; }
+        public string Password { get; set; }
     }
 }

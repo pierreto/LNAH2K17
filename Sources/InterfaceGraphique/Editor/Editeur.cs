@@ -452,7 +452,7 @@ namespace InterfaceGraphique {
             }
         }
 
-        private async Task _SaveMapOnline(string mapName)
+        private async Task _SaveMapOnline(string mapName, string pwdMap = null)
         {
                 StringBuilder sb = new StringBuilder(2000);
                 FonctionsNatives.getMapJson(Program.GeneralProperties.GetCoefficientValues(), sb);
@@ -462,7 +462,9 @@ namespace InterfaceGraphique {
                     Creator = Program.user.Username,
                     MapName = mapName,
                     LastBackup = DateTime.Now,
-                    Json = json
+                    Json = json,
+                    Private = (pwdMap != null) ? true : false,
+                    Password = pwdMap
                 };
 
                 HttpResponseMessage response = await Program.client.PostAsJsonAsync("api/maps/save", map);
@@ -486,7 +488,26 @@ namespace InterfaceGraphique {
 
             if (form.ShowDialog() == DialogResult.OK && form.Text_MapName.Text.Length > 0)
             {
-                await _SaveMapOnline(form.Text_MapName.Text);
+                string MapName = form.Text_MapName.Text;
+
+                if (form.Button_PrivateMap.Checked)
+                {
+                    if (form.Text_PwdMap.Text.Length >= 5)
+                    {
+                        await _SaveMapOnline(MapName, form.Text_PwdMap.Text);
+                    }
+                    else
+                    {
+                        MessageBox.Show(
+                            @"Le mot de passe pour accéder à la carte doit contenir au moins 5 caractères.",
+                            @"Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                else
+                {
+                    await _SaveMapOnline(MapName);
+                }
             }
             else
             {

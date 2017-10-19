@@ -52,7 +52,7 @@ namespace AirHockeyServer.Mapping
                 //);
             });
 
-            config.AssertConfigurationIsValid();
+            //config.AssertConfigurationIsValid();
             Mapper = config.CreateMapper();
         }
 
