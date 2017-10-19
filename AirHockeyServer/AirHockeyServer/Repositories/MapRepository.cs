@@ -12,7 +12,7 @@ using AirHockeyServer.Mapping;
 
 namespace AirHockeyServer.Repositories
 {
-    public class MapRepository : Repository<MapRepository>
+    public class MapRepository : Repository<MapRepository>, IMapRepository
     {
         private Table<MapPoco> Maps;
 

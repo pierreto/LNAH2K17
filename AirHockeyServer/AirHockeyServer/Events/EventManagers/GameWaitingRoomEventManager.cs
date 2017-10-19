@@ -23,7 +23,7 @@ namespace AirHockeyServer.Events.EventManagers
     ///////////////////////////////////////////////////////////////////////////////
     public class GameWaitingRoomEventManager
     {
-        private const int waitingRoomTimeoutTime = 30000;
+        private const int waitingRoomTimeoutTime = 70000;
 
         //private static Mutex RemainingTimeMutex = new Mutex();
 

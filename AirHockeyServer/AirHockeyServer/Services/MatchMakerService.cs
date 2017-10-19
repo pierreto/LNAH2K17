@@ -24,6 +24,8 @@ namespace AirHockeyServer.Services
     {
         public static event EventHandler<MatchFoundArgs> MatchFoundEvent;
 
+        public static event EventHandler<UserWaitingArgs> UserWaitingEvent;
+
         private static Mutex WaitingPlayersMutex = new Mutex();
 
         private static Queue<UserEntity> _WaitingPlayers;
@@ -122,9 +124,9 @@ namespace AirHockeyServer.Services
 
             WaitingPlayersMutex.ReleaseMutex();
 
-            ExecuteMatch();
+            StartPlayersMatching();
         }
-        
+
         ///////////////////////////////////////////////////////////////////////
         ///
         /// @fn static void StartPlayersMatching()
@@ -134,13 +136,13 @@ namespace AirHockeyServer.Services
         /// partie est ajouté dans la file d'attente
         ///
         ////////////////////////////////////////////////////////////////////////
-        //private static void StartPlayersMatching()
-        //{
+        private static void StartPlayersMatching()
+        {
 
-        //    Thread myThread = new Thread(new ThreadStart(ExecuteMatch));
-        //    myThread.Start();
+            Thread myThread = new Thread(new ThreadStart(ExecuteMatch));
+            myThread.Start();
 
-        //}
+        }
 
         ///////////////////////////////////////////////////////////////////////
         ///

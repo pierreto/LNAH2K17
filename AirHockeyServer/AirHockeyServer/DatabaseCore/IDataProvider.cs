@@ -8,5 +8,9 @@ namespace AirHockeyServer.DatabaseCore
 {
     public interface IDataProvider
     {
+        Task<IEnumerable<T>> GetAll<T>(string table);
+
+        Task<IEnumerable<T>> GetById<T>(string table, int id);
+        
     }
 }

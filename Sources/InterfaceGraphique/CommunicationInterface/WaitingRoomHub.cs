@@ -66,6 +66,11 @@ namespace InterfaceGraphique.CommunicationInterface
 
         }
 
+        public void LeaveGame()
+        {
+            GameWaitingRoomProxy.Invoke("LeaveGame", "");
+        }
+
         private void InitializeEvents()
         {
             GameWaitingRoomProxy.On<GameEntity>("OpponentFoundEvent", newgame =>

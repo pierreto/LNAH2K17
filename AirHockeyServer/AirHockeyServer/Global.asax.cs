@@ -53,7 +53,7 @@ namespace AirHockeyServer
             container.RegisterType<IRequestsManager, RequestsManager>(new HierarchicalLifetimeManager());
 
             config.DependencyResolver = new UnityResolver(container);
-
+            
             GameWaitingRoomEventManager gameWaitingRoomEventManager = container.Resolve<GameWaitingRoomEventManager>();
 
         }

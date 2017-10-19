@@ -8,6 +8,7 @@
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              xmlns:Controls="clr-namespace:InterfaceGraphique.Controls" x:Class="InterfaceGraphique.Controls.WPF.Matchmaking.MatchmakingView"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
              mc:Ignorable="d" d:DesignHeight="400" d:DesignWidth="600">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -49,13 +50,34 @@
             <ColumnDefinition Width="50*"/>
         </Grid.ColumnDefinitions>
 
-        <Grid Grid.Row="0" Grid.Column="0" Margin="50, 75, 50, 0">
+        <DockPanel Panel.ZIndex="99998" Grid.ColumnSpan="2" Margin="0,100,0,0" Height="400" Width="600" Visibility="{Binding IsWaitingForOpponent}">
+            <DockPanel.Style>
+                <Style TargetType="{x:Type DockPanel}">
+                    <Setter Property="Background" Value="#cccccc"></Setter>
+                    <Setter Property="Opacity" Value="0.8"></Setter>
+                </Style>
+            </DockPanel.Style>
+        </DockPanel>
+        <fa:ImageAwesome Icon="Spinner" Panel.ZIndex="99998" Spin="True" SpinDuration="4" Visibility="{Binding IsWaitingForOpponent}" Grid.ColumnSpan="2" Height="200">
+        </fa:ImageAwesome>
+        <TextBlock HorizontalAlignment="Center" FontSize="18" Panel.ZIndex="99999" Visibility="{Binding IsWaitingForOpponent}" FontWeight="Bold" Height="40" Grid.ColumnSpan="2" Margin="205,285,204,24.5">En attente d'un joueur</TextBlock>
+        <Button Visibility="{Binding IsWaitingForOpponent}" Command="{Binding MainMenuCommand}" Height="40" Width="100" Background="Transparent" Panel.ZIndex="99999" Grid.ColumnSpan="2" Margin="274,311,276,19.5" >
+            <TextBlock FontWeight="Bold">Annuler</TextBlock>
+        </Button>
+        
+        <Grid Grid.Row="0" Grid.Column="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" HorizontalAlignment="Center" Text="Temps avant la partie :" FontSize="18" Foreground="White"></TextBlock>
-            <TextBlock Grid.Row="1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding RemainingTime}" FontSize="100" Foreground="White" FontWeight="Bold" />
+            <Button IsEnabled="{Binding OpponentFound}" Command="{Binding MainMenuCommand}" Grid.Row="0" HorizontalAlignment="Left">
+                <Button.Content>
+                    <fa:FontAwesome Icon="ArrowLeft"></fa:FontAwesome>
+                </Button.Content>
+            </Button>
+            <TextBlock  Margin="50, 75, 50, 0" Grid.Row="1" HorizontalAlignment="Center" Text="Temps avant la partie :" FontSize="18" Foreground="White"></TextBlock>
+            <TextBlock Grid.Row="2" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding RemainingTime}" FontSize="100" Foreground="White" FontWeight="Bold" />
         </Grid>
 
         <Grid Grid.Row="0" Grid.Column="1" Margin="10, 20, 0, 0">
@@ -85,7 +107,7 @@
                   ItemsSource="{Binding MapsAvailable}" 
                   SelectedItem="{Binding SelectedMap}"
                   IsSynchronizedWithCurrentItem="True"
-                  IsEnabled="{Binding Path = IsChecked, ElementName=rbAssignedTo}" Margin="0,0,86,0">
+                  IsEnabled="{Binding OpponentFound}" Margin="0,0,86,0">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock>
@@ -97,6 +119,7 @@
                     </ComboBox.ItemTemplate>
                 </ComboBox>
                 <Image Grid.Row="2" Source="{Binding ImageSrc}" Height="200" Width="200" Margin="-90,20,0,0"></Image>
+                
             </Grid>
         </Grid>
 

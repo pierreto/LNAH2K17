@@ -41,9 +41,16 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
             {
                 OpponentName = args.Players[0].Username;
                 PlayerName = args.Players[1].Username;
+                SetVisibility(false);
             };
 
-            waitingRoomHub.MapUpdatedEvent += (sender, args) => { SelectedMap = args; };
+            waitingRoomHub.MapUpdatedEvent += (sender, args) => { selectedMap = args; OnPropertyChanged(); };
+        }
+
+        private void SetVisibility(bool isWaitingForOpponentValue)
+        {
+            IsWaitingForOpponent = isWaitingForOpponentValue ? "Visible" : "Hidden";
+            OpponentFound = isWaitingForOpponentValue ? "Hidden" : "Visible";
         }
 
         private void OnRemainingTimeEvent(int remainingTime)
@@ -69,7 +76,7 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
 
             SelectedMap = mapsAvailable[0];
 
-            RemainingTime = 15;
+            RemainingTime = 30;
         }
 
         private ICommand mainMenuCommand;
@@ -174,6 +181,32 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
                 return test;
             }
         }
-        
+
+        private string isWaitingForOpponent = "Visible";
+        public string IsWaitingForOpponent
+        {
+            get
+            {
+                return isWaitingForOpponent;
+            }
+            set
+            {
+                isWaitingForOpponent = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        private string opponentFound = "Hidden";
+        public string OpponentFound
+        {
+            get => opponentFound;
+
+            set
+            {
+                opponentFound = value;
+                this.OnPropertyChanged();
+            }
+        }
+
     }
 }
