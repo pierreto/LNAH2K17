@@ -39,7 +39,7 @@ class VisiteurSurTable: VisiteurAbstrait {
     
     /// Visiter un accélérateur pour la vérification sur la table
     func visiterAccelerateur(noeud: NoeudAccelerateur) {
-        if table != nil {
+        if self.table != nil {
             self.testPoints(noeud: noeud)
             self.intersectCercleTable(noeud: noeud, rayon: 3.75)
         }
@@ -62,6 +62,10 @@ class VisiteurSurTable: VisiteurAbstrait {
     
     /// Visiter un portail pour la vérification sur la table
     func visiterPortail(noeud: NoeudPortail) {
+        if self.table != nil {
+            self.testPoints(noeud: noeud)
+            self.intersectCercleTable(noeud: noeud, rayon: 7);
+        }
     }
     
     //virtual void visiterRondelle(NoeudRondelle* noeud);
