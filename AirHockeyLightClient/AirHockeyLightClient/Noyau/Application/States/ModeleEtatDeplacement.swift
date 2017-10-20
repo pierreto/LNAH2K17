@@ -23,6 +23,12 @@ class ModeleEtatDeplacement: ModeleEtat {
     /// Instance singleton
     static let instance = ModeleEtatDeplacement()
     
+    /// Position au début du pan gesture
+    private var beganPosition = CGPoint()
+    
+    /// Position à la fin du pan gesture
+    private var endedPosition = CGPoint()
+    
     /// Déplacement total appliqué
     private var deplacementTotal = GLKVector3()
     
@@ -43,8 +49,30 @@ class ModeleEtatDeplacement: ModeleEtat {
     override func panGesture(sender: ImmediatePanGestureRecognizer) {
         super.panGesture(sender: sender)
         
-        // Bouger le noeud
-        if sender.state != UIGestureRecognizerState.began {
+        if sender.state == UIGestureRecognizerState.began {
+            // Sauvegarder la position au début du pan gesture
+            self.beganPosition = self.position
+            print("Debut deplacement noeud")
+            print(self.beganPosition)
+        }
+        else if sender.state == UIGestureRecognizerState.ended {
+            // Sauvegarder la position de fin du pan gesture
+            self.endedPosition = self.position
+            print("Fin deplacement noeud")
+            print(self.endedPosition)
+            
+            // Déplacer le noeud
+            let visiteur = VisiteurDeplacement(lastPosition: self.lastPosition, position: self.position)
+            FacadeModele.instance.obtenirArbreRendu().accepterVisiteur(visiteur: visiteur)
+            
+            if !self.noeudsSurLaTable() {
+                // Annuler le déplacement
+                let visiteurAnnulation = VisiteurDeplacement(lastPosition: self.endedPosition, position: self.beganPosition)
+                FacadeModele.instance.obtenirArbreRendu().accepterVisiteur(visiteur: visiteurAnnulation)
+            }
+        }
+        else {
+            // Déplacer le noeud
             let visiteur = VisiteurDeplacement(lastPosition: self.lastPosition, position: self.position)
             FacadeModele.instance.obtenirArbreRendu().accepterVisiteur(visiteur: visiteur)
         }

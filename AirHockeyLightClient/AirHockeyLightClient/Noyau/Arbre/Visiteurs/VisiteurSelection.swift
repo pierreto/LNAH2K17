@@ -63,8 +63,8 @@ class VisiteurSelection: VisiteurAbstrait {
                         if !noeud.estSelectionne() {
                             noeud.assignerSelection(selectionne: true)
                         }
-                        // Déselectionner le noeud
-                        else {
+                        // Déselectionner le noeud sauf pour le point de contrôle
+                        else if (noeud.obtenirType() != FacadeModele.instance.obtenirArbreRendu().NOM_POINT_CONTROL) {
                             noeud.assignerSelection(selectionne: false)
                         }
                     }

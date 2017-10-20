@@ -249,11 +249,11 @@
 		8F0B94AA1F8D3ECA007F0E82 /* Visiteurs */ = {
 			isa = PBXGroup;
 			children = (
-				344A6E291F994E0100CFFBEB /* VisiteurSurTable.swift */,
 				8F0B94AB1F8D3EEE007F0E82 /* VisiteurAbstrait.swift */,
+				8F0B94BB1F8D8EA6007F0E82 /* VisiteurDeplacement.swift */,
 				8F0B94AD1F8D450B007F0E82 /* VisiteurSelectionnable.swift */,
 				8F0B94BD1F8DC0F1007F0E82 /* VisiteurSelection.swift */,
-				8F0B94BB1F8D8EA6007F0E82 /* VisiteurDeplacement.swift */,
+				344A6E291F994E0100CFFBEB /* VisiteurSurTable.swift */,
 			);
 			name = Visiteurs;
 			sourceTree = "<group>";

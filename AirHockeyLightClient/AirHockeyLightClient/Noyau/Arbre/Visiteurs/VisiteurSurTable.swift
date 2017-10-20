@@ -33,9 +33,8 @@ class VisiteurSurTable: VisiteurAbstrait {
     }
     
     /// Retourne si les noeuds sont sur la table
-    func obtenirSontSurTable() -> Bool
-    {
-        return self.sontSurTable;
+    func obtenirSontSurTable() -> Bool {
+        return self.sontSurTable
     }
     
     /// Visiter un accélérateur pour la vérification sur la table
@@ -138,7 +137,7 @@ class VisiteurSurTable: VisiteurAbstrait {
         }
         
         uniqueVector = uniqueVector.filter({
-            return $0.x == 0 && $0.y == 0 && $0.z == 0
+            return !($0.x == 0 && $0.y == 0 && $0.z == 0)
         })
         
         return uniqueVector
