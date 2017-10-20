@@ -29,11 +29,26 @@ class ModeleEtatDeplacement: ModeleEtat {
     /// Fonction qui initialise l'état de déplacement
     override func initialiser() {
         self.deplacementTotal = GLKVector3(v: (0.0, 0.0, 0.0))
+        
+        // Le déplacement des noeuds s'effectue par un gesture pan
+        FacadeModele.instance.obtenirVue().editorView.addGestureRecognizer(FacadeModele.instance.panGestureRecognizer!)
+    }
+    
+    override func nettoyerEtat() {
+        /// Enlève la gesture pan
+        FacadeModele.instance.obtenirVue().editorView.removeGestureRecognizer(FacadeModele.instance.panGestureRecognizer!)
     }
     
     // Fonctions gérant les entrées de l'utilisateur
-    
-    /// Évènement appelé lorsque le bouton gauche de la souris est descendu
+    override func panGesture(sender: ImmediatePanGestureRecognizer) {
+        super.panGesture(sender: sender)
+        
+        // Bouger le noeud
+        if sender.state != UIGestureRecognizerState.began {
+            let visiteur = VisiteurDeplacement(lastPosition: self.lastPosition, position: self.position)
+            FacadeModele.instance.obtenirArbreRendu().accepterVisiteur(visiteur: visiteur)
+        }
+    }
     
 }
 

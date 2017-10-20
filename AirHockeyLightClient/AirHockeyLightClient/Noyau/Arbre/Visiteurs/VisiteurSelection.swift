@@ -58,7 +58,15 @@ class VisiteurSelection: VisiteurAbstrait {
                     
                     if hitResult.node is NoeudCommun {
                         let noeud = hitResult.node as! NoeudCommun
-                        noeud.assignerSelection(selectionne: true)
+                        
+                        // Selectioner le noeud
+                        if !noeud.estSelectionne() {
+                            noeud.assignerSelection(selectionne: true)
+                        }
+                        // Déselectionner le noeud
+                        else {
+                            noeud.assignerSelection(selectionne: false)
+                        }
                     }
                 }
             }

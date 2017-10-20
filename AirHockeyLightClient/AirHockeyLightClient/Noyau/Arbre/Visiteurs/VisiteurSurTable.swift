@@ -32,13 +32,13 @@ class VisiteurSurTable: VisiteurAbstrait {
         self.table = arbre.childNode(withName: arbre.NOM_TABLE, recursively: true) as? NoeudTable
     }
     
-    /// Cette fonction test si un mur est sur la table
+    /// Retourne si les noeuds sont sur la table
     func obtenirSontSurTable() -> Bool
     {
         return self.sontSurTable;
     }
     
-    /// Visiter un accélérateur pour la sélection
+    /// Visiter un accélérateur pour la vérification sur la table
     func visiterAccelerateur(noeud: NoeudAccelerateur) {
         if table != nil {
             self.testPoints(noeud: noeud)
@@ -46,22 +46,22 @@ class VisiteurSurTable: VisiteurAbstrait {
         }
     }
     
-    /// Visiter un maillet pour la sélection
+    /// Visiter un maillet pour la vérification sur la table
     //virtual void visiterMaillet(NoeudMaillet* noeud);
     
-    /// Visiter une table pour la sélection
+    /// Visiter une table pour la vérification sur la table
     func visiterTable(noeud: NoeudTable) {
     }
     
-    /// Visiter un point de contrôle pour la sélection
+    /// Visiter un point de contrôle pour la vérification sur la table
     func visiterPointControl(noeud: NoeudPointControl) {
     }
     
-    /// Visiter un mur pour la sélection
+    /// Visiter un mur pour la vérification sur la table
     func visiterMur(noeud: NoeudMur) {
     }
     
-    /// Visiter un portail pour la sélection
+    /// Visiter un portail pour la vérification sur la table
     func visiterPortail(noeud: NoeudPortail) {
     }
     
@@ -95,26 +95,6 @@ class VisiteurSurTable: VisiteurAbstrait {
     }
     
     /// Cette fonction retourne les points d'un noeud de l'arbre de rendu
-    /*private func obtenirSommets(noeud: NoeudCommun) -> [GLKVector3] {
-        var sommets = [GLKVector3]()
-        
-        // Ajouter les meshs du noeuds
-        for (auto mesh : noeud.obtenirMeshes()) {
-            sommets.insert(sommets.end(), mesh.obtenirSommets().begin(), mesh.obtenirSommets().end());
-        }
-        
-        // Appeler recursivement la methode sur les enfants
-        const std::vector<modele::Noeud>& enfants = noeud.obtenirEnfants();
-        
-        for (int i = 0; i < enfants.size(); i++)
-        {
-            auto sommetsEnfant = obtenirSommets(enfants[i]);
-            sommets.insert(sommets.end(), sommetsEnfant.begin(), sommetsEnfant.end());
-        }
-        
-        return sommets;
-    }*/
-    
     private func obtenirSommets(noeud: NoeudCommun) -> [SCNVector3] {
         let vertexSources = noeud.geometry?.getGeometrySources(for: SCNGeometrySource.Semantic.vertex)
         
