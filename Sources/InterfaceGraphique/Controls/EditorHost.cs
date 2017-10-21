@@ -4,56 +4,18 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using InterfaceGraphique.Controls;
-using InterfaceGraphique.Menus;
-using Microsoft.Practices.Unity;
 
-namespace InterfaceGraphique {
-
-    ///////////////////////////////////////////////////////////////////////////
-    /// @class MainMenu
-    /// @brief UI du menu principal
-    /// @author Julien Charbonneau
-    /// @date 2016-09-13
-    ///////////////////////////////////////////////////////////////////////////
-    public partial class MainMenu : Form {
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// Constructeur de la classe MainMenu
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        public MainMenu()
+namespace InterfaceGraphique.Controls.WPF
+{
+    public partial class EditorHost : Form
+    {
+        public EditorHost()
         {
             InitializeComponent();
-            InitializeEvents();
         }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// Initialise les events sur la form courrante
-        ///
-        /// @return Void
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void InitializeEvents() {
-
-            this.boutonPartieRapide.Click += (sender, e) => Program.QuickPlayMenu.ShowDialog();
-
-            //this.boutonPartieRapide.Click += (sender, e) => Program.FormManager.CurrentForm = Program.LobbyHost;
-            this.boutonTournoi.Click += (sender, e) => Program.FormManager.CurrentForm = Program.TournementMenu;
-            this.buttonConfiguration.Click += (sender, e) => Program.ConfigurationMenu.ShowDialog();
-            this.buttonEditeur.Click += (sender, e) => Program.FormManager.CurrentForm = Program.EditorHost;
-            this.Button_Credits.Click += (sender, e) => Program.FormManager.CurrentForm = Program.CreditsMenu;
-            this.buttonQuitter.Click += (sender, e) => System.Windows.Forms.Application.Exit();
-            this.buttonLogout.Click += (sender, e) => Program.Login.Logout();
-        }
-
-
         ////////////////////////////////////////////////////////////////////////
         ///
         /// Fonction vide appelée sur toutes les forms de facon 
@@ -63,7 +25,8 @@ namespace InterfaceGraphique {
         /// @return     Void
         ///
         ////////////////////////////////////////////////////////////////////////
-        public void MettreAJour(double tempsInterAffichage) {
+        public void MettreAJour(double tempsInterAffichage)
+        {
 
         }
 
@@ -77,7 +40,8 @@ namespace InterfaceGraphique {
         /// @return     Void
         /// 
         ////////////////////////////////////////////////////////////////////////
-        private void WindowSizeChanged(object sender, EventArgs e) {
+        private void WindowSizeChanged(object sender, EventArgs e)
+        {
             this.Size = new Size(Program.FormManager.ClientSize.Width, Program.FormManager.ClientSize.Height);
         }
 
@@ -91,7 +55,8 @@ namespace InterfaceGraphique {
         /// @return Void
         ///
         ////////////////////////////////////////////////////////////////////////
-        public void InitializeOpenGlPanel() {
+        public void InitializeOpenGlPanel()
+        {
             Program.FormManager.SizeChanged += new EventHandler(WindowSizeChanged);
         }
 
@@ -104,8 +69,10 @@ namespace InterfaceGraphique {
         /// @return Void 
         ///
         ////////////////////////////////////////////////////////////////////////
-        public void UnsuscribeEventHandlers() {
+        public void UnsuscribeEventHandlers()
+        {
             Program.FormManager.SizeChanged -= new EventHandler(WindowSizeChanged);
         }
+
     }
 }

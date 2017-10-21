@@ -17,6 +17,7 @@ using InterfaceGraphique.CommunicationInterface;
 using InterfaceGraphique.Controls;
 using InterfaceGraphique.Controls.WPF;
 using InterfaceGraphique.Controls.WPF.Chat;
+using InterfaceGraphique.Controls.WPF.Editor;
 using InterfaceGraphique.Entities;
 using InterfaceGraphique.Menus;
 using Microsoft.AspNet.SignalR.Client;
@@ -48,6 +49,8 @@ namespace InterfaceGraphique
         public static Panel OpenGLPanel { get { return openGLPanel; } set { openGLPanel = value; } }
         public static UserEntity user;
         public static LobbyHost LobbyHost { get { return lobbyHost; } set { lobbyHost = value; } }
+        public static EditorHost EditorHost { get { return editorHost; } set { editorHost = value; } }
+
 
         private static FormManager formManager;
         private static MainMenu mainMenu;
@@ -61,6 +64,7 @@ namespace InterfaceGraphique
         private static TournementTree tournementTree;
         private static CreditsMenu creditsMenu;
         private static LobbyHost lobbyHost;
+        private static EditorHost editorHost;
 
         private static Panel openGLPanel;
         private static Login login;
@@ -97,7 +101,7 @@ namespace InterfaceGraphique
 
             InitializeUnityDependencyInjection();
 
-            login = unityContainer.Resolve<Login>(); ;
+            login = unityContainer.Resolve<Login>();
             openGLPanel = new Panel();
             formManager = new FormManager();
             mainMenu = new MainMenu();
@@ -111,6 +115,7 @@ namespace InterfaceGraphique
             tournementTree = new TournementTree();
             creditsMenu = new CreditsMenu();
             lobbyHost = new LobbyHost();
+            editorHost = new EditorHost();
 
             FonctionsNatives.loadSounds();
 
@@ -126,12 +131,18 @@ namespace InterfaceGraphique
         private static void InitializeUnityDependencyInjection()
         {
             unityContainer = new UnityContainer();
+
+            //Hub instantiations
             unityContainer.RegisterType<IBaseHub, ChatHub>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<IBaseHub,WaitingRoomHub>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<IBaseHub,GameHub>(new ContainerControlledLifetimeManager());
+
+            //View models instantiations
             unityContainer.RegisterType<MatchmakingViewModel>(new ContainerControlledLifetimeManager());
-            unityContainer.RegisterType<ChatViewModel>();
+            unityContainer.RegisterType<ChatViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<TournamentViewModel>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<EditorViewModel>(new ContainerControlledLifetimeManager());
+
 
         }
 

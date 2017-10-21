@@ -148,6 +148,20 @@
       <DependentUpon>ChatView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\WPF\Chat\ChatViewModel.cs" />
+    <Compile Include="Controls\EditorHost.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\EditorHost.Designer.cs">
+      <DependentUpon>EditorHost.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WPF\Editor\EditorJoinOrCreateView.xaml.cs">
+      <DependentUpon>EditorJoinOrCreateView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WPF\Editor\EditorModeView.xaml.cs">
+      <DependentUpon>EditorModeView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controls\WPF\Editor\EditorViewModel.cs" />
     <Compile Include="Controls\WPF\Matchmaking\MatchmakingView.xaml.cs">
       <DependentUpon>MatchmakingView.xaml</DependentUpon>
     </Compile>
@@ -282,6 +296,9 @@
       <DependentUpon>TestMode.cs</DependentUpon>
     </Compile>
     <Compile Include="WPFApplication.cs" />
+    <EmbeddedResource Include="Controls\EditorHost.resx">
+      <DependentUpon>EditorHost.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Editor\SaveMapForm.resx">
       <DependentUpon>SaveMapForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -402,6 +419,14 @@
     <Page Include="Controls\WPF\Chat\ChatView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\WPF\Editor\EditorJoinOrCreateView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\WPF\Editor\EditorModeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
     <Page Include="Controls\WPF\Matchmaking\MatchmakingView.xaml">
       <SubType>Designer</SubType>
