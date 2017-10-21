@@ -1,18 +1,27 @@
 ﻿<UserControl
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:wpf="clr-namespace:InterfaceGraphique.Controls.WPF"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:InterfaceGraphique.Controls.WPF.Tournament"
              xmlns:Controls="clr-namespace:InterfaceGraphique.Controls" x:Class="InterfaceGraphique.Controls.WPF.Tournament.TournamentView"
              mc:Ignorable="d" 
-             d:DesignHeight="400" d:DesignWidth="600">
+             d:DesignHeight="400" d:DesignWidth="591">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <wpf:ViewModelLocator x:Key="VMLocator" d:IsDataSource="True" />
+        </ResourceDictionary>
+
+    </UserControl.Resources>
     <Grid Background="#FF373A3E">
+        <Grid.DataContext>
+            <Binding Path="TournamentViewModel" Source="{StaticResource VMLocator}"/>
+        </Grid.DataContext>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"></ColumnDefinition>
@@ -34,10 +43,12 @@
             </Grid>
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*"></RowDefinition>
-                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="100"></RowDefinition>
+                    <RowDefinition/>
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" HorizontalAlignment="Center" Height="36" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="143"/>
+                <!--<TextBlock Grid.Row="0" HorizontalAlignment="Center" Height="36" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="143"/>-->
+                <Button Command="{Binding Cancel}">
+                    <TextBlock>JOIN</TextBlock></Button>
                 <TextBlock Grid.Row="1" HorizontalAlignment="Center" Height="36" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="143"/>
             </Grid>
             <Grid Grid.Column="2">

@@ -24,6 +24,7 @@ namespace AirHockeyServer.Events.EventManagers
     ///////////////////////////////////////////////////////////////////////////////
     public class GameWaitingRoomEventManager : WaitingRoomEventManager
     {
+        GameEntity game;
 
         public GameWaitingRoomEventManager(IGameService gameService) : base(gameService)
         {
@@ -60,12 +61,25 @@ namespace AirHockeyServer.Events.EventManagers
                 await HubContext.Groups.Add(connection, stringGameId);
             }
 
+            game = gameCreated;
             HubContext.Clients.Group(stringGameId).OpponentFoundEvent(gameCreated);
             
             this.RemainingTime[gameCreated.GameId] = 0;
 
             System.Timers.Timer timer = CreateTimeoutTimer(gameCreated.GameId);
             timer.Start();
+        }
+
+        protected override void SendRemainingTimeEvent(int remainingTime)
+        {
+            var Hub = GlobalHost.ConnectionManager.GetHubContext<GameWaitingRoomHub>();
+            Hub.Clients.Group(game.GameId.ToString()).WaitingRoomRemainingTime(remainingTime);
+        }
+
+        protected override void SendEndOfTimer()
+        {
+            var Hub = GlobalHost.ConnectionManager.GetHubContext<GameWaitingRoomHub>();
+            Hub.Clients.Group(game.GameId.ToString()).TournamentStarting(game);
         }
     }
 }

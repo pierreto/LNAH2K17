@@ -3,6 +3,8 @@ using InterfaceGraphique.Entities;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System;
+using System.Windows.Input;
+using System.Threading.Tasks;
 
 namespace InterfaceGraphique.Controls.WPF.Tournament
 {
@@ -46,7 +48,6 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
             };
 
             SelectedMap = mapsAvailable[1];
-            Player1 = waitingRoomHub.Username;
         }
 
         private void InitializeEvents()
@@ -54,12 +55,14 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
             this.waitingRoomHub.OpponentFoundEvent += (e, args) => OnOpponentFount(e, args);
 
             this.waitingRoomHub.TournamentAllOpponentsFound += (e, args) => { OnPropertyChanged("OpponentsFound"); };
+
+            this.waitingRoomHub.RemainingTimeEvent += (e, args) => { RemainingTime = args; };
         }
 
         private void OnOpponentFount(object e, UserEntity user)
         {
             Players.Add(user);
-            for (int i = 0; i < Players.Count; i++)
+            for (int i = 0; i <= Players.Count; i++)
             {
                 OnPropertyChanged("Player" + i);
             }
@@ -74,7 +77,6 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
                 }
             );
 
-            Player1 = Players[0].Username;
         }
 
         private int remainingTime = 30;
@@ -93,27 +95,22 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
         private string player1;
         public string Player1
         {
-            get => player1;
-            set
-            {
-                player1 = value;
-                this.OnPropertyChanged();
-            }
+            get => Players.Count > 0 ? Players[0].Username : DEFAULT_PLAYER_NAME;
         }
 
         public string Player2
         {
-            get => Players.Count > 0 ? Players[1].Username : DEFAULT_PLAYER_NAME;
+            get => Players.Count > 1 ? Players[1].Username : DEFAULT_PLAYER_NAME;
         }
 
         public string Player3
         {
-            get => Players.Count > 1 ? Players[2].Username : DEFAULT_PLAYER_NAME;
+            get => Players.Count > 2 ? Players[2].Username : DEFAULT_PLAYER_NAME;
         }
 
         public string Player4
         {
-            get => Players.Count > 2 ? Players[3].Username : DEFAULT_PLAYER_NAME;
+            get => Players.Count > 3 ? Players[3].Username : DEFAULT_PLAYER_NAME;
         }
 
         private ObservableCollection<MapEntity> mapsAvailable;
@@ -151,9 +148,21 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
 
         public string OpponentsFound
         {
-            get => Players.Count == 4 ? "Visible" : "Hidden";
+            get => Players.Count == 4 ? "Enabled" : "Disabled";
         }
 
+        private ICommand cancel;
+        public ICommand Cancel
+        {
+            get
+            {
+                return cancel ?? (cancel = new RelayCommandAsync(Join, (o) => true));
+            }
+        }
 
+        private async Task Join()
+        {
+            this.waitingRoomHub.Join();
+        }
     }
 }

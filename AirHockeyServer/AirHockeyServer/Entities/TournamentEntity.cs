@@ -14,5 +14,11 @@ namespace AirHockeyServer.Entities
         public List<GameEntity> Games { get; set; }
 
         public MapEntity SelectedMap { get; set; }
+
+        public TournamentEntity()
+        {
+            this.Players = new List<UserEntity>();
+            this.Games = new List<GameEntity>();
+        }
     }
 }

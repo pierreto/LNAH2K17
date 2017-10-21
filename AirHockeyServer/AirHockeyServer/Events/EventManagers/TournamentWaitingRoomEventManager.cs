@@ -25,8 +25,7 @@ namespace AirHockeyServer.Events.EventManagers
             {
                 Tournament = new TournamentEntity
                 {
-                    Id = new Random().Next(),
-                    Players = new List<UserEntity>()
+                    Id = new Random().Next()
                 };
             }
 
@@ -34,9 +33,11 @@ namespace AirHockeyServer.Events.EventManagers
             var connection = ConnectionMapper.GetConnection(user.UserId);
             await HubContext.Groups.Add(connection, Tournament.Id.ToString());
 
+            Tournament.Players.Add(user);
+
             HubContext.Clients.Group(Tournament.Id.ToString()).OpponentFoundEvent(user);
 
-            if (Tournament.Players.Count == 3)
+            if (Tournament.Players.Count == 4)
             {
                 GameEntity game1 = await CreateGame(Tournament.Players[0], Tournament.Players[1]);
                 GameEntity game2 = await CreateGame(Tournament.Players[2], Tournament.Players[3]);
@@ -75,6 +76,18 @@ namespace AirHockeyServer.Events.EventManagers
             }
 
             return gameCreated;
+        }
+
+        protected override void SendRemainingTimeEvent(int remainingTime)
+        {
+            var Hub = GlobalHost.ConnectionManager.GetHubContext<TournamentWaitingRoomHub>();
+            Hub.Clients.Group(Tournament.Id.ToString()).WaitingRoomRemainingTime(remainingTime);
+        }
+
+        protected override void SendEndOfTimer()
+        {
+            var Hub = GlobalHost.ConnectionManager.GetHubContext<TournamentWaitingRoomHub>();
+            Hub.Clients.Group(Tournament.Id.ToString()).TournamentStarting(Tournament);
         }
     }
 }

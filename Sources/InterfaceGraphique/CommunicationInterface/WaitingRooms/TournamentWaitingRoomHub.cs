@@ -6,11 +6,14 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using InterfaceGraphique.Entities;
 using Microsoft.AspNet.SignalR.Client;
+using System.Threading;
 
 namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 {
-    public class TournamentWaitingRoomHub : WaitingRoomHub, IBaseHub
+    public class TournamentWaitingRoomHub : WaitingRoomHub
     {
+        private bool test = false;
+
         protected TournamentEntity CurrentTournament { get; set; }
 
         public event EventHandler<UserEntity> OpponentFoundEvent;
@@ -21,11 +24,16 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
         {
             base.InitializeHub(connection, username);
             WaitingRoomProxy = connection.CreateHubProxy("TournamentWaitingRoomHub");
+            
         }
 
         public override void Join()
         {
-            InitializeEvents();
+            if (!test)
+            {
+                InitializeEvents();
+                test = true;
+            }
             base.Join();
         }
         private void InitializeEvents()
@@ -42,13 +50,15 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
                 CurrentTournament = tournament;
                 InitializeConfigurationEvents();
             });
+            
+            base.InitializeEvent();
         }
 
         private void InitializeConfigurationEvents()
         {
-            WaitingRoomProxy.On<TournamentEntity>("TournamentStartingEvent", officialGame =>
+            WaitingRoomProxy.On<TournamentEntity>("TournamentStarting", officialGame =>
             {
-
+                // CREATE NEW GAME
             });
 
             WaitingRoomProxy.On<MapEntity>("TournamentMapUpdatedEvent", map =>
@@ -57,8 +67,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
                 InvokeMapUpdated(map);
 
             });
-
-            base.InitializeEvent();
+            
         }
 
         public override void Logout()

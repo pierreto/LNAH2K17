@@ -20,6 +20,9 @@ namespace AirHockeyServer.Hubs
 
         public void Join(UserEntity user)
         {
+            // TO REMOVE, WAITING FOR AUTHENTIFICATION
+            ConnectionMapper.AddConnection(user.UserId, Context.ConnectionId);
+
             TournamentService.JoinTournament(user);
         }
 

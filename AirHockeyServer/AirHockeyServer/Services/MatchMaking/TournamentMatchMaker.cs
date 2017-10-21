@@ -25,7 +25,7 @@ namespace AirHockeyServer.Services.MatchMaking
         {
             WaitingPlayersMutex.WaitOne();
 
-            if (WaitingPlayers.Count > 1)
+            if (WaitingPlayers.Count >= 1)
             {
                 var players = WaitingPlayers.Take(1);
                 WaitingPlayersMutex.ReleaseMutex();
@@ -52,7 +52,7 @@ namespace AirHockeyServer.Services.MatchMaking
         protected override void ExecuteMatch()
         {
             var opponents = GetTournamentOpponents();
-            if (opponents != null && opponents.Count > 1)
+            if (opponents != null && opponents.Count == 1)
             {
                 OpponentFound.Invoke(this, opponents.First());
             }

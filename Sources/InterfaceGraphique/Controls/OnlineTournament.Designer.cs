@@ -42,15 +42,15 @@
             this.elementHost1.Text = "elementHost1";
             this.elementHost1.Child = this.onlineTournamentView1;
             // 
-            // LobbyHost
+            // OnlineTournament
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(49)))), ((int)(((byte)(54)))));
             this.ClientSize = new System.Drawing.Size(1184, 648);
             this.Controls.Add(this.elementHost1);
-            this.Name = "LobbyHost";
-            this.Text = "LobbyHost";
+            this.Name = "OnlineTournament";
+            this.Text = "OnlineTournament";
             this.ResumeLayout(false);
         }
 

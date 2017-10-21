@@ -36,7 +36,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
             user = new UserEntity
             {
                 UserId = random.Next(),
-                Username = Username
+                Username = "test"
             };
 
             WaitingRoomProxy.Invoke("Join", user);
@@ -63,6 +63,11 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
         protected void InvokeMapUpdated(MapEntity map)
         {
             this.MapUpdatedEvent.Invoke(this, map);
+        }
+
+        protected void InvokeTime(int time)
+        {
+            this.RemainingTimeEvent.Invoke(this, time);
         }
     }
 }

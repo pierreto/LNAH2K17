@@ -12,9 +12,9 @@ using System.Web;
 
 namespace AirHockeyServer.Events.EventManagers
 {
-    public class WaitingRoomEventManager
+    public abstract class WaitingRoomEventManager
     {
-        protected const int WAITING_TIMEOUT = 500000;
+        protected const int WAITING_TIMEOUT = 10000;
 
         protected ConcurrentDictionary<int, int> RemainingTime { get; set; }
 
@@ -44,40 +44,44 @@ namespace AirHockeyServer.Events.EventManagers
             {
                 RemainingTime[gameId] += 1000;
 
-                IHubContext hub = GlobalHost.ConnectionManager.GetHubContext<GameWaitingRoomHub>();
-                hub.Clients.Group(gameId.ToString()).WaitingRoomRemainingTime((WAITING_TIMEOUT - RemainingTime[gameId]) / 1000);
+                // ONLY WORKING FOR GAME OR TOURNAMENT
+                
+                //Hub.Clients.Group(gameId.ToString()).WaitingRoomRemainingTime();
+                SendRemainingTimeEvent((WAITING_TIMEOUT - RemainingTime[gameId]) / 1000);
             }
             else
             {
                 timer.Stop();
 
                 // TODO : get game from db
-                GameEntity game = GameService.GetGameEntityById(gameId);
+                //GameEntity game = GameService.GetGameEntityById(gameId);
 
-                if (game == null)
-                {
-                    return;
-                }
+                //if (game == null)
+                //{
+                //    return;
+                //}
 
-                if (game.SelectedMap == null)
-                {
-                    // TODO : select default map
-                    game.SelectedMap = new MapEntity();
+                //if (game.SelectedMap == null)
+                //{
+                //    // TODO : select default map
+                //    game.SelectedMap = new MapEntity();
 
-                    // TODO update game on bd
+                //    // TODO update game on bd
 
-                }
+                //}
 
-                if (game.SelectedConfiguration == null)
-                {
-                    // TODO : select default configuration
-                    game.SelectedConfiguration = new ConfigurationEntity();
+                //if (game.SelectedConfiguration == null)
+                //{
+                //    // TODO : select default configuration
+                //    game.SelectedConfiguration = new ConfigurationEntity();
 
-                    // TODO update game on bd
-                }
+                //    // TODO update game on bd
+                //}
 
+                //var Hub = GlobalHost.ConnectionManager.GetHubContext<TournamentWaitingRoomHub>();
                 // start the game
-                HubContext.Clients.Group(game.GameId.ToString()).GameStartingEvent(game);
+                //Hub.Clients.Group(game.GameId.ToString()).GameStartingEvent(game);
+                SendEndOfTimer();
             }
         }
 
@@ -99,5 +103,9 @@ namespace AirHockeyServer.Events.EventManagers
 
             return timer;
         }
+
+        protected virtual void SendRemainingTimeEvent(int remainingTime) { }
+
+        protected virtual void SendEndOfTimer() { }
     }
 }
