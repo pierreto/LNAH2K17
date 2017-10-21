@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using InterfaceGraphique.Entities;
 using Microsoft.AspNet.SignalR.Client;
+using InterfaceGraphique.CommunicationInterface.WaitingRooms;
 
 namespace InterfaceGraphique.CommunicationInterface
 {
@@ -14,7 +15,7 @@ namespace InterfaceGraphique.CommunicationInterface
         public event Action<GoalMessage> NewGoal;
         public event Action NewGameOver;
 
-        private Guid gameGuid;
+        private int gameGuid;
 
 
         private string username;
@@ -23,12 +24,12 @@ namespace InterfaceGraphique.CommunicationInterface
         {
             this.username = username;
          //   gameHubProxy = connection.CreateHubProxy("GameWaitingRoomHub");
-         gameHubProxy= WaitingRoomHub.GameWaitingRoomProxy;
+            gameHubProxy= GameWaitingRoomHub.WaitingRoomProxy;
         }
 
 
         //For the slave
-        public  void InitializeSlaveGameHub(Guid gameGuid)
+        public  void InitializeSlaveGameHub(int gameGuid)
         {
             this.gameGuid = gameGuid;
 
@@ -59,9 +60,9 @@ namespace InterfaceGraphique.CommunicationInterface
 
 
         //For the master
-        public void InitializeMasterGameHub(Guid gameGuid)
+        public void InitializeMasterGameHub(int gameId)
         {
-            this.gameGuid = gameGuid;
+            this.gameGuid = gameId;
             // Étape necessaire pour que le serveur sache que la connexion est reliée au bon userId:
             //await gameHubProxy.Invoke("JoinRoom", gameGuid);
 

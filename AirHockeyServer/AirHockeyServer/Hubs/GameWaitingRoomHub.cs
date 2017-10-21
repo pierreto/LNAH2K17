@@ -62,7 +62,7 @@ namespace AirHockeyServer.Hubs
         /// On appel simplement la classe GameService
         ///
         ////////////////////////////////////////////////////////////////////////
-        public void JoinGame(UserEntity user)
+        public void Join(UserEntity user)
         {
             // TO REMOVE, WAITING FOR AUTHENTIFICATION
             ConnectionMapper.AddConnection(user.UserId, Context.ConnectionId);
@@ -70,28 +70,9 @@ namespace AirHockeyServer.Hubs
             GameService.JoinGame(user);
         }
 
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn async Task<GameEntity> UpdateConfiguration(GameEntity gameEntity)
-        ///
-        /// Cette fonction permet d'updater les paramètres de parties et
-        /// d'avertir les autres clients
-        /// 
-        /// @return la partie mise à jour
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        public async Task<GameEntity> UpdateConfiguration(GameEntity gameEntity)
+        public void LeaveGame(UserEntity user)
         {
-            var updatedGame = await GameService.UpdateGame(gameEntity);
-
-            Clients.Group(gameEntity.GameId.ToString()).GameConfigurationUpdatedEvent(updatedGame);
-
-            return updatedGame;
-        }
-
-        public async Task LeaveGame(UserEntity user)
-        {
-
+            GameService.LeaveGame(user);
         }
 
         public void SendGameData(Guid gameId, GameDataMessage gameData)

@@ -1,0 +1,28 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web;
+using AirHockeyServer.Entities;
+using AirHockeyServer.Services.MatchMaking;
+
+namespace AirHockeyServer.Services
+{
+    public class TournamentService : ITournamentService
+    {
+        public void JoinTournament(UserEntity user)
+        {
+            TournamentMatchMakerService.Instance().AddOpponent(user);
+        }
+
+        public void LeaveTournament(UserEntity user)
+        {
+            TournamentMatchMakerService.Instance().RemoveUser(user.UserId);
+        }
+
+        public TournamentEntity UpdateTournament(TournamentEntity tournamentEntity)
+        {
+            return tournamentEntity;
+        }
+    }
+}

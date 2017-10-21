@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Practices.Unity;
 
 namespace InterfaceGraphique {
 
@@ -43,6 +44,7 @@ namespace InterfaceGraphique {
         ////////////////////////////////////////////////////////////////////////
         private void InitializeEvents() {
             // Button events
+            this.OnlineTournamentButton.Click += (sender, e) => { SwitchButtonsState(this.OnlineTournamentButton, this.OnlineTournamentButton); };
             this.Button_Play.Click += new EventHandler(ValidateSettings);
             this.Button_MainMenu.Click += (sender, e) => Program.FormManager.CurrentForm = Program.MainMenu;
             this.Button_OpenMap.Click += (sender, e) => fileDialog.ShowDialog();
@@ -227,6 +229,12 @@ namespace InterfaceGraphique {
         ///
         ////////////////////////////////////////////////////////////////////////
         private void SwitchButtonsState(Button select, Button deselect) {
+            if(select == OnlineTournamentButton)
+            {
+                Program.FormManager.CurrentForm = Program.OnlineTournament;
+                var vm = Program.unityContainer.Resolve<Controls.WPF.Tournament.TournamentViewModel>();
+                vm.Initialize();
+            }
             if (select.ForeColor == Color.White) {
                 select.ForeColor = deselect.ForeColor;
                 deselect.ForeColor = Color.White;

@@ -61,7 +61,7 @@
         <fa:ImageAwesome Icon="Spinner" Panel.ZIndex="99998" Spin="True" SpinDuration="4" Visibility="{Binding IsWaitingForOpponent}" Grid.ColumnSpan="2" Height="200">
         </fa:ImageAwesome>
         <TextBlock HorizontalAlignment="Center" FontSize="18" Panel.ZIndex="99999" Visibility="{Binding IsWaitingForOpponent}" FontWeight="Bold" Height="40" Grid.ColumnSpan="2" Margin="205,285,204,24.5">En attente d'un joueur</TextBlock>
-        <Button Visibility="{Binding IsWaitingForOpponent}" Command="{Binding MainMenuCommand}" Height="40" Width="100" Background="Transparent" Panel.ZIndex="99999" Grid.ColumnSpan="2" Margin="274,311,276,19.5" >
+        <Button Visibility="{Binding IsWaitingForOpponent}" Command="{Binding Cancel}" Height="40" Width="100" Background="Transparent" Panel.ZIndex="99999" Grid.ColumnSpan="2" Margin="274,311,276,19.5" >
             <TextBlock FontWeight="Bold">Annuler</TextBlock>
         </Button>
         

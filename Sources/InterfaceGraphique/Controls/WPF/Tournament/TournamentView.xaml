@@ -8,21 +8,77 @@
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="600">
     <Grid Background="#FF373A3E">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
 
-        <Controls:ChatView HorizontalAlignment="Left" Height="174" Margin="10,226,0,0" VerticalAlignment="Top" Width="385"/>
-        <TextBox HorizontalAlignment="Left" Height="36" Margin="32,21,0,0" TextWrapping="Wrap" Text="En attente d'un joueur..." VerticalAlignment="Top" Width="143"/>
-        <TextBox HorizontalAlignment="Left" Height="36" Margin="32,62,0,0" TextWrapping="Wrap" Text="En attente d'un joueur..." VerticalAlignment="Top" Width="143"/>
-
-        <TextBox HorizontalAlignment="Left" Height="36" Margin="32,144,0,0" TextWrapping="Wrap" Text="En attente d'un joueur..." VerticalAlignment="Top" Width="143"/>
-        <TextBox HorizontalAlignment="Left" Height="36" Margin="32,185,0,0" TextWrapping="Wrap" Text="En attente d'un joueur..." VerticalAlignment="Top" Width="143"/>
-
-        <TextBox HorizontalAlignment="Left" Height="36" Margin="227,48,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="143"/>
-        <TextBox HorizontalAlignment="Left" Height="36" Margin="227,166,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="143"/>
-
-        <TextBox HorizontalAlignment="Left" Height="36" Margin="418,110,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="143"/>
-
-        <TextBox HorizontalAlignment="Left" Height="32" Margin="400,226,0,0" TextWrapping="Wrap" Text="Carte courante : " VerticalAlignment="Top" Width="181" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" FontSize="20" FontWeight="Bold"/>
-
-
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Height="36" TextWrapping="Wrap" Text="{Binding Player1}" Width="143"/>
+                <TextBlock Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="36" TextWrapping="Wrap" Text="{Binding Player2}" Width="143"/>
+                <TextBlock Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" Height="36" TextWrapping="Wrap" Text="{Binding Player3}" Width="143"/>
+                <TextBlock Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Height="36" TextWrapping="Wrap" Text="{Binding Player4}" Width="143"/>
+            </Grid>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" HorizontalAlignment="Center" Height="36" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="143"/>
+                <TextBlock Grid.Row="1" HorizontalAlignment="Center" Height="36" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="143"/>
+            </Grid>
+            <Grid Grid.Column="2">
+                <TextBlock HorizontalAlignment="Center" Height="36" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="143"/>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50*"></ColumnDefinition>
+                <ColumnDefinition Width="50*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Controls:ChatView Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="300"/>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0">
+                    <TextBlock Text="Temps avant le début du tournoi:" Foreground="White" HorizontalAlignment="Center"></TextBlock>
+                    <TextBlock Text="{Binding RemainingTime}" VerticalAlignment="Center" Foreground="White" FontWeight="Bold" FontSize="24"></TextBlock>
+                </StackPanel>
+                <StackPanel Grid.Row="1">
+                    <TextBlock Text="Map" Foreground="White"></TextBlock>
+                    <ComboBox Name="mapList" 
+                        Grid.Row="1"
+                        ItemsSource="{Binding MapsAvailable}" 
+                        SelectedItem="{Binding SelectedMap, UpdateSourceTrigger=PropertyChanged}"
+                        IsSynchronizedWithCurrentItem="True"
+                        IsEnabled="{Binding OpponentsFound}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock>
+                                    <TextBlock.Text >
+                                        <Binding Path="MapName" UpdateSourceTrigger="PropertyChanged" />
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </StackPanel>
+            </Grid>
+        </Grid>
     </Grid>
 </UserControl>

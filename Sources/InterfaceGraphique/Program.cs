@@ -24,6 +24,7 @@ using Microsoft.Practices.Unity;
 using Application = System.Windows.Forms.Application;
 using InterfaceGraphique.Controls.WPF.Matchmaking;
 using InterfaceGraphique.Controls.WPF.Tournament;
+using InterfaceGraphique.CommunicationInterface.WaitingRooms;
 
 namespace InterfaceGraphique
 {
@@ -48,6 +49,7 @@ namespace InterfaceGraphique
         public static Panel OpenGLPanel { get { return openGLPanel; } set { openGLPanel = value; } }
         public static UserEntity user;
         public static LobbyHost LobbyHost { get { return lobbyHost; } set { lobbyHost = value; } }
+        public static OnlineTournament OnlineTournament { get { return onlineTournament;  } set { onlineTournament = value; } }
 
         private static FormManager formManager;
         private static MainMenu mainMenu;
@@ -61,6 +63,7 @@ namespace InterfaceGraphique
         private static TournementTree tournementTree;
         private static CreditsMenu creditsMenu;
         private static LobbyHost lobbyHost;
+        private static OnlineTournament onlineTournament;
 
         private static Panel openGLPanel;
         private static Login login;
@@ -111,6 +114,7 @@ namespace InterfaceGraphique
             tournementTree = new TournementTree();
             creditsMenu = new CreditsMenu();
             lobbyHost = new LobbyHost();
+            onlineTournament = new OnlineTournament();
 
             FonctionsNatives.loadSounds();
 
@@ -127,7 +131,7 @@ namespace InterfaceGraphique
         {
             unityContainer = new UnityContainer();
             unityContainer.RegisterType<IBaseHub, ChatHub>(new ContainerControlledLifetimeManager());
-            unityContainer.RegisterType<IBaseHub,WaitingRoomHub>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<IBaseHub,GameWaitingRoomHub>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<IBaseHub,GameHub>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<MatchmakingViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<ChatViewModel>();

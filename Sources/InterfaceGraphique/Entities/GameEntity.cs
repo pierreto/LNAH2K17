@@ -14,7 +14,7 @@ namespace InterfaceGraphique.Entities
 
         }
 
-        public Guid GameId { get; set; }
+        public int GameId { get; set; }
 
         public UserEntity Creator { get; set; }
 

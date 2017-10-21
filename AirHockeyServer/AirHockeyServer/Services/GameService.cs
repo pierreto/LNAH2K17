@@ -4,6 +4,7 @@ using System.Linq;
 using AirHockeyServer.Entities;
 using System.Threading.Tasks;
 using AirHockeyServer.Repositories;
+using AirHockeyServer.Services.MatchMaking;
 
 namespace AirHockeyServer.Services
 {
@@ -38,7 +39,7 @@ namespace AirHockeyServer.Services
         ////////////////////////////////////////////////////////////////////////
         public async Task<GameEntity> CreateGame(GameEntity gameEntity)
         {
-            gameEntity.GameId = Guid.NewGuid();
+            gameEntity.GameId = new Random().Next();
             this.games.Add(gameEntity);
 
             return gameEntity;
@@ -54,7 +55,7 @@ namespace AirHockeyServer.Services
         ////////////////////////////////////////////////////////////////////////
         public void JoinGame(UserEntity userEntity)
         {
-            MatchMakerService.AddOpponent(userEntity);
+            GameMatchMakerService.Instance().AddOpponent(userEntity);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -72,9 +73,14 @@ namespace AirHockeyServer.Services
             return gameEntity;
         }
 
-        public GameEntity GetGameEntityById(Guid id)
+        public GameEntity GetGameEntityById(int id)
         {
             return this.games.First(a => a.GameId.Equals(id));
-        } 
+        }
+
+        public void LeaveGame(UserEntity user)
+        {
+            GameMatchMakerService.Instance().RemoveUser(user.UserId);
+        }
     }
 }

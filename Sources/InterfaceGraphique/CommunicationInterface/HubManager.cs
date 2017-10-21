@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR.Client;
 using Microsoft.Practices.Unity;
+using InterfaceGraphique.CommunicationInterface.WaitingRooms;
 
 namespace InterfaceGraphique.CommunicationInterface
 {
@@ -35,7 +36,8 @@ namespace InterfaceGraphique.CommunicationInterface
             this.hubs = new List<IBaseHub>
             {
                 Program.unityContainer.Resolve<ChatHub>(),
-                Program.unityContainer.Resolve<WaitingRoomHub>(),
+                Program.unityContainer.Resolve<TournamentWaitingRoomHub>(),
+                Program.unityContainer.Resolve<GameWaitingRoomHub>(),
                 Program.unityContainer.Resolve<GameHub>()
             };
         }

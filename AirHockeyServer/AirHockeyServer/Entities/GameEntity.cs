@@ -20,7 +20,7 @@ namespace AirHockeyServer.Entities
             this.Players = new UserEntity[2];
         }
 
-        public Guid GameId { get; set; }
+        public int GameId { get; set; }
 
         public UserEntity Creator { get; set; }
 
