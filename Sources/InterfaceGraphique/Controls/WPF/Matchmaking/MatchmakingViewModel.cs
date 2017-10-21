@@ -45,7 +45,7 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
                 SetVisibility(false);
             };
 
-            waitingRoomHub.MapUpdatedEvent += (sender, args) => {selectedMap.MapName = args.MapName; OnPropertyChanged("SelectedMap"); };
+            waitingRoomHub.MapUpdatedEvent += (sender, args) => { SelectedMap = args; };
             //waitingRoomHub.MapUpdatedEvent += (sender, args) => { SelectedMap = args; };
 
         }
@@ -128,19 +128,20 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
             }
         }
 
-        private string selectedMap;
-        public string SelectedMap
+        private MapEntity selectedMap;
+        public MapEntity SelectedMap
         {
             get => selectedMap;
             set
             {
-                if (!string.Equals(selectedMap, value))
+                if (selectedMap==null || !string.Equals(selectedMap.MapName, value.MapName))
                 {
                     foreach(MapEntity map in mapsAvailable)
                     {
-                        if(string.Equals(map, value))
+
+                        if(string.Equals(map.MapName, value.MapName))
                         {
-                            selectedMap = map.MapName ;
+                            selectedMap = map ;
                         }
                     }
                     this.OnPropertyChanged();
