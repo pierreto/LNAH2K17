@@ -92,7 +92,10 @@ namespace AirHockeyServer.Hubs
             return updatedGame;
         }
 
+        public async Task LeaveGame(UserEntity user)
+        {
 
+        }
 
         public void SendGameData(Guid gameId, GameDataMessage gameData)
         {

@@ -24,6 +24,8 @@ namespace AirHockeyServer.Services
     {
         public static event EventHandler<MatchFoundArgs> MatchFoundEvent;
 
+        public static event EventHandler<UserWaitingArgs> UserWaitingEvent;
+
         private static Mutex WaitingPlayersMutex = new Mutex();
 
         private static Queue<UserEntity> _WaitingPlayers;
@@ -124,7 +126,7 @@ namespace AirHockeyServer.Services
 
             StartPlayersMatching();
         }
-        
+
         ///////////////////////////////////////////////////////////////////////
         ///
         /// @fn static void StartPlayersMatching()

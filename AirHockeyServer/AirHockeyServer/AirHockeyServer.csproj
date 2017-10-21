@@ -249,6 +249,7 @@
     <Compile Include="Entities\UserEntity.cs" />
     <Compile Include="Events\EventManagers\GameWaitingRoomEventManager.cs" />
     <Compile Include="Events\MatchFoundArgs.cs" />
+    <Compile Include="Events\UserWaitingArgs.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

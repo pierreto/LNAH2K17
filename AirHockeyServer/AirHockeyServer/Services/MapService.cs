@@ -6,6 +6,7 @@ using AirHockeyServer.Entities;
 using AirHockeyServer.Core;
 using AirHockeyServer.Repositories;
 using System.Threading.Tasks;
+using AirHockeyServer.DatabaseCore;
 
 namespace AirHockeyServer.Services
 {
@@ -19,11 +20,11 @@ namespace AirHockeyServer.Services
     ///////////////////////////////////////////////////////////////////////////////
     public class MapService : IMapService
     {
-        private MapRepository MapRepository;
+        private IMapRepository MapRepository;
 
-        public MapService()
+        public MapService(IMapRepository mapRepository)
         {
-            MapRepository = new MapRepository();
+            MapRepository = mapRepository;
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -77,7 +78,7 @@ namespace AirHockeyServer.Services
         ////////////////////////////////////////////////////////////////////////
         public IEnumerable<MapEntity> GetMaps()
         {
-            // get maps from bd
+            //MapRepository.
             return new List<MapEntity>();
         }
     }
