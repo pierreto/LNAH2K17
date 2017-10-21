@@ -29,26 +29,26 @@
         private void InitializeComponent()
         {
             this.elementHost1 = new System.Windows.Forms.Integration.ElementHost();
-            this.editorModeView1 = new InterfaceGraphique.Controls.WPF.Editor.EditorModeView();
             this.SuspendLayout();
             // 
             // elementHost1
             // 
             this.elementHost1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.elementHost1.Location = new System.Drawing.Point(-3, 0);
+            this.elementHost1.Location = new System.Drawing.Point(0, 0);
             this.elementHost1.Name = "elementHost1";
-            this.elementHost1.Size = new System.Drawing.Size(2381, 1253);
+            this.elementHost1.Size = new System.Drawing.Size(1193, 547);
             this.elementHost1.TabIndex = 0;
             this.elementHost1.Text = "elementHost1";
-            this.elementHost1.Child = this.editorModeView1;
+            this.elementHost1.Child = null;
             // 
             // EditorHost
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(49)))), ((int)(((byte)(54)))));
-            this.ClientSize = new System.Drawing.Size(2368, 1246);
+            this.ClientSize = new System.Drawing.Size(1184, 552);
             this.Controls.Add(this.elementHost1);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "EditorHost";
             this.Text = "EditorHost";
             this.ResumeLayout(false);
@@ -56,8 +56,7 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Integration.ElementHost elementHost1;
         private Editor.EditorModeView editorModeView1;
+        private System.Windows.Forms.Integration.ElementHost elementHost1;
     }
 }

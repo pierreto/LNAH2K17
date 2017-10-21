@@ -7,14 +7,35 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.Integration;
+using InterfaceGraphique.Controls.WPF.Editor;
 
 namespace InterfaceGraphique.Controls.WPF
 {
     public partial class EditorHost : Form
     {
+        private EditorServerBrowser serverBrowser;
+        private EditorJoinOrCreate joinOrCreate;
+        private EditorModeView modeView;
         public EditorHost()
         {
+            serverBrowser= new EditorServerBrowser();
+            joinOrCreate = new EditorJoinOrCreate();
+            modeView = new EditorModeView();
+            
+
             InitializeComponent();
+            this.elementHost1.Child = joinOrCreate;
+
+        }
+
+        public void SwitchViewToServerBrowser()
+        {
+            this.elementHost1.Child = serverBrowser;
+        }
+        public void SwitchViewToMapModeView()
+        {
+            this.elementHost1.Child = modeView;
         }
         ////////////////////////////////////////////////////////////////////////
         ///

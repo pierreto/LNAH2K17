@@ -10,13 +10,13 @@
     <UserControl.Resources>
         <ResourceDictionary>
 
-
+            <!--
             <ResourceDictionary.MergedDictionaries >
                 <ResourceDictionary Source="/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
                 <ResourceDictionary Source="/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
                 <ResourceDictionary Source="/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Blue.xaml" />
                 <ResourceDictionary Source="/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Green.xaml" />
-            </ResourceDictionary.MergedDictionaries>
+            </ResourceDictionary.MergedDictionaries>-->
             <wpf:ViewModelLocator x:Key="VMLocator" d:IsDataSource="True" />
 
         </ResourceDictionary>
@@ -26,8 +26,8 @@
         <Grid.DataContext>
             <Binding Path="EditorViewModel" Source="{StaticResource VMLocator}"/>
         </Grid.DataContext>
-        <Button Content="Rejoindre une carte en train d'être éditer" HorizontalAlignment="Left" Margin="79,179,0,0" VerticalAlignment="Top" Width="163" Height="69"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="331,179,0,0" VerticalAlignment="Top" Width="163" Height="69"/>
+        <Button Command ="{Binding ServerListViewCommand }" Content="Rejoindre existante" HorizontalAlignment="Left" Margin="79,179,0,0" VerticalAlignment="Top" Width="206" Height="69"/>
+        <Button Content="Créer une nouvelle carte" HorizontalAlignment="Left" Margin="331,179,0,0" VerticalAlignment="Top" Width="199" Height="69"/>
 
     </Grid>
 </UserControl>

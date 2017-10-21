@@ -167,6 +167,9 @@
       <DependentUpon>EditorModeView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Controls\WPF\Editor\EditorServerBrowser.xaml.cs">
+      <DependentUpon>EditorServerBrowser.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\WPF\Editor\EditorViewModel.cs" />
     <Compile Include="Controls\WPF\Matchmaking\MatchmakingView.xaml.cs">
       <DependentUpon>MatchmakingView.xaml</DependentUpon>
@@ -200,6 +203,7 @@
     <Compile Include="Entities\MapEntity.cs" />
     <Compile Include="Entities\MemberEntity.cs" />
     <Compile Include="CommunicationInterface\LoginClient.cs" />
+    <Compile Include="Entities\Model\OnlineEditedMapInfo.cs" />
     <Compile Include="Entities\TournamentOpponentMessage.cs" />
     <Compile Include="Entities\UserEntity.cs" />
     <Compile Include="Exceptions\LoginException.cs" />
@@ -433,6 +437,10 @@
     <Page Include="Controls\WPF\Editor\EditorModeView.xaml">
       <SubType>Designer</SubType>
       <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="Controls\WPF\Editor\EditorServerBrowser.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\WPF\Matchmaking\MatchmakingView.xaml">
       <SubType>Designer</SubType>
