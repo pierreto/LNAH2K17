@@ -137,7 +137,6 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
             {
                 CurrentTournament.SelectedMap = map;
                 this.MapUpdatedEvent.Invoke(this, map);
-
             });
             
         }

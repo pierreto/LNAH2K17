@@ -8,6 +8,14 @@ namespace AirHockeyServer.Hubs
 {
     public class TournamentHub : Hub
     {
+        public void SemiFinalEnded()
+        {
 
+        }
+
+        public void FinalEnded()
+        {
+
+        }
     }
 }
