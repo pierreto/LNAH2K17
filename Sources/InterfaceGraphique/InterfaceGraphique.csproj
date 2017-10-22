@@ -154,6 +154,12 @@
     <Compile Include="Controls\WPF\RelayCommandAsync.cs" />
     <Compile Include="Controls\WPF\ViewModelBase.cs" />
     <Compile Include="Controls\WPF\ViewModelLocator.cs" />
+    <Compile Include="Editor\OpenPrivateMapForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editor\OpenPrivateMapForm.Designer.cs">
+      <DependentUpon>OpenPrivateMapForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Editor\SaveMapForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -177,6 +183,12 @@
     <Compile Include="CommunicationInterface\LoginClient.cs" />
     <Compile Include="Entities\UserEntity.cs" />
     <Compile Include="Exceptions\LoginException.cs" />
+    <Compile Include="ListMaps.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ListMaps.Designer.cs">
+      <DependentUpon>ListMaps.cs</DependentUpon>
+    </Compile>
     <Compile Include="Game\GameState\AbstractGameState.cs" />
     <Compile Include="Game\GameState\MasterGameState.cs" />
     <Compile Include="Game\GameState\OfflineGameState.cs" />
@@ -276,6 +288,9 @@
       <DependentUpon>TestMode.cs</DependentUpon>
     </Compile>
     <Compile Include="WPFApplication.cs" />
+    <EmbeddedResource Include="Editor\OpenPrivateMapForm.resx">
+      <DependentUpon>OpenPrivateMapForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Editor\SaveMapForm.resx">
       <DependentUpon>SaveMapForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -284,6 +299,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\LobbyHost.resx">
       <DependentUpon>LobbyHost.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ListMaps.resx">
+      <DependentUpon>ListMaps.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Menus\Login.resx">
       <DependentUpon>Login.cs</DependentUpon>

@@ -22,20 +22,23 @@ namespace AirHockeyServer.Controllers
 
         public IMapService MapService { get; }
 
+        [HttpGet]
         [Route("api/maps")]
-        public HttpResponseMessage Get()
+        public async Task<HttpResponseMessage> ReturnAllMaps()
         {
-            IEnumerable<MapEntity> maps = MapService.GetMaps();
-            if(maps != null)
+            try
             {
-                return HttpResponseGenerator.CreateSuccesResponseMessage(HttpStatusCode.OK, maps);
+                IEnumerable<MapEntity> maps = await MapService.GetMaps();
+                var response = HttpResponseGenerator.CreateSuccesResponseMessage(HttpStatusCode.OK, maps);
+                return response;
             }
-            else
+            catch
             {
-                return HttpResponseGenerator.CreateErrorResponseMessage(HttpStatusCode.NotFound);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }
 
+        [HttpPost]
         [Route("api/maps/save")]
         public async Task<HttpResponseMessage> SaveMap([FromBody]MapEntity map)
         {

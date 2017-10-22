@@ -128,6 +128,8 @@ public:
    void enregistrerSous(std::string filePath, float coefficients[]);
    /// Charger un fichier d'enregistrement de l'arbre
    void ouvrir(std::string filePath, float coefficients[]);
+   /// Charger un fichier d'enregistrement de l'arbre
+   void chargerCarte(std::string json, float coefficients[]);
    /// Vérifie si le curseur est au dessus de la table
    bool mouseOverTable();
    /// Vérifie si le curseur est au dessus d'un point de contrôle

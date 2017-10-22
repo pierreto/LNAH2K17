@@ -91,6 +91,9 @@ namespace InterfaceGraphique {
         public static extern void ouvrir(StringBuilder filePath, float[] coefficients);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void chargerCarte(StringBuilder json, float[] coefficients);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern bool mouseOverTable();
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
