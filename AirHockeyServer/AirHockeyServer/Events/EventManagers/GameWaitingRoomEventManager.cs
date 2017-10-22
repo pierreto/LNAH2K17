@@ -26,7 +26,7 @@ namespace AirHockeyServer.Events.EventManagers
     {
         GameEntity game;
 
-        protected const int WAITING_TIMEOUT = 40000;
+        protected const int WAITING_TIMEOUT = 2000;
 
         protected ConcurrentDictionary<int, int> RemainingTime { get; set; }
 
@@ -145,7 +145,7 @@ namespace AirHockeyServer.Events.EventManagers
                 //var Hub = GlobalHost.ConnectionManager.GetHubContext<TournamentWaitingRoomHub>();
                 // start the game
                 //Hub.Clients.Group(game.GameId.ToString()).GameStartingEvent(game);
-                HubContext.Clients.Group(gameId.ToString()).TournamentStarting(game);
+                HubContext.Clients.Group(gameId.ToString()).GameStartingEvent(game);
             }
         }
 
