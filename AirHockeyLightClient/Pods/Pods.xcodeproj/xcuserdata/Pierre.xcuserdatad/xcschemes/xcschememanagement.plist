@@ -4,20 +4,64 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Alamofire.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
 		<key>Pods-AirHockeyLightClient.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+		<key>PromiseKit.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>4</integer>
 		</dict>
 		<key>SwiftR.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
+		<key>SwiftyJSON.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>5</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>038CC0FA3A3675034EE51023A66949EE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>38FE672807FDF6C306B5C6239A9254B7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>3BBCD6177936515244B20A97BBB321AF</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>5695DF74BB0E1AC1510F85B4B65958A9</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>7705170C32614C0B96B2951220485739</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>88E9EC28B8B46C3631E6B242B50F4442</key>
 		<dict>
 			<key>primary</key>
 			<true/>
