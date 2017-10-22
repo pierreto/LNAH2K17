@@ -35,10 +35,11 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
         protected SlaveGameState SlaveGameState { get; }
         protected MasterGameState MasterGameState { get; }
 
-        public TournamentWaitingRoomHub(SlaveGameState slaveGameState, MasterGameState masterGameState)
+        //public TournamentWaitingRoomHub(SlaveGameState slaveGameState, MasterGameState masterGameState)
+        public TournamentWaitingRoomHub()
         {
-            SlaveGameState = slaveGameState;
-            MasterGameState = masterGameState;
+            //SlaveGameState = slaveGameState;
+            //MasterGameState = masterGameState;
         }
 
         public void InitializeHub(HubConnection connection, string username)
@@ -98,10 +99,10 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
                     //if (tournament.SemiFinals.Any(game => game.Master.UserId == this.user.UserId))
                     //{
                     //this.MasterGameState.InitializeGameState(tournament.SemiFinals.Find(game => game.Master.UserId == this.user.UserId));
-                    Program.QuickPlay.CurrentGameState.IsTournementMode = true;
-                    this.MasterGameState.InitializeGameState(tournament.SemiFinals[0]);
-                            Program.QuickPlay.CurrentGameState = this.MasterGameState;
-                            Program.FormManager.CurrentForm = Program.QuickPlay;
+                    //Program.QuickPlay.CurrentGameState.IsTournementMode = true;
+                    //this.MasterGameState.InitializeGameState(tournament.SemiFinals[0]);
+                    //        Program.QuickPlay.CurrentGameState = this.MasterGameState;
+                    //        Program.FormManager.CurrentForm = Program.QuickPlay;
                         //}
                         //else
                         //{
