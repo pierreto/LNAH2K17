@@ -10,37 +10,57 @@ using System.Threading;
 
 namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 {
-    public class TournamentWaitingRoomHub : WaitingRoomHub
+    public class TournamentWaitingRoomHub : IBaseHub
     {
         private bool test = false;
 
         protected TournamentEntity CurrentTournament { get; set; }
 
-        public event EventHandler<UserEntity> OpponentFoundEvent;
+        public event EventHandler<List<UserEntity>> OpponentFoundEvent;
 
         public event EventHandler<TournamentEntity> TournamentAllOpponentsFound;
 
-        public override void InitializeHub(HubConnection connection, string username)
+        public event EventHandler<int> RemainingTimeEvent;
+
+        public event EventHandler<MapEntity> MapUpdatedEvent;
+
+        public static IHubProxy WaitingRoomProxy { get; set; }
+
+        public string Username { get; protected set; }
+
+        protected UserEntity user { get; set; }
+
+        protected HubConnection HubConnection { get; set; }
+
+        public void InitializeHub(HubConnection connection, string username)
         {
-            base.InitializeHub(connection, username);
+            this.HubConnection = connection;
+            this.Username = username;
             WaitingRoomProxy = connection.CreateHubProxy("TournamentWaitingRoomHub");
             
         }
 
-        public override void Join()
+        public void Join()
         {
             if (!test)
             {
                 InitializeEvents();
                 test = true;
             }
-            base.Join();
+            Random random = new Random();
+            user = new UserEntity
+            {
+                UserId = random.Next(),
+                Username = "test"
+            };
+
+            WaitingRoomProxy.Invoke("Join", user);
         }
         private void InitializeEvents()
         {
-            WaitingRoomProxy.On<UserEntity>("OpponentFoundEvent", (opponent) =>
+            WaitingRoomProxy.On<List<UserEntity>>("OpponentFoundEvent", (opponents) =>
             {
-                this.OpponentFoundEvent.Invoke(this, opponent);
+                this.OpponentFoundEvent.Invoke(this, opponents);
                 
             });
 
@@ -50,8 +70,10 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
                 CurrentTournament = tournament;
                 InitializeConfigurationEvents();
             });
-            
-            base.InitializeEvent();
+            WaitingRoomProxy.On<int>("WaitingRoomRemainingTime", remainingTime =>
+            {
+                this.RemainingTimeEvent.Invoke(this, remainingTime);
+            });
         }
 
         private void InitializeConfigurationEvents()
@@ -64,13 +86,13 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
             WaitingRoomProxy.On<MapEntity>("TournamentMapUpdatedEvent", map =>
             {
                 CurrentTournament.SelectedMap = map;
-                InvokeMapUpdated(map);
+                this.MapUpdatedEvent.Invoke(this, map);
 
             });
             
         }
 
-        public override void Logout()
+        public void Logout()
         {
             WaitingRoomProxy?.Invoke("Disconnect", this.Username).Wait();
         }

@@ -132,6 +132,7 @@ namespace InterfaceGraphique
             unityContainer = new UnityContainer();
             unityContainer.RegisterType<IBaseHub, ChatHub>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<IBaseHub,GameWaitingRoomHub>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<IBaseHub, TournamentWaitingRoomHub>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<IBaseHub,GameHub>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<MatchmakingViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<ChatViewModel>();

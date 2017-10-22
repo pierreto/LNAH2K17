@@ -45,6 +45,7 @@ namespace InterfaceGraphique.CommunicationInterface
             {
                 NewGoal?.Invoke(message);
             });
+            
             gameHubProxy.On("ReceivedGameOver", () =>
             {
                 NewGameOver?.Invoke();
@@ -55,7 +56,7 @@ namespace InterfaceGraphique.CommunicationInterface
         {
             GameDataMessage gameDataMessage = new GameDataMessage(slavePosition);
 
-            gameHubProxy.Invoke("SendGameData", gameGuid,gameDataMessage);
+            gameHubProxy.Invoke("SendGameData", gameGuid, gameDataMessage);
         }
 
 

@@ -143,7 +143,6 @@
     <Compile Include="CommunicationInterface\WaitingRooms\GameWaitingRoomHub.cs" />
     <Compile Include="CommunicationInterface\HubManager.cs" />
     <Compile Include="CommunicationInterface\IBaseHub.cs" />
-    <Compile Include="CommunicationInterface\WaitingRooms\WaitingRoomHub.cs" />
     <Compile Include="Controls\LobbyHost.cs">
       <SubType>Form</SubType>
     </Compile>

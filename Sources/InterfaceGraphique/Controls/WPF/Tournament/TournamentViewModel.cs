@@ -59,9 +59,9 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
             this.waitingRoomHub.RemainingTimeEvent += (e, args) => { RemainingTime = args; };
         }
 
-        private void OnOpponentFount(object e, UserEntity user)
+        private void OnOpponentFount(object e, List<UserEntity> users)
         {
-            Players.Add(user);
+            Players = users;
             for (int i = 0; i <= Players.Count; i++)
             {
                 OnPropertyChanged("Player" + i);

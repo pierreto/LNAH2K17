@@ -4,19 +4,30 @@ using AirHockeyServer.Services;
 using AirHockeyServer.Services.MatchMaking;
 using Microsoft.AspNet.SignalR;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace AirHockeyServer.Events.EventManagers
 {
-    public class TournamentWaitingRoomEventManager : WaitingRoomEventManager
+    public class TournamentWaitingRoomEventManager
     {
+        protected const int WAITING_TIMEOUT = 40000;
+
+        protected ConcurrentDictionary<int, int> RemainingTime { get; set; }
+
         protected TournamentEntity Tournament { get; set; }
 
-        public TournamentWaitingRoomEventManager(IGameService gameService) : base(gameService)
+        protected IHubContext HubContext { get; set; }
+        public IGameService GameService { get; }
+
+        public TournamentWaitingRoomEventManager(IGameService gameService)
         {
+            this.RemainingTime = new ConcurrentDictionary<int, int>();
             TournamentMatchMakerService.Instance().OpponentFound += OnOpponentFound;
             HubContext = GlobalHost.ConnectionManager.GetHubContext<TournamentWaitingRoomHub>();
+            GameService = gameService;
         }
 
         protected async void OnOpponentFound(object sender, UserEntity user)
@@ -35,7 +46,7 @@ namespace AirHockeyServer.Events.EventManagers
 
             Tournament.Players.Add(user);
 
-            HubContext.Clients.Group(Tournament.Id.ToString()).OpponentFoundEvent(user);
+            HubContext.Clients.Group(Tournament.Id.ToString()).OpponentFoundEvent(Tournament.Players);
 
             if (Tournament.Players.Count == 4)
             {
@@ -78,16 +89,69 @@ namespace AirHockeyServer.Events.EventManagers
             return gameCreated;
         }
 
-        protected override void SendRemainingTimeEvent(int remainingTime)
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn void WaitingRoomTimeOut(object source, ElapsedEventArgs e, Guid gameId, Timer timer)
+        ///
+        /// Fonction appellé à chaque seconde. Vérifie si le temps est échoué pour la modification
+        /// des paramètre de parties. Si ce n'est pas le cas, avertis les clients du temps restants. 
+        /// Sinon, il vérifier s'il mettre par defaut la carte et la configuration et avertis
+        /// les clients du démarrage de la partie
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        protected void WaitingRoomTimeOut(object source, ElapsedEventArgs e, int tournamentId, System.Timers.Timer timer)
         {
-            var Hub = GlobalHost.ConnectionManager.GetHubContext<TournamentWaitingRoomHub>();
-            Hub.Clients.Group(Tournament.Id.ToString()).WaitingRoomRemainingTime(remainingTime);
+            if (RemainingTime[tournamentId] < WAITING_TIMEOUT)
+            {
+                RemainingTime[tournamentId] += 1000;
+
+                // ONLY WORKING FOR GAME OR TOURNAMENT
+
+                //Hub.Clients.Group(gameId.ToString()).WaitingRoomRemainingTime();
+                HubContext.Clients.Group(tournamentId.ToString()).TournamentStarting((WAITING_TIMEOUT - RemainingTime[tournamentId]) / 1000);
+            }
+            else
+            {
+                timer.Stop();
+
+                // TODO : get game from db
+                //GameEntity game = GameService.GetGameEntityById(gameId);
+
+                //if (game == null)
+                //{
+                //    return;
+                //}
+
+                //if (game.SelectedMap == null)
+                //{
+                //    // TODO : select default map
+                //    game.SelectedMap = new MapEntity();
+
+                //    // TODO update game on bd
+
+                //}
+                
+                HubContext.Clients.Group(tournamentId.ToString()).TournamentStarting(Tournament);
+            }
         }
 
-        protected override void SendEndOfTimer()
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn Timer CreateTimeoutTimer(Guid gameId)
+        ///
+        /// Cette fonction crée un timer qui appellera la fonction WaitingRoomTimeOut
+        /// à chaque seconde
+        /// 
+        /// @return le timer créé
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        protected System.Timers.Timer CreateTimeoutTimer(int gameId)
         {
-            var Hub = GlobalHost.ConnectionManager.GetHubContext<TournamentWaitingRoomHub>();
-            Hub.Clients.Group(Tournament.Id.ToString()).TournamentStarting(Tournament);
+            System.Timers.Timer timer = new System.Timers.Timer();
+            timer.Interval = 1000;
+            timer.Elapsed += (timerSender, e) => WaitingRoomTimeOut(timerSender, e, gameId, timer);
+
+            return timer;
         }
     }
 }

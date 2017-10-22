@@ -11,7 +11,7 @@ using Microsoft.AspNet.SignalR.Client;
 
 namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 {
-    public class GameWaitingRoomHub : WaitingRoomHub
+    public class GameWaitingRoomHub : IBaseHub
     {
         private SlaveGameState slaveGameState;
 
@@ -21,22 +21,43 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
         public event EventHandler<GameEntity> OpponentFoundEvent;
 
-        public GameWaitingRoomHub(SlaveGameState slaveGameState,MasterGameState masterGameState) : base()
+        public event EventHandler<int> RemainingTimeEvent;
+
+        public event EventHandler<MapEntity> MapUpdatedEvent;
+
+        public static IHubProxy WaitingRoomProxy { get; set; }
+
+        public string Username { get; protected set; }
+
+        protected UserEntity user { get; set; }
+
+        protected HubConnection HubConnection { get; set; }
+
+        public GameWaitingRoomHub(SlaveGameState slaveGameState,MasterGameState masterGameState)
         {
             this.slaveGameState = slaveGameState;
             this.masterGameState = masterGameState;
         }
 
-        public override void InitializeHub(HubConnection connection, string username)
+        public void InitializeHub(HubConnection connection, string username)
         {
-            base.InitializeHub(connection, username);
+            this.HubConnection = connection;
+            this.Username = username;
             WaitingRoomProxy = this.HubConnection.CreateHubProxy("GameWaitingRoomHub");
         }
         
-        public override void Join()
+        public void Join()
         {
             InitializeEvents();
-            base.Join();
+
+            Random random = new Random();
+            user = new UserEntity
+            {
+                UserId = random.Next(),
+                Username = "test"
+            };
+
+            WaitingRoomProxy.Invoke("Join", user);
         }
         
         public async Task LeaveGame()
@@ -83,11 +104,14 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
                 WaitingRoomProxy.On<GameEntity>("GameMapUpdatedEvent", mapUpdated =>
                 {
                     this.CurrentGame = mapUpdated;
-                    InvokeMapUpdated(mapUpdated.SelectedMap);
+                    this.MapUpdatedEvent.Invoke(this, mapUpdated.SelectedMap);
                     
                 });
 
-                base.InitializeEvent();
+                WaitingRoomProxy.On<int>("WaitingRoomRemainingTime", remainingTime =>
+                {
+                    this.RemainingTimeEvent.Invoke(this, remainingTime);
+                });
             });
         }
 
@@ -98,6 +122,10 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
                 CurrentGame.SelectedMap = map;
                 CurrentGame = await WaitingRoomProxy.Invoke<GameEntity>("UpdateMap", CurrentGame);
             }
+        }
+        public virtual void Logout()
+        {
+            //TODO: IMPLEMENT THE LOGOUT MECANISM
         }
 
     }
