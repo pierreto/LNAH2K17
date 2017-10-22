@@ -272,10 +272,12 @@ namespace InterfaceGraphique {
             }
             else
             {
-                //Program.FormManager.CurrentForm = Program.OnlineTournament;
-                //var vm = Program.unityContainer.Resolve<Controls.WPF.Tournament.TournamentViewModel>();
-                //vm.Initialize();
-                Program.FormManager.CurrentForm = Program.QuickPlay;
+                Program.FormManager.CurrentForm = Program.OnlineTournament;
+                var vm = Program.unityContainer.Resolve<Controls.WPF.Tournament.TournamentViewModel>();
+                vm.Initialize();
+
+                // fonctionne ici
+                //Program.FormManager.CurrentForm = Program.QuickPlay;
             }
         }
 

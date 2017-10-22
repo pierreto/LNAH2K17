@@ -8,6 +8,7 @@ using InterfaceGraphique.Entities;
 using Microsoft.AspNet.SignalR.Client;
 using System.Threading;
 using InterfaceGraphique.Game.GameState;
+using System.Drawing;
 
 namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 {
@@ -102,6 +103,18 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
                         //Program.QuickPlay.CurrentGameState.IsTournementMode = true;
                         //this.MasterGameState.InitializeGameState(tournament.SemiFinals[0]);
                         //        Program.QuickPlay.CurrentGameState = this.MasterGameState;
+                        FonctionsNatives.setCurrentOpponentType((int)OpponentType.VIRTUAL_PLAYER);
+
+                        StringBuilder player1Name = new StringBuilder(4);
+                        StringBuilder player2Name = new StringBuilder(4);
+                        player1Name.Append("tata");
+                        player2Name.Append("papa");
+                        FonctionsNatives.setPlayerNames(player1Name, player2Name);
+
+                        float[] player1Color = new float[4] { Color.Red.R, Color.Red.G, Color.Red.B, Color.Red.A };
+                        float[] player2Color = new float[4] { Color.Blue.R, Color.Blue.G, Color.Blue.B, Color.Blue.A };
+                        FonctionsNatives.setPlayerColors(player1Color, player2Color);
+
                         Program.FormManager.CurrentForm = Program.QuickPlay;
                         //}
                         //else
