@@ -18,7 +18,6 @@
 		1D019A2D1F911E49004D79B2 /* SignupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D019A2B1F911E49004D79B2 /* SignupViewModel.swift */; };
 		1D019A2E1F911E49004D79B2 /* ISignupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D019A2C1F911E49004D79B2 /* ISignupViewModel.swift */; };
 		1D019A301F911E78004D79B2 /* Http.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D019A2F1F911E78004D79B2 /* Http.swift */; };
-		1D019A371F911F16004D79B2 /* ILoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D019A361F911F16004D79B2 /* ILoginViewModel.swift */; };
 		1D3D77B71F981BCA0012EF12 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3D77B61F981BCA0012EF12 /* MainViewController.swift */; };
 		1D863DB11F9848E70025B89D /* OfflineMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D863DB01F9848E70025B89D /* OfflineMenuViewController.swift */; };
 		1D90AAFB1F98205A003E0764 /* ConnectServerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D90AAFA1F98205A003E0764 /* ConnectServerViewController.swift */; };
@@ -26,6 +25,7 @@
 		1D90AB001F982332003E0764 /* ConnectServerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D90AAFF1F982332003E0764 /* ConnectServerViewModel.swift */; };
 		1D90AB021F9824BE003E0764 /* ConnectServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D90AB011F9824BE003E0764 /* ConnectServer.swift */; };
 		1DFE2E4C1F91A8FD0048892D /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFE2E4B1F91A8FD0048892D /* SignupViewController.swift */; };
+		25163A891F9CE62600142418 /* ILoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25163A881F9CE62500142418 /* ILoginViewModel.swift */; };
 		253E088C1F81858E009F301B /* UIViewShake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253E088B1F81858E009F301B /* UIViewShake.swift */; };
 		253E088E1F818DD2009F301B /* JsonHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253E088D1F818DD2009F301B /* JsonHelper.swift */; };
 		253E08911F81913A009F301B /* ChannelEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253E08901F81913A009F301B /* ChannelEntity.swift */; };
@@ -106,7 +106,6 @@
 		1D019A2B1F911E49004D79B2 /* SignupViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupViewModel.swift; sourceTree = "<group>"; };
 		1D019A2C1F911E49004D79B2 /* ISignupViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ISignupViewModel.swift; sourceTree = "<group>"; };
 		1D019A2F1F911E78004D79B2 /* Http.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Http.swift; sourceTree = "<group>"; };
-		1D019A361F911F16004D79B2 /* ILoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ILoginViewModel.swift; path = ../../../Projet3/Projet3/ViewModel/Login/ILoginViewModel.swift; sourceTree = "<group>"; };
 		1D3D77B61F981BCA0012EF12 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		1D863DB01F9848E70025B89D /* OfflineMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineMenuViewController.swift; sourceTree = "<group>"; };
 		1D90AAFA1F98205A003E0764 /* ConnectServerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectServerViewController.swift; sourceTree = "<group>"; };
@@ -114,6 +113,7 @@
 		1D90AAFF1F982332003E0764 /* ConnectServerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectServerViewModel.swift; sourceTree = "<group>"; };
 		1D90AB011F9824BE003E0764 /* ConnectServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectServer.swift; sourceTree = "<group>"; };
 		1DFE2E4B1F91A8FD0048892D /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
+		25163A881F9CE62500142418 /* ILoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ILoginViewModel.swift; sourceTree = "<group>"; };
 		253E088B1F81858E009F301B /* UIViewShake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIViewShake.swift; path = InterfaceGraphique/Effects/UIViewShake.swift; sourceTree = "<group>"; };
 		253E088D1F818DD2009F301B /* JsonHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = JsonHelper.swift; path = Noyau/Helper/JsonHelper.swift; sourceTree = "<group>"; };
 		253E08901F81913A009F301B /* ChannelEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChannelEntity.swift; path = Noyau/Entities/ChannelEntity.swift; sourceTree = "<group>"; };
@@ -225,7 +225,7 @@
 			isa = PBXGroup;
 			children = (
 				1D019A281F911E33004D79B2 /* LoginViewModel.swift */,
-				1D019A361F911F16004D79B2 /* ILoginViewModel.swift */,
+				25163A881F9CE62500142418 /* ILoginViewModel.swift */,
 			);
 			name = Login;
 			sourceTree = "<group>";
@@ -722,6 +722,7 @@
 				8FE1EB051F75A96900A01514 /* ClientConnection.swift in Sources */,
 				1D3D77B71F981BCA0012EF12 /* MainViewController.swift in Sources */,
 				8F6AE2C21F6592EB00A29E8B /* GameScene.swift in Sources */,
+				25163A891F9CE62600142418 /* ILoginViewModel.swift in Sources */,
 				34B66FE41F84636900A9CCB9 /* NoeudBut.swift in Sources */,
 				1D90AB021F9824BE003E0764 /* ConnectServer.swift in Sources */,
 				3475C2461F90144300E8BF86 /* ImmediatePanGestureRecognizer.swift in Sources */,
@@ -757,7 +758,6 @@
 				8F69F4BF1F8AF871004D5129 /* MathHelper.swift in Sources */,
 				1D019A2E1F911E49004D79B2 /* ISignupViewModel.swift in Sources */,
 				1D019A2D1F911E49004D79B2 /* SignupViewModel.swift in Sources */,
-				1D019A371F911F16004D79B2 /* ILoginViewModel.swift in Sources */,
 				8F0B94BA1F8D8C95007F0E82 /* ModeleEtatDeplacement.swift in Sources */,
 				1D863DB11F9848E70025B89D /* OfflineMenuViewController.swift in Sources */,
 				8F0B94B21F8D4BCE007F0E82 /* ModeleEtat.swift in Sources */,

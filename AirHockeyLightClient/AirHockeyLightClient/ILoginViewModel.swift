@@ -7,11 +7,12 @@
 //
 
 import Foundation
+import PromiseKit
 
 protocol ILoginViewModel {
     var ipAddressError: Dynamic<String> { get }
     var usernameError: Dynamic<String> { get }
     var passwordError: Dynamic<String> { get }
     
-    func login(ipAddress: String, username: String, password: String)
+    func login(username: String, password: String) -> Promise<Bool>
 }
