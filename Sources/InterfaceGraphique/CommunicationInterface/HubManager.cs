@@ -13,14 +13,35 @@ namespace InterfaceGraphique.CommunicationInterface
     //CLASSE TRES TEMPORAIRE
     public class HubManager
     {
+
+        private static HubManager instance;
+
         private HubConnection connection;
+        public HubConnection Connection { get; set; }
 
         private List<IBaseHub> hubs;
+        public static HubManager Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new HubManager();
+                }
+                return instance;
+            }
+        }
+
+        private HubManager()
+        {
+        }
 
         public async Task EstablishConnection(string serverIp)
         {
             this.connection = new HubConnection("http://" + serverIp + ":63056/signalr");
-            await this.connection.Start();
+            this.AddHubs();
+
+            //    this.InitializeHubs(username);
         }
 
         //public async Task EstablishConnection(string serverIp, string username)
@@ -34,7 +55,7 @@ namespace InterfaceGraphique.CommunicationInterface
         //    await this.connection.Start();
         //}
 
-        private void AddHubs()
+        public void AddHubs()
         {
             this.hubs = new List<IBaseHub>
             {
@@ -44,12 +65,14 @@ namespace InterfaceGraphique.CommunicationInterface
             };
         }
 
-        private void InitializeHubs(string username)
+        public async Task InitializeHubs(string username)
         {
             foreach (IBaseHub hub in this.hubs)
             {
                 hub.InitializeHub(this.connection, username);
             }
+            await this.connection.Start();
+
         }
 
         public void Logout()

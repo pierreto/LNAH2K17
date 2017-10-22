@@ -69,7 +69,7 @@ namespace InterfaceGraphique.Menus
                 {
                     LoginName = UsernameTextBox.Text
                 };
-                this.hubManager = new HubManager();
+                this.hubManager = HubManager.Instance;
 
                 // We first initialize the connection with the chat server:
                 //await hubManager.EstablishConnection(ServerTextBox.Text,UsernameTextBox.Text );

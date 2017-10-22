@@ -1,4 +1,5 @@
-﻿using InterfaceGraphique.Entities;
+﻿using InterfaceGraphique.CommunicationInterface;
+using InterfaceGraphique.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,10 +15,13 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
         static HttpClient client = new HttpClient();
 
         private LoginEntity loginEntity;
-
-        public AuthenticateViewModel(LoginEntity loginEntity)
+        private HubManager hubManager;
+        private ChatHub chatHub;
+        public AuthenticateViewModel(LoginEntity loginEntity, ChatHub chatHub)
         {
             this.loginEntity = loginEntity;
+            this.chatHub = chatHub;
+            this.hubManager = HubManager.Instance;
             this.inputsEnabled = true;
         }
 
@@ -49,6 +53,9 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
                     var response = await client.PostAsJsonAsync("http://localhost:63056/api/login", loginEntity);
                     if (response.IsSuccessStatusCode)
                     {
+                        hubManager.AddHubs();
+                        await hubManager.InitializeHubs(loginEntity.Username);
+                        await chatHub.InitializeChat();
                         Program.FormManager.CurrentForm = Program.MainMenu;
                     }
                     else
@@ -75,6 +82,24 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
 
         }
 
+        private ICommand signupCommand;
+        public ICommand SignupCommand
+        {
+            get
+            {
+                if (signupCommand == null)
+                {
+                    signupCommand = new RelayCommandAsync(Signup);
+                }
+                return signupCommand;
+            }
+        }
+
+        private async Task Signup()
+        {
+            Program.FormManager.CurrentForm = Program.SignupMenu;
+        }
+
         private bool ValidateLoginEntity()
         {
             bool valid = true;
@@ -89,7 +114,6 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
                 valid = false;
             }
             return valid;
-
         }
 
         private void Loading()

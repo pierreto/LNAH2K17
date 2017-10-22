@@ -15,9 +15,9 @@ namespace InterfaceGraphique.Controls.WPF.ConnectServer
         private readonly string LOCALHOST = "localhost";
 
         private HubManager hubManager;
-        public ConnectServerViewModel(HubManager hubManager)
+        public ConnectServerViewModel()
         {
-            this.hubManager = hubManager;
+            this.hubManager = HubManager.Instance;
             this.IpAddressInputEnabled = true;
         }
 

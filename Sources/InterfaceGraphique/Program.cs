@@ -25,6 +25,7 @@ using Application = System.Windows.Forms.Application;
 using InterfaceGraphique.Controls.WPF.Authenticate;
 using InterfaceGraphique.Controls.WPF.Home;
 using InterfaceGraphique.Controls.WPF.ConnectServer;
+using InterfaceGraphique.Controls.WPF.Signup;
 
 namespace InterfaceGraphique
 {

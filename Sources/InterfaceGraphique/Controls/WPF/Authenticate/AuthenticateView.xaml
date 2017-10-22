@@ -37,7 +37,7 @@
             </Border>
         </Grid>
         <TextBlock HorizontalAlignment="Center" Margin="0,0,0,10" TextWrapping="Wrap" Text="{Binding PasswordErrMsg}" VerticalAlignment="Top" Foreground="Red" FontSize="18"/>
-        <Button Content="Se Connecter" HorizontalAlignment="Center" Margin="0,0,0,10" VerticalAlignment="Top" Width="145" Command="{Binding AuthenticateCommand}" CommandParameter="{Binding Password}" IsDefault="True"/>
-        <Button Content="Créer Compte" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="145"/>
+        <Button Content="Se Connecter" HorizontalAlignment="Center" Margin="0,0,0,10" VerticalAlignment="Top" Width="145" Command="{Binding AuthenticateCommand}" IsDefault="True"/>
+        <Button Content="Créer Compte" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="145" Command="{Binding SignupCommand}"/>
     </StackPanel>
 </UserControl>

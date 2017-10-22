@@ -4,6 +4,7 @@ using InterfaceGraphique.Controls.WPF.ConnectServer;
 using Microsoft.Practices.Unity;
 using InterfaceGraphique.Controls.WPF.Home;
 using InterfaceGraphique.Controls.WPF.Authenticate;
+using InterfaceGraphique.Controls.WPF.Signup;
 
 namespace InterfaceGraphique.Controls.WPF
 {
@@ -31,6 +32,11 @@ namespace InterfaceGraphique.Controls.WPF
         public AuthenticateViewModel AuthenticateViewModel
         {
             get { return container.Resolve<AuthenticateViewModel>(); }
+        }
+
+        public SignupViewModel SignupViewModel
+        {
+            get { return container.Resolve<SignupViewModel>(); }
         }
 
         public ChatViewModel ChatViewModel

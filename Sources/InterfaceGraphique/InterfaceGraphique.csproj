@@ -166,6 +166,10 @@
     </Compile>
     <Compile Include="Controls\WPF\Matchmaking\MatchmakingViewModel.cs" />
     <Compile Include="Controls\WPF\RelayCommandAsync.cs" />
+    <Compile Include="Controls\WPF\Signup\SignupView.xaml.cs">
+      <DependentUpon>SignupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WPF\Signup\SignupViewModel.cs" />
     <Compile Include="Controls\WPF\ViewModelBase.cs" />
     <Compile Include="Controls\WPF\ViewModelLocator.cs" />
     <Compile Include="Editor\SaveMapForm.cs">
@@ -190,6 +194,7 @@
     <Compile Include="Entities\MapEntity.cs" />
     <Compile Include="Entities\MemberEntity.cs" />
     <Compile Include="CommunicationInterface\LoginClient.cs" />
+    <Compile Include="Entities\SignupEntity.cs" />
     <Compile Include="Entities\UserEntity.cs" />
     <Compile Include="Exceptions\ConnectServerException.cs" />
     <Compile Include="Exceptions\LoginException.cs" />
@@ -289,6 +294,12 @@
     <Compile Include="Menus\QuickPlayMenu.Designer.cs">
       <DependentUpon>QuickPlayMenu.cs</DependentUpon>
     </Compile>
+    <Compile Include="Menus\SignupMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Menus\SignupMenu.Designer.cs">
+      <DependentUpon>SignupMenu.cs</DependentUpon>
+    </Compile>
     <Compile Include="Menus\TournementMenu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -367,6 +378,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Menus\QuickPlayMenu.resx">
       <DependentUpon>QuickPlayMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Menus\SignupMenu.resx">
+      <DependentUpon>SignupMenu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Menus\TournementMenu.resx">
       <DependentUpon>TournementMenu.cs</DependentUpon>
@@ -453,6 +467,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\WPF\Matchmaking\MatchmakingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\WPF\Signup\SignupView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
