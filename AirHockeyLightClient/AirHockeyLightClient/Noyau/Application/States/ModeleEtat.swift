@@ -9,6 +9,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 import UIKit
+import GLKit
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class ModeleEtat
@@ -54,6 +55,20 @@ class ModeleEtat {
         let visiteur = VisiteurSurTable()
         FacadeModele.instance.obtenirArbreRendu().accepterVisiteur(visiteur: visiteur)
         return visiteur.obtenirSontSurTable()
+    }
+    
+    /// Détermine le déplacement (delta)
+    func obtenirDeplacement() -> GLKVector3 {
+        let arbre = FacadeModele.instance.obtenirArbreRendu()
+        let table = arbre.childNode(withName: arbre.NOM_TABLE, recursively: true) as! NoeudTable
+        
+        let start = MathHelper.CGPointToSCNVector3(view: FacadeModele.instance.obtenirVue().editorView,
+                                                   depth: table.position.z, point: self.lastPosition)
+        let end = MathHelper.CGPointToSCNVector3(view: FacadeModele.instance.obtenirVue().editorView,
+                                                 depth: table.position.z, point: self.position)
+        let delta = GLKVector3Make(end.x - start.x, end.y - start.y, end.z - start.z)
+        
+        return delta
     }
 }
 

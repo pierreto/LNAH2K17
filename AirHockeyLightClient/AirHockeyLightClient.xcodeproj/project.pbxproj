@@ -77,6 +77,7 @@
 		8F64C0131F7754FD00F14AC7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F64C0121F7754FD00F14AC7 /* LaunchScreen.storyboard */; };
 		8F64C0151F77550800F14AC7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F64C0141F77550800F14AC7 /* Main.storyboard */; };
 		8F64C0171F775B2500F14AC7 /* AuthentificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F64C0161F775B2500F14AC7 /* AuthentificationViewController.swift */; };
+		8F690D601F9D5244003F051A /* VisiteurObtenirSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F690D5F1F9D5244003F051A /* VisiteurObtenirSelection.swift */; };
 		8F69F4BF1F8AF871004D5129 /* MathHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F69F4BE1F8AF871004D5129 /* MathHelper.swift */; };
 		8F6AE2BC1F6592EB00A29E8B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6AE2BB1F6592EB00A29E8B /* AppDelegate.swift */; };
 		8F6AE2BE1F6592EB00A29E8B /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8F6AE2BD1F6592EB00A29E8B /* GameScene.sks */; };
@@ -169,6 +170,7 @@
 		8F64C0121F7754FD00F14AC7 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = InterfaceGraphique/Menus/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8F64C0141F77550800F14AC7 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = InterfaceGraphique/Main.storyboard; sourceTree = "<group>"; };
 		8F64C0161F775B2500F14AC7 /* AuthentificationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthentificationViewController.swift; path = InterfaceGraphique/Menus/AuthentificationViewController.swift; sourceTree = "<group>"; };
+		8F690D5F1F9D5244003F051A /* VisiteurObtenirSelection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VisiteurObtenirSelection.swift; path = Noyau/Arbre/Visiteurs/VisiteurObtenirSelection.swift; sourceTree = "<group>"; };
 		8F69F4BE1F8AF871004D5129 /* MathHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MathHelper.swift; path = Noyau/Helper/MathHelper.swift; sourceTree = "<group>"; };
 		8F6AE2B81F6592EB00A29E8B /* AirHockeyLightClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AirHockeyLightClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F6AE2BB1F6592EB00A29E8B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -345,6 +347,7 @@
 			children = (
 				8F0B94AB1F8D3EEE007F0E82 /* VisiteurAbstrait.swift */,
 				8F0B94BB1F8D8EA6007F0E82 /* VisiteurDeplacement.swift */,
+				8F690D5F1F9D5244003F051A /* VisiteurObtenirSelection.swift */,
 				8F0B94AD1F8D450B007F0E82 /* VisiteurSelectionnable.swift */,
 				8F0B94BD1F8DC0F1007F0E82 /* VisiteurSelection.swift */,
 				344A6E291F994E0100CFFBEB /* VisiteurSurTable.swift */,
@@ -758,6 +761,7 @@
 				8F0B94AC1F8D3EEE007F0E82 /* VisiteurAbstrait.swift in Sources */,
 				1D90AAFE1F98228E003E0764 /* IConnectServerViewModel.swift in Sources */,
 				3415E6C91F85659900DB1CAD /* UsineNoeud.swift in Sources */,
+				8F690D601F9D5244003F051A /* VisiteurObtenirSelection.swift in Sources */,
 				253E08911F81913A009F301B /* ChannelEntity.swift in Sources */,
 				8F69F4BF1F8AF871004D5129 /* MathHelper.swift in Sources */,
 				1D019A2E1F911E49004D79B2 /* ISignupViewModel.swift in Sources */,

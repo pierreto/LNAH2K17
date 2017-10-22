@@ -267,6 +267,9 @@ class NoeudTable : NoeudCommun {
         // Matériel de la ligne
         self.ligneCentreNoeud?.geometry?.firstMaterial?.diffuse.contents = UIColor(red: 1.0, green: 0, blue: 0, alpha: 1.0)
         
+        // La ligne du centre n'est pas sélectionnable
+        self.ligneCentreNoeud?.assignerEstSelectionnable(selectionnable: false)
+        
         self.addChildNode(self.ligneCentreNoeud!)
     }
     

@@ -24,11 +24,16 @@ class NoeudCommun : SCNNode {
     /// Vecteur spécifiant les axes bloqués pour le déplacement
     private var axisLock: GLKVector3 = GLKVector3(v: (1.0, 0.0, 1.0))
     
-    /// Sélection du noeud.
+    /// Sélection du noeud
     private var selectionne: Bool = false
     
-    /// Vrai si le noeud est sélectionnable.
+    /// Vrai si le noeud est sélectionnable
     private var selectionnable: Bool = true
+    
+    // Attributs de sauvegarde
+    private var savedScale = SCNVector3()
+    private var savedRotation = SCNVector3()
+    private var savedPosition = SCNVector3()
     
     /// Constructeur avec géométrie
     required init(type: String, geometry: SCNGeometry) {
@@ -104,6 +109,16 @@ class NoeudCommun : SCNNode {
     /// Vérifie si le noeud est sélectionnable.
     func estSelectionnable() -> Bool {
         return self.selectionnable
+    }
+    
+    /// Cette fonction sauve la position courante du noeud
+    func savePosition() {
+        self.savedPosition = self.position
+    }
+    
+    /// Cette fonction applique (revert) la position sauvee au noeud
+    func revertPosition() {
+        self.deplacer(position: SCNVector3ToGLKVector3(self.savedPosition))
     }
     
     /// Obtient la position relative du noeud.

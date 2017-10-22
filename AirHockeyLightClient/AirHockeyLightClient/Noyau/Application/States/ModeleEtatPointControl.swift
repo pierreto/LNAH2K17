@@ -86,24 +86,63 @@ class ModeleEtatPointControl : ModeleEtat {
         
         // Sélectionner le point de contrôle
         if sender.state == UIGestureRecognizerState.began {
-            print("début déplacement point contrôle")
+            print("Debut deplacement point contrôle")
+            
             let visiteurSelection = VisiteurSelection(point: self.position)
             FacadeModele.instance.obtenirArbreRendu().accepterVisiteur(visiteur: visiteurSelection)
+            
+            // Sauver la position du noeud selectionne
+            savePosition()
         }
         // Déselectionner le point de contrôle
         else if sender.state == UIGestureRecognizerState.ended {
-            print("fin déplacement point contrôle")
-            let visiteur = VisiteurDeplacement(lastPosition: self.lastPosition, position: self.position)
+            print("Fin deplacement point contrôle")
+            let arbre = FacadeModele.instance.obtenirArbreRendu()
+            let table = arbre.childNode(withName: arbre.NOM_TABLE, recursively: true) as! NoeudTable
+            
+            let visiteur = VisiteurDeplacement(delta: super.obtenirDeplacement())
             FacadeModele.instance.obtenirArbreRendu().accepterVisiteur(visiteur: visiteur)
             
-            let arbre = FacadeModele.instance.obtenirArbreRendu()
-            let table = arbre.childNode(withName: arbre.NOM_TABLE, recursively: true) as! NoeudCommun
+            if !self.noeudsSurLaTable() {
+                // Annuler le déplacement
+                revertPosition()
+                
+                // TODO : À vérifier si on change la géométrie de la table ici ou non
+                table.updateGeometry()
+            }
+            
             table.deselectionnerTout()
         }
         // Bouger le point de contrôle
         else {
-            let visiteur = VisiteurDeplacement(lastPosition: self.lastPosition, position: self.position)
+            let visiteur = VisiteurDeplacement(delta: super.obtenirDeplacement())
             FacadeModele.instance.obtenirArbreRendu().accepterVisiteur(visiteur: visiteur)
+        }
+    }
+    
+    /// Cette fonction sauve la position du noeud selectionne
+    private func savePosition() {
+        // Save position of matrice
+        let visiteur = VisiteurObtenirSelection()
+        FacadeModele.instance.obtenirArbreRendu().accepterVisiteur(visiteur: visiteur)
+        let noeuds = visiteur.obtenirNoeuds()
+    
+        for noeud in noeuds {
+            noeud.savePosition()
+            (noeud as! NoeudPointControl).obtenirNoeudOppose().savePosition()
+        }
+    }
+    
+    /// Cette fonction applique la position sauvée au noeud sélectionné
+    func revertPosition() {
+        // Revert position
+        let visiteur = VisiteurObtenirSelection()
+        FacadeModele.instance.obtenirArbreRendu().accepterVisiteur(visiteur: visiteur)
+        let noeuds = visiteur.obtenirNoeuds()
+    
+        for noeud in noeuds {
+            noeud.revertPosition()
+            (noeud as! NoeudPointControl).obtenirNoeudOppose().revertPosition()
         }
     }
 
