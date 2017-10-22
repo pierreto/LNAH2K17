@@ -284,7 +284,22 @@ class NoeudTable : NoeudCommun {
         // Matériel de la ligne
         self.ligneCentreNoeud?.geometry?.firstMaterial?.diffuse.contents = UIColor(red: 1.0, green: 0, blue: 0, alpha: 1.0)
     }
-
+    
+    /// Obtient les sommets composant la patinoire
+    func obtenirSommetsPatinoire() -> [SCNVector3] {
+        var patinoire = [SCNVector3]()
+        patinoire.append(self.sommets[0])
+        
+        var i = 1
+        let max = self.sommets.count - 1
+        
+        while (i < max) {
+            patinoire.append(sommets[i])
+            i += 5
+        }
+    
+        return patinoire
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////

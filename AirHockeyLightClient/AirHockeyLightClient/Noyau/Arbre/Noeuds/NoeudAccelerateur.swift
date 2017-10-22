@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////////
-/// @file NoeudPortail.swift
+/// @file NoeudAccelerateur.swift
 /// @author Pierre To
-/// @date 2017-10-18
+/// @date 2017-10-19
 /// @version 1
 ///
 /// @addtogroup log3900 LOG3990
@@ -11,21 +11,18 @@
 import SceneKit
 
 ///////////////////////////////////////////////////////////////////////////
-/// @class NoeudPortail
+/// @class NoeudAccelerateur
 /// @brief Classe pour afficher un portail
 ///
 /// @author Pierre To
-/// @date 2017-10-18
+/// @date 2017-10-19
 ///////////////////////////////////////////////////////////////////////////
-class NoeudPortail : NoeudCommun {
-    
+class NoeudAccelerateur: NoeudCommun {
+
     /// Angle selon l'axe des Y
     private var angleY: Float?
     
-    /// Le portail opposé
-    private var portailOppose: NoeudPortail?
-    
-    /// Retient si le portail est actif
+    /// Retient si l'accélérateur est actif
     private var desactiver: Bool = false
     
     /// Constructeur
@@ -47,19 +44,9 @@ class NoeudPortail : NoeudCommun {
         // Envoie le visiteur aux enfants
         super.accepterVisiteur(visiteur: visiteur)
         
-        visiteur.visiterPortail(noeud: self)
+        visiteur.visiterAccelerateur(noeud: self)
     }
-    
-    /// Cette fonction assigne un noeud opposé à un portail
-    func assignerOppose(portail: NoeudPortail) {
-        self.portailOppose = portail
-    }
-    
-    /// Cette fonction permet d'obtenir le portail opposé
-    func obtenirOppose() -> NoeudPortail {
-        return self.portailOppose!
-    }
-    
+
     /// Activer/Désactiver le noeud
     func assignerDesactiver(desactiver: Bool) {
         self.desactiver = desactiver
@@ -69,8 +56,5 @@ class NoeudPortail : NoeudCommun {
     func estDesactiver() -> Bool {
         return self.desactiver;
     }
+    
 }
-
-///////////////////////////////////////////////////////////////////////////////
-/// @}
-///////////////////////////////////////////////////////////////////////////////

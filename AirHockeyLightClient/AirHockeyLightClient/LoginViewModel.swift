@@ -12,11 +12,11 @@ import Foundation
 class LoginViewModel: NSObject, ILoginViewModel {
     
     let loginModel: Login
-    
     let usernameError: Dynamic<String>
     let passwordError: Dynamic<String>
+    let ipAddressError: Dynamic<String>
     
-    func login(username: String, password: String) -> Promise<Bool>{
+    func login(username: String, password: String) -> Promise<Bool> {
         return loginModel.validateFields(username: username, password: password)
     }
     
@@ -24,6 +24,7 @@ class LoginViewModel: NSObject, ILoginViewModel {
         self.loginModel = loginModel
         self.usernameError = Dynamic(loginModel.usernameError)
         self.passwordError = Dynamic(loginModel.passwordError)
+        self.ipAddressError = Dynamic("")
         super.init()
         subscribeToNotifications()
     }

@@ -41,8 +41,9 @@ class VisiteurSelectionnable : VisiteurAbstrait {
     }
     
     /// Visiter un accéléateur pour le rendre sélectionnable
-    //virtual void visiterAccelerateur(NoeudAccelerateur* noeud);
-    
+    func visiterAccelerateur(noeud: NoeudAccelerateur) {
+        self.implementationDefaut(noeud: noeud)
+    }
     /// Visiter un maillet pour le rendre sélectionnable
     //virtual void visiterMaillet(NoeudMaillet* noeud);
     
