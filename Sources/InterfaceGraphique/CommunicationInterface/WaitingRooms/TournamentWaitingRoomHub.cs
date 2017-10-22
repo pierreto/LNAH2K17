@@ -72,7 +72,6 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
             WaitingRoomProxy.On<List<UserEntity>>("OpponentFoundEvent", (opponents) =>
             {
                 this.OpponentFoundEvent.Invoke(this, opponents);
-                
             });
 
             WaitingRoomProxy.On<TournamentEntity>("TournamentAllOpponentsFound", (tournament) =>
@@ -104,6 +103,9 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
                         //this.MasterGameState.InitializeGameState(tournament.SemiFinals[0]);
                         //        Program.QuickPlay.CurrentGameState = this.MasterGameState;
                         FonctionsNatives.setCurrentOpponentType((int)OpponentType.VIRTUAL_PLAYER);
+
+                        PlayerProfile selectedProfile = Program.ConfigurationMenu.GetProfile(Program.TournementMenu.Player1Profile);
+                        FonctionsNatives.aiActiveProfile(selectedProfile.Speed, selectedProfile.Passivity);
 
                         StringBuilder player1Name = new StringBuilder(4);
                         StringBuilder player2Name = new StringBuilder(4);
