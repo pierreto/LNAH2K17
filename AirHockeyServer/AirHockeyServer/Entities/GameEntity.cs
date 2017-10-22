@@ -35,6 +35,8 @@ namespace AirHockeyServer.Entities
         public MapEntity SelectedMap { get; set; }
 
         public ConfigurationEntity SelectedConfiguration { get; set; }
+
+        public UserEntity Winner { get; set; }
     }
 
     public enum GameState

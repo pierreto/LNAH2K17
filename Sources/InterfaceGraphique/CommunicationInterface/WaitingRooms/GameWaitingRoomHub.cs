@@ -78,15 +78,12 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
                     Program.LobbyHost.Invoke(new MethodInvoker(() =>
                     {
-
                         if (this.Username.Equals(officialGame.Master.Username))
                         {
                             this.masterGameState.InitializeGameState(officialGame);
 
                             Program.QuickPlay.CurrentGameState = this.masterGameState;
                             Program.FormManager.CurrentForm = Program.QuickPlay;
-
-
                         }
                         else
                         {
@@ -96,8 +93,6 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
                             Program.FormManager.CurrentForm = Program.QuickPlay;
 
                             FonctionsNatives.rotateCamera(180);
-
-
                         }
                     }));
                 });

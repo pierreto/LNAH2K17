@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using InterfaceGraphique.Controls.WPF.Matchmaking;
 using InterfaceGraphique.Game.GameState;
 using Microsoft.Practices.Unity;
+using InterfaceGraphique.Controls.WPF.Tournament;
 
 namespace InterfaceGraphique {
 
@@ -251,6 +252,10 @@ namespace InterfaceGraphique {
                 {
                     Program.TournementTree.RoundScore = score;
                     Program.FormManager.CurrentForm = Program.TournementTree;
+                }
+                else if(currentGameState.IsOnlineTournementMode)
+                {
+                    Program.FormManager.CurrentForm = Program.OnlineTournament;
                 }
                 else
                 {

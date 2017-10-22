@@ -13,7 +13,7 @@ namespace AirHockeyServer.Events.EventManagers
 {
     public class TournamentWaitingRoomEventManager
     {
-        protected const int WAITING_TIMEOUT = 40000;
+        protected const int WAITING_TIMEOUT = 2000;
 
         protected ConcurrentDictionary<int, int> RemainingTime { get; set; }
 
@@ -32,13 +32,20 @@ namespace AirHockeyServer.Events.EventManagers
 
         protected async void OnOpponentFound(object sender, UserEntity user)
         {
+            if(Tournament?.Players?.Count >= 4)
+            {
+                Tournament = null;
+            }
+
             if (Tournament == null)
             {
                 Tournament = new TournamentEntity
                 {
-                    Id = new Random().Next()
+                    Id = new Random().Next(),
+                    State = TournamentState.WaitingForPlayers
                 };
             }
+
 
 
             var connection = ConnectionMapper.GetConnection(user.UserId);
@@ -53,8 +60,9 @@ namespace AirHockeyServer.Events.EventManagers
                 GameEntity game1 = await CreateGame(Tournament.Players[0], Tournament.Players[1]);
                 GameEntity game2 = await CreateGame(Tournament.Players[2], Tournament.Players[3]);
 
-                Tournament.Games.Add(game1);
-                Tournament.Games.Add(game2);
+                Tournament.SemiFinals.Add(game1);
+                Tournament.SemiFinals.Add(game2);
+                Tournament.State = TournamentState.TournamentConfiguration;
 
                 this.RemainingTime[Tournament.Id] = 0;
 
@@ -83,7 +91,7 @@ namespace AirHockeyServer.Events.EventManagers
             foreach (var player in gameCreated.Players)
             {
                 var connection = ConnectionMapper.GetConnection(player.UserId);
-                await HubContext.Groups.Add(connection, stringGameId);
+                await GlobalHost.ConnectionManager.GetHubContext<GameWaitingRoomHub>().Groups.Add(connection, stringGameId);
             }
 
             return gameCreated;
@@ -104,33 +112,14 @@ namespace AirHockeyServer.Events.EventManagers
             if (RemainingTime[tournamentId] < WAITING_TIMEOUT)
             {
                 RemainingTime[tournamentId] += 1000;
-
-                // ONLY WORKING FOR GAME OR TOURNAMENT
-
-                //Hub.Clients.Group(gameId.ToString()).WaitingRoomRemainingTime();
-                HubContext.Clients.Group(tournamentId.ToString()).TournamentStarting((WAITING_TIMEOUT - RemainingTime[tournamentId]) / 1000);
+                
+                HubContext.Clients.Group(tournamentId.ToString()).WaitingRoomRemainingTime((WAITING_TIMEOUT - RemainingTime[tournamentId]) / 1000);
             }
             else
             {
                 timer.Stop();
-
-                // TODO : get game from db
-                //GameEntity game = GameService.GetGameEntityById(gameId);
-
-                //if (game == null)
-                //{
-                //    return;
-                //}
-
-                //if (game.SelectedMap == null)
-                //{
-                //    // TODO : select default map
-                //    game.SelectedMap = new MapEntity();
-
-                //    // TODO update game on bd
-
-                //}
                 
+                Tournament.State = TournamentState.SemiFinals;
                 HubContext.Clients.Group(tournamentId.ToString()).TournamentStarting(Tournament);
             }
         }

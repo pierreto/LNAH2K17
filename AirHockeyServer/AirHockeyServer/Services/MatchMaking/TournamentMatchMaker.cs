@@ -21,16 +21,16 @@ namespace AirHockeyServer.Services.MatchMaking
         /// @return un ensemble de joueurs
         ///
         ////////////////////////////////////////////////////////////////////////
-        public List<UserEntity> GetTournamentOpponents()
+        public UserEntity GetTournamentOpponent()
         {
             WaitingPlayersMutex.WaitOne();
 
             if (WaitingPlayers.Count >= 1)
             {
-                var players = WaitingPlayers.Take(1);
+                var player = WaitingPlayers.Dequeue();
                 WaitingPlayersMutex.ReleaseMutex();
 
-                return players.ToList();
+                return player;
             }
             else
             {
@@ -51,10 +51,10 @@ namespace AirHockeyServer.Services.MatchMaking
         ////////////////////////////////////////////////////////////////////////
         protected override void ExecuteMatch()
         {
-            var opponents = GetTournamentOpponents();
-            if (opponents != null && opponents.Count == 1)
+            var opponent = GetTournamentOpponent();
+            if (opponent != null)
             {
-                OpponentFound.Invoke(this, opponents.First());
+                OpponentFound.Invoke(this, opponent);
             }
         }
     }

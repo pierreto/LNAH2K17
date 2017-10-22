@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using InterfaceGraphique.Entities;
 using Microsoft.AspNet.SignalR.Client;
 using System.Threading;
+using InterfaceGraphique.Game.GameState;
 
 namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 {
@@ -31,6 +32,14 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
         protected UserEntity user { get; set; }
 
         protected HubConnection HubConnection { get; set; }
+        protected SlaveGameState SlaveGameState { get; }
+        protected MasterGameState MasterGameState { get; }
+
+        public TournamentWaitingRoomHub(SlaveGameState slaveGameState, MasterGameState masterGameState)
+        {
+            SlaveGameState = slaveGameState;
+            MasterGameState = masterGameState;
+        }
 
         public void InitializeHub(HubConnection connection, string username)
         {
@@ -70,6 +79,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
                 CurrentTournament = tournament;
                 InitializeConfigurationEvents();
             });
+
             WaitingRoomProxy.On<int>("WaitingRoomRemainingTime", remainingTime =>
             {
                 this.RemainingTimeEvent.Invoke(this, remainingTime);
@@ -78,9 +88,33 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
         private void InitializeConfigurationEvents()
         {
-            WaitingRoomProxy.On<TournamentEntity>("TournamentStarting", officialGame =>
+            WaitingRoomProxy.On<TournamentEntity>("TournamentStarting", tournament =>
             {
-                // CREATE NEW GAME
+                if(tournament.State == TournamentState.SemiFinals)
+                {
+                    //Program.LobbyHost.Invoke(new MethodInvoker(() =>
+                    //{
+                    //Program.QuickPlay.CurrentGameState.IsOnlineTournementMode = true;
+                    //if (tournament.SemiFinals.Any(game => game.Master.UserId == this.user.UserId))
+                    //{
+                    //this.MasterGameState.InitializeGameState(tournament.SemiFinals.Find(game => game.Master.UserId == this.user.UserId));
+                    Program.QuickPlay.CurrentGameState.IsTournementMode = true;
+                    this.MasterGameState.InitializeGameState(tournament.SemiFinals[0]);
+                            Program.QuickPlay.CurrentGameState = this.MasterGameState;
+                            Program.FormManager.CurrentForm = Program.QuickPlay;
+                        //}
+                        //else
+                        //{
+                        //    this.SlaveGameState.InitializeGameState(tournament.SemiFinals.Find(game => game.Slave.UserId == this.user.UserId));
+
+                        //    Program.QuickPlay.CurrentGameState = this.SlaveGameState;
+                        //    Program.FormManager.CurrentForm = Program.QuickPlay;
+
+                        //    FonctionsNatives.rotateCamera(180);
+                        //}
+                    //}));
+
+                }
             });
 
             WaitingRoomProxy.On<MapEntity>("TournamentMapUpdatedEvent", map =>

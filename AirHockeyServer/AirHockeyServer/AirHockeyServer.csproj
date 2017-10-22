@@ -252,6 +252,7 @@
     </Compile>
     <Compile Include="Hubs\GameWaitingRoomHub.cs" />
     <Compile Include="Hubs\ConnectionMapper.cs" />
+    <Compile Include="Hubs\TournamentHub.cs" />
     <Compile Include="Hubs\TournamentWaitingRoomHub.cs" />
     <Compile Include="Mapping\MapperManager.cs" />
     <Compile Include="Pocos\LoginPoco.cs" />
