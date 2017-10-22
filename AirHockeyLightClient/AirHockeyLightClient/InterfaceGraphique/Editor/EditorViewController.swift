@@ -28,6 +28,7 @@ class EditorViewController: UIViewController {
     @IBOutlet weak var editorView: SCNView!
     public var editorScene: SCNScene!
     public var cameraNode: SCNNode!
+    public var editorHUDScene: EditorHUDScene?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,10 +42,11 @@ class EditorViewController: UIViewController {
         self.initFacadeModele()
         
         // Load the SKScene from 'EditorHUDScene.sks'
-        if let scene = SKScene(fileNamed: "EditorHUDScene") {
+        self.editorHUDScene = SKScene(fileNamed: "EditorHUDScene") as? EditorHUDScene
+        if self.editorHUDScene != nil {
             // Set the scale mode to scale to fit the window
-            scene.scaleMode = .aspectFill
-            self.editorView.overlaySKScene = scene
+            self.editorHUDScene?.scaleMode = .aspectFill
+            self.editorView.overlaySKScene = self.editorHUDScene
         }
     }
     

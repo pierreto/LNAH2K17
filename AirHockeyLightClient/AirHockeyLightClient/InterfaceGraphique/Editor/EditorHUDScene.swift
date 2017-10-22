@@ -26,6 +26,8 @@ class EditorHUDScene: SKScene {
     private var pointControlButton: SKSpriteNode?
     private var portalButton: SKSpriteNode?
     private var wallButton: SKSpriteNode?
+    private var boosterButton: SKSpriteNode?
+    private var cancelButton: SKSpriteNode?
     
     override func sceneDidLoad() {
         super.sceneDidLoad()
@@ -37,13 +39,26 @@ class EditorHUDScene: SKScene {
         self.pointControlButton = (self.childNode(withName: "//pointControlButton") as? SKSpriteNode)!
         self.portalButton = (self.childNode(withName: "//portalButton") as? SKSpriteNode)!
         self.wallButton = (self.childNode(withName: "//wallButton") as? SKSpriteNode)!
+        self.boosterButton = (self.childNode(withName: "//boosterButton") as? SKSpriteNode)!
+        self.cancelButton = (self.childNode(withName: "//cancelButton") as? SKSpriteNode)!
+        
+        /// Cacher le bouton cancel
+        self.cancelButton?.isHidden = true
         
         // Charger les images
+        self.cameraControlButton?.texture = SKTexture(imageNamed: "Camera");
         self.selectionButton?.texture = SKTexture(imageNamed: "Select")
         self.deplacementButton?.texture = SKTexture(imageNamed: "Move")
         self.pointControlButton?.texture = SKTexture(imageNamed: "ControlPoint")
         self.portalButton?.texture = SKTexture(imageNamed: "Portal")
         self.wallButton?.texture = SKTexture(imageNamed: "Wall");
+        self.boosterButton?.texture = SKTexture(imageNamed: "Booster");
+        self.cancelButton?.texture = SKTexture(imageNamed: "Cancel");
+    }
+    
+    /// Activer/Desactiver le bouton d'annulation
+    func showCancelButton(activer: Bool) {
+        self.cancelButton?.isHidden = !activer
     }
     
     override func didMove(to view: SKView) {
@@ -87,6 +102,15 @@ class EditorHUDScene: SKScene {
             print("Wall")
             FacadeModele.instance.changerModeleEtat(etat: .CREATION_MURET)
         }
+        else if touchedNode?.name == "boosterButton"{
+            print("Booster")
+            FacadeModele.instance.changerModeleEtat(etat: .CREATION_ACCELERATEUR)
+        }
+        else if touchedNode?.name == "cancelButton"{
+            print("Annuler")
+            FacadeModele.instance.obtenirEtat().nettoyerEtat()
+        }
+        
         for t in touches { self.touchDown(atPoint: t.location(in: self)) }
     }
     

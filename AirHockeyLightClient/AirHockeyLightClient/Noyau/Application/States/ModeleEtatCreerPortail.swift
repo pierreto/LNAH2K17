@@ -47,13 +47,18 @@ class ModeleEtatCreerPortail: ModeleEtat {
     }
     
     func annulerCreation() {
+        /// Ignorer le tap associé au bouton pour la création de portails
+        FacadeModele.instance.obtenirVue().editorView.removeGestureRecognizer(FacadeModele.instance.tapGestureRecognizer!)
+        
         if (self.premierNoeud != nil) {
             // Supprimer le noeud ajouté
-            //FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->effacer(premierNoeud_);
             self.premierNoeud?.removeFromParentNode()
-            self.premierNoeud?.effetFantome(activer: false)
             self.premierNoeud = nil
+            FacadeModele.instance.obtenirVue().editorHUDScene?.showCancelButton(activer: false)
         }
+        
+        // Activer la reconnaissance de tap pour la création de portails
+        FacadeModele.instance.obtenirVue().editorView.addGestureRecognizer(FacadeModele.instance.tapGestureRecognizer!)
     }
     
     // Fonctions gérant les entrées de l'utilisateur
@@ -73,31 +78,36 @@ class ModeleEtatCreerPortail: ModeleEtat {
         let arbre = FacadeModele.instance.obtenirArbreRendu()
         
         let convertedPoint = MathHelper.GetHitTestSceneViewCoordinates(point: self.position)
-        let position = GLKVector3.init(v: (convertedPoint.x, convertedPoint.y, convertedPoint.z))
-        noeud.assignerPositionRelative(positionRelative: position)
         
-        // Ajout du noeud à l'arbre de rendu
-        arbre.addChildNode(noeud)
+        if convertedPoint != nil {
+        let position = GLKVector3.init(v: ((convertedPoint?.x)!, (convertedPoint?.y)!, (convertedPoint?.z)!))
+            noeud.assignerPositionRelative(positionRelative: position)
+        
+            // Ajout du noeud à l'arbre de rendu
+            arbre.addChildNode(noeud)
             
-        // Etat de l'operation
-        if (self.premierNoeud == nil) {
-            self.premierNoeud = noeud
-            self.premierNoeud?.effetFantome(activer: true)
-        }
-        else {
-            // Verification que les noeuds soient sur la table
-            // TODO : implémenter VisiteurSurTable
-            //if (noeudsSurLaTable()) {
-                // Link portal together
-                noeud.assignerOppose(portail: self.premierNoeud!);
-                self.premierNoeud?.assignerOppose(portail: noeud);
-                self.premierNoeud?.effetFantome(activer: false);
-                self.premierNoeud = nil;
-            //}
-            //else { // Annulation de la commande
-            //    self.annulerCreation()
-            //    noeud.removeFromParentNode()
-            //}
+            // Etat de l'operation
+            if (self.premierNoeud == nil) {
+                self.premierNoeud = noeud
+                self.premierNoeud?.effetFantome(activer: true)
+                FacadeModele.instance.obtenirVue().editorHUDScene?.showCancelButton(activer: true)
+            }
+            else {
+                // Verification que les noeuds soient sur la table
+                // TODO : implémenter VisiteurSurTable
+                if (self.noeudsSurLaTable()) {
+                    // Link portal together
+                    noeud.assignerOppose(portail: self.premierNoeud!);
+                    self.premierNoeud?.assignerOppose(portail: noeud);
+                    self.premierNoeud?.effetFantome(activer: false);
+                    self.premierNoeud = nil;
+                    FacadeModele.instance.obtenirVue().editorHUDScene?.showCancelButton(activer: false)
+                }
+                else { // Annulation de la commande
+                    self.annulerCreation()
+                    noeud.removeFromParentNode()
+                }
+            }
         }
     }
     

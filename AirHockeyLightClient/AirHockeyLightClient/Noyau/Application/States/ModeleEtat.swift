@@ -33,11 +33,12 @@ class ModeleEtat {
     
     // Fonctions gérant les entrées de l'utilisateur
 
-    /// Évènement appelé lorsque l'utilisateur tap sur l'écran
+    // TAP
     func tapGesture(point: CGPoint) {
         self.position = point
     }
     
+    // PAN
     func panGesture(sender: ImmediatePanGestureRecognizer) {
         self.lastPosition = self.position
         self.position = sender.location(in: sender.view)
@@ -46,6 +47,13 @@ class ModeleEtat {
     /// Fonction pour obtenir la vue rapidement
     func obtenirVue() -> UIViewController {
         return FacadeModele.instance.obtenirVue()
+    }
+    
+    /// Vérifie que les objets sont sur la table.
+    func noeudsSurLaTable() -> Bool {
+        let visiteur = VisiteurSurTable()
+        FacadeModele.instance.obtenirArbreRendu().accepterVisiteur(visiteur: visiteur)
+        return visiteur.obtenirSontSurTable()
     }
 }
 
