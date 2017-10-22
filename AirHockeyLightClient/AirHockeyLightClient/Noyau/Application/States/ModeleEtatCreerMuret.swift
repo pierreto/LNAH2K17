@@ -74,7 +74,7 @@ class ModeleEtatCreerMuret: ModeleEtat {
                 
                 // Création du noeud
                 let arbre = FacadeModele.instance.obtenirArbreRendu()
-                self.noeud = FacadeModele.instance.obtenirArbreRendu().creerNoeud(typeNouveauNoeud: arbre.NOM_MUR) as! NoeudMur
+                self.noeud = arbre.creerNoeud(typeNouveauNoeud: arbre.NOM_MUR) as! NoeudMur
                 
                 // Déplacement du noeud (avec transformation du point dans l'espace virtuelle)
                 let point = MathHelper.GetHitTestSceneViewCoordinates(point: self.position)
@@ -90,7 +90,8 @@ class ModeleEtatCreerMuret: ModeleEtat {
                     self.noeud?.effetFantome(activer: true)
                 
                     // Ajout du noeud à l'arbre de rendu
-                    arbre.addChildNode(self.noeud!)
+                    let table = arbre.childNode(withName: arbre.NOM_TABLE, recursively: true) as! NoeudTable
+                    table.addChildNode(self.noeud!)
                 }
             }
             else if sender.state == UIGestureRecognizerState.ended {

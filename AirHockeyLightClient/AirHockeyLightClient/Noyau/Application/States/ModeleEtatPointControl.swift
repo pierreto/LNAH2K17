@@ -35,14 +35,17 @@ class ModeleEtatPointControl : ModeleEtat {
         arbre.accepterVisiteur(visiteur: VisiteurSelectionnable(type: arbre.NOM_POINT_CONTROL, selectionnable: true))
         
         // Afficher les points en rose saumon
-        let table = arbre.childNode(withName: arbre.NOM_TABLE, recursively: true)
-        for child in (table?.childNodes)! {
+        let table = arbre.childNode(withName: arbre.NOM_TABLE, recursively: true) as! NoeudTable
+        for child in (table.childNodes) {
             if (child.name == arbre.NOM_POINT_CONTROL) {
                 let color = UIColor(red: 1.0, green: 85.0/255.0, blue: 82.0/255.0, alpha: 1.0)
                 let pointControl = child as! NoeudPointControl
                 pointControl.useOtherColor(activer: true, color: color)
             }
         }
+        
+        // Déselectionner tous les objets
+        table.deselectionnerTout()
         
         // Le déplacement des points de contrôle s'effectue par un gesture pan
         FacadeModele.instance.obtenirVue().editorView.addGestureRecognizer(FacadeModele.instance.panGestureRecognizer!)

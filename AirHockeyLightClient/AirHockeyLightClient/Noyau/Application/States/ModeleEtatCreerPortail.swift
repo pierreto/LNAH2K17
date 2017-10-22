@@ -71,12 +71,11 @@ class ModeleEtatCreerPortail: ModeleEtat {
         super.tapGesture(point: point)
         
         // Création du noeud
-        let noeud = FacadeModele.instance.obtenirArbreRendu().creerNoeud(typeNouveauNoeud: ArbreRendu.instance.NOM_PORTAIL) as! NoeudPortail
+        let arbre = FacadeModele.instance.obtenirArbreRendu()
+        let noeud = arbre.creerNoeud(typeNouveauNoeud: ArbreRendu.instance.NOM_PORTAIL) as! NoeudPortail
             
         // Déplacement du noeud
         // Transformation du point dans l'espace virtuelle
-        let arbre = FacadeModele.instance.obtenirArbreRendu()
-        
         let convertedPoint = MathHelper.GetHitTestSceneViewCoordinates(point: self.position)
         
         if convertedPoint != nil {
@@ -84,7 +83,8 @@ class ModeleEtatCreerPortail: ModeleEtat {
             noeud.assignerPositionRelative(positionRelative: position)
         
             // Ajout du noeud à l'arbre de rendu
-            arbre.addChildNode(noeud)
+            let table = arbre.childNode(withName: arbre.NOM_TABLE, recursively: true) as! NoeudTable
+            table.addChildNode(noeud)
             
             // Etat de l'operation
             if (self.premierNoeud == nil) {
