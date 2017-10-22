@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using InterfaceGraphique.CommunicationInterface;
-using InterfaceGraphique.Controls.WPF.Chat;
+﻿using InterfaceGraphique.Controls.WPF.Chat;
 using InterfaceGraphique.Controls.WPF.Matchmaking;
 using InterfaceGraphique.Controls.WPF.ConnectServer;
 using Microsoft.Practices.Unity;
+using InterfaceGraphique.Controls.WPF.Home;
+using InterfaceGraphique.Controls.WPF.Authenticate;
 
 namespace InterfaceGraphique.Controls.WPF
 {
@@ -22,9 +18,19 @@ namespace InterfaceGraphique.Controls.WPF
             container = Program.unityContainer;
         }
 
+        public HomeViewModel HomeViewModel
+        {
+            get { return container.Resolve<HomeViewModel>(); }
+        }
+
         public ConnectServerViewModel ConnectServerViewModel
         {
             get { return container.Resolve<ConnectServerViewModel>(); }
+        }
+
+        public AuthenticateViewModel AuthenticateViewModel
+        {
+            get { return container.Resolve<AuthenticateViewModel>(); }
         }
 
         public ChatViewModel ChatViewModel

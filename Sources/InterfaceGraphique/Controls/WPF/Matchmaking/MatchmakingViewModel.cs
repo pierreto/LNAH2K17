@@ -87,7 +87,6 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
                 this.waitingRoomHub.JoinGame();
                 this.IsStarted = true;
             }
-
         }
 
 

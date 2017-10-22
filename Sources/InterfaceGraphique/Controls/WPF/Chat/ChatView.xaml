@@ -135,7 +135,7 @@
 
                      VerticalScrollBarVisibility="Auto"
 
-                     Text="{Binding MessagheTextBox, UpdateSourceTrigger=PropertyChanged}" Background="#FF494C51" Foreground="White">
+                     Text="{Binding MessageTextBox, UpdateSourceTrigger=PropertyChanged}" Background="#FF494C51" Foreground="White">
 
                     <TextBox.InputBindings>
                         <KeyBinding Key="Enter" Command="{Binding EnterKeyCommand}"/>

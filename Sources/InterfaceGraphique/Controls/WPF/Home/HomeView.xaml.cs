@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace InterfaceGraphique.Controls.WPF.ConnectServer
+namespace InterfaceGraphique.Controls.WPF.Home
 {
     /// <summary>
-    /// Logique d'interaction pour ConnectServer.xaml
+    /// Interaction logic for HomeView.xaml
     /// </summary>
-    public partial class ConnectServer : UserControl
+    public partial class HomeView : UserControl
     {
-        public ConnectServer()
+        public HomeView()
         {
             InitializeComponent();
         }

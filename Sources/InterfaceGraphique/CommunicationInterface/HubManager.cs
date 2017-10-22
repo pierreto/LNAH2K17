@@ -5,17 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR.Client;
 using Microsoft.Practices.Unity;
+using System.Threading;
 
 namespace InterfaceGraphique.CommunicationInterface
 {
 
     //CLASSE TRES TEMPORAIRE
-    class HubManager
+    public class HubManager
     {
         private HubConnection connection;
-
-        private ChatHub chatHub;
-
 
         private List<IBaseHub> hubs;
 

@@ -26,20 +26,13 @@ namespace AirHockeyServer.Controllers
         {
             try
             {
-                if (await this.LoginService.ValidateCredentials(loginEntity))
-                {
-                    return Request.CreateResponse(HttpStatusCode.OK, true);
-                }
-                else
-                {
-                    return Request.CreateResponse(HttpStatusCode.OK, false);
-                }
-
+                await this.LoginService.ValidateCredentials(loginEntity);
+                return Request.CreateResponse(HttpStatusCode.OK);
             }
             catch (LoginException e)
             {
                 System.Diagnostics.Debug.WriteLine(e);
-                return Request.CreateResponse(HttpStatusCode.Forbidden);
+                return Request.CreateResponse(HttpStatusCode.Unauthorized, e.Message);
             }
             catch (Exception e)
             {

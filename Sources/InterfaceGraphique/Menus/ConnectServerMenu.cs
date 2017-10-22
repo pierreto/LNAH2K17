@@ -15,77 +15,11 @@ namespace InterfaceGraphique.Menus
     public partial class ConnectServerMenu : Form
     {
 
-        private HubManager hubManager;
-        private readonly string LOCALHOST = "localhost";
         public ConnectServerMenu()
         {
             InitializeComponent();
-            InitializeEvents();
-            this.hubManager = new HubManager();
-            this.ipAddressErrorLabel.Text = "";
         }
 
-        private void InitializeEvents()
-        {
-            this.ConnectServerButton.Click += async (sender, e) =>
-            {
-                await ConnectToServer();
-            };
-
-            this.IpAddressInput.KeyPress += new System.Windows.Forms.KeyPressEventHandler(CheckEnterKeyPress);
-        }
-
-        private async Task ConnectToServer()
-        {
-            this.ConnectServerButton.Enabled = false;
-
-            try
-            {
-                ValidateIpAddress();
-                await hubManager.EstablishConnection(IpAddressInput.Text);
-                Program.FormManager.CurrentForm = Program.MainMenu;
-            }
-            catch (LoginException e)
-            {
-                Console.WriteLine(e);
-                this.NotifyError(this.IpAddressInput);
-                this.ipAddressErrorLabel.Text = "Adresse IP invalide";
-            }
-            catch (System.Exception exception)
-            {
-                //Server Exceptions...
-                Console.WriteLine(exception);
-                this.NotifyError(this.IpAddressInput);
-                this.ipAddressErrorLabel.Text = "Adresse non rejoinable";
-            }
-            finally
-            {
-                this.ConnectServerButton.Enabled = true;
-            }
-        }
-
-        private void ValidateIpAddress()
-        {
-            if (!ValidateIP(IpAddressInput.Text) && !LOCALHOST.Equals(IpAddressInput.Text))
-            {
-                throw new LoginException(@"Le format de l'adresse IP n'est pas valide.");
-            }
-        }
-
-        private bool ValidateIP(string ipString)
-        {
-            if (String.IsNullOrWhiteSpace(ipString))
-            {
-                return false;
-            }
-
-            string[] splitValues = ipString.Split('.');
-            if (splitValues.Length != 4)
-            {
-                return false;
-            }
-            return splitValues.All(r => byte.TryParse(r, out byte tempForParsing));
-        }
 
         ////////////////////////////////////////////////////////////////////////
         ///
@@ -140,29 +74,6 @@ namespace InterfaceGraphique.Menus
         public void UnsuscribeEventHandlers()
         {
             Program.FormManager.SizeChanged -= new EventHandler(WindowSizeChanged);
-        }
-
-        private async void CheckEnterKeyPress(object sender, System.Windows.Forms.KeyPressEventArgs e)
-        {
-            ClearTextBox(this.IpAddressInput);
-            this.ipAddressErrorLabel.Text = "";
-            if (e.KeyChar == (char)Keys.Return)
-            {
-                await ConnectToServer();
-                e.Handled = true;
-            }
-
-        }
-
-        private void NotifyError(TextBox textBox)
-        {
-            textBox.Text = "";
-            textBox.BackColor = ColorTranslator.FromHtml("#F2ACAC");
-        }
-
-        private void ClearTextBox(TextBox textBox)
-        {
-            textBox.BackColor = Color.White;
         }
     }
 }

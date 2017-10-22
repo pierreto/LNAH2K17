@@ -5,7 +5,7 @@ namespace AirHockeyServer.Services
 {
     public interface ILoginService
     {
-        Task<bool> ValidateCredentials(LoginEntity loginEntity);
+        Task ValidateCredentials(LoginEntity loginEntity);
         void Logout(LoginEntity message);
     }
 }

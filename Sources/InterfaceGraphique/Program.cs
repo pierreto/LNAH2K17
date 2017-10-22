@@ -22,6 +22,9 @@ using InterfaceGraphique.Menus;
 using Microsoft.AspNet.SignalR.Client;
 using Microsoft.Practices.Unity;
 using Application = System.Windows.Forms.Application;
+using InterfaceGraphique.Controls.WPF.Authenticate;
+using InterfaceGraphique.Controls.WPF.Home;
+using InterfaceGraphique.Controls.WPF.ConnectServer;
 
 namespace InterfaceGraphique
 {
@@ -34,6 +37,8 @@ namespace InterfaceGraphique
         public static FormManager FormManager { get { return formManager; } }
         public static MainMenu MainMenu { get { return mainMenu; } }
         public static ConnectServerMenu ConnectServerMenu { get { return connectServerMenu; } }
+        public static AuthenticateMenu AuthenticateMenu { get { return authenticateMenu; } }
+        public static SignupMenu SignupMenu { get { return signupMenu; } }
         public static Login Login {  get { return login; } }
         public static Editeur Editeur { get { return editeur; } }
         public static ConfigurationMenu ConfigurationMenu { get { return configurationMenu; } }
@@ -52,6 +57,8 @@ namespace InterfaceGraphique
         private static HomeMenu homeMenu;
         private static MainMenu mainMenu;
         private static ConnectServerMenu connectServerMenu;
+        private static AuthenticateMenu authenticateMenu;
+        private static SignupMenu signupMenu;
         private static Editeur editeur;
         private static ConfigurationMenu configurationMenu;
         private static QuickPlay quickPlay;
@@ -104,6 +111,8 @@ namespace InterfaceGraphique
             mainMenu = new MainMenu();
             homeMenu = new HomeMenu();
             connectServerMenu = new ConnectServerMenu();
+            authenticateMenu = new AuthenticateMenu();
+            signupMenu = new SignupMenu();
             editeur = new Editeur();
             configurationMenu = new ConfigurationMenu();
             quickPlay = new QuickPlay();
@@ -130,6 +139,10 @@ namespace InterfaceGraphique
             unityContainer.RegisterType<IBaseHub,WaitingRoomHub>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<IBaseHub,GameHub>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<ChatViewModel>();
+            unityContainer.RegisterType<AuthenticateViewModel>();
+            unityContainer.RegisterType<SignupViewModel>();
+            unityContainer.RegisterType<HomeViewModel>();
+            unityContainer.RegisterType<ConnectServerViewModel>();
         }
 
         static void ExecuterQuandInactif(object sender, EventArgs e)

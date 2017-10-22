@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace InterfaceGraphique.Menus
 {
-    public partial class HomeMenu : Form
+    public partial class AuthenticateMenu : Form
     {
-        public HomeMenu()
+        public AuthenticateMenu()
         {
             InitializeComponent();
         }
@@ -70,31 +70,6 @@ namespace InterfaceGraphique.Menus
         public void UnsuscribeEventHandlers()
         {
             Program.FormManager.SizeChanged -= new EventHandler(WindowSizeChanged);
-        }
-
-        private void InitializeComponent()
-        {
-            this.elementHost1 = new System.Windows.Forms.Integration.ElementHost();
-            this.homeView1 = new InterfaceGraphique.Controls.WPF.Home.HomeView();
-            this.SuspendLayout();
-            // 
-            // elementHost1
-            // 
-            this.elementHost1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.elementHost1.Location = new System.Drawing.Point(0, 0);
-            this.elementHost1.Name = "elementHost1";
-            this.elementHost1.Size = new System.Drawing.Size(284, 261);
-            this.elementHost1.TabIndex = 0;
-            this.elementHost1.Text = "elementHost1";
-            this.elementHost1.Child = this.homeView1;
-            // 
-            // HomeMenu
-            // 
-            this.ClientSize = new System.Drawing.Size(284, 261);
-            this.Controls.Add(this.elementHost1);
-            this.Name = "HomeMenu";
-            this.ResumeLayout(false);
-
         }
     }
 }

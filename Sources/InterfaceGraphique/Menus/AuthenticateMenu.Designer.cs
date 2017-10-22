@@ -1,6 +1,6 @@
 ﻿namespace InterfaceGraphique.Menus
 {
-    partial class ConnectServerMenu
+    partial class AuthenticateMenu
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.elementHost1 = new System.Windows.Forms.Integration.ElementHost();
-            this.connectServerView1 = new InterfaceGraphique.Controls.WPF.ConnectServer.ConnectServerView();
+            this.authenticateView1 = new InterfaceGraphique.Controls.WPF.Authenticate.AuthenticateView();
             this.SuspendLayout();
             // 
             // elementHost1
@@ -37,19 +37,19 @@
             this.elementHost1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.elementHost1.Location = new System.Drawing.Point(0, 0);
             this.elementHost1.Name = "elementHost1";
-            this.elementHost1.Size = new System.Drawing.Size(605, 368);
+            this.elementHost1.Size = new System.Drawing.Size(522, 367);
             this.elementHost1.TabIndex = 0;
             this.elementHost1.Text = "elementHost1";
-            this.elementHost1.Child = this.connectServerView1;
+            this.elementHost1.Child = this.authenticateView1;
             // 
-            // ConnectServerMenu
+            // AuthenticateMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(605, 368);
+            this.ClientSize = new System.Drawing.Size(522, 367);
             this.Controls.Add(this.elementHost1);
-            this.Name = "ConnectServerMenu";
-            this.Text = "ConnectServerMenu";
+            this.Name = "AuthenticateMenu";
+            this.Text = "Authenticate";
             this.ResumeLayout(false);
 
         }
@@ -57,6 +57,6 @@
         #endregion
 
         private System.Windows.Forms.Integration.ElementHost elementHost1;
-        private Controls.WPF.ConnectServer.ConnectServerView connectServerView1;
+        private Controls.WPF.Authenticate.AuthenticateView authenticateView1;
     }
 }
