@@ -15,6 +15,7 @@ namespace InterfaceGraphique.Controls.WPF.Editor
         private ObservableCollection<OnlineEditedMapInfo> onlineEditedMapInfos;
         private ICommand serverListViewCommand;
         private ICommand modeViewCommand;
+        private ICommand joinEditionCommand;
 
         public EditorViewModel()
         {
@@ -59,5 +60,24 @@ namespace InterfaceGraphique.Controls.WPF.Editor
             set => onlineEditedMapInfos = value;
         }
 
+        public ICommand JoinEditionCommand
+        {
+            get
+            {
+                return joinEditionCommand ??
+                       (joinEditionCommand = new RelayCommandAsync(JoinEdition, (o) => CanJoinEdition()));
+            }
+
+        }
+
+        private async Task JoinEdition()
+        {
+            
+        }
+
+        private bool CanJoinEdition()
+        {
+            return true;
+        }
     }
 }

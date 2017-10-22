@@ -135,14 +135,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommunicationInterface\ChatHub.cs" />
+    <Compile Include="CommunicationInterface\EditionBrowserHub.cs" />
     <Compile Include="CommunicationInterface\GameHub.cs" />
+    <Compile Include="CommunicationInterface\IBaseHub.cs" />
     <Compile Include="CommunicationInterface\RestInterface\HttpResponseParser.cs" />
     <Compile Include="CommunicationInterface\RestInterface\MapsRepository.cs" />
     <Compile Include="CommunicationInterface\RestInterface\Repository.cs" />
     <Compile Include="CommunicationInterface\TournamentHub.cs" />
     <Compile Include="CommunicationInterface\WaitingRoomHub.cs" />
     <Compile Include="CommunicationInterface\HubManager.cs" />
-    <Compile Include="CommunicationInterface\IBaseHub.cs" />
     <Compile Include="Controls\LobbyHost.cs">
       <SubType>Form</SubType>
     </Compile>
