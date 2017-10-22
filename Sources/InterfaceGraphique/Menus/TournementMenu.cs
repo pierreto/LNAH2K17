@@ -34,6 +34,8 @@ namespace InterfaceGraphique {
             InitializeAvailableColors();
         }
 
+        bool isOnline { get; set; }
+
 
         ////////////////////////////////////////////////////////////////////////
         ///
@@ -231,9 +233,7 @@ namespace InterfaceGraphique {
         private void SwitchButtonsState(Button select, Button deselect) {
             if(select == OnlineTournamentButton)
             {
-                Program.FormManager.CurrentForm = Program.OnlineTournament;
-                var vm = Program.unityContainer.Resolve<Controls.WPF.Tournament.TournamentViewModel>();
-                vm.Initialize();
+                isOnline = true;
             }
             if (select.ForeColor == Color.White) {
                 select.ForeColor = deselect.ForeColor;
@@ -265,8 +265,18 @@ namespace InterfaceGraphique {
             SaveGameSettings();
             Program.QuickPlay.CurrentGameState.IsTournementMode = true;
             Program.QuickPlay.CurrentGameState.MapFilePath = mapFilePath;
-            Program.TournementTree.CurrentRound = 0;
-            Program.FormManager.CurrentForm = Program.TournementTree;
+            if(!isOnline)
+            {
+                Program.TournementTree.CurrentRound = 0;
+                Program.FormManager.CurrentForm = Program.TournementTree;
+            }
+            else
+            {
+                //Program.FormManager.CurrentForm = Program.OnlineTournament;
+                //var vm = Program.unityContainer.Resolve<Controls.WPF.Tournament.TournamentViewModel>();
+                //vm.Initialize();
+                Program.FormManager.CurrentForm = Program.QuickPlay;
+            }
         }
 
 
@@ -409,6 +419,10 @@ namespace InterfaceGraphique {
         ///
         ////////////////////////////////////////////////////////////////////////
         private void ValidateSettings(object sender, EventArgs e) {
+            if(isOnline)
+            {
+                LoadGame();
+            }
             if (this.Button_Player1Human.ForeColor == Color.White && this.Button_Player2Human.ForeColor == Color.White && this.Button_Player3Human.ForeColor == Color.White && this.Button_Player4Human.ForeColor == Color.White) {
                 string warning = "La partie ne peut être lancée sans qu'il y ait au moins un joueur humain.";
                 ErrorMessageDialog dialog = new ErrorMessageDialog(warning);

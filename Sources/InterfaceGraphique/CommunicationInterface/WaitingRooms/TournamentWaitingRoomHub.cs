@@ -93,16 +93,16 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
             {
                 if(tournament.State == TournamentState.SemiFinals)
                 {
-                    //Program.LobbyHost.Invoke(new MethodInvoker(() =>
-                    //{
-                    //Program.QuickPlay.CurrentGameState.IsOnlineTournementMode = true;
-                    //if (tournament.SemiFinals.Any(game => game.Master.UserId == this.user.UserId))
-                    //{
-                    //this.MasterGameState.InitializeGameState(tournament.SemiFinals.Find(game => game.Master.UserId == this.user.UserId));
-                    //Program.QuickPlay.CurrentGameState.IsTournementMode = true;
-                    //this.MasterGameState.InitializeGameState(tournament.SemiFinals[0]);
-                    //        Program.QuickPlay.CurrentGameState = this.MasterGameState;
-                    //        Program.FormManager.CurrentForm = Program.QuickPlay;
+                    Program.LobbyHost.Invoke(new MethodInvoker(() =>
+                    {
+                        //Program.QuickPlay.CurrentGameState.IsOnlineTournementMode = true;
+                        //if (tournament.SemiFinals.Any(game => game.Master.UserId == this.user.UserId))
+                        //{
+                        //this.MasterGameState.InitializeGameState(tournament.SemiFinals.Find(game => game.Master.UserId == this.user.UserId));
+                        //Program.QuickPlay.CurrentGameState.IsTournementMode = true;
+                        //this.MasterGameState.InitializeGameState(tournament.SemiFinals[0]);
+                        //        Program.QuickPlay.CurrentGameState = this.MasterGameState;
+                        Program.FormManager.CurrentForm = Program.QuickPlay;
                         //}
                         //else
                         //{
@@ -113,7 +113,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
                         //    FonctionsNatives.rotateCamera(180);
                         //}
-                    //}));
+                    }));
 
                 }
             });
