@@ -30,7 +30,11 @@ class EditorHUDScene: SKScene {
     private var cancelButton: SKSpriteNode?
     
     override func sceneDidLoad() {
-        super.sceneDidLoad()
+        if #available(iOS 10.0, *) {
+            super.sceneDidLoad()
+        } else {
+            // Fallback on earlier versions
+        }
         
         // Chercher les boutons noeud
         self.cameraControlButton = (self.childNode(withName: "//cameraControlButton") as? SKSpriteNode)!

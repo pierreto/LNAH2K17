@@ -83,6 +83,7 @@
 		8F6AE2C01F6592EB00A29E8B /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8F6AE2BF1F6592EB00A29E8B /* Actions.sks */; };
 		8F6AE2C21F6592EB00A29E8B /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6AE2C11F6592EB00A29E8B /* GameScene.swift */; };
 		8F6AE2C91F6592EB00A29E8B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8F6AE2C81F6592EB00A29E8B /* Assets.xcassets */; };
+		8F76FC0F1F9CF990001BBC99 /* SCNodeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F76FC0E1F9CF990001BBC99 /* SCNodeHelper.swift */; };
 		8F8706B91F7892BB000E6824 /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8706B81F7892BB000E6824 /* Entity.swift */; };
 		8F8706BB1F7892F2000E6824 /* ChatMessageEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8706BA1F7892F2000E6824 /* ChatMessageEntity.swift */; };
 		8F8706BD1F78A67F000E6824 /* ChannelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8706BC1F78A67F000E6824 /* ChannelViewController.swift */; };
@@ -176,6 +177,7 @@
 		8F6AE2C11F6592EB00A29E8B /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		8F6AE2C81F6592EB00A29E8B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8F6AE2CD1F6592EB00A29E8B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8F76FC0E1F9CF990001BBC99 /* SCNodeHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SCNodeHelper.swift; path = Noyau/Helper/SCNodeHelper.swift; sourceTree = "<group>"; };
 		8F8706B81F7892BB000E6824 /* Entity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Entity.swift; path = Noyau/Entities/Entity.swift; sourceTree = "<group>"; };
 		8F8706BA1F7892F2000E6824 /* ChatMessageEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatMessageEntity.swift; path = Noyau/Entities/ChatMessageEntity.swift; sourceTree = "<group>"; };
 		8F8706BC1F78A67F000E6824 /* ChannelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChannelViewController.swift; path = InterfaceGraphique/Chat/ChannelViewController.swift; sourceTree = "<group>"; };
@@ -271,6 +273,7 @@
 				344A6E2B1F994E0D00CFFBEB /* CollisionHelper.swift */,
 				253E088D1F818DD2009F301B /* JsonHelper.swift */,
 				8F69F4BE1F8AF871004D5129 /* MathHelper.swift */,
+				8F76FC0E1F9CF990001BBC99 /* SCNodeHelper.swift */,
 			);
 			name = Helper;
 			sourceTree = "<group>";
@@ -729,6 +732,7 @@
 				253E088C1F81858E009F301B /* UIViewShake.swift in Sources */,
 				1D019A211F911DF6004D79B2 /* Login.swift in Sources */,
 				8FB6A9CA1F81E38300FAFFCF /* Table.swift in Sources */,
+				8F76FC0F1F9CF990001BBC99 /* SCNodeHelper.swift in Sources */,
 				3415E6C21F8545B300DB1CAD /* NoeudCommun.swift in Sources */,
 				8F8706B91F7892BB000E6824 /* Entity.swift in Sources */,
 				34B66FE21F84599100A9CCB9 /* But.swift in Sources */,
@@ -875,7 +879,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = BG3AZJL2HA;
 				INFOPLIST_FILE = AirHockeyLightClient/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "ca.polymtl.A17-LOG3900-03.AirHockeyLightClient";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -893,7 +897,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = BG3AZJL2HA;
 				INFOPLIST_FILE = AirHockeyLightClient/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "ca.polymtl.A17-LOG3900-03.AirHockeyLightClient";
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -102,8 +102,7 @@ class ModeleEtatCreerMuret: ModeleEtat {
                     self.noeud = nil
                 }
                 else {
-                    if (self.noeud != nil)
-                    {
+                    if (self.noeud != nil) {
                         self.noeud?.removeFromParentNode()
                         self.noeud = nil
                     }
@@ -119,6 +118,7 @@ class ModeleEtatCreerMuret: ModeleEtat {
 
                     // Calculer la distance pour le scaling
                     let distance = GLKVector3Distance(point, self.pointInitial)
+                    self.noeud?.scale = SCNVector3(1, 1, distance)
                 
                     // Calculer l'angle pour la rotation
                     let node2mouse = GLKVector3Subtract(point, self.pointInitial)
@@ -133,15 +133,13 @@ class ModeleEtatCreerMuret: ModeleEtat {
                     let crossProduct = GLKVector3CrossProduct(x, y)
                     let dotCrossProduct = GLKVector3DotProduct(ref, crossProduct)
                     let finalAngle = dotCrossProduct >= 0 ? angle : -angle
-                
-                    // Calculer le déplecement
+                    self.noeud?.rotation = SCNVector4(0, 1, 0, finalAngle)
+                    
+                    // Calculer le déplacement
                     var position = GLKVector3.init(v: (self.pointInitial.x, self.pointInitial.y, self.pointInitial.z));
                     position.x += Float(sin(finalAngle) * distance / 2)
                     position.z += Float(cos(finalAngle) * distance / 2)
-                
-                    self.noeud?.deplacer(position: position)
-                    self.noeud?.scale = SCNVector3(1, 1, distance)
-                    self.noeud?.rotation = SCNVector4(0, 1, 0, finalAngle)
+                    self.noeud?.position = SCNVector3FromGLKVector3(position)
                 }
             }
     }

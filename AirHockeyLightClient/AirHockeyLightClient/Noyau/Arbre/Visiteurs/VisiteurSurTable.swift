@@ -41,7 +41,7 @@ class VisiteurSurTable: VisiteurAbstrait {
     func visiterAccelerateur(noeud: NoeudAccelerateur) {
         if self.table != nil {
             self.testPoints(noeud: noeud)
-            self.intersectCercleTable(noeud: noeud, rayon: 3.75)
+            //self.intersectCercleTable(noeud: noeud, rayon: 3.75)
         }
     }
     
@@ -58,35 +58,32 @@ class VisiteurSurTable: VisiteurAbstrait {
     
     /// Visiter un mur pour la vérification sur la table
     func visiterMur(noeud: NoeudMur) {
+        if self.table != nil {
+            // Test de l'intersection d'un cube avec la table
+            self.testPoints(noeud: noeud)
+            //self.intersectCubeTable(noeud: noeud)
+        }
     }
     
     /// Visiter un portail pour la vérification sur la table
     func visiterPortail(noeud: NoeudPortail) {
         if self.table != nil {
             self.testPoints(noeud: noeud)
-            self.intersectCercleTable(noeud: noeud, rayon: 7);
+            //self.intersectCercleTable(noeud: noeud, rayon: 7);
         }
     }
     
     //virtual void visiterRondelle(NoeudRondelle* noeud);
     
-    /// Cette fonction test si les points d'un noeud sont tous sur la table
+    /// Cette fonction teste si les points d'un noeud sont tous sur la table
     private func testPoints(noeud: NoeudCommun) {
-        // Ramasser les sommets du noeuds
-        var sommets: [SCNVector3] = self.obtenirSommets(noeud: noeud)
-    
-        // Appliquer les transformations sur les points
-        for i in 0..<sommets.count {
-            var sommetTransforme = GLKVector4.init(v: (sommets[i].x, sommets[i].y, sommets[i].z, 1.0))
-            sommetTransforme = GLKMatrix4MultiplyVector4(SCNMatrix4ToGLKMatrix4(noeud.transform), sommetTransforme)
-            sommets[i] = SCNVector3.init(sommetTransforme.x, sommetTransforme.y, sommetTransforme.z)
-        }
-    
-        // Ajouter le centre du noeud
-        sommets.append(SCNVector3FromGLKVector3(noeud.obtenirPositionRelative()))
-    
-        // Enleve les doublons
-        sommets = self.enleverDoublons(vec: sommets);
+        var sommets = [SCNVector3]()
+        
+        // Point minimal
+        sommets.append(noeud.convertPosition(noeud.boundingBox.min, to: FacadeModele.instance.obtenirVue().editorScene.rootNode))
+        
+        // Point maximal
+        sommets.append(noeud.convertPosition(noeud.boundingBox.max, to: FacadeModele.instance.obtenirVue().editorScene.rootNode))
     
         // Verifier que tous les noeuds sont sur la table
         for sommet in sommets {
@@ -95,20 +92,6 @@ class VisiteurSurTable: VisiteurAbstrait {
                 return;
             }
         }
-    }
-    
-    /// Cette fonction retourne les points d'un noeud de l'arbre de rendu
-    private func obtenirSommets(noeud: NoeudCommun) -> [SCNVector3] {
-        let vertexSources = noeud.geometry?.getGeometrySources(for: SCNGeometrySource.Semantic.vertex)
-        
-        if let vertexSource = vertexSources?.first {
-            let count = vertexSource.data.count / MemoryLayout<SCNVector3>.size
-            return vertexSource.data.withUnsafeBytes {
-                [SCNVector3](UnsafeBufferPointer<SCNVector3>(start: $0, count: count))
-            }
-        }
-        
-        return []
     }
     
     /// Cette fonction enleve les doublons pour un vecteur de sommets
