@@ -1,9 +1,11 @@
-﻿using InterfaceGraphique.Entities;
+﻿using InterfaceGraphique.CommunicationInterface;
+using InterfaceGraphique.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -13,12 +15,16 @@ namespace InterfaceGraphique.Controls.WPF.Signup
     {
 
         private SignupEntity signupEntity;
+        private HubManager hubManager;
+        private ChatHub chatHub;
 
         static HttpClient client = new HttpClient();
 
-        public SignupViewModel(SignupEntity signupEntity)
+        public SignupViewModel(SignupEntity signupEntity, ChatHub chatHub)
         {
+            this.chatHub = chatHub;
             this.signupEntity = signupEntity;
+            this.hubManager = HubManager.Instance;
             this.inputsEnabled = true;
         }
 
@@ -42,13 +48,16 @@ namespace InterfaceGraphique.Controls.WPF.Signup
                 {
                     Loading();
                     ResetErrMsg();
-                    if (!ValidatePasswordsIdentical())
+                    if (!ValidateFields())
                     {
                         return null;
                     }
                     var response = await client.PostAsJsonAsync("http://localhost:63056/api/signup", signupEntity);
                     if (response.IsSuccessStatusCode)
                     {
+                        hubManager.AddHubs();
+                        await hubManager.InitializeHubs(signupEntity.Username);
+                        await chatHub.InitializeChat();
                         Program.FormManager.CurrentForm = Program.MainMenu;
                     }
                     else
@@ -75,14 +84,58 @@ namespace InterfaceGraphique.Controls.WPF.Signup
 
         }
 
-        private bool ValidatePasswordsIdentical()
+        private bool ValidateFields()
         {
-            if(Password == ConfirmPassword)
+            bool valid = true;
+            if (Username == "")
             {
-                return true;
+                UsernameErrMsg = "Nom d'usager requis";
+                valid = false;
             }
-            ConfirmPasswordErrMsg = "Mots de passes pas identiques";
-            return false;
+            else if (Username.Length < 2)
+            {
+                UsernameErrMsg = "Minimum 2 charactères requis";
+                valid = false;
+            }
+            else
+            {
+                Regex rgx = new Regex(@"^[a-zA-Z0-9_.-]*$");
+                if (!rgx.IsMatch(Username))
+                {
+                    UsernameErrMsg = "Seul les charactères alphanumériqus et les tirets sont acceptés";
+                    valid = false;
+                }
+            }
+            if(Password == "")
+            {
+                PasswordErrMsg = "Mot de passe requis";
+                valid = false;
+            }
+            else if (Password.Length < 8)
+            {
+                PasswordErrMsg = "Minimum 8 charactères requis";
+                valid = false;
+            }
+            else
+            {
+                Regex rgx = new Regex(@"(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]");
+                if (!rgx.IsMatch(Password))
+                {
+                    PasswordErrMsg = "Minimum une lettre minuscule, une lettre majuscule et un chiffre";
+                    valid = false;
+                }
+            }
+            if (ConfirmPassword == "")
+            {
+                ConfirmPasswordErrMsg = "Confirmation mot de passe requise";
+                valid = false;
+            }
+            if (Password != ConfirmPassword)
+            {
+                ConfirmPasswordErrMsg = "Mots de passes pas identiques";
+                valid = false;
+            }
+            return valid;
         }
 
         private void Loading()
