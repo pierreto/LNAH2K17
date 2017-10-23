@@ -121,7 +121,7 @@ class FacadeModele {
                 self.etat = ModeleEtatDeplacement.instance
                 break;
             case .ROTATION:
-                //self.etat = ModeleEtatRotation.instance
+                self.etat = ModeleEtatRotation.instance
                 break;
             case .MISE_A_ECHELLE:
                 //self.etat = ModeleEtatScale.instance

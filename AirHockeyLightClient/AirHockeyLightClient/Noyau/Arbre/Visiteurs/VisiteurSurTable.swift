@@ -41,7 +41,7 @@ class VisiteurSurTable: VisiteurAbstrait {
     func visiterAccelerateur(noeud: NoeudAccelerateur) {
         if self.table != nil {
             self.testPoints(noeud: noeud)
-            //self.intersectCercleTable(noeud: noeud, rayon: 3.75)
+            self.intersectCercleTable(noeud: noeud, rayon: 3.75)
         }
     }
     
@@ -69,7 +69,7 @@ class VisiteurSurTable: VisiteurAbstrait {
     func visiterPortail(noeud: NoeudPortail) {
         if self.table != nil {
             self.testPoints(noeud: noeud)
-            //self.intersectCercleTable(noeud: noeud, rayon: 7);
+            self.intersectCercleTable(noeud: noeud, rayon: 7);
         }
     }
     

@@ -23,6 +23,7 @@ class EditorHUDScene: SKScene {
     private var cameraControlButton: SKSpriteNode?
     private var selectionButton: SKSpriteNode?
     private var deplacementButton: SKSpriteNode?
+    private var rotationButton: SKSpriteNode?
     private var pointControlButton: SKSpriteNode?
     private var portalButton: SKSpriteNode?
     private var wallButton: SKSpriteNode?
@@ -40,6 +41,7 @@ class EditorHUDScene: SKScene {
         self.cameraControlButton = (self.childNode(withName: "//cameraControlButton") as? SKSpriteNode)!
         self.selectionButton = (self.childNode(withName: "//selectionButton") as? SKSpriteNode)!
         self.deplacementButton = (self.childNode(withName: "//deplacementButton") as? SKSpriteNode)!
+        self.rotationButton = (self.childNode(withName: "//rotationButton") as? SKSpriteNode)!
         self.pointControlButton = (self.childNode(withName: "//pointControlButton") as? SKSpriteNode)!
         self.portalButton = (self.childNode(withName: "//portalButton") as? SKSpriteNode)!
         self.wallButton = (self.childNode(withName: "//wallButton") as? SKSpriteNode)!
@@ -53,6 +55,7 @@ class EditorHUDScene: SKScene {
         self.cameraControlButton?.texture = SKTexture(imageNamed: "Camera");
         self.selectionButton?.texture = SKTexture(imageNamed: "Select")
         self.deplacementButton?.texture = SKTexture(imageNamed: "Move")
+        self.rotationButton?.texture = SKTexture(imageNamed: "Rotate")
         self.pointControlButton?.texture = SKTexture(imageNamed: "ControlPoint")
         self.portalButton?.texture = SKTexture(imageNamed: "Portal")
         self.wallButton?.texture = SKTexture(imageNamed: "Wall");
@@ -93,6 +96,10 @@ class EditorHUDScene: SKScene {
         else if touchedNode?.name == "deplacementButton"{
             print("Deplacement")
             FacadeModele.instance.changerModeleEtat(etat: .DEPLACEMENT)
+        }
+        else if touchedNode?.name == "rotationButton"{
+            print("Rotation")
+            FacadeModele.instance.changerModeleEtat(etat: .ROTATION)
         }
         else if touchedNode?.name == "pointControlButton"{
             print("PointControl")

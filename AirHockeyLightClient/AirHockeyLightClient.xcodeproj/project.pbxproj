@@ -78,6 +78,7 @@
 		8F64C0151F77550800F14AC7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F64C0141F77550800F14AC7 /* Main.storyboard */; };
 		8F64C0171F775B2500F14AC7 /* AuthentificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F64C0161F775B2500F14AC7 /* AuthentificationViewController.swift */; };
 		8F690D601F9D5244003F051A /* VisiteurObtenirSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F690D5F1F9D5244003F051A /* VisiteurObtenirSelection.swift */; };
+		8F690D621F9D5E7F003F051A /* ModeleEtatRotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F690D611F9D5E7F003F051A /* ModeleEtatRotation.swift */; };
 		8F69F4BF1F8AF871004D5129 /* MathHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F69F4BE1F8AF871004D5129 /* MathHelper.swift */; };
 		8F6AE2BC1F6592EB00A29E8B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6AE2BB1F6592EB00A29E8B /* AppDelegate.swift */; };
 		8F6AE2BE1F6592EB00A29E8B /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8F6AE2BD1F6592EB00A29E8B /* GameScene.sks */; };
@@ -171,6 +172,7 @@
 		8F64C0141F77550800F14AC7 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = InterfaceGraphique/Main.storyboard; sourceTree = "<group>"; };
 		8F64C0161F775B2500F14AC7 /* AuthentificationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthentificationViewController.swift; path = InterfaceGraphique/Menus/AuthentificationViewController.swift; sourceTree = "<group>"; };
 		8F690D5F1F9D5244003F051A /* VisiteurObtenirSelection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VisiteurObtenirSelection.swift; path = Noyau/Arbre/Visiteurs/VisiteurObtenirSelection.swift; sourceTree = "<group>"; };
+		8F690D611F9D5E7F003F051A /* ModeleEtatRotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ModeleEtatRotation.swift; path = Noyau/Application/States/ModeleEtatRotation.swift; sourceTree = "<group>"; };
 		8F69F4BE1F8AF871004D5129 /* MathHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MathHelper.swift; path = Noyau/Helper/MathHelper.swift; sourceTree = "<group>"; };
 		8F6AE2B81F6592EB00A29E8B /* AirHockeyLightClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AirHockeyLightClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F6AE2BB1F6592EB00A29E8B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -370,8 +372,9 @@
 				8F0B94B11F8D4BCE007F0E82 /* ModeleEtat.swift */,
 				3475C2421F8FE71800E8BF86 /* ModeleEtatCameraControl.swift */,
 				8F0B94B31F8D4EC1007F0E82 /* ModeleEtatSelection.swift */,
-				8F0B94B71F8D7F11007F0E82 /* ModeleEtatPointControl.swift */,
 				8F0B94B91F8D8C95007F0E82 /* ModeleEtatDeplacement.swift */,
+				8F690D611F9D5E7F003F051A /* ModeleEtatRotation.swift */,
+				8F0B94B71F8D7F11007F0E82 /* ModeleEtatPointControl.swift */,
 				342E7C511F9859620062017A /* ModeleEtatCreerPortail.swift */,
 				0EED627E1F982B3B00CD8C56 /* ModeleEtatCreerMuret.swift */,
 				344A6E211F99101700CFFBEB /* ModeleEtatCreerBoost.swift */,
@@ -748,6 +751,7 @@
 				8F0B94BC1F8D8EA6007F0E82 /* VisiteurDeplacement.swift in Sources */,
 				3415E6C41F8547CE00DB1CAD /* ArbreRendu.swift in Sources */,
 				0EED627D1F9825B500CD8C56 /* NoeudMur.swift in Sources */,
+				8F690D621F9D5E7F003F051A /* ModeleEtatRotation.swift in Sources */,
 				8FFC5B4A1F7CA7170031474F /* PaddingLabel.swift in Sources */,
 				8F0B94B61F8D5C25007F0E82 /* FacadeModele.swift in Sources */,
 				8F64C0171F775B2500F14AC7 /* AuthentificationViewController.swift in Sources */,

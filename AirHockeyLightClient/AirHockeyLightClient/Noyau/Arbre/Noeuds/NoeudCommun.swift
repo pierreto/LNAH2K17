@@ -121,6 +121,26 @@ class NoeudCommun : SCNNode {
         self.deplacer(position: SCNVector3ToGLKVector3(self.savedPosition))
     }
     
+    /// Cette fonction permet de changer la position relative en appliquant
+    /// une transformation a la suite des autres changements
+    func appliquerDeplacement(deplacement: GLKVector3) {
+        let translation = GLKVector3Multiply(deplacement, self.axisLock)
+        self.transform = SCNMatrix4FromGLKMatrix4(
+                            GLKMatrix4Multiply(
+                                GLKMatrix4MakeTranslation(translation.x, translation.y, translation.z),
+                                SCNMatrix4ToGLKMatrix4(self.transform)))
+    }
+    
+    /// Cette fonction permet de changer le rotation en appliquant
+    /// une transformation à la suite des autres changements
+    func appliquerRotation(angle: Float, axes: GLKVector3) {
+        let rotation = SCNMatrix4MakeRotation(angle, axes.x, axes.y, axes.z)
+        self.transform = SCNMatrix4FromGLKMatrix4(
+                            GLKMatrix4Multiply(
+                                SCNMatrix4ToGLKMatrix4(rotation),
+                                SCNMatrix4ToGLKMatrix4(self.transform)))
+    }
+    
     /// Obtient la position relative du noeud.
     func obtenirPositionRelative() -> GLKVector3 {
         let vector = GLKMatrix4GetColumn(SCNMatrix4ToGLKMatrix4(self.transform), 3)

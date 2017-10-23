@@ -69,6 +69,21 @@ class VisiteurObtenirSelection: VisiteurAbstrait {
         }
     }
     
+    /// Cette fonction calcule et retourne le centre de la sélection
+    func obtenirCentreSelection() -> GLKVector3 {
+        var centre = GLKVector3.init(v: (0.0, 0.0, 0.0))
+    
+        for noeud in self.noeuds {
+            centre = GLKVector3Add(centre, noeud.obtenirPositionRelative())
+        }
+    
+        if self.noeuds.count > 0 {
+            centre = GLKVector3DivideScalar(centre, Float(self.noeuds.count))
+        }
+    
+        return centre
+    }
+    
 }
 
 ///////////////////////////////////////////////////////////////////////////////
