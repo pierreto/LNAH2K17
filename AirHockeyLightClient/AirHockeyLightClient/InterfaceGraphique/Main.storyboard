@@ -35,7 +35,7 @@
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" title="Édition hors ligne"/>
                                         <connections>
-                                            <segue destination="a5z-US-HJw" kind="show" id="kP9-pe-92S"/>
+                                            <segue destination="OGU-4H-ePP" kind="show" id="oAR-m4-osP"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -238,7 +238,6 @@
                                 <state key="normal" title="&lt; Quitter"/>
                                 <connections>
                                     <action selector="deregisterClient:" destination="xgG-d7-dxf" eventType="touchUpInside" id="r7n-do-kRD"/>
-                                    <segue destination="CBq-Dz-qxq" kind="show" id="KKi-lQ-8rK"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -277,7 +276,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n15-76-e5h" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1445" y="547"/>
+            <point key="canvasLocation" x="-1445" y="1200"/>
         </scene>
         <!--Chat View Controller-->
         <scene sceneID="tXr-a1-R10">
@@ -826,10 +825,85 @@
             </objects>
             <point key="canvasLocation" x="-3253" y="-744"/>
         </scene>
+        <!--Map Display View Controller-->
+        <scene sceneID="d0C-NR-qyv">
+            <objects>
+                <viewController id="OGU-4H-ePP" userLabel="Map Display View Controller" customClass="MapDisplayViewController" customModule="AirHockeyLightClient" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="7ng-Ez-SEs"/>
+                        <viewControllerLayoutGuide type="bottom" id="Y9o-M2-Vlh"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="KkG-7r-nKN">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WI9-AF-YiM" userLabel="Separator">
+                                <rect key="frame" x="0.0" y="131" width="768" height="3"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.63902775150000002" green="0.63902775150000002" blue="0.63902775150000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Sélection des cartes" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x9Q-Nq-tAc">
+                                <rect key="frame" x="206" y="76" width="356" height="47"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="39"/>
+                                <color key="textColor" red="0.50682244060000003" green="0.50682244060000003" blue="0.50682244060000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="132" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="G5f-LQ-K9K" userLabel="Maps">
+                                <rect key="frame" x="0.0" y="135" width="768" height="893"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Map" rowHeight="132" id="VkK-WK-HBQ" userLabel="Map">
+                                        <rect key="frame" x="0.0" y="28" width="768" height="132"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="VkK-WK-HBQ" id="kp6-3a-Et1">
+                                            <rect key="frame" x="0.0" y="0.0" width="768" height="132"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G8V-lc-5XO" userLabel="Separator">
+                                                    <rect key="frame" x="0.0" y="129" width="768" height="3"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" red="0.63902775150000002" green="0.63902775150000002" blue="0.63902775150000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zUh-Bd-0Gh">
+                                                    <rect key="frame" x="0.0" y="-1" width="768" height="132"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="50"/>
+                                                    <state key="normal" title="Nom de la carte"/>
+                                                    <connections>
+                                                        <segue destination="a5z-US-HJw" kind="show" id="0NV-wX-0vr"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                    <integer key="value" value="12"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="maps" destination="G5f-LQ-K9K" id="bw0-FC-uhN"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AGs-3Z-F0T" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1445.3125" y="470.50781249999994"/>
+        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="ShH-57-1HW"/>
-        <segue reference="KKi-lQ-8rK"/>
         <segue reference="ekN-4s-to3"/>
     </inferredMetricsTieBreakers>
 </document>
