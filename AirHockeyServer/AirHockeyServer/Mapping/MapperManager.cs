@@ -43,6 +43,8 @@ namespace AirHockeyServer.Mapping
                 cfg.CreateMap<PasswordEntity, PasswordPoco>();
                 cfg.CreateMap<UserPoco, UserEntity>();
                 cfg.CreateMap<UserEntity, UserPoco>();
+                cfg.CreateMap<FriendPoco, FriendRequestEntity>();
+                cfg.CreateMap<FriendRequestEntity, FriendPoco>();
 
                 //Not necessary if same attribute names from poco to entity
                 //cfg.CreateMap<UserPoco, UserEntity>()
