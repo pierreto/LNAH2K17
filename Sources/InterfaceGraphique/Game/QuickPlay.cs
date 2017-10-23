@@ -138,7 +138,6 @@ namespace InterfaceGraphique {
             catch (Exception) {
 
             }
-            Program.unityContainer.Resolve<MatchmakingViewModel>();
         }
 
 

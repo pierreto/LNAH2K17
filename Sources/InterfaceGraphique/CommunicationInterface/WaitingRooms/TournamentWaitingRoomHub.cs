@@ -37,8 +37,8 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
         protected UserEntity user { get; set; }
 
         protected HubConnection HubConnection { get; set; }
-        protected SlaveGameState SlaveGameState { get; }
-        protected MasterGameState MasterGameState { get; }
+        protected SlaveGameState SlaveGameState { get; set; }
+        protected MasterGameState MasterGameState { get; set; }
 
         public TournamentWaitingRoomHub(SlaveGameState slaveGameState, MasterGameState masterGameState)
         {
