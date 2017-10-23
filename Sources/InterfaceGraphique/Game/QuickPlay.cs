@@ -138,7 +138,6 @@ namespace InterfaceGraphique {
             catch (Exception) {
 
             }
-            Program.unityContainer.Resolve<MatchmakingViewModel>();
         }
 
 
@@ -253,10 +252,10 @@ namespace InterfaceGraphique {
                     Program.TournementTree.RoundScore = score;
                     Program.FormManager.CurrentForm = Program.TournementTree;
                 }
-                //else if(currentGameState.IsOnlineTournementMode)
-                //{
-                //    Program.FormManager.CurrentForm = Program.OnlineTournament;
-                //}
+                else if(currentGameState.IsOnlineTournementMode)
+                {
+                    Program.FormManager.CurrentForm = Program.OnlineTournament;
+                }
                 else
                 {
                     this.Panel_EndBack.Visible = true;

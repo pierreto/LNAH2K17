@@ -37,14 +37,13 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
         protected UserEntity user { get; set; }
 
         protected HubConnection HubConnection { get; set; }
-        protected SlaveGameState SlaveGameState { get; }
-        protected MasterGameState MasterGameState { get; }
+        protected SlaveGameState SlaveGameState { get; set; }
+        protected MasterGameState MasterGameState { get; set; }
 
-        //public TournamentWaitingRoomHub(SlaveGameState slaveGameState, MasterGameState masterGameState)
-        public TournamentWaitingRoomHub()
+        public TournamentWaitingRoomHub(SlaveGameState slaveGameState, MasterGameState masterGameState)
         {
-            //SlaveGameState = slaveGameState;
-            //MasterGameState = masterGameState;
+            SlaveGameState = slaveGameState;
+            MasterGameState = masterGameState;
         }
 
         public void InitializeHub(HubConnection connection, string username)
@@ -121,8 +120,14 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
         {
             WaitingRoomProxy.On<TournamentEntity>("TournamentStarting", tournament =>
             {
-                Program.LobbyHost.Invoke(new MethodInvoker(() =>
+                Program.OnlineTournament.Invoke(new MethodInvoker(() =>
                     {
+                        this.MasterGameState.InitializeGameState(tournament.SemiFinals[0]);
+
+                        Program.QuickPlay.CurrentGameState = this.MasterGameState;
+                        Program.FormManager.CurrentForm = Program.QuickPlay;
+                        /*
+
                         //Program.QuickPlay.CurrentGameState.IsOnlineTournementMode = true;
                         //if (tournament.SemiFinals.Any(game => game.Master.UserId == this.user.UserId))
                         //{
@@ -145,7 +150,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
                         float[] player2Color = new float[4] { Color.Blue.R, Color.Blue.G, Color.Blue.B, Color.Blue.A };
                         FonctionsNatives.setPlayerColors(player1Color, player2Color);
 
-                        Program.FormManager.CurrentForm = Program.QuickPlay;
+                        Program.FormManager.CurrentForm = Program.QuickPlay;*/
                         //}
                         //else
                         //{
@@ -160,7 +165,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
                 // start tournament
 
-                Program.FormManager.CurrentForm = Program.FormManager;
+                //Program.FormManager.CurrentForm = Program.FormManager;
             });
 
             WaitingRoomProxy.On<TournamentEntity>("StartFinal", tournament =>
