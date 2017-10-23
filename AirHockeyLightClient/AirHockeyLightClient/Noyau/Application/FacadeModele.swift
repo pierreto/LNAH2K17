@@ -51,6 +51,7 @@ class FacadeModele {
     /// Gesture recognizer
     var tapGestureRecognizer: UITapGestureRecognizer?
     var panGestureRecognizer: ImmediatePanGestureRecognizer?
+    var pinchGestureRecognizer: UIPinchGestureRecognizer?
     
     /// Etat du modèle
     private var etat: ModeleEtat?
@@ -63,6 +64,7 @@ class FacadeModele {
         
         self.tapGestureRecognizer = UITapGestureRecognizer(target: self, action:  #selector (self.tapGesture (_:)))
         self.panGestureRecognizer = ImmediatePanGestureRecognizer(target: self, action: #selector (self.panGesture(_:)))
+        self.pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector (self.pinchGesture(_:)))
         
         self.arbre?.initialiser()
         self.etat?.initialiser()
@@ -100,6 +102,10 @@ class FacadeModele {
         self.etat?.panGesture(sender: sender)
     }
     
+    @objc func pinchGesture(_ sender: UIPinchGestureRecognizer) {
+        self.etat?.pinchGesture(sender: sender)
+    }
+    
     /// Réinitialise la scène.
     func reinitialiser() {
         self.arbre?.initialiser()
@@ -124,7 +130,7 @@ class FacadeModele {
                 self.etat = ModeleEtatRotation.instance
                 break;
             case .MISE_A_ECHELLE:
-                //self.etat = ModeleEtatScale.instance
+                self.etat = ModeleEtatScale.instance
                 break;
             case .ZOOM:
                 //self.etat = ModeleEtatZoom.instance

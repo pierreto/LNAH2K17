@@ -31,10 +31,6 @@
 		253E088E1F818DD2009F301B /* JsonHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253E088D1F818DD2009F301B /* JsonHelper.swift */; };
 		253E08911F81913A009F301B /* ChannelEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253E08901F81913A009F301B /* ChannelEntity.swift */; };
 		256539A91F9D643A00D81E2C /* MapEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256539A81F9D643A00D81E2C /* MapEntity.swift */; };
-		25C55FDF1F9D985400A676E8 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25C55FDE1F9D985400A676E8 /* RealmSwift.framework */; };
-		25C55FE01F9D985400A676E8 /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 25C55FDE1F9D985400A676E8 /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		25C55FE31F9D986400A676E8 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25C55FE21F9D986400A676E8 /* Realm.framework */; };
-		25C55FE41F9D986400A676E8 /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 25C55FE21F9D986400A676E8 /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3415E6C21F8545B300DB1CAD /* NoeudCommun.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3415E6C11F8545B300DB1CAD /* NoeudCommun.swift */; };
 		3415E6C41F8547CE00DB1CAD /* ArbreRendu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3415E6C31F8547CE00DB1CAD /* ArbreRendu.swift */; };
 		3415E6C71F85649D00DB1CAD /* UsineAbstraite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3415E6C61F85649D00DB1CAD /* UsineAbstraite.swift */; };
@@ -79,6 +75,8 @@
 		8F0B94BA1F8D8C95007F0E82 /* ModeleEtatDeplacement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0B94B91F8D8C95007F0E82 /* ModeleEtatDeplacement.swift */; };
 		8F0B94BC1F8D8EA6007F0E82 /* VisiteurDeplacement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0B94BB1F8D8EA6007F0E82 /* VisiteurDeplacement.swift */; };
 		8F0B94BE1F8DC0F1007F0E82 /* VisiteurSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0B94BD1F8DC0F1007F0E82 /* VisiteurSelection.swift */; };
+		8F1D52A81F9D972400135A53 /* ModeleEtatScale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1D52A71F9D972400135A53 /* ModeleEtatScale.swift */; };
+		8F1D52AA1F9D99C700135A53 /* VisiteurScale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1D52A91F9D99C700135A53 /* VisiteurScale.swift */; };
 		8F64C0111F7754EF00F14AC7 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F64C0101F7754EF00F14AC7 /* ChatViewController.swift */; };
 		8F64C0131F7754FD00F14AC7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F64C0121F7754FD00F14AC7 /* LaunchScreen.storyboard */; };
 		8F64C0151F77550800F14AC7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F64C0141F77550800F14AC7 /* Main.storyboard */; };
@@ -97,6 +95,10 @@
 		8F8706BD1F78A67F000E6824 /* ChannelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8706BC1F78A67F000E6824 /* ChannelViewController.swift */; };
 		8FB6A9951F81B9C800FAFFCF /* EditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB6A9941F81B9C800FAFFCF /* EditorViewController.swift */; };
 		8FB6A9CA1F81E38300FAFFCF /* Table.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB6A9C91F81E38300FAFFCF /* Table.swift */; };
+		8FC8750D1F9DAE3800688D8B /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25C55FE21F9D986400A676E8 /* Realm.framework */; };
+		8FC8750E1F9DAE3800688D8B /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 25C55FE21F9D986400A676E8 /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		8FC875101F9DAE3B00688D8B /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25C55FDE1F9D985400A676E8 /* RealmSwift.framework */; };
+		8FC875111F9DAE3B00688D8B /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 25C55FDE1F9D985400A676E8 /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8FE1EB051F75A96900A01514 /* ClientConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE1EB041F75A96900A01514 /* ClientConnection.swift */; };
 		8FFC5B481F7C90340031474F /* MessageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFC5B471F7C90340031474F /* MessageViewCell.swift */; };
 		8FFC5B4A1F7CA7170031474F /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFC5B491F7CA7170031474F /* PaddingLabel.swift */; };
@@ -104,14 +106,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		25C55FE11F9D985400A676E8 /* Embed Frameworks */ = {
+		8FC8750F1F9DAE3800688D8B /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				25C55FE41F9D986400A676E8 /* Realm.framework in Embed Frameworks */,
-				25C55FE01F9D985400A676E8 /* RealmSwift.framework in Embed Frameworks */,
+				8FC875111F9DAE3B00688D8B /* RealmSwift.framework in Embed Frameworks */,
+				8FC8750E1F9DAE3800688D8B /* Realm.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -192,6 +194,8 @@
 		8F0B94B91F8D8C95007F0E82 /* ModeleEtatDeplacement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ModeleEtatDeplacement.swift; path = Noyau/Application/States/ModeleEtatDeplacement.swift; sourceTree = "<group>"; };
 		8F0B94BB1F8D8EA6007F0E82 /* VisiteurDeplacement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VisiteurDeplacement.swift; path = Noyau/Arbre/Visiteurs/VisiteurDeplacement.swift; sourceTree = "<group>"; };
 		8F0B94BD1F8DC0F1007F0E82 /* VisiteurSelection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VisiteurSelection.swift; path = Noyau/Arbre/Visiteurs/VisiteurSelection.swift; sourceTree = "<group>"; };
+		8F1D52A71F9D972400135A53 /* ModeleEtatScale.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ModeleEtatScale.swift; path = Noyau/Application/States/ModeleEtatScale.swift; sourceTree = "<group>"; };
+		8F1D52A91F9D99C700135A53 /* VisiteurScale.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VisiteurScale.swift; path = Noyau/Arbre/Visiteurs/VisiteurScale.swift; sourceTree = "<group>"; };
 		8F64C0101F7754EF00F14AC7 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatViewController.swift; path = InterfaceGraphique/Chat/ChatViewController.swift; sourceTree = "<group>"; };
 		8F64C0121F7754FD00F14AC7 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = InterfaceGraphique/Menus/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8F64C0141F77550800F14AC7 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = InterfaceGraphique/Main.storyboard; sourceTree = "<group>"; };
@@ -222,9 +226,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				25C55FE31F9D986400A676E8 /* Realm.framework in Frameworks */,
-				25C55FDF1F9D985400A676E8 /* RealmSwift.framework in Frameworks */,
+				8FC8750D1F9DAE3800688D8B /* Realm.framework in Frameworks */,
 				E7B7E3DDFEF5DC14C25C5EF5 /* Pods_AirHockeyLightClient.framework in Frameworks */,
+				8FC875101F9DAE3B00688D8B /* RealmSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -378,8 +382,9 @@
 				8F0B94AB1F8D3EEE007F0E82 /* VisiteurAbstrait.swift */,
 				8F0B94BB1F8D8EA6007F0E82 /* VisiteurDeplacement.swift */,
 				8F690D5F1F9D5244003F051A /* VisiteurObtenirSelection.swift */,
-				8F0B94AD1F8D450B007F0E82 /* VisiteurSelectionnable.swift */,
+				8F1D52A91F9D99C700135A53 /* VisiteurScale.swift */,
 				8F0B94BD1F8DC0F1007F0E82 /* VisiteurSelection.swift */,
+				8F0B94AD1F8D450B007F0E82 /* VisiteurSelectionnable.swift */,
 				344A6E291F994E0100CFFBEB /* VisiteurSurTable.swift */,
 			);
 			name = Visiteurs;
@@ -402,10 +407,11 @@
 				8F0B94B31F8D4EC1007F0E82 /* ModeleEtatSelection.swift */,
 				8F0B94B91F8D8C95007F0E82 /* ModeleEtatDeplacement.swift */,
 				8F690D611F9D5E7F003F051A /* ModeleEtatRotation.swift */,
+				8F1D52A71F9D972400135A53 /* ModeleEtatScale.swift */,
+				344A6E211F99101700CFFBEB /* ModeleEtatCreerBoost.swift */,
 				8F0B94B71F8D7F11007F0E82 /* ModeleEtatPointControl.swift */,
 				342E7C511F9859620062017A /* ModeleEtatCreerPortail.swift */,
 				0EED627E1F982B3B00CD8C56 /* ModeleEtatCreerMuret.swift */,
-				344A6E211F99101700CFFBEB /* ModeleEtatCreerBoost.swift */,
 			);
 			name = States;
 			sourceTree = "<group>";
@@ -602,7 +608,7 @@
 				8F6AE2B61F6592EB00A29E8B /* Resources */,
 				9E82807AEFA30D063897DB68 /* [CP] Embed Pods Frameworks */,
 				C35C3B87ADACF750160F987B /* [CP] Copy Pods Resources */,
-				25C55FE11F9D985400A676E8 /* Embed Frameworks */,
+				8FC8750F1F9DAE3800688D8B /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -785,6 +791,7 @@
 				3415E6C41F8547CE00DB1CAD /* ArbreRendu.swift in Sources */,
 				0EED627D1F9825B500CD8C56 /* NoeudMur.swift in Sources */,
 				8F690D621F9D5E7F003F051A /* ModeleEtatRotation.swift in Sources */,
+				8F1D52AA1F9D99C700135A53 /* VisiteurScale.swift in Sources */,
 				8FFC5B4A1F7CA7170031474F /* PaddingLabel.swift in Sources */,
 				8F0B94B61F8D5C25007F0E82 /* FacadeModele.swift in Sources */,
 				8F64C0171F775B2500F14AC7 /* AuthentificationViewController.swift in Sources */,
@@ -809,6 +816,7 @@
 				8F0B94B21F8D4BCE007F0E82 /* ModeleEtat.swift in Sources */,
 				3475C2431F8FE71800E8BF86 /* ModeleEtatCameraControl.swift in Sources */,
 				1D90AB001F982332003E0764 /* ConnectServerViewModel.swift in Sources */,
+				8F1D52A81F9D972400135A53 /* ModeleEtatScale.swift in Sources */,
 				34B66FD91F8428EA00A9CCB9 /* NoeudTable.swift in Sources */,
 				1DFE2E4C1F91A8FD0048892D /* SignupViewController.swift in Sources */,
 				8F6AE2BC1F6592EB00A29E8B /* AppDelegate.swift in Sources */,

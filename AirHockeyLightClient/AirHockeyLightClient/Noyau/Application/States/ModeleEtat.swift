@@ -45,6 +45,10 @@ class ModeleEtat {
         self.position = sender.location(in: sender.view)
     }
     
+    // PINCH
+    func pinchGesture(sender: UIPinchGestureRecognizer) {
+    }
+    
     /// Fonction pour obtenir la vue rapidement
     func obtenirVue() -> UIViewController {
         return FacadeModele.instance.obtenirVue()

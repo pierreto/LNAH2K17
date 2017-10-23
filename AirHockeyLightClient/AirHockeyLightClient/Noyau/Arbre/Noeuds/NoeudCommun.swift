@@ -32,7 +32,7 @@ class NoeudCommun : SCNNode {
     
     // Attributs de sauvegarde
     private var savedScale = SCNVector3()
-    private var savedRotation = SCNVector3()
+    private var savedRotation = SCNVector4()
     private var savedPosition = SCNVector3()
     
     /// Constructeur avec géométrie
@@ -121,6 +121,16 @@ class NoeudCommun : SCNNode {
         self.deplacer(position: SCNVector3ToGLKVector3(self.savedPosition))
     }
     
+    /// Cette fonction sauve le scaling du noeud
+    func saveScale() {
+        self.savedScale = self.scale
+    }
+    
+    /// Cette fonction applique le scaling sauvee au noeud
+    func revertScale() {
+        self.scale = self.savedScale
+    }
+    
     /// Cette fonction permet de changer la position relative en appliquant
     /// une transformation a la suite des autres changements
     func appliquerDeplacement(deplacement: GLKVector3) {
@@ -169,7 +179,15 @@ class NoeudCommun : SCNNode {
     /// Cette fonction permet de changer la position relative en conservant
     /// le scaling et la rotation
     func deplacer(position: GLKVector3) {
+        // Sauvegarder rotation et scaling
+        self.savedRotation = self.rotation
+        self.savedScale = self.scale
+        
         self.assignerPositionRelative(positionRelative: position)
+        
+        // Réappliquer rotation et scaling
+        self.rotation = self.savedRotation
+        self.scale = self.savedScale
         
         //let glkRotation = SCNVector4ToGLKVector4(self.rotation)
         //let glkScale = GLKVector4MakeWithVector3(SCNVector3ToGLKVector3(self.scale), 0.0)

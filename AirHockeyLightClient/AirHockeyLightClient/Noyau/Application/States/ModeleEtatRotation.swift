@@ -17,7 +17,7 @@ import SceneKit
 ///        patron Singleton.
 ///
 /// @author Pierre To
-/// @date 2017-10-10
+/// @date 2017-10-22
 ///////////////////////////////////////////////////////////////////////////
 class ModeleEtatRotation: ModeleEtat {
     
