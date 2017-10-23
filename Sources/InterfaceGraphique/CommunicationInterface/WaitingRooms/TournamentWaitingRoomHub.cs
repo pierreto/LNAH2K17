@@ -46,7 +46,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
             this.HubConnection = connection;
             this.Username = username;
             WaitingRoomProxy = connection.CreateHubProxy("TournamentWaitingRoomHub");
-            
+
         }
 
         public void Join()
@@ -98,21 +98,32 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
                     //if (tournament.SemiFinals.Any(game => game.Master.UserId == this.user.UserId))
                     //{
                     //this.MasterGameState.InitializeGameState(tournament.SemiFinals.Find(game => game.Master.UserId == this.user.UserId));
-                    Program.QuickPlay.CurrentGameState.IsTournementMode = true;
-                    this.MasterGameState.InitializeGameState(tournament.SemiFinals[0]);
+                    //Program.QuickPlay.CurrentGameState.IsTournementMode = true;
+
+                    //this.MasterGameState.InitializeGameState(tournament.SemiFinals[0]);
+                    //Program.QuickPlay.CurrentGameState = this.MasterGameState;
+                    //Program.FormManager.CurrentForm = Program.QuickPlay;
+                    //}
+                    //else
+                    //{
+                    //    this.SlaveGameState.InitializeGameState(tournament.SemiFinals.Find(game => game.Slave.UserId == this.user.UserId));
+
+                    //    Program.QuickPlay.CurrentGameState = this.SlaveGameState;
+                    //    Program.FormManager.CurrentForm = Program.QuickPlay;
+
+                    //    FonctionsNatives.rotateCamera(180);
+                    //}
+                    //}));
+
+
+                    Program.OnlineTournament.Invoke(new MethodInvoker(() =>
+                    {
+                  
+                            this.MasterGameState.InitializeGameState(tournament.SemiFinals[0]);
+
                             Program.QuickPlay.CurrentGameState = this.MasterGameState;
                             Program.FormManager.CurrentForm = Program.QuickPlay;
-                        //}
-                        //else
-                        //{
-                        //    this.SlaveGameState.InitializeGameState(tournament.SemiFinals.Find(game => game.Slave.UserId == this.user.UserId));
-
-                        //    Program.QuickPlay.CurrentGameState = this.SlaveGameState;
-                        //    Program.FormManager.CurrentForm = Program.QuickPlay;
-
-                        //    FonctionsNatives.rotateCamera(180);
-                        //}
-                    //}));
+                    }));
 
                 }
             });
