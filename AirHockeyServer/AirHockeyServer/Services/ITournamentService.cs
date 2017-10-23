@@ -13,6 +13,6 @@ namespace AirHockeyServer.Services
 
         TournamentEntity UpdateTournament(TournamentEntity tournamentEntity);
 
-        void LeaveTournament(UserEntity user);
+        void LeaveTournamentWaitingRoom(UserEntity user);
     }
 }

@@ -26,6 +26,10 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
         public event EventHandler<MapEntity> MapUpdatedEvent;
 
+        public event EventHandler<List<UserEntity>> SemiFinalResultEvent;
+
+        public event EventHandler<UserEntity> WinnerResultEvent;
+
         public static IHubProxy WaitingRoomProxy { get; set; }
 
         public string Username { get; protected set; }
@@ -55,7 +59,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
         {
             if (!test)
             {
-                InitializeEvents();
+                InitializeWaitingRoomEvents();
                 test = true;
             }
             Random random = new Random();
@@ -67,8 +71,29 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
             WaitingRoomProxy.Invoke("Join", user);
         }
-        private void InitializeEvents()
+
+        public void Logout()
         {
+            WaitingRoomProxy?.Invoke("Disconnect", this.Username).Wait();
+        }
+
+        public async void UpdateSelectedMap(MapEntity map)
+        {
+            if (CurrentTournament != null)
+            {
+                CurrentTournament.SelectedMap = map;
+                CurrentTournament = await WaitingRoomProxy.Invoke<TournamentEntity>("UpdateMap", CurrentTournament);
+            }
+        }
+
+        public void LeaveTournament()
+        {
+            WaitingRoomProxy.Invoke("LeaveTournament", user);
+        }
+
+        private void InitializeWaitingRoomEvents()
+        {
+            InitializeTournamentsEvents();
             WaitingRoomProxy.On<List<UserEntity>>("OpponentFoundEvent", (opponents) =>
             {
                 this.OpponentFoundEvent.Invoke(this, opponents);
@@ -78,22 +103,25 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
             {
                 this.TournamentAllOpponentsFound.Invoke(this, tournament);
                 CurrentTournament = tournament;
-                InitializeConfigurationEvents();
             });
 
             WaitingRoomProxy.On<int>("WaitingRoomRemainingTime", remainingTime =>
             {
                 this.RemainingTimeEvent.Invoke(this, remainingTime);
             });
+
+            WaitingRoomProxy.On<MapEntity>("TournamentMapUpdatedEvent", map =>
+            {
+                CurrentTournament.SelectedMap = map;
+                this.MapUpdatedEvent.Invoke(this, map);
+            });
         }
 
-        private void InitializeConfigurationEvents()
+        private void InitializeTournamentsEvents()
         {
             WaitingRoomProxy.On<TournamentEntity>("TournamentStarting", tournament =>
             {
-                if(tournament.State == TournamentState.SemiFinals)
-                {
-                    Program.LobbyHost.Invoke(new MethodInvoker(() =>
+                Program.LobbyHost.Invoke(new MethodInvoker(() =>
                     {
                         //Program.QuickPlay.CurrentGameState.IsOnlineTournementMode = true;
                         //if (tournament.SemiFinals.Any(game => game.Master.UserId == this.user.UserId))
@@ -130,35 +158,48 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
                         //}
                     }));
 
+                // start tournament
+
+                Program.FormManager.CurrentForm = Program.FormManager;
+            });
+
+            WaitingRoomProxy.On<TournamentEntity>("StartFinal", tournament =>
+            {
+                if (tournament.Final.Players.Contains(user))
+                {
+                    // continue
+                }
+                else
+                {
+                    // you lost
                 }
             });
 
-            WaitingRoomProxy.On<MapEntity>("TournamentMapUpdatedEvent", map =>
+            WaitingRoomProxy.On<TournamentEntity>("TournamentSemiFinalResults", tournament =>
             {
-                CurrentTournament.SelectedMap = map;
-                this.MapUpdatedEvent.Invoke(this, map);
+                SemiFinalResultEvent.Invoke(this, new List<UserEntity>() { GetWinner(tournament.SemiFinals[0]), GetWinner(tournament.SemiFinals[1]) });
             });
-            
-        }
 
-        public void Logout()
-        {
-            WaitingRoomProxy?.Invoke("Disconnect", this.Username).Wait();
-        }
-
-        public async void UpdateSelectedMap(MapEntity map)
-        {
-            if (CurrentTournament != null)
+            WaitingRoomProxy.On<TournamentEntity>("TournamentFinalResult", tournament =>
             {
-                CurrentTournament.SelectedMap = map;
-                CurrentTournament = await WaitingRoomProxy.Invoke<TournamentEntity>("UpdateMap", CurrentTournament);
-            }
+                WinnerResultEvent.Invoke(this, GetWinner(tournament.Final) );
+            });
         }
 
-        public void LeaveTournament()
+        private UserEntity GetWinner(GameEntity game)
         {
-            WaitingRoomProxy.Invoke("LeaveTournament", user);
+            if(game.GameState != GameState.Ended)
+            {
+                return null;
+            }
+            
+            if(game.Score[0] < game.Score[1])
+            {
+                return game.Players[1];
+            }
+            return game.Players[0];
         }
+
 
     }
 }

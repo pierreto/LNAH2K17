@@ -46,13 +46,13 @@
                     <RowDefinition Height="100"></RowDefinition>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <!--<TextBlock Grid.Row="0" HorizontalAlignment="Center" Height="36" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="143"/>-->
+                <TextBlock Grid.Row="0" HorizontalAlignment="Center" Height="36" TextWrapping="Wrap" Text="{Binding SemiFinal1}" VerticalAlignment="Center" Width="143"/>
                 <Button Command="{Binding Cancel}">
                     <TextBlock>JOIN</TextBlock></Button>
-                <TextBlock Grid.Row="1" HorizontalAlignment="Center" Height="36" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="143"/>
+                <TextBlock Grid.Row="1" HorizontalAlignment="Center" Height="36" TextWrapping="Wrap" Text="{Binding SemiFinal2}" VerticalAlignment="Center" Width="143"/>
             </Grid>
             <Grid Grid.Column="2">
-                <TextBlock HorizontalAlignment="Center" Height="36" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="143"/>
+                <TextBlock HorizontalAlignment="Center" Height="36" TextWrapping="Wrap" Text="{Binding Winner}" VerticalAlignment="Center" Width="143"/>
             </Grid>
         </Grid>
         <Grid Grid.Row="1">
