@@ -98,8 +98,8 @@ namespace InterfaceGraphique.Game.GameState
 
         public bool IsOnlineTournementMode
         {
-            get;
-            set;
+            get => IsOnlineTournementMode;
+            set => IsOnlineTournementMode = value;
         }
 
         public string MapFilePath
