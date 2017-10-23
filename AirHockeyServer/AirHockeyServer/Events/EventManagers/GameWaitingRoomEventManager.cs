@@ -24,13 +24,13 @@ namespace AirHockeyServer.Events.EventManagers
     ///////////////////////////////////////////////////////////////////////////////
     public class GameWaitingRoomEventManager
     {
-        GameEntity game;
 
-        protected const int WAITING_TIMEOUT = 40000;
+        protected const int WAITING_TIMEOUT = 2000;
 
         protected ConcurrentDictionary<int, int> RemainingTime { get; set; }
 
         protected IHubContext HubContext { get; set; }
+
         public IGameService GameService { get; }
 
         public GameWaitingRoomEventManager(IGameService gameService)
@@ -69,26 +69,13 @@ namespace AirHockeyServer.Events.EventManagers
                 var connection = ConnectionMapper.GetConnection(player.UserId);
                 await HubContext.Groups.Add(connection, stringGameId);
             }
-
-            game = gameCreated;
+            
             HubContext.Clients.Group(stringGameId).OpponentFoundEvent(gameCreated);
             
             this.RemainingTime[gameCreated.GameId] = 0;
 
-            System.Timers.Timer timer = CreateTimeoutTimer(gameCreated.GameId);
+            System.Timers.Timer timer = CreateTimeoutTimer(gameCreated);
             timer.Start();
-        }
-
-        protected void SendRemainingTimeEvent(int remainingTime)
-        {
-            //var Hub = GlobalHost.ConnectionManager.GetHubContext<GameWaitingRoomHub>();
-            HubContext.Clients.Group(game.GameId.ToString()).WaitingRoomRemainingTime(remainingTime);
-        }
-
-        protected void SendEndOfTimer()
-        {
-            //var Hub = GlobalHost.ConnectionManager.GetHubContext<GameWaitingRoomHub>();
-            HubContext.Clients.Group(game.GameId.ToString()).TournamentStarting(game);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -101,51 +88,30 @@ namespace AirHockeyServer.Events.EventManagers
         /// les clients du démarrage de la partie
         ///
         ////////////////////////////////////////////////////////////////////////
-        protected void WaitingRoomTimeOut(object source, ElapsedEventArgs e, int gameId, System.Timers.Timer timer)
+        protected void WaitingRoomTimeOut(object source, ElapsedEventArgs e, GameEntity game, System.Timers.Timer timer)
         {
-            if (RemainingTime[gameId] < WAITING_TIMEOUT)
+            if (RemainingTime[game.GameId] < WAITING_TIMEOUT)
             {
-                RemainingTime[gameId] += 1000;
+                RemainingTime[game.GameId] += 1000;
 
                 // ONLY WORKING FOR GAME OR TOURNAMENT
 
                 //Hub.Clients.Group(gameId.ToString()).WaitingRoomRemainingTime();
-                var remainingTime = ((WAITING_TIMEOUT - RemainingTime[gameId]) / 1000);
-                HubContext.Clients.Group(gameId.ToString()).WaitingRoomRemainingTime(remainingTime); 
+                var remainingTime = ((WAITING_TIMEOUT - RemainingTime[game.GameId]) / 1000);
+                HubContext.Clients.Group(game.GameId.ToString()).WaitingRoomRemainingTime(remainingTime); 
             }
             else
             {
                 timer.Stop();
-
-                // TODO : get game from db
-                //GameEntity game = GameService.GetGameEntityById(gameId);
-
-                //if (game == null)
-                //{
-                //    return;
-                //}
 
                 //if (game.SelectedMap == null)
                 //{
                 //    // TODO : select default map
                 //    game.SelectedMap = new MapEntity();
 
-                //    // TODO update game on bd
-
                 //}
-
-                //if (game.SelectedConfiguration == null)
-                //{
-                //    // TODO : select default configuration
-                //    game.SelectedConfiguration = new ConfigurationEntity();
-
-                //    // TODO update game on bd
-                //}
-
-                //var Hub = GlobalHost.ConnectionManager.GetHubContext<TournamentWaitingRoomHub>();
-                // start the game
-                //Hub.Clients.Group(game.GameId.ToString()).GameStartingEvent(game);
-                HubContext.Clients.Group(gameId.ToString()).TournamentStarting(game);
+                HubContext.Clients.Group(game.GameId.ToString()).GameStartingEvent(game);
+                GameManager.Instance().AddGame(game);
             }
         }
 
@@ -159,11 +125,11 @@ namespace AirHockeyServer.Events.EventManagers
         /// @return le timer créé
         ///
         ////////////////////////////////////////////////////////////////////////
-        protected System.Timers.Timer CreateTimeoutTimer(int gameId)
+        protected System.Timers.Timer CreateTimeoutTimer(GameEntity game)
         {
             System.Timers.Timer timer = new System.Timers.Timer();
             timer.Interval = 1000;
-            timer.Elapsed += (timerSender, e) => WaitingRoomTimeOut(timerSender, e, gameId, timer);
+            timer.Elapsed += (timerSender, e) => WaitingRoomTimeOut(timerSender, e, game, timer);
 
             return timer;
         }

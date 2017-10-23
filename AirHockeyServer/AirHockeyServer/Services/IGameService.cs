@@ -18,5 +18,9 @@ namespace AirHockeyServer.Services
         GameEntity GetGameEntityById(int id);
 
         void LeaveGame(UserEntity user);
+
+        void GoalScored(int gameId, int playerId);
+
+        void GameOver(int gameId);
     }
 }

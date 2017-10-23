@@ -75,19 +75,21 @@ namespace AirHockeyServer.Hubs
             GameService.LeaveGame(user);
         }
 
-        public void SendGameData(Guid gameId, GameDataMessage gameData)
+        public void SendGameData(int gameId, GameDataMessage gameData)
         {
              Clients.Group(gameId.ToString(), Context.ConnectionId).ReceivedGameData(gameData);
         }
 
-        public void SendGoal(Guid gameId, GoalMessage goal)
+        public void SendGoal(int gameId, GoalMessage goal)
         {
-             Clients.Group(gameId.ToString(), Context.ConnectionId).ReceivedGoal(goal);
+            GameService.GoalScored(gameId, goal.PlayerNumber);
+            Clients.Group(gameId.ToString(), Context.ConnectionId).ReceivedGoal(goal);
         }
 
-        public void GameOver(Guid gameId)
+        public void GameOver(int gameId)
         {
-             Clients.Group(gameId.ToString(), Context.ConnectionId).ReceivedGameOver();
+            GameService.GameOver(gameId);
+            Clients.Group(gameId.ToString(), Context.ConnectionId).ReceivedGameOver();
         }
 
     }

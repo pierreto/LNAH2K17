@@ -44,7 +44,7 @@ namespace AirHockeyServer.Hubs
 
         public async Task LeaveGame(UserEntity user)
         {
-            TournamentService.LeaveTournament(user);
+            TournamentService.LeaveTournamentWaitingRoom(user);
         }
 
     }

@@ -242,7 +242,11 @@
     <Compile Include="Entities\PlayersMatchEntity.cs" />
     <Compile Include="Entities\TournamentEntity.cs" />
     <Compile Include="Entities\UserEntity.cs" />
+    <Compile Include="Events\EventManagers\GameManager.cs" />
+    <Compile Include="Events\EventManagers\GameManagerInstance.cs" />
     <Compile Include="Events\EventManagers\GameWaitingRoomEventManager.cs" />
+    <Compile Include="Events\EventManagers\TournamentManagerInstance.cs" />
+    <Compile Include="Events\EventManagers\TournamentsManager.cs" />
     <Compile Include="Events\EventManagers\TournamentWaitingRoomEventManager.cs" />
     <Compile Include="Events\EventManagers\WaitingRoomEventManager.cs" />
     <Compile Include="Events\MatchFoundArgs.cs" />
@@ -252,7 +256,6 @@
     </Compile>
     <Compile Include="Hubs\GameWaitingRoomHub.cs" />
     <Compile Include="Hubs\ConnectionMapper.cs" />
-    <Compile Include="Hubs\TournamentHub.cs" />
     <Compile Include="Hubs\TournamentWaitingRoomHub.cs" />
     <Compile Include="Mapping\MapperManager.cs" />
     <Compile Include="Pocos\LoginPoco.cs" />

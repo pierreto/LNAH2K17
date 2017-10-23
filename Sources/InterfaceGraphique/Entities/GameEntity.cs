@@ -11,7 +11,7 @@ namespace InterfaceGraphique.Entities
         public GameEntity()
         {
             this.Players = new UserEntity[2];
-
+            this.Score = new int[2];
         }
 
         public int GameId { get; set; }
@@ -24,6 +24,7 @@ namespace InterfaceGraphique.Entities
         public UserEntity Master { get; set; }
         public UserEntity Slave { get; set; }
 
+        public int[] Score { get; set; }
 
         public GameState GameState { get; set; }
 
