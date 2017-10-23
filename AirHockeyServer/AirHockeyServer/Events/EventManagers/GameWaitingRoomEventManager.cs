@@ -110,8 +110,8 @@ namespace AirHockeyServer.Events.EventManagers
                 //    game.SelectedMap = new MapEntity();
 
                 //}
-                HubContext.Clients.Group(game.GameId.ToString()).GameStartingEvent(game);
                 GameManager.Instance().AddGame(game);
+                HubContext.Clients.Group(game.GameId.ToString()).GameStartingEvent(game);
             }
         }
 

@@ -65,8 +65,8 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
 
         private void OnSemiFinalResult(object e, List<UserEntity> users)
         {
-            SemiFinal1 = users[0].Username;
-            SemiFinal2 = users[1].Username;
+            SemiFinal1 = users[0]?.Username;
+            SemiFinal2 = users[1]?.Username;
         }
 
         private void OnOpponentFount(object e, List<UserEntity> users)

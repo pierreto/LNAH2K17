@@ -81,7 +81,8 @@ namespace AirHockeyServer.Events.EventManagers
                 CreationDate = DateTime.Now,
                 Players = new UserEntity[2] { player1, player2 },
                 Master = player1,
-                Slave = player2
+                Slave = player2,
+                TournamentId = Tournament.Id
             };
 
             GameEntity gameCreated = await GameService.CreateGame(game);
@@ -120,6 +121,7 @@ namespace AirHockeyServer.Events.EventManagers
                 timer.Stop();
                 
                 Tournament.State = TournamentState.SemiFinals;
+                TournamentsManager.Instance().AddTournament(Tournament);
                 HubContext.Clients.Group(tournamentId.ToString()).TournamentStarting(Tournament);
             }
         }
