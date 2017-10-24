@@ -44,7 +44,7 @@ namespace AirHockeyServer.Events.EventManagers
 
                 if (tournament.SemiFinals.All(game => game.GameState == GameState.Ended))
                 {
-                    if (tournament.Final.GameState == GameState.Ended)
+                    if (tournament.Final?.GameState == GameState.Ended)
                     {
                         // end of tournament
                         tournament.State = TournamentState.Done;
@@ -90,7 +90,7 @@ namespace AirHockeyServer.Events.EventManagers
                 else
                 {
                     hub.Clients.Group(tournament.Id.ToString()).TournamentSemiFinalResults(tournament);
-                    testFlow(tournament.Id);
+                    //testFlow(tournament.Id);
                 }
 
                 Tournaments[tournament.Id] = tournament;

@@ -162,12 +162,12 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
             {
 
                 //if (tournament.Final.Players.Contains(user))
-                if (true)
+                if (tournament.Final.Players[0].UserId == user.UserId || tournament.Final.Players[1].UserId == user.UserId)
                 {
                     Program.OnlineTournament.Invoke(new MethodInvoker(() =>
                     {
                         //if (tournament.Final.Master.UserId == user.UserId)
-                        if (true)
+                        if (tournament.Final.Master.UserId == user.UserId)
                         {
                             this.MasterGameState.InitializeGameState(tournament.Final);
                             this.MasterGameState.IsOnlineTournementMode = true;
