@@ -1,4 +1,5 @@
 ﻿using InterfaceGraphique.CommunicationInterface;
+using InterfaceGraphique.Controls.WPF.Signup;
 using InterfaceGraphique.Entities;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Microsoft.Practices.Unity;
 
 namespace InterfaceGraphique.Controls.WPF.Authenticate
 {
@@ -97,7 +99,7 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
 
         private async Task Signup()
         {
-            //Program.FormManager.CurrentForm = Program.SignupMenu;
+            Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<SignupViewModel>());
         }
 
         private bool ValidateLoginEntity()

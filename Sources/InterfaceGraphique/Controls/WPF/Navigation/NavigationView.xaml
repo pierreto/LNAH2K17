@@ -6,6 +6,8 @@
              xmlns:wpf="clr-namespace:InterfaceGraphique.Controls.WPF"
              xmlns:home="clr-namespace:InterfaceGraphique.Controls.WPF.Home"
              xmlns:connectServer="clr-namespace:InterfaceGraphique.Controls.WPF.ConnectServer"
+             xmlns:authenticate="clr-namespace:InterfaceGraphique.Controls.WPF.Authenticate"
+             xmlns:signup="clr-namespace:InterfaceGraphique.Controls.WPF.Signup"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
@@ -16,6 +18,12 @@
             </DataTemplate>
             <DataTemplate x:Name="ConnectServerTemplate" DataType="{x:Type connectServer:ConnectServerViewModel}">
                 <connectServer:ConnectServerView DataContext="{Binding}"/>
+            </DataTemplate>
+            <DataTemplate x:Name="AuthenticateTemplate" DataType="{x:Type authenticate:AuthenticateViewModel}">
+                <authenticate:AuthenticateView DataContext="{Binding}"/>
+            </DataTemplate>
+            <DataTemplate x:Name="SignupTemplate" DataType="{x:Type signup:SignupViewModel}">
+                <signup:SignupView DataContext="{Binding}"/>
             </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -40,6 +48,6 @@
             <TextBlock TextWrapping="Wrap" Text="Title" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="48" FontWeight="Bold" RenderTransformOrigin="0.5,0.5"/>
         </DockPanel>
 
-        <ContentControl Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" Grid.RowSpan="4" Content="{Binding}"/>
+        <ContentControl Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" Grid.RowSpan="4" Content="{Binding }"/>
     </Grid>
 </UserControl>

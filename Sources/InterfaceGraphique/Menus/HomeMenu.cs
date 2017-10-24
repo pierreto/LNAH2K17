@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InterfaceGraphique.Controls.WPF;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +16,12 @@ namespace InterfaceGraphique.Menus
         public HomeMenu()
         {
             InitializeComponent();
+        }
+
+
+        public void ChangeViewTo(ViewModelBase vmb)
+        {
+            navigationView1.DataContext = vmb;
         }
 
         ////////////////////////////////////////////////////////////////////////

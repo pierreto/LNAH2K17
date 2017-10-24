@@ -7,11 +7,9 @@ namespace InterfaceGraphique.Controls.WPF.Home
     public class HomeViewModel : ViewModelBase
     {
 
-        private ConnectServerViewModel csvm;
 
         public HomeViewModel()
         {
-            csvm = new ConnectServerViewModel();
         }
 
         private ICommand onlineCommand;
@@ -29,9 +27,7 @@ namespace InterfaceGraphique.Controls.WPF.Home
 
         private async Task GoConnectServerMenu()
         {
-            ConnectServerView csv = new ConnectServerView();
-            csv.DataContext = csvm;
-            //Program.FormManager.CurrentForm = Program.ConnectServerMenu;
+            Program.HomeMenu.ChangeViewTo(new ConnectServerViewModel());
         }
 
         private ICommand offlineCommand;

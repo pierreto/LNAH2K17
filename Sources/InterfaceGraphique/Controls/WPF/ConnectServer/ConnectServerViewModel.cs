@@ -1,4 +1,6 @@
 ﻿using InterfaceGraphique.CommunicationInterface;
+using InterfaceGraphique.Controls.WPF.Authenticate;
+using InterfaceGraphique.Entities;
 using InterfaceGraphique.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -7,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Microsoft.Practices.Unity;
 
 namespace InterfaceGraphique.Controls.WPF.ConnectServer
 {
@@ -45,8 +48,7 @@ namespace InterfaceGraphique.Controls.WPF.ConnectServer
                 await task;
                 if (await Task.WhenAny(task, Task.Delay(timeout)) == task)
                 {
-                    // task completed within timeout
-                    //Program.FormManager.CurrentForm = Program.AuthenticateMenu;
+                    Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<AuthenticateViewModel>());
                 }
                 else
                 {
