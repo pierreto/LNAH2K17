@@ -42,10 +42,11 @@ namespace InterfaceGraphique.Controls.WPF.ConnectServer
                 ValidateIpAddress();
                 int timeout = 5000;
                 var task = hubManager.EstablishConnection(IpAddress);
+                await task;
                 if (await Task.WhenAny(task, Task.Delay(timeout)) == task)
                 {
                     // task completed within timeout
-                    Program.FormManager.CurrentForm = Program.AuthenticateMenu;
+                    //Program.FormManager.CurrentForm = Program.AuthenticateMenu;
                 }
                 else
                 {

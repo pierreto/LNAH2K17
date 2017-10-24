@@ -20,7 +20,43 @@
             base.Dispose(disposing);
         }
 
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.elementHost1 = new System.Windows.Forms.Integration.ElementHost();
+            this.navigationView1 = new InterfaceGraphique.Controls.WPF.Navigation.NavigationView();
+            this.SuspendLayout();
+            // 
+            // elementHost1
+            // 
+            this.elementHost1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.elementHost1.Location = new System.Drawing.Point(0, 0);
+            this.elementHost1.Name = "elementHost1";
+            this.elementHost1.Size = new System.Drawing.Size(708, 462);
+            this.elementHost1.TabIndex = 0;
+            this.elementHost1.Text = "elementHost1";
+            this.elementHost1.Child = this.navigationView1;
+            // 
+            // HomeMenu
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(708, 462);
+            this.Controls.Add(this.elementHost1);
+            this.Name = "HomeMenu";
+            this.Text = "HomeMenu";
+            this.ResumeLayout(false);
+
+        }
+
+        #endregion
+
         private System.Windows.Forms.Integration.ElementHost elementHost1;
-        private Controls.WPF.Home.HomeView homeView1;
+        private Controls.WPF.Navigation.NavigationView navigationView1;
     }
 }

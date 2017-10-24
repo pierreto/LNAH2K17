@@ -37,9 +37,6 @@ namespace InterfaceGraphique
 
         public static FormManager FormManager { get { return formManager; } }
         public static MainMenu MainMenu { get { return mainMenu; } }
-        public static ConnectServerMenu ConnectServerMenu { get { return connectServerMenu; } }
-        public static AuthenticateMenu AuthenticateMenu { get { return authenticateMenu; } }
-        public static SignupMenu SignupMenu { get { return signupMenu; } }
         public static Login Login {  get { return login; } }
         public static Editeur Editeur { get { return editeur; } }
         public static ConfigurationMenu ConfigurationMenu { get { return configurationMenu; } }
@@ -55,11 +52,8 @@ namespace InterfaceGraphique
         public static LobbyHost LobbyHost { get { return lobbyHost; } set { lobbyHost = value; } }
 
         private static FormManager formManager;
-        private static HomeMenu homeMenu;
         private static MainMenu mainMenu;
-        private static ConnectServerMenu connectServerMenu;
-        private static AuthenticateMenu authenticateMenu;
-        private static SignupMenu signupMenu;
+        private static HomeMenu homeMenu;
         private static Editeur editeur;
         private static ConfigurationMenu configurationMenu;
         private static QuickPlay quickPlay;
@@ -109,11 +103,8 @@ namespace InterfaceGraphique
             login = unityContainer.Resolve<Login>(); ;
             openGLPanel = new Panel();
             formManager = new FormManager();
-            mainMenu = new MainMenu();
             homeMenu = new HomeMenu();
-            connectServerMenu = new ConnectServerMenu();
-            authenticateMenu = new AuthenticateMenu();
-            signupMenu = new SignupMenu();
+            mainMenu = new MainMenu();
             editeur = new Editeur();
             configurationMenu = new ConfigurationMenu();
             quickPlay = new QuickPlay();

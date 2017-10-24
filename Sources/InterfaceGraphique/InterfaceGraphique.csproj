@@ -143,6 +143,10 @@
     <Compile Include="Controls\LobbyHost.Designer.cs">
       <DependentUpon>LobbyHost.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\WPF\Navigation\NavigationView.xaml.cs">
+      <DependentUpon>NavigationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WPF\Navigation\NavigationViewModel.cs" />
     <Compile Include="Controls\WPF\PasswordHelper.cs" />
     <Compile Include="Controls\WPF\Authenticate\AuthenticateView.xaml.cs">
       <DependentUpon>AuthenticateView.xaml</DependentUpon>
@@ -202,18 +206,6 @@
     <Compile Include="Game\GameState\MasterGameState.cs" />
     <Compile Include="Game\GameState\OfflineGameState.cs" />
     <Compile Include="Game\GameState\SlaveGameState.cs" />
-    <Compile Include="Menus\AuthenticateMenu.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Menus\AuthenticateMenu.Designer.cs">
-      <DependentUpon>AuthenticateMenu.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Menus\ConnectServerMenu.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Menus\ConnectServerMenu.Designer.cs">
-      <DependentUpon>ConnectServerMenu.cs</DependentUpon>
-    </Compile>
     <Compile Include="Menus\HomeMenu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -294,12 +286,6 @@
     <Compile Include="Menus\QuickPlayMenu.Designer.cs">
       <DependentUpon>QuickPlayMenu.cs</DependentUpon>
     </Compile>
-    <Compile Include="Menus\SignupMenu.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Menus\SignupMenu.Designer.cs">
-      <DependentUpon>SignupMenu.cs</DependentUpon>
-    </Compile>
     <Compile Include="Menus\TournementMenu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -329,12 +315,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\LobbyHost.resx">
       <DependentUpon>LobbyHost.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Menus\AuthenticateMenu.resx">
-      <DependentUpon>AuthenticateMenu.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Menus\ConnectServerMenu.resx">
-      <DependentUpon>ConnectServerMenu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Menus\HomeMenu.resx">
       <DependentUpon>HomeMenu.cs</DependentUpon>
@@ -378,9 +358,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Menus\QuickPlayMenu.resx">
       <DependentUpon>QuickPlayMenu.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Menus\SignupMenu.resx">
-      <DependentUpon>SignupMenu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Menus\TournementMenu.resx">
       <DependentUpon>TournementMenu.cs</DependentUpon>
@@ -467,6 +444,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\WPF\Matchmaking\MatchmakingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\WPF\Navigation\NavigationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

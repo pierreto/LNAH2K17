@@ -97,7 +97,7 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
 
         private async Task Signup()
         {
-            Program.FormManager.CurrentForm = Program.SignupMenu;
+            //Program.FormManager.CurrentForm = Program.SignupMenu;
         }
 
         private bool ValidateLoginEntity()

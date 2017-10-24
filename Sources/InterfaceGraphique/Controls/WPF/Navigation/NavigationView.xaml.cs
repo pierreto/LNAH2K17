@@ -1,4 +1,5 @@
 ﻿using InterfaceGraphique.Controls.WPF.ConnectServer;
+using InterfaceGraphique.Controls.WPF.Home;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,16 +15,23 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace InterfaceGraphique.Controls.WPF.Home
+namespace InterfaceGraphique.Controls.WPF.Navigation
 {
     /// <summary>
-    /// Interaction logic for HomeView.xaml
+    /// Interaction logic for NavigationView.xaml
     /// </summary>
-    public partial class HomeView : UserControl
+    public partial class NavigationView : UserControl
     {
-        public HomeView()
+        public NavigationView()
         {
             InitializeComponent();
+            DataContext = new HomeViewModel();
         }
+
+        private void Back(object sender, RoutedEventArgs e)
+        {
+            DataContext = new ConnectServerViewModel();
+        }
+
     }
 }

@@ -1,13 +1,17 @@
-﻿using System.Threading.Tasks;
+﻿using InterfaceGraphique.Controls.WPF.ConnectServer;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace InterfaceGraphique.Controls.WPF.Home
 {
     public class HomeViewModel : ViewModelBase
     {
+
+        private ConnectServerViewModel csvm;
+
         public HomeViewModel()
         {
-
+            csvm = new ConnectServerViewModel();
         }
 
         private ICommand onlineCommand;
@@ -25,8 +29,9 @@ namespace InterfaceGraphique.Controls.WPF.Home
 
         private async Task GoConnectServerMenu()
         {
-
-            Program.FormManager.CurrentForm = Program.ConnectServerMenu;
+            ConnectServerView csv = new ConnectServerView();
+            csv.DataContext = csvm;
+            //Program.FormManager.CurrentForm = Program.ConnectServerMenu;
         }
 
         private ICommand offlineCommand;
