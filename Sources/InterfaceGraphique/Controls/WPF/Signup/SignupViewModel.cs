@@ -1,4 +1,5 @@
 ﻿using InterfaceGraphique.CommunicationInterface;
+using InterfaceGraphique.Controls.WPF.Authenticate;
 using InterfaceGraphique.Entities;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Microsoft.Practices.Unity;
 
 namespace InterfaceGraphique.Controls.WPF.Signup
 {
@@ -22,10 +24,16 @@ namespace InterfaceGraphique.Controls.WPF.Signup
 
         public SignupViewModel(SignupEntity signupEntity, ChatHub chatHub)
         {
+            Title = "Créer un compte";
             this.chatHub = chatHub;
             this.signupEntity = signupEntity;
             this.hubManager = HubManager.Instance;
             this.inputsEnabled = true;
+        }
+
+        protected override async Task GoBack()
+        {
+            Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<AuthenticateViewModel>());
         }
 
         private ICommand signupCommand;

@@ -27,11 +27,5 @@ namespace InterfaceGraphique.Controls.WPF.Navigation
             InitializeComponent();
             DataContext = new HomeViewModel();
         }
-
-        private void Back(object sender, RoutedEventArgs e)
-        {
-            DataContext = new ConnectServerViewModel();
-        }
-
     }
 }

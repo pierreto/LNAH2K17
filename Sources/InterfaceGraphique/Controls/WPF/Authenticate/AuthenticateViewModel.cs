@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Microsoft.Practices.Unity;
+using InterfaceGraphique.Controls.WPF.ConnectServer;
 
 namespace InterfaceGraphique.Controls.WPF.Authenticate
 {
@@ -28,6 +29,11 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
             this.inputsEnabled = true;
         }
 
+        protected override async Task GoBack()
+        {
+            Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<ConnectServerViewModel>());
+        }
+
         private ICommand authenticateCommand;
         public ICommand AuthenticateCommand
         {
@@ -43,46 +49,40 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
 
         private async Task<Uri> Authenticate()
         {
+            try
             {
-                try
+                Loading();
+                if (!ValidateLoginEntity())
                 {
-                    Loading();
-                    UsernameErrMsg = "";
-                    PasswordErrMsg = "";
-                    if (!ValidateLoginEntity())
-                    {
-                        return null;
-                    }
-                    var response = await client.PostAsJsonAsync("http://localhost:63056/api/login", loginEntity);
-                    if (response.IsSuccessStatusCode)
-                    {
-                        hubManager.AddHubs();
-                        await hubManager.InitializeHubs(loginEntity.Username);
-                        await chatHub.InitializeChat();
-                        Program.FormManager.CurrentForm = Program.MainMenu;
-                    }
-                    else
-                    {
-                        var res = response.Content.ReadAsAsync<string>().Result;
-                        //response.EnsureSuccessStatusCode();
-                        // return URI of the created resource.
-                        UsernameErrMsg = res;
-                        PasswordErrMsg = res;
-                    }
-                    return response.Headers.Location;
-                }
-                catch(Exception e)
-                {
-                    System.Diagnostics.Debug.WriteLine(e);
                     return null;
                 }
-                finally
+                var response = await client.PostAsJsonAsync("http://localhost:63056/api/login", loginEntity);
+                if (response.IsSuccessStatusCode)
                 {
-                    LoadingDone();
+                    hubManager.AddHubs();
+                    await hubManager.InitializeHubs(loginEntity.Username);
+                    await chatHub.InitializeChat();
+                    Program.FormManager.CurrentForm = Program.MainMenu;
                 }
-
+                else
+                {
+                    var res = response.Content.ReadAsAsync<string>().Result;
+                    //response.EnsureSuccessStatusCode();
+                    // return URI of the created resource.
+                    UsernameErrMsg = res;
+                    PasswordErrMsg = res;
+                }
+                return response.Headers.Location;
             }
-
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+                return null;
+            }
+            finally
+            {
+                LoadingDone();
+            }
         }
 
         private ICommand signupCommand;
@@ -106,7 +106,7 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
         private bool ValidateLoginEntity()
         {
             bool valid = true;
-            if(loginEntity.Username == null || loginEntity.Username == "")
+            if (loginEntity.Username == null || loginEntity.Username == "")
             {
                 UsernameErrMsg = "Nom d'usager requis";
                 valid = false;
@@ -121,6 +121,8 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
 
         private void Loading()
         {
+            UsernameErrMsg = "";
+            PasswordErrMsg = "";
             InputsEnabled = false;
         }
 

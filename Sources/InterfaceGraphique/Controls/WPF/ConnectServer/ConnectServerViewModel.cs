@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Microsoft.Practices.Unity;
+using InterfaceGraphique.Controls.WPF.Home;
 
 namespace InterfaceGraphique.Controls.WPF.ConnectServer
 {
@@ -23,6 +24,11 @@ namespace InterfaceGraphique.Controls.WPF.ConnectServer
             Title = "Connexion";
             this.hubManager = HubManager.Instance;
             this.IpAddressInputEnabled = true;
+        }
+
+        protected override async Task GoBack()
+        {
+            Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<HomeViewModel>());
         }
 
         private ICommand enterKeyCommand;
@@ -49,6 +55,7 @@ namespace InterfaceGraphique.Controls.WPF.ConnectServer
                 await task;
                 if (await Task.WhenAny(task, Task.Delay(timeout)) == task)
                 {
+                    //Task resolved within delay
                     Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<AuthenticateViewModel>());
                 }
                 else

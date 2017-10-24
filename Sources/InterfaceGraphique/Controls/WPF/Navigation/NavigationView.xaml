@@ -43,10 +43,10 @@
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
 
-        <DockPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" Background="Gray">
-            <Button Content="&lt;" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" Width="65" Click="Back" FontWeight="Bold"/>
+        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" Background="Gray">
+            <Button Content="Retour" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" FontWeight="Bold" Command="{Binding BackCommand}" Visibility="{Binding Hidden}"/>
             <TextBlock TextWrapping="Wrap" Text="{Binding Title}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="48" FontWeight="Bold" RenderTransformOrigin="0.5,0.5"/>
-        </DockPanel>
+        </Grid>
 
         <ContentControl Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" Grid.RowSpan="4" Content="{Binding }"/>
     </Grid>
