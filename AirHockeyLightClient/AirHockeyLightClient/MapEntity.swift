@@ -37,6 +37,14 @@ class MapEntity : Entity {
         self.name = name
     }
     
+    public func getJson() -> String {
+        return self.json!
+    }
+    
+    public func setJson(name: String) {
+        self.json = name
+    }
+    
 }
 
 ///////////////////////////////////////////////////////////////////////////////
