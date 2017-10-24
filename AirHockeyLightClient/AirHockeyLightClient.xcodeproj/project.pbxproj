@@ -31,10 +31,6 @@
 		253E088E1F818DD2009F301B /* JsonHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253E088D1F818DD2009F301B /* JsonHelper.swift */; };
 		253E08911F81913A009F301B /* ChannelEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253E08901F81913A009F301B /* ChannelEntity.swift */; };
 		256539A91F9D643A00D81E2C /* MapEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256539A81F9D643A00D81E2C /* MapEntity.swift */; };
-		25DF9BBB1F9FA94A001E6DB2 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25DF9BB91F9FA94A001E6DB2 /* Realm.framework */; };
-		25DF9BBC1F9FA94A001E6DB2 /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 25DF9BB91F9FA94A001E6DB2 /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		25DF9BBD1F9FA94A001E6DB2 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25DF9BBA1F9FA94A001E6DB2 /* RealmSwift.framework */; };
-		25DF9BBE1F9FA94A001E6DB2 /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 25DF9BBA1F9FA94A001E6DB2 /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3415E6C21F8545B300DB1CAD /* NoeudCommun.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3415E6C11F8545B300DB1CAD /* NoeudCommun.swift */; };
 		3415E6C41F8547CE00DB1CAD /* ArbreRendu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3415E6C31F8547CE00DB1CAD /* ArbreRendu.swift */; };
 		3415E6C71F85649D00DB1CAD /* UsineAbstraite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3415E6C61F85649D00DB1CAD /* UsineAbstraite.swift */; };
@@ -112,8 +108,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				25DF9BBE1F9FA94A001E6DB2 /* RealmSwift.framework in Embed Frameworks */,
-				25DF9BBC1F9FA94A001E6DB2 /* Realm.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -145,12 +139,6 @@
 		253E088D1F818DD2009F301B /* JsonHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = JsonHelper.swift; path = Noyau/Helper/JsonHelper.swift; sourceTree = "<group>"; };
 		253E08901F81913A009F301B /* ChannelEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChannelEntity.swift; path = Noyau/Entities/ChannelEntity.swift; sourceTree = "<group>"; };
 		256539A81F9D643A00D81E2C /* MapEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapEntity.swift; sourceTree = "<group>"; };
-		25C55FDE1F9D985400A676E8 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = "<group>"; };
-		25C55FE21F9D986400A676E8 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
-		25DF9BB21F9FA8F5001E6DB2 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = "../../../Downloads/realm-swift-3.0.0/ios/swift-4.0/RealmSwift.framework"; sourceTree = "<group>"; };
-		25DF9BB31F9FA8F5001E6DB2 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = "../../../Downloads/realm-swift-3.0.0/ios/swift-4.0/Realm.framework"; sourceTree = "<group>"; };
-		25DF9BB91F9FA94A001E6DB2 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
-		25DF9BBA1F9FA94A001E6DB2 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = "<group>"; };
 		3415E6C11F8545B300DB1CAD /* NoeudCommun.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NoeudCommun.swift; path = Noyau/Arbre/Noeuds/NoeudCommun.swift; sourceTree = "<group>"; };
 		3415E6C31F8547CE00DB1CAD /* ArbreRendu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArbreRendu.swift; path = Noyau/Arbre/ArbreRendu.swift; sourceTree = "<group>"; };
 		3415E6C61F85649D00DB1CAD /* UsineAbstraite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UsineAbstraite.swift; path = Noyau/Arbre/Usines/UsineAbstraite.swift; sourceTree = "<group>"; };
@@ -230,9 +218,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				25DF9BBB1F9FA94A001E6DB2 /* Realm.framework in Frameworks */,
 				E7B7E3DDFEF5DC14C25C5EF5 /* Pods_AirHockeyLightClient.framework in Frameworks */,
-				25DF9BBD1F9FA94A001E6DB2 /* RealmSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -480,12 +466,6 @@
 		8F6AE2AF1F6592EB00A29E8B = {
 			isa = PBXGroup;
 			children = (
-				25C55FE21F9D986400A676E8 /* Realm.framework */,
-				25DF9BB31F9FA8F5001E6DB2 /* Realm.framework */,
-				25C55FDE1F9D985400A676E8 /* RealmSwift.framework */,
-				25DF9BB21F9FA8F5001E6DB2 /* RealmSwift.framework */,
-				25DF9BB91F9FA94A001E6DB2 /* Realm.framework */,
-				25DF9BBA1F9FA94A001E6DB2 /* RealmSwift.framework */,
 				8F6AE2BA1F6592EB00A29E8B /* AirHockeyLightClient */,
 				8F6AE2B91F6592EB00A29E8B /* Products */,
 				3085577F2BC9CDF3683F45B9 /* Pods */,
@@ -706,6 +686,8 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-AirHockeyLightClient/Pods-AirHockeyLightClient-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/PromiseKit/PromiseKit.framework",
+				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
+				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftR/SwiftR.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 			);
@@ -713,6 +695,8 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PromiseKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftR.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 			);
@@ -936,9 +920,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = BG3AZJL2HA;
+				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/**",
 				);
 				INFOPLIST_FILE = AirHockeyLightClient/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
@@ -958,6 +943,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = BG3AZJL2HA;
+				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
