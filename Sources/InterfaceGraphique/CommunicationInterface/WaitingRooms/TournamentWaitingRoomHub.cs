@@ -146,6 +146,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
                             else
                             {
                                 this.SlaveGameState.InitializeGameState(userGame);
+                                this.MasterGameState.IsOnlineTournementMode = true;
                                 Program.QuickPlay.CurrentGameState = this.SlaveGameState;
                             }
                         }
@@ -176,6 +177,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
                         else
                         {
                             this.SlaveGameState.InitializeGameState(tournament.Final);
+                            this.MasterGameState.IsOnlineTournementMode = true;
                             Program.QuickPlay.CurrentGameState = this.SlaveGameState;
                         }
 
