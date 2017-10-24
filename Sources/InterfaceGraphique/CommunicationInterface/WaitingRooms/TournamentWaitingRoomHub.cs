@@ -146,7 +146,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
                             else
                             {
                                 this.SlaveGameState.InitializeGameState(userGame);
-                                this.MasterGameState.IsOnlineTournementMode = true;
+                                this.SlaveGameState.IsOnlineTournementMode = true;
                                 Program.QuickPlay.CurrentGameState = this.SlaveGameState;
                             }
                             Program.FormManager.CurrentForm = Program.QuickPlay;
