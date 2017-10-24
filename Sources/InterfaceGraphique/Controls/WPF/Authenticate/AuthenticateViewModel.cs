@@ -21,6 +21,7 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
         private ChatHub chatHub;
         public AuthenticateViewModel(LoginEntity loginEntity, ChatHub chatHub)
         {
+            Title = "Authentification";
             this.loginEntity = loginEntity;
             this.chatHub = chatHub;
             this.hubManager = HubManager.Instance;

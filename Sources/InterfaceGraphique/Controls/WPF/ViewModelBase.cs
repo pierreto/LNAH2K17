@@ -10,6 +10,8 @@ namespace InterfaceGraphique.Controls.WPF
 {
     public class ViewModelBase : INotifyPropertyChanged
     {
+        public string Title { get; set; }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void OnPropertyChanged([CallerMemberName()] string name = null)

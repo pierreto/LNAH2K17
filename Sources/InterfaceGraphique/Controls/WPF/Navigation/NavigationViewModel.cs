@@ -8,5 +8,6 @@ namespace InterfaceGraphique.Controls.WPF.Navigation
 {
     class NavigationViewModel : ViewModelBase
     {
+        private string Title = "Home";
     }
 }

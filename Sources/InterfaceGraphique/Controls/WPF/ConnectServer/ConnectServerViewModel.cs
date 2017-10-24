@@ -20,6 +20,7 @@ namespace InterfaceGraphique.Controls.WPF.ConnectServer
         private HubManager hubManager;
         public ConnectServerViewModel()
         {
+            Title = "Connexion";
             this.hubManager = HubManager.Instance;
             this.IpAddressInputEnabled = true;
         }

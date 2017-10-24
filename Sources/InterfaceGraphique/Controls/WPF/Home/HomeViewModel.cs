@@ -6,10 +6,11 @@ namespace InterfaceGraphique.Controls.WPF.Home
 {
     public class HomeViewModel : ViewModelBase
     {
-
+        
 
         public HomeViewModel()
         {
+            Title = "LNAH 2K17";
         }
 
         private ICommand onlineCommand;
