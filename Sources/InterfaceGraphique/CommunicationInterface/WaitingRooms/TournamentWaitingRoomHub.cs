@@ -149,9 +149,13 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
                                 this.MasterGameState.IsOnlineTournementMode = true;
                                 Program.QuickPlay.CurrentGameState = this.SlaveGameState;
                             }
+                            Program.FormManager.CurrentForm = Program.QuickPlay;
+                        }
+                        else
+                        {
+                            Program.FormManager.CurrentForm = Program.MainMenu;
                         }
 
-                        Program.FormManager.CurrentForm = Program.QuickPlay;
                     }));
 
                 // start tournament
