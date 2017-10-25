@@ -43,8 +43,28 @@ namespace AirHockeyServer.Mapping
                 cfg.CreateMap<PasswordEntity, PasswordPoco>();
                 cfg.CreateMap<UserPoco, UserEntity>();
                 cfg.CreateMap<UserEntity, UserPoco>();
-                cfg.CreateMap<FriendPoco, FriendRequestEntity>();
-                cfg.CreateMap<FriendRequestEntity, FriendPoco>();
+
+                cfg.CreateMap<FriendPoco, FriendRequestEntity>()
+                .ForMember(
+                    dest => dest.Requestor,
+                    opt => opt.MapFrom(src => src.RequestorUserPoco))
+                .ForMember(
+                    dest => dest.Friend,
+                    opt => opt.MapFrom(src => src.FriendUserPoco));
+
+                cfg.CreateMap<FriendRequestEntity, FriendPoco>()
+                .ForMember(
+                    dest => dest.Requestor,
+                    opt => opt.MapFrom(src => src.Requestor.Id))
+                .ForMember(
+                    dest => dest.Friend,
+                    opt => opt.MapFrom(src => src.Friend.Id))
+                .ForMember(
+                    dest => dest.RequestorUserPoco,
+                    opt => opt.MapFrom(src => src.Requestor))
+                .ForMember(
+                    dest => dest.FriendUserPoco,
+                    opt => opt.MapFrom(src => src.Friend));
 
                 //Not necessary if same attribute names from poco to entity
                 //cfg.CreateMap<UserPoco, UserEntity>()

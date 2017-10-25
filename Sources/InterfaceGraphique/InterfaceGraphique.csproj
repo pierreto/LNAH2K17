@@ -129,6 +129,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommunicationInterface\ChatHub.cs" />
+    <Compile Include="CommunicationInterface\FriendsHub.cs" />
     <Compile Include="CommunicationInterface\GameHub.cs" />
     <Compile Include="CommunicationInterface\RestInterface\HttpResponseParser.cs" />
     <Compile Include="CommunicationInterface\RestInterface\MapsRepository.cs" />
@@ -174,6 +175,7 @@
     </Compile>
     <Compile Include="Entities\ChannelEntity.cs" />
     <Compile Include="Entities\ChatMessage.cs" />
+    <Compile Include="Entities\FriendRequestEntity.cs" />
     <Compile Include="Entities\GameDataMessage.cs" />
     <Compile Include="Entities\GameEntity.cs" />
     <Compile Include="Entities\GoalMessage.cs" />

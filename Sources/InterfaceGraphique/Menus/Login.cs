@@ -21,10 +21,12 @@ namespace InterfaceGraphique.Menus
         private readonly string LOCALHOST = "localhost";
         private readonly int MAX_INPUT_LENGTH = 15;
         private ChatHub chatHub;
+        private FriendsHub friendsHub;
         private HubManager hubManager;
-        public Login(ChatHub chatHub)
+        public Login(ChatHub chatHub, FriendsHub friendsHub)
         {
             this.chatHub = chatHub;
+            this.friendsHub = friendsHub;
             InitializeComponent();
             InitializeEvents();
             this.ServerLabel.BackColor = System.Drawing.Color.Transparent;
@@ -82,6 +84,9 @@ namespace InterfaceGraphique.Menus
 
                     // We initialize the chat to activate broadcasting from the server:
                     await chatHub.InitializeChat();
+
+                    await friendsHub.InitializeFriendsHub(Program.user);
+
                     // Finally we move from the login page to the main menu:
                     Program.FormManager.CurrentForm = Program.MainMenu;
                 }

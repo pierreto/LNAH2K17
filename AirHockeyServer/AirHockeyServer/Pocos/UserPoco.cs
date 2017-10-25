@@ -17,5 +17,3 @@ namespace AirHockeyServer.Pocos
 
     }
 }
-
-

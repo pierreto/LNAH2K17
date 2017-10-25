@@ -26,6 +26,10 @@ namespace AirHockeyServer.App_Start
                 typeof(GameWaitingRoomHub),
                 () => new GameWaitingRoomHub(new GameService()));
 
+            GlobalHost.DependencyResolver.Register(
+                typeof(FriendsHub),
+                () => new FriendsHub(new FriendService()));
+
             app.MapSignalR("/signalr", new HubConfiguration());
         }
 
@@ -38,6 +42,7 @@ namespace AirHockeyServer.App_Start
             // Services
             container.RegisterType<IChatService, ChatService>(new HierarchicalLifetimeManager());
             container.RegisterType<IChannelService, ChannelService>(new HierarchicalLifetimeManager());
+            container.RegisterType<IFriendService, FriendService>(new HierarchicalLifetimeManager());
 
             //Core
             container.RegisterType<IConnector, Connector>(new HierarchicalLifetimeManager());

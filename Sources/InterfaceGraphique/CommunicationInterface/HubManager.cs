@@ -12,7 +12,7 @@ namespace InterfaceGraphique.CommunicationInterface
     //CLASSE TRES TEMPORAIRE
     class HubManager
     {
-        private HubConnection connection;
+        public HubConnection connection;
 
         private ChatHub chatHub;
 
@@ -36,7 +36,9 @@ namespace InterfaceGraphique.CommunicationInterface
             {
                 Program.unityContainer.Resolve<ChatHub>(),
                 Program.unityContainer.Resolve<WaitingRoomHub>(),
-                Program.unityContainer.Resolve<GameHub>()
+                //Program.unityContainer.Resolve<GameHub>()
+                Program.unityContainer.Resolve<GameHub>(),
+                Program.unityContainer.Resolve<FriendsHub>()
             };
         }
 

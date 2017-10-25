@@ -281,6 +281,7 @@
     <Compile Include="Services\GameService.cs" />
     <Compile Include="Services\IChannelService.cs" />
     <Compile Include="Services\IChatService.cs" />
+    <Compile Include="Services\IFriendService.cs" />
     <Compile Include="Services\IGameService.cs" />
     <Compile Include="Services\ILoginService.cs" />
     <Compile Include="Services\IMapService.cs" />

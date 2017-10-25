@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace AirHockeyServer.Entities
+namespace InterfaceGraphique.Entities
 {
-    public enum RequestStatus { Refused=-1, Pending=0, Accepted=1};
+    public enum RequestStatus { Refused = -1, Pending = 0, Accepted = 1 };
 
     public class FriendRequestEntity
     {
