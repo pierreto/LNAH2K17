@@ -21,14 +21,17 @@ namespace InterfaceGraphique.Controls.WPF.Editor
         private ICommand modeViewCommand;
         private ICommand joinEditionCommand;
 
+        private MapEntity selectedMap;
+
         public EditorViewModel(MapService mapService)
         {
             this.mapService = mapService;
+            this.onlineEditedMapInfos = new ObservableCollection<MapEntity>();
+
         }
         public override async void  InitializeViewModel()
         {
             //TODO:Not optimized should use a list here but for testing purpose i'll leave it this way
-            this.onlineEditedMapInfos = new ObservableCollection<MapEntity>();
             List<MapEntity> list = await this.mapService.GetOnlineMap();
             list.ForEach(x => this.onlineEditedMapInfos.Add(x));
         }
@@ -78,12 +81,18 @@ namespace InterfaceGraphique.Controls.WPF.Editor
 
         private async Task JoinEdition()
         {
-            
+            //Program.Editeur.
         }
 
         private bool CanJoinEdition()
         {
-            return true;
+            return this.selectedMap!=null;
+        }
+
+        public MapEntity SelectedMap
+        {
+            get => selectedMap;
+            set => selectedMap = value;
         }
     }
 }

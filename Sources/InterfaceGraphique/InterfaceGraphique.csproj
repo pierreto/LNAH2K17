@@ -135,7 +135,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommunicationInterface\ChatHub.cs" />
-    <Compile Include="CommunicationInterface\EditionBrowserHub.cs" />
+    <Compile Include="CommunicationInterface\EditionHub.cs" />
     <Compile Include="CommunicationInterface\GameHub.cs" />
     <Compile Include="CommunicationInterface\IBaseHub.cs" />
     <Compile Include="CommunicationInterface\RestInterface\HttpResponseParser.cs" />
@@ -183,6 +183,9 @@
     <Compile Include="Controls\WPF\Tournament\TournamentViewModel.cs" />
     <Compile Include="Controls\WPF\ViewModelBase.cs" />
     <Compile Include="Controls\WPF\ViewModelLocator.cs" />
+    <Compile Include="Editor\EditorState\AbstractEditorState.cs" />
+    <Compile Include="Editor\EditorState\OfflineEditorState.cs" />
+    <Compile Include="Editor\EditorState\OnlineEditorState.cs" />
     <Compile Include="Editor\OpenPrivateMapForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -203,6 +206,7 @@
     </Compile>
     <Compile Include="Entities\ChannelEntity.cs" />
     <Compile Include="Entities\ChatMessage.cs" />
+    <Compile Include="Entities\EditorCommand\AbstractEditorCommand.cs" />
     <Compile Include="Entities\GameDataMessage.cs" />
     <Compile Include="Entities\GameEntity.cs" />
     <Compile Include="Entities\GoalMessage.cs" />

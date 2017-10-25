@@ -37,7 +37,7 @@ namespace InterfaceGraphique.CommunicationInterface
                 Program.unityContainer.Resolve<ChatHub>(),
                 Program.unityContainer.Resolve<WaitingRoomHub>(),
                 Program.unityContainer.Resolve<GameHub>(),
-                Program.unityContainer.Resolve<EditionBrowserHub>()
+                Program.unityContainer.Resolve<EditionHub>()
             };
         }
 
