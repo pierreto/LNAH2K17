@@ -48,6 +48,9 @@ class FacadeModele {
     /// Arbre de rendu contenant les différents objets de la scène.
     private var arbre: ArbreRendu?
     
+    /// Document JSON
+    private var docJson: [String : Any]?
+    
     /// Gesture recognizer
     var tapGestureRecognizer: UITapGestureRecognizer?
     var panGestureRecognizer: ImmediatePanGestureRecognizer?
@@ -168,18 +171,17 @@ class FacadeModele {
         
         do {
             let data = jsonTmp.data(using: String.Encoding.utf8)!
-            let json = try JSONSerialization.jsonObject(with: data) as? [String: Any]
-            let pointControle = json?["PointControle"]
+            self.docJson = try JSONSerialization.jsonObject(with: data) as? [String : Any]
         } catch {
             print("error")
         }
+        
+        self.chargerPntCtrl();
+
+        self.creerNoeuds(type: "Accelerateur", nomType: ArbreRendu.instance.NOM_ACCELERATEUR)
+        self.creerNoeuds(type: "Portail", nomType: ArbreRendu.instance.NOM_PORTAIL)
+        self.creerNoeuds(type: "Muret", nomType: ArbreRendu.instance.NOM_MUR)
         /*
-        chargerPntCtrl();
-    
-        creerNoeuds("Accelerateur", ArbreRenduINF2990::NOM_ACCELERATEUR);
-        creerNoeuds("Portail", ArbreRenduINF2990::NOM_PORTAIL);
-        creerNoeuds("Muret", ArbreRenduINF2990::NOM_MUR);
-    
         coefficients[0] = docJSON_["Coefficients"][0].GetDouble();
         coefficients[1] = docJSON_["Coefficients"][1].GetDouble();
         coefficients[2] = docJSON_["Coefficients"][2].GetDouble();
@@ -188,24 +190,101 @@ class FacadeModele {
     
     /// Placer les points de contrôle sur la patinoire
     func chargerPntCtrl() {
-        /*
-         NoeudComposite* table = (NoeudComposite*)arbre_->chercher(ArbreRenduINF2990::NOM_TABLE);
-         int i = 0;
-         glm::dvec3 temp;
-         for (auto it = table->obtenirIterateurBegin(); it != table->obtenirIterateurEnd(); ++it)
-         {
-         if ((*it)->obtenirType() == ArbreRenduINF2990::NOM_POINT_CONTROL) {
-         temp.x = docJSON_["PointControle"][i][0].GetDouble();
-         temp.y = docJSON_["PointControle"][i][1].GetDouble();
-         temp.z = docJSON_["PointControle"][i][2].GetDouble();
-         glm::vec3 pos(temp);
-        (*it)->assignerPositionRelative(pos);
-         i++;
-         }
-         }
-         */
+        let table = self.arbre?.childNode(withName: ArbreRendu.instance.NOM_TABLE, recursively: true) as! NoeudTable
+        let pointsControle = self.docJson!["PointControle"] as! [Any]
+        var count = 0;
+        
+        for child in table.childNodes {
+            if child.name == ArbreRendu.instance.NOM_POINT_CONTROL {
+                let pointControle = pointsControle[count] as! [Any]
+                let x = pointControle[0] as? Float
+                let y = pointControle[1] as? Float
+                let z = pointControle[2] as? Float
+                let pos = GLKVector3.init(v: (x!, y!, z!))
+                let noeud = child as! NoeudCommun
+                noeud.assignerPositionRelative(positionRelative: pos)
+                count += 1
+            }
+        }
+        table.updateGeometry()
     }
 
+    /// Cette fonction permet de créer les noeuds sur la patinoire
+    func creerNoeuds(type: String, nomType: String) {
+        let table = self.arbre?.childNode(withName: ArbreRendu.instance.NOM_TABLE, recursively: true)
+        
+        if nomType == ArbreRendu.instance.NOM_ACCELERATEUR || nomType == ArbreRendu.instance.NOM_MUR {
+            let typeJson = self.docJson![type] as! [Any]
+            
+            for i in 0...typeJson.count - 1 {
+                let typeInfo = typeJson[i] as! [Any]
+                
+                let noeud: NoeudCommun
+                if nomType == ArbreRendu.instance.NOM_ACCELERATEUR {
+                    noeud = self.arbre?.creerNoeud(typeNouveauNoeud: nomType) as! NoeudAccelerateur
+                } else {
+                    noeud = self.arbre?.creerNoeud(typeNouveauNoeud: nomType) as! NoeudMur
+                }
+                
+                // Appliquer rotation
+                let angle = typeInfo[6] as! Float
+                noeud.appliquerRotation(angle: angle, axes: GLKVector3.init(v: (0, 1, 0)))
+                
+                // Appliquer scale
+                var scale = SCNVector3.init()
+                scale.x = typeInfo[3] as! Float
+                scale.y = typeInfo[4] as! Float
+                scale.z = typeInfo[5] as! Float
+                noeud.scale = scale
+                table?.addChildNode(noeud)
+                
+                // Appliquer déplacement
+                var deplacement = GLKVector3.init()
+                deplacement.x = typeInfo[0] as! Float
+                deplacement.y = typeInfo[1] as! Float
+                deplacement.z = typeInfo[2] as! Float
+                noeud.appliquerDeplacement(deplacement: deplacement)
+            }
+        }
+        else if nomType == ArbreRendu.instance.NOM_PORTAIL {
+            let typeJson = self.docJson![type] as! [Any]
+            
+            for i in stride(from: 0, to: typeJson.count - 1, by: 2) {
+                var linkedPortals = Set<NoeudPortail>()
+                
+                for j in 0...1 {
+                    let portal = self.arbre?.creerNoeud(typeNouveauNoeud: nomType) as! NoeudPortail
+                    linkedPortals.insert(portal)
+                    
+                    // Appliquer rotation
+                    let typeInfo = typeJson[i + j] as! [Any]
+                    let angle = typeInfo[6] as! Float
+                    portal.appliquerRotation(angle: angle, axes: GLKVector3.init(v: (0, 1, 0)))
+                    
+                    // Appliquer scale
+                    var scale = SCNVector3.init()
+                    scale.x = typeInfo[3] as! Float
+                    scale.y = typeInfo[4] as! Float
+                    scale.z = typeInfo[5] as! Float
+                    portal.scale = scale
+                    table?.addChildNode(portal)
+                    
+                    // Appliquer déplacement
+                    var deplacement = GLKVector3.init()
+                    deplacement.x = typeInfo[0] as! Float
+                    deplacement.y = typeInfo[1] as! Float
+                    deplacement.z = typeInfo[2] as! Float
+                    portal.appliquerDeplacement(deplacement: deplacement)
+                }
+                
+                // Assigner portails opposés
+                let portalA = linkedPortals[linkedPortals.index(linkedPortals.startIndex, offsetBy: 0)]
+                let portalB = linkedPortals[linkedPortals.index(linkedPortals.startIndex, offsetBy: 1)]
+                portalA.assignerOppose(portail: portalB)
+                portalB.assignerOppose(portail: portalA)
+            }
+        }
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
