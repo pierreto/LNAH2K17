@@ -31,6 +31,7 @@
 		253E088E1F818DD2009F301B /* JsonHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253E088D1F818DD2009F301B /* JsonHelper.swift */; };
 		253E08911F81913A009F301B /* ChannelEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253E08901F81913A009F301B /* ChannelEntity.swift */; };
 		256539A91F9D643A00D81E2C /* MapEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256539A81F9D643A00D81E2C /* MapEntity.swift */; };
+		25F66FB51FA13071006CB47F /* VisiteurSauvegarde.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F66FB41FA13071006CB47F /* VisiteurSauvegarde.swift */; };
 		3415E6C21F8545B300DB1CAD /* NoeudCommun.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3415E6C11F8545B300DB1CAD /* NoeudCommun.swift */; };
 		3415E6C41F8547CE00DB1CAD /* ArbreRendu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3415E6C31F8547CE00DB1CAD /* ArbreRendu.swift */; };
 		3415E6C71F85649D00DB1CAD /* UsineAbstraite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3415E6C61F85649D00DB1CAD /* UsineAbstraite.swift */; };
@@ -142,6 +143,7 @@
 		253E088D1F818DD2009F301B /* JsonHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = JsonHelper.swift; path = Noyau/Helper/JsonHelper.swift; sourceTree = "<group>"; };
 		253E08901F81913A009F301B /* ChannelEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChannelEntity.swift; path = Noyau/Entities/ChannelEntity.swift; sourceTree = "<group>"; };
 		256539A81F9D643A00D81E2C /* MapEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapEntity.swift; sourceTree = "<group>"; };
+		25F66FB41FA13071006CB47F /* VisiteurSauvegarde.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VisiteurSauvegarde.swift; path = Noyau/Arbre/Visiteurs/VisiteurSauvegarde.swift; sourceTree = "<group>"; };
 		3415E6C11F8545B300DB1CAD /* NoeudCommun.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NoeudCommun.swift; path = Noyau/Arbre/Noeuds/NoeudCommun.swift; sourceTree = "<group>"; };
 		3415E6C31F8547CE00DB1CAD /* ArbreRendu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArbreRendu.swift; path = Noyau/Arbre/ArbreRendu.swift; sourceTree = "<group>"; };
 		3415E6C61F85649D00DB1CAD /* UsineAbstraite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UsineAbstraite.swift; path = Noyau/Arbre/Usines/UsineAbstraite.swift; sourceTree = "<group>"; };
@@ -384,6 +386,7 @@
 				8F0B94BD1F8DC0F1007F0E82 /* VisiteurSelection.swift */,
 				8F0B94AD1F8D450B007F0E82 /* VisiteurSelectionnable.swift */,
 				344A6E291F994E0100CFFBEB /* VisiteurSurTable.swift */,
+				25F66FB41FA13071006CB47F /* VisiteurSauvegarde.swift */,
 			);
 			name = Visiteurs;
 			sourceTree = "<group>";
@@ -768,6 +771,7 @@
 				8F8706BB1F7892F2000E6824 /* ChatMessageEntity.swift in Sources */,
 				344A6E241F99112000CFFBEB /* NoeudAccelerateur.swift in Sources */,
 				3415E6C71F85649D00DB1CAD /* UsineAbstraite.swift in Sources */,
+				25F66FB51FA13071006CB47F /* VisiteurSauvegarde.swift in Sources */,
 				8F0B94AE1F8D450B007F0E82 /* VisiteurSelectionnable.swift in Sources */,
 				8FE1EB051F75A96900A01514 /* ClientConnection.swift in Sources */,
 				1D3D77B71F981BCA0012EF12 /* MainViewController.swift in Sources */,

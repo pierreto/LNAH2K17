@@ -49,7 +49,7 @@ class FacadeModele {
     private var arbre: ArbreRendu?
     
     /// Document JSON
-    private var docJson: [String : Any]?
+    var docJson: [String : Any]?
     
     /// Gesture recognizer
     var tapGestureRecognizer: UITapGestureRecognizer?
@@ -181,6 +181,7 @@ class FacadeModele {
         self.creerNoeuds(type: "Accelerateur", nomType: ArbreRendu.instance.NOM_ACCELERATEUR)
         self.creerNoeuds(type: "Portail", nomType: ArbreRendu.instance.NOM_PORTAIL)
         self.creerNoeuds(type: "Muret", nomType: ArbreRendu.instance.NOM_MUR)
+        
         /*
         coefficients[0] = docJSON_["Coefficients"][0].GetDouble();
         coefficients[1] = docJSON_["Coefficients"][1].GetDouble();
@@ -285,6 +286,34 @@ class FacadeModele {
             }
         }
     }
+    
+    /// Cette fonction permet d'enregistrer le patinoire en format JSON
+    func enregistrerSous(filePath: String, coefficients: [Float]) {
+        let json = self.getMapJson(coefficients: coefficients);
+    }
+    
+    func getMapJson(coefficients: [Float]) -> String {
+        let dict: [String: Any] = ["PointControle":"", "Accelerateur":"", "Muret":"", "Portail": [coefficients[0], coefficients[1], coefficients[2]]]
+        
+        if let data = try? JSONSerialization.data(withJSONObject: dict, options: .prettyPrinted) {
+            let str = String(bytes: data, encoding: .utf8)
+            print(str)
+        }
+        
+        /*
+        VisiteurSauvegarde visiteur = VisiteurSauvegarde();
+        arbre_->accepterVisiteur(&visiteur);
+     
+        rapidjson::StringBuffer buffer2;
+        rapidjson::Writer<rapidjson::StringBuffer>writer(buffer2);
+        docJSON_.Accept(writer);
+        std::string data(buffer2.GetString(), buffer2.GetSize());
+        return data;
+         */
+        
+        return ""
+    }
+    
 }
 
 ///////////////////////////////////////////////////////////////////////////////
