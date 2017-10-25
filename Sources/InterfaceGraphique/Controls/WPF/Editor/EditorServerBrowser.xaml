@@ -3,10 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:InterfaceGraphique.Controls.WPF.Editor"
              xmlns:wpf="clr-namespace:InterfaceGraphique.Controls.WPF"
-             xmlns:model="clr-namespace:InterfaceGraphique.Entities.Model"
-             xmlns:collections="clr-namespace:System.Collections;assembly=mscorlib"
+             xmlns:mockObject="clr-namespace:InterfaceGraphique.Entities.MockObject"
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="600">
     <UserControl.Resources>
@@ -26,7 +24,8 @@
                 <model:OnlineEditedMapInfo MapName="MapName2" NumberOfPlayer="123"/>
             </x:Array>-->
 
-            <model:OnlineEditedMapInfoMock  x:Key="DesignViewModel"/>
+            <mockObject:MapEntityMock
+                x:Key="DesignViewModel"/>
         </ResourceDictionary>
 
     </UserControl.Resources>
@@ -43,8 +42,8 @@
                 </Grid.ColumnDefinitions>
                 <TextBlock HorizontalAlignment="Center" Grid.Column="0" Text="IsPublic" Foreground="#DDFFFFFF" />
                 <TextBlock HorizontalAlignment="Center" Grid.Column="1" Text="MapName" Foreground="#DDFFFFFF" Margin="0,0,7,0" />
-                <TextBlock HorizontalAlignment="Center" Grid.Column="2" Text="NumberOfPlayer" Foreground="#DDFFFFFF" />
-                <TextBlock HorizontalAlignment="Center" Grid.Column="3" Text="MaxNumberOfPlayer" Foreground="#DDFFFFFF" />
+                <TextBlock HorizontalAlignment="Center" Grid.Column="2" Text="Number Of Player" Foreground="#DDFFFFFF" />
+                <TextBlock HorizontalAlignment="Center" Grid.Column="3" Text="Creator" Foreground="#DDFFFFFF" />
 
             </Grid>
             <ListBox ItemsSource="{Binding OnlineEditedMapInfos}" 
@@ -66,10 +65,10 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <TextBlock HorizontalAlignment="Center" Grid.Column="0" Text="{Binding IsPublic}" Foreground="#DDFFFFFF" />
+                            <TextBlock HorizontalAlignment="Center" Grid.Column="0" Text="{Binding Private}" Foreground="#DDFFFFFF" />
                             <TextBlock HorizontalAlignment="Center" Grid.Column="1" Text="{Binding MapName}" Foreground="#DDFFFFFF" Margin="0,0,0,0" />
-                            <TextBlock HorizontalAlignment="Center" Grid.Column="2" Text="{Binding NumberOfPlayer}" Foreground="#DDFFFFFF" />
-                            <TextBlock HorizontalAlignment="Center" Grid.Column="3" Text="{Binding MaxNumberOfPlayer}" Foreground="#DDFFFFFF" />
+                            <TextBlock HorizontalAlignment="Center" Grid.Column="2" Text="{Binding CurrentNumberOfPlayer, StringFormat= ' {0}/4'}" Foreground="#DDFFFFFF" />
+                            <TextBlock HorizontalAlignment="Center" Grid.Column="3" Text="{Binding Creator}" Foreground="#DDFFFFFF" />
 
                         </Grid>
                     </DataTemplate>

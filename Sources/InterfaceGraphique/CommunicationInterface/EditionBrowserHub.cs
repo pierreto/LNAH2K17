@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using InterfaceGraphique.Entities.Model;
+using InterfaceGraphique.Entities;
 using Microsoft.AspNet.SignalR.Client;
 
 namespace InterfaceGraphique.CommunicationInterface
@@ -19,9 +19,9 @@ namespace InterfaceGraphique.CommunicationInterface
 
         }
 
-        public async Task<List<OnlineEditedMapInfo>> getAvailableMap()
+        public async Task<List<MapEntity>> getAvailableMap()
         {
-            return await hubProxy.Invoke<List<OnlineEditedMapInfo>>("GetAvailableMapList");
+            return await hubProxy.Invoke<List<MapEntity>>("GetAvailableMapList");
         }
 
         public void Logout()

@@ -5,26 +5,32 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using InterfaceGraphique.Entities.Model;
+using InterfaceGraphique.CommunicationInterface.RestInterface;
+using InterfaceGraphique.Entities;
+using InterfaceGraphique.Services;
+using Microsoft.Practices.ObjectBuilder2;
 
 namespace InterfaceGraphique.Controls.WPF.Editor
 {
-    public class EditorViewModel
+    public class EditorViewModel : ViewModelBase
     {
+        private MapService mapService;
 
-        private ObservableCollection<OnlineEditedMapInfo> onlineEditedMapInfos;
+        private ObservableCollection<MapEntity> onlineEditedMapInfos;
         private ICommand serverListViewCommand;
         private ICommand modeViewCommand;
         private ICommand joinEditionCommand;
 
-        public EditorViewModel()
+        public EditorViewModel(MapService mapService)
         {
-            this.onlineEditedMapInfos = new ObservableCollection<OnlineEditedMapInfo>();
-            OnlineEditedMapInfos = new ObservableCollection<OnlineEditedMapInfo>
-            {
-                new OnlineEditedMapInfo() {MapName = "test text 1", NumberOfPlayer = 2},
-                new OnlineEditedMapInfo() {MapName = "test text 3", NumberOfPlayer = 2}
-            };
+            this.mapService = mapService;
+        }
+        public override async void  InitializeViewModel()
+        {
+            //TODO:Not optimized should use a list here but for testing purpose i'll leave it this way
+            this.onlineEditedMapInfos = new ObservableCollection<MapEntity>();
+            List<MapEntity> list = await this.mapService.GetOnlineMap();
+            list.ForEach(x => this.onlineEditedMapInfos.Add(x));
         }
 
         public ICommand ServerListViewCommand
@@ -54,7 +60,7 @@ namespace InterfaceGraphique.Controls.WPF.Editor
         {
             Program.EditorHost.SwitchViewToMapModeView();
         }
-        public ObservableCollection<OnlineEditedMapInfo> OnlineEditedMapInfos
+        public ObservableCollection<MapEntity> OnlineEditedMapInfos
         {
             get => onlineEditedMapInfos;
             set => onlineEditedMapInfos = value;

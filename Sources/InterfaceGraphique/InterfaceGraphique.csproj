@@ -210,7 +210,7 @@
     <Compile Include="Entities\MapEntity.cs" />
     <Compile Include="Entities\MemberEntity.cs" />
     <Compile Include="CommunicationInterface\LoginClient.cs" />
-    <Compile Include="Entities\Model\OnlineEditedMapInfo.cs" />
+    <Compile Include="Entities\MockObject\MapEntityMock.cs" />
     <Compile Include="Entities\TournamentOpponentMessage.cs" />
     <Compile Include="Entities\UserEntity.cs" />
     <Compile Include="Exceptions\LoginException.cs" />
@@ -318,6 +318,7 @@
     <Compile Include="Game\TestMode.Designer.cs">
       <DependentUpon>TestMode.cs</DependentUpon>
     </Compile>
+    <Compile Include="Services\MapService.cs" />
     <Compile Include="WPFApplication.cs" />
     <EmbeddedResource Include="Editor\OpenPrivateMapForm.resx">
       <DependentUpon>OpenPrivateMapForm.cs</DependentUpon>

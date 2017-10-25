@@ -8,8 +8,10 @@ using System.Threading.Tasks;
 
 namespace InterfaceGraphique.Controls.WPF
 {
-    public class ViewModelBase : INotifyPropertyChanged
+    public abstract class ViewModelBase : INotifyPropertyChanged
     {
+
+        public abstract  void InitializeViewModel();
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void OnPropertyChanged([CallerMemberName()] string name = null)

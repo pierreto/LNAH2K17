@@ -14,6 +14,7 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Windows;
 using InterfaceGraphique.CommunicationInterface;
+using InterfaceGraphique.CommunicationInterface.RestInterface;
 using InterfaceGraphique.Controls;
 using InterfaceGraphique.Controls.WPF;
 using InterfaceGraphique.Controls.WPF.Chat;
@@ -25,6 +26,7 @@ using Microsoft.Practices.Unity;
 using Application = System.Windows.Forms.Application;
 using InterfaceGraphique.Controls.WPF.Matchmaking;
 using InterfaceGraphique.Controls.WPF.Tournament;
+using InterfaceGraphique.Services;
 
 namespace InterfaceGraphique
 {
@@ -144,6 +146,10 @@ namespace InterfaceGraphique
             unityContainer.RegisterType<ChatViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<TournamentViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<EditorViewModel>(new ContainerControlledLifetimeManager());
+
+
+            //Rest services instantiations
+            unityContainer.RegisterType<MapService>();
 
 
         }

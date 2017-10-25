@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.Integration;
 using InterfaceGraphique.Controls.WPF.Editor;
+using Microsoft.Practices.Unity;
 
 namespace InterfaceGraphique.Controls.WPF
 {
@@ -32,6 +33,7 @@ namespace InterfaceGraphique.Controls.WPF
         public void SwitchViewToServerBrowser()
         {
             this.elementHost1.Child = serverBrowser;
+            Program.unityContainer.Resolve<EditorViewModel>().InitializeViewModel();
         }
         public void SwitchViewToMapModeView()
         {

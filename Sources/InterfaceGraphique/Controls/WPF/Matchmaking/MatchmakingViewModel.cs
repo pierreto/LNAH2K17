@@ -26,13 +26,13 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
             this.isStarted = false;
             this.MapsRepository = new MapsRepository();
         }
-
-        public void Initialize()
+        public override void InitializeViewModel()
         {
             LoadData();
             InitializeEvents();
             this.waitingRoomHub.JoinGame();
         }
+
 
         private void InitializeEvents()
         {
