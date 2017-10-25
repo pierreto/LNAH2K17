@@ -39,21 +39,13 @@ namespace InterfaceGraphique.CommunicationInterface
         public async Task EstablishConnection(string serverIp)
         {
             this.connection = new HubConnection("http://" + serverIp + ":63056/signalr");
+
             this.AddHubs();
 
-            //    this.InitializeHubs(username);
+            this.InitializeHubs();
+
+            await this.connection.Start();
         }
-
-        //public async Task EstablishConnection(string serverIp, string username)
-        //{
-        //    this.connection = new HubConnection("http://" + serverIp + ":63056/signalr");
-
-        //    this.AddHubs();
-
-        //    this.InitializeHubs(username);
-
-        //    await this.connection.Start();
-        //}
 
         public void AddHubs()
         {
@@ -65,14 +57,12 @@ namespace InterfaceGraphique.CommunicationInterface
             };
         }
 
-        public async Task InitializeHubs(string username)
+        public void InitializeHubs()
         {
             foreach (IBaseHub hub in this.hubs)
             {
-                hub.InitializeHub(this.connection, username);
+                hub.InitializeHub(this.connection);
             }
-            await this.connection.Start();
-
         }
 
         public void Logout()

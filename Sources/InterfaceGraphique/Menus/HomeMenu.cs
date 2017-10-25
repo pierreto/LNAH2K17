@@ -1,4 +1,5 @@
-﻿using InterfaceGraphique.Controls.WPF;
+﻿using InterfaceGraphique.CommunicationInterface;
+using InterfaceGraphique.Controls.WPF;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,6 +9,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Practices.Unity;
+using InterfaceGraphique.Controls.WPF.Home;
 
 namespace InterfaceGraphique.Menus
 {
@@ -24,6 +27,12 @@ namespace InterfaceGraphique.Menus
             navigationView1.DataContext = vmb;
         }
 
+        public void Logout()
+        {
+            HubManager.Instance.Logout();
+            Program.FormManager.CurrentForm = Program.HomeMenu;
+            ChangeViewTo(Program.unityContainer.Resolve<HomeViewModel>());
+        }
         ////////////////////////////////////////////////////////////////////////
         ///
         /// Fonction vide appelée sur toutes les forms de facon 

@@ -38,7 +38,7 @@ namespace InterfaceGraphique
         public static FormManager FormManager { get { return formManager; } }
         public static MainMenu MainMenu { get { return mainMenu; } }
         public static HomeMenu HomeMenu { get { return homeMenu; } }
-        public static Login Login {  get { return login; } }
+        //public static Login Login {  get { return login; } }
         public static Editeur Editeur { get { return editeur; } }
         public static ConfigurationMenu ConfigurationMenu { get { return configurationMenu; } }
         public static QuickPlay QuickPlay { get { return quickPlay; } }
@@ -67,7 +67,7 @@ namespace InterfaceGraphique
         private static LobbyHost lobbyHost;
 
         private static Panel openGLPanel;
-        private static Login login;
+        //private static Login login;
         private static TimeSpan dernierTemps;
         private static TimeSpan tempsAccumule;
         private static Stopwatch chrono = Stopwatch.StartNew();
@@ -101,7 +101,7 @@ namespace InterfaceGraphique
 
             InitializeUnityDependencyInjection();
 
-            login = unityContainer.Resolve<Login>(); ;
+            //login = unityContainer.Resolve<Login>(); ;
             openGLPanel = new Panel();
             formManager = new FormManager();
             homeMenu = new HomeMenu();
@@ -135,7 +135,7 @@ namespace InterfaceGraphique
             unityContainer.RegisterType<AuthenticateViewModel>();
             unityContainer.RegisterType<SignupViewModel>();
             unityContainer.RegisterType<HomeViewModel>();
-            unityContainer.RegisterType<ConnectServerViewModel>();
+            unityContainer.RegisterType<ConnectServerViewModel>(); 
         }
 
         static void ExecuterQuandInactif(object sender, EventArgs e)

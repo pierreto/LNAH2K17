@@ -59,8 +59,8 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
                 var response = await client.PostAsJsonAsync("http://localhost:63056/api/login", loginEntity);
                 if (response.IsSuccessStatusCode)
                 {
-                    hubManager.AddHubs();
-                    await hubManager.InitializeHubs(loginEntity.Username);
+                    int userId = response.Content.ReadAsAsync<int>().Result;
+                    User.Instance.UserEntity = new UserEntity { Id = userId, Username = loginEntity.Username };
                     await chatHub.InitializeChat();
                     Program.FormManager.CurrentForm = Program.MainMenu;
                 }

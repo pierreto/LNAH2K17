@@ -12,7 +12,7 @@ namespace AirHockeyServer.Services
         private UserService UserService = new UserService();
         private PasswordService PasswordService = new PasswordService();
 
-        public async Task ValidateCredentials(LoginEntity loginEntity)
+        public async Task<int> ValidateCredentials(LoginEntity loginEntity)
         {
             try
             {
@@ -25,6 +25,10 @@ namespace AirHockeyServer.Services
                         if (uE.Username != loginEntity.Username || pE.Password != loginEntity.Password)
                         {
                             throw new LoginException("Nom d'usager ou mot de passe invalide");
+                        }
+                        else
+                        {
+                            return uE.Id;
                         }
                     }
                     else

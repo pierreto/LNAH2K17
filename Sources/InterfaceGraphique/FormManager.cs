@@ -63,7 +63,7 @@ namespace InterfaceGraphique {
         ////////////////////////////////////////////////////////////////////////
         public void InitializeEvents()
         {
-            this.FormClosing += (sender, e) => Program.Login.Logout();
+            this.FormClosing += (sender, e) => Program.HomeMenu.Logout();
         }
 
 

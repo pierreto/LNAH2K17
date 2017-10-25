@@ -26,8 +26,9 @@ namespace AirHockeyServer.Controllers
         {
             try
             {
-                await this.LoginService.ValidateCredentials(loginEntity);
-                return Request.CreateResponse(HttpStatusCode.OK);
+                int? id = null;
+                id = await this.LoginService.ValidateCredentials(loginEntity);
+                return Request.CreateResponse(HttpStatusCode.OK, id);
             }
             catch (LoginException e)
             {

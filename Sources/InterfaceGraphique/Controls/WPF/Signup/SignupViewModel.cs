@@ -51,45 +51,40 @@ namespace InterfaceGraphique.Controls.WPF.Signup
 
         private async Task<Uri> Signup()
         {
+            try
             {
-                try
+                Loading();
+                ResetErrMsg();
+                if (!ValidateFields())
                 {
-                    Loading();
-                    ResetErrMsg();
-                    if (!ValidateFields())
-                    {
-                        return null;
-                    }
-                    var response = await client.PostAsJsonAsync("http://localhost:63056/api/signup", signupEntity);
-                    if (response.IsSuccessStatusCode)
-                    {
-                        hubManager.AddHubs();
-                        await hubManager.InitializeHubs(signupEntity.Username);
-                        await chatHub.InitializeChat();
-                        Program.FormManager.CurrentForm = Program.MainMenu;
-                    }
-                    else
-                    {
-                        var res = response.Content.ReadAsAsync<string>().Result;
-                        //response.EnsureSuccessStatusCode();
-                        // return URI of the created resource.
-                        UsernameErrMsg = res;
-                        PasswordErrMsg = res;
-                    }
-                    return response.Headers.Location;
-                }
-                catch (Exception e)
-                {
-                    System.Diagnostics.Debug.WriteLine(e);
                     return null;
                 }
-                finally
+                var response = await client.PostAsJsonAsync("http://localhost:63056/api/signup", signupEntity);
+                if (response.IsSuccessStatusCode)
                 {
-                    LoadingDone();
+                    int userId = response.Content.ReadAsAsync<int>().Result;
+                    User.Instance.UserEntity = new UserEntity { Id = userId, Username = signupEntity.Username };
+                    await chatHub.InitializeChat();
+                    Program.FormManager.CurrentForm = Program.MainMenu;
                 }
-
+                else
+                {
+                    var res = response.Content.ReadAsAsync<string>().Result;
+                    //response.EnsureSuccessStatusCode();
+                    // return URI of the created resource.
+                    UsernameErrMsg = res;
+                }
+                return response.Headers.Location;
             }
-
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+                return null;
+            }
+            finally
+            {
+                LoadingDone();
+            }
         }
 
         private bool ValidateFields()
@@ -114,7 +109,7 @@ namespace InterfaceGraphique.Controls.WPF.Signup
                     valid = false;
                 }
             }
-            if(Password == "")
+            if (Password == "")
             {
                 PasswordErrMsg = "Mot de passe requis";
                 valid = false;

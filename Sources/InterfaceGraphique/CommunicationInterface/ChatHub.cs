@@ -18,24 +18,22 @@ namespace InterfaceGraphique.CommunicationInterface
     {
 
         public event Action<ChatMessage> NewMessage;
-        private string username;
         private IHubProxy chatHubProxy;
 
         private ChannelEntity mainChannel;
         private ObservableCollection<ChannelEntity> channels;
 
-     
-        public void InitializeHub(HubConnection connection, string username)
+
+        public void InitializeHub(HubConnection connection)
         {
-            this.username = username;
             chatHubProxy = connection.CreateHubProxy("ChatHub");
         }
 
         public async Task<bool> AuthenticateUser()
         {
-            var authentication = chatHubProxy.Invoke<bool>("Authenticate", this.username);
+            var authentication = chatHubProxy.Invoke<bool>("Authenticate", User.Instance.UserEntity.Username);
             await authentication;
-           return authentication.Result;
+            return authentication.Result;
         }
 
         public async Task InitializeChat()
@@ -44,7 +42,7 @@ namespace InterfaceGraphique.CommunicationInterface
             Random random = new Random();
             var userId = random.Next();
 
-            Program.user = new UserEntity { Id = userId, Username = this.username };
+            Program.user = new UserEntity { Id = userId, Username = User.Instance.UserEntity.Username };
 
             await chatHubProxy.Invoke("Subscribe", userId);
 
@@ -57,13 +55,13 @@ namespace InterfaceGraphique.CommunicationInterface
 
         public void Logout()
         {
-            chatHubProxy?.Invoke("Disconnect", this.username).Wait();
+            chatHubProxy?.Invoke("Disconnect", User.Instance.UserEntity.Username).Wait();
         }
 
         public async void SendMessage(ChatMessage message)
         {
-            message.Sender = this.username;
-            message.TimeStamp=DateTime.Now;
+            message.Sender = User.Instance.UserEntity.Username;
+            message.TimeStamp = DateTime.Now;
             await chatHubProxy.Invoke("SendBroadcast", message);
         }
     }

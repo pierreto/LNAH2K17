@@ -134,6 +134,7 @@
     <Compile Include="CommunicationInterface\RestInterface\HttpResponseParser.cs" />
     <Compile Include="CommunicationInterface\RestInterface\MapsRepository.cs" />
     <Compile Include="CommunicationInterface\RestInterface\Repository.cs" />
+    <Compile Include="CommunicationInterface\User.cs" />
     <Compile Include="CommunicationInterface\WaitingRoomHub.cs" />
     <Compile Include="CommunicationInterface\HubManager.cs" />
     <Compile Include="CommunicationInterface\IBaseHub.cs" />
@@ -212,9 +213,7 @@
     <Compile Include="Menus\HomeMenu.Designer.cs">
       <DependentUpon>HomeMenu.cs</DependentUpon>
     </Compile>
-    <Compile Include="Menus\Login.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Menus\Login.cs" />
     <Compile Include="Menus\Login.Designer.cs">
       <DependentUpon>Login.cs</DependentUpon>
     </Compile>
