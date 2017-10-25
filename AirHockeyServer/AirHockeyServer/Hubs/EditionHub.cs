@@ -3,6 +3,7 @@ using AirHockeyServer.Entities.EditionCommand;
 using AirHockeyServer.Entities.Messages;
 using AirHockeyServer.Entities.Messages.Edition;
 using Microsoft.AspNet.SignalR;
+using Newtonsoft.Json;
 
 namespace AirHockeyServer.Hubs
 {
@@ -22,7 +23,7 @@ namespace AirHockeyServer.Hubs
             Groups.Add(Context.ConnectionId, ObtainEditionGroupIdentifier(map.Id));
         }
 
-        public void SendEditionCommand(int mapId, AbstractEditionCommand editionCommand)
+        public void SendEditionCommand(int mapId, string editionCommand)
         {
             Clients.Group(ObtainEditionGroupIdentifier(mapId)).NewCommand(editionCommand);
         }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using InterfaceGraphique.Entities;
 using InterfaceGraphique.Entities.EditorCommand;
 using Microsoft.AspNet.SignalR.Client;
+using Newtonsoft.Json;
 
 namespace InterfaceGraphique.CommunicationInterface
 {
@@ -31,9 +32,15 @@ namespace InterfaceGraphique.CommunicationInterface
             mapEntity.Id = 1;
             hubProxy.Invoke("JoinPublicRoom", mapEntity);
 
-            hubProxy.On<AbstractEditionCommand>("NewCommand", command =>
+            hubProxy.On<string>("NewCommand", command =>
             {
-                NewCommand?.Invoke(command);
+                var rcmd = JsonConvert.DeserializeObject<AbstractEditionCommand>(
+                    command,
+                    new JsonSerializerSettings
+                    {
+                        TypeNameHandling = TypeNameHandling.All
+                    });
+                NewCommand?.Invoke(rcmd);
             });
         }
 
@@ -48,7 +55,9 @@ namespace InterfaceGraphique.CommunicationInterface
 
         public void SendEditorCommand(AbstractEditionCommand command)
         {
-            hubProxy.Invoke("SendEditionCommand", this.map.Id, command);
+            var serializer = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
+            var str = JsonConvert.SerializeObject(command, serializer);
+            hubProxy.Invoke("SendEditionCommand", this.map.Id, str);
         }
 
 
