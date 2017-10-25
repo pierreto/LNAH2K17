@@ -41,6 +41,23 @@ namespace AirHockeyServer.Repositories
             }
         }
 
+        public async Task<IEnumerable<MapEntity>> GetMaps()
+        {
+            try
+            {
+                IQueryable<MapPoco> queryable = from map in this.Maps select map;
+                IEnumerable<MapPoco> maps = await Task<IEnumerable<MapPoco>>.Run(
+                    () => queryable.ToArray());
+
+                return MapperManager.Map<IEnumerable<MapPoco>, IEnumerable<MapEntity>>(maps);
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("[MapRepository.GetMaps] " + e.ToString());
+                return null;
+            }
+        }
+
         public async Task CreateNewMap(MapEntity map)
         {
             try

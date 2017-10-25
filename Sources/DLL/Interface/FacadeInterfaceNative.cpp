@@ -454,6 +454,22 @@ extern "C"
 		FacadeModele::obtenirInstance()->ouvrir(filePath, coefficients);
 	}
 
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void chargerCarte(const char* json, float coefficients[])
+	///
+	/// Cette fonction permet l'ouverture d'un fichier de sauvegarde pour 
+	/// charger un arbre enregistré
+	///
+	/// @param[in] json : JSON représentant l'arbre enregistré (= la carte)
+	/// @param[in] coefficients[] : Coefficients de la carte
+	///
+	/// @return Aucune
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) void chargerCarte(const char* json, float coefficients[]) {
+		FacadeModele::obtenirInstance()->chargerCarte(json, coefficients);
+	}
 
 	////////////////////////////////////////////////////////////////////////
 	///

@@ -76,10 +76,9 @@ namespace AirHockeyServer.Services
         /// @return une liste de carte
         ///
         ////////////////////////////////////////////////////////////////////////
-        public IEnumerable<MapEntity> GetMaps()
+        public async Task<IEnumerable<MapEntity>> GetMaps()
         {
-            //MapRepository.
-            return new List<MapEntity>();
+            return await MapRepository.GetMaps();
         }
     }
 }
