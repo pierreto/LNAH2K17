@@ -26,7 +26,7 @@ class ModeleEtatDuplication: ModeleEtat {
     static let instance = ModeleEtatDuplication()
     
     /// Booléen pour savoir si on est en copie
-    private var estCopie: Bool = false
+    private var copieEnCours: Bool = false
     
     /// Fonction qui initialise l'état de création de murets
     override func initialiser() {
@@ -35,73 +35,89 @@ class ModeleEtatDuplication: ModeleEtat {
         // La duplication des noeuds s'effectue via un gesture pan
         FacadeModele.instance.obtenirVue().editorView.addGestureRecognizer(FacadeModele.instance.panGestureRecognizer!)
         
-        self.estCopie = false
+        self.copieEnCours = false
     }
     
     /// Cette fonction nettoie l'état des changements apportes
     override func nettoyerEtat() {
         FacadeModele.instance.obtenirVue().editorView.removeGestureRecognizer(FacadeModele.instance.panGestureRecognizer!)
+        
+        /// Enlever tous les noeuds hors de la table
+        /// En théorie, ces noeuds devraient être encore sélectionnés
+        if !noeudsSurLaTable() {
+            let visiteur = VisiteurObtenirSelection()
+            FacadeModele.instance.obtenirArbreRendu().accepterVisiteur(visiteur: visiteur)
+            let noeuds = visiteur.obtenirNoeuds()
+        
+            for noeud in noeuds {
+                noeud.removeFromParentNode()
+            }
+        }
     }
     
     // Fonctions gérant les entrées de l'utilisateur
     override func panGesture(sender: ImmediatePanGestureRecognizer) {
         super.panGesture(sender: sender)
         
-        if sender.state == UIGestureRecognizerState.began {
+        if sender.state == .began {
             print("Debut duplication noeud")
-            // Faire apparaitre le tampon
-            self.dupliquerNoeud()
-        }
-        else if sender.state == UIGestureRecognizerState.ended {
-            print("Fin duplication noeud")
-            // Dupliquer les noeuds
             
-            // Dernier déplacement
-            //let deplacement = super.obtenirDeplacement()
-            //self.deplacerNoeud(deplacement: deplacement)
-            
-            if (noeudsSurLaTable()) {
-                // Redupliquer les objets sont dans la zone de jeu
-                //let duplication = VisiteurDuplication();
-                //FacadeModele.instance.obtenirArbreRendu().accepterVisiteur(visiteur: duplication)
+            if !copieEnCours {
+                // Faire apparaitre le tampon
+                self.dupliquerNoeud()
             }
             else {
-                // Annuler la duplication
-                //let visiteur = VisiteurObtenirSelection()
-                //FacadeModele.instance.obtenirArbreRendu().accepterVisiteur(visiteur: visiteur)
-                //let noeuds = visiteur.obtenirNoeuds()
+                // Déplacer les noeuds dupliqués où l'utilisateur touche l'écran
+                let visiteur = VisiteurObtenirSelection()
+                FacadeModele.instance.obtenirArbreRendu().accepterVisiteur(visiteur: visiteur)
+                let centreDuplication = visiteur.obtenirCentreSelection()
                 
-                //for noeud in noeuds {
-                //    noeud.removeFromParentNode()
-                //}
+                let deplacement = obtenirDeplacementDuplication(centreDuplication: centreDuplication)
+                self.deplacerNoeud(deplacement: deplacement)
             }
-            
-            //self.reset()
         }
-        else {
-            // Déplacer le noeud fantôme
+        else if sender.state == .changed {
+            // Déplacer les noeuds dupliqués
             let deplacement = super.obtenirDeplacement()
             self.deplacerNoeud(deplacement: deplacement)
         }
-    }
-    
-    /// Déplace un fantome de la sélection
-    func dupliquerNoeud() {
-        let arbre = FacadeModele.instance.obtenirArbreRendu()
-        
-        if !self.estCopie {
-            let duplication = VisiteurDuplication()
-            arbre.accepterVisiteur(visiteur: duplication)
-            let centreDuplication = duplication.obtenirCentreDuplication()
+        else if sender.state == .ended {
+            print("Fin duplication noeud")
             
-            let deplacement = obtenirDeplacementDuplication(centreDuplication: centreDuplication)
+            // Dernier déplacement
+            let deplacement = super.obtenirDeplacement()
             self.deplacerNoeud(deplacement: deplacement)
-    
-            self.estCopie = true
+            
+            if (noeudsSurLaTable()) {
+                let visiteur = VisiteurObtenirSelection()
+                FacadeModele.instance.obtenirArbreRendu().accepterVisiteur(visiteur: visiteur)
+                let noeuds = visiteur.obtenirNoeuds()
+                
+                // Valider la position des noeuds dupliqués (en enlevant l'effet fantôme)
+                // Ceux-ci restent sélectionnés pour des duplications successives
+                for noeud in noeuds {
+                    noeud.effetFantome(activer: false)
+                }
+                
+                self.copieEnCours = false
+            }
         }
     }
     
-    /// Détermine le déplacement pour la duplication (delta)
+    /// Dupliquer les noeuds sélectionnés
+    func dupliquerNoeud() {
+        let duplication = VisiteurDuplication()
+        FacadeModele.instance.obtenirArbreRendu().accepterVisiteur(visiteur: duplication)
+        
+        // Déplacer les noeuds dupliqués où l'utilisateur touche l'écran
+        let centreDuplication = duplication.obtenirCentreDuplication()
+        let deplacement = obtenirDeplacementDuplication(centreDuplication: centreDuplication)
+        self.deplacerNoeud(deplacement: deplacement)
+    
+        self.copieEnCours = true
+    }
+    
+    /// Déterminer le déplacement des noeuds dupliqués au toucher de l'utilisateur
     func obtenirDeplacementDuplication(centreDuplication: GLKVector3) -> GLKVector3 {
         let arbre = FacadeModele.instance.obtenirArbreRendu()
         let table = arbre.childNode(withName: arbre.NOM_TABLE, recursively: true) as! NoeudTable
@@ -118,15 +134,6 @@ class ModeleEtatDuplication: ModeleEtat {
     private func deplacerNoeud(deplacement: GLKVector3) {
         let visiteur = VisiteurDeplacement(delta: deplacement)
         FacadeModele.instance.obtenirArbreRendu().accepterVisiteur(visiteur: visiteur)
-    }
-    
-    /// Supprime noeud fantôme et remet à l'état initial avant duplication
-    func reset() {
-        //VisiteurSuppression suppression = VisiteurSuppression();
-        //FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(&suppression);
-        //suppression.deleteAllSelectedNode();
-        
-        self.estCopie = false
     }
 
 }

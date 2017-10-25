@@ -51,7 +51,7 @@ class NoeudPortail : NoeudCommun {
     }
     
     /// Cette fonction assigne un noeud opposé à un portail
-    func assignerOppose(portail: NoeudPortail) {
+    func assignerOppose(portail: NoeudPortail?) {
         self.portailOppose = portail
     }
     
