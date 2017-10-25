@@ -25,6 +25,7 @@ class EditorHUDScene: SKScene {
     private var deplacementButton: SKSpriteNode?
     private var rotationButton: SKSpriteNode?
     private var resizeButton: SKSpriteNode?
+    private var duplicateButton: SKSpriteNode?
     private var pointControlButton: SKSpriteNode?
     private var portalButton: SKSpriteNode?
     private var wallButton: SKSpriteNode?
@@ -44,6 +45,7 @@ class EditorHUDScene: SKScene {
         self.deplacementButton = (self.childNode(withName: "//deplacementButton") as? SKSpriteNode)!
         self.rotationButton = (self.childNode(withName: "//rotationButton") as? SKSpriteNode)!
         self.resizeButton = (self.childNode(withName: "//resizeButton") as? SKSpriteNode)!
+        self.duplicateButton = (self.childNode(withName: "//duplicateButton") as? SKSpriteNode)!
         self.pointControlButton = (self.childNode(withName: "//pointControlButton") as? SKSpriteNode)!
         self.portalButton = (self.childNode(withName: "//portalButton") as? SKSpriteNode)!
         self.wallButton = (self.childNode(withName: "//wallButton") as? SKSpriteNode)!
@@ -59,6 +61,7 @@ class EditorHUDScene: SKScene {
         self.deplacementButton?.texture = SKTexture(imageNamed: "Move")
         self.rotationButton?.texture = SKTexture(imageNamed: "Rotate")
         self.resizeButton?.texture = SKTexture(imageNamed: "Resize")
+        self.duplicateButton?.texture = SKTexture(imageNamed: "Duplicate")
         self.pointControlButton?.texture = SKTexture(imageNamed: "ControlPoint")
         self.portalButton?.texture = SKTexture(imageNamed: "Portal")
         self.wallButton?.texture = SKTexture(imageNamed: "Wall");
@@ -107,6 +110,10 @@ class EditorHUDScene: SKScene {
         else if touchedNode?.name == "resizeButton"{
             print("Mise à l'échelle")
             FacadeModele.instance.changerModeleEtat(etat: .MISE_A_ECHELLE)
+        }
+        else if touchedNode?.name == "duplicateButton"{
+            print("Duplication")
+            FacadeModele.instance.changerModeleEtat(etat: .DUPLIQUER)
         }
         else if touchedNode?.name == "pointControlButton"{
             print("PointControl")

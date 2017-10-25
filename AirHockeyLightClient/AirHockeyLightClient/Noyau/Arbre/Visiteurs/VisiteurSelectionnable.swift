@@ -16,7 +16,7 @@
 /// @author Mikael Ferland et Pierre
 /// @date 2017-10-10
 ///////////////////////////////////////////////////////////////////////////
-class VisiteurSelectionnable : VisiteurAbstrait {
+class VisiteurSelectionnable: VisiteurAbstrait {
 
     /// Type du noeud
     private var type: String

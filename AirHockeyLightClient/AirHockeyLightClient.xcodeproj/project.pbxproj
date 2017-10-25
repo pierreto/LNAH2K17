@@ -61,6 +61,8 @@
 		3475C2411F8FB9A100E8BF86 /* Zoom.png in Resources */ = {isa = PBXBuildFile; fileRef = 3475C2371F8FB9A100E8BF86 /* Zoom.png */; };
 		3475C2431F8FE71800E8BF86 /* ModeleEtatCameraControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3475C2421F8FE71800E8BF86 /* ModeleEtatCameraControl.swift */; };
 		3475C2461F90144300E8BF86 /* ImmediatePanGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3475C2451F90144300E8BF86 /* ImmediatePanGestureRecognizer.swift */; };
+		3497C3251F9FECA600C58700 /* ModeleEtatDuplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3497C3241F9FECA600C58700 /* ModeleEtatDuplication.swift */; };
+		3497C3271F9FF3C300C58700 /* VisiteurDuplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3497C3261F9FF3C300C58700 /* VisiteurDuplication.swift */; };
 		34B66FD91F8428EA00A9CCB9 /* NoeudTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B66FD81F8428EA00A9CCB9 /* NoeudTable.swift */; };
 		34B66FDC1F843CD400A9CCB9 /* fire_texture.png in Resources */ = {isa = PBXBuildFile; fileRef = 34B66FDB1F843CD300A9CCB9 /* fire_texture.png */; };
 		34B66FE01F844C2100A9CCB9 /* table_texture.png in Resources */ = {isa = PBXBuildFile; fileRef = 34B66FDF1F844C2100A9CCB9 /* table_texture.png */; };
@@ -169,6 +171,8 @@
 		3475C2371F8FB9A100E8BF86 /* Zoom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Zoom.png; path = ../../Sources/Icons/Zoom.png; sourceTree = "<group>"; };
 		3475C2421F8FE71800E8BF86 /* ModeleEtatCameraControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ModeleEtatCameraControl.swift; path = Noyau/Application/States/ModeleEtatCameraControl.swift; sourceTree = "<group>"; };
 		3475C2451F90144300E8BF86 /* ImmediatePanGestureRecognizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImmediatePanGestureRecognizer.swift; path = InterfaceGraphique/Gestures/ImmediatePanGestureRecognizer.swift; sourceTree = "<group>"; };
+		3497C3241F9FECA600C58700 /* ModeleEtatDuplication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ModeleEtatDuplication.swift; path = Noyau/Application/States/ModeleEtatDuplication.swift; sourceTree = "<group>"; };
+		3497C3261F9FF3C300C58700 /* VisiteurDuplication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VisiteurDuplication.swift; path = Noyau/Arbre/Visiteurs/VisiteurDuplication.swift; sourceTree = "<group>"; };
 		34B66FD81F8428EA00A9CCB9 /* NoeudTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NoeudTable.swift; path = Noyau/Arbre/Noeuds/NoeudTable.swift; sourceTree = "<group>"; };
 		34B66FDB1F843CD300A9CCB9 /* fire_texture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fire_texture.png; path = ../../Exe/media/textures/fire_texture.png; sourceTree = "<group>"; };
 		34B66FDF1F844C2100A9CCB9 /* table_texture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = table_texture.png; path = ../../Exe/media/textures/table_texture.png; sourceTree = "<group>"; };
@@ -371,6 +375,7 @@
 			children = (
 				8F0B94AB1F8D3EEE007F0E82 /* VisiteurAbstrait.swift */,
 				8F0B94BB1F8D8EA6007F0E82 /* VisiteurDeplacement.swift */,
+				3497C3261F9FF3C300C58700 /* VisiteurDuplication.swift */,
 				8F690D5F1F9D5244003F051A /* VisiteurObtenirSelection.swift */,
 				8F1D52A91F9D99C700135A53 /* VisiteurScale.swift */,
 				8F0B94BD1F8DC0F1007F0E82 /* VisiteurSelection.swift */,
@@ -398,6 +403,7 @@
 				8F0B94B91F8D8C95007F0E82 /* ModeleEtatDeplacement.swift */,
 				8F690D611F9D5E7F003F051A /* ModeleEtatRotation.swift */,
 				8F1D52A71F9D972400135A53 /* ModeleEtatScale.swift */,
+				3497C3241F9FECA600C58700 /* ModeleEtatDuplication.swift */,
 				344A6E211F99101700CFFBEB /* ModeleEtatCreerBoost.swift */,
 				8F0B94B71F8D7F11007F0E82 /* ModeleEtatPointControl.swift */,
 				342E7C511F9859620062017A /* ModeleEtatCreerPortail.swift */,
@@ -768,6 +774,7 @@
 				3475C2461F90144300E8BF86 /* ImmediatePanGestureRecognizer.swift in Sources */,
 				253E088C1F81858E009F301B /* UIViewShake.swift in Sources */,
 				1D019A211F911DF6004D79B2 /* Login.swift in Sources */,
+				3497C3271F9FF3C300C58700 /* VisiteurDuplication.swift in Sources */,
 				8FB6A9CA1F81E38300FAFFCF /* Table.swift in Sources */,
 				8F76FC0F1F9CF990001BBC99 /* SCNodeHelper.swift in Sources */,
 				3415E6C21F8545B300DB1CAD /* NoeudCommun.swift in Sources */,
@@ -799,6 +806,7 @@
 				1D90AAFE1F98228E003E0764 /* IConnectServerViewModel.swift in Sources */,
 				3415E6C91F85659900DB1CAD /* UsineNoeud.swift in Sources */,
 				8F690D601F9D5244003F051A /* VisiteurObtenirSelection.swift in Sources */,
+				3497C3251F9FECA600C58700 /* ModeleEtatDuplication.swift in Sources */,
 				253E08911F81913A009F301B /* ChannelEntity.swift in Sources */,
 				8F69F4BF1F8AF871004D5129 /* MathHelper.swift in Sources */,
 				1D019A2E1F911E49004D79B2 /* ISignupViewModel.swift in Sources */,

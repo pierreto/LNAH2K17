@@ -136,7 +136,7 @@ class FacadeModele {
                 //self.etat = ModeleEtatZoom.instance
                 break;
             case .DUPLIQUER:
-                //self.etat = ModeleEtatDuplication.instance
+                self.etat = ModeleEtatDuplication.instance
                 break;
             case .POINTS_CONTROLE:
                 self.etat = ModeleEtatPointControl.instance
