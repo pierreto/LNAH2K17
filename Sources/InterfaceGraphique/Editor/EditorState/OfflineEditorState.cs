@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using InterfaceGraphique.Entities;
 
 namespace InterfaceGraphique.Editor.EditorState 
 {
-    class OfflineEditorState : AbstractEditorState
+    public class OfflineEditorState : AbstractEditorState
     {
-        public override void mouseUp(object sender, MouseEventArgs e)
+        public override void MouseUp(object sender, MouseEventArgs e)
         {
             FonctionsNatives.modifierKeys((Control.ModifierKeys == Keys.Alt), (Control.ModifierKeys == Keys.Control));
             if (e.Button == MouseButtons.Left)
@@ -24,7 +25,7 @@ namespace InterfaceGraphique.Editor.EditorState
             }
         }
 
-        public override void mouseDown(object sender, MouseEventArgs e)
+        public override void MouseDown(object sender, MouseEventArgs e)
         {
             FonctionsNatives.modifierKeys((Control.ModifierKeys == Keys.Alt), (Control.ModifierKeys == Keys.Control));
             if (e.Button == MouseButtons.Left)
@@ -35,6 +36,11 @@ namespace InterfaceGraphique.Editor.EditorState
             {
                 FonctionsNatives.mouseDownR();
             }
+        }
+
+        public override void JoinEdition(MapEntity mapEntity)
+        {
+            //Online is not working in offline mode so we do nothing
         }
     }
 }

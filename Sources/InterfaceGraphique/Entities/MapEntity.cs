@@ -11,7 +11,7 @@ namespace InterfaceGraphique.Entities
 {
     public class MapEntity : BindableBase
     {
-        public string UUID { get; set; }
+        public int Id { get; set; }
         public string Creator { get; set; }
         public string MapName { get; set; }
         public DateTime LastBackup { get; set; }

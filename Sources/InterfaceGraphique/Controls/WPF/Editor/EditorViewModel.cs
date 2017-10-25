@@ -81,7 +81,8 @@ namespace InterfaceGraphique.Controls.WPF.Editor
 
         private async Task JoinEdition()
         {
-            //Program.Editeur.
+            Program.Editeur.JoinEdition(this.selectedMap);
+            Program.EditorHost.Close();
         }
 
         private bool CanJoinEdition()

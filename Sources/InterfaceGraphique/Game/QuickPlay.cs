@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using InterfaceGraphique.Controls.WPF.Matchmaking;
+using InterfaceGraphique.Editor.EditorState;
 using InterfaceGraphique.Game.GameState;
 using Microsoft.Practices.Unity;
 
@@ -19,7 +20,9 @@ namespace InterfaceGraphique {
     /// @author Julien Charbonneau
     /// @date 2016-09-13
     ///////////////////////////////////////////////////////////////////////////
-    public partial class QuickPlay : Form {
+    public partial class QuickPlay : Form
+    {
+
         private AbstractGameState currentGameState;
         ////////////////////////////////////////////////////////////////////////
         ///
@@ -137,7 +140,6 @@ namespace InterfaceGraphique {
             catch (Exception) {
 
             }
-            Program.unityContainer.Resolve<MatchmakingViewModel>();
         }
 
 

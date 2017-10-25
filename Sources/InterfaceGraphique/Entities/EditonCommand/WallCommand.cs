@@ -1,11 +1,18 @@
-﻿namespace AirHockeyServer.Entities.Messages.Edition
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using InterfaceGraphique.Entities.EditorCommand;
+
+namespace InterfaceGraphique.Entities.EditonCommand
 {
-    public class WallMessage : ObjectMessage
+    class WallCommand : AbstractEditionCommand
     {
         private int[] startPosition;
         private int[] endPosition;
 
-        public WallMessage(string objectUuid, int[] startPosition, int[] endPosition) : base(objectUuid)
+        public WallCommand(string objectUuid, int[] startPosition, int[] endPosition) : base(objectUuid)
         {
             this.startPosition = startPosition;
             this.endPosition = endPosition;
@@ -21,6 +28,12 @@
         {
             get => endPosition;
             set => endPosition = value;
+        }
+
+
+        public override void ExecuteCommand()
+        {
+
         }
     }
 }

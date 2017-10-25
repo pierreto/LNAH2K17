@@ -107,7 +107,7 @@ namespace InterfaceGraphique
             openGLPanel = new Panel();
             formManager = new FormManager();
             mainMenu = new MainMenu();
-            editeur = new Editeur();
+            editeur = unityContainer.Resolve<Editeur>();
             configurationMenu = new ConfigurationMenu();
             quickPlay = new QuickPlay();
             testMode = new TestMode();

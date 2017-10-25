@@ -5,19 +5,24 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using InterfaceGraphique.CommunicationInterface;
+using InterfaceGraphique.Entities;
+using InterfaceGraphique.Entities.EditonCommand;
+using InterfaceGraphique.Entities.EditorCommand;
 
 namespace InterfaceGraphique.Editor.EditorState
 {
-    class OnlineEditorState : AbstractEditorState
+    public class OnlineEditorState : AbstractEditorState
     {
         private EditionHub editionHub;
 
         public OnlineEditorState(EditionHub editionHub)
         {
             this.editionHub = editionHub;
+            this.editionHub.NewCommand += OnNewCommand;
+
         }
 
-        public override void mouseUp(object sender, MouseEventArgs e)
+        public override void MouseUp(object sender, MouseEventArgs e)
         {
             FonctionsNatives.modifierKeys((Control.ModifierKeys == Keys.Alt), (Control.ModifierKeys == Keys.Control));
             if (e.Button == MouseButtons.Left)
@@ -30,9 +35,15 @@ namespace InterfaceGraphique.Editor.EditorState
             {
                 FonctionsNatives.mouseUpR();
             }
+
+            int[] test = {1, 2, 3};
+            this.editionHub.SendEditorCommand(new PortalCommand("11234")
+            {
+                Position = test
+            });
         }
 
-        public override void mouseDown(object sender, MouseEventArgs e)
+        public override void MouseDown(object sender, MouseEventArgs e)
         {
             FonctionsNatives.modifierKeys((Control.ModifierKeys == Keys.Alt), (Control.ModifierKeys == Keys.Control));
             if (e.Button == MouseButtons.Left)
@@ -43,6 +54,16 @@ namespace InterfaceGraphique.Editor.EditorState
             {
                 FonctionsNatives.mouseDownR();
             }
+        }
+
+        public override void JoinEdition(MapEntity mapEntity)
+        {
+            this.editionHub.JoinPublicRoom(mapEntity);
+        }
+
+        private void OnNewCommand(AbstractEditionCommand editionCommand)
+        {
+            editionCommand.ExecuteCommand();
         }
     }
 }

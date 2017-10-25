@@ -1,10 +1,10 @@
 ﻿namespace AirHockeyServer.Entities.Messages.Edition
 {
-    public abstract class ObjectMessage
+    public abstract class AbstractEditionCommand
     {
         protected string objectUuid;
 
-        protected ObjectMessage(string objectUuid)
+        protected AbstractEditionCommand(string objectUuid)
         {
             this.objectUuid = objectUuid;
         }

@@ -234,9 +234,9 @@
     <Compile Include="Entities\ChannelEntity.cs" />
     <Compile Include="Entities\ChatMessageEntity.cs" />
     <Compile Include="Entities\ConfigurationEntity.cs" />
-    <Compile Include="Entities\Messages\Edition\ObjectMessage.cs" />
-    <Compile Include="Entities\Messages\Edition\WallMessage.cs" />
-    <Compile Include="Entities\Messages\RoomConnectionMessage.cs" />
+    <Compile Include="Entities\EditionCommand\AbstractEditionCommand.cs" />
+    <Compile Include="Entities\EditionCommand\PortalCommand.cs" />
+    <Compile Include="Entities\EditionCommand\WallCommand.cs" />
     <Compile Include="Entities\OnlineEditedMapInfo.cs" />
     <Compile Include="Entities\PasswordEntity.cs" />
     <Compile Include="Entities\Entity.cs" />
@@ -258,7 +258,6 @@
     <Compile Include="Hubs\EditionHub.cs" />
     <Compile Include="Hubs\GameWaitingRoomHub.cs" />
     <Compile Include="Hubs\ConnectionMapper.cs" />
-    <Compile Include="Hubs\IRoomHub.cs" />
     <Compile Include="Mapping\MapperManager.cs" />
     <Compile Include="Pocos\LoginPoco.cs" />
     <Compile Include="Pocos\MapPoco.cs" />
@@ -357,6 +356,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Entities\Messages\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

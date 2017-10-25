@@ -26,8 +26,6 @@ namespace InterfaceGraphique.Controls.WPF
             
 
             InitializeComponent();
-            this.elementHost1.Child = joinOrCreate;
-
         }
 
         public void SwitchViewToServerBrowser()
