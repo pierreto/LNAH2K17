@@ -79,6 +79,12 @@ class NoeudCommun : SCNNode {
         else {
             self.effetFantome(activer: false);
         }
+        
+        // Activer la fonctionnalité de suppression s'il y a un objet sélectionné
+        let selection = VisiteurObtenirSelection()
+        FacadeModele.instance.obtenirArbreRendu().accepterVisiteur(visiteur: selection)
+        let noeuds = selection.obtenirNoeuds()
+        FacadeModele.instance.obtenirVue().editorHUDScene?.showDeleteButton(activer: (noeuds.count > 0))
     }
 
     /// Cette fonction retourne l'état d'être sélectionné ou non du noeud.
@@ -90,8 +96,7 @@ class NoeudCommun : SCNNode {
     
     /// Désélectonne tous les noeuds qui sont sélectitonnés parmi les descendants de ce noeud, lui-même étant inclus
     func deselectionnerTout() {
-        self.selectionne = false
-        self.effetFantome(activer: false)
+        self.assignerSelection(selectionne: false)
         
         for child in self.childNodes {
             if child is NoeudCommun {

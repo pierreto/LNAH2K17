@@ -30,7 +30,10 @@ class EditorHUDScene: SKScene {
     private var portalButton: SKSpriteNode?
     private var wallButton: SKSpriteNode?
     private var boosterButton: SKSpriteNode?
+    private var deleteButton: SKSpriteNode?
     private var cancelButton: SKSpriteNode?
+    
+    private var deleteButtonIsEnable: Bool = true
     
     override func sceneDidLoad() {
         if #available(iOS 10.0, *) {
@@ -50,8 +53,11 @@ class EditorHUDScene: SKScene {
         self.portalButton = (self.childNode(withName: "//portalButton") as? SKSpriteNode)!
         self.wallButton = (self.childNode(withName: "//wallButton") as? SKSpriteNode)!
         self.boosterButton = (self.childNode(withName: "//boosterButton") as? SKSpriteNode)!
+        self.deleteButton = (self.childNode(withName: "//deleteButton") as? SKSpriteNode)!
         self.cancelButton = (self.childNode(withName: "//cancelButton") as? SKSpriteNode)!
         
+        /// Cacher le bouton delete
+        self.deleteButton?.isHidden = true
         /// Cacher le bouton cancel
         self.cancelButton?.isHidden = true
         
@@ -66,10 +72,30 @@ class EditorHUDScene: SKScene {
         self.portalButton?.texture = SKTexture(imageNamed: "Portal")
         self.wallButton?.texture = SKTexture(imageNamed: "Wall");
         self.boosterButton?.texture = SKTexture(imageNamed: "Booster");
+        self.deleteButton?.texture = SKTexture(imageNamed: "Delete");
         self.cancelButton?.texture = SKTexture(imageNamed: "Cancel");
     }
     
-    /// Activer/Desactiver le bouton d'annulation
+    /// Affiche/Cache le bouton de suppression
+    func showDeleteButton(activer: Bool) {
+        self.deleteButton?.isHidden = !activer
+        
+        if !self.deleteButtonIsEnable {
+            self.deleteButton?.isHidden = true
+        }
+    }
+    
+    /// Désactive le bouton de suppression
+    func enableDeleteButton() {
+        self.deleteButtonIsEnable = true
+    }
+    
+    /// Active le bouton de suppression
+    func disableDeleteButton() {
+        self.deleteButtonIsEnable = false
+    }
+    
+    /// Affiche/Cache le bouton d'annulation
     func showCancelButton(activer: Bool) {
         self.cancelButton?.isHidden = !activer
     }
@@ -130,6 +156,10 @@ class EditorHUDScene: SKScene {
         else if touchedNode?.name == "boosterButton"{
             print("Booster")
             FacadeModele.instance.changerModeleEtat(etat: .CREATION_ACCELERATEUR)
+        }
+        else if touchedNode?.name == "deleteButton"{
+            print("Delete")
+            FacadeModele.instance.obtenirEtat().supprimerSelection()
         }
         else if touchedNode?.name == "cancelButton"{
             print("Annuler")

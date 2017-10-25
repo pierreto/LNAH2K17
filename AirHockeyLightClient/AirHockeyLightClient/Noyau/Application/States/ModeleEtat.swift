@@ -74,6 +74,29 @@ class ModeleEtat {
         
         return delta
     }
+    
+    /// Supprimer les noeuds sélectionnés
+    final func supprimerSelection() {
+        let arbre = FacadeModele.instance.obtenirArbreRendu()
+        
+        /// Supprimer les objets sélectionnés
+        let visiteur = VisiteurObtenirSelection()
+        arbre.accepterVisiteur(visiteur: visiteur)
+        let noeuds = visiteur.obtenirNoeuds()
+        
+        for noeud in noeuds {
+            // Suppression du portail opposé qu'il soit sélectionné ou non
+            if noeud.obtenirType() == arbre.NOM_PORTAIL {
+                let portail = noeud as! NoeudPortail
+                portail.obtenirOppose().removeFromParentNode()
+            }
+            
+            noeud.removeFromParentNode()
+        }
+        
+        let table = arbre.childNode(withName: arbre.NOM_TABLE, recursively: true) as! NoeudTable
+        table.deselectionnerTout()
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
