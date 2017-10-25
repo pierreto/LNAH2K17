@@ -35,6 +35,11 @@ class NoeudCommun : SCNNode {
     private var savedRotation = SCNVector4()
     private var savedPosition = SCNVector3()
     
+    // Attributs de couleur du noeud
+    private var defaultColor: UIColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+    private var selectionnableColor: UIColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+    private var selectionneColor: UIColor = FacadeModele.instance.getUserColor()
+    
     /// Constructeur avec géométrie
     required init(type: String, geometry: SCNGeometry) {
         super.init()
@@ -73,11 +78,17 @@ class NoeudCommun : SCNNode {
         // Un objet non sélectionnable n'est jamais sélectionné.
         self.selectionne = (selectionne && self.selectionnable);
     
+        // Changer le matériel selon la sélection
         if (self.selectionne) {
-            self.effetFantome(activer: true);
+            self.appliquerMaterielSelection(activer: true)
         }
         else {
-            self.effetFantome(activer: false);
+            self.appliquerMaterielSelection(activer: false)
+            
+            // Appliquer une autre couleur si le noeud n'est pas sélectionné et est sélectionnable
+            if self.selectionnable {
+                self.useOtherColor(activer: true, color: self.selectionnableColor)
+            }
         }
         
         // Activer la fonctionnalité de suppression s'il y a un objet sélectionné
@@ -109,6 +120,11 @@ class NoeudCommun : SCNNode {
     /// Écrit si le noeud peut être sélectionné ou non.
     func assignerEstSelectionnable(selectionnable: Bool) {
         self.selectionnable = selectionnable
+        
+        // Colorer le noeud devenu sélectionnable
+        if self.defaultColor != self.selectionnableColor {
+            self.useOtherColor(activer: selectionnable, color: self.selectionnableColor)
+        }
     }
     
     /// Vérifie si le noeud est sélectionnable.
@@ -134,6 +150,16 @@ class NoeudCommun : SCNNode {
     /// Cette fonction applique le scaling sauvee au noeud
     func revertScale() {
         self.scale = self.savedScale
+    }
+    
+    /// Modifie la couleur par défaut
+    func assignerDefaultColor(color: UIColor) {
+        self.defaultColor = color
+    }
+    
+    /// Modifie la couleur lorsqu'un noeud est sélectionnable
+    func assignerSelectionnableColor(color: UIColor) {
+        self.selectionnableColor = color
     }
     
     /// Cette fonction permet de changer la position relative en appliquant
@@ -217,19 +243,35 @@ class NoeudCommun : SCNNode {
         if (activer) {
             material?.diffuse.contents = color
         } else {
-            let defaultColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-            material?.diffuse.contents = defaultColor
+            material?.diffuse.contents = self.defaultColor
         }
     }
     
+    func appliquerMaterielSelection(activer: Bool) {
+        self.colorerSelection(activer: activer)
+        self.effetFantome(activer: activer)
+    }
+    
     /// Cette fonction active ou désactive un effet fantome sur le mur
-    func effetFantome(activer: Bool) {
+    private func effetFantome(activer: Bool) {
         let material = self.geometry?.firstMaterial?.copy() as! SCNMaterial
         
         if (material.diffuse.contents is UIColor) {
             self.geometry?.firstMaterial = material
             self.geometry?.firstMaterial?.lightingModel = SCNMaterial.LightingModel.phong
-            self.geometry?.firstMaterial?.transparency = activer ? 0.25 : 1.0
+            self.geometry?.firstMaterial?.transparency = activer ? 0.50 : 1.0
+        }
+    }
+    
+    /// Cette fonction colore les noeuds sélectionnables lors de la sélection
+    private func colorerSelection(activer: Bool) {
+        let material = self.geometry?.firstMaterial?.copy() as! SCNMaterial
+        
+        if material.diffuse.contents is UIColor && self.estSelectionnable() {
+            self.geometry?.firstMaterial = material
+            self.geometry?.firstMaterial?.locksAmbientWithDiffuse = true
+            // TODO : pour color utiliser selectionneColor à la place de getUserColor()
+            self.useOtherColor(activer: activer, color: FacadeModele.instance.getUserColor())
         }
     }
     

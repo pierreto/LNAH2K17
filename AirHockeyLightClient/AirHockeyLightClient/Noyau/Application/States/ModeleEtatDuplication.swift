@@ -99,10 +99,10 @@ class ModeleEtatDuplication: ModeleEtat {
                 FacadeModele.instance.obtenirArbreRendu().accepterVisiteur(visiteur: visiteur)
                 let noeuds = visiteur.obtenirNoeuds()
                 
-                // Valider la position des noeuds dupliqués (en enlevant l'effet fantôme)
+                // Valider la position des noeuds dupliqués (en enlevant l'effet sélection)
                 // Ceux-ci restent sélectionnés pour des duplications successives
                 for noeud in noeuds {
-                    noeud.effetFantome(activer: false)
+                    noeud.appliquerMaterielSelection(activer: false)
                 }
                 
                 self.copieEnCours = false

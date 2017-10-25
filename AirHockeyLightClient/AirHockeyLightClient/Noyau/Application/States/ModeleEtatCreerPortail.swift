@@ -89,7 +89,7 @@ class ModeleEtatCreerPortail: ModeleEtat {
             // Etat de l'operation
             if (self.premierNoeud == nil) {
                 self.premierNoeud = noeud
-                self.premierNoeud?.effetFantome(activer: true)
+                self.premierNoeud?.appliquerMaterielSelection(activer: true)
                 FacadeModele.instance.obtenirVue().editorHUDScene?.showCancelButton(activer: true)
             }
             else {
@@ -99,7 +99,7 @@ class ModeleEtatCreerPortail: ModeleEtat {
                     // Link portal together
                     noeud.assignerOppose(portail: self.premierNoeud!);
                     self.premierNoeud?.assignerOppose(portail: noeud);
-                    self.premierNoeud?.effetFantome(activer: false);
+                    self.premierNoeud?.appliquerMaterielSelection(activer: false)
                     self.premierNoeud = nil;
                     FacadeModele.instance.obtenirVue().editorHUDScene?.showCancelButton(activer: false)
                 }

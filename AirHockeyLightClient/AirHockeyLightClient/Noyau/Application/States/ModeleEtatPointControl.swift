@@ -27,25 +27,17 @@ class ModeleEtatPointControl : ModeleEtat {
     /// Cette fonction initialise l'etat. Elle ajuste la couleur des points
     /// de controle et rend ces derniers selectionnables
     override func initialiser() {
-        // Rendre seulement les points de contrôle selectionnable
         let arbre = FacadeModele.instance.obtenirArbreRendu()
+        let table = arbre.childNode(withName: arbre.NOM_TABLE, recursively: true) as! NoeudTable
+        
+        // Déselectionner tous les objets
+        table.deselectionnerTout()
+        
+        // Rendre seulement les points de contrôle selectionnable
         arbre.accepterVisiteur(visiteur: VisiteurSelectionnable(type: arbre.NOM_MUR, selectionnable: false))
         arbre.accepterVisiteur(visiteur: VisiteurSelectionnable(type: arbre.NOM_ACCELERATEUR, selectionnable: false))
         arbre.accepterVisiteur(visiteur: VisiteurSelectionnable(type: arbre.NOM_PORTAIL, selectionnable: false))
         arbre.accepterVisiteur(visiteur: VisiteurSelectionnable(type: arbre.NOM_POINT_CONTROL, selectionnable: true))
-        
-        // Afficher les points en rose saumon
-        let table = arbre.childNode(withName: arbre.NOM_TABLE, recursively: true) as! NoeudTable
-        for child in (table.childNodes) {
-            if (child.name == arbre.NOM_POINT_CONTROL) {
-                let color = UIColor(red: 1.0, green: 85.0/255.0, blue: 82.0/255.0, alpha: 1.0)
-                let pointControl = child as! NoeudPointControl
-                pointControl.useOtherColor(activer: true, color: color)
-            }
-        }
-        
-        // Déselectionner tous les objets
-        table.deselectionnerTout()
         
         // Le déplacement des points de contrôle s'effectue par un gesture pan
         FacadeModele.instance.obtenirVue().editorView.addGestureRecognizer(FacadeModele.instance.panGestureRecognizer!)

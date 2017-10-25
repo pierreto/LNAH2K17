@@ -410,8 +410,8 @@
 				8F690D611F9D5E7F003F051A /* ModeleEtatRotation.swift */,
 				8F1D52A71F9D972400135A53 /* ModeleEtatScale.swift */,
 				3497C3241F9FECA600C58700 /* ModeleEtatDuplication.swift */,
-				344A6E211F99101700CFFBEB /* ModeleEtatCreerBoost.swift */,
 				8F0B94B71F8D7F11007F0E82 /* ModeleEtatPointControl.swift */,
+				344A6E211F99101700CFFBEB /* ModeleEtatCreerBoost.swift */,
 				342E7C511F9859620062017A /* ModeleEtatCreerPortail.swift */,
 				0EED627E1F982B3B00CD8C56 /* ModeleEtatCreerMuret.swift */,
 			);

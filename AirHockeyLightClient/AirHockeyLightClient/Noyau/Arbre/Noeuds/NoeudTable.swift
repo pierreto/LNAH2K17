@@ -51,6 +51,9 @@ class NoeudTable : NoeudCommun {
         // Mettre à jour la géométrie de la table
         self.updateGeometry()
         
+        // La table n'est pas sélectionnable
+        self.assignerEstSelectionnable(selectionnable: false)
+        
         self.categoryBitMask = 0b100
     }
     

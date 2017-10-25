@@ -86,8 +86,8 @@ class ModeleEtatCreerMuret: ModeleEtat {
                 
                     self.pointInitial = GLKVector3.init(v: ((point?.x)!, (point?.y)!, (point?.z)!))
                 
-                    // Activer effet fantome
-                    self.noeud?.effetFantome(activer: true)
+                    // Activer effet sélection
+                    self.noeud?.appliquerMaterielSelection(activer: true)
                 
                     // Ajout du noeud à l'arbre de rendu
                     let table = arbre.childNode(withName: arbre.NOM_TABLE, recursively: true) as! NoeudTable
@@ -98,8 +98,8 @@ class ModeleEtatCreerMuret: ModeleEtat {
                 print("END")
                 
                 if (self.noeudsSurLaTable()) {
-                    // Desactiver effet fantome
-                    self.noeud?.effetFantome(activer: false)
+                    // Desactiver effet sélection
+                    self.noeud?.appliquerMaterielSelection(activer: false)
                     self.noeud = nil
                 }
                 else {
