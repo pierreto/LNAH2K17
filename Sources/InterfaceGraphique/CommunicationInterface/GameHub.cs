@@ -89,11 +89,11 @@ namespace InterfaceGraphique.CommunicationInterface
         }
 
 
-        public void Logout()
+        public async Task Logout()
         {
-            gameHubProxy.Invoke("LeaveRoom", gameGuid);
+            //gameHubProxy.Invoke("LeaveRoom", gameGuid);
 
-            gameHubProxy?.Invoke("Disconnect", User.Instance.UserEntity.Username).Wait();
+            //gameHubProxy?.Invoke("Disconnect", User.Instance.UserEntity.Username).Wait();
         }
     }
 }

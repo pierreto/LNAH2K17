@@ -67,7 +67,7 @@ namespace InterfaceGraphique {
             // TODO: Fix this. Make this is added AFTER authentication 
             if (User.Instance.IsConnected)
             {
-                this.FormClosing += async (sender, e) => await Program.HomeMenu.Logout();
+                this.FormClosing += async (sender, e) => await Program.MainMenu.Logout();
             }
         }
 

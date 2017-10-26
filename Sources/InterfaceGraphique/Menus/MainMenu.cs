@@ -12,6 +12,8 @@ using InterfaceGraphique.Controls;
 using InterfaceGraphique.Menus;
 using Microsoft.Practices.Unity;
 using InterfaceGraphique.CommunicationInterface;
+using InterfaceGraphique.Controls.WPF.Home;
+using System.Net.Http;
 
 namespace InterfaceGraphique {
 
@@ -23,6 +25,7 @@ namespace InterfaceGraphique {
     ///////////////////////////////////////////////////////////////////////////
     public partial class MainMenu : Form {
 
+        static HttpClient client = new HttpClient();
         ////////////////////////////////////////////////////////////////////////
         ///
         /// Constructeur de la classe MainMenu
@@ -53,11 +56,19 @@ namespace InterfaceGraphique {
             this.buttonQuitter.Click += (sender, e) => System.Windows.Forms.Application.Exit();
             if (User.Instance.IsConnected)
             {
-                this.buttonLogout.Click += (sender, e) => Program.HomeMenu.Logout();
+                this.buttonLogout.Click += async (sender, e) => await this.Logout();
             }
         }
 
-
+        public async Task Logout()
+        {
+            var response = await client.PostAsJsonAsync(Program.client.BaseAddress + "api/logout", User.Instance.UserEntity);
+            HubManager.Instance.Logout();
+            User.Instance.UserEntity = null;
+            User.Instance.IsConnected = false;
+            Program.FormManager.CurrentForm = Program.HomeMenu;
+            Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<HomeViewModel>());
+        }
         ////////////////////////////////////////////////////////////////////////
         ///
         /// Fonction vide appelée sur toutes les forms de facon 

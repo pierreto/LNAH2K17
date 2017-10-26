@@ -43,7 +43,7 @@ namespace InterfaceGraphique.CommunicationInterface
             GameWaitingRoomProxy = this.connection.CreateHubProxy("GameWaitingRoomHub");
         }
 
-        public void Logout()
+        public async Task Logout()
         {
             //TODO: IMPLEMENT THE LOGOUT MECANISM
         }

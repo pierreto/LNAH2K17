@@ -38,14 +38,7 @@ namespace InterfaceGraphique.CommunicationInterface
 
         public async Task InitializeChat()
         {
-            // Étape necessaire pour que le serveur sache que la connexion est reliée au bon userId:
-            // J-M: Cette Etape est encore necessaire?
-            Random random = new Random();
-            var userId = random.Next();
-
-            Program.user = new UserEntity { Id = userId, Username = User.Instance.UserEntity.Username };
-
-            await chatHubProxy.Invoke("Subscribe", userId);
+            await chatHubProxy.Invoke("Subscribe", User.Instance.UserEntity.Id);
 
             // Inscription à l'event "ChatMessageReceived". Quand l'event est lancé du serveur on veut print le message:
             chatHubProxy.On<ChatMessage>("ChatMessageReceived", message =>
@@ -54,9 +47,9 @@ namespace InterfaceGraphique.CommunicationInterface
             });
         }
 
-        public void Logout()
+        public async Task Logout()
         {
-            chatHubProxy?.Invoke("Disconnect", User.Instance.UserEntity.Username).Wait();
+           await chatHubProxy?.Invoke("Disconnect", User.Instance.UserEntity.Username);
         }
 
         public async void SendMessage(ChatMessage message)

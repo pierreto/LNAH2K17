@@ -54,9 +54,9 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
             WaitingRoomProxy.Invoke("Join", User.Instance.UserEntity);
         }
 
-        public void Logout()
+        public async Task Logout()
         {
-            WaitingRoomProxy?.Invoke("Disconnect", User.Instance.UserEntity.Username).Wait();
+            await WaitingRoomProxy.Invoke("Disconnect", User.Instance.UserEntity.Username);
         }
 
         public async void UpdateSelectedMap(MapEntity map)

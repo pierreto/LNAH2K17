@@ -106,5 +106,9 @@ namespace AirHockeyServer.Hubs
             Clients.Group(gameId.ToString(), Context.ConnectionId).ReceivedGameOver();
         }
 
+        public void Disconnect(string username)
+        {
+            //
+        }
     }
 }
