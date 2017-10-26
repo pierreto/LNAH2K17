@@ -47,7 +47,7 @@ namespace InterfaceGraphique.Controls.WPF.Home
 
         private async Task GoOfflineMenu()
         {
-            Program.InitMainMenu();
+            Program.InitAfterConnection();
             Program.FormManager.CurrentForm = Program.MainMenu;
         }
     }

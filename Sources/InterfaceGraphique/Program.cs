@@ -111,7 +111,7 @@ namespace InterfaceGraphique
             quickPlay = new QuickPlay();
             testMode = new TestMode();
             generalProperties = new GeneralProperties();
-            quickPlayMenu = new QuickPlayMenu();
+            //quickPlayMenu = new QuickPlayMenu();
             tournementMenu = new TournementMenu();
             tournementTree = new TournementTree();
             creditsMenu = new CreditsMenu();
@@ -125,9 +125,10 @@ namespace InterfaceGraphique
 
         }
 
-        public static void InitMainMenu()
+        public static void InitAfterConnection()
         {
             mainMenu = new MainMenu();
+            quickPlayMenu = new QuickPlayMenu();
         }
 
         private static void InitializeUnityDependencyInjection()

@@ -11,24 +11,29 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Practices.Unity;
 using InterfaceGraphique.Controls.WPF.Home;
+using System.Net.Http;
+using InterfaceGraphique.Entities;
 
 namespace InterfaceGraphique.Menus
 {
     public partial class HomeMenu: Form
     {
+        //Rendre singleton?
+        static HttpClient client = new HttpClient();
+
         public HomeMenu()
         {
             InitializeComponent();
         }
-
 
         public void ChangeViewTo(ViewModelBase vmb)
         {
             navigationView1.DataContext = vmb;
         }
 
-        public void Logout()
+        public async Task Logout()
         {
+            var response = await client.PostAsJsonAsync("http://localhost:63056/api/logout", User.Instance.UserEntity);
             HubManager.Instance.Logout();
             Program.FormManager.CurrentForm = Program.HomeMenu;
             ChangeViewTo(Program.unityContainer.Resolve<HomeViewModel>());

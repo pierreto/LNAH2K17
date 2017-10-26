@@ -64,7 +64,9 @@ namespace InterfaceGraphique.Controls.WPF.Signup
                 {
                     int userId = response.Content.ReadAsAsync<int>().Result;
                     User.Instance.UserEntity = new UserEntity { Id = userId, Username = signupEntity.Username };
+                    User.Instance.IsConnected = true;
                     await chatHub.InitializeChat();
+                    Program.InitAfterConnection();
                     Program.FormManager.CurrentForm = Program.MainMenu;
                 }
                 else

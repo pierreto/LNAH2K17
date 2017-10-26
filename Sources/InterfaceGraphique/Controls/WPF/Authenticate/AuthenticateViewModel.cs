@@ -65,7 +65,7 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
                     await chatHub.InitializeChat();
                     //N'est plus necessaire?
                     await chatHub.AuthenticateUser();
-                    Program.InitMainMenu();
+                    Program.InitAfterConnection();
                     Program.FormManager.CurrentForm = Program.MainMenu;
                 }
                 else
