@@ -9,9 +9,16 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <wpf:ViewModelLocator x:Key="VMLocator" d:IsDataSource="True" />
+
+            <ResourceDictionary.MergedDictionaries >
+                <ResourceDictionary Source="/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                <ResourceDictionary Source="/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                <ResourceDictionary Source="/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Blue.xaml" />
+                <ResourceDictionary Source="/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Green.xaml" />
+            </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <StackPanel VerticalAlignment="Center" MaxWidth="400">
+    <StackPanel VerticalAlignment="Center" MaxWidth="400" Background="#FF373A3E">
         <StackPanel.DataContext>
             <Binding Path="AuthenticateViewModel" Source="{StaticResource VMLocator}"/>
         </StackPanel.DataContext>

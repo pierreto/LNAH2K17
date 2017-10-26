@@ -11,7 +11,7 @@
             <wpf:ViewModelLocator x:Key="VMLocator" d:IsDataSource="True" />
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid>
+    <Grid Background="#FF373A3E" >
         <StackPanel VerticalAlignment="Center" MaxWidth="550">
             <StackPanel.DataContext>
                 <Binding Path="SignupViewModel" Source="{StaticResource VMLocator}"/>

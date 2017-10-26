@@ -11,7 +11,7 @@
             <wpf:ViewModelLocator x:Key="VMLocator" d:IsDataSource="True" />
         </ResourceDictionary>
     </UserControl.Resources>
-    <Border Padding="10" >
+    <Border Padding="10" Background="#FF373A3E" >
         <StackPanel VerticalAlignment="Center" MaxWidth="400">
             <StackPanel.DataContext>
                 <Binding Path="HomeViewModel" Source="{StaticResource VMLocator}"/>
