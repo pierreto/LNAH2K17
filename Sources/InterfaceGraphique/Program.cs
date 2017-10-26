@@ -111,14 +111,14 @@ namespace InterfaceGraphique
             formManager = new FormManager();
             homeMenu = new HomeMenu();
             //mainMenu = new MainMenu();
-            editeur = new Editeur();
+            //editeur = new Editeur();
             configurationMenu = new ConfigurationMenu();
             quickPlay = new QuickPlay();
             testMode = new TestMode();
             generalProperties = new GeneralProperties();
             //quickPlayMenu = new QuickPlayMenu();
-            tournementMenu = new TournementMenu();
-            tournementTree = new TournementTree();
+            //tournementMenu = new TournementMenu();
+            //tournementTree = new TournementTree();
             creditsMenu = new CreditsMenu();
             lobbyHost = new LobbyHost();
             onlineTournament = new OnlineTournament();
@@ -135,7 +135,10 @@ namespace InterfaceGraphique
         public static void InitAfterConnection()
         {
             mainMenu = new MainMenu();
+            editeur = new Editeur();
             quickPlayMenu = new QuickPlayMenu();
+            tournementMenu = new TournementMenu();
+            tournementTree = new TournementTree();
         }
 
         private static void InitializeUnityDependencyInjection()
