@@ -71,7 +71,7 @@ class ModeleEtatScale: ModeleEtat {
         }
         // Pinch out
         else {
-            ajoutScale = -Float(scale) * 4.0
+            ajoutScale = -Float(scale) * 6.0
         }
         
         // Apply nouveau scale
