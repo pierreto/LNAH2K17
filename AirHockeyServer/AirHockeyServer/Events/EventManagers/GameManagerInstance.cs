@@ -28,7 +28,7 @@ namespace AirHockeyServer.Events.EventManagers
         {
             if (Games.ContainsKey(gameId))
             {
-                if (Games[gameId].Players[0].UserId == playerId)
+                if (Games[gameId].Players[0].Id == playerId)
                 {
                     Games[gameId].Score[0] += 1;
                 }

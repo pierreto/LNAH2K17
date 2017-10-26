@@ -27,10 +27,6 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
         public static IHubProxy WaitingRoomProxy { get; set; }
 
-        public string Username { get; protected set; }
-
-        protected UserEntity user { get; set; }
-
         protected HubConnection HubConnection { get; set; }
 
         public GameWaitingRoomHub(SlaveGameState slaveGameState,MasterGameState masterGameState)
@@ -39,30 +35,22 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
             this.masterGameState = masterGameState;
         }
 
-        public void InitializeHub(HubConnection connection, string username)
+        public void InitializeHub(HubConnection connection)
         {
             this.HubConnection = connection;
-            this.Username = username;
             WaitingRoomProxy = this.HubConnection.CreateHubProxy("GameWaitingRoomHub");
         }
         
         public void Join()
         {
             InitializeEvents();
-
-            Random random = new Random();
-            user = new UserEntity
-            {
-                UserId = random.Next(),
-                Username = "test"
-            };
-
-            WaitingRoomProxy.Invoke("Join", user);
+            
+            WaitingRoomProxy.Invoke("Join", User.Instance.UserEntity);
         }
         
         public async Task LeaveGame()
         {
-            await WaitingRoomProxy.Invoke("LeaveGame", user);
+            await WaitingRoomProxy.Invoke("LeaveGame", User.Instance.UserEntity);
         }
 
         private void InitializeEvents()
@@ -78,7 +66,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
                     Program.LobbyHost.Invoke(new MethodInvoker(() =>
                     {
-                        if (this.Username.Equals(officialGame.Master.Username))
+                        if (User.Instance.UserEntity.Id == officialGame.Master.Id)
                         {
                             this.masterGameState.InitializeGameState(officialGame);
 

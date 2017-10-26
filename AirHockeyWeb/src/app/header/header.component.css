@@ -11,9 +11,9 @@
 #login {
     font-size: 24px;
     font-weight: bold;
-    width: 125px;
+    width: 220px;
     height: 40px;
-    background-color: #ff3535;
+    background-color: #54C3FF;
     color: #fff;
     border-radius: 5px;  
     margin: 10px auto;  
@@ -21,7 +21,8 @@
 }
 
 #login:hover {
-    background-color: #ff0000;
+    background-color: #3EABE6;
+;
 }
 
 .buttons {

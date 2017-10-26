@@ -17,16 +17,12 @@ namespace InterfaceGraphique.CommunicationInterface
 
         private int gameGuid;
 
-
-        private string username;
         private IHubProxy gameHubProxy;
-        public void InitializeHub(HubConnection connection, string username)
+        public void InitializeHub(HubConnection connection)
         {
-            this.username = username;
-         //   gameHubProxy = connection.CreateHubProxy("GameWaitingRoomHub");
-            gameHubProxy= GameWaitingRoomHub.WaitingRoomProxy;
+            //   gameHubProxy = connection.CreateHubProxy("GameWaitingRoomHub");
+            gameHubProxy = WaitingRoomHub.GameWaitingRoomProxy;
         }
-
 
         //For the slave
         public  void InitializeSlaveGameHub(int gameGuid)
@@ -97,7 +93,7 @@ namespace InterfaceGraphique.CommunicationInterface
         {
             gameHubProxy.Invoke("LeaveRoom", gameGuid);
 
-            gameHubProxy?.Invoke("Disconnect", this.username).Wait();
+            gameHubProxy?.Invoke("Disconnect", User.Instance.UserEntity.Username).Wait();
         }
     }
 }

@@ -32,10 +32,6 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
         public static IHubProxy WaitingRoomProxy { get; set; }
 
-        public string Username { get; protected set; }
-
-        protected UserEntity user { get; set; }
-
         protected HubConnection HubConnection { get; set; }
         protected SlaveGameState SlaveGameState { get; set; }
         protected MasterGameState MasterGameState { get; set; }
@@ -46,46 +42,21 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
             MasterGameState = masterGameState;
         }
 
-        public void InitializeHub(HubConnection connection, string username)
+        public void InitializeHub(HubConnection connection)
         {
             this.HubConnection = connection;
-            this.Username = username;
             WaitingRoomProxy = connection.CreateHubProxy("TournamentWaitingRoomHub");
 
         }
 
         public void Join()
         {
-            UserEntity userToUse;
-            if (!test)
-            {
-                InitializeWaitingRoomEvents();
-                test = true;
-                Random random = new Random();
-                user = new UserEntity
-                {
-                    UserId = random.Next(),
-                    Username = "test"
-                };
-                userToUse = user;
-            }
-            else
-            {
-                Random random = new Random();
-                userToUse = new UserEntity
-                {
-                    UserId = random.Next(),
-                    Username = "test"
-                };
-            }
-
-
-            WaitingRoomProxy.Invoke("Join", userToUse);
+            WaitingRoomProxy.Invoke("Join", User.Instance.UserEntity);
         }
 
         public void Logout()
         {
-            WaitingRoomProxy?.Invoke("Disconnect", this.Username).Wait();
+            WaitingRoomProxy?.Invoke("Disconnect", User.Instance.UserEntity.Username).Wait();
         }
 
         public async void UpdateSelectedMap(MapEntity map)
@@ -99,7 +70,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
         public void LeaveTournament()
         {
-            WaitingRoomProxy.Invoke("LeaveTournament", user);
+            WaitingRoomProxy.Invoke("LeaveTournament", User.Instance.UserEntity);
         }
 
         private void InitializeWaitingRoomEvents()
@@ -134,10 +105,10 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
             {
                 Program.OnlineTournament.Invoke(new MethodInvoker(() =>
                     {
-                        var userGame = tournament.SemiFinals.Find(game => game.Players.Any(player => player.UserId == this.user.UserId));
+                        var userGame = tournament.SemiFinals.Find(game => game.Players.Any(player => player.Id == User.Instance.UserEntity.Id));
                         if (userGame != null)
                         {
-                            if (userGame.Master.UserId == user.UserId)
+                            if (userGame.Master.Id == User.Instance.UserEntity.Id)
                             {
                                 this.MasterGameState.InitializeGameState(userGame);
                                 this.MasterGameState.IsOnlineTournementMode = true;
@@ -167,12 +138,12 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
             {
 
                 //if (tournament.Final.Players.Contains(user))
-                if (tournament.Final.Players[0].UserId == user.UserId || tournament.Final.Players[1].UserId == user.UserId)
+                if (tournament.Final.Players[0].Id == User.Instance.UserEntity.Id || tournament.Final.Players[1].Id== User.Instance.UserEntity.Id)
                 {
                     Program.OnlineTournament.Invoke(new MethodInvoker(() =>
                     {
                         //if (tournament.Final.Master.UserId == user.UserId)
-                        if (tournament.Final.Master.UserId == user.UserId)
+                        if (tournament.Final.Master.Id == User.Instance.UserEntity.Id)
                         {
                             this.MasterGameState.InitializeGameState(tournament.Final);
                             this.MasterGameState.IsOnlineTournementMode = true;

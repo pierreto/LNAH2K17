@@ -37,7 +37,21 @@ namespace AirHockeyServer.Hubs
         {
             GameService = gameService;
         }
+        
+        /// @fn void JoinGame(UserEntity user)
+        ///
+        /// Cette fonction permet de gérer la demande d'un utilisateur de se joindre à une partie. 
+        /// On appel simplement la classe GameService
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        public void JoinGame(UserEntity user)
+        {
+            // TO REMOVE, WAITING FOR AUTHENTIFICATION
+            ConnectionMapper.AddConnection(user.Id, Context.ConnectionId);
 
+            GameService.JoinGame(user);
+        }
+        
         ////////////////////////////////////////////////////////////////////////
         ///
         /// @fn async Task<GameEntity> UpdateMap(GameEntity gameEntity)
@@ -65,7 +79,7 @@ namespace AirHockeyServer.Hubs
         public void Join(UserEntity user)
         {
             // TO REMOVE, WAITING FOR AUTHENTIFICATION
-            ConnectionMapper.AddConnection(user.UserId, Context.ConnectionId);
+            ConnectionMapper.AddConnection(user.Id, Context.ConnectionId);
 
             GameService.JoinGame(user);
         }

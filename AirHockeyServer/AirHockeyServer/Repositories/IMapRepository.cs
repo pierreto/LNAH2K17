@@ -14,5 +14,7 @@ namespace AirHockeyServer.Repositories
         Task CreateNewMap(MapEntity map);
 
         Task UpdateMap(MapEntity updatedMap);
+
+        Task<IEnumerable<MapEntity>> GetMaps();
     }
 }

@@ -9,15 +9,14 @@ export class LoginService {
     constructor(private http: Http) {}
 
 
-    login(user: User): Observable<boolean> {
+    login(user: User): any {
         const body = {
             Username: user.Username,
-            Password: user.Password
+            Password: user.Password,
+            LoginFromWebApp: true
         };
 
-        return this.http.post('/api/user', body).map(
-            () =>  true,
-            () =>  false
-        );
+        return this.http.post('/api/login', body)
+        .map(res => res.json());
     }
 }

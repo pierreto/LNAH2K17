@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System;
 using System.Windows.Input;
 using System.Threading.Tasks;
+using InterfaceGraphique.CommunicationInterface;
 
 namespace InterfaceGraphique.Controls.WPF.Tournament
 {
@@ -83,7 +84,7 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
             Players.Add(
                 new UserEntity
                 {
-                    Username = this.waitingRoomHub.Username
+                    Username = User.Instance.UserEntity.Username
                 }
             );
 

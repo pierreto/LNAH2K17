@@ -1,9 +1,10 @@
 ﻿using AirHockeyServer.Entities;
+using System.Threading.Tasks;
 
 namespace AirHockeyServer.Services
 {
     public interface ISignupService
     {
-        void Signup(SignupEntity message);
+        Task<int> Signup(SignupEntity signupEntity);
     }
 }

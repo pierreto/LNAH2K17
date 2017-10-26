@@ -17,7 +17,7 @@ namespace AirHockeyServer.Services
 
         public void LeaveTournamentWaitingRoom(UserEntity user)
         {
-            TournamentMatchMakerService.Instance().RemoveUser(user.UserId);
+            TournamentMatchMakerService.Instance().RemoveUser(user.Id);
         }
 
         public TournamentEntity UpdateTournament(TournamentEntity tournamentEntity)

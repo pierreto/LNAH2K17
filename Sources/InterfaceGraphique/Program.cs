@@ -25,6 +25,10 @@ using Application = System.Windows.Forms.Application;
 using InterfaceGraphique.Controls.WPF.Matchmaking;
 using InterfaceGraphique.Controls.WPF.Tournament;
 using InterfaceGraphique.CommunicationInterface.WaitingRooms;
+using InterfaceGraphique.Controls.WPF.Authenticate;
+using InterfaceGraphique.Controls.WPF.Home;
+using InterfaceGraphique.Controls.WPF.ConnectServer;
+using InterfaceGraphique.Controls.WPF.Signup;
 
 namespace InterfaceGraphique
 {
@@ -36,7 +40,8 @@ namespace InterfaceGraphique
 
         public static FormManager FormManager { get { return formManager; } }
         public static MainMenu MainMenu { get { return mainMenu; } }
-        public static Login Login {  get { return login; } }
+        public static HomeMenu HomeMenu { get { return homeMenu; } }
+        //public static Login Login {  get { return login; } }
         public static Editeur Editeur { get { return editeur; } }
         public static ConfigurationMenu ConfigurationMenu { get { return configurationMenu; } }
         public static QuickPlay QuickPlay { get { return quickPlay; } }
@@ -53,6 +58,7 @@ namespace InterfaceGraphique
 
         private static FormManager formManager;
         private static MainMenu mainMenu;
+        private static HomeMenu homeMenu;
         private static Editeur editeur;
         private static ConfigurationMenu configurationMenu;
         private static QuickPlay quickPlay;
@@ -66,7 +72,7 @@ namespace InterfaceGraphique
         private static OnlineTournament onlineTournament;
 
         private static Panel openGLPanel;
-        private static Login login;
+        //private static Login login;
         private static TimeSpan dernierTemps;
         private static TimeSpan tempsAccumule;
         private static Stopwatch chrono = Stopwatch.StartNew();
@@ -100,16 +106,17 @@ namespace InterfaceGraphique
 
             InitializeUnityDependencyInjection();
 
-            login = unityContainer.Resolve<Login>(); ;
+            //login = unityContainer.Resolve<Login>(); ;
             openGLPanel = new Panel();
             formManager = new FormManager();
-            mainMenu = new MainMenu();
+            homeMenu = new HomeMenu();
+            //mainMenu = new MainMenu();
             editeur = new Editeur();
             configurationMenu = new ConfigurationMenu();
             quickPlay = new QuickPlay();
             testMode = new TestMode();
             generalProperties = new GeneralProperties();
-            quickPlayMenu = new QuickPlayMenu();
+            //quickPlayMenu = new QuickPlayMenu();
             tournementMenu = new TournementMenu();
             tournementTree = new TournementTree();
             creditsMenu = new CreditsMenu();
@@ -118,14 +125,18 @@ namespace InterfaceGraphique
 
             FonctionsNatives.loadSounds();
 
-
-
-           
-            formManager.CurrentForm = login;
+            formManager.CurrentForm = homeMenu;
+            // formManager.CurrentForm = login;
             Application.Run(formManager);
 
         }
         
+
+        public static void InitAfterConnection()
+        {
+            mainMenu = new MainMenu();
+            quickPlayMenu = new QuickPlayMenu();
+        }
 
         private static void InitializeUnityDependencyInjection()
         {
@@ -137,7 +148,10 @@ namespace InterfaceGraphique
             unityContainer.RegisterType<MatchmakingViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<ChatViewModel>();
             unityContainer.RegisterType<TournamentViewModel>(new ContainerControlledLifetimeManager());
-
+            unityContainer.RegisterType<AuthenticateViewModel>();
+            unityContainer.RegisterType<SignupViewModel>();
+            unityContainer.RegisterType<HomeViewModel>();
+            unityContainer.RegisterType<ConnectServerViewModel>(); 
         }
 
         static void ExecuterQuandInactif(object sender, EventArgs e)

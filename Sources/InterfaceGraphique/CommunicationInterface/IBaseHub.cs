@@ -7,7 +7,7 @@ namespace InterfaceGraphique.CommunicationInterface
 {
     public interface IBaseHub
     {
-        void InitializeHub(HubConnection connection, string username);
+        void InitializeHub(HubConnection connection);
         void Logout();
     }
 }

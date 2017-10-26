@@ -33,7 +33,7 @@ namespace AirHockeyServer.Services.MatchMaking
 
         public void RemoveUser(int userId)
         {
-            _WaitingPlayers = new Queue<UserEntity>(_WaitingPlayers.Where(x => x.UserId != userId));
+            _WaitingPlayers = new Queue<UserEntity>(_WaitingPlayers.Where(x => x.Id != userId));
         }
 
         protected void InvokeMatchFound(PlayersMatchEntity match)
