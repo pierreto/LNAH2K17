@@ -39,6 +39,7 @@ namespace InterfaceGraphique.CommunicationInterface
         public async Task InitializeChat()
         {
             // Étape necessaire pour que le serveur sache que la connexion est reliée au bon userId:
+            // J-M: Cette Etape est encore necessaire?
             Random random = new Random();
             var userId = random.Next();
 

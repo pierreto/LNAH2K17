@@ -10,6 +10,7 @@ namespace InterfaceGraphique.CommunicationInterface
     public class User
     {
         public UserEntity UserEntity { get; set; }
+        public bool IsConnected { get; set; }
         private static User instance;
         public static User Instance
         {

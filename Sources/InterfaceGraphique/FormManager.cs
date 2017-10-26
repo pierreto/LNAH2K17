@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InterfaceGraphique.CommunicationInterface;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -63,7 +64,10 @@ namespace InterfaceGraphique {
         ////////////////////////////////////////////////////////////////////////
         public void InitializeEvents()
         {
-            this.FormClosing += (sender, e) => Program.HomeMenu.Logout();
+            if (User.Instance.IsConnected)
+            {
+                this.FormClosing += (sender, e) => Program.HomeMenu.Logout();
+            }
         }
 
 

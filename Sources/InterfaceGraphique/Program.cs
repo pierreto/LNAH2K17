@@ -105,7 +105,7 @@ namespace InterfaceGraphique
             openGLPanel = new Panel();
             formManager = new FormManager();
             homeMenu = new HomeMenu();
-            mainMenu = new MainMenu();
+            //mainMenu = new MainMenu();
             editeur = new Editeur();
             configurationMenu = new ConfigurationMenu();
             quickPlay = new QuickPlay();
@@ -123,6 +123,11 @@ namespace InterfaceGraphique
             // formManager.CurrentForm = login;
             Application.Run(formManager);
 
+        }
+
+        public static void InitMainMenu()
+        {
+            mainMenu = new MainMenu();
         }
 
         private static void InitializeUnityDependencyInjection()

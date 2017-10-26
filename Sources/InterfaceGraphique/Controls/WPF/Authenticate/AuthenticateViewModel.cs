@@ -61,7 +61,11 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
                 {
                     int userId = response.Content.ReadAsAsync<int>().Result;
                     User.Instance.UserEntity = new UserEntity { Id = userId, Username = loginEntity.Username };
+                    User.Instance.IsConnected = true;
                     await chatHub.InitializeChat();
+                    //N'est plus necessaire?
+                    await chatHub.AuthenticateUser();
+                    Program.InitMainMenu();
                     Program.FormManager.CurrentForm = Program.MainMenu;
                 }
                 else

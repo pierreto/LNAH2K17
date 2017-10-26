@@ -28,6 +28,14 @@ namespace AirHockeyServer.Services
                         }
                         else
                         {
+                            if (!loginEntity.LoginFromWebApp)
+                            {
+                                if (_usernames.Contains(loginEntity.Username))
+                                {
+                                    throw new LoginException("Déjà connecté");
+                                }
+                                _usernames.Add(loginEntity.Username);
+                            }
                             return uE.Id;
                         }
                     }
@@ -61,9 +69,12 @@ namespace AirHockeyServer.Services
 
         public void Logout(LoginEntity loginEntity)
         {
-            if (_usernames.Contains(loginEntity.Username))
+            if (!loginEntity.LoginFromWebApp)
             {
-                _usernames.Remove(loginEntity.Username);
+                if (_usernames.Contains(loginEntity.Username))
+                {
+                    _usernames.Remove(loginEntity.Username);
+                }
             }
         }
     }

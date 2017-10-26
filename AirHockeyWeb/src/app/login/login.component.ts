@@ -74,15 +74,9 @@ export class LoginComponent implements OnInit {
     this.appService.loading = true;
     this.loginService.login(this.user).subscribe(
       (res) => {
-        if (res) {
           this.appService.loading = false;
           this.validUser = true;
           this.router.navigate(['GO TO PROFILE']);
-        } else {
-          this.appService.loading = false;
-          this.validUser = false;
-        }
-
       },
       (err) => {
         this.appService.loading = false;
