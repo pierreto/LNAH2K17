@@ -9,7 +9,8 @@ namespace InterfaceGraphique.Entities.EditonCommand
 {
     class PortalCommand : AbstractEditionCommand
     {
-        public int[] Position { get; set; }
+        public float[] StartPosition { get; set; }
+        public float[] EndPosition { get; set; }
 
         public PortalCommand(string objectUuid) : base(objectUuid)
         {
@@ -17,7 +18,7 @@ namespace InterfaceGraphique.Entities.EditonCommand
 
         public override void ExecuteCommand()
         {
-            FonctionsNatives.changerModeleEtat((int)MODELE_ETAT.CREATION_PORTAIL);  
+            FonctionsNatives.createPortal(StartPosition,EndPosition);  
         }
     }
 }

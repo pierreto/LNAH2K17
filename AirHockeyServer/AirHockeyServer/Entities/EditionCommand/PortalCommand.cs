@@ -4,7 +4,8 @@ namespace AirHockeyServer.Entities.EditionCommand
 {
     public class PortalCommand : AbstractEditionCommand
     {
-        public int[] Position { get; set; }
+        public float[] StartPosition { get; set; }
+        public float[] EndPosition { get; set; }
 
         public PortalCommand(string objectUuid) : base(objectUuid)
         {

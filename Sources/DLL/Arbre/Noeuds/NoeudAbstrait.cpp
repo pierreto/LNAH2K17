@@ -31,8 +31,16 @@ NoeudAbstrait::NoeudAbstrait(
 	) :
 	type_(type), axisLock_(glm::ivec3(1, 0, 1)), enCollision_(false)
 {
+	uuid_= generateUUID();
 }
-
+char* NoeudAbstrait::generateUUID()
+{
+	UUID uuid;
+	UuidCreate(&uuid);
+	char* str;
+	UuidToStringA(&uuid, (RPC_CSTR*)&str);
+	return str;
+}
 
 ////////////////////////////////////////////////////////////////////////
 ///

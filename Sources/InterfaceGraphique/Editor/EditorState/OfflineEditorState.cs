@@ -41,6 +41,7 @@ namespace InterfaceGraphique.Editor.EditorState
         public override void JoinEdition(MapEntity mapEntity)
         {
             //Online is not working in offline mode so we do nothing
+            FonctionsNatives.setOnlineClientType((int)OnlineClientType.OFFLINE_EDITION);
         }
     }
 }

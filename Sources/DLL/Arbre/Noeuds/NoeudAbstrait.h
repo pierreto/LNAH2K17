@@ -192,7 +192,10 @@ public:
 	void setEnCollision(bool enCollision);
 	virtual void calculerCollider() {};
 
+	char* getUUID() const { return uuid_; };
+
 protected:
+	char* generateUUID();
 
 	MatricesPipeline obtenirMatricePipeline() const;
 
@@ -244,6 +247,8 @@ protected:
 
 	// Options de dessin
 	OptionsDessin options_;
+
+	char* uuid_;
 };
 
 

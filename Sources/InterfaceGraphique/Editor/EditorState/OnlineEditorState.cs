@@ -14,11 +14,12 @@ namespace InterfaceGraphique.Editor.EditorState
     public class OnlineEditorState : AbstractEditorState
     {
         private EditionHub editionHub;
-
+        private FonctionsNatives.PortalCreationCallback portalCreationCallback;
         public OnlineEditorState(EditionHub editionHub)
         {
             this.editionHub = editionHub;
             this.editionHub.NewCommand += OnNewCommand;
+            this.portalCreationCallback = CurrentUserCreatedPortal;
 
         }
 
@@ -35,12 +36,6 @@ namespace InterfaceGraphique.Editor.EditorState
             {
                 FonctionsNatives.mouseUpR();
             }
-
-            int[] test = {1, 2, 3};
-            this.editionHub.SendEditorCommand(new PortalCommand("11234")
-            {
-                Position = test
-            });
         }
 
         public override void MouseDown(object sender, MouseEventArgs e)
@@ -59,11 +54,25 @@ namespace InterfaceGraphique.Editor.EditorState
         public override void JoinEdition(MapEntity mapEntity)
         {
             this.editionHub.JoinPublicRoom(mapEntity);
+            FonctionsNatives.setOnlineClientType((int)OnlineClientType.ONLINE_EDITION);
+            FonctionsNatives.setPortalCreationCallback(this.portalCreationCallback);
+
         }
 
         private void OnNewCommand(AbstractEditionCommand editionCommand)
         {
             editionCommand.ExecuteCommand();
+        }
+
+        private void CurrentUserCreatedPortal(char[] startUuid, float[] startPos, char[] endUuid, float[] endPos)
+        {
+            PortalCommand portalCommand = new PortalCommand(startUuid.ToString())
+            {
+                StartPosition = startPos,
+                EndPosition = endPos
+            };
+            this.editionHub.SendEditorCommand(portalCommand);
+
         }
     }
 }
