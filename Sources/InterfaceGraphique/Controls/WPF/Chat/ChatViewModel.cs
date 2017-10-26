@@ -43,10 +43,9 @@ namespace InterfaceGraphique.Controls.WPF.Chat
 
             this.Channels.Add(new ChannelEntity(new ObservableCollection<ChatMessage>())
             {
-                Name = "Main"
+                Name = "Principal"
             });
 
-       
         }
         private ICommand sendMessageCommand;
         public ICommand SendMessageCommand
@@ -84,6 +83,26 @@ namespace InterfaceGraphique.Controls.WPF.Chat
             }
         }
 
+        private ICommand addChannelCommand;
+        public ICommand AddChannelCommand
+        {
+            get
+            {
+                if (addChannelCommand == null)
+                {
+                    addChannelCommand = new RelayCommandAsync(AddChannel);
+
+                }
+                return addChannelCommand;
+            }
+        }
+        private async Task AddChannel()
+        {
+            this.Channels.Add(new ChannelEntity(new ObservableCollection<ChatMessage>())
+            {
+                Name = "Principal"
+            });
+        }
 
         private bool CanSendMessage()
         {
