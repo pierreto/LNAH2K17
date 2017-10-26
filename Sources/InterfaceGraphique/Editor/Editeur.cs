@@ -13,6 +13,7 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.IO;
 using InterfaceGraphique.Entities;
+using InterfaceGraphique.CommunicationInterface.RestInterface;
 
 namespace InterfaceGraphique {
 
@@ -149,7 +150,8 @@ namespace InterfaceGraphique {
             this.Fichier_Enregistrer.Click += async (sender, e) => await SaveFile();
             this.Fichier_EnregistrerSous_Ordinateur.Click += (sender, e) => SaveFileAs();
             this.Fichier_EnregistrerSous_Serveur.Click += async (sender, e) => await SaveMapOnline(); 
-            this.Fichier_Ouvrir.Click += (sender, e) => OpenFile();
+            this.Fichier_OuvrirLocalement.Click += (sender, e) => OpenFile();
+            this.Fichier_OuvrirEnLigne.Click += async (sender, e) => await OpenOnlineMap();
             this.Fichier_Nouveau.Click += async (sender, e) => await ResetDefaultTable();
             this.Fichier_MenuPrincipal.Click += async (sender, e) => { await ResetDefaultTable(); Program.FormManager.CurrentForm = Program.MainMenu; };
             this.Fichier_ModeTest.Click += (sender, e) => Program.FormManager.CurrentForm = Program.TestMode;
@@ -380,15 +382,61 @@ namespace InterfaceGraphique {
             ofd.InitialDirectory = Directory.GetCurrentDirectory() + "\\zones";
 
             if (ofd.ShowDialog() == DialogResult.OK) {
-                StringBuilder filePath = new StringBuilder(ofd.FileName.Length);
-                filePath.Append(ofd.FileName);
+                StringBuilder json = new StringBuilder(File.ReadAllText(ofd.FileName));
                 float[] coefficients = new float[3];
-                FonctionsNatives.ouvrir(filePath, coefficients);
+                FonctionsNatives.chargerCarte(json, coefficients);
                 Program.GeneralProperties.SetCoefficientValues(coefficients);
                 nameSavedMap = ofd.FileName;
             }
         }
 
+        private async Task OpenOnlineMap()
+        {
+            HttpResponseMessage response = await Program.client.GetAsync("api/maps/");
+            if (response.IsSuccessStatusCode)
+            {
+                List<MapEntity> maps = await HttpResponseParser.ParseResponse<List<MapEntity>>(response);
+                InterfaceGraphique.ListMaps mapsForm = new InterfaceGraphique.ListMaps();
+
+                foreach (var map in maps)
+                {
+                    string[] row = { map.MapName, map.Creator, map.LastBackup.ToShortDateString(), ((map.Private) ? "Privée" : "Publique") };
+                    mapsForm.DataGridView_Maps.Rows.Add(row);
+                }
+
+                mapsForm.ShowDialog();
+
+                MapEntity SelectedMap = maps.Find(
+                    map => map.MapName == mapsForm.SelectedMap.Cells["MapName"].Value.ToString());
+
+                if (SelectedMap.Private)
+                {
+                    InterfaceGraphique.Editor.OpenPrivateMapForm passwordForm = new InterfaceGraphique.Editor.OpenPrivateMapForm();
+
+                    if (passwordForm.ShowDialog() != DialogResult.OK || passwordForm.Text_MapPassword.Text != SelectedMap.Password)
+                    {
+                        MessageBox.Show(
+                            @"Mot de passe erroné.",
+                            @"Erreur",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+
+                StringBuilder json = new StringBuilder(SelectedMap.Json);
+                float[] coefficients = new float[3];
+                FonctionsNatives.chargerCarte(json, coefficients);
+                Program.GeneralProperties.SetCoefficientValues(coefficients);
+                nameSavedMap = SelectedMap.MapName;
+            }
+            else
+            {
+                MessageBox.Show(
+                    @"Impossible de charger les cartes, veuillez réessayer plus tard.",
+                    @"Internal error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
         ////////////////////////////////////////////////////////////////////////
         ///
@@ -452,7 +500,7 @@ namespace InterfaceGraphique {
             }
         }
 
-        private async Task _SaveMapOnline(string mapName)
+        private async Task _SaveMapOnline(string mapName, string pwdMap = null)
         {
                 StringBuilder sb = new StringBuilder(2000);
                 FonctionsNatives.getMapJson(Program.GeneralProperties.GetCoefficientValues(), sb);
@@ -462,7 +510,9 @@ namespace InterfaceGraphique {
                     Creator = Program.user.Username,
                     MapName = mapName,
                     LastBackup = DateTime.Now,
-                    Json = json
+                    Json = json,
+                    Private = (pwdMap != null) ? true : false,
+                    Password = pwdMap
                 };
 
                 HttpResponseMessage response = await Program.client.PostAsJsonAsync("api/maps/save", map);
@@ -486,7 +536,26 @@ namespace InterfaceGraphique {
 
             if (form.ShowDialog() == DialogResult.OK && form.Text_MapName.Text.Length > 0)
             {
-                await _SaveMapOnline(form.Text_MapName.Text);
+                string MapName = form.Text_MapName.Text;
+
+                if (form.Button_PrivateMap.Checked)
+                {
+                    if (form.Text_PwdMap.Text.Length >= 5)
+                    {
+                        await _SaveMapOnline(MapName, form.Text_PwdMap.Text);
+                    }
+                    else
+                    {
+                        MessageBox.Show(
+                            @"Le mot de passe pour accéder à la carte doit contenir au moins 5 caractères.",
+                            @"Error",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                else
+                {
+                    await _SaveMapOnline(MapName);
+                }
             }
             else
             {
@@ -633,7 +702,7 @@ namespace InterfaceGraphique {
                     return true;
 
                 case Keys.D:
-                    Task.Run(() => changerEtatEdition(Toolbar_Move, null, MODELE_ETAT.DEPLACEMENT)).Wait();
+                    Task.Run(() => changerEtatEdition(Toolbar_Move, null, MODELE_ETAT.DEPLACEMENT));
                     return true;
 
                 case Keys.S:

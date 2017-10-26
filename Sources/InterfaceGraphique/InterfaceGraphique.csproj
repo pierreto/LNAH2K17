@@ -177,6 +177,12 @@
     <Compile Include="Controls\WPF\Signup\SignupViewModel.cs" />
     <Compile Include="Controls\WPF\ViewModelBase.cs" />
     <Compile Include="Controls\WPF\ViewModelLocator.cs" />
+    <Compile Include="Editor\OpenPrivateMapForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Editor\OpenPrivateMapForm.Designer.cs">
+      <DependentUpon>OpenPrivateMapForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Editor\SaveMapForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -203,6 +209,12 @@
     <Compile Include="Entities\UserEntity.cs" />
     <Compile Include="Exceptions\ConnectServerException.cs" />
     <Compile Include="Exceptions\LoginException.cs" />
+    <Compile Include="ListMaps.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ListMaps.Designer.cs">
+      <DependentUpon>ListMaps.cs</DependentUpon>
+    </Compile>
     <Compile Include="Game\GameState\AbstractGameState.cs" />
     <Compile Include="Game\GameState\MasterGameState.cs" />
     <Compile Include="Game\GameState\OfflineGameState.cs" />
@@ -306,6 +318,9 @@
       <DependentUpon>TestMode.cs</DependentUpon>
     </Compile>
     <Compile Include="WPFApplication.cs" />
+    <EmbeddedResource Include="Editor\OpenPrivateMapForm.resx">
+      <DependentUpon>OpenPrivateMapForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Editor\SaveMapForm.resx">
       <DependentUpon>SaveMapForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -314,6 +329,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\LobbyHost.resx">
       <DependentUpon>LobbyHost.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ListMaps.resx">
+      <DependentUpon>ListMaps.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Menus\HomeMenu.resx">
       <DependentUpon>HomeMenu.cs</DependentUpon>
@@ -470,7 +488,7 @@
     <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
     <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
   </Target>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
