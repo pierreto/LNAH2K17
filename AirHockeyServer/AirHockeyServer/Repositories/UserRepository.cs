@@ -94,7 +94,7 @@ namespace AirHockeyServer.Repositories
             try
             {
                 UserPoco uP = MapperManager.Mapper.Map<UserEntity, UserPoco>(userEntity);
-                DataProvider.Post(uP);
+                //DataProvider.Post(uP);
             }
             catch (Exception e)
             {

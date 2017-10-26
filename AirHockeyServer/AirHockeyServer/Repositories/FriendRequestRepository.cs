@@ -14,18 +14,19 @@ namespace AirHockeyServer.Repositories
 {
     public class FriendRequestRepository : Repository<FriendRequestRepository>
     {
+        private Table<UserPoco> Users;
         private Table<FriendPoco> FriendRequests;
 
         public FriendRequestRepository()
         {
             try
             {
+                Users = DataProvider.DC.GetTable<UserPoco>();
                 FriendRequests = DataProvider.DC.GetTable<FriendPoco>();
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine("FRIEND REQUEST REPOSITORY");
-                System.Diagnostics.Debug.WriteLine(e.ToString());
+                System.Diagnostics.Debug.WriteLine("[FriendRequestRepository()] " + e.ToString());
             }
         }
 
@@ -35,7 +36,7 @@ namespace AirHockeyServer.Repositories
             {
                 IQueryable<FriendPoco> queryable =
                     from friend_request in this.FriendRequests
-                    where (friend_request.Requestor == user_id || friend_request.Friend == user_id) && friend_request.Status == 1
+                    where (friend_request.RequestorID == user_id || friend_request.FriendID == user_id) && friend_request.Status == 1
                     select friend_request;
 
                 var results = await Task<List<FriendPoco>>.Run(
@@ -46,7 +47,7 @@ namespace AirHockeyServer.Repositories
                 // - si l'utilisateur est l'initiateur de la demande, son ami est relation.friend
                 // - si l'utilisateur a accepté la demande, son ami est l'initiateur relation.requestor:
                 List<UserPoco> friends = results.Select(
-                    relation => (relation.Requestor == user_id) ? relation.FriendUserPoco.Entity : relation.RequestorUserPoco.Entity).ToList();
+                    relation => (relation.RequestorID == user_id) ? relation.Friend : relation.Requestor).ToList();
 
                 return MapperManager.Map<List<UserPoco>, List<UserEntity>>(friends);
             }
@@ -63,7 +64,7 @@ namespace AirHockeyServer.Repositories
             {
                 IQueryable<FriendPoco> queryable =
                     from friend_request in this.FriendRequests
-                    where (friend_request.Friend == user_id) && friend_request.Status == 0
+                    where (friend_request.FriendID == user_id) && friend_request.Status == 0
                     select friend_request;
 
                 var results = await Task<List<FriendPoco>>.Run(
@@ -82,9 +83,18 @@ namespace AirHockeyServer.Repositories
         {
             try
             {
+                UserPoco requestor =
+                    (from user in this.Users where user.Id == request.Requestor.Id select user).ToArray<UserPoco>().First();
+                UserPoco friend =
+                    (from user in this.Users where user.Id == request.Friend.Id select user).ToArray<UserPoco>().First();
+
                 FriendPoco newFriendRequest = MapperManager.Map<FriendRequestEntity, FriendPoco>(request);
+                newFriendRequest.Requestor = requestor;
+                newFriendRequest.Friend = friend;
+
                 this.FriendRequests.InsertOnSubmit(newFriendRequest);
                 await Task.Run(() => this.DataProvider.DC.SubmitChanges());
+
                 return request;
             }
             catch (Exception e)
@@ -100,7 +110,7 @@ namespace AirHockeyServer.Repositories
             {
                 var query =
                     from friend_request in this.FriendRequests
-                    where friend_request.Requestor == request.Requestor.Id && friend_request.Friend == request.Friend.Id
+                    where friend_request.RequestorID == request.Requestor.Id && friend_request.FriendID == request.Friend.Id
                     select friend_request;
 
                 var friendRequest = query.ToArray().First();
@@ -131,8 +141,8 @@ namespace AirHockeyServer.Repositories
             {
                 var query =
                     from friend_request in this.FriendRequests
-                    where (friend_request.Requestor == user_id1 && friend_request.Friend == user_id2) ||
-                          (friend_request.Requestor == user_id2 && friend_request.Friend == user_id1)
+                    where (friend_request.RequestorID == user_id1 && friend_request.FriendID == user_id2) ||
+                          (friend_request.RequestorID == user_id2 && friend_request.FriendID == user_id1)
                     select friend_request;
 
                 var relation = query.ToArray().First();

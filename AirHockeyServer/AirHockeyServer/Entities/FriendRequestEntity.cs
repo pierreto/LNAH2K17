@@ -9,7 +9,6 @@ namespace AirHockeyServer.Entities
 
     public class FriendRequestEntity
     {
-        public int? Id { get; set; }
         public UserEntity Requestor { get; set; }
         public UserEntity Friend { get; set; }
         public RequestStatus Status { get; set; }

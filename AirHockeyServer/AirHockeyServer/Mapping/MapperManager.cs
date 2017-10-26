@@ -21,7 +21,12 @@ namespace AirHockeyServer.Mapping
         {
             var config = new MapperConfiguration(cfg =>
             {
-                // A faire pour chaque pair poco/entity
+                // À faire pour chaque pair poco/entity:
+
+                cfg.CreateMap<UserPoco, UserEntity>();
+                cfg.CreateMap<UserEntity, UserPoco>();
+                cfg.CreateMap<PasswordPoco, PasswordEntity>();
+                cfg.CreateMap<PasswordEntity, PasswordPoco>();
 
                 cfg.CreateMap<MapPoco, MapEntity>()
                 .ForMember(
@@ -38,40 +43,28 @@ namespace AirHockeyServer.Mapping
                 .ForMember(
                     dest => dest.Name,
                     opt => opt.MapFrom(src => src.MapName));
-
-                cfg.CreateMap<PasswordPoco, PasswordEntity>();
-                cfg.CreateMap<PasswordEntity, PasswordPoco>();
-                cfg.CreateMap<UserPoco, UserEntity>();
-                cfg.CreateMap<UserEntity, UserPoco>();
-
+                
                 cfg.CreateMap<FriendPoco, FriendRequestEntity>()
                 .ForMember(
                     dest => dest.Requestor,
-                    opt => opt.MapFrom(src => src.RequestorUserPoco))
+                    opt => opt.MapFrom(src => new UserEntity { Id = src.RequestorID, Username = src.Requestor.Username }))
                 .ForMember(
                     dest => dest.Friend,
-                    opt => opt.MapFrom(src => src.FriendUserPoco));
+                    opt => opt.MapFrom(src => new UserEntity { Id = src.FriendID, Username = src.Friend.Username }));
 
                 cfg.CreateMap<FriendRequestEntity, FriendPoco>()
                 .ForMember(
-                    dest => dest.Requestor,
+                    dest => dest.RequestorID,
                     opt => opt.MapFrom(src => src.Requestor.Id))
                 .ForMember(
-                    dest => dest.Friend,
+                    dest => dest.FriendID,
                     opt => opt.MapFrom(src => src.Friend.Id))
                 .ForMember(
-                    dest => dest.RequestorUserPoco,
-                    opt => opt.MapFrom(src => src.Requestor))
+                    dest => dest.Requestor,
+                    opt => opt.MapFrom(src => new UserPoco { Id = src.Requestor.Id, Username = src.Requestor.Username }))
                 .ForMember(
-                    dest => dest.FriendUserPoco,
-                    opt => opt.MapFrom(src => src.Friend));
-
-                //Not necessary if same attribute names from poco to entity
-                //cfg.CreateMap<UserPoco, UserEntity>()
-                //.ForMember(
-                //    dest => dest.Id,
-                //    opt => opt.MapFrom(src => src.Id)
-                //);
+                    dest => dest.Friend,
+                    opt => opt.MapFrom(src => new UserPoco { Id = src.Friend.Id, Username = src.Friend.Username }));
             });
 
             //config.AssertConfigurationIsValid();

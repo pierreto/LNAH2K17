@@ -19,11 +19,9 @@ namespace AirHockeyServer.Hubs
             FriendService = friendService;
         }
 
-        public void JoinHub()
-        //public void JoinHub(UserEntity user)
+        public void JoinHub(UserEntity user)
         {
-            System.Diagnostics.Debug.WriteLine("JOIN FUCKING HUB");
-            //ConnectionMapper.AddConnection(user.Id, Context.ConnectionId);
+            ConnectionMapper.AddConnection(user.Id, Context.ConnectionId);
         }
 
         public async Task<List<UserEntity>> GetAllFriends(UserEntity user)
@@ -36,10 +34,12 @@ namespace AirHockeyServer.Hubs
             var friendRequest = await FriendService.SendFriendRequest(user, friend);
 
             // On notifie l'utilisateur dont on veut être l'ami de la demande:
+            /*
             if (friendRequest != null)
             {
                 Clients.Client(ConnectionMapper.GetConnection(friend.Id)).FriendRequestEvent(friendRequest);
             }
+            */
 
             return friendRequest;
         }
@@ -53,7 +53,7 @@ namespace AirHockeyServer.Hubs
             if (relation != null)
             {
                 Clients.Client(ConnectionMapper.GetConnection(relation.Requestor.Id)).NewFriendEvent(relation.Friend);
-                Clients.Client(ConnectionMapper.GetConnection(relation.Friend.Id)).NewFriendEvent(relation.Requestor);
+                //Clients.Client(ConnectionMapper.GetConnection(relation.Friend.Id)).NewFriendEvent(relation.Requestor);
             }
 
             return relation;
@@ -88,7 +88,7 @@ namespace AirHockeyServer.Hubs
             if (removed_friend)
             {
                 Clients.Client(ConnectionMapper.GetConnection(user.Id)).RemovedFriendEvent(ex_friend);
-                Clients.Client(ConnectionMapper.GetConnection(ex_friend.Id)).RemovedFriendEvent(user);
+                //Clients.Client(ConnectionMapper.GetConnection(ex_friend.Id)).RemovedFriendEvent(user);
             }
 
             return removed_friend;
