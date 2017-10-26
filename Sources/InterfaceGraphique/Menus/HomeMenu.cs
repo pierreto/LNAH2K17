@@ -33,7 +33,7 @@ namespace InterfaceGraphique.Menus
 
         public async Task Logout()
         {
-            var response = await client.PostAsJsonAsync("http://localhost:63056/api/logout", User.Instance.UserEntity);
+            var response = await client.PostAsJsonAsync("http://" + HubManager.Instance.IpAddress + ":63056/api/logout", User.Instance.UserEntity);
             HubManager.Instance.Logout();
             Program.FormManager.CurrentForm = Program.HomeMenu;
             ChangeViewTo(Program.unityContainer.Resolve<HomeViewModel>());

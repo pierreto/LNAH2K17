@@ -56,7 +56,7 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
                 {
                     return null;
                 }
-                var response = await client.PostAsJsonAsync("http://localhost:63056/api/login", loginEntity);
+                var response = await client.PostAsJsonAsync("http://" + HubManager.Instance.IpAddress + ":63056/api/login", loginEntity);
                 if (response.IsSuccessStatusCode)
                 {
                     int userId = response.Content.ReadAsAsync<int>().Result;

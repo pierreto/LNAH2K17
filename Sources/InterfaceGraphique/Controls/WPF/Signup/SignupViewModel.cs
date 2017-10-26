@@ -59,7 +59,7 @@ namespace InterfaceGraphique.Controls.WPF.Signup
                 {
                     return null;
                 }
-                var response = await client.PostAsJsonAsync("http://localhost:63056/api/signup", signupEntity);
+                var response = await client.PostAsJsonAsync("http://" + HubManager.Instance.IpAddress + ":63056/api/signup", signupEntity);
                 if (response.IsSuccessStatusCode)
                 {
                     int userId = response.Content.ReadAsAsync<int>().Result;

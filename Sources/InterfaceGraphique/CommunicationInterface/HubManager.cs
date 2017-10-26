@@ -15,7 +15,7 @@ namespace InterfaceGraphique.CommunicationInterface
     {
 
         private static HubManager instance;
-
+        public string IpAddress { get; set; }
         private HubConnection connection;
         public HubConnection Connection { get; set; }
 
@@ -45,6 +45,8 @@ namespace InterfaceGraphique.CommunicationInterface
             this.InitializeHubs();
 
             await this.connection.Start();
+
+            IpAddress = serverIp;
         }
 
         public void AddHubs()
