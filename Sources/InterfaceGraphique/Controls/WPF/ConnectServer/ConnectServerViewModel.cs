@@ -56,6 +56,7 @@ namespace InterfaceGraphique.Controls.WPF.ConnectServer
                 if (await Task.WhenAny(task, Task.Delay(timeout)) == task)
                 {
                     //Task resolved within delay
+                    Program.client.BaseAddress = new System.Uri("http://" + IpAddress + ":63056/");
                     Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<AuthenticateViewModel>());
                 }
                 else

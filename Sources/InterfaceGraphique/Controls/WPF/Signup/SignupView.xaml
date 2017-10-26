@@ -11,45 +11,47 @@
             <wpf:ViewModelLocator x:Key="VMLocator" d:IsDataSource="True" />
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid Background="#FF373A3E" >
-        <StackPanel VerticalAlignment="Center" MaxWidth="550">
-            <StackPanel.DataContext>
-                <Binding Path="SignupViewModel" Source="{StaticResource VMLocator}"/>
-            </StackPanel.DataContext>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="2*"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock VerticalAlignment="Center" TextAlignment="Right" Grid.Row="0" Grid.Column="0" TextWrapping="Wrap" Text="Username" Padding="0 0 10 0" FontSize="20" Margin="0,0,0,10"/>
-                <Border Grid.Row="0"  Grid.Column="1" Padding="5" CornerRadius="5" BorderThickness="1" BorderBrush="LightGray" SnapsToDevicePixels="True" Background="White" Margin="0,0,0,10" MaxWidth="300">
-                    <TextBox x:Name="Username" Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding InputsEnabled}" Background="Transparent" BorderThickness="0" MaxLength="16"/>
-                </Border>
-            </Grid>
-            <TextBlock HorizontalAlignment="Center" Margin="0,0,0,10" TextWrapping="Wrap" Text="{Binding UsernameErrMsg}" VerticalAlignment="Top" Foreground="Red" FontSize="18"/>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="2*"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock VerticalAlignment="Center" TextAlignment="Right" Grid.Column="0" TextWrapping="Wrap" Text="Password" Padding="0 0 10 0" FontSize="20" Margin="0,0,0,10"/>
-                <Border Grid.Row="1"  Grid.Column="1" Padding="5" CornerRadius="5" BorderThickness="1" BorderBrush="LightGray" SnapsToDevicePixels="True" Background="White" Margin="0,0,0,10" MaxWidth="300">
-                    <PasswordBox x:Name="Password" wpf:PasswordHelper.Attach="True" wpf:PasswordHelper.Password="{Binding Password, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" IsEnabled="{Binding InputsEnabled}" Background="Transparent" BorderThickness="0" MaxLength="16"/>
-                </Border>
-            </Grid>
-            <TextBlock HorizontalAlignment="Center" Margin="0,0,0,10" TextWrapping="Wrap" Text="{Binding PasswordErrMsg}" VerticalAlignment="Top" Foreground="Red" FontSize="18"/>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="2*"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock VerticalAlignment="Center" TextAlignment="Right" Grid.Column="0" TextWrapping="Wrap" Text="Password" Padding="0 0 10 0" FontSize="20" Margin="0,0,0,10"/>
-                <Border Grid.Column="1" Padding="5" CornerRadius="5" BorderThickness="1" BorderBrush="LightGray" SnapsToDevicePixels="True" Background="White" Margin="0,0,0,10" MaxWidth="300">
-                    <PasswordBox x:Name="ConfirmPassword" wpf:PasswordHelper.Attach="True" wpf:PasswordHelper.Password="{Binding ConfirmPassword, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" IsEnabled="{Binding InputsEnabled}" Background="Transparent" BorderThickness="0" MaxLength="16"/>
-                </Border>
-            </Grid>
-            <TextBlock HorizontalAlignment="Center" Margin="0,0,0,10" TextWrapping="Wrap" Text="{Binding ConfirmPasswordErrMsg}" VerticalAlignment="Top" Foreground="Red" FontSize="18"/>
-            <Button Content="Créer Compte" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="145" Command="{Binding SignupCommand}" IsDefault="True"/>
-        </StackPanel>
-    </Grid>
+    <Border Padding="10"  Background="#FF373A3E">
+        <Grid>
+            <StackPanel VerticalAlignment="Center" MaxWidth="550">
+                <StackPanel.DataContext>
+                    <Binding Path="SignupViewModel" Source="{StaticResource VMLocator}"/>
+                </StackPanel.DataContext>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock VerticalAlignment="Center" TextAlignment="Right" Grid.Row="0" Grid.Column="0" TextWrapping="Wrap" Text="Username" Padding="0 0 10 0" FontSize="20" Margin="0,0,0,10"/>
+                    <Border Grid.Row="0"  Grid.Column="1" Padding="5" CornerRadius="5" BorderThickness="1" BorderBrush="LightGray" SnapsToDevicePixels="True" Background="White" Margin="0,0,0,10" MaxWidth="300">
+                        <TextBox x:Name="Username" Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding InputsEnabled}" Background="Transparent" BorderThickness="0" MaxLength="16"/>
+                    </Border>
+                </Grid>
+                <TextBlock HorizontalAlignment="Center" Margin="0,0,0,10" TextWrapping="Wrap" Text="{Binding UsernameErrMsg}" VerticalAlignment="Top" Foreground="Red" FontSize="18"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock VerticalAlignment="Center" TextAlignment="Right" Grid.Column="0" TextWrapping="Wrap" Text="Password" Padding="0 0 10 0" FontSize="20" Margin="0,0,0,10"/>
+                    <Border Grid.Row="1"  Grid.Column="1" Padding="5" CornerRadius="5" BorderThickness="1" BorderBrush="LightGray" SnapsToDevicePixels="True" Background="White" Margin="0,0,0,10" MaxWidth="300">
+                        <PasswordBox x:Name="Password" wpf:PasswordHelper.Attach="True" wpf:PasswordHelper.Password="{Binding Password, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" IsEnabled="{Binding InputsEnabled}" Background="Transparent" BorderThickness="0" MaxLength="16"/>
+                    </Border>
+                </Grid>
+                <TextBlock HorizontalAlignment="Center" Margin="0,0,0,10" TextWrapping="Wrap" Text="{Binding PasswordErrMsg}" VerticalAlignment="Top" Foreground="Red" FontSize="18"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock VerticalAlignment="Center" TextAlignment="Right" Grid.Column="0" TextWrapping="Wrap" Text="Password" Padding="0 0 10 0" FontSize="20" Margin="0,0,0,10"/>
+                    <Border Grid.Column="1" Padding="5" CornerRadius="5" BorderThickness="1" BorderBrush="LightGray" SnapsToDevicePixels="True" Background="White" Margin="0,0,0,10" MaxWidth="300">
+                        <PasswordBox x:Name="ConfirmPassword" wpf:PasswordHelper.Attach="True" wpf:PasswordHelper.Password="{Binding ConfirmPassword, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" IsEnabled="{Binding InputsEnabled}" Background="Transparent" BorderThickness="0" MaxLength="16"/>
+                    </Border>
+                </Grid>
+                <TextBlock HorizontalAlignment="Center" Margin="0,0,0,10" TextWrapping="Wrap" Text="{Binding ConfirmPasswordErrMsg}" VerticalAlignment="Top" Foreground="Red" FontSize="18"/>
+                <Button Content="Créer Compte" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="145" Command="{Binding SignupCommand}" IsDefault="True"/>
+            </StackPanel>
+        </Grid>
+    </Border>
 </UserControl>
