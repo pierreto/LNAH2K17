@@ -87,6 +87,17 @@ class EditorViewController: UIViewController {
         facade.initialiser()
     }
     
+    /// Affichage de la vue de configuration des propriétés de la zone de jeu
+    @IBAction func showGeneralProperties(_ sender: Any) {
+        let generalPropertiesVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "GeneralPropertiesVCID") as! GeneralPropertiesViewController
+        self.addChildViewController(generalPropertiesVC)
+        
+        generalPropertiesVC.view.frame = self.view.frame
+        self.view.addSubview(generalPropertiesVC.view)
+        generalPropertiesVC.didMove(toParentViewController: self)
+    }
+    
+    
     override var shouldAutorotate: Bool {
         return true
     }

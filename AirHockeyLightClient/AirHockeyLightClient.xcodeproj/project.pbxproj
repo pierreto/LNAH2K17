@@ -69,6 +69,7 @@
 		34B66FE01F844C2100A9CCB9 /* table_texture.png in Resources */ = {isa = PBXBuildFile; fileRef = 34B66FDF1F844C2100A9CCB9 /* table_texture.png */; };
 		34B66FE21F84599100A9CCB9 /* But.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B66FE11F84599100A9CCB9 /* But.swift */; };
 		34B66FE41F84636900A9CCB9 /* NoeudBut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B66FE31F84636900A9CCB9 /* NoeudBut.swift */; };
+		34B965CE1FA26EDE00BD17CC /* GeneralPropertiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B965CD1FA26EDE00BD17CC /* GeneralPropertiesViewController.swift */; };
 		8F0B94AC1F8D3EEE007F0E82 /* VisiteurAbstrait.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0B94AB1F8D3EEE007F0E82 /* VisiteurAbstrait.swift */; };
 		8F0B94AE1F8D450B007F0E82 /* VisiteurSelectionnable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0B94AD1F8D450B007F0E82 /* VisiteurSelectionnable.swift */; };
 		8F0B94B21F8D4BCE007F0E82 /* ModeleEtat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0B94B11F8D4BCE007F0E82 /* ModeleEtat.swift */; };
@@ -184,6 +185,7 @@
 		34B66FDF1F844C2100A9CCB9 /* table_texture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = table_texture.png; path = ../../Exe/media/textures/table_texture.png; sourceTree = "<group>"; };
 		34B66FE11F84599100A9CCB9 /* But.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = But.swift; path = Noyau/Arbre/Noeuds/But.swift; sourceTree = "<group>"; };
 		34B66FE31F84636900A9CCB9 /* NoeudBut.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NoeudBut.swift; path = Noyau/Arbre/Noeuds/NoeudBut.swift; sourceTree = "<group>"; };
+		34B965CD1FA26EDE00BD17CC /* GeneralPropertiesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GeneralPropertiesViewController.swift; path = InterfaceGraphique/Editor/GeneralPropertiesViewController.swift; sourceTree = "<group>"; };
 		4BC65514BAA095CA955FDC5C /* Pods-AirHockeyLightClient.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AirHockeyLightClient.release.xcconfig"; path = "Pods/Target Support Files/Pods-AirHockeyLightClient/Pods-AirHockeyLightClient.release.xcconfig"; sourceTree = "<group>"; };
 		628E0B24C7327005FBC765AC /* Pods-AirHockeyLightClient.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AirHockeyLightClient.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AirHockeyLightClient/Pods-AirHockeyLightClient.debug.xcconfig"; sourceTree = "<group>"; };
 		7585740DC43877CD99CDDF6A /* Pods_AirHockeyLightClient.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AirHockeyLightClient.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -535,6 +537,7 @@
 				3475C2281F8FAF8D00E8BF86 /* EditorHUDScene.swift */,
 				8FCDF6171FA1BEDF00631551 /* EditorNotificationScene.sks */,
 				8FCDF6181FA1BEDF00631551 /* EditorNotificationScene.swift */,
+				34B965CD1FA26EDE00BD17CC /* GeneralPropertiesViewController.swift */,
 			);
 			name = Editor;
 			sourceTree = "<group>";
@@ -819,6 +822,7 @@
 				1D019A301F911E78004D79B2 /* Http.swift in Sources */,
 				25163A8B1F9CED9E00142418 /* MapDisplayViewController.swift in Sources */,
 				3475C22A1F8FAF8D00E8BF86 /* EditorHUDScene.swift in Sources */,
+				34B965CE1FA26EDE00BD17CC /* GeneralPropertiesViewController.swift in Sources */,
 				253E088E1F818DD2009F301B /* JsonHelper.swift in Sources */,
 				8F8706BD1F78A67F000E6824 /* ChannelViewController.swift in Sources */,
 				344A6E2A1F994E0100CFFBEB /* VisiteurSurTable.swift in Sources */,
