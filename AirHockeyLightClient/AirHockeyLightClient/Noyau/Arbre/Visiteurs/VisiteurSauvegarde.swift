@@ -9,6 +9,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 import GLKit
+import SwiftyJSON
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class VisiteurSauvegarde
@@ -35,17 +36,12 @@ class VisiteurSauvegarde: VisiteurAbstrait {
     
     /// Cette fonction permet de visiteur un portail pour la sauvegarde.
     func visiterPortail(noeud: NoeudPortail) {
-        if  (self.linkedPortals.contains{ element in return element == noeud }) {
-            let portal = self.linkedPortals.first{ element in return element == noeud }
-            let finalPortal = self.linkedPortals[self.linkedPortals.count - 1]
-            
-            if portal == finalPortal {
-                sauvegarderNoeud(noeud: noeud, nom: "Portail")
-                sauvegarderNoeud(noeud: noeud.obtenirOppose(), nom: "Portail")
+        if  (!self.linkedPortals.contains{ element in return element == noeud }) {
+            sauvegarderNoeud(noeud: noeud, nom: "Portail")
+            sauvegarderNoeud(noeud: noeud.obtenirOppose(), nom: "Portail")
                 
-                self.linkedPortals.append(noeud)
-                self.linkedPortals.append(noeud.obtenirOppose())
-            }
+            self.linkedPortals.append(noeud)
+            self.linkedPortals.append(noeud.obtenirOppose())
         }
     }
     
@@ -61,18 +57,8 @@ class VisiteurSauvegarde: VisiteurAbstrait {
         let angle = noeud.rotation.w
         let angleY = angle * noeud.rotation.y
         
-        /*
-        rapidjson::Value tempArray(rapidjson::kArrayType);
-        tempArray.PushBack(pos.x, FacadeModele::obtenirInstance()->docJSON_.GetAllocator());
-        tempArray.PushBack(pos.y, FacadeModele::obtenirInstance()->docJSON_.GetAllocator());
-        tempArray.PushBack(pos.z, FacadeModele::obtenirInstance()->docJSON_.GetAllocator());
-        tempArray.PushBack(scale.x, FacadeModele::obtenirInstance()->docJSON_.GetAllocator());
-        tempArray.PushBack(scale.y, FacadeModele::obtenirInstance()->docJSON_.GetAllocator());
-        tempArray.PushBack(scale.z, FacadeModele::obtenirInstance()->docJSON_.GetAllocator());
-        tempArray.PushBack(angle, FacadeModele::obtenirInstance()->docJSON_.GetAllocator());
-        
-        FacadeModele::obtenirInstance()->docJSON_[nom].PushBack(tempArray, FacadeModele::obtenirInstance()->docJSON_.GetAllocator());
-         */
+        let entry = JSON([pos.x, pos.y, pos.z, scale.x, scale.y, scale.z, angleY])
+        FacadeModele.instance.docJSON?[nom].appendArray(json: entry)
     }
     
 }
