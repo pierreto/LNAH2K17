@@ -30,6 +30,9 @@ class ModeleEtatPointControl : ModeleEtat {
         let arbre = FacadeModele.instance.obtenirArbreRendu()
         let table = arbre.childNode(withName: arbre.NOM_TABLE, recursively: true) as! NoeudTable
         
+        // Désactiver le bouton de suppression
+        FacadeModele.instance.obtenirVue().editorHUDScene?.disableDeleteButton()
+        
         // Déselectionner tous les objets
         table.deselectionnerTout()
         
@@ -62,6 +65,9 @@ class ModeleEtatPointControl : ModeleEtat {
         }
         
         FacadeModele.instance.obtenirVue().editorView.removeGestureRecognizer(FacadeModele.instance.panGestureRecognizer!)
+        
+        // Réactiver le bouton de suppression
+        FacadeModele.instance.obtenirVue().editorHUDScene?.enableDeleteButton()
     }
     
     // Fonctions gérant les entrées de l'utilisateur
