@@ -69,7 +69,7 @@ namespace InterfaceGraphique.CommunicationInterface
             });
         }
 
-        public void SendMasterPosition(float[] slavePosition, float[] masterPosition, float[] puckPosition)
+        public void SendGameData(float[] slavePosition, float[] masterPosition, float[] puckPosition)
         {
             GameDataMessage gameDataMessage = new GameDataMessage(slavePosition, masterPosition,puckPosition);
 

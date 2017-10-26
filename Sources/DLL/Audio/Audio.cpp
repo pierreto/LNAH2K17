@@ -84,7 +84,7 @@ Audio::~Audio() {
 
 	if (instance_ != nullptr) {
 		libererInstance();
-	}	
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -100,7 +100,7 @@ void Audio::loadSounds() {
 	result = FMOD::System_Create(&system);
 
 	result = system->init(100, FMOD_INIT_NORMAL, NULL);
-	
+
 	result = system->createSound("media/audio/effets/CollisionMaillet.mp3", FMOD_DEFAULT | FMOD_LOOP_OFF, 0, &soundMaillet);
 	result = system->createSound("media/audio/effets/But.mp3", FMOD_DEFAULT | FMOD_LOOP_OFF, 0, &soundBut);
 	result = system->createSound("media/audio/effets/CollisionMur.mp3", FMOD_DEFAULT | FMOD_LOOP_OFF, 0, &soundMur);
@@ -119,15 +119,21 @@ void Audio::loadSounds() {
 ///
 ////////////////////////////////////////////////////////////////////////
 void Audio::playMusic(bool quickPlay) {
+	try {
 
-	if (quickPlay) {
-		result = system->playSound(FMOD_CHANNEL_FREE, musique, false, &channelMusic);
-		channelMusic->setVolume(0.2);
-		system->update();
+		if (quickPlay) {
+			result = system->playSound(FMOD_CHANNEL_FREE, musique, false, &channelMusic);
+			channelMusic->setVolume(0.2);
+			system->update();
+		}
+		else {
+			result = channelMusic->stop();
+			system->update();
+		}
 	}
-	else {
-		result = channelMusic->stop();
-		system->update();
+	catch (...)
+	{
+		// dans le cas qu'il n'y a pas de carte de son, on ignore le son
 	}
 }
 
@@ -142,8 +148,10 @@ void Audio::playMusic(bool quickPlay) {
 ///
 ////////////////////////////////////////////////////////////////////////
 void Audio::playSound(int sound, float volume) {
+	try
+	{
 
-	switch (sound) {
+		switch (sound) {
 		case SOUND_MAILLET:
 			result = system->playSound(FMOD_CHANNEL_FREE, soundMaillet, false, &channel);
 			break;
@@ -161,9 +169,14 @@ void Audio::playSound(int sound, float volume) {
 			break;
 		default:
 			break;
+		}
+		channel->setVolume(glm::clamp(volume, 0.0f, 1.0f));
+		system->update();
 	}
-	channel->setVolume(glm::clamp(volume, 0.0f, 1.0f));
-	system->update();
+	catch (...)
+	{
+		// dans le cas qu'il n'y a pas de carte de son, on ignore le son
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////

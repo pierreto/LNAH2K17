@@ -61,8 +61,8 @@ namespace InterfaceGraphique.Game.GameState
             float[] puckPosition = new float[3];
 
             FonctionsNatives.getGameElementPositions(slavePosition,masterPosition,puckPosition);
-
-             gameHub.SendMasterPosition(slavePosition, masterPosition, puckPosition);
+            
+            gameHub.SendGameData(slavePosition, masterPosition, puckPosition);
        
 
         }
