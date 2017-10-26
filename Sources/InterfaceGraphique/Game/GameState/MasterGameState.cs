@@ -29,13 +29,13 @@ namespace InterfaceGraphique.Game.GameState
 
         public override void InitializeGameState(GameEntity gameEntity)
         {
-            FonctionsNatives.setOnlineClientType((int) OnlineClientType.MASTER);
+            FonctionsNatives.setOnlineClientType((int)OnlineClientType.MASTER);
             FonctionsNatives.setCurrentOpponentType((int)OpponentType.ONLINE_PLAYER);
 
             this.gameHub.InitializeMasterGameHub(gameEntity.GameId);
             this.gameHub.NewPositions += OnNewGamePositions;
 
-        
+
             FonctionsNatives.setOnGoalCallback(callback);
 
             StringBuilder player1Name = new StringBuilder(gameEntity.Master.Username.Length);
@@ -45,8 +45,11 @@ namespace InterfaceGraphique.Game.GameState
             FonctionsNatives.setPlayerNames(player1Name, player2Name);
         }
 
+        private int elapsedTime = 0;
+        private const int UPDATE_SERVER_INTERVAL = 5;
         public override void MettreAJour(double tempsInterAffichage, int neededGoalsToWin)
         {
+
             if (FonctionsNatives.isGameOver(neededGoalsToWin) == 1)
             {
                 EndGame();
@@ -60,10 +63,16 @@ namespace InterfaceGraphique.Game.GameState
             float[] masterPosition = new float[3];
             float[] puckPosition = new float[3];
 
-            FonctionsNatives.getGameElementPositions(slavePosition,masterPosition,puckPosition);
-            
-            gameHub.SendGameData(slavePosition, masterPosition, puckPosition);
-       
+            if (elapsedTime >= UPDATE_SERVER_INTERVAL)
+            {
+                elapsedTime = 0;
+                FonctionsNatives.getGameElementPositions(slavePosition, masterPosition, puckPosition);
+
+                gameHub.SendGameData(slavePosition, masterPosition, puckPosition);
+            }
+
+            elapsedTime++;
+
 
         }
         ////////////////////////////////////////////////////////////////////////
@@ -118,15 +127,17 @@ namespace InterfaceGraphique.Game.GameState
         /// @return Void 
         ///
         ////////////////////////////////////////////////////////////////////////
-        public override void EndGame() {
+        public override void EndGame()
+        {
             gameHasEnded = true;
             gameHub.SendGameOver();
             Program.QuickPlay.EndGame();
-            if(IsOnlineTournementMode)
+            if (IsOnlineTournementMode)
             {
                 Program.FormManager.CurrentForm = Program.OnlineTournament;
             }
         }
+
         private void OnNewGamePositions(GameDataMessage gameData)
         {
             if (!gameHasEnded)
