@@ -128,11 +128,13 @@ void ModeleEtatCreerPortail::mouseUpL() {
 				noeud->assignerOppose(premierNoeud_);
 				premierNoeud_->assignerOppose(noeud);
 				premierNoeud_->effetFantome(false);
-				premierNoeud_ = nullptr;
-				if(ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
+				if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
 				{
-					portalCreationCallback_(premierNoeud_->getUUID(),glm::value_ptr(premierNoeud_->obtenirPositionRelative()), noeud->getUUID(), glm::value_ptr(noeud->obtenirPositionRelative()));
+
+					portalCreationCallback_(premierNoeud_->getUUID(), glm::value_ptr(premierNoeud_->obtenirPositionRelative()), noeud->getUUID(), glm::value_ptr(noeud->obtenirPositionRelative()));
 				}
+				premierNoeud_ = nullptr;
+		
 			}
 			else { // Annulation de la commande
 				escape();
