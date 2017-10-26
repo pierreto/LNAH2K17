@@ -1,4 +1,6 @@
-﻿namespace InterfaceGraphique
+﻿using InterfaceGraphique.CommunicationInterface;
+
+namespace InterfaceGraphique
 {
     partial class Editeur {
         private System.ComponentModel.IContainer components = null;
@@ -21,6 +23,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            bool onlineMode = User.Instance.IsConnected;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Editeur));
             this.PropertiesEditPanel = new System.Windows.Forms.Panel();
             this.ScaleZText = new System.Windows.Forms.NumericUpDown();
@@ -657,9 +660,12 @@
             // Fichier_Ouvrir
             // 
             this.Fichier_Ouvrir.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Fichier_Ouvrir.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Fichier_OuvrirLocalement,
-            this.Fichier_OuvrirEnLigne});
+            if (onlineMode)
+            {
+                this.Fichier_Ouvrir.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+                this.Fichier_OuvrirLocalement,
+                this.Fichier_OuvrirEnLigne});
+            }
             this.Fichier_Ouvrir.ForeColor = System.Drawing.Color.White;
             this.Fichier_Ouvrir.Name = "Fichier_Ouvrir";
             this.Fichier_Ouvrir.Size = new System.Drawing.Size(197, 26);
@@ -676,9 +682,12 @@
             // Fichier_EnregistrerSous
             // 
             this.Fichier_EnregistrerSous.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Fichier_EnregistrerSous.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Fichier_EnregistrerSous_Ordinateur,
-            this.Fichier_EnregistrerSous_Serveur});
+            if (onlineMode)
+            {
+                this.Fichier_EnregistrerSous.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+                this.Fichier_EnregistrerSous_Ordinateur,
+                this.Fichier_EnregistrerSous_Serveur});
+            }
             this.Fichier_EnregistrerSous.ForeColor = System.Drawing.Color.White;
             this.Fichier_EnregistrerSous.Name = "Fichier_EnregistrerSous";
             this.Fichier_EnregistrerSous.Size = new System.Drawing.Size(197, 26);

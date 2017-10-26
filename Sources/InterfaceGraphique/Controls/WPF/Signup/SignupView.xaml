@@ -22,7 +22,7 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock VerticalAlignment="Center" TextAlignment="Right" Grid.Row="0" Grid.Column="0" TextWrapping="Wrap" Text="Username" Padding="0 0 10 0" FontSize="20" Margin="0,0,0,10"/>
+                    <TextBlock VerticalAlignment="Center" TextAlignment="Right" Grid.Row="0" Grid.Column="0" TextWrapping="Wrap" Text="Username" Padding="0 0 10 0" FontSize="20" Margin="0,0,0,10" Foreground="White"/>
                     <Border Grid.Row="0"  Grid.Column="1" Padding="5" CornerRadius="5" BorderThickness="1" BorderBrush="LightGray" SnapsToDevicePixels="True" Background="White" Margin="0,0,0,10" MaxWidth="300">
                         <TextBox x:Name="Username" Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding InputsEnabled}" Background="Transparent" BorderThickness="0" MaxLength="16"/>
                     </Border>
@@ -33,7 +33,7 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock VerticalAlignment="Center" TextAlignment="Right" Grid.Column="0" TextWrapping="Wrap" Text="Password" Padding="0 0 10 0" FontSize="20" Margin="0,0,0,10"/>
+                    <TextBlock VerticalAlignment="Center" TextAlignment="Right" Grid.Column="0" TextWrapping="Wrap" Text="Password" Padding="0 0 10 0" FontSize="20" Margin="0,0,0,10" Foreground="White"/>
                     <Border Grid.Row="1"  Grid.Column="1" Padding="5" CornerRadius="5" BorderThickness="1" BorderBrush="LightGray" SnapsToDevicePixels="True" Background="White" Margin="0,0,0,10" MaxWidth="300">
                         <PasswordBox x:Name="Password" wpf:PasswordHelper.Attach="True" wpf:PasswordHelper.Password="{Binding Password, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" IsEnabled="{Binding InputsEnabled}" Background="Transparent" BorderThickness="0" MaxLength="16"/>
                     </Border>
@@ -44,7 +44,7 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock VerticalAlignment="Center" TextAlignment="Right" Grid.Column="0" TextWrapping="Wrap" Text="Password" Padding="0 0 10 0" FontSize="20" Margin="0,0,0,10"/>
+                    <TextBlock VerticalAlignment="Center" TextAlignment="Right" Grid.Column="0" TextWrapping="Wrap" Text="Confirm Password" Padding="0 0 10 0" FontSize="20" Margin="0,0,0,10" Foreground="White"/>
                     <Border Grid.Column="1" Padding="5" CornerRadius="5" BorderThickness="1" BorderBrush="LightGray" SnapsToDevicePixels="True" Background="White" Margin="0,0,0,10" MaxWidth="300">
                         <PasswordBox x:Name="ConfirmPassword" wpf:PasswordHelper.Attach="True" wpf:PasswordHelper.Password="{Binding ConfirmPassword, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" IsEnabled="{Binding InputsEnabled}" Background="Transparent" BorderThickness="0" MaxLength="16"/>
                     </Border>

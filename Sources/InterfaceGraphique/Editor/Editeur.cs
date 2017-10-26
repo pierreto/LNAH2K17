@@ -14,6 +14,7 @@ using System.Runtime.InteropServices;
 using System.IO;
 using InterfaceGraphique.Entities;
 using InterfaceGraphique.CommunicationInterface.RestInterface;
+using InterfaceGraphique.CommunicationInterface;
 
 namespace InterfaceGraphique {
 
@@ -128,7 +129,7 @@ namespace InterfaceGraphique {
         ///
         ////////////////////////////////////////////////////////////////////////
         private void InitializeEvents() {
-
+            bool onlineMode = User.Instance.IsConnected;
             // Window events
             Toolbar.MouseEnter += (sender, e) => this.Cursor = Cursors.Default;
             MenuBar.MouseEnter += (sender, e) => this.Cursor = Cursors.Default;
@@ -148,10 +149,17 @@ namespace InterfaceGraphique {
 
             // Menu dropdown options events
             this.Fichier_Enregistrer.Click += async (sender, e) => await SaveFile();
-            this.Fichier_EnregistrerSous_Ordinateur.Click += (sender, e) => SaveFileAs();
-            this.Fichier_EnregistrerSous_Serveur.Click += async (sender, e) => await SaveMapOnline(); 
-            this.Fichier_OuvrirLocalement.Click += (sender, e) => OpenFile();
-            this.Fichier_OuvrirEnLigne.Click += async (sender, e) => await OpenOnlineMap();
+            if (onlineMode)
+            {
+                this.Fichier_EnregistrerSous_Ordinateur.Click += (sender, e) => SaveFileAs();
+                this.Fichier_EnregistrerSous_Serveur.Click += async (sender, e) => await SaveMapOnline(); 
+                this.Fichier_OuvrirLocalement.Click += (sender, e) => OpenFile();
+                this.Fichier_OuvrirEnLigne.Click += async (sender, e) => await OpenOnlineMap();
+            } else
+            {
+                this.Fichier_EnregistrerSous.Click += (sender, e) => SaveFileAs();
+                this.Fichier_Ouvrir.Click += (sender, e) => OpenFile();
+            }
             this.Fichier_Nouveau.Click += async (sender, e) => await ResetDefaultTable();
             this.Fichier_MenuPrincipal.Click += async (sender, e) => { await ResetDefaultTable(); Program.FormManager.CurrentForm = Program.MainMenu; };
             this.Fichier_ModeTest.Click += (sender, e) => Program.FormManager.CurrentForm = Program.TestMode;
