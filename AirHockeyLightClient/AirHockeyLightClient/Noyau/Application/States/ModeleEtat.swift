@@ -58,7 +58,14 @@ class ModeleEtat {
     func noeudsSurLaTable() -> Bool {
         let visiteur = VisiteurSurTable()
         FacadeModele.instance.obtenirArbreRendu().accepterVisiteur(visiteur: visiteur)
-        return visiteur.obtenirSontSurTable()
+        let sontSurTable = visiteur.obtenirSontSurTable()
+        
+        // Faire apparaître un message d'erreur
+        if !sontSurTable {
+            FacadeModele.instance.obtenirVue().editorHUDScene?.showErrorOutOfBoundMessage(activer: true)
+        }
+        
+        return sontSurTable
     }
     
     /// Détermine le déplacement (delta)

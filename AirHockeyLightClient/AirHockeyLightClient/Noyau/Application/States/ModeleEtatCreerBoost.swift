@@ -61,6 +61,10 @@ class ModeleEtatCreerBoost: ModeleEtat {
             let table = arbre.childNode(withName: arbre.NOM_TABLE, recursively: true) as! NoeudTable
             table.addChildNode(noeud)
         }
+        else {
+            // Afficher un message d'erreur
+            FacadeModele.instance.obtenirVue().editorHUDScene?.showErrorOutOfBoundMessage(activer: true)
+        }
         
         // Verification que les noeuds soient sur la table
         if (!self.noeudsSurLaTable()) {

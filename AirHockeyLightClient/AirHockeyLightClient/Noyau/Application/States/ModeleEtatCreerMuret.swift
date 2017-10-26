@@ -93,6 +93,10 @@ class ModeleEtatCreerMuret: ModeleEtat {
                     let table = arbre.childNode(withName: arbre.NOM_TABLE, recursively: true) as! NoeudTable
                     table.addChildNode(self.noeud!)
                 }
+                else {
+                    // Afficher un message d'erreur
+                    FacadeModele.instance.obtenirVue().editorHUDScene?.showErrorOutOfBoundMessage(activer: true)
+                }
             }
             else if sender.state == UIGestureRecognizerState.ended {
                 print("END")

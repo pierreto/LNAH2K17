@@ -79,7 +79,7 @@ class ModeleEtatCreerPortail: ModeleEtat {
         let convertedPoint = MathHelper.GetHitTestSceneViewCoordinates(point: self.position)
         
         if convertedPoint != nil {
-        let position = GLKVector3.init(v: ((convertedPoint?.x)!, (convertedPoint?.y)!, (convertedPoint?.z)!))
+            let position = GLKVector3.init(v: ((convertedPoint?.x)!, (convertedPoint?.y)!, (convertedPoint?.z)!))
             noeud.assignerPositionRelative(positionRelative: position)
         
             // Ajout du noeud à l'arbre de rendu
@@ -108,6 +108,10 @@ class ModeleEtatCreerPortail: ModeleEtat {
                     noeud.removeFromParentNode()
                 }
             }
+        }
+        else {
+            // Afficher un message d'erreur
+            FacadeModele.instance.obtenirVue().editorHUDScene?.showErrorOutOfBoundMessage(activer: true)
         }
     }
     

@@ -20,6 +20,7 @@ import GameplayKit
 ///////////////////////////////////////////////////////////////////////////
 class EditorHUDScene: SKScene {
     
+    /// Boutons d'édition
     private var cameraControlButton: SKSpriteNode?
     private var selectionButton: SKSpriteNode?
     private var deplacementButton: SKSpriteNode?
@@ -34,6 +35,9 @@ class EditorHUDScene: SKScene {
     private var cancelButton: SKSpriteNode?
     
     private var deleteButtonIsEnable: Bool = true
+    
+    /// Messages
+    private var errorOutOfBound: SKShapeNode?
     
     override func sceneDidLoad() {
         if #available(iOS 10.0, *) {
@@ -74,6 +78,9 @@ class EditorHUDScene: SKScene {
         self.boosterButton?.texture = SKTexture(imageNamed: "Booster");
         self.deleteButton?.texture = SKTexture(imageNamed: "Delete");
         self.cancelButton?.texture = SKTexture(imageNamed: "Cancel");
+        
+        self.errorOutOfBound = (self.childNode(withName: "//errorOutOfBound") as? SKShapeNode)!
+        self.errorOutOfBound?.isHidden = true
     }
     
     /// Affiche/Cache le bouton de suppression
@@ -98,6 +105,18 @@ class EditorHUDScene: SKScene {
     /// Affiche/Cache le bouton d'annulation
     func showCancelButton(activer: Bool) {
         self.cancelButton?.isHidden = !activer
+    }
+    
+    /// Affiche le message d'erreur
+    func showErrorOutOfBoundMessage(activer: Bool) {
+        self.errorOutOfBound?.isHidden = !activer
+        
+        if activer {
+            self.errorOutOfBound?.alpha = 0.0
+            self.errorOutOfBound?.run(SKAction.fadeIn(withDuration: 0.5))
+            self.errorOutOfBound?.run(SKAction.sequence([SKAction.wait(forDuration: 1.5),
+                                                         SKAction.fadeOut(withDuration: 0.5)]))
+        }
     }
     
     override func didMove(to view: SKView) {
