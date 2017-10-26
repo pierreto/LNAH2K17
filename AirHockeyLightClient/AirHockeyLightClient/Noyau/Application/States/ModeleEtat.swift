@@ -62,7 +62,7 @@ class ModeleEtat {
         
         // Faire apparaître un message d'erreur
         if !sontSurTable {
-            FacadeModele.instance.obtenirVue().editorHUDScene?.showErrorOutOfBoundMessage(activer: true)
+            FacadeModele.instance.obtenirVue().editorNotificationScene?.showErrorOutOfBoundMessage(activer: true)
         }
         
         return sontSurTable

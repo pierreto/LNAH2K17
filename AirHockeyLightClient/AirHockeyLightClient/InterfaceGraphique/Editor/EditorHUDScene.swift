@@ -37,9 +37,6 @@ class EditorHUDScene: SKScene {
     private var boosterButton: SKSpriteNode?
     
     private var selectContextButtonsEnable: Bool = true
-    
-    /// Messages
-    private var errorOutOfBound: SKShapeNode?
 
     private let SELECTED_COLOR = UIColor(red: 153.0/255.0, green: 204.0/255.0, blue: 1.0, alpha: 1.0)
     
@@ -87,9 +84,6 @@ class EditorHUDScene: SKScene {
         self.wallButton?.texture = SKTexture(imageNamed: "Wall");
         self.boosterButton?.texture = SKTexture(imageNamed: "Booster");
         
-        self.errorOutOfBound = (self.childNode(withName: "//errorOutOfBound") as? SKShapeNode)!
-        self.errorOutOfBound?.isHidden = true
-        
         // Bouton courant par défaut
         if self.currentButton == nil {
             self.colorCurrentButton(button: self.cameraControlButton!)
@@ -121,18 +115,6 @@ class EditorHUDScene: SKScene {
     /// Affiche/Cache le bouton d'annulation
     func showCancelButton(activer: Bool) {
         self.cancelButton?.isHidden = !activer
-    }
-    
-    /// Affiche le message d'erreur
-    func showErrorOutOfBoundMessage(activer: Bool) {
-        self.errorOutOfBound?.isHidden = !activer
-        
-        if activer {
-            self.errorOutOfBound?.alpha = 0.0
-            self.errorOutOfBound?.run(SKAction.fadeIn(withDuration: 0.5))
-            self.errorOutOfBound?.run(SKAction.sequence([SKAction.wait(forDuration: 1.5),
-                                                         SKAction.fadeOut(withDuration: 0.5)]))
-        }
     }
     
     override func didMove(to view: SKView) {

@@ -40,9 +40,6 @@ class ModeleEtatCreerBoost: ModeleEtat {
     
     /// Évènement appelé lorsque l'utilisateur tap sur l'écran
     override func tapGesture(point: CGPoint) {
-        // TODO : Vérifier que c'est au-dessus de la table tapOverTable()
-        //if (mouseDownL_ && isAClick() && mouseOverTable()) {
-        
         super.tapGesture(point: point)
         
         // Création du noeud
@@ -63,7 +60,7 @@ class ModeleEtatCreerBoost: ModeleEtat {
         }
         else {
             // Afficher un message d'erreur
-            FacadeModele.instance.obtenirVue().editorHUDScene?.showErrorOutOfBoundMessage(activer: true)
+            FacadeModele.instance.obtenirVue().editorNotificationScene?.showErrorOutOfBoundMessage(activer: true)
         }
         
         // Verification que les noeuds soient sur la table

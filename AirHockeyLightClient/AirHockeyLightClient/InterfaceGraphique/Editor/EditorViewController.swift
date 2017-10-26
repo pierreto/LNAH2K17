@@ -27,7 +27,11 @@ class EditorViewController: UIViewController {
     //public var editorView: SCNView!
     @IBOutlet weak var editorView: SCNView!
     public var editorScene: SCNScene!
+    public var editorNotificationScene: EditorNotificationScene?
     public var cameraNode: SCNNode!
+    
+    @IBOutlet weak var hudView: SCNView!
+    public var hudScene: SCNScene!
     public var editorHUDScene: EditorHUDScene?
     
     override func viewDidLoad() {
@@ -46,7 +50,15 @@ class EditorViewController: UIViewController {
         if self.editorHUDScene != nil {
             // Set the scale mode to scale to fit the window
             self.editorHUDScene?.scaleMode = .aspectFill
-            self.editorView.overlaySKScene = self.editorHUDScene
+            self.hudView.overlaySKScene = self.editorHUDScene
+        }
+        
+        // Load the SKScene from 'EditorNotificationScene.sks'
+        self.editorNotificationScene = SKScene(fileNamed: "EditorNotificationScene") as? EditorNotificationScene
+        if self.editorNotificationScene != nil {
+            // Set the scale mode to scale to fit the window
+            self.editorNotificationScene?.scaleMode = .aspectFill
+            self.editorView.overlaySKScene = self.editorNotificationScene
         }
     }
     
@@ -58,8 +70,11 @@ class EditorViewController: UIViewController {
     func initScene() {
         self.editorScene = SCNScene()
         self.editorView.scene = editorScene
-        
         self.editorView.isPlaying = true
+        
+        self.hudScene = SCNScene()
+        self.hudView.scene = hudScene
+        self.hudView.isPlaying = true
     }
     
     func initCamera() {

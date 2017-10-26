@@ -57,6 +57,11 @@ class ModeleEtatDuplication: ModeleEtat {
             }
         }
         
+        /// Désélectionner tous les noeuds
+        let arbre = FacadeModele.instance.obtenirArbreRendu()
+        let table = arbre.childNode(withName: arbre.NOM_TABLE, recursively: true) as! NoeudTable
+        table.deselectionnerTout()
+        
         // Réactiver les boutons associés à la sélection
         FacadeModele.instance.obtenirVue().editorHUDScene?.enableSelectContextButtons()
     }

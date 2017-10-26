@@ -66,9 +66,6 @@ class ModeleEtatCreerMuret: ModeleEtat {
     override func panGesture(sender: ImmediatePanGestureRecognizer) {
         super.panGesture(sender: sender)
         
-        // TODO
-        // if (mouseDownL_ && isAClick() && mouseOverTable()) {
-
             if sender.state == UIGestureRecognizerState.began && self.noeud == nil {
                 print("BEGIN")
                 
@@ -95,7 +92,7 @@ class ModeleEtatCreerMuret: ModeleEtat {
                 }
                 else {
                     // Afficher un message d'erreur
-                    FacadeModele.instance.obtenirVue().editorHUDScene?.showErrorOutOfBoundMessage(activer: true)
+                    FacadeModele.instance.obtenirVue().editorNotificationScene?.showErrorOutOfBoundMessage(activer: true)
                 }
             }
             else if sender.state == UIGestureRecognizerState.ended {
