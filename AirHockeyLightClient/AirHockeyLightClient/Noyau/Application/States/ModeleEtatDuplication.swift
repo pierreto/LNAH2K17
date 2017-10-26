@@ -35,8 +35,8 @@ class ModeleEtatDuplication: ModeleEtat {
         // La duplication des noeuds s'effectue via un gesture pan
         FacadeModele.instance.obtenirVue().editorView.addGestureRecognizer(FacadeModele.instance.panGestureRecognizer!)
         
-        // Désactiver le bouton de suppression
-        FacadeModele.instance.obtenirVue().editorHUDScene?.disableDeleteButton()
+        // Désactiver les boutons associés à la sélection
+        FacadeModele.instance.obtenirVue().editorHUDScene?.disableSelectContextButtons()
         
         self.copieEnCours = false
     }
@@ -57,8 +57,8 @@ class ModeleEtatDuplication: ModeleEtat {
             }
         }
         
-        // Réactiver le bouton de suppression
-        FacadeModele.instance.obtenirVue().editorHUDScene?.enableDeleteButton()
+        // Réactiver les boutons associés à la sélection
+        FacadeModele.instance.obtenirVue().editorHUDScene?.enableSelectContextButtons()
     }
     
     // Fonctions gérant les entrées de l'utilisateur

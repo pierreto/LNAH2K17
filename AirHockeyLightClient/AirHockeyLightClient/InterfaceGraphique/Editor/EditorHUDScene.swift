@@ -27,14 +27,15 @@ class EditorHUDScene: SKScene {
     private var rotationButton: SKSpriteNode?
     private var resizeButton: SKSpriteNode?
     private var duplicateButton: SKSpriteNode?
+    private var cancelButton: SKSpriteNode?
+    private var deselectAllButton: SKSpriteNode?
+    private var deleteButton: SKSpriteNode?
     private var pointControlButton: SKSpriteNode?
     private var portalButton: SKSpriteNode?
     private var wallButton: SKSpriteNode?
     private var boosterButton: SKSpriteNode?
-    private var deleteButton: SKSpriteNode?
-    private var cancelButton: SKSpriteNode?
     
-    private var deleteButtonIsEnable: Bool = true
+    private var selectContextButtonsEnable: Bool = true
     
     /// Messages
     private var errorOutOfBound: SKShapeNode?
@@ -53,53 +54,59 @@ class EditorHUDScene: SKScene {
         self.rotationButton = (self.childNode(withName: "//rotationButton") as? SKSpriteNode)!
         self.resizeButton = (self.childNode(withName: "//resizeButton") as? SKSpriteNode)!
         self.duplicateButton = (self.childNode(withName: "//duplicateButton") as? SKSpriteNode)!
+        self.cancelButton = (self.childNode(withName: "//cancelButton") as? SKSpriteNode)!
+        self.deselectAllButton = (self.childNode(withName: "//deselectAllButton") as? SKSpriteNode)!
+        self.deleteButton = (self.childNode(withName: "//deleteButton") as? SKSpriteNode)!
         self.pointControlButton = (self.childNode(withName: "//pointControlButton") as? SKSpriteNode)!
         self.portalButton = (self.childNode(withName: "//portalButton") as? SKSpriteNode)!
         self.wallButton = (self.childNode(withName: "//wallButton") as? SKSpriteNode)!
         self.boosterButton = (self.childNode(withName: "//boosterButton") as? SKSpriteNode)!
-        self.deleteButton = (self.childNode(withName: "//deleteButton") as? SKSpriteNode)!
-        self.cancelButton = (self.childNode(withName: "//cancelButton") as? SKSpriteNode)!
         
-        /// Cacher le bouton delete
-        self.deleteButton?.isHidden = true
         /// Cacher le bouton cancel
         self.cancelButton?.isHidden = true
+        /// Cacher le bouton déselection
+        self.deselectAllButton?.isHidden = true
+        /// Cacher le bouton delete
+        self.deleteButton?.isHidden = true
         
         // Charger les images
         self.cameraControlButton?.texture = SKTexture(imageNamed: "Camera");
-        self.selectionButton?.texture = SKTexture(imageNamed: "Select")
+        self.selectionButton?.texture = SKTexture(imageNamed: "Tap")
         self.deplacementButton?.texture = SKTexture(imageNamed: "Move")
         self.rotationButton?.texture = SKTexture(imageNamed: "Rotate")
         self.resizeButton?.texture = SKTexture(imageNamed: "Resize")
         self.duplicateButton?.texture = SKTexture(imageNamed: "Duplicate")
+        self.cancelButton?.texture = SKTexture(imageNamed: "Cancel");
+        self.deselectAllButton?.texture = SKTexture(imageNamed: "Cancel");
+        self.deleteButton?.texture = SKTexture(imageNamed: "Delete");
         self.pointControlButton?.texture = SKTexture(imageNamed: "ControlPoint")
         self.portalButton?.texture = SKTexture(imageNamed: "Portal")
         self.wallButton?.texture = SKTexture(imageNamed: "Wall");
         self.boosterButton?.texture = SKTexture(imageNamed: "Booster");
-        self.deleteButton?.texture = SKTexture(imageNamed: "Delete");
-        self.cancelButton?.texture = SKTexture(imageNamed: "Cancel");
         
         self.errorOutOfBound = (self.childNode(withName: "//errorOutOfBound") as? SKShapeNode)!
         self.errorOutOfBound?.isHidden = true
     }
     
-    /// Affiche/Cache le bouton de suppression
-    func showDeleteButton(activer: Bool) {
+    /// Affiche/Cache les boutons liés à la sélection
+    func showSelectContextButtons(activer: Bool) {
         self.deleteButton?.isHidden = !activer
+        self.deselectAllButton?.isHidden = !activer
         
-        if !self.deleteButtonIsEnable {
+        if !self.selectContextButtonsEnable {
             self.deleteButton?.isHidden = true
+            self.deselectAllButton?.isHidden = true
         }
     }
     
-    /// Désactive le bouton de suppression
-    func enableDeleteButton() {
-        self.deleteButtonIsEnable = true
+    /// Désactive les boutons liés à la sélection
+    func enableSelectContextButtons() {
+        self.selectContextButtonsEnable = true
     }
     
-    /// Active le bouton de suppression
-    func disableDeleteButton() {
-        self.deleteButtonIsEnable = false
+    /// Active les boutons liés à la sélection
+    func disableSelectContextButtons() {
+        self.selectContextButtonsEnable = false
     }
     
     /// Affiche/Cache le bouton d'annulation
@@ -183,6 +190,12 @@ class EditorHUDScene: SKScene {
         else if touchedNode?.name == "cancelButton"{
             print("Annuler")
             FacadeModele.instance.obtenirEtat().nettoyerEtat()
+        }
+        else if touchedNode?.name == "deselectAllButton"{
+            print("Désélectionner")
+            let arbre = FacadeModele.instance.obtenirArbreRendu()
+            let table = arbre.childNode(withName: arbre.NOM_TABLE, recursively: true) as! NoeudTable
+            table.deselectionnerTout()
         }
         
         for t in touches { self.touchDown(atPoint: t.location(in: self)) }

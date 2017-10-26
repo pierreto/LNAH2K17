@@ -80,6 +80,7 @@
 		8F0B94BE1F8DC0F1007F0E82 /* VisiteurSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0B94BD1F8DC0F1007F0E82 /* VisiteurSelection.swift */; };
 		8F1D52A81F9D972400135A53 /* ModeleEtatScale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1D52A71F9D972400135A53 /* ModeleEtatScale.swift */; };
 		8F1D52AA1F9D99C700135A53 /* VisiteurScale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1D52A91F9D99C700135A53 /* VisiteurScale.swift */; };
+		8F27E8111FA1803400A8856D /* Tap.png in Resources */ = {isa = PBXBuildFile; fileRef = 8F27E8101FA1803400A8856D /* Tap.png */; };
 		8F4D5E3C1FA060150002D5C5 /* Delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 8F4D5E3B1FA060140002D5C5 /* Delete.png */; };
 		8F64C0111F7754EF00F14AC7 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F64C0101F7754EF00F14AC7 /* ChatViewController.swift */; };
 		8F64C0131F7754FD00F14AC7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F64C0121F7754FD00F14AC7 /* LaunchScreen.storyboard */; };
@@ -195,6 +196,7 @@
 		8F0B94BD1F8DC0F1007F0E82 /* VisiteurSelection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VisiteurSelection.swift; path = Noyau/Arbre/Visiteurs/VisiteurSelection.swift; sourceTree = "<group>"; };
 		8F1D52A71F9D972400135A53 /* ModeleEtatScale.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ModeleEtatScale.swift; path = Noyau/Application/States/ModeleEtatScale.swift; sourceTree = "<group>"; };
 		8F1D52A91F9D99C700135A53 /* VisiteurScale.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VisiteurScale.swift; path = Noyau/Arbre/Visiteurs/VisiteurScale.swift; sourceTree = "<group>"; };
+		8F27E8101FA1803400A8856D /* Tap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Tap.png; path = ../../Sources/Icons/Tap.png; sourceTree = "<group>"; };
 		8F4D5E3B1FA060140002D5C5 /* Delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Delete.png; path = ../../Sources/Icons/Delete.png; sourceTree = "<group>"; };
 		8F64C0101F7754EF00F14AC7 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatViewController.swift; path = InterfaceGraphique/Chat/ChatViewController.swift; sourceTree = "<group>"; };
 		8F64C0121F7754FD00F14AC7 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = InterfaceGraphique/Menus/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -344,6 +346,7 @@
 				3475C2331F8FB9A100E8BF86 /* Resize.png */,
 				3475C2341F8FB9A100E8BF86 /* Rotate.png */,
 				3475C2351F8FB9A100E8BF86 /* Select.png */,
+				8F27E8101FA1803400A8856D /* Tap.png */,
 				3475C2361F8FB9A100E8BF86 /* Wall.png */,
 				3475C2371F8FB9A100E8BF86 /* Zoom.png */,
 			);
@@ -660,6 +663,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3475C23B1F8FB9A100E8BF86 /* Move.png in Resources */,
+				8F27E8111FA1803400A8856D /* Tap.png in Resources */,
 				8F6AE2BE1F6592EB00A29E8B /* GameScene.sks in Resources */,
 				8F64C0151F77550800F14AC7 /* Main.storyboard in Resources */,
 				8F6AE2C91F6592EB00A29E8B /* Assets.xcassets in Resources */,

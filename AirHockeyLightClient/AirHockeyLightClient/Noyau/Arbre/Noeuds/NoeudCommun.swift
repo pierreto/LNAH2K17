@@ -91,11 +91,11 @@ class NoeudCommun : SCNNode {
             }
         }
         
-        // Activer la fonctionnalité de suppression s'il y a un objet sélectionné
+        // Activer les fonctonnalités liées à la sélection d'au moins un objet
         let selection = VisiteurObtenirSelection()
         FacadeModele.instance.obtenirArbreRendu().accepterVisiteur(visiteur: selection)
         let noeuds = selection.obtenirNoeuds()
-        FacadeModele.instance.obtenirVue().editorHUDScene?.showDeleteButton(activer: (noeuds.count > 0))
+        FacadeModele.instance.obtenirVue().editorHUDScene?.showSelectContextButtons(activer: (noeuds.count > 0))
     }
 
     /// Cette fonction retourne l'état d'être sélectionné ou non du noeud.
