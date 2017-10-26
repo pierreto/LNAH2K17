@@ -61,7 +61,7 @@ class VisiteurSurTable: VisiteurAbstrait {
         if self.table != nil {
             // Test de l'intersection d'un cube avec la table
             self.testPoints(noeud: noeud)
-            //self.intersectCubeTable(noeud: noeud)
+            self.intersectCubeTable(noeud: noeud)
         }
     }
     
@@ -147,6 +147,37 @@ class VisiteurSurTable: VisiteurAbstrait {
         }
     
         return false;
+    }
+    
+    /// Cette fonction trouve si les segments d'un cube croise le contour de la table.
+    func intersectCubeTable(noeud: NoeudCommun) {
+        // Les sommets de la table
+        let sommetsTable = self.table?.obtenirSommetsPatinoire()
+    
+        // Recherche des points pertinents
+        let c = noeud.boundingBox
+        let cMin = noeud.convertPosition(c.min, to: FacadeModele.instance.obtenirVue().editorScene.rootNode)
+        let cMax = noeud.convertPosition(c.max, to: FacadeModele.instance.obtenirVue().editorScene.rootNode)
+        
+        var sommets = [GLKVector3]()
+        sommets.append(GLKVector3.init(v: (cMin.x, 0, cMin.z)))
+        sommets.append(GLKVector3.init(v: (cMin.x, 0, cMax.z)))
+        sommets.append(GLKVector3.init(v: (cMax.x, 0, cMax.z)))
+        sommets.append(GLKVector3.init(v: (cMax.x, 0, cMin.z)))
+    
+        let sommetsTableCount: Int! = sommetsTable?.count
+        let sommetsCount = sommets.count
+        for i in 1..<sommetsTableCount {
+            for j in 0..<sommetsCount {
+                if MathHelper.segmentsIntersect(
+                    s11: SCNVector3ToGLKVector3(sommetsTable![i]),
+                    s12: SCNVector3ToGLKVector3(sommetsTable![(i % (sommetsTableCount - 1)) + 1]),
+                    s21: sommets[j],
+                    s22: sommets[(j + 1) % sommetsCount]) {
+                        self.sontSurTable = false
+                }
+            }
+        }
     }
     
     /// Cette fonction trouve si un accélérateur croise les côtés de la table

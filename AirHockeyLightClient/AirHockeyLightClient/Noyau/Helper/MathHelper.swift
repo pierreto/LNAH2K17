@@ -51,6 +51,25 @@ class MathHelper {
         return nil
     }
     
+    /// Cette fonction trouve si deux segments se croisent
+    static func segmentsIntersect(s11: GLKVector3, s12: GLKVector3, s21: GLKVector3, s22: GLKVector3) -> Bool {
+        let u1 = s11;
+        let v1 = GLKVector3Subtract(s12, s11)
+        let u2 = s21;
+        let v2 = GLKVector3Subtract(s22, s21)
+    
+        let d = (-v2.x * v1.z + v1.x * v2.z);
+    
+        if (d == 0) {
+            return false;
+        }
+    
+        let s = (-v1.z * (u1.x - u2.x) + v1.x * (u1.z - u2.z)) / d;
+        let t = (v2.x * (u1.z - u2.z) - v2.z * (u1.x - u2.x)) / d;
+    
+        return 0.0 <= s && s <= 1.0 && 0.0 <= t && t <= 1.0;
+    }
+    
     /// Cette fonction trouve si un segment et un cercle se croisent
     static func segmentCercleIntersect(s1: GLKVector3, s2: GLKVector3, centreCercle: GLKVector3, rayon: Float) -> Bool {
         let v1 = GLKVector3Subtract(s2, s1)
