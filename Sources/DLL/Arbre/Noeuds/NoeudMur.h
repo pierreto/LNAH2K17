@@ -25,7 +25,7 @@
 class NoeudMur : public NoeudAbstrait {
 public:
 	/// Constructeur à partir du type du noeud.
-	NoeudMur(const std::string& typeNoeud);
+	NoeudMur(const std::string& typeNoeud, const char* uuid = nullptr);
 	/// Destructeur.
 	~NoeudMur();
 

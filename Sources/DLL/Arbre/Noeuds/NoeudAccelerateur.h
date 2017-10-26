@@ -23,7 +23,7 @@
 class NoeudAccelerateur : public NoeudAbstrait {
 public:
 	/// Constructeur à partir du type du noeud.
-	NoeudAccelerateur(const std::string& typeNoeud);
+	NoeudAccelerateur(const std::string& typeNoeud, const char* uuid = nullptr);
 	/// Destructeur.
 	~NoeudAccelerateur();
 

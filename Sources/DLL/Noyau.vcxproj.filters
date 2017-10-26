@@ -115,9 +115,6 @@
     <Filter Include="Source Files\Console">
       <UniqueIdentifier>{7994da7e-9d20-4b20-bee6-0c34b58d8c5a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\NewFilter1">
-      <UniqueIdentifier>{de42cc30-b040-49ce-bf9d-b7de422cfdc0}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\FacadeModele.cpp">

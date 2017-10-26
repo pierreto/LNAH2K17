@@ -25,7 +25,7 @@
 class NoeudMaillet : public NoeudAbstrait {
 public:
 	/// Constructeur à partir du type du noeud.
-	NoeudMaillet(const std::string& typeNoeud);
+	NoeudMaillet(const std::string& typeNoeud, const char* uuid);
 	/// Destructeur.
 	~NoeudMaillet();
 

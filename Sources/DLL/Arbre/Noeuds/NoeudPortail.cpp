@@ -35,8 +35,8 @@ opengl::Nuanceur NoeudPortail::nuanceurSommet_;
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-NoeudPortail::NoeudPortail(const std::string& typeNoeud)
-	: NoeudAbstrait{ typeNoeud }, collider_{ 0,0,0 }, desactiver_{false}
+NoeudPortail::NoeudPortail(const std::string& typeNoeud, const char* uuid)
+	: NoeudAbstrait{ typeNoeud, uuid }, collider_{ 0,0,0 }, desactiver_{false}
 {
 	initialiserNuanceurs();
 }

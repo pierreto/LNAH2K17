@@ -27,7 +27,7 @@
 class NoeudPortail : public NoeudAbstrait {
 public:
 	/// Constructeur à partir du type du noeud.
-	NoeudPortail(const std::string& typeNoeud);
+	NoeudPortail(const std::string& typeNoeud, const char* uuid = nullptr);
 	/// Destructeur.
 	~NoeudPortail();
 

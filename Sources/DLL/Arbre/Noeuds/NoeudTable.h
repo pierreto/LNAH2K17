@@ -35,7 +35,7 @@
 class NoeudTable : public NoeudComposite {
 public:
 	/// Constructeur à partir du type du noeud.
-	NoeudTable(const std::string& typeNoeud);
+	NoeudTable(const std::string& typeNoeud, const char* uuid);
 	/// Destructeur.
 	~NoeudTable();
 

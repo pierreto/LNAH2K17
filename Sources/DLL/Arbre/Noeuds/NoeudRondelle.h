@@ -23,7 +23,7 @@
 class NoeudRondelle : public NoeudAbstrait {
 public:
 	/// Constructeur à partir du type du noeud.
-	NoeudRondelle(const std::string& typeNoeud);
+	NoeudRondelle(const std::string& typeNoeud, const char* uuid);
 	/// Destructeur.
 	~NoeudRondelle();
 

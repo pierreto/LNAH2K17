@@ -52,7 +52,8 @@ public:
 
    /// Crée un nouveau noeud.
    NoeudAbstrait* creerNoeud(
-      const std::string& typeNouveauNoeud
+      const std::string& typeNouveauNoeud,
+	  const char* uuid=nullptr
       ) const;
 
    /// Crée et ajoute un nouveau noeud à l'arbre.

@@ -26,7 +26,7 @@
 class NoeudPointControl : public NoeudComposite {
 public:
 	/// Constructeur à partir du type du noeud.
-	NoeudPointControl(const std::string& typeNoeud);
+	NoeudPointControl(const std::string& typeNoeud, const char* uuid = nullptr);
 	/// Destructeur.
 	~NoeudPointControl();
 
