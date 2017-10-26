@@ -21,7 +21,7 @@ namespace InterfaceGraphique.CommunicationInterface
         public void InitializeHub(HubConnection connection)
         {
             //   gameHubProxy = connection.CreateHubProxy("GameWaitingRoomHub");
-            gameHubProxy = WaitingRoomHub.GameWaitingRoomProxy;
+            gameHubProxy = GameWaitingRoomHub.WaitingRoomProxy;
         }
 
         //For the slave
