@@ -208,5 +208,10 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
         {
             this.waitingRoomHub.Join();
         }
+
+        public override void InitializeViewModel()
+        {
+          //  throw new NotImplementedException();
+        }
     }
 }

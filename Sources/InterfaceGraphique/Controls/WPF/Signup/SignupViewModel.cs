@@ -36,6 +36,11 @@ namespace InterfaceGraphique.Controls.WPF.Signup
             Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<AuthenticateViewModel>());
         }
 
+        public override void InitializeViewModel()
+        {
+           // throw new NotImplementedException();
+        }
+
         private ICommand signupCommand;
         public ICommand SignupCommand
         {

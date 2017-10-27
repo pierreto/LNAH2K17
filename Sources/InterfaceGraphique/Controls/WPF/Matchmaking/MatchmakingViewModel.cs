@@ -26,8 +26,7 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
             this.isStarted = false;
             this.MapsRepository = new MapsRepository();
         }
-
-        public void Initialize()
+        public override void InitializeViewModel()
         {
             LoadData();
             InitializeEvents();
@@ -39,6 +38,7 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
         {
             RemainingTime = 30;
         }
+
 
         private void InitializeEvents()
         {

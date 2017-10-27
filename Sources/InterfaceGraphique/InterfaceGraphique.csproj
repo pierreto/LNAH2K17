@@ -66,6 +66,9 @@
     <PlatformTarget>x86</PlatformTarget>
     <OutputPath>bin\x86\Release\</OutputPath>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="FontAwesome.WPF, Version=4.7.0.37774, Culture=neutral, PublicKeyToken=0758b07a11a4f466, processorArchitecture=MSIL">
       <HintPath>..\packages\FontAwesome.WPF.4.7.0.9\lib\net40\FontAwesome.WPF.dll</HintPath>
@@ -139,7 +142,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommunicationInterface\ChatHub.cs" />
+    <Compile Include="CommunicationInterface\EditionHub.cs" />
     <Compile Include="CommunicationInterface\GameHub.cs" />
+    <Compile Include="CommunicationInterface\IBaseHub.cs" />
     <Compile Include="CommunicationInterface\RestInterface\HttpResponseParser.cs" />
     <Compile Include="CommunicationInterface\RestInterface\MapsRepository.cs" />
     <Compile Include="CommunicationInterface\RestInterface\Repository.cs" />
@@ -147,7 +152,6 @@
     <Compile Include="CommunicationInterface\WaitingRooms\GameWaitingRoomHub.cs" />
     <Compile Include="CommunicationInterface\User.cs" />
     <Compile Include="CommunicationInterface\HubManager.cs" />
-    <Compile Include="CommunicationInterface\IBaseHub.cs" />
     <Compile Include="Controls\LobbyHost.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -182,6 +186,23 @@
       <DependentUpon>HomeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\WPF\Home\HomeViewModel.cs" />
+    <Compile Include="Controls\EditorHost.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\EditorHost.Designer.cs">
+      <DependentUpon>EditorHost.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WPF\Editor\EditorJoinOrCreateView.xaml.cs">
+      <DependentUpon>EditorJoinOrCreateView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WPF\Editor\EditorModeView.xaml.cs">
+      <DependentUpon>EditorModeView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controls\WPF\Editor\EditorServerBrowser.xaml.cs">
+      <DependentUpon>EditorServerBrowser.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WPF\Editor\EditorViewModel.cs" />
     <Compile Include="Controls\WPF\Matchmaking\MatchmakingView.xaml.cs">
       <DependentUpon>MatchmakingView.xaml</DependentUpon>
     </Compile>
@@ -197,6 +218,9 @@
     <Compile Include="Controls\WPF\Signup\SignupViewModel.cs" />
     <Compile Include="Controls\WPF\ViewModelBase.cs" />
     <Compile Include="Controls\WPF\ViewModelLocator.cs" />
+    <Compile Include="Editor\EditorState\AbstractEditorState.cs" />
+    <Compile Include="Editor\EditorState\OfflineEditorState.cs" />
+    <Compile Include="Editor\EditorState\OnlineEditorState.cs" />
     <Compile Include="Editor\OpenPrivateMapForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -217,6 +241,9 @@
     </Compile>
     <Compile Include="Entities\ChannelEntity.cs" />
     <Compile Include="Entities\ChatMessage.cs" />
+    <Compile Include="Entities\EditonCommand\AbstractEditionCommand.cs" />
+    <Compile Include="Entities\EditonCommand\PortalCommand.cs" />
+    <Compile Include="Entities\EditonCommand\WallCommand.cs" />
     <Compile Include="Entities\GameDataMessage.cs" />
     <Compile Include="Entities\GameEntity.cs" />
     <Compile Include="Entities\GoalMessage.cs" />
@@ -226,6 +253,7 @@
     <Compile Include="Entities\MemberEntity.cs" />
     <Compile Include="CommunicationInterface\LoginClient.cs" />
     <Compile Include="Entities\TournamentEntity.cs" />
+    <Compile Include="Entities\MockObject\MapEntityMock.cs" />
     <Compile Include="Entities\TournamentOpponentMessage.cs" />
     <Compile Include="Entities\SignupEntity.cs" />
     <Compile Include="Entities\UserEntity.cs" />
@@ -339,9 +367,13 @@
     <Compile Include="Game\TestMode.Designer.cs">
       <DependentUpon>TestMode.cs</DependentUpon>
     </Compile>
+    <Compile Include="Services\MapService.cs" />
     <Compile Include="WPFApplication.cs" />
     <EmbeddedResource Include="Editor\OpenPrivateMapForm.resx">
       <DependentUpon>OpenPrivateMapForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\EditorHost.resx">
+      <DependentUpon>EditorHost.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Editor\SaveMapForm.resx">
       <DependentUpon>SaveMapForm.cs</DependentUpon>
@@ -411,6 +443,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="app.manifest" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -482,6 +515,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\WPF\Editor\EditorJoinOrCreateView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\WPF\Editor\EditorModeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="Controls\WPF\Editor\EditorServerBrowser.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\WPF\Matchmaking\MatchmakingView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -503,7 +548,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Entities\Message\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

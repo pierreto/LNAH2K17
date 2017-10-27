@@ -11,6 +11,7 @@
 #define __APPLICATION_STATES_MODELEETATCREATIONPORTAIL_H__
 
 #include "ModeleEtat.h"
+#include "FacadeInterfaceNative.h"
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class ModeleEtatCreerPortail
@@ -39,6 +40,11 @@ public:
 	/// Fonction pour nettoyer l'état
 	virtual void nettoyerEtat();
 
+	void setPortalCreationCallback(PortalCreationCallback callback)
+	{
+		portalCreationCallback_ = callback;
+	}
+
 private:
 
 	/// Constructeur.
@@ -55,6 +61,8 @@ private:
 
 	/// Premier portail 
 	NoeudPortail* premierNoeud_{nullptr};
+
+	PortalCreationCallback portalCreationCallback_;
 };
 
 

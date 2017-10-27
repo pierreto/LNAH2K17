@@ -40,7 +40,7 @@ protected:
 public:
 	/// Constructeur.
 	NoeudComposite(
-		const std::string& type = std::string{ "" }
+		const std::string& type = std::string{ "" }, const char* uuid = nullptr
       );
    /// Destructeur.
    virtual ~NoeudComposite();

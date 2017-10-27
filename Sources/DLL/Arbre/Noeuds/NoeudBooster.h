@@ -24,7 +24,7 @@
 class NoeudBooster : public NoeudAbstrait {
 public:
 	/// Constructeur à partir du type du noeud.
-	NoeudBooster(const std::string& typeNoeud);
+	NoeudBooster(const std::string& typeNoeud, const char* uuid = nullptr);
 	/// Destructeur.
 	~NoeudBooster();
 

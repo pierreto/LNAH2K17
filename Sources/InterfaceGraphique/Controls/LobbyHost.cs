@@ -7,14 +7,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using InterfaceGraphique.Controls.WPF.Matchmaking;
 
 namespace InterfaceGraphique.Controls
 {
     public partial class LobbyHost : Form
     {
+        private MatchmakingView matchmaking;
         public LobbyHost()
         {
             InitializeComponent();
+            matchmaking = new MatchmakingView();
+            this.elementHost1.Child = matchmaking;
         }
         ////////////////////////////////////////////////////////////////////////
         ///

@@ -31,6 +31,11 @@ namespace InterfaceGraphique.Controls.WPF.ConnectServer
             Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<HomeViewModel>());
         }
 
+        public override void InitializeViewModel()
+        {
+           // throw new NotImplementedException();
+        }
+
         private ICommand enterKeyCommand;
         public ICommand EnterKeyCommand
         {

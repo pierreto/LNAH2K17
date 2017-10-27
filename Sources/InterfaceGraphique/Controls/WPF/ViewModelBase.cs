@@ -9,7 +9,7 @@ using System.Windows.Input;
 
 namespace InterfaceGraphique.Controls.WPF
 {
-    public class ViewModelBase : INotifyPropertyChanged
+    public abstract class ViewModelBase : INotifyPropertyChanged
     {
         public string Title { get; set; }
         public string Hidden { get; set; }
@@ -28,6 +28,8 @@ namespace InterfaceGraphique.Controls.WPF
         }
 
         protected virtual async Task GoBack() { }
+
+        public abstract void InitializeViewModel();
 
         public event PropertyChangedEventHandler PropertyChanged;
 

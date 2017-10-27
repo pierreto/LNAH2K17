@@ -14,6 +14,7 @@ using System.Runtime.InteropServices;
 using System.IO;
 using InterfaceGraphique.Entities;
 using InterfaceGraphique.CommunicationInterface.RestInterface;
+using InterfaceGraphique.Editor.EditorState;
 
 namespace InterfaceGraphique {
 
@@ -23,11 +24,15 @@ namespace InterfaceGraphique {
     /// @author Julien Charbonneau
     /// @date 2016-09-13
     ///////////////////////////////////////////////////////////////////////////
-    public partial class Editeur : Form {
-
+    public partial class Editeur : Form
+    {
+        private OfflineEditorState offlineState;
+        private OnlineEditorState onlineState;
         private MODELE_ETAT outilCourrant = MODELE_ETAT.AUCUN;
         private string nameSavedMap;
         private bool savedOnline;
+
+        public AbstractEditorState CurrentState { get; set; }
 
         ////////////////////////////////////////////////////////////////////////
         ///
@@ -36,13 +41,18 @@ namespace InterfaceGraphique {
         /// @return Void
         ///
         ////////////////////////////////////////////////////////////////////////
-        public Editeur() {
+        public Editeur(OfflineEditorState offlineState, OnlineEditorState onlineState) {
             InitializeComponent();
             InitializeEvents();
 
             nameSavedMap = null;
             savedOnline = false;
+
+            this.offlineState = offlineState;
+            this.onlineState = onlineState;
+            CurrentState= offlineState;
         }
+
 
 
         ////////////////////////////////////////////////////////////////////////
@@ -210,13 +220,7 @@ namespace InterfaceGraphique {
         ///
         ////////////////////////////////////////////////////////////////////////
         private void mouseDown(object sender, MouseEventArgs e) {
-            FonctionsNatives.modifierKeys((Control.ModifierKeys == Keys.Alt), (Control.ModifierKeys == Keys.Control));
-            if (e.Button == MouseButtons.Left) {
-                FonctionsNatives.mouseDownL();
-            }
-            if (e.Button == MouseButtons.Right) {
-                FonctionsNatives.mouseDownR();
-            }
+            CurrentState.MouseDown(sender,e);
         }
 
 
@@ -231,15 +235,7 @@ namespace InterfaceGraphique {
         ///
         ////////////////////////////////////////////////////////////////////////
         private void mouseUp(object sender, MouseEventArgs e) {
-            FonctionsNatives.modifierKeys((Control.ModifierKeys == Keys.Alt), (Control.ModifierKeys == Keys.Control));
-            if (e.Button == MouseButtons.Left) {
-                FonctionsNatives.mouseUpL();
-                this.Edition_Supprimer.Enabled = FonctionsNatives.verifierSelection();
-                resetProprietesPanel(null, null);
-            }
-            if (e.Button == MouseButtons.Right) {
-                FonctionsNatives.mouseUpR();
-            }
+            CurrentState.MouseUp(sender,e);
         }
 
 
@@ -314,7 +310,7 @@ namespace InterfaceGraphique {
         /// @return     Void 
         ///
         ////////////////////////////////////////////////////////////////////////
-        private void resetProprietesPanel(object sender, EventArgs e) {
+        public void resetProprietesPanel(object sender, EventArgs e) {
             float[] infos = new float[9];
             if (FonctionsNatives.selectedNodeInfos(infos) && outilCourrant == MODELE_ETAT.SELECTION) {
                 this.Panel_PropertiesBack.Visible = true;
@@ -390,52 +386,56 @@ namespace InterfaceGraphique {
             }
         }
 
+        public void JoinEdition(MapEntity map)
+        {
+            this.CurrentState= this.onlineState;
+            this.CurrentState.JoinEdition(map);
+            this.LoadMap(map);
+        }
+
         private async Task OpenOnlineMap()
         {
-            HttpResponseMessage response = await Program.client.GetAsync("api/maps/");
-            if (response.IsSuccessStatusCode)
-            {
-                List<MapEntity> maps = await HttpResponseParser.ParseResponse<List<MapEntity>>(response);
-                InterfaceGraphique.ListMaps mapsForm = new InterfaceGraphique.ListMaps();
 
-                foreach (var map in maps)
-                {
-                    string[] row = { map.MapName, map.Creator, map.LastBackup.ToShortDateString(), ((map.Private) ? "Privée" : "Publique") };
-                    mapsForm.DataGridView_Maps.Rows.Add(row);
-                }
+            Program.EditorHost.SwitchViewToServerBrowser();
+            Program.EditorHost.ShowDialog();
+            /*
 
-                mapsForm.ShowDialog();
+                            if (SelectedMap.Private)
+                            {
+                                InterfaceGraphique.Editor.OpenPrivateMapForm passwordForm = new InterfaceGraphique.Editor.OpenPrivateMapForm();
 
-                MapEntity SelectedMap = maps.Find(
-                    map => map.MapName == mapsForm.SelectedMap.Cells["MapName"].Value.ToString());
+                                if (passwordForm.ShowDialog() != DialogResult.OK || passwordForm.Text_MapPassword.Text != SelectedMap.Password)
+                                {
+                                    MessageBox.Show(
+                                        @"Mot de passe erroné.",
+                                        @"Erreur",
+                                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    return;
+                                }
+                            }
 
-                if (SelectedMap.Private)
-                {
-                    InterfaceGraphique.Editor.OpenPrivateMapForm passwordForm = new InterfaceGraphique.Editor.OpenPrivateMapForm();
+                            StringBuilder json = new StringBuilder(SelectedMap.Json);
+                            float[] coefficients = new float[3];
+                            FonctionsNatives.chargerCarte(json, coefficients);
+                            Program.GeneralProperties.SetCoefficientValues(coefficients);
+                            nameSavedMap = SelectedMap.MapName;
+                        }
+                        else
+                        {
+                            MessageBox.Show(
+                                @"Impossible de charger les cartes, veuillez réessayer plus tard.",
+                                @"Internal error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }*/
+        }
 
-                    if (passwordForm.ShowDialog() != DialogResult.OK || passwordForm.Text_MapPassword.Text != SelectedMap.Password)
-                    {
-                        MessageBox.Show(
-                            @"Mot de passe erroné.",
-                            @"Erreur",
-                            MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-                }
-
-                StringBuilder json = new StringBuilder(SelectedMap.Json);
-                float[] coefficients = new float[3];
-                FonctionsNatives.chargerCarte(json, coefficients);
-                Program.GeneralProperties.SetCoefficientValues(coefficients);
-                nameSavedMap = SelectedMap.MapName;
-            }
-            else
-            {
-                MessageBox.Show(
-                    @"Impossible de charger les cartes, veuillez réessayer plus tard.",
-                    @"Internal error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+        private void LoadMap(MapEntity map)
+        {
+            StringBuilder json = new StringBuilder(map.Json);
+            float[] coefficients = new float[3];
+            FonctionsNatives.chargerCarte(json, coefficients);
+            Program.GeneralProperties.SetCoefficientValues(coefficients);
+            nameSavedMap = map.MapName;
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -791,6 +791,11 @@ namespace InterfaceGraphique {
             return base.ProcessCmdKey(ref msg, keyData);
         }
 
+        public ToolStripMenuItem EditionSupprimer
+        {
+            get => Edition_Supprimer;
+            set => Edition_Supprimer = value;
+        }
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

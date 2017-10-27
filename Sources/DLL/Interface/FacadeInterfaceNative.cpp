@@ -28,6 +28,8 @@
 #include <iomanip>
 #include "glm/gtc/type_ptr.hpp"
 #include "../ModeleEtatJeuOnline.h"
+#include "../NodeCreator.h"
+#include "ModeleEtatCreerPortail.h"
 
 extern "C"
 {
@@ -964,4 +966,20 @@ void masterGoal()
 {
 	ModeleEtatJeu::obtenirInstance()->player1Goal();
 
+}
+
+
+__declspec(dllexport) void createPortal(float* startPos, float* endPosd)
+{
+	glm::vec3 startPosVec = glm::make_vec3(startPos);
+	glm::vec3 endPosVec = glm::make_vec3(endPosd);
+
+	return NodeCreator::obtenirInstance()->createPortal(startPosVec,endPosVec);
+
+}
+
+void setPortalCreationCallback(PortalCreationCallback callback)
+{
+
+	ModeleEtatCreerPortail::obtenirInstance()->setPortalCreationCallback(callback);
 }
