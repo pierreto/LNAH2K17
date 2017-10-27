@@ -10,5 +10,8 @@ namespace AirHockeyServer.Repositories
     public interface IMapRepository
     {
 
+        Task UpdateMap(MapEntity updatedMap);
+
+        Task<IEnumerable<MapEntity>> GetMaps();
     }
 }

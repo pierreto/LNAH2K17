@@ -4,6 +4,8 @@ using System.Linq;
 using AirHockeyServer.Entities;
 using System.Threading.Tasks;
 using AirHockeyServer.Repositories;
+using AirHockeyServer.Services.MatchMaking;
+using AirHockeyServer.Events.EventManagers;
 
 namespace AirHockeyServer.Services
 {
@@ -19,7 +21,7 @@ namespace AirHockeyServer.Services
     {
         private List<GameEntity> games;
         private static IGameRepository GameRepository = new GameRepository();
-
+        
         public GameService()
         {
             this.games = new List<GameEntity>();
@@ -38,7 +40,7 @@ namespace AirHockeyServer.Services
         ////////////////////////////////////////////////////////////////////////
         public async Task<GameEntity> CreateGame(GameEntity gameEntity)
         {
-            gameEntity.GameId = Guid.NewGuid();
+            gameEntity.GameId = new Random().Next();
             this.games.Add(gameEntity);
 
             return gameEntity;
@@ -54,7 +56,7 @@ namespace AirHockeyServer.Services
         ////////////////////////////////////////////////////////////////////////
         public void JoinGame(UserEntity userEntity)
         {
-            MatchMakerService.AddOpponent(userEntity);
+            GameMatchMakerService.Instance().AddOpponent(userEntity);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -72,9 +74,24 @@ namespace AirHockeyServer.Services
             return gameEntity;
         }
 
-        public GameEntity GetGameEntityById(Guid id)
+        public GameEntity GetGameEntityById(int id)
         {
             return this.games.First(a => a.GameId.Equals(id));
-        } 
+        }
+
+        public void LeaveGame(UserEntity user)
+        {
+            GameMatchMakerService.Instance().RemoveUser(user.Id);
+        }
+
+        public void GoalScored(int gameId, int playerId)
+        {
+            GameManager.Instance().GoalScored(gameId, playerId);
+        }
+
+        public void GameOver(int gameId)
+        {
+            GameManager.Instance().GameEnded(gameId);
+        }
     }
 }

@@ -5,7 +5,7 @@ using System.Text;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using InterfaceGraphique.CommunicationInterface;
+using InterfaceGraphique.CommunicationInterface.WaitingRooms;
 using InterfaceGraphique.Entities;
 using InterfaceGraphique.CommunicationInterface.RestInterface;
 using System.Collections.ObjectModel;
@@ -14,12 +14,12 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
 {
     public class MatchmakingViewModel : ViewModelBase
     {
-        private WaitingRoomHub waitingRoomHub;
+        private GameWaitingRoomHub waitingRoomHub;
         private bool isStarted;
 
         protected MapsRepository MapsRepository { get; set; }
 
-        public MatchmakingViewModel(WaitingRoomHub matchmakingHub)
+        public MatchmakingViewModel(GameWaitingRoomHub matchmakingHub)
         {
 
             this.waitingRoomHub = matchmakingHub;
@@ -30,7 +30,13 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
         {
             LoadData();
             InitializeEvents();
-            this.waitingRoomHub.JoinGame();
+            this.waitingRoomHub.Join();
+            SetDefaultValues();
+        }
+
+        private void SetDefaultValues()
+        {
+            RemainingTime = 30;
         }
 
 
@@ -46,7 +52,6 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
             };
 
             waitingRoomHub.MapUpdatedEvent += (sender, args) => { SelectedMap = args; };
-            //waitingRoomHub.MapUpdatedEvent += (sender, args) => { SelectedMap = args; };
 
         }
 
@@ -78,8 +83,7 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
             };
 
             SelectedMap = mapsAvailable[1];
-
-            RemainingTime = 30;
+            
         }
 
         private ICommand mainMenuCommand;
@@ -90,6 +94,22 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
                 return mainMenuCommand ??
                        (mainMenuCommand = new RelayCommandAsync(MainMenu, (o) => true));
             }
+        }
+
+        private ICommand cancel;
+        public ICommand Cancel
+        {
+            get
+            {
+                return cancel ?? (cancel = new RelayCommandAsync(LeaveGame, (o) => true));
+            }
+        }
+
+        private async Task LeaveGame()
+        {
+            await this.waitingRoomHub.LeaveGame();
+            SetDefaultValues();
+            Program.FormManager.CurrentForm = Program.MainMenu;
         }
 
         private async Task MainMenu()

@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using InterfaceGraphique.Controls;
 using InterfaceGraphique.Menus;
 using Microsoft.Practices.Unity;
+using InterfaceGraphique.CommunicationInterface;
 
 namespace InterfaceGraphique {
 
@@ -50,7 +51,10 @@ namespace InterfaceGraphique {
             this.buttonEditeur.Click += (sender, e) => Program.FormManager.CurrentForm = Program.Editeur;
             this.Button_Credits.Click += (sender, e) => Program.FormManager.CurrentForm = Program.CreditsMenu;
             this.buttonQuitter.Click += (sender, e) => System.Windows.Forms.Application.Exit();
-            this.buttonLogout.Click += (sender, e) => Program.Login.Logout();
+            if (User.Instance.IsConnected)
+            {
+                this.buttonLogout.Click += (sender, e) => Program.HomeMenu.Logout();
+            }
         }
 
 

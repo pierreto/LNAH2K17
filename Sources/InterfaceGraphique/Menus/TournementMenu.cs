@@ -9,8 +9,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Practices.Unity;
 
-namespace InterfaceGraphique {
+namespace InterfaceGraphique
+{
 
     ///////////////////////////////////////////////////////////////////////////
     /// @class TournementMenu
@@ -18,20 +20,24 @@ namespace InterfaceGraphique {
     /// @author Julien Charbonneau
     /// @date 2016-09-13
     ///////////////////////////////////////////////////////////////////////////
-    public partial class TournementMenu : Form {
+    public partial class TournementMenu : Form
+    {
 
         ////////////////////////////////////////////////////////////////////////
         ///
         /// Constructeur de la classe TournementMenu
         ///
         ////////////////////////////////////////////////////////////////////////
-        public TournementMenu() {
+        public TournementMenu()
+        {
             InitializeComponent();
             InitializeEvents();
             InitializeBaseSettings();
             LoadFromJson();
             InitializeAvailableColors();
         }
+
+        bool isOnline { get; set; }
 
 
         ////////////////////////////////////////////////////////////////////////
@@ -41,14 +47,16 @@ namespace InterfaceGraphique {
         /// @return Void
         ///
         ////////////////////////////////////////////////////////////////////////
-        private void InitializeEvents() {
+        private void InitializeEvents()
+        {
             // Button events
+            this.OnlineTournamentButton.Click += (sender, e) => { SwitchButtonsState(this.OnlineTournamentButton, this.OnlineTournamentButton); };
             this.Button_Play.Click += new EventHandler(ValidateSettings);
             this.Button_MainMenu.Click += (sender, e) => Program.FormManager.CurrentForm = Program.MainMenu;
             this.Button_OpenMap.Click += (sender, e) => fileDialog.ShowDialog();
             this.Button_DefaultMap.Click += (sender, e) => { this.Button_DefaultMap.Enabled = false; this.Label_MapName.Text = DefaultValues.mapName; fileDialog.FileName = null; };
             this.Button_DefaultMap.Paint += new PaintEventHandler(StatePaintButton);
-            this.Button_Player1Human.Click += (sender, e) => { SwitchButtonsState( this.Button_Player1Human, this.Button_Player1Virtual); this.List_VirtualProfile1.Enabled = false; };
+            this.Button_Player1Human.Click += (sender, e) => { SwitchButtonsState(this.Button_Player1Human, this.Button_Player1Virtual); this.List_VirtualProfile1.Enabled = false; };
             this.Button_Player1Virtual.Click += (sender, e) => { SwitchButtonsState(this.Button_Player1Virtual, this.Button_Player1Human); this.List_VirtualProfile1.Enabled = true; };
             this.Button_Player2Human.Click += (sender, e) => { SwitchButtonsState(this.Button_Player2Human, this.Button_Player2Virtual); this.List_VirtualProfile2.Enabled = false; };
             this.Button_Player2Virtual.Click += (sender, e) => { SwitchButtonsState(this.Button_Player2Virtual, this.Button_Player2Human); this.List_VirtualProfile2.Enabled = true; };
@@ -79,7 +87,8 @@ namespace InterfaceGraphique {
         /// @return Void
         ///
         ////////////////////////////////////////////////////////////////////////
-        private void InitializeBaseSettings() {
+        private void InitializeBaseSettings()
+        {
             this.fileDialog.Filter = "JSON Files (JSON)|*.json";
             this.fileDialog.InitialDirectory = Directory.GetCurrentDirectory() + "\\zones";
         }
@@ -92,9 +101,11 @@ namespace InterfaceGraphique {
         /// @return Void
         ///
         ////////////////////////////////////////////////////////////////////////
-        private void InitializeAvailableColors() {
-            foreach (Color color in DefaultValues.availableColors) {
-                if(color != player1Color && color != player2Color && color != player3Color && color != player4Color)
+        private void InitializeAvailableColors()
+        {
+            foreach (Color color in DefaultValues.availableColors)
+            {
+                if (color != player1Color && color != player2Color && color != player3Color && color != player4Color)
                     availableColors.Enqueue(color);
             }
         }
@@ -107,7 +118,8 @@ namespace InterfaceGraphique {
         /// @return Void
         ///
         ////////////////////////////////////////////////////////////////////////
-        private void ResetProfileLists() {
+        private void ResetProfileLists()
+        {
             this.List_VirtualProfile1.Items.Clear();
             this.List_VirtualProfile2.Items.Clear();
             this.List_VirtualProfile3.Items.Clear();
@@ -116,7 +128,8 @@ namespace InterfaceGraphique {
             this.List_VirtualProfile2.Items.Add(DefaultValues.profileName);
             this.List_VirtualProfile3.Items.Add(DefaultValues.profileName);
             this.List_VirtualProfile4.Items.Add(DefaultValues.profileName);
-            foreach (string profile in Program.ConfigurationMenu.GetProfileList()) {
+            foreach (string profile in Program.ConfigurationMenu.GetProfileList())
+            {
                 this.List_VirtualProfile1.Items.Add(profile);
                 this.List_VirtualProfile2.Items.Add(profile);
                 this.List_VirtualProfile3.Items.Add(profile);
@@ -138,7 +151,8 @@ namespace InterfaceGraphique {
         /// @return     Void
         ///
         ////////////////////////////////////////////////////////////////////////
-        public void MettreAJour(double tempsInterAffichage) {
+        public void MettreAJour(double tempsInterAffichage)
+        {
 
         }
 
@@ -152,7 +166,8 @@ namespace InterfaceGraphique {
         /// @return     Void
         ///
         ////////////////////////////////////////////////////////////////////////
-        private void WindowSizeChanged(object sender, EventArgs e) {
+        private void WindowSizeChanged(object sender, EventArgs e)
+        {
             this.Size = new Size(Program.FormManager.ClientSize.Width, Program.FormManager.ClientSize.Height);
         }
 
@@ -167,29 +182,34 @@ namespace InterfaceGraphique {
         /// @return     Void
         ///
         ////////////////////////////////////////////////////////////////////////
-        private void CycleAvailableColors(object sender, EventArgs e) {
+        private void CycleAvailableColors(object sender, EventArgs e)
+        {
             availableColors.Enqueue(((Label)sender).ForeColor);
             Color newColor = availableColors.Dequeue();
 
-            if ((Label)sender == this.Label_Player1) {
+            if ((Label)sender == this.Label_Player1)
+            {
                 this.Label_Player1.ForeColor = newColor;
                 this.Panel_Player1BorderColor.BackColor = newColor;
                 this.Button_Player1Human.ForeColor = (this.Button_Player1Human.ForeColor != Color.White) ? newColor : Color.White;
                 this.Button_Player1Virtual.ForeColor = (this.Button_Player1Virtual.ForeColor != Color.White) ? newColor : Color.White;
             }
-            else if ((Label)sender == this.Label_Player2) {
+            else if ((Label)sender == this.Label_Player2)
+            {
                 this.Label_Player2.ForeColor = newColor;
                 this.Panel_Player2BorderColor.BackColor = newColor;
                 this.Button_Player2Human.ForeColor = (this.Button_Player2Human.ForeColor != Color.White) ? newColor : Color.White;
                 this.Button_Player2Virtual.ForeColor = (this.Button_Player2Virtual.ForeColor != Color.White) ? newColor : Color.White;
             }
-            else if ((Label)sender == this.Label_Player3) {
+            else if ((Label)sender == this.Label_Player3)
+            {
                 this.Label_Player3.ForeColor = newColor;
                 this.Panel_Player3BorderColor.BackColor = newColor;
                 this.Button_Player3Human.ForeColor = (this.Button_Player3Human.ForeColor != Color.White) ? newColor : Color.White;
                 this.Button_Player3Virtual.ForeColor = (this.Button_Player3Virtual.ForeColor != Color.White) ? newColor : Color.White;
             }
-            else if ((Label)sender == this.Label_Player4) {
+            else if ((Label)sender == this.Label_Player4)
+            {
                 this.Label_Player4.ForeColor = newColor;
                 this.Panel_Player4BorderColor.BackColor = newColor;
                 this.Button_Player4Human.ForeColor = (this.Button_Player4Human.ForeColor != Color.White) ? newColor : Color.White;
@@ -208,7 +228,8 @@ namespace InterfaceGraphique {
         /// @return     Void
         ///
         ////////////////////////////////////////////////////////////////////////
-        private void StatePaintButton(object sender, PaintEventArgs e) {
+        private void StatePaintButton(object sender, PaintEventArgs e)
+        {
             if (((Button)sender).Enabled)
                 ((Button)sender).ForeColor = Color.White;
             else
@@ -226,8 +247,14 @@ namespace InterfaceGraphique {
         /// @return     Void
         ///
         ////////////////////////////////////////////////////////////////////////
-        private void SwitchButtonsState(Button select, Button deselect) {
-            if (select.ForeColor == Color.White) {
+        private void SwitchButtonsState(Button select, Button deselect)
+        {
+            if (select == OnlineTournamentButton)
+            {
+                isOnline = true;
+            }
+            if (select.ForeColor == Color.White)
+            {
                 select.ForeColor = deselect.ForeColor;
                 deselect.ForeColor = Color.White;
                 deselect.FlatAppearance.MouseDownBackColor = Color.Empty;
@@ -248,7 +275,8 @@ namespace InterfaceGraphique {
         /// @return Void
         ///
         ////////////////////////////////////////////////////////////////////////
-        private void LoadGame() {
+        private void LoadGame()
+        {
             string mapFilePath = null;
 
             if (this.Button_DefaultMap.Enabled)
@@ -257,8 +285,20 @@ namespace InterfaceGraphique {
             SaveGameSettings();
             Program.QuickPlay.CurrentGameState.IsTournementMode = true;
             Program.QuickPlay.CurrentGameState.MapFilePath = mapFilePath;
-            Program.TournementTree.CurrentRound = 0;
-            Program.FormManager.CurrentForm = Program.TournementTree;
+            if (!isOnline)
+            {
+                Program.TournementTree.CurrentRound = 0;
+                Program.FormManager.CurrentForm = Program.TournementTree;
+            }
+            else
+            {
+                Program.FormManager.CurrentForm = Program.OnlineTournament;
+                var vm = Program.unityContainer.Resolve<Controls.WPF.Tournament.TournamentViewModel>();
+                vm.Initialize();
+
+                // fonctionne ici
+                //Program.FormManager.CurrentForm = Program.QuickPlay;
+            }
         }
 
 
@@ -270,7 +310,8 @@ namespace InterfaceGraphique {
         /// @return Void
         ///
         ////////////////////////////////////////////////////////////////////////
-        private void SaveGameSettings() {
+        private void SaveGameSettings()
+        {
             player1Profile = this.List_VirtualProfile1.SelectedItem.ToString();
             player2Profile = this.List_VirtualProfile2.SelectedItem.ToString();
             player3Profile = this.List_VirtualProfile3.SelectedItem.ToString();
@@ -307,7 +348,8 @@ namespace InterfaceGraphique {
         /// @return Void
         ///
         ////////////////////////////////////////////////////////////////////////
-        private void LoadSavedSettings() {
+        private void LoadSavedSettings()
+        {
 
             if (this.List_VirtualProfile1.Items.Contains(player1Profile)) this.List_VirtualProfile1.SelectedItem = player1Profile; else this.List_VirtualProfile1.SelectedIndex = 0;
             if (this.List_VirtualProfile2.Items.Contains(player2Profile)) this.List_VirtualProfile2.SelectedItem = player2Profile; else this.List_VirtualProfile2.SelectedIndex = 0;
@@ -358,8 +400,10 @@ namespace InterfaceGraphique {
         /// @return Void
         ///
         ////////////////////////////////////////////////////////////////////////
-        private void LoadFromJson() {
-            if (File.Exists(DefaultValues.saveFilePath)) {
+        private void LoadFromJson()
+        {
+            if (File.Exists(DefaultValues.saveFilePath))
+            {
                 string fileData = File.ReadAllText(DefaultValues.saveFilePath);
                 ConfigData data = JsonConvert.DeserializeObject<ConfigData>(fileData);
 
@@ -400,24 +444,37 @@ namespace InterfaceGraphique {
         /// @return     Void
         ///
         ////////////////////////////////////////////////////////////////////////
-        private void ValidateSettings(object sender, EventArgs e) {
-            if (this.Button_Player1Human.ForeColor == Color.White && this.Button_Player2Human.ForeColor == Color.White && this.Button_Player3Human.ForeColor == Color.White && this.Button_Player4Human.ForeColor == Color.White) {
-                string warning = "La partie ne peut être lancée sans qu'il y ait au moins un joueur humain.";
-                ErrorMessageDialog dialog = new ErrorMessageDialog(warning);
-                dialog.ShowDialog();
-            }
-            else if (this.Input_Player1Name.Text == "" || this.Input_Player2Name.Text == "" || this.Input_Player3Name.Text == "" || this.Input_Player4Name.Text == "") {
-                string warning = "La partie ne peut être lancée sans que tous les joueurs aient un nom.";
-                ErrorMessageDialog dialog = new ErrorMessageDialog(warning);
-                dialog.ShowDialog();
-            }
-            else if (PlayerNameTheSame()) {
-                string warning = "La partie ne peut être lancée sans que tous les joueurs aient des noms différents.";
-                ErrorMessageDialog dialog = new ErrorMessageDialog(warning);
-                dialog.ShowDialog();
-            }
-            else {
+        private void ValidateSettings(object sender, EventArgs e)
+        {
+            if (isOnline)
+            {
                 LoadGame();
+            }
+            else
+            {
+
+                if (this.Button_Player1Human.ForeColor == Color.White && this.Button_Player2Human.ForeColor == Color.White && this.Button_Player3Human.ForeColor == Color.White && this.Button_Player4Human.ForeColor == Color.White)
+                {
+                    string warning = "La partie ne peut être lancée sans qu'il y ait au moins un joueur humain.";
+                    ErrorMessageDialog dialog = new ErrorMessageDialog(warning);
+                    dialog.ShowDialog();
+                }
+                else if (this.Input_Player1Name.Text == "" || this.Input_Player2Name.Text == "" || this.Input_Player3Name.Text == "" || this.Input_Player4Name.Text == "")
+                {
+                    string warning = "La partie ne peut être lancée sans que tous les joueurs aient un nom.";
+                    ErrorMessageDialog dialog = new ErrorMessageDialog(warning);
+                    dialog.ShowDialog();
+                }
+                else if (PlayerNameTheSame())
+                {
+                    string warning = "La partie ne peut être lancée sans que tous les joueurs aient des noms différents.";
+                    ErrorMessageDialog dialog = new ErrorMessageDialog(warning);
+                    dialog.ShowDialog();
+                }
+                else
+                {
+                    LoadGame();
+                }
             }
         }
 
@@ -431,7 +488,8 @@ namespace InterfaceGraphique {
         /// @return     Void
         ///
         ////////////////////////////////////////////////////////////////////////
-        private void MapFileOpened(object sender, CancelEventArgs e) {
+        private void MapFileOpened(object sender, CancelEventArgs e)
+        {
             this.Button_DefaultMap.Enabled = true;
             string currentDirectory = Path.GetDirectoryName(fileDialog.FileName) + "\\";
             string fileType = ".json";
@@ -450,7 +508,8 @@ namespace InterfaceGraphique {
         /// @return Void
         ///
         ////////////////////////////////////////////////////////////////////////
-        public void InitializeOpenGlPanel() {
+        public void InitializeOpenGlPanel()
+        {
             Program.FormManager.SizeChanged += new EventHandler(WindowSizeChanged);
             ResetProfileLists();
             LoadSavedSettings();
@@ -465,7 +524,8 @@ namespace InterfaceGraphique {
         /// @return Void
         ///
         ////////////////////////////////////////////////////////////////////////
-        public void UnsuscribeEventHandlers() {
+        public void UnsuscribeEventHandlers()
+        {
             Program.FormManager.SizeChanged -= new EventHandler(WindowSizeChanged);
         }
 
@@ -477,7 +537,8 @@ namespace InterfaceGraphique {
         /// @return Vrai si deux joeurs ont le même nom 
         ///
         ////////////////////////////////////////////////////////////////////////
-        public bool PlayerNameTheSame() {
+        public bool PlayerNameTheSame()
+        {
             if (this.Input_Player1Name.Text == this.Input_Player2Name.Text || this.Input_Player1Name.Text == this.Input_Player3Name.Text || this.Input_Player1Name.Text == this.Input_Player4Name.Text)
                 return true;
             if (this.Input_Player2Name.Text == this.Input_Player3Name.Text || this.Input_Player2Name.Text == this.Input_Player4Name.Text)
@@ -496,7 +557,8 @@ namespace InterfaceGraphique {
         /// @return La struture de sauvegarde remplie
         ///
         ////////////////////////////////////////////////////////////////////////
-        ConfigData FillJSONStructure() {
+        ConfigData FillJSONStructure()
+        {
             ConfigData data;
 
             data.player1Profile = player1Profile;
@@ -577,7 +639,8 @@ namespace InterfaceGraphique {
         /// TournementMenu
         ///
         ////////////////////////////////////////////////////////////////////////
-        private class DefaultValues {
+        private class DefaultValues
+        {
             public static string mapName = "Défaut";
             public static string profileName = "Défaut";
             public static string player1Name = "Joueur 1";
@@ -600,7 +663,8 @@ namespace InterfaceGraphique {
         /// Struct contenant les valeurs à sauvegarder en externe en JSON
         ///
         ////////////////////////////////////////////////////////////////////////
-        private struct ConfigData {
+        private struct ConfigData
+        {
             public string player1Profile;
             public string player2Profile;
             public string player3Profile;
@@ -615,7 +679,7 @@ namespace InterfaceGraphique {
             public Color player2Color;
             public Color player3Color;
             public Color player4Color;
-                                                  
+
             public bool isPlayer1Virtual;
             public bool isPlayer2Virtual;
             public bool isPlayer3Virtual;

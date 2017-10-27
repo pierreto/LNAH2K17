@@ -11,7 +11,7 @@ namespace AirHockeyServer.Services
         private UserService UserService = new UserService();
         private PasswordService PasswordService = new PasswordService();
 
-        public async Task Signup(SignupEntity signupEntity)
+        public async Task<int> Signup(SignupEntity signupEntity)
         {
             try
             {
@@ -25,6 +25,7 @@ namespace AirHockeyServer.Services
                     UserEntity uE2 = await UserService.GetUserByUsername(uE.Username);
                     PasswordEntity pE = new PasswordEntity { UserId = uE2.Id, Password = signupEntity.Password };
                     PasswordService.PostPassword(pE);
+                    return uE2.Id;
                 }
                 else
                 {

@@ -5,13 +5,32 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace InterfaceGraphique.Controls.WPF
 {
     public abstract class ViewModelBase : INotifyPropertyChanged
     {
+        public string Title { get; set; }
+        public string Hidden { get; set; }
 
-        public abstract  void InitializeViewModel();
+        private ICommand backCommand;
+        public ICommand BackCommand
+        {
+            get
+            {
+                if (backCommand == null)
+                {
+                    backCommand = new RelayCommandAsync(GoBack);
+                }
+                return backCommand;
+            }
+        }
+
+        protected virtual async Task GoBack() { }
+
+        public abstract void InitializeViewModel();
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void OnPropertyChanged([CallerMemberName()] string name = null)

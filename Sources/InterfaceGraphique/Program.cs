@@ -26,6 +26,11 @@ using Microsoft.Practices.Unity;
 using Application = System.Windows.Forms.Application;
 using InterfaceGraphique.Controls.WPF.Matchmaking;
 using InterfaceGraphique.Controls.WPF.Tournament;
+using InterfaceGraphique.CommunicationInterface.WaitingRooms;
+using InterfaceGraphique.Controls.WPF.Authenticate;
+using InterfaceGraphique.Controls.WPF.Home;
+using InterfaceGraphique.Controls.WPF.ConnectServer;
+using InterfaceGraphique.Controls.WPF.Signup;
 using InterfaceGraphique.Services;
 
 namespace InterfaceGraphique
@@ -38,7 +43,8 @@ namespace InterfaceGraphique
 
         public static FormManager FormManager { get { return formManager; } }
         public static MainMenu MainMenu { get { return mainMenu; } }
-        public static Login Login {  get { return login; } }
+        public static HomeMenu HomeMenu { get { return homeMenu; } }
+        //public static Login Login {  get { return login; } }
         public static Editeur Editeur { get { return editeur; } }
         public static ConfigurationMenu ConfigurationMenu { get { return configurationMenu; } }
         public static QuickPlay QuickPlay { get { return quickPlay; } }
@@ -51,11 +57,13 @@ namespace InterfaceGraphique
         public static Panel OpenGLPanel { get { return openGLPanel; } set { openGLPanel = value; } }
         public static UserEntity user;
         public static LobbyHost LobbyHost { get { return lobbyHost; } set { lobbyHost = value; } }
+        public static OnlineTournament OnlineTournament { get { return onlineTournament;  } set { onlineTournament = value; } }
         public static EditorHost EditorHost { get { return editorHost; } set { editorHost = value; } }
 
 
         private static FormManager formManager;
         private static MainMenu mainMenu;
+        private static HomeMenu homeMenu;
         private static Editeur editeur;
         private static ConfigurationMenu configurationMenu;
         private static QuickPlay quickPlay;
@@ -67,9 +75,10 @@ namespace InterfaceGraphique
         private static CreditsMenu creditsMenu;
         private static LobbyHost lobbyHost;
         private static EditorHost editorHost;
+        private static OnlineTournament onlineTournament;
 
         private static Panel openGLPanel;
-        private static Login login;
+        //private static Login login;
         private static TimeSpan dernierTemps;
         private static TimeSpan tempsAccumule;
         private static Stopwatch chrono = Stopwatch.StartNew();
@@ -103,32 +112,38 @@ namespace InterfaceGraphique
 
             InitializeUnityDependencyInjection();
 
-            login = unityContainer.Resolve<Login>();
+            //login = unityContainer.Resolve<Login>(); ;
             openGLPanel = new Panel();
             formManager = new FormManager();
-            mainMenu = new MainMenu();
-            editeur = unityContainer.Resolve<Editeur>();
+            homeMenu = new HomeMenu();
+            //mainMenu = new MainMenu();
+            editeur = new Editeur();
             configurationMenu = new ConfigurationMenu();
             quickPlay = new QuickPlay();
             testMode = new TestMode();
             generalProperties = new GeneralProperties();
-            quickPlayMenu = new QuickPlayMenu();
+            //quickPlayMenu = new QuickPlayMenu();
             tournementMenu = new TournementMenu();
             tournementTree = new TournementTree();
             creditsMenu = new CreditsMenu();
             lobbyHost = new LobbyHost();
+            onlineTournament = new OnlineTournament();
             editorHost = new EditorHost();
 
             FonctionsNatives.loadSounds();
 
-
-
-           
-            formManager.CurrentForm = login;
+            formManager.CurrentForm = homeMenu;
+            // formManager.CurrentForm = login;
             Application.Run(formManager);
 
         }
         
+
+        public static void InitAfterConnection()
+        {
+            mainMenu = new MainMenu();
+            quickPlayMenu = new QuickPlayMenu();
+        }
 
         private static void InitializeUnityDependencyInjection()
         {
@@ -136,7 +151,8 @@ namespace InterfaceGraphique
 
             //Hub instantiations
             unityContainer.RegisterType<IBaseHub, ChatHub>(new ContainerControlledLifetimeManager());
-            unityContainer.RegisterType<IBaseHub,WaitingRoomHub>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<IBaseHub,GameWaitingRoomHub>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<IBaseHub, TournamentWaitingRoomHub>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<IBaseHub,GameHub>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<IBaseHub, EditionHub>(new ContainerControlledLifetimeManager());
 
@@ -145,6 +161,10 @@ namespace InterfaceGraphique
             unityContainer.RegisterType<MatchmakingViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<ChatViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<TournamentViewModel>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<AuthenticateViewModel>();
+            unityContainer.RegisterType<SignupViewModel>();
+            unityContainer.RegisterType<HomeViewModel>();
+            unityContainer.RegisterType<ConnectServerViewModel>(); 
             unityContainer.RegisterType<EditorViewModel>(new ContainerControlledLifetimeManager());
 
 

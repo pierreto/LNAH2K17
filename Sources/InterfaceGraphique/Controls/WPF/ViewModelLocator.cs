@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using InterfaceGraphique.CommunicationInterface;
-using InterfaceGraphique.Controls.WPF.Chat;
+﻿using InterfaceGraphique.Controls.WPF.Chat;
 using InterfaceGraphique.Controls.WPF.Editor;
 using InterfaceGraphique.Controls.WPF.Matchmaking;
+using InterfaceGraphique.Controls.WPF.ConnectServer;
 using Microsoft.Practices.Unity;
 using InterfaceGraphique.Controls.WPF.Tournament;
+using InterfaceGraphique.Controls.WPF.Home;
+using InterfaceGraphique.Controls.WPF.Authenticate;
+using InterfaceGraphique.Controls.WPF.Signup;
 
 namespace InterfaceGraphique.Controls.WPF
 {
@@ -23,10 +21,40 @@ namespace InterfaceGraphique.Controls.WPF
             container = Program.unityContainer;
         }
 
-        public ChatViewModel ChatViewModel => container.Resolve<ChatViewModel>();
-        public MatchmakingViewModel MatchmakingViewModel => container.Resolve<MatchmakingViewModel>();
-        public TournamentViewModel TournamentViewModel => container.Resolve<TournamentViewModel>();
+        public HomeViewModel HomeViewModel
+        {
+            get { return container.Resolve<HomeViewModel>(); }
+        }
+
+        public ConnectServerViewModel ConnectServerViewModel
+        {
+            get { return container.Resolve<ConnectServerViewModel>(); }
+        }
+
+        public AuthenticateViewModel AuthenticateViewModel
+        {
+            get { return container.Resolve<AuthenticateViewModel>(); }
+        }
+
+        public SignupViewModel SignupViewModel
+        {
+            get { return container.Resolve<SignupViewModel>(); }
+        }
+
+        public ChatViewModel ChatViewModel
+        {
+            get { return container.Resolve<ChatViewModel>(); }
+        }
+        public MatchmakingViewModel MatchmakingViewModel
+        {
+            get { return container.Resolve<MatchmakingViewModel>(); }
+        }
+        public TournamentViewModel TournamentViewModel
+        {
+            get { return container.Resolve<TournamentViewModel>(); }
+        }
+
         public EditorViewModel EditorViewModel => container.Resolve<EditorViewModel>();
-        
+
     }
 }

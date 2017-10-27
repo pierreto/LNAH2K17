@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AirHockeyServer.Pocos;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,9 @@ namespace AirHockeyServer.DatabaseCore
     {
         Task<IEnumerable<T>> GetAll<T>(string table);
 
-        Task<IEnumerable<T>> GetById<T>(string table, int id);
-        
+        Task<IEnumerable<T>> GetBy<T, K>(string table, string field, K value);
+
+        void Post<T>(T poco) where T : Poco;
+
     }
 }

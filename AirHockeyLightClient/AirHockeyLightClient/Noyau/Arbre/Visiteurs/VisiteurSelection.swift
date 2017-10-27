@@ -37,7 +37,8 @@ class VisiteurSelection: VisiteurAbstrait {
     }
     
     /// Visiter un accélérateur pour la sélection
-    //virtual void visiterAccelerateur(NoeudAccelerateur* noeud);
+    func visiterAccelerateur(noeud: NoeudAccelerateur) {
+    }
     
     /// Visiter un maillet pour la sélection
     //virtual void visiterMaillet(NoeudMaillet* noeud);
@@ -55,9 +56,17 @@ class VisiteurSelection: VisiteurAbstrait {
                 if  result is SCNHitTestResult {
                     let hitResult = result as! SCNHitTestResult
                     
-                    if noeud is NoeudCommun {
+                    if hitResult.node is NoeudCommun {
                         let noeud = hitResult.node as! NoeudCommun
-                        noeud.assignerSelection(selectionne: true)
+                        
+                        // Selectioner le noeud
+                        if !noeud.estSelectionne() {
+                            noeud.assignerSelection(selectionne: true)
+                        }
+                        // Déselectionner le noeud sauf pour le point de contrôle
+                        else if (noeud.obtenirType() != FacadeModele.instance.obtenirArbreRendu().NOM_POINT_CONTROL) {
+                            noeud.assignerSelection(selectionne: false)
+                        }
                     }
                 }
             }
@@ -69,10 +78,12 @@ class VisiteurSelection: VisiteurAbstrait {
     }
     
     /// Visiter un mur pour la sélection
-    //virtual void visiterMur(NoeudMur* noeud);
+    func visiterMur(noeud: NoeudMur) {
+    }
     
     /// Visiter un portail pour la sélection
-    //virtual void visiterPortail(NoeudPortail* noeud);
+    func visiterPortail(noeud: NoeudPortail) {
+    }
     
     //virtual void visiterRondelle(NoeudRondelle* noeud);
 }

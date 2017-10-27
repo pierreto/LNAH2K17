@@ -11,6 +11,7 @@ using InterfaceGraphique.Controls.WPF.Matchmaking;
 using InterfaceGraphique.Editor.EditorState;
 using InterfaceGraphique.Game.GameState;
 using Microsoft.Practices.Unity;
+using InterfaceGraphique.Controls.WPF.Tournament;
 
 namespace InterfaceGraphique {
 

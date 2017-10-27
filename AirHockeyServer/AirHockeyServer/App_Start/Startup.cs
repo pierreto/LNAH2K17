@@ -26,24 +26,11 @@ namespace AirHockeyServer.App_Start
                 typeof(GameWaitingRoomHub),
                 () => new GameWaitingRoomHub(new GameService()));
 
+            GlobalHost.DependencyResolver.Register(
+                typeof(TournamentWaitingRoomHub),
+                () => new TournamentWaitingRoomHub(new TournamentService()));
+
             app.MapSignalR("/signalr", new HubConfiguration());
-        }
-
-        public static void Register(HttpConfiguration config)
-        {
-            var container = new UnityContainer();
-            // Repositories
-            container.RegisterType<IChannelRepository, ChannelRepository>(new HierarchicalLifetimeManager());
-
-            // Services
-            container.RegisterType<IChatService, ChatService>(new HierarchicalLifetimeManager());
-            container.RegisterType<IChannelService, ChannelService>(new HierarchicalLifetimeManager());
-
-            //Core
-            container.RegisterType<IConnector, Connector>(new HierarchicalLifetimeManager());
-            container.RegisterType<IRequestsManager, RequestsManager>(new HierarchicalLifetimeManager());
-
-            config.DependencyResolver = new UnityResolver(container);
         }
     }
 }

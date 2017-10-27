@@ -43,6 +43,9 @@ class ModeleEtatPointControl : ModeleEtat {
                 pointControl.useOtherColor(activer: true, color: color)
             }
         }
+        
+        // Le déplacement des points de contrôle s'effectue par un gesture pan
+        FacadeModele.instance.obtenirVue().editorView.addGestureRecognizer(FacadeModele.instance.panGestureRecognizer!)
     }
 
     /// Cette fonction nettoie l'état des changements apportes
@@ -62,6 +65,8 @@ class ModeleEtatPointControl : ModeleEtat {
                 pointControl.useOtherColor(activer: false)
             }
         }
+        
+        FacadeModele.instance.obtenirVue().editorView.removeGestureRecognizer(FacadeModele.instance.panGestureRecognizer!)
     }
     
     // Fonctions gérant les entrées de l'utilisateur
@@ -78,11 +83,16 @@ class ModeleEtatPointControl : ModeleEtat {
         
         // Sélectionner le point de contrôle
         if sender.state == UIGestureRecognizerState.began {
+            print("début déplacement point contrôle")
             let visiteurSelection = VisiteurSelection(point: self.position)
             FacadeModele.instance.obtenirArbreRendu().accepterVisiteur(visiteur: visiteurSelection)
         }
         // Déselectionner le point de contrôle
         else if sender.state == UIGestureRecognizerState.ended {
+            print("fin déplacement point contrôle")
+            let visiteur = VisiteurDeplacement(lastPosition: self.lastPosition, position: self.position)
+            FacadeModele.instance.obtenirArbreRendu().accepterVisiteur(visiteur: visiteur)
+            
             let arbre = FacadeModele.instance.obtenirArbreRendu()
             let table = arbre.childNode(withName: arbre.NOM_TABLE, recursively: true) as! NoeudCommun
             table.deselectionnerTout()

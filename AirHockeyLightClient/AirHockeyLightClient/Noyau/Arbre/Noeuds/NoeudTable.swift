@@ -29,6 +29,9 @@ class NoeudTable : NoeudCommun {
     /// Les buts associés à la table
     private var buts = [NoeudBut]()
     
+    /// Ligne du centre
+    private var ligneCentreNoeud: NoeudCommun?
+    
     /// La table n'a pas un modèle obj
     required init(type: String, geometry: SCNGeometry) {
         fatalError("init(type:geometry:) has not been implemented")
@@ -40,7 +43,7 @@ class NoeudTable : NoeudCommun {
         
         self.initialiserTable()
         self.creerPointsDeControle()
-        self.updateLigneCentre(sommetA: self.sommets[31], sommetB: self.sommets[11])
+        self.creerLigneCentre()
         
         // Mettre à jour la géométrie de la table
         self.updateGeometry()
@@ -107,7 +110,7 @@ class NoeudTable : NoeudCommun {
         self.geometry = SCNGeometry(sources: sources, elements: initElements())
         self.initialiserMateriau()
         
-        self.updateLigneCentre(sommetA: self.sommets[31], sommetB: self.sommets[11])
+        self.updateLigneCentre()
     }
     
     /// Initialiser le matériau de la table sur la géométrie
@@ -206,8 +209,6 @@ class NoeudTable : NoeudCommun {
         // Creation des buts
         creerButs(pointGauche: noeuds[4], pointDroite: noeuds[0]);
         
-        // noeuds[7].assignerPositionRelative(positionRelative: noeuds[6].obtenirPositionRelative())
-        
         // Ajuster les sommets de la table
         for noeud in noeuds {
             noeud.ajusterPoints()
@@ -216,7 +217,7 @@ class NoeudTable : NoeudCommun {
     
     /// Cette fonction permet de créer des buts
     func creerButs(pointGauche: NoeudPointControl, pointDroite: NoeudPointControl) {
-        // obtention de l'arbre
+        // Obtention de l'arbre
         let arbre = ArbreRendu.instance
         let butGauche = arbre.creerNoeud(typeNouveauNoeud: arbre.NOM_BUT) as! NoeudBut
         let butDroite = arbre.creerNoeud(typeNouveauNoeud: arbre.NOM_BUT) as! NoeudBut
@@ -241,25 +242,64 @@ class NoeudTable : NoeudCommun {
         buts.append(butDroite)
     }
     
-    /// Cette fonction crée la ligne du cente
-    func updateLigneCentre(sommetA: SCNVector3, sommetB: SCNVector3) {
-        let vecteurRectangle = GLKVector3Make(sommetA.x - sommetB.x, sommetA.y - sommetB.y, sommetA.z - sommetB.z)
-        let rectangle = SCNPlane(width: 2.5, height: CGFloat(GLKVector3Length(vecteurRectangle)))
+    /// Cette fonction crée la ligne du centre
+    func creerLigneCentre() {
+        // Sommets de la ligne
+        let sommetA = self.sommets[31]
+        let sommetB = self.sommets[11]
+        let vecteurSommets = GLKVector3Make(sommetA.x - sommetB.x, sommetA.y - sommetB.y, sommetA.z - sommetB.z)
         
-        rectangle.firstMaterial?.diffuse.contents = UIColor(red: 1.0, green: 0, blue: 0, alpha: 1.0)
-        
-        let rectangleNode = SCNNode(geometry: rectangle)
+        // Géométrie de la ligne
+        let ligne = SCNPlane(width: 2.5, height: CGFloat(GLKVector3Length(vecteurSommets)) + 5.0)
+        self.ligneCentreNoeud = NoeudCommun(type: ArbreRendu.instance.NOM_LIGNE_CENTRE, geometry: ligne)
         
         let xAngle = SCNMatrix4MakeRotation(Float(Double.pi / 2.0), 0, 1, 0)
         let yAngle = SCNMatrix4MakeRotation(Float(Double.pi / 2.0), 0, 0, 1)
         let zAngle = SCNMatrix4MakeRotation(0, 1, 0, 0)
         let rotationMatrix = SCNMatrix4Mult(SCNMatrix4Mult(xAngle, yAngle), zAngle)
-        rectangleNode.transform = SCNMatrix4Mult(rotationMatrix, rectangleNode.transform)
-        rectangleNode.transform = SCNMatrix4Translate(rectangleNode.transform, 0, 0.1, 0)
         
-        self.addChildNode(rectangleNode)
+        // Effectuer la rotation de la ligne du centre
+        self.ligneCentreNoeud?.transform = SCNMatrix4Mult(rotationMatrix, (self.ligneCentreNoeud?.transform)!)
+        
+        // Effectuer la translation de la ligne du centre
+        self.ligneCentreNoeud?.transform = SCNMatrix4Translate((self.ligneCentreNoeud?.transform)!, 0, 0.2, 0)
+        
+        // Matériel de la ligne
+        self.ligneCentreNoeud?.geometry?.firstMaterial?.diffuse.contents = UIColor(red: 1.0, green: 0, blue: 0, alpha: 1.0)
+        
+        self.addChildNode(self.ligneCentreNoeud!)
     }
-
+    
+    /// Cette fonction met à jour la géométrie de la ligne du centre
+    func updateLigneCentre() {
+        // Sommets de la ligne du centre
+        let sommetA = self.sommets[31]
+        let sommetB = self.sommets[11]
+        let vecteurSommets = GLKVector3Make(sommetA.x - sommetB.x, sommetA.y - sommetB.y, sommetA.z - sommetB.z)
+        
+        // Géométrie de la ligne
+        let ligne = SCNPlane(width: 2.5, height: CGFloat(GLKVector3Length(vecteurSommets)) + 5.0)
+        self.ligneCentreNoeud?.geometry = ligne
+        
+        // Matériel de la ligne
+        self.ligneCentreNoeud?.geometry?.firstMaterial?.diffuse.contents = UIColor(red: 1.0, green: 0, blue: 0, alpha: 1.0)
+    }
+    
+    /// Obtient les sommets composant la patinoire
+    func obtenirSommetsPatinoire() -> [SCNVector3] {
+        var patinoire = [SCNVector3]()
+        patinoire.append(self.sommets[0])
+        
+        var i = 1
+        let max = self.sommets.count - 1
+        
+        while (i < max) {
+            patinoire.append(sommets[i])
+            i += 5
+        }
+    
+        return patinoire
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////

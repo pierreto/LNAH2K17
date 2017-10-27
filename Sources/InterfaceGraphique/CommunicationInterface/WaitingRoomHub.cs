@@ -20,15 +20,16 @@ namespace InterfaceGraphique.CommunicationInterface
         private MasterGameState masterGameState;
 
         private string username;
-        private GameEntity CurrentGame;
 
         public event EventHandler<int> RemainingTimeEvent;
 
-        public event EventHandler<GameEntity> OpponentFoundEvent;
+        public event EventHandler<UserEntity> OpponentFoundEvent;
 
-        public event EventHandler<MapEntity> MapUpdatedEvent;
+        public event EventHandler<GameEntity> MapUpdatedEvent;
 
         public event EventHandler<GameEntity> ConfigurationUpdatedEvent;
+
+        public event EventHandler<GameEntity> GameStartingEvent;
 
         public WaitingRoomHub(SlaveGameState slaveGameState,MasterGameState masterGameState)
         {
@@ -36,10 +37,9 @@ namespace InterfaceGraphique.CommunicationInterface
             this.masterGameState = masterGameState;
         }
 
-        public void InitializeHub(HubConnection connection, string username)
+        public void InitializeHub(HubConnection connection)
         {
             this.connection = connection;
-            this.username = username;
             GameWaitingRoomProxy = this.connection.CreateHubProxy("GameWaitingRoomHub");
         }
 
@@ -53,35 +53,19 @@ namespace InterfaceGraphique.CommunicationInterface
             //TODO: IMPLEMENT THIS
         }
 
-        public void JoinGame()
+        public async void JoinGame()
         {
             InitializeEvents();
-            Random random= new Random();
-            UserEntity user = new UserEntity
-            {
-                Id = random.Next(),
-                Username = username
-            };
-            GameWaitingRoomProxy.Invoke("JoinGame", user);
-
-        }
-
-        public void LeaveGame()
-        {
-            GameWaitingRoomProxy.Invoke("LeaveGame", "");
+            await GameWaitingRoomProxy.Invoke("JoinGame", User.Instance.UserEntity);
         }
 
         private void InitializeEvents()
         {
             GameWaitingRoomProxy.On<GameEntity>("OpponentFoundEvent", newgame =>
             {
-                this.CurrentGame = newgame;
-                this.OpponentFoundEvent.Invoke(this, newgame);
-
                 GameWaitingRoomProxy.On<GameEntity>("GameStartingEvent", officialGame =>
                 {
                     Console.WriteLine("Game is starting!");
-
                     Program.LobbyHost.Invoke(new MethodInvoker(() =>
                     {
 
@@ -120,22 +104,18 @@ namespace InterfaceGraphique.CommunicationInterface
 
                 GameWaitingRoomProxy.On<GameEntity>("GameMapUpdatedEvent", mapUpdated =>
                 {
-                    this.CurrentGame = mapUpdated;
-                    this.MapUpdatedEvent.Invoke(this, mapUpdated.SelectedMap);
+                    Console.WriteLine("map updated");
                 });
           
    
 
             });
         }
-        
-        public async void UpdateSelectedMap(MapEntity map)
+
+        public async Task<GameEntity> UpdateSelectedMap(GameEntity game)
         {
-            if(CurrentGame != null)
-            {
-                CurrentGame.SelectedMap = map;
-                var t = await GameWaitingRoomProxy.Invoke<GameEntity>("UpdateMap", CurrentGame);
-            }
+            GameEntity gameUpdated = await GameWaitingRoomProxy.Invoke<GameEntity>("UpdateMap", game);
+            return gameUpdated;
         }
 
         public async Task<GameEntity> UpdateSelectedConfiguration(GameEntity game)

@@ -1,5 +1,7 @@
-﻿
+﻿using System;
+﻿using InterfaceGraphique.CommunicationInterface;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.IO;
@@ -44,9 +46,12 @@ namespace InterfaceGraphique
             this.Button_Cancel.Click += (sender, e) => this.Close();
             this.Button_OpenMap.Click += (sender, e) => fileDialog.ShowDialog();
             this.Button_DefaultMap.Click += (sender, e) => { this.Button_DefaultMap.Enabled = false; this.Text_MapName.Text = DefaultValues.mapName; };
-            this.Button_PlayerHuman.Click += (sender, e) => { SwitchButtonsState(this.Button_PlayerHuman); this.List_VirtualProfile.Enabled = false; };
             this.Button_PlayerVirtual.Click += (sender, e) => { SwitchButtonsState(this.Button_PlayerVirtual); this.List_VirtualProfile.Enabled = true; };
-            this.Button_Online_Game.Click += (sender, e) => { SwitchButtonsState(this.Button_Online_Game); this.List_VirtualProfile.Enabled = false; };
+            this.Button_PlayerHuman.Click += (sender, e) => { SwitchButtonsState(this.Button_PlayerHuman); this.List_VirtualProfile.Enabled = false; };
+            if (User.Instance.IsConnected)
+            {
+                this.Button_Online_Game.Click += (sender, e) => { SwitchButtonsState(this.Button_Online_Game); this.List_VirtualProfile.Enabled = false; };
+            }
 
             // Paint events
             this.Button_DefaultMap.Paint += new PaintEventHandler(StatePaintButton);

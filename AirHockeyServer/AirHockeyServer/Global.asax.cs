@@ -46,6 +46,7 @@ namespace AirHockeyServer
             container.RegisterType<IChatService, ChatService>(new HierarchicalLifetimeManager());
             container.RegisterType<IChannelService, ChannelService>(new HierarchicalLifetimeManager());
             container.RegisterType<IGameService, GameService>(new HierarchicalLifetimeManager());
+            container.RegisterType<ITournamentService, TournamentService>(new HierarchicalLifetimeManager());
             container.RegisterType<IMapService, MapService>(new HierarchicalLifetimeManager());
 
             //Core
@@ -55,6 +56,7 @@ namespace AirHockeyServer
             config.DependencyResolver = new UnityResolver(container);
             
             GameWaitingRoomEventManager gameWaitingRoomEventManager = container.Resolve<GameWaitingRoomEventManager>();
+            TournamentWaitingRoomEventManager tournamentWaitingRoomEventManager = container.Resolve<TournamentWaitingRoomEventManager>();
 
         }
 
