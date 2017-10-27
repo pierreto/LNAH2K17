@@ -61,6 +61,9 @@ class FacadeModele {
     /// Document JSON
     var docJSON: JSON?
     
+    /// Propriétés générales de la zone de jeu (coefficients)
+    private var generalProperties: GeneralProperties?
+    
     /// Les différentes couleurs pour chaque utilisateur en édition
     // TODO : Mettre ceci dans les infos de l'utilisateur lors de l'édition en ligne
     private let COLOR_USERS : [UIColor] =
@@ -90,6 +93,7 @@ class FacadeModele {
         self.arbre = ArbreRendu.instance
         self.viewController = EditorViewController.instance
         self.etat = ModeleEtatCameraControl.instance
+        self.generalProperties = GeneralProperties()
         
         self.tapGestureRecognizer = UITapGestureRecognizer(target: self, action:  #selector (self.tapGesture (_:)))
         self.panGestureRecognizer = ImmediatePanGestureRecognizer(target: self, action: #selector (self.panGesture(_:)))
@@ -113,6 +117,11 @@ class FacadeModele {
     /// Retourne l'état courant
     func obtenirEtat() -> ModeleEtat {
         return self.etat!
+    }
+    
+    /// Retourne l'état courant
+    func obtenirGeneralProperties() -> GeneralProperties {
+        return self.generalProperties!
     }
     
     func initVue() {

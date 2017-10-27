@@ -70,6 +70,9 @@
 		34B66FE21F84599100A9CCB9 /* But.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B66FE11F84599100A9CCB9 /* But.swift */; };
 		34B66FE41F84636900A9CCB9 /* NoeudBut.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B66FE31F84636900A9CCB9 /* NoeudBut.swift */; };
 		34B965CE1FA26EDE00BD17CC /* GeneralPropertiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B965CD1FA26EDE00BD17CC /* GeneralPropertiesViewController.swift */; };
+		34B965D01FA2976600BD17CC /* GeneralProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B965CF1FA2976600BD17CC /* GeneralProperties.swift */; };
+		34B965D21FA29A9700BD17CC /* GeneralPropertiesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B965D11FA29A9700BD17CC /* GeneralPropertiesViewModel.swift */; };
+		34B965D51FA29D3300BD17CC /* IGeneralPropertiesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34B965D41FA29D3300BD17CC /* IGeneralPropertiesViewModel.swift */; };
 		8F0B94AC1F8D3EEE007F0E82 /* VisiteurAbstrait.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0B94AB1F8D3EEE007F0E82 /* VisiteurAbstrait.swift */; };
 		8F0B94AE1F8D450B007F0E82 /* VisiteurSelectionnable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0B94AD1F8D450B007F0E82 /* VisiteurSelectionnable.swift */; };
 		8F0B94B21F8D4BCE007F0E82 /* ModeleEtat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0B94B11F8D4BCE007F0E82 /* ModeleEtat.swift */; };
@@ -186,6 +189,9 @@
 		34B66FE11F84599100A9CCB9 /* But.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = But.swift; path = Noyau/Arbre/Noeuds/But.swift; sourceTree = "<group>"; };
 		34B66FE31F84636900A9CCB9 /* NoeudBut.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NoeudBut.swift; path = Noyau/Arbre/Noeuds/NoeudBut.swift; sourceTree = "<group>"; };
 		34B965CD1FA26EDE00BD17CC /* GeneralPropertiesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GeneralPropertiesViewController.swift; path = InterfaceGraphique/Editor/GeneralPropertiesViewController.swift; sourceTree = "<group>"; };
+		34B965CF1FA2976600BD17CC /* GeneralProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GeneralProperties.swift; path = Noyau/Model/GeneralProperties.swift; sourceTree = "<group>"; };
+		34B965D11FA29A9700BD17CC /* GeneralPropertiesViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GeneralPropertiesViewModel.swift; path = InterfaceGraphique/ViewModel/GeneralPropertiesViewModel.swift; sourceTree = "<group>"; };
+		34B965D41FA29D3300BD17CC /* IGeneralPropertiesViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IGeneralPropertiesViewModel.swift; path = InterfaceGraphique/ViewModel/IGeneralPropertiesViewModel.swift; sourceTree = "<group>"; };
 		4BC65514BAA095CA955FDC5C /* Pods-AirHockeyLightClient.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AirHockeyLightClient.release.xcconfig"; path = "Pods/Target Support Files/Pods-AirHockeyLightClient/Pods-AirHockeyLightClient.release.xcconfig"; sourceTree = "<group>"; };
 		628E0B24C7327005FBC765AC /* Pods-AirHockeyLightClient.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AirHockeyLightClient.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AirHockeyLightClient/Pods-AirHockeyLightClient.debug.xcconfig"; sourceTree = "<group>"; };
 		7585740DC43877CD99CDDF6A /* Pods_AirHockeyLightClient.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AirHockeyLightClient.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -257,6 +263,7 @@
 		1D019A331F911EEF004D79B2 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				34B965D31FA29AB300BD17CC /* Editor */,
 				1D90AAFC1F982277003E0764 /* ConnectServer */,
 				1D019A251F911E25004D79B2 /* Dynamic.swift */,
 				1D019A351F911F08004D79B2 /* Signup */,
@@ -289,6 +296,7 @@
 				1D019A201F911DF6004D79B2 /* Signup.swift */,
 				1D019A1F1F911DF6004D79B2 /* Login.swift */,
 				1D90AB011F9824BE003E0764 /* ConnectServer.swift */,
+				34B965CF1FA2976600BD17CC /* GeneralProperties.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -376,6 +384,15 @@
 			name = Textures;
 			sourceTree = "<group>";
 		};
+		34B965D31FA29AB300BD17CC /* Editor */ = {
+			isa = PBXGroup;
+			children = (
+				34B965D11FA29A9700BD17CC /* GeneralPropertiesViewModel.swift */,
+				34B965D41FA29D3300BD17CC /* IGeneralPropertiesViewModel.swift */,
+			);
+			name = Editor;
+			sourceTree = "<group>";
+		};
 		63B9F5E76BF43EF82631DFF3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -433,7 +450,6 @@
 				8F64C0121F7754FD00F14AC7 /* LaunchScreen.storyboard */,
 				8F64C0141F77550800F14AC7 /* Main.storyboard */,
 				8FB6A9C31F81DCA000FAFFCF /* Assets */,
-				1D019A381F911F1E004D79B2 /* Model */,
 				1D019A331F911EEF004D79B2 /* ViewModel */,
 				1D019A311F911EDC004D79B2 /* View */,
 				3475C2441F90142600E8BF86 /* Gestures */,
@@ -448,6 +464,7 @@
 		8F0FFED51F6EB8B100366D8E /* Noyau */ = {
 			isa = PBXGroup;
 			children = (
+				1D019A381F911F1E004D79B2 /* Model */,
 				8F0B94AF1F8D4B9D007F0E82 /* Application */,
 				8FB6A9C71F81E35D00FAFFCF /* Arbre */,
 				253E088F1F818DE1009F301B /* Helper */,
@@ -803,7 +820,10 @@
 				8F8706B91F7892BB000E6824 /* Entity.swift in Sources */,
 				34B66FE21F84599100A9CCB9 /* But.swift in Sources */,
 				1D019A2A1F911E33004D79B2 /* LoginViewModel.swift in Sources */,
+				34B965D51FA29D3300BD17CC /* IGeneralPropertiesViewModel.swift in Sources */,
 				3415E6DB1F85C1F300DB1CAD /* NoeudPointControl.swift in Sources */,
+				34B965D21FA29A9700BD17CC /* GeneralPropertiesViewModel.swift in Sources */,
+				34B965D01FA2976600BD17CC /* GeneralProperties.swift in Sources */,
 				342E7C521F9859620062017A /* ModeleEtatCreerPortail.swift in Sources */,
 				344A6E221F99101700CFFBEB /* ModeleEtatCreerBoost.swift in Sources */,
 				8F64C0111F7754EF00F14AC7 /* ChatViewController.swift in Sources */,

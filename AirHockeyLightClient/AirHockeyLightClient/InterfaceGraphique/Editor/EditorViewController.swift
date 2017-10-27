@@ -24,7 +24,6 @@ class EditorViewController: UIViewController {
     /// Instance singleton
     static var instance = EditorViewController()
     
-    //public var editorView: SCNView!
     @IBOutlet weak var editorView: SCNView!
     public var editorScene: SCNScene!
     public var editorNotificationScene: EditorNotificationScene?
@@ -33,6 +32,8 @@ class EditorViewController: UIViewController {
     @IBOutlet weak var hudView: SCNView!
     public var hudScene: SCNScene!
     public var editorHUDScene: EditorHUDScene?
+    
+    @IBOutlet weak var navigationBar: UINavigationItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -95,6 +96,14 @@ class EditorViewController: UIViewController {
         generalPropertiesVC.view.frame = self.view.frame
         self.view.addSubview(generalPropertiesVC.view)
         generalPropertiesVC.didMove(toParentViewController: self)
+        
+        // Désactiver la barre de navigation
+        self.enableNavigationBar(activer: false)
+    }
+    
+    func enableNavigationBar(activer: Bool) {
+        self.navigationBar.hidesBackButton = !activer
+        self.navigationBar.rightBarButtonItem?.isEnabled = activer
     }
     
     

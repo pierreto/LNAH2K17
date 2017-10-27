@@ -288,6 +288,7 @@
                     <connections>
                         <outlet property="editorView" destination="nQ0-Ye-2E0" id="lFW-mx-rzE"/>
                         <outlet property="hudView" destination="aV8-1q-JCY" id="Xcf-9i-JaZ"/>
+                        <outlet property="navigationBar" destination="07a-Zg-bjU" id="DR5-RF-hC3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n15-76-e5h" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -337,16 +338,29 @@
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <action selector="editCoefficientFriction:" destination="1Qo-Vb-McK" eventType="editingChanged" id="lgW-v0-Mgx"/>
+                                        </connections>
                                     </textField>
                                     <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="gvR-JX-1CG" userLabel="StepperFriction">
                                         <rect key="frame" x="236" y="75" width="94" height="29"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </stepper>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cU0-Hz-niK" userLabel="coefficientFrictionError">
+                                        <rect key="frame" x="42" y="103" width="334" height="23"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <color key="textColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1bM-s9-rCk" userLabel="Sauvegarder">
                                         <rect key="frame" x="152" y="271" width="111" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" red="0.87050217390060425" green="0.87064856290817261" blue="0.87048280239105225" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" title="Sauvegarder"/>
+                                        <connections>
+                                            <action selector="saveGeneralProperties:" destination="1Qo-Vb-McK" eventType="touchUpInside" id="lcS-yk-eql"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -354,10 +368,15 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="coefficientFrictionError" destination="cU0-Hz-niK" id="7Pl-sm-pdh"/>
+                        <outlet property="coefficientFrictionStepper" destination="gvR-JX-1CG" id="Uzf-1n-2WR"/>
+                        <outlet property="coefficientFrictionText" destination="aS3-BJ-HSz" id="9KO-7k-7hL"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zMV-wz-bD4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1446" y="2030"/>
+            <point key="canvasLocation" x="-1446.09375" y="2029.6875"/>
         </scene>
         <!--Chat View Controller-->
         <scene sceneID="tXr-a1-R10">
