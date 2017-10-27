@@ -13,8 +13,10 @@ import PromiseKit
 
 protocol IGeneralPropertiesViewModel {
     var coefficientFrictionError: Dynamic<String> { get }
+    var coefficientRebondError: Dynamic<String> { get }
+    var coefficientAccelerationError: Dynamic<String> { get }
     
-    func save(coefficientFriction: Float) -> Bool
+    func save(coefficientFriction: String, coefficientRebond: String, coefficientAcceleration: String) -> Bool
 }
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -14,11 +14,16 @@ import Foundation
 class GeneralPropertiesViewModel: NSObject, IGeneralPropertiesViewModel {
     
     private var generalProperties: GeneralProperties
+    
     var coefficientFrictionError: Dynamic<String>
+    var coefficientRebondError: Dynamic<String>
+    var coefficientAccelerationError: Dynamic<String>
     
     init(generalProperties: GeneralProperties) {
         self.generalProperties = generalProperties
         self.coefficientFrictionError = Dynamic(generalProperties.coefficientFrictionError)
+        self.coefficientRebondError = Dynamic(generalProperties.coefficientRebondError)
+        self.coefficientAccelerationError = Dynamic(generalProperties.coefficientAccelerationError)
         super.init()
         self.subscribeToNotifications()
     }
@@ -27,11 +32,16 @@ class GeneralPropertiesViewModel: NSObject, IGeneralPropertiesViewModel {
         unsubscribeFromNotifications()
     }
     
-    func save (coefficientFriction: Float) -> Bool {
-        let valid = generalProperties.validateCoefficients(coefficientFriction: coefficientFriction)
+    func save (coefficientFriction: String, coefficientRebond: String, coefficientAcceleration: String) -> Bool {
+        let valid = generalProperties.validateCoefficients(
+            coefficientFriction: coefficientFriction,
+            coefficientRebond: coefficientRebond,
+            coefficientAcceleration: coefficientAcceleration)
         
         if valid {
-            generalProperties.setCoefficientValues(coefficientFriction: coefficientFriction, coefficientRebond: 1.0, coefficientAcceleration: 1.0)
+            generalProperties.setCoefficientValues(coefficientFriction: coefficientFriction,
+                                                   coefficientRebond: coefficientRebond,
+                                                   coefficientAcceleration: coefficientAcceleration)
         }
         
         return valid
@@ -50,6 +60,8 @@ class GeneralPropertiesViewModel: NSObject, IGeneralPropertiesViewModel {
     
     @objc fileprivate func savePressed(_ notification: NSNotification){
         self.coefficientFrictionError.value = self.generalProperties.coefficientFrictionError
+        self.coefficientRebondError.value = self.generalProperties.coefficientRebondError
+        self.coefficientAccelerationError.value = self.generalProperties.coefficientAccelerationError
     }
 }
 

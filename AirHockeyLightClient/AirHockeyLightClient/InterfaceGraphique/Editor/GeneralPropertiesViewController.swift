@@ -22,11 +22,20 @@ class GeneralPropertiesViewController: UIViewController {
     /// Instance singleton
     static var instance = GeneralPropertiesViewController()
     
-    @IBOutlet weak var coefficientFrictionText: UITextField!
+    @IBOutlet weak var saveButton: UIBarButtonItem!
+    
+    @IBOutlet weak var coefficientFrictionField: UITextField!
     @IBOutlet weak var coefficientFrictionStepper: UIStepper!
     @IBOutlet weak var coefficientFrictionError: UILabel!
     
-    // Mark: Functions
+    @IBOutlet weak var coefficientRebondField: UITextField!
+    @IBOutlet weak var coefficientRebondStepper: UIStepper!
+    @IBOutlet weak var coefficientRebondError: UILabel!
+    
+    @IBOutlet weak var coefficientAccelerationField: UITextField!
+    @IBOutlet weak var coefficientAccelerationStepper: UIStepper!
+    @IBOutlet weak var coefficientAccelerationError: UILabel!
+    
     var viewModel: IGeneralPropertiesViewModel? {
         didSet {
             fillUI()
@@ -87,6 +96,7 @@ class GeneralPropertiesViewController: UIViewController {
         EditorViewController.instance.enableNavigationBar(activer: true)
     }
     
+    /// Crée le lien entre les messages d'erreur et le view model
     private func fillUI() {
         if !isViewLoaded {
             return
@@ -96,11 +106,16 @@ class GeneralPropertiesViewController: UIViewController {
             return
         }
         viewModel.coefficientFrictionError.bindAndFire { [unowned self] in self.coefficientFrictionError.text = $0 }
+        viewModel.coefficientRebondError.bindAndFire { [unowned self] in self.coefficientRebondError.text = $0 }
+        viewModel.coefficientAccelerationError.bindAndFire { [unowned self] in self.coefficientAccelerationError.text = $0 }
     }
     
+    /// Ajuste le visuel
     private func styleUI() {
         self.activateInputs()
-        self.resetStyle(textField: self.coefficientFrictionText)
+        self.resetStyle(textField: self.coefficientFrictionField)
+        self.resetStyle(textField: self.coefficientRebondField)
+        self.resetStyle(textField: self.coefficientAccelerationField)
         self.resetErrorMessage()
     }
     
@@ -108,18 +123,35 @@ class GeneralPropertiesViewController: UIViewController {
     private func loadGeneralProperties() {
         let coefficients = FacadeModele.instance.obtenirGeneralProperties().getCoefficientValues()
         
-        self.coefficientFrictionText.text = coefficients[0].description
-        //this.Input_CoefRebound.Text = coefficientRebond.ToString();
-        //this.Input_CoefAcceleration.Text = coefficientAcceleration.ToString();
+        self.coefficientFrictionField.text = coefficients[0].description
+        self.coefficientFrictionStepper.value = Double(Float.init(self.coefficientFrictionField.text!)!)
+        
+        self.coefficientRebondField.text = coefficients[1].description
+        self.coefficientRebondStepper.value = Double.init(self.coefficientRebondField.text!)!
+        
+        self.coefficientAccelerationField.text = coefficients[2].description
+        self.coefficientAccelerationStepper.value = Double.init(self.coefficientAccelerationField.text!)!
+    }
+    
+    /// Réinitialise toutes les valeurs par défaut
+    @IBAction func resetCoefficients(_ sender: Any) {
+        self.coefficientFrictionField.text = String.init(1.0)
+        self.coefficientFrictionStepper.value = 1.0
+        self.coefficientRebondField.text = String.init(0.0)
+        self.coefficientRebondStepper.value = 0.0
+        self.coefficientAccelerationField.text = String.init(40.0)
+        self.coefficientAccelerationStepper.value = 40.0
+        self.styleUI()
     }
     
     /// Permet la sauvegarde des inputs losque le bouton sauvegarder est utilisé.
     @IBAction func saveGeneralProperties(_ sender: Any) {
         self.deactivateInputs()
         
-        let coefficientFriction = Float.init(self.coefficientFrictionText.text!)
-        
-        if (self.viewModel?.save(coefficientFriction: coefficientFriction!))! {
+        if (self.viewModel?.save(
+            coefficientFriction: self.coefficientFrictionField.text!,
+            coefficientRebond: self.coefficientRebondField.text!,
+            coefficientAcceleration: self.coefficientAccelerationField.text!))! {
             /// Fermer la fenêtre
             self.removeAnimate()
         }
@@ -127,8 +159,14 @@ class GeneralPropertiesViewController: UIViewController {
             //Laisse le temps au message d'erreur d'apparaitre avant le shake
             let when = DispatchTime.now() + 0.1
             DispatchQueue.main.asyncAfter(deadline: when) {
-                if(self.coefficientFrictionError.text != ""){
-                    self.notifyErrorInput(textField: self.coefficientFrictionText)
+                if (self.coefficientFrictionError.text != "") {
+                    self.notifyErrorInput(textField: self.coefficientFrictionField)
+                }
+                if (self.coefficientRebondError.text != "") {
+                    self.notifyErrorInput(textField: self.coefficientRebondField)
+                }
+                if (self.coefficientAccelerationError.text != "") {
+                    self.notifyErrorInput(textField: self.coefficientAccelerationField)
                 }
             }
             
@@ -137,8 +175,57 @@ class GeneralPropertiesViewController: UIViewController {
     }
     
     @IBAction func editCoefficientFriction(_ sender: Any) {
-        resetStyle(textField: self.coefficientFrictionText)
+        let coefficientValue = Float.init(self.coefficientFrictionField.text!)
+        
+        if coefficientValue != nil {
+            self.coefficientFrictionStepper.value = Double(coefficientValue!)
+        }
+        
+        resetStyle(textField: self.coefficientFrictionField)
         self.coefficientFrictionError.text = ""
+    }
+    
+    @IBAction func editStepperCoefficientFriction(_ sender: Any) {
+        self.coefficientFrictionField.text = String.init(self.coefficientFrictionStepper.value)
+        
+        resetStyle(textField: self.coefficientFrictionField)
+        self.coefficientFrictionError.text = ""
+    }
+    
+    @IBAction func editCoefficientRebond(_ sender: Any) {
+        let coefficientValue = Double.init(self.coefficientRebondField.text!)
+        
+        if coefficientValue != nil {
+            self.coefficientRebondStepper.value = coefficientValue!
+        }
+        
+        resetStyle(textField: self.coefficientRebondField)
+        self.coefficientRebondError.text = ""
+    }
+    
+    @IBAction func editStepperCoefficientRebond(_ sender: Any) {
+        self.coefficientRebondField.text = String.init(self.coefficientRebondStepper.value)
+        
+        resetStyle(textField: self.coefficientRebondField)
+        self.coefficientRebondError.text = ""
+    }
+    
+    @IBAction func editCoefficientAcceleration(_ sender: Any) {
+        let coefficientValue = Double.init(self.coefficientAccelerationField.text!)
+        
+        if coefficientValue != nil {
+            self.coefficientAccelerationStepper.value = coefficientValue!
+        }
+        
+        resetStyle(textField: self.coefficientAccelerationField)
+        self.coefficientAccelerationError.text = ""
+    }
+    
+    @IBAction func editStepperCoefficientAcceleration(_ sender: Any) {
+        self.coefficientAccelerationField.text = String.init(self.coefficientAccelerationStepper.value)
+        
+        resetStyle(textField: self.coefficientAccelerationField)
+        self.coefficientAccelerationError.text = ""
     }
     
     /// Modifier l'apparence du input en cas d'erreur
@@ -151,11 +238,15 @@ class GeneralPropertiesViewController: UIViewController {
     }
     
     private func activateInputs() {
-        self.coefficientFrictionText.isEnabled = true
+        self.coefficientFrictionField.isEnabled = true
+        self.coefficientRebondField.isEnabled = true
+        self.coefficientAccelerationField.isEnabled = true
     }
     
     private func deactivateInputs(){
-        self.coefficientFrictionText.isEnabled = false
+        self.coefficientFrictionField.isEnabled = false
+        self.coefficientRebondField.isEnabled = false
+        self.coefficientAccelerationField.isEnabled = false
     }
     
     private func resetStyle(textField: UITextField) {
@@ -164,6 +255,8 @@ class GeneralPropertiesViewController: UIViewController {
     
     private func resetErrorMessage() {
         self.coefficientFrictionError.text = ""
+        self.coefficientRebondError.text = ""
+        self.coefficientAccelerationError.text = ""
     }
     
     override var shouldAutorotate: Bool {

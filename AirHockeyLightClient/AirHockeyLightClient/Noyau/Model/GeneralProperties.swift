@@ -27,6 +27,10 @@ class GeneralProperties: NSObject {
     /// Valeurs maximales et minimales
     private let MIN_COEFFICIENT_FRICTION: Float = 0.0
     private let MAX_COEFFICIENT_FRICTION: Float = 10.0
+    private let MIN_COEFFICIENT_REBOND: Float = 0.0
+    private let MAX_COEFFICIENT_REBOND: Float = 15.0
+    private let MIN_COEFFICIENT_ACCELERATION: Float = 0.0
+    private let MAX_COEFFICIENT_ACCELERATION: Float = 100.0
     
     /// Propriétés de la zone de jeu
     private var coefficientFriction: Float = DefaultValues.coefficientFriction;
@@ -35,14 +39,20 @@ class GeneralProperties: NSObject {
     
     /// Messages d'erreur
     var coefficientFrictionError: String
+    var coefficientRebondError: String
+    var coefficientAccelerationError: String
     
     override init() {
         self.coefficientFrictionError = ""
+        self.coefficientRebondError = ""
+        self.coefficientAccelerationError = ""
         super.init()
     }
     
-    func validateCoefficients(coefficientFriction: Float) -> Bool {
-        if (!validateCoefficientFriction(coefficient: coefficientFriction)) {
+    func validateCoefficients(coefficientFriction: String, coefficientRebond: String, coefficientAcceleration: String) -> Bool {
+        if (!validateCoefficientFriction(coefficient: coefficientFriction) ||
+            !validateCoefficientRebond(coefficient: coefficientRebond) ||
+            !validateCoefficientAcceleration(coefficient: coefficientAcceleration)) {
             NotificationCenter.default.post(name: Notification.Name(rawValue: GeneralPropertiesNotification.SaveGeneralPropertiesNotification), object: self)
             return false
         }
@@ -51,15 +61,65 @@ class GeneralProperties: NSObject {
         return true
     }
     
-    private func validateCoefficientFriction(coefficient: Float) -> Bool {
-        if coefficient < self.MIN_COEFFICIENT_FRICTION {
-            self.coefficientFrictionError = "Coefficient de friction doit être plus grand que 0.0"
+    private func validateCoefficientFriction(coefficient: String) -> Bool {
+        let coefficientFriction: Float? = Float.init(coefficient)
+        
+        if coefficientFriction == nil {
+            self.coefficientFrictionError = "Entrée invalide"
             return false
-        } else if coefficient > self.MAX_COEFFICIENT_FRICTION {
-            self.coefficientFrictionError = "Coefficient de friction doit être moins grand que 10.0"
+        }
+        else if coefficientFriction! < self.MIN_COEFFICIENT_FRICTION {
+            self.coefficientFrictionError = "Coefficient de friction >= 0.0"
             return false
-        } else {
+        }
+        else if coefficientFriction! > self.MAX_COEFFICIENT_FRICTION {
+            self.coefficientFrictionError = "Coefficient de friction <= 10.0"
+            return false
+        }
+        else {
             self.coefficientFrictionError = ""
+            return true
+        }
+    }
+    
+    private func validateCoefficientRebond(coefficient: String) -> Bool {
+        let coefficientRebond: Float? = Float.init(coefficient)
+        
+        if coefficientRebond == nil {
+            self.coefficientRebondError = "Entrée invalide"
+            return false
+        }
+        else if coefficientRebond! < self.MIN_COEFFICIENT_REBOND {
+            self.coefficientRebondError = "Coefficient de rebond >= 0.0"
+            return false
+        }
+        else if coefficientRebond! > self.MAX_COEFFICIENT_REBOND {
+            self.coefficientRebondError = "Coefficient de rebond <= 15.0"
+            return false
+        }
+        else {
+            self.coefficientRebondError = ""
+            return true
+        }
+    }
+    
+    private func validateCoefficientAcceleration(coefficient: String) -> Bool {
+        let coefficientAccceleration: Float? = Float.init(coefficient)
+        
+        if coefficientAccceleration == nil {
+            self.coefficientAccelerationError = "Entrée invalide"
+            return false
+        }
+        else if coefficientAccceleration! < self.MIN_COEFFICIENT_ACCELERATION {
+            self.coefficientAccelerationError = "Coefficient d'accélération >= 0.0"
+            return false
+        }
+        else if coefficientAccceleration! > self.MAX_COEFFICIENT_ACCELERATION {
+            self.coefficientAccelerationError = "Coefficient d'accélération <= 100.0"
+            return false
+        }
+        else {
+            self.coefficientAccelerationError = ""
             return true
         }
     }
@@ -72,10 +132,10 @@ class GeneralProperties: NSObject {
     }
     
     /// Retourne les valeurs des trois coefficients de la zone en cours
-    public func setCoefficientValues(coefficientFriction: Float, coefficientRebond: Float, coefficientAcceleration: Float) {
-        self.coefficientFriction = coefficientFriction
-        self.coefficientRebond = coefficientRebond
-        self.coefficientAcceleration = coefficientAcceleration
+    public func setCoefficientValues(coefficientFriction: String, coefficientRebond: String, coefficientAcceleration: String) {
+        self.coefficientFriction = Float.init(coefficientFriction)!
+        self.coefficientRebond = Float.init(coefficientRebond)!
+        self.coefficientAcceleration = Float.init(coefficientAcceleration)!
     }
     
 }
