@@ -13,7 +13,8 @@
 #include "FacadeModele.h"
 #include "Vue.h"
 #include "Projection.h"
-
+#include<Rpc.h>
+#pragma comment(lib, "Rpcrt4.lib")
 
 ////////////////////////////////////////////////////////////////////////
 ///
