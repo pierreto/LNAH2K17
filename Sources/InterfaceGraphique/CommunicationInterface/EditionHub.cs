@@ -19,9 +19,8 @@ namespace InterfaceGraphique.CommunicationInterface
 
         private MapEntity map;
 
-        public void InitializeHub(HubConnection connection, string username)
+        public void InitializeHub(HubConnection connection)
         {
-            this.username = username;
             hubProxy = connection.CreateHubProxy("EditionHub");
 
         }
@@ -68,11 +67,10 @@ namespace InterfaceGraphique.CommunicationInterface
         }
 
 
-
         public void Logout()
         {
-            hubProxy?.Invoke("Disconnect", this.username).Wait();
-            this.map = null;
+           /* hubProxy?.Invoke("Disconnect", this.username).Wait();
+            this.map = null;*/
         }
     }
 }

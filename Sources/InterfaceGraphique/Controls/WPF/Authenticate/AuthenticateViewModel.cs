@@ -34,6 +34,11 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
             Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<ConnectServerViewModel>());
         }
 
+        public override void InitializeViewModel()
+        {
+            //throw new NotImplementedException();
+        }
+
         private ICommand authenticateCommand;
         public ICommand AuthenticateCommand
         {

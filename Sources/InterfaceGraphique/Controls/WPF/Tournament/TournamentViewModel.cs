@@ -108,10 +108,6 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
         {
             get => Players.Count > 0 ? Players[0].Username : DEFAULT_PLAYER_NAME;
         }
-        public override void InitializeViewModel()
-        {
-            this.waitingRoomHub.JoinGame();
-        }
 
         public string Player2
         {
@@ -211,6 +207,11 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
         private async Task Join()
         {
             this.waitingRoomHub.Join();
+        }
+
+        public override void InitializeViewModel()
+        {
+          //  throw new NotImplementedException();
         }
     }
 }

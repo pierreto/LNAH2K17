@@ -117,7 +117,7 @@ namespace InterfaceGraphique
             formManager = new FormManager();
             homeMenu = new HomeMenu();
             //mainMenu = new MainMenu();
-            editeur = new Editeur();
+            editeur = unityContainer.Resolve<Editeur>();
             configurationMenu = new ConfigurationMenu();
             quickPlay = new QuickPlay();
             testMode = new TestMode();
