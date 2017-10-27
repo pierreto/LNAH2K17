@@ -14,9 +14,11 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Windows;
 using InterfaceGraphique.CommunicationInterface;
+using InterfaceGraphique.CommunicationInterface.RestInterface;
 using InterfaceGraphique.Controls;
 using InterfaceGraphique.Controls.WPF;
 using InterfaceGraphique.Controls.WPF.Chat;
+using InterfaceGraphique.Controls.WPF.Editor;
 using InterfaceGraphique.Entities;
 using InterfaceGraphique.Menus;
 using Microsoft.AspNet.SignalR.Client;
@@ -29,6 +31,7 @@ using InterfaceGraphique.Controls.WPF.Authenticate;
 using InterfaceGraphique.Controls.WPF.Home;
 using InterfaceGraphique.Controls.WPF.ConnectServer;
 using InterfaceGraphique.Controls.WPF.Signup;
+using InterfaceGraphique.Services;
 
 namespace InterfaceGraphique
 {
@@ -55,6 +58,8 @@ namespace InterfaceGraphique
         public static UserEntity user;
         public static LobbyHost LobbyHost { get { return lobbyHost; } set { lobbyHost = value; } }
         public static OnlineTournament OnlineTournament { get { return onlineTournament;  } set { onlineTournament = value; } }
+        public static EditorHost EditorHost { get { return editorHost; } set { editorHost = value; } }
+
 
         private static FormManager formManager;
         private static MainMenu mainMenu;
@@ -69,6 +74,7 @@ namespace InterfaceGraphique
         private static TournementTree tournementTree;
         private static CreditsMenu creditsMenu;
         private static LobbyHost lobbyHost;
+        private static EditorHost editorHost;
         private static OnlineTournament onlineTournament;
 
         private static Panel openGLPanel;
@@ -110,8 +116,6 @@ namespace InterfaceGraphique
             openGLPanel = new Panel();
             formManager = new FormManager();
             homeMenu = new HomeMenu();
-            //mainMenu = new MainMenu();
-            //editeur = new Editeur();
             configurationMenu = new ConfigurationMenu();
             quickPlay = new QuickPlay();
             testMode = new TestMode();
@@ -122,6 +126,7 @@ namespace InterfaceGraphique
             creditsMenu = new CreditsMenu();
             lobbyHost = new LobbyHost();
             onlineTournament = new OnlineTournament();
+            editorHost = new EditorHost();
 
             FonctionsNatives.loadSounds();
 
@@ -135,7 +140,7 @@ namespace InterfaceGraphique
         public static void InitAfterConnection()
         {
             mainMenu = new MainMenu();
-            editeur = new Editeur();
+            editeur = unityContainer.Resolve<Editeur>();
             quickPlayMenu = new QuickPlayMenu();
             tournementMenu = new TournementMenu();
             tournementTree = new TournementTree();
@@ -144,17 +149,30 @@ namespace InterfaceGraphique
         private static void InitializeUnityDependencyInjection()
         {
             unityContainer = new UnityContainer();
+
+            //Hub instantiations
             unityContainer.RegisterType<IBaseHub, ChatHub>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<IBaseHub,GameWaitingRoomHub>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<IBaseHub, TournamentWaitingRoomHub>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<IBaseHub,GameHub>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<IBaseHub, EditionHub>(new ContainerControlledLifetimeManager());
+
+
+            //View models instantiations
             unityContainer.RegisterType<MatchmakingViewModel>(new ContainerControlledLifetimeManager());
-            unityContainer.RegisterType<ChatViewModel>();
+            unityContainer.RegisterType<ChatViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<TournamentViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<AuthenticateViewModel>();
             unityContainer.RegisterType<SignupViewModel>();
             unityContainer.RegisterType<HomeViewModel>();
             unityContainer.RegisterType<ConnectServerViewModel>(); 
+            unityContainer.RegisterType<EditorViewModel>(new ContainerControlledLifetimeManager());
+
+
+            //Rest services instantiations
+            unityContainer.RegisterType<MapService>();
+
+
         }
 
         static void ExecuterQuandInactif(object sender, EventArgs e)

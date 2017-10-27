@@ -18,7 +18,7 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress />
+    <Use64BitIISExpress>true</Use64BitIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -234,6 +234,10 @@
     <Compile Include="Entities\ChannelEntity.cs" />
     <Compile Include="Entities\ChatMessageEntity.cs" />
     <Compile Include="Entities\ConfigurationEntity.cs" />
+    <Compile Include="Entities\EditionCommand\AbstractEditionCommand.cs" />
+    <Compile Include="Entities\EditionCommand\PortalCommand.cs" />
+    <Compile Include="Entities\EditionCommand\WallCommand.cs" />
+    <Compile Include="Entities\OnlineEditedMapInfo.cs" />
     <Compile Include="Entities\PasswordEntity.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\GoalMessage.cs" />
@@ -257,6 +261,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Hubs\EditionBrowserHub.cs" />
+    <Compile Include="Hubs\EditionHub.cs" />
     <Compile Include="Hubs\GameWaitingRoomHub.cs" />
     <Compile Include="Hubs\ConnectionMapper.cs" />
     <Compile Include="Hubs\TournamentWaitingRoomHub.cs" />
@@ -282,6 +288,7 @@
     <Compile Include="Services\ChatService.cs" />
     <Compile Include="Hubs\ChatHub.cs" />
     <Compile Include="Services\ChatServiceServer\ChatServer.cs" />
+    <Compile Include="Services\EditionService.cs" />
     <Compile Include="Services\GameService.cs" />
     <Compile Include="Services\IChannelService.cs" />
     <Compile Include="Services\IChatService.cs" />
@@ -363,6 +370,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Entities\Messages\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

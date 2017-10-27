@@ -9,5 +9,9 @@ namespace InterfaceGraphique.Controls.WPF.Navigation
     class NavigationViewModel : ViewModelBase
     {
         private string Title = "Home";
+        public override void InitializeViewModel()
+        {
+        //    throw new NotImplementedException();
+        }
     }
 }

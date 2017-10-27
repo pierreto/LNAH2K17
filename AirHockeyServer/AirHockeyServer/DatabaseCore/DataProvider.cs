@@ -56,6 +56,11 @@ namespace AirHockeyServer.DatabaseCore
             }
         }
 
+        public Task<IEnumerable<T>> GetById<T>(string table, int id)
+        {
+            throw new NotImplementedException();
+        }
+
         // Not async?
         public void Post<T>(T poco) where T : Poco
         {

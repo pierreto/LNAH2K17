@@ -58,7 +58,8 @@ ArbreRendu::~ArbreRendu()
 ///
 ////////////////////////////////////////////////////////////////////////
 NoeudAbstrait* ArbreRendu::creerNoeud(
-	const std::string& typeNouveauNoeud
+	const std::string& typeNouveauNoeud,
+	const char* uuid
 	) const
 {
 	if (usines_.find(typeNouveauNoeud) == usines_.end()) {
@@ -68,7 +69,7 @@ NoeudAbstrait* ArbreRendu::creerNoeud(
 
 	const UsineAbstraite* usine{ (*(usines_.find(typeNouveauNoeud))).second };
 
-	return usine->creerNoeud();
+	return usine->creerNoeud(uuid);
 }
 
 

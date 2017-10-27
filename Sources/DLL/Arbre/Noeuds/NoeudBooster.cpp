@@ -29,8 +29,8 @@
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-NoeudBooster::NoeudBooster(const std::string& typeNoeud)
-	: NoeudAbstrait{ typeNoeud }
+NoeudBooster::NoeudBooster(const std::string& typeNoeud, const char* uuid)
+	: NoeudAbstrait{ typeNoeud, uuid }
 {
 	particleGenerator_ = new FireEffect();
 }

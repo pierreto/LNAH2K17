@@ -48,9 +48,7 @@ class NoeudAbstrait
 {
 public:
 	/// Constructeur.
-	NoeudAbstrait(
-		const std::string& type = std::string{ "" }
-	);
+	NoeudAbstrait(const std::string& type = std::string{ "" }, const char* uuid = nullptr);
 	/// Destructeur.
 	virtual ~NoeudAbstrait();
 
@@ -192,7 +190,10 @@ public:
 	void setEnCollision(bool enCollision);
 	virtual void calculerCollider() {};
 
+	char* getUUID() const { return uuid_; };
+
 protected:
+	void generateUUID();
 
 	MatricesPipeline obtenirMatricePipeline() const;
 
@@ -244,6 +245,8 @@ protected:
 
 	// Options de dessin
 	OptionsDessin options_;
+
+	char* uuid_;
 };
 
 

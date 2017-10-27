@@ -15,12 +15,13 @@ namespace AirHockeyServer.Entities
     ///////////////////////////////////////////////////////////////////////////////
     public class MapEntity : Entity
     {
-        public int? Id { get; set; }
+        public int Id { get; set; }
         public string Creator { get; set; }
         public string MapName { get; set; }
         public DateTime LastBackup { get; set; }
         public string Json { get; set; }
         public bool Private { get; set; }
         public string Password { get; set; }
+        public int CurrentNumberOfPlayer { get; set; }
     }
 }

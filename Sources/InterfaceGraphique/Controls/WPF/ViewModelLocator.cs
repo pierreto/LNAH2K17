@@ -1,4 +1,5 @@
 ﻿using InterfaceGraphique.Controls.WPF.Chat;
+using InterfaceGraphique.Controls.WPF.Editor;
 using InterfaceGraphique.Controls.WPF.Matchmaking;
 using InterfaceGraphique.Controls.WPF.ConnectServer;
 using Microsoft.Practices.Unity;
@@ -52,5 +53,8 @@ namespace InterfaceGraphique.Controls.WPF
         {
             get { return container.Resolve<TournamentViewModel>(); }
         }
+
+        public EditorViewModel EditorViewModel => container.Resolve<EditorViewModel>();
+
     }
 }
