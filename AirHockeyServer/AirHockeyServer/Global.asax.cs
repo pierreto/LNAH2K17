@@ -29,75 +29,13 @@ namespace AirHockeyServer
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-
-            //Register(GlobalConfiguration.Configuration);
-
+            
             GameWaitingRoomEventManager gameWaitingRoomEventManager = new GameWaitingRoomEventManager();
             TournamentWaitingRoomEventManager tournamentWaitingRoomEventManager = new TournamentWaitingRoomEventManager();
             Cache cache = new Cache();
-
-            ExecuteTest();
         }
-
-        private async void ExecuteTest()
-        {
-            // TEST
-            GameService gameService = new GameService();
-
-            GameEntity game = new GameEntity
-            {
-                SelectedMap = new MapEntity
-                {
-                    Id = 10
-                },
-                Winner = new UserEntity
-                {
-                    Id = 105
-                },
-                GameId = new Random().Next()
-            };
-
-            await gameService.SaveGame(game);
-        }
-
-        public static void Register(HttpConfiguration config)
-        {
-            //var container = new UnityContainer();
-
-            //// Repositories
-            //container.RegisterType<IChannelRepository, ChannelRepository>(new HierarchicalLifetimeManager());
-            //container.RegisterType<IPlayerStatsRepository, PlayerStatsRepository>(new HierarchicalLifetimeManager());
-
-            //// Services
-            //container.RegisterType<IChatService, ChatService>(new HierarchicalLifetimeManager());
-            //container.RegisterType<IChannelService, ChannelService>(new HierarchicalLifetimeManager());
-            //container.RegisterType<IGameService, GameService>(new HierarchicalLifetimeManager());
-            //container.RegisterType<ITournamentService, TournamentService>(new HierarchicalLifetimeManager());
-            //container.RegisterType<IMapService, MapService>(new HierarchicalLifetimeManager());
-            //container.RegisterType<IPlayerStatsService, PlayerStatsService>(new HierarchicalLifetimeManager());
-
-            ////Core
-            //container.RegisterType<IConnector, Connector>(new HierarchicalLifetimeManager());
-            //container.RegisterType<IRequestsManager, RequestsManager>(new HierarchicalLifetimeManager());
-
-            //GameManager gameManager = new GameManager(container.Resolve<IPlayerStatsService>());
-            //container.RegisterInstance<GameManager>(gameManager);
-
-            
-
-            //TournamentManager tournamentManager = new TournamentManager(container.Resolve<IPlayerStatsService>(), container.Resolve<GameManager>());
-
-            //config.DependencyResolver = new UnityResolver(container);
-
-
-            //container.RegisterInstance<TournamentManager>(tournamentManager);
-
-        }
-
-        /*
-         * TODO(Michael): removing that?
-         * ---
-         */
+        
+        
         private bool IsWebApiRequest()
         {
             return HttpContext.Current.Request.AppRelativeCurrentExecutionFilePath.StartsWith("~/api");
