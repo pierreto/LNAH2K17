@@ -15,6 +15,7 @@ using System.Web.Routing;
 using System.Web.SessionState;
 using System.Threading.Tasks;
 using AirHockeyServer.Events.EventManagers;
+using Microsoft.AspNet.SignalR;
 
 namespace AirHockeyServer
 {
@@ -28,35 +29,43 @@ namespace AirHockeyServer
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            Register(GlobalConfiguration.Configuration);
-            //ChatServer server = new ChatServer();
-            //Task running_server = Task.Run(() => server.StartListeningAsync());
-            // We make the server running asynchronously so the REST API can
-            // still continue to run:
-            //await running_server;
+            //Register(GlobalConfiguration.Configuration);
+
+            GameWaitingRoomEventManager gameWaitingRoomEventManager = new GameWaitingRoomEventManager();
+            TournamentWaitingRoomEventManager tournamentWaitingRoomEventManager = new TournamentWaitingRoomEventManager();
         }
 
         public static void Register(HttpConfiguration config)
         {
-            var container = new UnityContainer();
-            // Repositories
-            container.RegisterType<IChannelRepository, ChannelRepository>(new HierarchicalLifetimeManager());
+            //var container = new UnityContainer();
 
-            // Services
-            container.RegisterType<IChatService, ChatService>(new HierarchicalLifetimeManager());
-            container.RegisterType<IChannelService, ChannelService>(new HierarchicalLifetimeManager());
-            container.RegisterType<IGameService, GameService>(new HierarchicalLifetimeManager());
-            container.RegisterType<ITournamentService, TournamentService>(new HierarchicalLifetimeManager());
-            container.RegisterType<IMapService, MapService>(new HierarchicalLifetimeManager());
+            //// Repositories
+            //container.RegisterType<IChannelRepository, ChannelRepository>(new HierarchicalLifetimeManager());
+            //container.RegisterType<IPlayerStatsRepository, PlayerStatsRepository>(new HierarchicalLifetimeManager());
 
-            //Core
-            container.RegisterType<IConnector, Connector>(new HierarchicalLifetimeManager());
-            container.RegisterType<IRequestsManager, RequestsManager>(new HierarchicalLifetimeManager());
+            //// Services
+            //container.RegisterType<IChatService, ChatService>(new HierarchicalLifetimeManager());
+            //container.RegisterType<IChannelService, ChannelService>(new HierarchicalLifetimeManager());
+            //container.RegisterType<IGameService, GameService>(new HierarchicalLifetimeManager());
+            //container.RegisterType<ITournamentService, TournamentService>(new HierarchicalLifetimeManager());
+            //container.RegisterType<IMapService, MapService>(new HierarchicalLifetimeManager());
+            //container.RegisterType<IPlayerStatsService, PlayerStatsService>(new HierarchicalLifetimeManager());
 
-            config.DependencyResolver = new UnityResolver(container);
+            ////Core
+            //container.RegisterType<IConnector, Connector>(new HierarchicalLifetimeManager());
+            //container.RegisterType<IRequestsManager, RequestsManager>(new HierarchicalLifetimeManager());
+
+            //GameManager gameManager = new GameManager(container.Resolve<IPlayerStatsService>());
+            //container.RegisterInstance<GameManager>(gameManager);
+
             
-            GameWaitingRoomEventManager gameWaitingRoomEventManager = container.Resolve<GameWaitingRoomEventManager>();
-            TournamentWaitingRoomEventManager tournamentWaitingRoomEventManager = container.Resolve<TournamentWaitingRoomEventManager>();
+
+            //TournamentManager tournamentManager = new TournamentManager(container.Resolve<IPlayerStatsService>(), container.Resolve<GameManager>());
+
+            //config.DependencyResolver = new UnityResolver(container);
+
+
+            //container.RegisterInstance<TournamentManager>(tournamentManager);
 
         }
 

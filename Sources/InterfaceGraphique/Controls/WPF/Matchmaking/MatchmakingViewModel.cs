@@ -59,6 +59,7 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
         {
             IsWaitingForOpponent = isWaitingForOpponentValue ? "Visible" : "Hidden";
             OpponentFound = isWaitingForOpponentValue ? "Hidden" : "Visible";
+            EnabledMap = !isWaitingForOpponentValue;
         }
 
         private void OnRemainingTimeEvent(int remainingTime)
@@ -235,6 +236,17 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
             {
                 opponentFound = value;
                 this.OnPropertyChanged();
+            }
+        }
+
+        public bool enabledMap = false;
+        public bool EnabledMap
+        {
+            get => enabledMap;
+            set
+            {
+                value = enabledMap;
+                OnPropertyChanged();
             }
         }
 

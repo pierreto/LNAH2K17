@@ -8,6 +8,7 @@ using AirHockeyServer.Core;
 using Microsoft.AspNet.SignalR;
 using AirHockeyServer.Services.ChatServiceServer;
 using AirHockeyServer.Hubs;
+using System;
 
 [assembly: OwinStartup(typeof(AirHockeyServer.App_Start.Startup))]
 
@@ -20,15 +21,15 @@ namespace AirHockeyServer.App_Start
             // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=316888
             GlobalHost.DependencyResolver.Register(
                 typeof(ChatHub),
-                () => new ChatHub(new ChannelService()));
+                () => new ChatHub());
 
             GlobalHost.DependencyResolver.Register(
                 typeof(GameWaitingRoomHub),
-                () => new GameWaitingRoomHub(new GameService()));
+                () => new GameWaitingRoomHub());
 
             GlobalHost.DependencyResolver.Register(
                 typeof(TournamentWaitingRoomHub),
-                () => new TournamentWaitingRoomHub(new TournamentService()));
+                () => new TournamentWaitingRoomHub());
 
             app.MapSignalR("/signalr", new HubConfiguration());
         }

@@ -15,9 +15,9 @@ namespace AirHockeyServer.Controllers
     public class ChatController : ApiController
     {
 
-        public ChatController(IChatService chatService)
+        public ChatController()
         {
-            ChatService = chatService;
+            ChatService = new ChatService();
         }
 
         public IChatService ChatService { get; }

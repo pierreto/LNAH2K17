@@ -12,12 +12,9 @@ namespace AirHockeyServer.Services
 {
     public class ChatService : IChatService, IService
     {   
-        public ChatService(IRequestsManager requestsManager)
+        public ChatService()
         {
-            RequestsManager = requestsManager;
         }
-        
-        public IRequestsManager RequestsManager { get; }
 
         public void SendPrivateMessage(ChatMessageEntity message)
         {

@@ -11,9 +11,9 @@ namespace AirHockeyServer.Hubs
 {
     public class TournamentWaitingRoomHub : Hub
     {
-        public TournamentWaitingRoomHub(ITournamentService tournamentService)
+        public TournamentWaitingRoomHub()
         {
-            TournamentService = tournamentService;
+            TournamentService = new TournamentService(); ;
         }
 
         public ITournamentService TournamentService { get; }

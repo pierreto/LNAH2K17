@@ -33,9 +33,9 @@ namespace AirHockeyServer.Hubs
         /// @return Aucune (Constructeur).
         ///
         ////////////////////////////////////////////////////////////////////////
-        public GameWaitingRoomHub(IGameService gameService)
+        public GameWaitingRoomHub()
         {
-            GameService = gameService;
+            GameService = new GameService();
         }
         
         /// @fn void JoinGame(UserEntity user)
@@ -79,7 +79,7 @@ namespace AirHockeyServer.Hubs
         public void Join(UserEntity user)
         {
             // TO REMOVE, WAITING FOR AUTHENTIFICATION
-            ConnectionMapper.AddConnection(user.Id, Context.ConnectionId);
+           // ConnectionMapper.AddConnection(user.Id, Context.ConnectionId);
 
             GameService.JoinGame(user);
         }

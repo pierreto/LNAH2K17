@@ -44,6 +44,19 @@ namespace AirHockeyServer.Mapping
                 cfg.CreateMap<UserPoco, UserEntity>();
                 cfg.CreateMap<UserEntity, UserPoco>();
 
+                cfg.CreateMap<StatsEntity, StatsPoco>();
+
+                cfg.CreateMap<GameEntity, GamePoco>()
+                .ForMember(
+                    dest => dest.Id,
+                    opt => opt.MapFrom(src => src.GameId))
+                .ForMember(
+                    dest => dest.PlayedMap,
+                    opt => opt.MapFrom(src => src.SelectedMap.Id))
+                .ForMember(
+                    dest => dest.Winner,
+                    opt => opt.MapFrom(src => src.Winner.Id));
+
                 //Not necessary if same attribute names from poco to entity
                 //cfg.CreateMap<UserPoco, UserEntity>()
                 //.ForMember(

@@ -29,7 +29,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
         protected HubConnection HubConnection { get; set; }
 
-        public GameWaitingRoomHub(SlaveGameState slaveGameState,MasterGameState masterGameState)
+        public GameWaitingRoomHub(SlaveGameState slaveGameState, MasterGameState masterGameState)
         {
             this.slaveGameState = slaveGameState;
             this.masterGameState = masterGameState;
@@ -41,11 +41,19 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
             WaitingRoomProxy = this.HubConnection.CreateHubProxy("GameWaitingRoomHub");
         }
         
-        public void Join()
+        public async void Join()
         {
-            InitializeEvents();
+            try
+            {
+
+                InitializeEvents();
             
-            WaitingRoomProxy.Invoke("Join", User.Instance.UserEntity);
+                await WaitingRoomProxy.Invoke("Join", User.Instance.UserEntity);
+            }
+            catch(Exception e)
+            {
+
+            }
         }
         
         public async Task LeaveGame()

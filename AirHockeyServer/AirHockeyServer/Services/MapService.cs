@@ -22,9 +22,9 @@ namespace AirHockeyServer.Services
     {
         private IMapRepository MapRepository;
 
-        public MapService(IMapRepository mapRepository)
+        public MapService()
         {
-            MapRepository = mapRepository;
+            MapRepository = new MapRepository();
         }
 
         ////////////////////////////////////////////////////////////////////////

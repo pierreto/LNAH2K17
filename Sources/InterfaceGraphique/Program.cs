@@ -141,10 +141,15 @@ namespace InterfaceGraphique
         private static void InitializeUnityDependencyInjection()
         {
             unityContainer = new UnityContainer();
-            unityContainer.RegisterType<IBaseHub, ChatHub>(new ContainerControlledLifetimeManager());
-            unityContainer.RegisterType<IBaseHub,GameWaitingRoomHub>(new ContainerControlledLifetimeManager());
-            unityContainer.RegisterType<IBaseHub, TournamentWaitingRoomHub>(new ContainerControlledLifetimeManager());
-            unityContainer.RegisterType<IBaseHub,GameHub>(new ContainerControlledLifetimeManager());
+            //unityContainer.RegisterType<IBaseHub, ChatHub>(new ContainerControlledLifetimeManager());
+            //unityContainer.RegisterType<IBaseHub,GameWaitingRoomHub>(new ContainerControlledLifetimeManager());
+            //unityContainer.RegisterType<IBaseHub, TournamentWaitingRoomHub>(new ContainerControlledLifetimeManager());
+            //unityContainer.RegisterType<IBaseHub,GameHub>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterInstance<ChatHub>(new ChatHub());
+            unityContainer.RegisterInstance(new GameHub());
+            unityContainer.RegisterInstance(new GameWaitingRoomHub(new Game.GameState.SlaveGameState(unityContainer.Resolve<GameHub>()), new Game.GameState.MasterGameState(unityContainer.Resolve<GameHub>())));
+            unityContainer.RegisterInstance(new TournamentWaitingRoomHub(new Game.GameState.SlaveGameState(unityContainer.Resolve<GameHub>()), new Game.GameState.MasterGameState(unityContainer.Resolve<GameHub>())));
+
             unityContainer.RegisterType<MatchmakingViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<ChatViewModel>();
             unityContainer.RegisterType<TournamentViewModel>(new ContainerControlledLifetimeManager());
