@@ -15,7 +15,8 @@ using InterfaceGraphique.CommunicationInterface;
 using InterfaceGraphique.Controls.WPF.Home;
 using System.Net.Http;
 
-namespace InterfaceGraphique {
+namespace InterfaceGraphique
+{
 
     ///////////////////////////////////////////////////////////////////////////
     /// @class MainMenu
@@ -23,7 +24,8 @@ namespace InterfaceGraphique {
     /// @author Julien Charbonneau
     /// @date 2016-09-13
     ///////////////////////////////////////////////////////////////////////////
-    public partial class MainMenu : Form {
+    public partial class MainMenu : Form
+    {
 
         static HttpClient client = new HttpClient();
         ////////////////////////////////////////////////////////////////////////
@@ -44,7 +46,8 @@ namespace InterfaceGraphique {
         /// @return Void
         ///
         ////////////////////////////////////////////////////////////////////////
-        private void InitializeEvents() {
+        private void InitializeEvents()
+        {
 
             this.boutonPartieRapide.Click += (sender, e) => Program.QuickPlayMenu.ShowDialog();
 
@@ -78,7 +81,8 @@ namespace InterfaceGraphique {
         /// @return     Void
         ///
         ////////////////////////////////////////////////////////////////////////
-        public void MettreAJour(double tempsInterAffichage) {
+        public void MettreAJour(double tempsInterAffichage)
+        {
 
         }
 
@@ -92,7 +96,8 @@ namespace InterfaceGraphique {
         /// @return     Void
         /// 
         ////////////////////////////////////////////////////////////////////////
-        private void WindowSizeChanged(object sender, EventArgs e) {
+        private void WindowSizeChanged(object sender, EventArgs e)
+        {
             this.Size = new Size(Program.FormManager.ClientSize.Width, Program.FormManager.ClientSize.Height);
         }
 
@@ -106,7 +111,8 @@ namespace InterfaceGraphique {
         /// @return Void
         ///
         ////////////////////////////////////////////////////////////////////////
-        public void InitializeOpenGlPanel() {
+        public void InitializeOpenGlPanel()
+        {
             Program.FormManager.SizeChanged += new EventHandler(WindowSizeChanged);
         }
 
@@ -119,7 +125,8 @@ namespace InterfaceGraphique {
         /// @return Void 
         ///
         ////////////////////////////////////////////////////////////////////////
-        public void UnsuscribeEventHandlers() {
+        public void UnsuscribeEventHandlers()
+        {
             Program.FormManager.SizeChanged -= new EventHandler(WindowSizeChanged);
         }
     }

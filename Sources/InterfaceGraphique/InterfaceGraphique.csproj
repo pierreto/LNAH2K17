@@ -14,6 +14,8 @@
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <IsWebBootstrapper>false</IsWebBootstrapper>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -28,8 +30,6 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -165,6 +165,22 @@
     <Compile Include="Controls\OnlineTournament.Designer.cs">
       <DependentUpon>OnlineTournament.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\WPF\Chat\Channel\ChannelView.xaml.cs">
+      <DependentUpon>ChannelView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WPF\Chat\Channel\ChatListView.xaml.cs">
+      <DependentUpon>ChatListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WPF\Chat\Channel\ChatListItemView.xaml.cs">
+      <DependentUpon>ChatListItemView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WPF\Chat\Channel\ChatListItemViewModel.cs" />
+    <Compile Include="Controls\WPF\Chat\Channel\ChatListViewModel.cs" />
+    <Compile Include="Controls\WPF\Chat\TestChatView.xaml.cs">
+      <DependentUpon>TestChatView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WPF\Converters\BaseValueConverter.cs" />
+    <Compile Include="Controls\WPF\Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Controls\WPF\Navigation\NavigationView.xaml.cs">
       <DependentUpon>NavigationView.xaml</DependentUpon>
     </Compile>
@@ -348,6 +364,12 @@
     <Compile Include="Menus\QuickPlayMenu.Designer.cs">
       <DependentUpon>QuickPlayMenu.cs</DependentUpon>
     </Compile>
+    <Compile Include="Menus\TestChatMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Menus\TestChatMenu.Designer.cs">
+      <DependentUpon>TestChatMenu.cs</DependentUpon>
+    </Compile>
     <Compile Include="Menus\TournementMenu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -431,6 +453,9 @@
     <EmbeddedResource Include="Menus\QuickPlayMenu.resx">
       <DependentUpon>QuickPlayMenu.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Menus\TestChatMenu.resx">
+      <DependentUpon>TestChatMenu.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Menus\TournementMenu.resx">
       <DependentUpon>TournementMenu.cs</DependentUpon>
     </EmbeddedResource>
@@ -445,6 +470,11 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.manifest" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\FontAwesome.otf" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -504,7 +534,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\WPF\Chat\Channel\ChannelView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\WPF\Chat\Channel\ChatListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\WPF\Chat\Channel\ChatListItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\WPF\Chat\ChatView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\WPF\Chat\TestChatView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -532,6 +578,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\WPF\Styles\Colors.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\WPF\Tournament\TournamentView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -551,6 +601,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entities\Message\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\font-awesome.min.css" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

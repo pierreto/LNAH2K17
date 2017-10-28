@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InterfaceGraphique.Controls.WPF.Chat;
+using System;
 using System.Windows;
 
 namespace InterfaceGraphique.Controls

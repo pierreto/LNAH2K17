@@ -17,12 +17,13 @@
         <ResourceDictionary>
 
 
-            <!--<ResourceDictionary.MergedDictionaries >
+            <ResourceDictionary.MergedDictionaries >
+                <ResourceDictionary Source="../Styles/Colors.xaml" />
                 <ResourceDictionary Source="/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
                 <ResourceDictionary Source="/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
                 <ResourceDictionary Source="/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Blue.xaml" />
                 <ResourceDictionary Source="/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Green.xaml" />
-            </ResourceDictionary.MergedDictionaries>-->
+            </ResourceDictionary.MergedDictionaries>
 
             <wpf:ViewModelLocator x:Key="VMLocator" d:IsDataSource="True" />
             <DataTemplate x:Key="MessagesDataTemplate" DataType="entities:ChatMessage" >
@@ -45,44 +46,35 @@
                     </Grid>
                 </Border>
             </DataTemplate>
-            <DataTemplate x:Key="ChannelsDataTemplate" DataType="entities:ChannelEntity">
-                <Border MinHeight="40" BorderThickness="0 0 0 2" Background="#FF373A3E" 
-                        Margin="0,0,0,0" BorderBrush="#FF3C3F44" CornerRadius="2" SnapsToDevicePixels="True" Height="79"  >
-                    <Grid Margin="0,0">
-
-                        <Button Style="{DynamicResource MaterialDesignFloatingActionMiniLightButton}"
-                        Margin="0,0,0,10" HorizontalAlignment="Center"
-                        ToolTip="MaterialDesignFloatingActionMiniLightButton" Background="#FF414953" Height="59" Width="59">
-                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0"                              
-
-                                   TextWrapping="Wrap" Text="{Binding Name}" Foreground="LightGray"/>
-                        </Button>
-
-                    </Grid>
-                </Border>
-            </DataTemplate>
+         
         </ResourceDictionary>
 
     </UserControl.Resources>
-    <Grid DataContext="{Binding Source={StaticResource VMLocator}, Path=ChatViewModel}" Background="#FF373A3E">
+    <Grid>
+        <Border BorderBrush="{StaticResource VeryDarkGrayBrush}" BorderThickness="10,0,0,0" CornerRadius="5" Margin="-10" Panel.ZIndex="1">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="25" ShadowDepth="5" />
+            </Border.Effect>
+        </Border>
+        <Grid DataContext="{Binding Source={StaticResource VMLocator}, Path=ChatViewModel}" Background="{StaticResource VeryDarkGrayBrush}">
 
-        <Grid.RowDefinitions>
-            <RowDefinition/>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
 
-            <RowDefinition Height="Auto" MinHeight="47"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="98"/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
+                <RowDefinition Height="Auto" MinHeight="47"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
 
-        <Border Grid.RowSpan="1" BorderThickness="0 0 2 0" SnapsToDevicePixels="True" Height="353" VerticalAlignment="Bottom" BorderBrush="#FF414953" >
-            <ItemsControl x:Name="ChannelsItemsCtrl" Grid.Row="0" Grid.Column="0" Margin="0,0,1,0" 
-                ItemsSource="{Binding Channels}" 
+            <!-- Messages -->
+            <ItemsControl  x:Name="MessagesItemsCtrl" Grid.Row="0" Grid.Column="1" Margin="0,5,0,0" 
+
+            ItemsSource="{Binding Messages}" 
         
-                ItemTemplate="{DynamicResource ChannelsDataTemplate}"
+            ItemTemplate="{DynamicResource MessagesDataTemplate}"
 
-                ScrollViewer.VerticalScrollBarVisibility="Hidden" Height="351" VerticalAlignment="Top" ScrollViewer.PanningMode="VerticalOnly">
+                  ScrollViewer.VerticalScrollBarVisibility="Auto">
                 <i:Interaction.Behaviors>
                     <wpf:BringNewItemIntoViewBehavior/>
                 </i:Interaction.Behaviors>
@@ -94,62 +86,52 @@
                     </ControlTemplate>
                 </ItemsControl.Template>
             </ItemsControl>
-        </Border>
 
-        <!-- Messages -->
-        <ItemsControl  x:Name="MessagesItemsCtrl" Grid.Row="0" Grid.Column="1" Margin="0,5,0,0" 
-
-             ItemsSource="{Binding Messages}" 
-        
-            ItemTemplate="{DynamicResource MessagesDataTemplate}"
-
-                  ScrollViewer.VerticalScrollBarVisibility="Auto">
-            <i:Interaction.Behaviors>
-                <wpf:BringNewItemIntoViewBehavior/>
-            </i:Interaction.Behaviors>
-            <ItemsControl.Template>
-                <ControlTemplate TargetType="ItemsControl">
-                    <ScrollViewer>
-                        <ItemsPresenter/>
-                    </ScrollViewer>
-                </ControlTemplate>
-            </ItemsControl.Template>
-        </ItemsControl>
-
-        <Border Grid.Row="1" Grid.Column="1" SnapsToDevicePixels="True"
+            <Border Grid.Row="1" Grid.Column="1" SnapsToDevicePixels="True"
 
             BorderBrush="{DynamicResource MaterialDesignDivider}">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="209*"/>
-                    <ColumnDefinition Width="61*"/>
-                </Grid.ColumnDefinitions>
-                <!-- Message -->
-                <TextBox x:Name="MessageTextBox" Margin="10" MaxHeight="80"                                         
 
-                     BorderThickness="1" BorderBrush="{DynamicResource MaterialDesignDivider}"
-
-                     TextWrapping="Wrap" AcceptsReturn="True" CaretBrush="#7F000000" 
-
-
-                     VerticalScrollBarVisibility="Auto"
-
-                     Text="{Binding MessageTextBox, UpdateSourceTrigger=PropertyChanged}" Background="#FF494C51" Foreground="White">
-
-                    <TextBox.InputBindings>
-                        <KeyBinding Key="Enter" Command="{Binding EnterKeyCommand}"/>
-                    </TextBox.InputBindings>
-                </TextBox>
-                <!-- Send -->
-                <Button x:Name="SendButton" Margin="10"
+                <Grid Background="{StaticResource DarkGrayBrush}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="209*"/>
+                        <ColumnDefinition Width="61*"/>
+                    </Grid.ColumnDefinitions>
+                    <!-- Message -->
+                    <Grid>
+                        <TextBox x:Name="MessageTextBox" MaxHeight="80"
+                             BorderThickness="0"
+                                 Padding="4,0,0,0"
+                        TextWrapping="Wrap" AcceptsReturn="True" CaretBrush="#7F000000" 
+                        VerticalScrollBarVisibility="Auto"
+                        VerticalAlignment="Center"
+                        Margin="30,4,4,4"
+                                 FontSize="18"
+                        Text="{Binding MessageTextBox, UpdateSourceTrigger=PropertyChanged}"
+                        Background="Transparent" Foreground="White">
+                        </TextBox>
+                        <!-- Placeholder -->
+                        <TextBlock IsHitTestVisible="False" Text="Entrez un message ..." VerticalAlignment="Center" HorizontalAlignment="Left" Margin="40,0,0,0" Foreground="{StaticResource TextColorBrush}" FontSize="18">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, ElementName=MessageTextBox}" Value="">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Grid>
+                    <!-- Send -->
+                    <Button x:Name="SendButton" Margin="10" Background="DarkOrange"
+                            BorderThickness="0"
+                            IsDefault="True"
                     Command="{Binding SendMessageCommand}" Grid.Column="1" Height="Auto">
-                    <TextBlock>Envoyer</TextBlock>
-                </Button>
-            </Grid>
-        </Border>
-
-        <Border Grid.Row="1" Grid.Column="0">
-            <Button Content="+" Command="{Binding AddChannelCommand}" IsEnabled="true"/>
-        </Border>
+                        <TextBlock>Envoyer</TextBlock>
+                    </Button>
+                </Grid>
+            </Border>
+        </Grid>
     </Grid>
 </UserControl>

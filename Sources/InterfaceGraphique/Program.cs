@@ -41,6 +41,7 @@ namespace InterfaceGraphique
         public static Object unLock = new Object();
         public static bool peutAfficher = true;
 
+        public static TestChatMenu TestChatMenu { get { return testChatMenu; } }
         public static FormManager FormManager { get { return formManager; } }
         public static MainMenu MainMenu { get { return mainMenu; } }
         public static HomeMenu HomeMenu { get { return homeMenu; } }
@@ -61,6 +62,7 @@ namespace InterfaceGraphique
         public static EditorHost EditorHost { get { return editorHost; } set { editorHost = value; } }
 
 
+        private static TestChatMenu testChatMenu;
         private static FormManager formManager;
         private static MainMenu mainMenu;
         private static HomeMenu homeMenu;
@@ -120,6 +122,7 @@ namespace InterfaceGraphique
             quickPlay = new QuickPlay();
             testMode = new TestMode();
             generalProperties = new GeneralProperties();
+            testChatMenu = new TestChatMenu();
             //quickPlayMenu = new QuickPlayMenu();
             //tournementMenu = new TournementMenu();
             //tournementTree = new TournementTree();

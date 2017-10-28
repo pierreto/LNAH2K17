@@ -27,12 +27,12 @@ namespace InterfaceGraphique.Controls.WPF.Chat
 
         private string messageTextBox;
 
+        private string placeholder;
 
         public ChatViewModel(ChatHub chatHub)
         {
 
             ctxTaskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
-
             // Finally we move from the login page to the main menu:
             this.channels = new ObservableCollection<ChannelEntity>();
             this.mainChannel = new ChannelEntity(new ObservableCollection<ChatMessage>());
@@ -68,27 +68,14 @@ namespace InterfaceGraphique.Controls.WPF.Chat
                 return sendMessageCommand;
             }
         }
+
         private async Task SendMessage()
         {
             this.chatHub.SendMessage(new ChatMessage()
             {
                 MessageValue = this.messageTextBox,
             });
-            this.MessageTextBox = "";
-        }
-
-        private ICommand enterKeyCommand;
-        public ICommand EnterKeyCommand
-        {
-            get
-            {
-                if (enterKeyCommand == null)
-                {
-                    enterKeyCommand = new RelayCommandAsync(SendMessage, (o) => CanSendMessage());
-
-                }
-                return enterKeyCommand;
-            }
+            MessageTextBox = placeholder;
         }
 
         private ICommand addChannelCommand;
