@@ -16,6 +16,7 @@ using System.Web.SessionState;
 using System.Threading.Tasks;
 using AirHockeyServer.Events.EventManagers;
 using Microsoft.AspNet.SignalR;
+using AirHockeyServer.Entities;
 
 namespace AirHockeyServer
 {
@@ -33,6 +34,30 @@ namespace AirHockeyServer
 
             GameWaitingRoomEventManager gameWaitingRoomEventManager = new GameWaitingRoomEventManager();
             TournamentWaitingRoomEventManager tournamentWaitingRoomEventManager = new TournamentWaitingRoomEventManager();
+            Cache cache = new Cache();
+
+            ExecuteTest();
+        }
+
+        private async void ExecuteTest()
+        {
+            // TEST
+            GameService gameService = new GameService();
+
+            GameEntity game = new GameEntity
+            {
+                SelectedMap = new MapEntity
+                {
+                    Id = 10
+                },
+                Winner = new UserEntity
+                {
+                    Id = 105
+                },
+                GameId = new Random().Next()
+            };
+
+            await gameService.SaveGame(game);
         }
 
         public static void Register(HttpConfiguration config)

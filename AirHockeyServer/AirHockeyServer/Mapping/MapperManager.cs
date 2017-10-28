@@ -45,6 +45,7 @@ namespace AirHockeyServer.Mapping
                 cfg.CreateMap<UserEntity, UserPoco>();
 
                 cfg.CreateMap<StatsEntity, StatsPoco>();
+                cfg.CreateMap<StatsPoco, StatsEntity>();
 
                 cfg.CreateMap<GameEntity, GamePoco>()
                 .ForMember(

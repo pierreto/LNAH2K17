@@ -28,6 +28,7 @@ namespace AirHockeyServer.Services
         {
             this.games = new List<GameEntity>();
             GameManager = new GameManager();
+            GameRepository = new GameRepository();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -75,6 +76,11 @@ namespace AirHockeyServer.Services
         {
             // update game bd
             return gameEntity;
+        }
+
+        public async Task SaveGame(GameEntity game)
+        {
+            await GameRepository.CreateGame(game);
         }
 
         public GameEntity GetGameEntityById(int id)

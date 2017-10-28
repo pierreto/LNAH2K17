@@ -116,9 +116,9 @@ namespace AirHockeyServer.Events.EventManagers
                 //}
                 GameManager.AddGame(game);
                 HubContext.Clients.Group(game.GameId.ToString()).GameStartingEvent(game);
+                
             }
         }
-
         ////////////////////////////////////////////////////////////////////////
         ///
         /// @fn Timer CreateTimeoutTimer(Guid gameId)

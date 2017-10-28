@@ -45,9 +45,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
         {
             try
             {
-
                 InitializeEvents();
-            
                 await WaitingRoomProxy.Invoke("Join", User.Instance.UserEntity);
             }
             catch(Exception e)
