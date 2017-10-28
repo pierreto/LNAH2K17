@@ -29,8 +29,8 @@
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-NoeudAccelerateur::NoeudAccelerateur(const std::string& typeNoeud)
-	: NoeudAbstrait{ typeNoeud }, collider_{0,0,0}, desactiver_(false)
+NoeudAccelerateur::NoeudAccelerateur(const std::string& typeNoeud, const char* uuid)
+	: NoeudAbstrait{ typeNoeud, uuid }, collider_{0,0,0}, desactiver_(false)
 {
 }
 

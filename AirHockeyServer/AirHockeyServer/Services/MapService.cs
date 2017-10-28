@@ -20,7 +20,7 @@ namespace AirHockeyServer.Services
     ///////////////////////////////////////////////////////////////////////////////
     public class MapService : IMapService
     {
-        private IMapRepository MapRepository;
+        private MapRepository MapRepository;
 
         public MapService()
         {

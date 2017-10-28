@@ -9,9 +9,6 @@ namespace AirHockeyServer.Repositories
 {
     public interface IMapRepository
     {
-        Task<MapEntity> GetMapByName(string creator, string name);
-
-        Task CreateNewMap(MapEntity map);
 
         Task UpdateMap(MapEntity updatedMap);
 

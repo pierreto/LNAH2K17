@@ -28,8 +28,8 @@
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-NoeudMur::NoeudMur(const std::string& typeNoeud)
-	: NoeudAbstrait{ typeNoeud }, collider_{ glm::dvec3(0), glm::dvec3(0) }
+NoeudMur::NoeudMur(const std::string& typeNoeud, const char* uuid )
+	: NoeudAbstrait{ typeNoeud, uuid }, collider_{ glm::dvec3(0), glm::dvec3(0) }
 {
 }
 

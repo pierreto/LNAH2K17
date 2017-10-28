@@ -50,5 +50,10 @@ namespace InterfaceGraphique.Controls.WPF.Home
             Program.InitAfterConnection();
             Program.FormManager.CurrentForm = Program.MainMenu;
         }
+
+        public override void InitializeViewModel()
+        {
+           // throw new System.NotImplementedException();
+        }
     }
 }

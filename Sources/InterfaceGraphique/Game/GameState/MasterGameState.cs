@@ -15,7 +15,8 @@ namespace InterfaceGraphique.Game.GameState
         private GameHub gameHub;
         private bool gameHasEnded = false;
         private FonctionsNatives.GoalCallback callback;
-
+        private int ELapsedTime = 0;
+        private const int SERVER_INTERVAL = 5;
         public MasterGameState(GameHub gameHub)
         {
             this.gameHub = gameHub;
@@ -44,9 +45,7 @@ namespace InterfaceGraphique.Game.GameState
             player2Name.Append(gameEntity.Slave.Username);
             FonctionsNatives.setPlayerNames(player1Name, player2Name);
         }
-
-        private int elapsedTime = 0;
-        private const int UPDATE_SERVER_INTERVAL = 5;
+        
         public override void MettreAJour(double tempsInterAffichage, int neededGoalsToWin)
         {
 
@@ -58,20 +57,23 @@ namespace InterfaceGraphique.Game.GameState
             FonctionsNatives.moveMaillet();
             FonctionsNatives.animer(tempsInterAffichage);
             FonctionsNatives.dessinerOpenGL();
+            ELapsedTime++;
 
-            float[] slavePosition = new float[3];
-            float[] masterPosition = new float[3];
-            float[] puckPosition = new float[3];
-
-            if (elapsedTime >= UPDATE_SERVER_INTERVAL)
+            if (ELapsedTime >= SERVER_INTERVAL)
             {
-                elapsedTime = 0;
+                ELapsedTime = 0;
+
+                float[] slavePosition = new float[3];
+                float[] masterPosition = new float[3];
+                float[] puckPosition = new float[3];
+                
                 FonctionsNatives.getGameElementPositions(slavePosition, masterPosition, puckPosition);
 
                 gameHub.SendGameData(slavePosition, masterPosition, puckPosition);
             }
 
-            elapsedTime++;
+            ELapsedTime++;
+
 
 
         }

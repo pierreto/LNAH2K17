@@ -37,8 +37,8 @@ opengl::Nuanceur NoeudBut::nuanceurGeo_;
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-NoeudBut::NoeudBut(const std::string& typeNoeud)
-	: NoeudAbstrait{ typeNoeud }, sommets_{12, glm::vec3(0)}
+NoeudBut::NoeudBut(const std::string& typeNoeud, const char* uuid)
+	: NoeudAbstrait{ typeNoeud, uuid }, sommets_{12, glm::vec3(0)}
 {
 	initialiserBut();
 	initialiserNuanceurs();

@@ -39,7 +39,7 @@ opengl::Nuanceur NoeudTable::nuanceurGeo_;
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-NoeudTable::NoeudTable(const std::string& typeNoeud)
+NoeudTable::NoeudTable(const std::string& typeNoeud, const char* uuid)
 	: NoeudComposite{ typeNoeud }, vao_(0), tampon_faces_(0), tampon_sommets_(0), showGrid_(true)
 {
 	initialiserTable();

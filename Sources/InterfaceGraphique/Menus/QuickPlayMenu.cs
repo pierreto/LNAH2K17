@@ -151,7 +151,7 @@ namespace InterfaceGraphique
             {
                 Program.FormManager.CurrentForm = Program.LobbyHost;
                 var vm = Program.unityContainer.Resolve<Controls.WPF.Matchmaking.MatchmakingViewModel>();
-                vm.Initialize();
+                vm.InitializeViewModel();
             }
         }
 
