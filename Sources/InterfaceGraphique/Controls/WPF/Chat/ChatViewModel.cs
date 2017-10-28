@@ -11,15 +11,13 @@ using InterfaceGraphique.CommunicationInterface;
 using InterfaceGraphique.Entities;
 using InterfaceGraphique.Exceptions;
 using InterfaceGraphique.Menus;
+using InterfaceGraphique.Controls.WPF.Chat.Channel;
 
 namespace InterfaceGraphique.Controls.WPF.Chat
 {
     public class ChatViewModel : ViewModelBase
     {
         private ChatHub chatHub;
-        private string username;
-        private ObservableCollection<ChannelEntity> channels;
-        private ObservableCollection<ChatMessage> messages;
         private ChannelEntity mainChannel;
         private ChannelEntity currentChannel;
         private TaskFactory ctxTaskFactory;
@@ -27,32 +25,13 @@ namespace InterfaceGraphique.Controls.WPF.Chat
 
         private string messageTextBox;
 
-        private string placeholder;
-
         public ChatViewModel(ChatHub chatHub)
         {
-
-            ctxTaskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
-            // Finally we move from the login page to the main menu:
-            this.channels = new ObservableCollection<ChannelEntity>();
-            this.mainChannel = new ChannelEntity(new ObservableCollection<ChatMessage>());
-            this.messages=new ObservableCollection<ChatMessage>();
-
             this.chatHub = chatHub;
             chatHub.NewMessage += NewMessage;
-            this.currentChannel = mainChannel;
 
-            this.Channels.Add(new ChannelEntity(new ObservableCollection<ChatMessage>())
-            {
-                Name = "Principal"
-            });
-
-        }
-
-
-        public override void InitializeViewModel()
-        {
-            //Empty for the moment
+            ctxTaskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
+            this.currentChannel = CurrentChannel;
         }
 
         private ICommand sendMessageCommand;
@@ -74,29 +53,9 @@ namespace InterfaceGraphique.Controls.WPF.Chat
             this.chatHub.SendMessage(new ChatMessage()
             {
                 MessageValue = this.messageTextBox,
+                SentByMe = false
             });
-            MessageTextBox = placeholder;
-        }
-
-        private ICommand addChannelCommand;
-        public ICommand AddChannelCommand
-        {
-            get
-            {
-                if (addChannelCommand == null)
-                {
-                    addChannelCommand = new RelayCommandAsync(AddChannel);
-
-                }
-                return addChannelCommand;
-            }
-        }
-        private async Task AddChannel()
-        {
-            this.Channels.Add(new ChannelEntity(new ObservableCollection<ChatMessage>())
-            {
-                Name = "Principal"
-            });
+            MessageTextBox = "";
         }
 
         private bool CanSendMessage()
@@ -121,6 +80,8 @@ namespace InterfaceGraphique.Controls.WPF.Chat
                 }
                 currentChannel = value;
                 this.OnPropertyChanged();
+                //To update messages...
+                Messages = Messages;
             }
         }
 
@@ -128,14 +89,28 @@ namespace InterfaceGraphique.Controls.WPF.Chat
         {
             ctxTaskFactory.StartNew(() =>
             {
-                this.messages.Add(message);
-            }).Wait();     
+                CurrentChannel.Messages.Add(message);
+            }).Wait();
         }
 
         public ObservableCollection<ChatMessage> Messages
         {
-            get => messages;
-            set => messages = value;
+            get
+            {
+                if (CurrentChannel != null)
+                {
+                    return CurrentChannel.Messages;
+                }
+                return null;
+            }
+            set
+            {
+                if (CurrentChannel != null)
+                {
+                    CurrentChannel.Messages = value;
+                    this.OnPropertyChanged();
+                }
+            }
         }
 
         public string MessageTextBox
@@ -148,20 +123,9 @@ namespace InterfaceGraphique.Controls.WPF.Chat
             }
         }
 
-        public ObservableCollection<ChannelEntity> Channels
+        public override void InitializeViewModel()
         {
-            get => channels;
-            set
-            {
-                this.channels = value;
-                this.OnPropertyChanged();
-            }
-        }
-
-        public ChannelEntity CurrentChannel1
-        {
-            get => currentChannel;
-            set => currentChannel = value;
+            //Empty for the moment
         }
 
     }

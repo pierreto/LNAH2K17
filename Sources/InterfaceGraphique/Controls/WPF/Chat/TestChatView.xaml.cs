@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MaterialDesignThemes.Wpf;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,7 @@ namespace InterfaceGraphique.Controls.WPF.Chat
         public TestChatView()
         {
             InitializeComponent();
+            ShadowAssist.SetShadowDepth(this, ShadowDepth.Depth0);
         }
     }
 }

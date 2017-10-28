@@ -30,12 +30,17 @@ namespace InterfaceGraphique.CommunicationInterface
             this.gameGuid = gameGuid;
 
             // Étape necessaire pour que le serveur sache que la connexion est reliée au bon userId:
-           // await gameHubProxy.Invoke("JoinRoom", gameGuid);
-
-            gameHubProxy.On<GameDataMessage>("ReceivedGameData", message =>
+            // await gameHubProxy.Invoke("JoinRoom", gameGuid);
+            try
             {
-                NewPositions?.Invoke(message);
-            });
+                gameHubProxy.On<GameDataMessage>("ReceivedGameData", message =>
+                {
+                    NewPositions?.Invoke(message);
+                });
+            }catch(Exception e)
+            {
+
+            }
 
             gameHubProxy.On<GoalMessage>("ReceivedGoal", message =>
             {

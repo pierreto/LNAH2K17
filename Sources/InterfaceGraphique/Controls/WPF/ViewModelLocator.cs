@@ -42,10 +42,6 @@ namespace InterfaceGraphique.Controls.WPF
             get { return container.Resolve<SignupViewModel>(); }
         }
 
-        public ChatViewModel ChatViewModel
-        {
-            get { return container.Resolve<ChatViewModel>(); }
-        }
 
         public ChatListViewModel ChatListViewModel
         {
@@ -55,6 +51,10 @@ namespace InterfaceGraphique.Controls.WPF
         public ChatListItemViewModel ChatListItemViewModel
         {
             get { return container.Resolve<ChatListItemViewModel>(); }
+        }
+        public ChatViewModel ChatViewModel
+        {
+            get { return container.Resolve<ChatViewModel>(); }
         }
         public MatchmakingViewModel MatchmakingViewModel
         {

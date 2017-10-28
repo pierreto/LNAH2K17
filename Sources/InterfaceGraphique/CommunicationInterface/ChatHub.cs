@@ -47,16 +47,17 @@ namespace InterfaceGraphique.CommunicationInterface
             });
         }
 
-        public async Task Logout()
-        {
-           await chatHubProxy?.Invoke("Disconnect", User.Instance.UserEntity.Username);
-        }
-
         public async void SendMessage(ChatMessage message)
         {
             message.Sender = User.Instance.UserEntity.Username;
             message.TimeStamp = DateTime.Now;
             await chatHubProxy.Invoke("SendBroadcast", message);
         }
+
+        public async Task Logout()
+        {
+           await chatHubProxy?.Invoke("Disconnect", User.Instance.UserEntity.Username);
+        }
+
     }
 }

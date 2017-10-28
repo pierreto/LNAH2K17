@@ -20,6 +20,11 @@
                             <!-- Content -->
                             <Border x:Name="background" Background="{StaticResource DarkGrayBrush}" BorderBrush="{StaticResource VeryDarkGrayBrush}" BorderThickness="0,0,0,2">
 
+                                <!-- Click to open message -->
+                                <Border.InputBindings>
+                                    <MouseBinding MouseAction="LeftClick" Command="{Binding OpenChannelCommand}" />
+                                </Border.InputBindings>
+                                
                                 <Grid x:Name="container" Background="Transparent">
                                     <Grid.ColumnDefinitions>
                                         <!-- New Message Indicator Bar -->
@@ -123,9 +128,9 @@
     </UserControl.Resources>
 
     <ContentControl Style="{StaticResource ContentStyle}">
-        <ContentControl.DataContext>
+        <!--<ContentControl.DataContext>
             <Binding Path="ChatListItemViewModel" Source="{StaticResource VMLocator}"/>
-        </ContentControl.DataContext>
+        </ContentControl.DataContext>-->
     </ContentControl>
 
 </UserControl>

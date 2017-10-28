@@ -32,6 +32,7 @@ using InterfaceGraphique.Controls.WPF.Home;
 using InterfaceGraphique.Controls.WPF.ConnectServer;
 using InterfaceGraphique.Controls.WPF.Signup;
 using InterfaceGraphique.Services;
+using InterfaceGraphique.Controls.WPF.Chat.Channel;
 
 namespace InterfaceGraphique
 {
@@ -163,14 +164,15 @@ namespace InterfaceGraphique
 
             //View models instantiations
             unityContainer.RegisterType<MatchmakingViewModel>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<ChatListViewModel>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<ChatListItemViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<ChatViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<TournamentViewModel>(new ContainerControlledLifetimeManager());
-            unityContainer.RegisterType<AuthenticateViewModel>();
-            unityContainer.RegisterType<SignupViewModel>();
-            unityContainer.RegisterType<HomeViewModel>();
-            unityContainer.RegisterType<ConnectServerViewModel>(); 
+            unityContainer.RegisterType<AuthenticateViewModel>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<ConnectServerViewModel>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<SignupViewModel>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<HomeViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<EditorViewModel>(new ContainerControlledLifetimeManager());
-
 
             //Rest services instantiations
             unityContainer.RegisterType<MapService>();

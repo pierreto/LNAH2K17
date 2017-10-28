@@ -12,8 +12,13 @@ namespace InterfaceGraphique.Controls.WPF
     public abstract class ViewModelBase : INotifyPropertyChanged
     {
         public string Title { get; set; }
-        public string Hidden { get; set; }
+        public string Visibility { get; set; }
 
+        public ViewModelBase()
+        {
+            Visibility = "Visible";
+            Title = "";
+        }
         private ICommand backCommand;
         public ICommand BackCommand
         {

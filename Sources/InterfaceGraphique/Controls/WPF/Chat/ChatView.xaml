@@ -10,13 +10,12 @@
              xmlns:wpf="clr-namespace:InterfaceGraphique.Controls.WPF"
              xmlns:interfaceGraphique="clr-namespace:InterfaceGraphique"
              xmlns:entities="clr-namespace:InterfaceGraphique.Entities"
+             xmlns:convert="clr-namespace:InterfaceGraphique.Controls.WPF.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="600"
              >
     <UserControl.Resources>
         <ResourceDictionary>
-
-
             <ResourceDictionary.MergedDictionaries >
                 <ResourceDictionary Source="../Styles/Colors.xaml" />
                 <ResourceDictionary Source="/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
@@ -28,21 +27,22 @@
             <wpf:ViewModelLocator x:Key="VMLocator" d:IsDataSource="True" />
             <DataTemplate x:Key="MessagesDataTemplate" DataType="entities:ChatMessage" >
 
-                <Border Name="MessageBorder" MinHeight="40" BorderThickness="0 0 0 2" Background="#FF373A3E" 
-                        Margin="10,0,10,0" BorderBrush="#FF3C3F44" CornerRadius="2" SnapsToDevicePixels="True"  >
+                <Border Name="MessageBorder" MinHeight="40" BorderThickness="0 0 0 2" Background="{StaticResource DarkGrayBrush}" 
+                        Margin="10" BorderBrush="#FF3C3F44" CornerRadius="10" SnapsToDevicePixels="True" Padding="8" MinWidth="150" 
+                        HorizontalAlignment="{Binding Sender, Converter={convert:SentByMeToAlignmentConverter}}">
                     <Grid>
 
                         <TextBlock VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="7,3,7,0"                                
                                    FontWeight="Bold" 
-                                   TextWrapping="Wrap" Text="{Binding Sender}" Foreground="White"/>
-                        <TextBlock VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="7,20,7,0"                                
+                                   TextWrapping="Wrap" Text="{Binding Sender}" Foreground="{StaticResource TextColorBrush}"/>
+                        <TextBlock VerticalAlignment="Stretch" Margin="7,20,7,0"                                
 
                                    TextWrapping="Wrap" Text="{Binding MessageValue}" Foreground="LightGray"/>
                         <TextBlock Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Stretch"
 
                                Margin="0,0,5,0" FontSize="10" Opacity="0.8"
 
-                               Text="{Binding TimeStamp, StringFormat={}{0:t}}" Foreground="#FFACACAC"/>
+                               Text="{Binding TimeStamp, StringFormat={}{0:t}}" Foreground="{StaticResource TextColorBrush}"/>
                     </Grid>
                 </Border>
             </DataTemplate>
@@ -51,12 +51,12 @@
 
     </UserControl.Resources>
     <Grid>
-        <Border BorderBrush="{StaticResource VeryDarkGrayBrush}" BorderThickness="10,0,0,0" CornerRadius="5" Margin="-10" Panel.ZIndex="1">
+        <Border BorderBrush="{StaticResource VeryDarkGrayBrush}" BorderThickness="10,0,0,0" CornerRadius="5" Margin="-14" Panel.ZIndex="1">
             <Border.Effect>
-                <DropShadowEffect BlurRadius="25" ShadowDepth="5" />
+                <DropShadowEffect BlurRadius="20" ShadowDepth="5" />
             </Border.Effect>
         </Border>
-        <Grid DataContext="{Binding Source={StaticResource VMLocator}, Path=ChatViewModel}" Background="{StaticResource VeryDarkGrayBrush}">
+        <Grid Background="{StaticResource VeryDarkGrayBrush}">
 
             <Grid.RowDefinitions>
                 <RowDefinition/>
@@ -69,7 +69,6 @@
 
             <!-- Messages -->
             <ItemsControl  x:Name="MessagesItemsCtrl" Grid.Row="0" Grid.Column="1" Margin="0,5,0,0" 
-
             ItemsSource="{Binding Messages}" 
         
             ItemTemplate="{DynamicResource MessagesDataTemplate}"
