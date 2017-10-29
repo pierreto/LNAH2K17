@@ -89,7 +89,7 @@ extern "C" {
 	
 	__declspec(dllexport) void masterGoal();
 
-	__declspec(dllexport) void createPortal(float* startPos, float* endPosd);
+	__declspec(dllexport) void createPortal(char* startUuid, float* startPos, char* endUuid, float* endPos);
 	typedef void(__stdcall * PortalCreationCallback)(char* startUuid, const float* startPos, char* endUuid, const float* endPosd);
 	__declspec(dllexport) void setPortalCreationCallback(PortalCreationCallback callback);
 

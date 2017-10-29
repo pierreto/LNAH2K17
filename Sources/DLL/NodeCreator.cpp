@@ -31,17 +31,21 @@ NodeCreator::~NodeCreator()
 		libererInstance();
 	}
 }
-void NodeCreator::createPortal(glm::vec3 portal1Pos, glm::vec3 portal2Pos)
+void NodeCreator::createPortal(char* startUuid, glm::vec3 portal1Pos, char* endUuid, glm::vec3 portal2Pos)
 {
 
-	NoeudPortail* noeud1 = (NoeudPortail*)FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->creerNoeud(ArbreRenduINF2990::NOM_PORTAIL);
+	NoeudPortail* noeud1 = (NoeudPortail*)FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->creerNoeud(ArbreRenduINF2990::NOM_PORTAIL,startUuid);
 
 	noeud1->assignerPositionRelative(portal1Pos);
 
-	NoeudPortail* noeud2 = (NoeudPortail*)FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->creerNoeud(ArbreRenduINF2990::NOM_PORTAIL);
+	NoeudPortail* noeud2 = (NoeudPortail*)FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->creerNoeud(ArbreRenduINF2990::NOM_PORTAIL, endUuid);
 
 	noeud2->assignerPositionRelative(portal2Pos);
 
 	noeud1->assignerOppose(noeud2);
+	noeud2->assignerOppose(noeud1);
+
+	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->ajouter(noeud1);
+	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->ajouter(noeud2);
 
 }

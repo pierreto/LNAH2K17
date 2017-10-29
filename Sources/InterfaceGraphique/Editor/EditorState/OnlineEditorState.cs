@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -58,21 +59,27 @@ namespace InterfaceGraphique.Editor.EditorState
             FonctionsNatives.setPortalCreationCallback(this.portalCreationCallback);
 
         }
-
+        
         private void OnNewCommand(AbstractEditionCommand editionCommand)
         {
             editionCommand.ExecuteCommand();
         }
 
-        private void CurrentUserCreatedPortal(char[] startUuid, float[] startPos, char[] endUuid, float[] endPos)
+        private void CurrentUserCreatedPortal(string startUuid, IntPtr startPos, string endUuid, IntPtr endPos)
         {
-            PortalCommand portalCommand = new PortalCommand(startUuid.ToString())
+            float[] startPosA= new float[3];
+            Marshal.Copy(startPos, startPosA, 0,3);
+
+            float[] endPosA  = new float[3];
+            Marshal.Copy(endPos, endPosA, 0, 3);
+
+            PortalCommand portalCommand = new PortalCommand(startUuid)
             {
-                StartPosition = startPos,
-                EndPosition = endPos
+                EndUuid = endUuid,
+                StartPosition = startPosA,
+                EndPosition = endPosA
             };
             this.editionHub.SendEditorCommand(portalCommand);
-
         }
     }
 }

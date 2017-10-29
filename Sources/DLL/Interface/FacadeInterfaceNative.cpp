@@ -969,12 +969,12 @@ void masterGoal()
 }
 
 
-__declspec(dllexport) void createPortal(float* startPos, float* endPosd)
+__declspec(dllexport) void createPortal(char* startUuid, float* startPos, char* endUuid, float* endPos)
 {
 	glm::vec3 startPosVec = glm::make_vec3(startPos);
-	glm::vec3 endPosVec = glm::make_vec3(endPosd);
+	glm::vec3 endPosVec = glm::make_vec3(endPos);
 
-	return NodeCreator::obtenirInstance()->createPortal(startPosVec,endPosVec);
+	return NodeCreator::obtenirInstance()->createPortal(startUuid,startPosVec, endUuid,endPosVec);
 
 }
 

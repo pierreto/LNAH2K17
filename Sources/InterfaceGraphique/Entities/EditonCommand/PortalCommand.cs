@@ -9,6 +9,8 @@ namespace InterfaceGraphique.Entities.EditonCommand
 {
     class PortalCommand : AbstractEditionCommand
     {
+        public string EndUuid { get; set; }
+
         public float[] StartPosition { get; set; }
         public float[] EndPosition { get; set; }
 
@@ -18,7 +20,7 @@ namespace InterfaceGraphique.Entities.EditonCommand
 
         public override void ExecuteCommand()
         {
-            FonctionsNatives.createPortal(StartPosition,EndPosition);  
+            FonctionsNatives.createPortal( objectUuid.ToCharArray(), StartPosition, EndUuid.ToCharArray(), EndPosition);  
         }
     }
 }

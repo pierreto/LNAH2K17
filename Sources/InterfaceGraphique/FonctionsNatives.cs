@@ -203,10 +203,10 @@ namespace InterfaceGraphique {
         public static extern void masterGoal();
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void createPortal(float[] startPos, float[] endPos);
+        public static extern void createPortal(char[] startUuid, float[] startPos, char[] endUuid, float[] endPos);
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        public delegate void PortalCreationCallback(char[] startUuid, float[] startPos, char[] endUuid, float[] endPos);
+        public delegate void PortalCreationCallback([Out,MarshalAs(UnmanagedType.LPStr)] string startUuid, [Out] IntPtr startPos, [Out, MarshalAs(UnmanagedType.LPStr)]string endUuid, [Out] IntPtr endPos);
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void setPortalCreationCallback(PortalCreationCallback callback);
     }

@@ -10,7 +10,7 @@ public:
 	static void libererInstance();
 
 
-	virtual void createPortal(glm::vec3  portal1Pos, glm::vec3 portal2Pos);
+	virtual void createPortal(char* startUuid, glm::vec3 portal1Pos, char* endUuid, glm::vec3 portal2Pos);
 
 private:
 	NodeCreator();
