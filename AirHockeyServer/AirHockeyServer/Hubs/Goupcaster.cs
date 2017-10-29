@@ -60,7 +60,7 @@ namespace AirHockeyServer.Hubs
 
             if(_gameSlaveUpdated)
             {
-                _hubContext.Clients.Group(_gameId.ToString()).ReceiveSlaveData(_gameSlaveData);
+                _hubContext.Clients.Group(_gameId.ToString()).ReceivedSlaveData(_gameSlaveData);
                 _gameSlaveUpdated = false;
             }
         }

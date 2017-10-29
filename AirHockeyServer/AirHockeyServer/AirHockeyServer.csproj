@@ -250,6 +250,7 @@
     <Compile Include="Entities\StatsEntity.cs" />
     <Compile Include="Entities\TournamentEntity.cs" />
     <Compile Include="Entities\UserEntity.cs" />
+    <Compile Include="Hubs\Goupcaster.cs" />
     <Compile Include="Managers\GameManager.cs" />
     <Compile Include="Events\EventManagers\GameWaitingRoomEventManager.cs" />
     <Compile Include="Managers\TournamentManager.cs" />
