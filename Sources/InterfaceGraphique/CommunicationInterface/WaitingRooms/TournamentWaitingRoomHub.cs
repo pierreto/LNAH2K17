@@ -49,9 +49,9 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
         }
 
-        public void Join()
+        public async void Join()
         {
-            WaitingRoomProxy.Invoke("Join", User.Instance.UserEntity);
+            await WaitingRoomProxy.Invoke("Join", User.Instance.UserEntity);
         }
 
         public void Logout()
