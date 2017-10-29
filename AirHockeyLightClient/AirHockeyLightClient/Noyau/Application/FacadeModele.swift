@@ -34,7 +34,7 @@ extension JSON {
     mutating func appendArray(json:JSON){
         if var arr = self.array{
             arr.append(json)
-            self = JSON(arr);
+            self = JSON(arr)
         }
     }
 }
@@ -152,64 +152,61 @@ class FacadeModele {
     /// Modifie le modèle état en cours
     func changerModeleEtat(etat: MODELE_ETAT) {
         // Nettoyer l'état courant
-        self.etat?.nettoyerEtat();
+        self.etat?.nettoyerEtat()
         
         switch (etat) {
             case .AUCUN:
-                self.etat = nil;
-                break;
+                self.etat = nil
+                break
             case .SELECTION:
                 self.etat = ModeleEtatSelection.instance
-                break;
+                break
             case .DEPLACEMENT:
                 self.etat = ModeleEtatDeplacement.instance
-                break;
+                break
             case .ROTATION:
                 self.etat = ModeleEtatRotation.instance
-                break;
+                break
             case .MISE_A_ECHELLE:
                 self.etat = ModeleEtatScale.instance
-                break;
+                break
             case .ZOOM:
                 //self.etat = ModeleEtatZoom.instance
-                break;
+                break
             case .DUPLIQUER:
                 self.etat = ModeleEtatDuplication.instance
-                break;
+                break
             case .POINTS_CONTROLE:
                 self.etat = ModeleEtatPointControl.instance
-                break;
+                break
             case .CREATION_ACCELERATEUR:
                 self.etat = ModeleEtatCreerBoost.instance
-                break;
+                break
             case .CREATION_MURET:
                 self.etat = ModeleEtatCreerMuret.instance
-                break;
+                break
             case .CREATION_PORTAIL:
                 self.etat = ModeleEtatCreerPortail.instance
-                break;
+                break
             case .CAMERA_CONTROLE:
                 self.etat = ModeleEtatCameraControl.instance
-                break;
+                break
         }
         
         // Initialisation de l'etat
-        self.etat?.initialiser();
+        self.etat?.initialiser()
     }
     
-    /// Charger une patinoire préalablement suavegarder
-    func ouvrir(filePath: String, coefficients: [Float]) {
-        // TODO : extraire les informations de la carte à partir du file path
-        let jsonString = "{\"PointControle\":[[0, 0, 0, 0, 0, 0, 0]]," +
-                          "\"Accelerateur\":[[0, 0, 0, 0, 0, 0, 0]]," +
-                          "\"Muret\"[[0, 0, 0, 0, 0, 0, 0]]," +
-                          "\"Portail\":[[0, 0, 0, 0, 0, 0, 0]]," +
-                          "\"Coefficients\":[0, 0, 0]}"
-    
+    /// Charger une patinoire préalablement sauvegardée
+    func chargerCarte(map: MapEntity) {
         self.obtenirArbreRendu().initialiser()
         self.initializeJson()
         
-        if let dataFromString = jsonString.data(using: .utf8, allowLossyConversion: false) {
+        if map.json == nil {
+            return
+        }
+        
+        if let dataFromString = map.json!.data(using: .utf8, allowLossyConversion: false) {
             self.docJSON = JSON(data: dataFromString)
         }
         
@@ -220,16 +217,16 @@ class FacadeModele {
         self.creerNoeuds(type: "Muret", nomType: ArbreRendu.instance.NOM_MUR)
         
         /*
-        coefficients[0] = docJSON_["Coefficients"][0].GetDouble();
-        coefficients[1] = docJSON_["Coefficients"][1].GetDouble();
-        coefficients[2] = docJSON_["Coefficients"][2].GetDouble();
+        coefficients[0] = docJSON_["Coefficients"][0].GetDouble()
+        coefficients[1] = docJSON_["Coefficients"][1].GetDouble()
+        coefficients[2] = docJSON_["Coefficients"][2].GetDouble()
          */
     }
     
     /// Placer les points de contrôle sur la patinoire
     func chargerPntCtrl() {
         let table = self.arbre?.childNode(withName: ArbreRendu.instance.NOM_TABLE, recursively: true) as! NoeudTable
-        var count = 0;
+        var count = 0
         
         for child in table.childNodes {
             if child.name == ArbreRendu.instance.NOM_POINT_CONTROL {
@@ -250,6 +247,11 @@ class FacadeModele {
         let table = self.arbre?.childNode(withName: ArbreRendu.instance.NOM_TABLE, recursively: true)
         
         if nomType == ArbreRendu.instance.NOM_ACCELERATEUR || nomType == ArbreRendu.instance.NOM_MUR {
+            // S'il n'y a aucun accélérateur ou de muret dans la carte à charger
+            if self.docJSON![type].count == 0 {
+                return
+            }
+            
             for i in 0...self.docJSON![type].count - 1 {
                 let noeud: NoeudCommun
                 if nomType == ArbreRendu.instance.NOM_ACCELERATEUR {
@@ -279,6 +281,11 @@ class FacadeModele {
             }
         }
         else if nomType == ArbreRendu.instance.NOM_PORTAIL {
+            // S'il n'y a aucun portail dans la carte à charger
+            if self.docJSON![type].count == 0 {
+                return
+            }
+            
             for i in stride(from: 0, to: self.docJSON![type].count - 1, by: 2) {
                 var linkedPortals = Set<NoeudPortail>()
                 
@@ -316,14 +323,13 @@ class FacadeModele {
     }
     
     /// Cette fonction permet d'enregistrer la patinoire en format JSON
-    func sauvegarderCarte() {
+    func sauvegarderCarte(map: MapEntity) {
         self.initializeJson()
-        let visiteur = VisiteurSauvegarde();
-        self.arbre?.accepterVisiteur(visiteur: visiteur);
+        let visiteur = VisiteurSauvegarde()
+        self.arbre?.accepterVisiteur(visiteur: visiteur)
         
         // Sauver le fichier localement ou TODO : via le serveur
-        let currentDateTime = recuperateCurrentDateTime()
-        DBManager.instance.sauvegarderCarte(name: "A", creationDate: currentDateTime, creator: "B", type: "C", json: (self.docJSON?.rawString(options: []))!)
+        DBManager.instance.sauvegarderCarte(map: map)
     }
     
     private func initializeJson() {

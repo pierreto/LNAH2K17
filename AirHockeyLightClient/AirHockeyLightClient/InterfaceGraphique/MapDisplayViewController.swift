@@ -19,10 +19,11 @@ import UIKit
 /// @author Mikael Ferland
 /// @date 2017-09-27
 ///////////////////////////////////////////////////////////////////////////
-class MapDisplayViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class MapDisplayViewController: UITableViewController {
     
     private var mapsData = [MapEntity]()
     
+    //@IBOutlet weak var maps: UITableView!
     @IBOutlet weak var maps: UITableView!
     
     override func viewDidLoad() {
@@ -30,8 +31,6 @@ class MapDisplayViewController: UIViewController, UITableViewDelegate, UITableVi
         
         self.maps.delegate = self
         self.maps.dataSource = self
-        
-        self.mapsData = DBManager.instance.recupererCartes()
         
         let defaultMap = MapEntity()
         defaultMap.name = "Default map #1"
@@ -41,41 +40,33 @@ class MapDisplayViewController: UIViewController, UITableViewDelegate, UITableVi
             // Reload tableView
             self.maps.reloadData()
         })
+        
+        let addMapBtn = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addMapBtnClicked))
+        self.navigationItem.setRightBarButtonItems([addMapBtn], animated: true)
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func addMapBtnClicked(sender: AnyObject)
+    {
+        print("create map")
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return mapsData.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = maps.dequeueReusableCell(withIdentifier: "Map", for: indexPath)
         
-        let button = cell.viewWithTag(1) as! UIButton
-        button.setTitle(mapsData[indexPath.row].name, for: UIControlState.normal)
-        button.titleEdgeInsets.left = 20
+        let txtLabel = cell.viewWithTag(1) as! UILabel
+        txtLabel.text = mapsData[indexPath.row].name
         
         return cell
     }
     
-    override var shouldAutorotate: Bool {
-        return true
-    }
-    
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        if UIDevice.current.userInterfaceIdiom == .phone {
-            return .allButUpsideDown
-        } else {
-            return .all
-        }
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Release any cached data, images, etc that aren't in use.
-    }
-    
-    override var prefersStatusBarHidden: Bool {
-        return true
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let editor = storyboard?.instantiateViewController(withIdentifier: "EditorViewController") as! EditorViewController
+        editor.currentMap = self.mapsData[indexPath.row]
+        navigationController?.pushViewController(editor, animated: true)
     }
     
 }

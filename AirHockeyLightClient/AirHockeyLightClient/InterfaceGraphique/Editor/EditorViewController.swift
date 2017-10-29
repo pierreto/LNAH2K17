@@ -24,6 +24,8 @@ class EditorViewController: UIViewController {
     /// Instance singleton
     static var instance = EditorViewController()
     
+    public var currentMap: MapEntity?
+    
     @IBOutlet weak var editorView: SCNView!
     public var editorScene: SCNScene!
     public var editorNotificationScene: EditorNotificationScene?
@@ -61,6 +63,8 @@ class EditorViewController: UIViewController {
             self.editorNotificationScene?.scaleMode = .aspectFill
             self.editorView.overlaySKScene = self.editorNotificationScene
         }
+        
+        FacadeModele.instance.chargerCarte(map: currentMap!)
     }
     
     func initView() {
@@ -110,7 +114,7 @@ class EditorViewController: UIViewController {
     }
     
     @IBAction func sauvegarderCarte(_ sender: Any) {
-        FacadeModele.instance.sauvegarderCarte()
+        FacadeModele.instance.sauvegarderCarte(map: currentMap!)
     }
     
     override var shouldAutorotate: Bool {
