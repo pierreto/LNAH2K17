@@ -25,6 +25,9 @@ namespace AirHockeyServer.Hubs
     {
         protected IGameService GameService { get; }
 
+        // Is set via the constructor on each creation
+        private Groupcaster _broadcaster;
+
         ////////////////////////////////////////////////////////////////////////
         ///
         /// @fn GameWaitingRoomHub(IGameService gameService)
@@ -34,11 +37,16 @@ namespace AirHockeyServer.Hubs
         /// @return Aucune (Constructeur).
         ///
         ////////////////////////////////////////////////////////////////////////
-        public GameWaitingRoomHub()
+        public GameWaitingRoomHub(): this(Groupcaster.Instance)
         {
+        }
+
+        public GameWaitingRoomHub(Groupcaster broadcaster)
+        {
+            _broadcaster = broadcaster;
             GameService = new GameService();
         }
-        
+
         /// @fn void JoinGame(UserEntity user)
         ///
         /// Cette fonction permet de gérer la demande d'un utilisateur de se joindre à une partie. 
@@ -92,12 +100,18 @@ namespace AirHockeyServer.Hubs
 
         public void SendGameData(int gameId, GameMasterData gameData)
         {
-             Clients.Group(gameId.ToString(), Context.ConnectionId).ReceivedMasterData(gameData);
+            //Clients.Group(gameId.ToString(), Context.ConnectionId).ReceivedMasterData(gameData);
+
+            Groupcaster.Instance.SetGame(gameId);
+            Groupcaster.Instance.MasterUpdated(gameData);
         }
 
         public void SendSlaveGameData(int gameId, GameSlaveData gameData)
         {
-            Clients.Group(gameId.ToString(), Context.ConnectionId).ReceivedSlaveData(gameData);
+            //Clients.Group(gameId.ToString(), Context.ConnectionId).ReceivedSlaveData(gameData);
+
+            Groupcaster.Instance.SetGame(gameId);
+            Groupcaster.Instance.SlaveUpdated(gameData);
         }
 
         public void SendGoal(int gameId, GoalMessage goal)

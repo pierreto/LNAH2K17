@@ -12,16 +12,12 @@ namespace InterfaceGraphique.Game.GameState
 {
     public class MasterGameState : AbstractGameState
     {
-
         private GameHub gameHub;
         private bool gameHasEnded = false;
         private FonctionsNatives.GoalCallback callback;
 
         private GameMasterData LastGameDataSent { get; set; }
-
-        private int ELapsedTime = 0;
-        private const int SERVER_INTERVAL = 5;
-
+        
         public MasterGameState(GameHub gameHub)
         {
             this.gameHub = gameHub;
@@ -63,11 +59,12 @@ namespace InterfaceGraphique.Game.GameState
             FonctionsNatives.moveMaillet();
             FonctionsNatives.animer(tempsInterAffichage);
             FonctionsNatives.dessinerOpenGL();
-            ELapsedTime++;
 
-            if (ELapsedTime >= SERVER_INTERVAL)
+            double totalMillisec = (DateTime.Now - ElapsedTime).TotalMilliseconds;
+
+            if (totalMillisec >= SERVER_INTERVAL)
             {
-                ELapsedTime = 0;
+                ElapsedTime = DateTime.Now;
 
                 float[] slavePosition = new float[3];
                 float[] masterPosition = new float[3];
@@ -89,8 +86,7 @@ namespace InterfaceGraphique.Game.GameState
                     gameHub.SendGameData(gameData);
                 }
             }
-
-            ELapsedTime++;
+            
         }
 
         private bool IsSamePosition(float[] position1, float[] position2)

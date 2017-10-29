@@ -15,9 +15,7 @@ namespace InterfaceGraphique.Game.GameState
 
         private GameHub gameHub;
         private bool gameHasEnded = false;
-
-        protected const int INTERVAL_MIS_A_JOUR = 5;
-        protected int ElapsedTime { get; set; }
+        
         protected GameSlaveData LastSlavePositionSent { get; set; }
 
         public SlaveGameState(GameHub gameHub)
@@ -74,9 +72,11 @@ namespace InterfaceGraphique.Game.GameState
         {
             FonctionsNatives.opponentMouseMove(e.Location.X, e.Location.Y);
 
-            if (ElapsedTime >= INTERVAL_MIS_A_JOUR)
+            double totalMillisec = (DateTime.Now - ElapsedTime).TotalMilliseconds;
+
+            if (totalMillisec >= SERVER_INTERVAL)
             {
-                ElapsedTime = 0;
+                ElapsedTime = DateTime.Now;
                 float[] slavePosition = new float[3];
                 FonctionsNatives.getSlavePosition(slavePosition);
                 GameSlaveData gameData = new GameSlaveData
@@ -90,7 +90,6 @@ namespace InterfaceGraphique.Game.GameState
                     this.gameHub.SendGameData(gameData);
                 }
             }
-            ElapsedTime++;
         }
 
         private bool IsSamePosition(float[] position1, float[] position2)
