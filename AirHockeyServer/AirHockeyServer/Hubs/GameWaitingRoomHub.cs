@@ -95,7 +95,7 @@ namespace AirHockeyServer.Hubs
              Clients.Group(gameId.ToString(), Context.ConnectionId).ReceivedMasterData(gameData);
         }
 
-        public void SendGameData(int gameId, GameSlaveData gameData)
+        public void SendSlaveGameData(int gameId, GameSlaveData gameData)
         {
             Clients.Group(gameId.ToString(), Context.ConnectionId).ReceivedSlaveData(gameData);
         }

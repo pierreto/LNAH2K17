@@ -18,7 +18,8 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress>true</Use64BitIISExpress>
+    <Use64BitIISExpress>
+    </Use64BitIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -234,6 +235,8 @@
     <Compile Include="Entities\EditionCommand\AbstractEditionCommand.cs" />
     <Compile Include="Entities\EditionCommand\PortalCommand.cs" />
     <Compile Include="Entities\EditionCommand\WallCommand.cs" />
+    <Compile Include="Entities\Messages\GameMasterData.cs" />
+    <Compile Include="Entities\Messages\GameSlaveData.cs" />
     <Compile Include="Entities\OnlineEditedMapInfo.cs" />
     <Compile Include="Entities\PasswordEntity.cs" />
     <Compile Include="Entities\Entity.cs" />
@@ -374,7 +377,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Entities\Messages\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
