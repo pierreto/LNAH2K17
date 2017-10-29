@@ -109,7 +109,7 @@ namespace AirHockeyServer.Hubs
 
         public void SendSlaveGameData(int gameId, GameSlaveData gameData)
         {
-            Clients.Group(gameId.ToString(), Context.ConnectionId).ReceivedSlaveData(gameData);
+            //Clients.Group(gameId.ToString(), Context.ConnectionId).ReceivedSlaveData(gameData);
 
             Groupcaster.Instance.SetGame(gameId);
             Groupcaster.Instance.SlaveUpdated(gameData);

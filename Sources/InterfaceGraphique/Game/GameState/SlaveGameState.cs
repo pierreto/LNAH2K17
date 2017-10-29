@@ -56,6 +56,28 @@ namespace InterfaceGraphique.Game.GameState
         {
             FonctionsNatives.animer(tempsInterAffichage);
             FonctionsNatives.dessinerOpenGL();
+
+            double totalMillisec = (DateTime.Now - ElapsedTime).TotalMilliseconds;
+
+            if (totalMillisec >= SERVER_INTERVAL)
+            {
+                ElapsedTime = DateTime.Now;
+
+                float[] slavePosition = new float[3];
+                FonctionsNatives.getSlavePosition(slavePosition);
+                GameSlaveData gameData = new GameSlaveData
+                {
+                    SlavePosition = slavePosition
+                };
+
+                if (!IsSamePosition(LastSlavePositionSent.SlavePosition, gameData.SlavePosition))
+                {
+                    LastSlavePositionSent = gameData;
+                    //Log(DateTime.Now.ToLongTimeString() + " Master: " + PrintPosition(gameData.MasterPosition)
+                    //+ " Puck: " + PrintPosition(gameData.PuckPosition));
+                    gameHub.SendGameData(gameData);
+                }
+            }
         }
 
 
@@ -71,14 +93,14 @@ namespace InterfaceGraphique.Game.GameState
         public override void MouseMoved(object sender, MouseEventArgs e)
         {
             FonctionsNatives.opponentMouseMove(e.Location.X, e.Location.Y);
-            float[] slavePosition = new float[3];
-            FonctionsNatives.getSlavePosition(slavePosition);
-            GameSlaveData gameData = new GameSlaveData
-            {
-                SlavePosition = slavePosition
-            };
+            //float[] slavePosition = new float[3];
+            //FonctionsNatives.getSlavePosition(slavePosition);
+            //GameSlaveData gameData = new GameSlaveData
+            //{
+            //    SlavePosition = slavePosition
+            //};
 
-            this.gameHub.SendGameData(gameData);
+            //this.gameHub.SendGameData(gameData);
         }
 
         private bool IsSamePosition(float[] position1, float[] position2)
