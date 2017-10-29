@@ -60,11 +60,11 @@ namespace InterfaceGraphique.Game.GameState
             FonctionsNatives.animer(tempsInterAffichage);
             FonctionsNatives.dessinerOpenGL();
 
-            //double totalMillisec = (DateTime.Now - ElapsedTime).TotalMilliseconds;
+            double totalMillisec = (DateTime.Now - ElapsedTime).TotalMilliseconds;
 
-            //if (totalMillisec >= SERVER_INTERVAL)
-            //{
-            //    ElapsedTime = DateTime.Now;
+            if (totalMillisec >= SERVER_INTERVAL)
+            {
+                ElapsedTime = DateTime.Now;
 
                 float[] slavePosition = new float[3];
                 float[] masterPosition = new float[3];
@@ -81,11 +81,11 @@ namespace InterfaceGraphique.Game.GameState
                 !IsSamePosition(LastGameDataSent.PuckPosition, gameData.PuckPosition))
             {
                 LastGameDataSent = gameData;
-                Log(DateTime.Now.ToLongTimeString() + " Master: " + PrintPosition(gameData.MasterPosition)
-                + " Puck: " + PrintPosition(gameData.PuckPosition));
+                //Log(DateTime.Now.ToLongTimeString() + " Master: " + PrintPosition(gameData.MasterPosition)
+                //+ " Puck: " + PrintPosition(gameData.PuckPosition));
             gameHub.SendGameData(gameData);
             }
-            //}
+            }
         }
 
         private bool IsSamePosition(float[] position1, float[] position2)
@@ -161,6 +161,7 @@ namespace InterfaceGraphique.Game.GameState
 
         private void OnNewGamePositions(GameSlaveData gameData)
         {
+            Log(PrintPosition(gameData.SlavePosition));
             if (!gameHasEnded)
             {
                 FonctionsNatives.setMasterGameElementPositions(gameData.SlavePosition);
