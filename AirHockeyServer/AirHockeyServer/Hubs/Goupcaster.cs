@@ -11,7 +11,7 @@ namespace AirHockeyServer.Hubs
         private readonly static Lazy<Groupcaster> _instance = new Lazy<Groupcaster>(() => new Groupcaster());
 
         // We're going to broadcast to all clients a maximum of 25 times per second
-        private readonly TimeSpan BroadcastInterval = TimeSpan.FromMilliseconds(40);
+        private readonly TimeSpan BroadcastInterval = TimeSpan.FromMilliseconds(20);
 
         private readonly IHubContext _hubContext;
 

@@ -47,11 +47,14 @@ namespace AirHockeyServer.Events.EventManagers
             }
             
             var connection = ConnectionMapper.GetConnection(user.Id);
-            await HubContext.Groups.Add(connection, Tournament.Id.ToString());
+
+            var tournamentId = Tournament.Id.ToString();
+            await HubContext.Groups.Add(connection, tournamentId);
+
 
             Tournament.Players.Add(user);
 
-            HubContext.Clients.Group(Tournament.Id.ToString()).OpponentFoundEvent(Tournament.Players);
+            HubContext.Clients.Group(tournamentId).OpponentFoundEvent(Tournament.Players);
 
             if (Tournament.Players.Count == 4)
             {
