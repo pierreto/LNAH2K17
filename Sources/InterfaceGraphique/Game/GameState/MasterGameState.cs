@@ -86,8 +86,7 @@ namespace InterfaceGraphique.Game.GameState
                     gameHub.SendGameData(gameData);
                 }
             }
-            
-        }
+                      }
 
         private bool IsSamePosition(float[] position1, float[] position2)
         {

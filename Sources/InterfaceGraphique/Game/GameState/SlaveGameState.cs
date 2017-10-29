@@ -72,10 +72,10 @@ namespace InterfaceGraphique.Game.GameState
         {
             FonctionsNatives.opponentMouseMove(e.Location.X, e.Location.Y);
 
-            double totalMillisec = (DateTime.Now - ElapsedTime).TotalMilliseconds;
+            //double totalMillisec = (DateTime.Now - ElapsedTime).TotalMilliseconds;
 
-            if (totalMillisec >= SERVER_INTERVAL)
-            {
+            //if (totalMillisec >= SERVER_INTERVAL)
+            //{
                 ElapsedTime = DateTime.Now;
                 float[] slavePosition = new float[3];
                 FonctionsNatives.getSlavePosition(slavePosition);
@@ -89,7 +89,7 @@ namespace InterfaceGraphique.Game.GameState
                     LastSlavePositionSent = gameData;
                     this.gameHub.SendGameData(gameData);
                 }
-            }
+            //}
         }
 
         private bool IsSamePosition(float[] position1, float[] position2)
