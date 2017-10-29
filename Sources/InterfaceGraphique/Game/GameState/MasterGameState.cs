@@ -60,11 +60,11 @@ namespace InterfaceGraphique.Game.GameState
             FonctionsNatives.animer(tempsInterAffichage);
             FonctionsNatives.dessinerOpenGL();
 
-            double totalMillisec = (DateTime.Now - ElapsedTime).TotalMilliseconds;
+            //double totalMillisec = (DateTime.Now - ElapsedTime).TotalMilliseconds;
 
-            if (totalMillisec >= SERVER_INTERVAL)
-            {
-                ElapsedTime = DateTime.Now;
+            //if (totalMillisec >= SERVER_INTERVAL)
+            //{
+            //    ElapsedTime = DateTime.Now;
 
                 float[] slavePosition = new float[3];
                 float[] masterPosition = new float[3];
@@ -77,15 +77,15 @@ namespace InterfaceGraphique.Game.GameState
                     PuckPosition = puckPosition
                 };
 
-                if(!IsSamePosition(LastGameDataSent.MasterPosition,gameData.MasterPosition) ||
-                    !IsSamePosition(LastGameDataSent.PuckPosition , gameData.PuckPosition))
-                {
-                    LastGameDataSent = gameData;
-                    Log(DateTime.Now.ToLongTimeString() + " Master: " + PrintPosition(gameData.MasterPosition)
-                        + " Puck: " + PrintPosition(gameData.PuckPosition));
+                //if(!IsSamePosition(LastGameDataSent.MasterPosition,gameData.MasterPosition) ||
+                //    !IsSamePosition(LastGameDataSent.PuckPosition , gameData.PuckPosition))
+                //{
+                    //LastGameDataSent = gameData;
+                    //Log(DateTime.Now.ToLongTimeString() + " Master: " + PrintPosition(gameData.MasterPosition)
+                    //    + " Puck: " + PrintPosition(gameData.PuckPosition));
                     gameHub.SendGameData(gameData);
-                }
-            }
+                //}
+            //}
                       }
 
         private bool IsSamePosition(float[] position1, float[] position2)
@@ -111,9 +111,6 @@ namespace InterfaceGraphique.Game.GameState
         public override void MouseMoved(object sender, MouseEventArgs e)
         {
             FonctionsNatives.playerMouseMove(e.Location.X, e.Location.Y);
-
-
-
         }
         ////////////////////////////////////////////////////////////////////////
         ///

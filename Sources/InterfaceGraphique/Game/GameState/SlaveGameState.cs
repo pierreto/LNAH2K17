@@ -84,11 +84,11 @@ namespace InterfaceGraphique.Game.GameState
                     SlavePosition = slavePosition
                 };
 
-                if (!IsSamePosition(gameData.SlavePosition, LastSlavePositionSent.SlavePosition))
-                {
-                    LastSlavePositionSent = gameData;
+                //if (!IsSamePosition(gameData.SlavePosition, LastSlavePositionSent.SlavePosition))
+                ////{
+                //    LastSlavePositionSent = gameData;
                     this.gameHub.SendGameData(gameData);
-                }
+                //}
             //}
         }
 
