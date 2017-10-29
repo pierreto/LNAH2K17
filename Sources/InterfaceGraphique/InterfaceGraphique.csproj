@@ -252,6 +252,8 @@
     <Compile Include="Entities\MapEntity.cs" />
     <Compile Include="Entities\MemberEntity.cs" />
     <Compile Include="CommunicationInterface\LoginClient.cs" />
+    <Compile Include="Entities\Message\GameMasterData.cs" />
+    <Compile Include="Entities\Message\GameSlaveData.cs" />
     <Compile Include="Entities\TournamentEntity.cs" />
     <Compile Include="Entities\MockObject\MapEntityMock.cs" />
     <Compile Include="Entities\TournamentOpponentMessage.cs" />
@@ -548,9 +550,7 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Entities\Message\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

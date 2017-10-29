@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using InterfaceGraphique.Entities;
 using Microsoft.AspNet.SignalR.Client;
 using InterfaceGraphique.CommunicationInterface.WaitingRooms;
+using InterfaceGraphique.Entities.Message;
 
 namespace InterfaceGraphique.CommunicationInterface
 {
@@ -67,10 +68,8 @@ namespace InterfaceGraphique.CommunicationInterface
             });
         }
 
-        public void SendGameData(float[] slavePosition, float[] masterPosition, float[] puckPosition)
+        public void SendGameData(GameMasterData gameDataMessage)
         {
-            GameDataMessage gameDataMessage = new GameDataMessage(slavePosition, masterPosition,puckPosition);
-
             gameHubProxy.Invoke("SendGameData", gameGuid, gameDataMessage);
         }
 

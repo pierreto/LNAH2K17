@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using InterfaceGraphique.CommunicationInterface;
 using InterfaceGraphique.Entities;
+using InterfaceGraphique.Entities.Message;
 
 namespace InterfaceGraphique.Game.GameState
 {
@@ -15,11 +16,16 @@ namespace InterfaceGraphique.Game.GameState
         private GameHub gameHub;
         private bool gameHasEnded = false;
         private FonctionsNatives.GoalCallback callback;
+
+        private GameMasterData LastGameDataSent { get; set; }
+
         private int ELapsedTime = 0;
         private const int SERVER_INTERVAL = 5;
+
         public MasterGameState(GameHub gameHub)
         {
             this.gameHub = gameHub;
+            this.LastGameDataSent = new GameMasterData();
             this.callback =
                 (player) =>
                 {
@@ -68,14 +74,35 @@ namespace InterfaceGraphique.Game.GameState
                 float[] puckPosition = new float[3];
                 
                 FonctionsNatives.getGameElementPositions(slavePosition, masterPosition, puckPosition);
+                GameMasterData gameData = new GameMasterData
+                {
+                    MasterPosition = masterPosition,
+                    PuckPosition = puckPosition
+                };
 
-                gameHub.SendGameData(slavePosition, masterPosition, puckPosition);
+                if(!IsSamePosition(LastGameDataSent.MasterPosition,gameData.MasterPosition) ||
+                    !IsSamePosition(LastGameDataSent.PuckPosition , gameData.PuckPosition))
+                {
+                    LastGameDataSent = gameData;
+                    Log(DateTime.Now.ToLongTimeString() + " Master: " + PrintPosition(gameData.MasterPosition)
+                        + " Puck: " + PrintPosition(gameData.PuckPosition));
+                    gameHub.SendGameData(gameData);
+                }
             }
 
             ELapsedTime++;
+        }
 
-
-
+        private bool IsSamePosition(float[] position1, float[] position2)
+        {
+            for(int i = 0; i < 3; i++)
+            {
+                if(!(position1[i] == position2[i]))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
         ////////////////////////////////////////////////////////////////////////
         ///
@@ -145,6 +172,20 @@ namespace InterfaceGraphique.Game.GameState
             if (!gameHasEnded)
             {
                 FonctionsNatives.setMasterGameElementPositions(gameData.SlavePosition);
+            }
+        }
+
+        private string PrintPosition(float[] position)
+        {
+            return string.Join(",", position);
+        }
+
+        private void Log(string message)
+        {
+            using (System.IO.StreamWriter file =
+            new System.IO.StreamWriter(@"C:\dev\log.txt", true))
+            {
+                file.WriteLine(message);
             }
         }
     }
