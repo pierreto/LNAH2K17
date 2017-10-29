@@ -77,7 +77,7 @@ namespace InterfaceGraphique.CommunicationInterface
 
         public void SendGameData(GameSlaveData gameDataMessage)
         {
-            gameHubProxy.Invoke("SendGameData", gameGuid, gameDataMessage);
+            gameHubProxy.Invoke("SendSlaveGameData", gameGuid, gameDataMessage);
         }
 
         public void SendGameOver()
