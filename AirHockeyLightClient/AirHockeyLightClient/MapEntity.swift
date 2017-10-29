@@ -8,7 +8,7 @@
 /// @{
 ///////////////////////////////////////////////////////////////////////////////
 
-import Foundation
+import RealmSwift
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class MapEntity
@@ -17,33 +17,13 @@ import Foundation
 /// @author Mikael Ferland
 /// @date 2017-10-01
 ///////////////////////////////////////////////////////////////////////////
-class MapEntity : Entity {
+class MapEntity : Object {
     
-    private var name: String
-    private var creationDate: String?
-    private var creator: String?
-    private var type: String?
-    private var json: String?
-    
-    init(name: String) {
-        self.name = name;
-    }
-    
-    public func getName() -> String {
-        return self.name
-    }
-    
-    public func setName(name: String) {
-        self.name = name
-    }
-    
-    public func getJson() -> String {
-        return self.json!
-    }
-    
-    public func setJson(name: String) {
-        self.json = name
-    }
+    dynamic var name: String?
+    dynamic var creationDate: String?
+    dynamic var creator: String?
+    dynamic var type: String?
+    dynamic var json: String?
     
 }
 

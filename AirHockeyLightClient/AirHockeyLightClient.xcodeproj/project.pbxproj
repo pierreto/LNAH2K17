@@ -27,6 +27,7 @@
 		1DFE2E4C1F91A8FD0048892D /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFE2E4B1F91A8FD0048892D /* SignupViewController.swift */; };
 		25163A891F9CE62600142418 /* ILoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25163A881F9CE62500142418 /* ILoginViewModel.swift */; };
 		25163A8B1F9CED9E00142418 /* MapDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25163A8A1F9CED9E00142418 /* MapDisplayViewController.swift */; };
+		253741AC1FA61B0C00E7DBE1 /* DBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253741AB1FA61B0C00E7DBE1 /* DBManager.swift */; };
 		253E088C1F81858E009F301B /* UIViewShake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253E088B1F81858E009F301B /* UIViewShake.swift */; };
 		253E088E1F818DD2009F301B /* JsonHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253E088D1F818DD2009F301B /* JsonHelper.swift */; };
 		253E08911F81913A009F301B /* ChannelEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253E08901F81913A009F301B /* ChannelEntity.swift */; };
@@ -146,6 +147,7 @@
 		1DFE2E4B1F91A8FD0048892D /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		25163A881F9CE62500142418 /* ILoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ILoginViewModel.swift; sourceTree = "<group>"; };
 		25163A8A1F9CED9E00142418 /* MapDisplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapDisplayViewController.swift; sourceTree = "<group>"; };
+		253741AB1FA61B0C00E7DBE1 /* DBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DBManager.swift; path = Noyau/Entities/DBManager.swift; sourceTree = "<group>"; };
 		253E088B1F81858E009F301B /* UIViewShake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIViewShake.swift; path = InterfaceGraphique/Effects/UIViewShake.swift; sourceTree = "<group>"; };
 		253E088D1F818DD2009F301B /* JsonHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = JsonHelper.swift; path = Noyau/Helper/JsonHelper.swift; sourceTree = "<group>"; };
 		253E08901F81913A009F301B /* ChannelEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChannelEntity.swift; path = Noyau/Entities/ChannelEntity.swift; sourceTree = "<group>"; };
@@ -542,6 +544,7 @@
 				8F8706BA1F7892F2000E6824 /* ChatMessageEntity.swift */,
 				253E08901F81913A009F301B /* ChannelEntity.swift */,
 				256539A81F9D643A00D81E2C /* MapEntity.swift */,
+				253741AB1FA61B0C00E7DBE1 /* DBManager.swift */,
 			);
 			name = Entities;
 			sourceTree = "<group>";
@@ -800,6 +803,7 @@
 				8FFC5B481F7C90340031474F /* MessageViewCell.swift in Sources */,
 				8F0B94B41F8D4EC1007F0E82 /* ModeleEtatSelection.swift in Sources */,
 				8F8706BB1F7892F2000E6824 /* ChatMessageEntity.swift in Sources */,
+				253741AC1FA61B0C00E7DBE1 /* DBManager.swift in Sources */,
 				344A6E241F99112000CFFBEB /* NoeudAccelerateur.swift in Sources */,
 				3415E6C71F85649D00DB1CAD /* UsineAbstraite.swift in Sources */,
 				25F66FB51FA13071006CB47F /* VisiteurSauvegarde.swift in Sources */,

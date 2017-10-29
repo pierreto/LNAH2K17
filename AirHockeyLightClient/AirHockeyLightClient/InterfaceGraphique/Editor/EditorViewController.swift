@@ -103,9 +103,15 @@ class EditorViewController: UIViewController {
     
     func enableNavigationBar(activer: Bool) {
         self.navigationBar.hidesBackButton = !activer
-        self.navigationBar.rightBarButtonItem?.isEnabled = activer
+        
+        for button in self.navigationBar.rightBarButtonItems! {
+            button.isEnabled = activer
+        }
     }
     
+    @IBAction func sauvegarderCarte(_ sender: Any) {
+        FacadeModele.instance.sauvegarderCarte()
+    }
     
     override var shouldAutorotate: Bool {
         return true

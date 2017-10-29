@@ -28,12 +28,14 @@ class MapDisplayViewController: UIViewController, UITableViewDelegate, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.maps.delegate = self;
-        self.maps.dataSource = self;
+        self.maps.delegate = self
+        self.maps.dataSource = self
         
-        self.mapsData.append(MapEntity(name: "Default map #1"))
-        self.mapsData.append(MapEntity(name: "Default map #2"))
-        self.mapsData.append(MapEntity(name: "Default map #3"))
+        self.mapsData = DBManager.instance.recupererCartes()
+        
+        let defaultMap = MapEntity()
+        defaultMap.name = "Default map #1"
+        self.mapsData.append(defaultMap)
         
         DispatchQueue.main.async(execute: { () -> Void in
             // Reload tableView
@@ -42,17 +44,17 @@ class MapDisplayViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return mapsData.count;
+        return mapsData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = maps.dequeueReusableCell(withIdentifier: "Map", for: indexPath);
+        let cell = maps.dequeueReusableCell(withIdentifier: "Map", for: indexPath)
         
-        let button = cell.viewWithTag(1) as! UIButton;
-        button.setTitle(mapsData[indexPath.row].getName(), for: UIControlState.normal)
-        button.titleEdgeInsets.left = 20;
+        let button = cell.viewWithTag(1) as! UIButton
+        button.setTitle(mapsData[indexPath.row].name, for: UIControlState.normal)
+        button.titleEdgeInsets.left = 20
         
-        return cell;
+        return cell
     }
     
     override var shouldAutorotate: Bool {

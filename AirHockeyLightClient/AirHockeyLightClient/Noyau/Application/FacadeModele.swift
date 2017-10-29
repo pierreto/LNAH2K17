@@ -316,12 +316,14 @@ class FacadeModele {
     }
     
     /// Cette fonction permet d'enregistrer la patinoire en format JSON
-    func enregistrerSous(filePath: String, coefficients: [Float]) {
+    func sauvegarderCarte() {
         self.initializeJson()
         let visiteur = VisiteurSauvegarde();
         self.arbre?.accepterVisiteur(visiteur: visiteur);
         
-        // TODO : sauver le fichier localement ou via le serveur
+        // Sauver le fichier localement ou TODO : via le serveur
+        let currentDateTime = recuperateCurrentDateTime()
+        DBManager.instance.sauvegarderCarte(name: "A", creationDate: currentDateTime, creator: "B", type: "C", json: (self.docJSON?.rawString(options: []))!)
     }
     
     private func initializeJson() {
@@ -332,6 +334,14 @@ class FacadeModele {
             "Portail": [],
             "Coefficients": [0, 0, 0]
         ]
+    }
+    
+    private func recuperateCurrentDateTime() -> String {
+        let date = Date()
+        let formatter = DateFormatter()
+
+        formatter.dateFormat = "dd.MM.yyyy HH:mm:ss"
+        return formatter.string(from: date)
     }
     
 }
