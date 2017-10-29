@@ -15,9 +15,14 @@ namespace InterfaceGraphique.Game.GameState
         private GameHub gameHub;
         private bool gameHasEnded = false;
 
+        protected const int INTERVAL_MIS_A_JOUR = 5;
+        protected int ElapsedTime { get; set; }
+        protected GameDataMessage LastSlavePositionSent { get; set; }
+
         public SlaveGameState(GameHub gameHub)
         {
             this.gameHub = gameHub;
+            this.LastSlavePositionSent = new GameDataMessage();
         }
 
         public override void InitializeGameState(GameEntity gameEntity)
@@ -54,7 +59,7 @@ namespace InterfaceGraphique.Game.GameState
             FonctionsNatives.dessinerOpenGL();
         }
 
-    
+
         ////////////////////////////////////////////////////////////////////////
         ///
         /// Cette fonction suit le mouvement de la souris.
@@ -66,12 +71,37 @@ namespace InterfaceGraphique.Game.GameState
         ////////////////////////////////////////////////////////////////////////
         public override void MouseMoved(object sender, MouseEventArgs e)
         {
+            FonctionsNatives.opponentMouseMove(e.Location.X, e.Location.Y);
 
-                FonctionsNatives.opponentMouseMove(e.Location.X, e.Location.Y);
+            if (ElapsedTime >= INTERVAL_MIS_A_JOUR)
+            {
+                ElapsedTime = 0;
                 float[] slavePosition = new float[3];
                 FonctionsNatives.getSlavePosition(slavePosition);
-                this.gameHub.SendSlavePosition(slavePosition);
+                GameDataMessage gameDataMessage = new GameDataMessage(slavePosition);
+
+                if (!IsSamePosition(gameDataMessage.SlavePosition, LastSlavePositionSent.SlavePosition))
+                {
+                    LastSlavePositionSent = gameDataMessage;
+                    this.gameHub.SendSlavePosition(gameDataMessage);
+                }
+            }
+            ElapsedTime++;
         }
+
+        private bool IsSamePosition(float[] position1, float[] position2)
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                if (!(position1[i] == position2[i]))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+
         ////////////////////////////////////////////////////////////////////////
         ///
         /// Cette fonction gère l'enfoncement des touches de déplacement du
@@ -120,9 +150,26 @@ namespace InterfaceGraphique.Game.GameState
 
         private void OnNewGamePositions(GameDataMessage gameData)
         {
+            log(DateTime.Now.ToLongTimeString() + " Master: " + PrintPosition(gameData.MasterPosition) 
+                + " Slave: " + PrintPosition(gameData.SlavePosition)
+                + " Puck: " + PrintPosition(gameData.PuckPosition));
             if (!gameHasEnded && gameData.MasterPosition != null && gameData.SlavePosition != null && gameData.PuckPosition != null)
             {
                 FonctionsNatives.setSlaveGameElementPositions(gameData.SlavePosition, gameData.MasterPosition, gameData.PuckPosition);
+            }
+        }
+
+        private string PrintPosition(float[] position)
+        {
+            return string.Join(",", position);
+        }
+
+        private void log(string message)
+        {
+            using (System.IO.StreamWriter file =
+                new System.IO.StreamWriter(@"C:/TEMP/log.txt", true))
+            {
+                file.WriteLine(message);
             }
         }
 

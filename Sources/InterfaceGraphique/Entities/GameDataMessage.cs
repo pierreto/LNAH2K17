@@ -14,6 +14,9 @@ namespace InterfaceGraphique.Entities
 
         public GameDataMessage()
         {
+            this.slavePosition = new float[3];
+            this.masterPosition = new float[3];
+            this.puckPosition = new float[3];
         }
 
         public GameDataMessage(float[] slavePosition, float[] masterPosition, float[] puckPosition)

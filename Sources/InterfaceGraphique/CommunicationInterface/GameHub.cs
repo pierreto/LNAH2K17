@@ -48,10 +48,8 @@ namespace InterfaceGraphique.CommunicationInterface
             });
         }
 
-        public void SendSlavePosition(float[] slavePosition)
+        public void SendSlavePosition(GameDataMessage gameDataMessage)
         {
-            GameDataMessage gameDataMessage = new GameDataMessage(slavePosition);
-
             gameHubProxy.Invoke("SendGameData", gameGuid, gameDataMessage);
         }
 
