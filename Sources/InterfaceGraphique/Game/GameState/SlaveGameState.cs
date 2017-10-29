@@ -142,8 +142,8 @@ namespace InterfaceGraphique.Game.GameState
 
         private void OnNewGamePositions(GameMasterData gameData)
         {
-            log(DateTime.Now.ToLongTimeString() + " Master: " + PrintPosition(gameData.MasterPosition)
-                + " Puck: " + PrintPosition(gameData.PuckPosition));
+            //log(DateTime.Now.ToLongTimeString() + " Master: " + PrintPosition(gameData.MasterPosition)
+            //    + " Puck: " + PrintPosition(gameData.PuckPosition));
             if (!gameHasEnded && gameData.MasterPosition != null && gameData.PuckPosition != null)
             {
                 FonctionsNatives.setSlaveGameElementPositions(gameData.MasterPosition, gameData.PuckPosition);
