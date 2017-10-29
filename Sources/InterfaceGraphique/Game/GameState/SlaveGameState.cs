@@ -71,25 +71,14 @@ namespace InterfaceGraphique.Game.GameState
         public override void MouseMoved(object sender, MouseEventArgs e)
         {
             FonctionsNatives.opponentMouseMove(e.Location.X, e.Location.Y);
-
-            //double totalMillisec = (DateTime.Now - ElapsedTime).TotalMilliseconds;
-
-            //if (totalMillisec >= SERVER_INTERVAL)
-            //{
-                ElapsedTime = DateTime.Now;
                 float[] slavePosition = new float[3];
                 FonctionsNatives.getSlavePosition(slavePosition);
                 GameSlaveData gameData = new GameSlaveData
                 {
                     SlavePosition = slavePosition
                 };
-
-                //if (!IsSamePosition(gameData.SlavePosition, LastSlavePositionSent.SlavePosition))
-                //{
-                    //LastSlavePositionSent = gameData;
-                    this.gameHub.SendGameData(gameData);
-                //}
-            //}
+            
+                this.gameHub.SendGameData(gameData);
         }
 
         private bool IsSamePosition(float[] position1, float[] position2)

@@ -77,16 +77,16 @@ namespace InterfaceGraphique.Game.GameState
                     PuckPosition = puckPosition
                 };
 
-                if(!IsSamePosition(LastGameDataSent.MasterPosition,gameData.MasterPosition) ||
-                    !IsSamePosition(LastGameDataSent.PuckPosition , gameData.PuckPosition))
-                {
-                    LastGameDataSent = gameData;
-                    Log(DateTime.Now.ToLongTimeString() + " Master: " + PrintPosition(gameData.MasterPosition)
-                        + " Puck: " + PrintPosition(gameData.PuckPosition));
-                    gameHub.SendGameData(gameData);
-                }
+            if (!IsSamePosition(LastGameDataSent.MasterPosition, gameData.MasterPosition) ||
+                !IsSamePosition(LastGameDataSent.PuckPosition, gameData.PuckPosition))
+            {
+                LastGameDataSent = gameData;
+                //Log(DateTime.Now.ToLongTimeString() + " Master: " + PrintPosition(gameData.MasterPosition)
+                //+ " Puck: " + PrintPosition(gameData.PuckPosition));
+            gameHub.SendGameData(gameData);
             }
-                      }
+            }
+        }
 
         private bool IsSamePosition(float[] position1, float[] position2)
         {
@@ -111,9 +111,6 @@ namespace InterfaceGraphique.Game.GameState
         public override void MouseMoved(object sender, MouseEventArgs e)
         {
             FonctionsNatives.playerMouseMove(e.Location.X, e.Location.Y);
-
-
-
         }
         ////////////////////////////////////////////////////////////////////////
         ///
@@ -164,6 +161,7 @@ namespace InterfaceGraphique.Game.GameState
 
         private void OnNewGamePositions(GameSlaveData gameData)
         {
+            Log(PrintPosition(gameData.SlavePosition));
             if (!gameHasEnded)
             {
                 FonctionsNatives.setMasterGameElementPositions(gameData.SlavePosition);
