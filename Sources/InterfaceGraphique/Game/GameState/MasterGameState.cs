@@ -17,7 +17,7 @@ namespace InterfaceGraphique.Game.GameState
         private FonctionsNatives.GoalCallback callback;
 
         private GameMasterData LastGameDataSent { get; set; }
-        
+
         public MasterGameState(GameHub gameHub)
         {
             this.gameHub = gameHub;
@@ -37,8 +37,7 @@ namespace InterfaceGraphique.Game.GameState
 
             this.gameHub.InitializeMasterGameHub(gameEntity.GameId);
             this.gameHub.NewSlavePositions += OnNewGamePositions;
-
-
+            
             FonctionsNatives.setOnGoalCallback(callback);
 
             StringBuilder player1Name = new StringBuilder(gameEntity.Master.Username.Length);
@@ -47,15 +46,15 @@ namespace InterfaceGraphique.Game.GameState
             player2Name.Append(gameEntity.Slave.Username);
             FonctionsNatives.setPlayerNames(player1Name, player2Name);
         }
-        
+
         public override void MettreAJour(double tempsInterAffichage, int neededGoalsToWin)
         {
-
             if (FonctionsNatives.isGameOver(neededGoalsToWin) == 1)
             {
                 EndGame();
                 return;
             }
+
             FonctionsNatives.moveMaillet();
             FonctionsNatives.animer(tempsInterAffichage);
             FonctionsNatives.dessinerOpenGL();
@@ -69,7 +68,7 @@ namespace InterfaceGraphique.Game.GameState
                 float[] slavePosition = new float[3];
                 float[] masterPosition = new float[3];
                 float[] puckPosition = new float[3];
-                
+
                 FonctionsNatives.getGameElementPositions(slavePosition, masterPosition, puckPosition);
                 GameMasterData gameData = new GameMasterData
                 {
@@ -77,22 +76,22 @@ namespace InterfaceGraphique.Game.GameState
                     PuckPosition = puckPosition
                 };
 
-            if (!IsSamePosition(LastGameDataSent.MasterPosition, gameData.MasterPosition) ||
-                !IsSamePosition(LastGameDataSent.PuckPosition, gameData.PuckPosition))
-            {
-                LastGameDataSent = gameData;
-                //Log(DateTime.Now.ToLongTimeString() + " Master: " + PrintPosition(gameData.MasterPosition)
-                //+ " Puck: " + PrintPosition(gameData.PuckPosition));
-            gameHub.SendGameData(gameData);
-            }
+                if (!IsSamePosition(LastGameDataSent.MasterPosition, gameData.MasterPosition) ||
+                    !IsSamePosition(LastGameDataSent.PuckPosition, gameData.PuckPosition))
+                {
+                    LastGameDataSent = gameData;
+                    //Log(DateTime.Now.ToLongTimeString() + " Master: " + PrintPosition(gameData.MasterPosition)
+                    //+ " Puck: " + PrintPosition(gameData.PuckPosition));
+                    gameHub.SendGameData(gameData);
+                }
             }
         }
 
         private bool IsSamePosition(float[] position1, float[] position2)
         {
-            for(int i = 0; i < 3; i++)
+            for (int i = 0; i < 3; i++)
             {
-                if(!(position1[i] == position2[i]))
+                if (!(position1[i] == position2[i]))
                 {
                     return false;
                 }
@@ -112,6 +111,7 @@ namespace InterfaceGraphique.Game.GameState
         {
             FonctionsNatives.playerMouseMove(e.Location.X, e.Location.Y);
         }
+
         ////////////////////////////////////////////////////////////////////////
         ///
         /// Cette fonction gère l'enfoncement des touches de déplacement du
@@ -125,8 +125,7 @@ namespace InterfaceGraphique.Game.GameState
         public override void KeyDownEvent(object sender, KeyEventArgs e)
         {
         }
-
-
+        
         ////////////////////////////////////////////////////////////////////////
         ///
         /// Cette fonction gère le relachement des touches de déplacement du
@@ -161,7 +160,6 @@ namespace InterfaceGraphique.Game.GameState
 
         private void OnNewGamePositions(GameSlaveData gameData)
         {
-            Log(PrintPosition(gameData.SlavePosition));
             if (!gameHasEnded)
             {
                 FonctionsNatives.setMasterGameElementPositions(gameData.SlavePosition);

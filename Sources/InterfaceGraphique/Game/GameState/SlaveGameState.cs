@@ -15,7 +15,7 @@ namespace InterfaceGraphique.Game.GameState
 
         private GameHub gameHub;
         private bool gameHasEnded = false;
-        
+
         protected GameSlaveData LastSlavePositionSent { get; set; }
 
         public SlaveGameState(GameHub gameHub)
@@ -28,16 +28,16 @@ namespace InterfaceGraphique.Game.GameState
         {
             FonctionsNatives.setOnlineClientType((int)OnlineClientType.SLAVE);
 
+            this.gameHub.InitializeSlaveGameHub(gameEntity.GameId);
+            this.gameHub.NewMasterPositions += OnNewGamePositions;
+            this.gameHub.NewGoal += OnNewGoal;
+            this.gameHub.NewGameOver += EndGame;
+
             StringBuilder player1Name = new StringBuilder(gameEntity.Slave.Username.Length);
             StringBuilder player2Name = new StringBuilder(gameEntity.Master.Username.Length);
             player1Name.Append(gameEntity.Slave.Username);
             player2Name.Append(gameEntity.Master.Username);
             FonctionsNatives.setPlayerNames(player1Name, player2Name);
-
-            this.gameHub.InitializeSlaveGameHub(gameEntity.GameId);
-            this.gameHub.NewMasterPositions += OnNewGamePositions;
-            this.gameHub.NewGoal += OnNewGoal;
-            this.gameHub.NewGameOver += EndGame;
         }
 
         private void OnNewGoal(GoalMessage goalMessage)
@@ -71,14 +71,14 @@ namespace InterfaceGraphique.Game.GameState
         public override void MouseMoved(object sender, MouseEventArgs e)
         {
             FonctionsNatives.opponentMouseMove(e.Location.X, e.Location.Y);
-                float[] slavePosition = new float[3];
-                FonctionsNatives.getSlavePosition(slavePosition);
-                GameSlaveData gameData = new GameSlaveData
-                {
-                    SlavePosition = slavePosition
-                };
-            
-                this.gameHub.SendGameData(gameData);
+            float[] slavePosition = new float[3];
+            FonctionsNatives.getSlavePosition(slavePosition);
+            GameSlaveData gameData = new GameSlaveData
+            {
+                SlavePosition = slavePosition
+            };
+
+            this.gameHub.SendGameData(gameData);
         }
 
         private bool IsSamePosition(float[] position1, float[] position2)
@@ -142,8 +142,8 @@ namespace InterfaceGraphique.Game.GameState
 
         private void OnNewGamePositions(GameMasterData gameData)
         {
-            log(DateTime.Now.ToLongTimeString() + " Master: " + PrintPosition(gameData.MasterPosition)
-                + " Puck: " + PrintPosition(gameData.PuckPosition));
+            //log(DateTime.Now.ToLongTimeString() + " Master: " + PrintPosition(gameData.MasterPosition)
+            //    + " Puck: " + PrintPosition(gameData.PuckPosition));
             if (!gameHasEnded && gameData.MasterPosition != null && gameData.PuckPosition != null)
             {
                 FonctionsNatives.setSlaveGameElementPositions(gameData.MasterPosition, gameData.PuckPosition);

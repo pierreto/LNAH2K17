@@ -92,7 +92,6 @@ namespace InterfaceGraphique.CommunicationInterface
 
         }
 
-
         public void Logout()
         {
             gameHubProxy.Invoke("LeaveRoom", gameGuid);
