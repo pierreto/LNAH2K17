@@ -72,7 +72,7 @@ extern "C" {
 
 
 	__declspec(dllexport) void getGameElementPositions(float* slavePosition, float* masterPosition, float* puckPosition);
-	__declspec(dllexport) void setSlaveGameElementPositions(float* slavePosition, float* masterPosition, float* puckPosition);
+	__declspec(dllexport) void setSlaveGameElementPositions(float* masterPosition, float* puckPosition);
 	__declspec(dllexport) void setMasterGameElementPositions(float* slavePosition);
 
 	__declspec(dllexport) void rotateCamera(float angle);

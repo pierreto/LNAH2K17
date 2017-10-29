@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using InterfaceGraphique.CommunicationInterface;
 using InterfaceGraphique.Entities;
+using InterfaceGraphique.Entities.Message;
 
 namespace InterfaceGraphique.Game.GameState
 {
@@ -17,12 +18,12 @@ namespace InterfaceGraphique.Game.GameState
 
         protected const int INTERVAL_MIS_A_JOUR = 5;
         protected int ElapsedTime { get; set; }
-        protected GameDataMessage LastSlavePositionSent { get; set; }
+        protected GameSlaveData LastSlavePositionSent { get; set; }
 
         public SlaveGameState(GameHub gameHub)
         {
             this.gameHub = gameHub;
-            this.LastSlavePositionSent = new GameDataMessage();
+            this.LastSlavePositionSent = new GameSlaveData();
         }
 
         public override void InitializeGameState(GameEntity gameEntity)
@@ -36,7 +37,7 @@ namespace InterfaceGraphique.Game.GameState
             FonctionsNatives.setPlayerNames(player1Name, player2Name);
 
             this.gameHub.InitializeSlaveGameHub(gameEntity.GameId);
-            this.gameHub.NewPositions += OnNewGamePositions;
+            this.gameHub.NewMasterPositions += OnNewGamePositions;
             this.gameHub.NewGoal += OnNewGoal;
             this.gameHub.NewGameOver += EndGame;
         }
@@ -78,12 +79,15 @@ namespace InterfaceGraphique.Game.GameState
                 ElapsedTime = 0;
                 float[] slavePosition = new float[3];
                 FonctionsNatives.getSlavePosition(slavePosition);
-                GameDataMessage gameDataMessage = new GameDataMessage(slavePosition);
-
-                if (!IsSamePosition(gameDataMessage.SlavePosition, LastSlavePositionSent.SlavePosition))
+                GameSlaveData gameData = new GameSlaveData
                 {
-                    LastSlavePositionSent = gameDataMessage;
-                    this.gameHub.SendSlavePosition(gameDataMessage);
+                    SlavePosition = slavePosition
+                };
+
+                if (!IsSamePosition(gameData.SlavePosition, LastSlavePositionSent.SlavePosition))
+                {
+                    LastSlavePositionSent = gameData;
+                    this.gameHub.SendGameData(gameData);
                 }
             }
             ElapsedTime++;
@@ -148,14 +152,13 @@ namespace InterfaceGraphique.Game.GameState
             }
         }
 
-        private void OnNewGamePositions(GameDataMessage gameData)
+        private void OnNewGamePositions(GameMasterData gameData)
         {
-            log(DateTime.Now.ToLongTimeString() + " Master: " + PrintPosition(gameData.MasterPosition) 
-                + " Slave: " + PrintPosition(gameData.SlavePosition)
+            log(DateTime.Now.ToLongTimeString() + " Master: " + PrintPosition(gameData.MasterPosition)
                 + " Puck: " + PrintPosition(gameData.PuckPosition));
-            if (!gameHasEnded && gameData.MasterPosition != null && gameData.SlavePosition != null && gameData.PuckPosition != null)
+            if (!gameHasEnded && gameData.MasterPosition != null && gameData.PuckPosition != null)
             {
-                FonctionsNatives.setSlaveGameElementPositions(gameData.SlavePosition, gameData.MasterPosition, gameData.PuckPosition);
+                FonctionsNatives.setSlaveGameElementPositions(gameData.MasterPosition, gameData.PuckPosition);
             }
         }
 

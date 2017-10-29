@@ -12,7 +12,9 @@ namespace InterfaceGraphique.CommunicationInterface
 {
     public class GameHub : IBaseHub
     {
-        public event Action<GameDataMessage> NewPositions;
+        public event Action<GameSlaveData> NewSlavePositions;
+        public event Action<GameMasterData> NewMasterPositions;
+
         public event Action<GoalMessage> NewGoal;
         public event Action NewGameOver;
 
@@ -33,9 +35,9 @@ namespace InterfaceGraphique.CommunicationInterface
             // Étape necessaire pour que le serveur sache que la connexion est reliée au bon userId:
            // await gameHubProxy.Invoke("JoinRoom", gameGuid);
 
-            gameHubProxy.On<GameDataMessage>("ReceivedGameData", message =>
+            gameHubProxy.On<GameMasterData>("ReceivedMasterData", message =>
             {
-                NewPositions?.Invoke(message);
+                NewMasterPositions?.Invoke(message);
             });
 
             gameHubProxy.On<GoalMessage>("ReceivedGoal", message =>
@@ -49,10 +51,10 @@ namespace InterfaceGraphique.CommunicationInterface
             });
         }
 
-        public void SendSlavePosition(GameDataMessage gameDataMessage)
-        {
-            gameHubProxy.Invoke("SendGameData", gameGuid, gameDataMessage);
-        }
+        //public void SendSlavePosition(GameDataMessage gameDataMessage)
+        //{
+        //    gameHubProxy.Invoke("SendGameData", gameGuid, gameDataMessage);
+        //}
 
 
         //For the master
@@ -62,13 +64,18 @@ namespace InterfaceGraphique.CommunicationInterface
             // Étape necessaire pour que le serveur sache que la connexion est reliée au bon userId:
             //await gameHubProxy.Invoke("JoinRoom", gameGuid);
 
-            gameHubProxy.On<GameDataMessage>("ReceivedGameData", message =>
+            gameHubProxy.On<GameSlaveData>("ReceivedSlaveData", message =>
             {
-                NewPositions?.Invoke(message);
+                NewSlavePositions?.Invoke(message);
             });
         }
 
         public void SendGameData(GameMasterData gameDataMessage)
+        {
+            gameHubProxy.Invoke("SendGameData", gameGuid, gameDataMessage);
+        }
+
+        public void SendGameData(GameSlaveData gameDataMessage)
         {
             gameHubProxy.Invoke("SendGameData", gameGuid, gameDataMessage);
         }

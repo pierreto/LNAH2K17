@@ -8,6 +8,7 @@ using AirHockeyServer.Entities;
 using System.Threading.Tasks;
 using AirHockeyServer.Events;
 using System.Diagnostics;
+using AirHockeyServer.Entities.Messages;
 
 namespace AirHockeyServer.Hubs
 {
@@ -89,9 +90,14 @@ namespace AirHockeyServer.Hubs
             GameService.LeaveGame(user);
         }
 
-        public void SendGameData(int gameId, GameDataMessage gameData)
+        public void SendGameData(int gameId, GameMasterData gameData)
         {
-             Clients.Group(gameId.ToString(), Context.ConnectionId).ReceivedGameData(gameData);
+             Clients.Group(gameId.ToString(), Context.ConnectionId).ReceivedMasterData(gameData);
+        }
+
+        public void SendGameData(int gameId, GameSlaveData gameData)
+        {
+            Clients.Group(gameId.ToString(), Context.ConnectionId).ReceivedSlaveData(gameData);
         }
 
         public void SendGoal(int gameId, GoalMessage goal)

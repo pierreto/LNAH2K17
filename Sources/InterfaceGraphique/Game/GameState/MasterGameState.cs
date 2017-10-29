@@ -40,7 +40,7 @@ namespace InterfaceGraphique.Game.GameState
             FonctionsNatives.setCurrentOpponentType((int)OpponentType.ONLINE_PLAYER);
 
             this.gameHub.InitializeMasterGameHub(gameEntity.GameId);
-            this.gameHub.NewPositions += OnNewGamePositions;
+            this.gameHub.NewSlavePositions += OnNewGamePositions;
 
 
             FonctionsNatives.setOnGoalCallback(callback);
@@ -167,7 +167,7 @@ namespace InterfaceGraphique.Game.GameState
             }
         }
 
-        private void OnNewGamePositions(GameDataMessage gameData)
+        private void OnNewGamePositions(GameSlaveData gameData)
         {
             if (!gameHasEnded)
             {

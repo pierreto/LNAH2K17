@@ -917,7 +917,7 @@ __declspec(dllexport) void getGameElementPositions(float* slavePosition, float* 
 		puckPosition[i] = puckVec[i];
 	}
 }
-__declspec(dllexport) void setSlaveGameElementPositions(float* slavePosition, float* masterPosition, float* puckPosition)
+__declspec(dllexport) void setSlaveGameElementPositions(float* masterPosition, float* puckPosition)
 {
 	
 	// ModeleEtatJeu::obtenirInstance()->setOpponentPosition(slavePosition);

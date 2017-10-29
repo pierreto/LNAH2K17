@@ -175,7 +175,7 @@ namespace InterfaceGraphique {
         public static extern void getGameElementPositions([Out] float[] slavePosition, [Out] float[] masterPosition, [Out] float[] puckPosition);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void setSlaveGameElementPositions(float[] slavePosition, float[] masterPosition, float[] puckPosition);
+        public static extern void setSlaveGameElementPositions(float[] masterPosition, float[] puckPosition);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void setMasterGameElementPositions(float[] slavePosition);
