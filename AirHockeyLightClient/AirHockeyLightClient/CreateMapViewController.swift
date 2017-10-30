@@ -87,6 +87,7 @@ class CreateMapViewController: UIViewController {
         self.deactivateInputs()
         
         if (self.viewModel?.save(mapName: self.mapName.text!, isLocalMap: self.isLocalMap.isOn, isPrivateMap: self.isPrivateMap.isOn))! {
+            MapTableViewController.instance.updateEntries()
             /// Fermer la fenêtre
             self.removeAnimate()
         }

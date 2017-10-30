@@ -21,6 +21,9 @@ import UIKit
 ///////////////////////////////////////////////////////////////////////////
 class MapTableViewController: UITableViewController {
     
+    /// Instance singleton
+    static var instance = MapTableViewController()
+    
     @IBOutlet weak var maps: UITableView!
     
     private var mapsData = [MapEntity]()
@@ -28,20 +31,15 @@ class MapTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        MapTableViewController.instance = self
         self.maps.delegate = self
         self.maps.dataSource = self
         
-        let defaultMap1 = MapEntity()
-        defaultMap1.name = "Default map #1"
-        self.mapsData.append(defaultMap1)
-        
-        let defaultMap2 = MapEntity()
-        defaultMap2.name = "Default map #2"
-        self.mapsData.append(defaultMap2)
-        
-        let defaultMap3 = MapEntity()
-        defaultMap3.name = "Default map #3"
-        self.mapsData.append(defaultMap3)
+        self.updateEntries()
+    }
+    
+    func updateEntries() {
+        self.mapsData = DBManager.instance.recupererCartes()
         
         DispatchQueue.main.async(execute: { () -> Void in
             // Reload tableView
@@ -50,14 +48,14 @@ class MapTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return mapsData.count
+        return self.mapsData.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = maps.dequeueReusableCell(withIdentifier: "Map", for: indexPath)
+        let cell = self.maps.dequeueReusableCell(withIdentifier: "Map", for: indexPath)
         
         let txtLabel = cell.viewWithTag(1) as! UILabel
-        txtLabel.text = mapsData[indexPath.row].name
+        txtLabel.text = self.mapsData[indexPath.row].name
         
         return cell
     }
@@ -66,6 +64,20 @@ class MapTableViewController: UITableViewController {
         let editor = storyboard?.instantiateViewController(withIdentifier: "EditorViewController") as! EditorViewController
         editor.currentMap = self.mapsData[indexPath.row]
         navigationController?.pushViewController(editor, animated: true)
+    }
+    
+    /// Supprimer une entrée de la table après un swipe
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        
+        if editingStyle == .delete {
+            DBManager.instance.effacerCarte(mapName: self.mapsData[indexPath.row].name!)
+            
+            // remove the item from the data model
+            self.mapsData.remove(at: indexPath.row)
+            
+            // delete the table view row
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
     }
     
 }

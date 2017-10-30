@@ -36,10 +36,10 @@ class DBManager {
         return Array(self.realm.objects(MapEntity.self))
     }
     
-    func effacerCartes() {
-        // Delete all maps in the realm
-        try! self.realm.write {
-            self.realm.deleteAll()
+    func effacerCarte(mapName: String) {
+        try! realm.write {
+            let map = self.realm.objects(MapEntity.self).filter("name == %@", mapName)
+            realm.delete(map)
         }
     }
     
