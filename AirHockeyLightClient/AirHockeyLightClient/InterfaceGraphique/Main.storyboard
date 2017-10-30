@@ -36,7 +36,7 @@
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" title="Édition hors ligne"/>
                                         <connections>
-                                            <segue destination="Jfr-uj-nQp" kind="show" id="fzR-vA-c1p"/>
+                                            <segue destination="8q1-PD-X5V" kind="show" id="M9v-27-zeQ"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -255,7 +255,7 @@
         <!--Create Map View Controller-->
         <scene sceneID="qni-ho-MCp">
             <objects>
-                <viewController id="Rjh-Wh-cdd" customClass="CreateMapViewController" customModule="AirHockeyLightClient" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CreateMapViewController" id="Rjh-Wh-cdd" customClass="CreateMapViewController" customModule="AirHockeyLightClient" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="UHg-iZ-aHE"/>
                         <viewControllerLayoutGuide type="bottom" id="UWd-rP-Nwp"/>
@@ -264,167 +264,87 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="G3X-TM-lRo" userLabel="General Properties View">
-                                <rect key="frame" x="31" y="311" width="962" height="145"/>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="G3X-TM-lRo" userLabel="Create Map View">
+                                <rect key="frame" x="270" y="120" width="485" height="225"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xcv-ud-tXJ">
-                                        <rect key="frame" x="0.0" y="0.0" width="962" height="44"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="485" height="44"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                         <items>
-                                            <navigationItem title="Configuration de la zone de jeu" id="OYg-Sl-dAp">
-                                                <leftBarButtonItems>
-                                                    <barButtonItem title="Annuler" id="EGS-yh-KQa">
-                                                        <connections>
-                                                            <action selector="closeView:" destination="1Qo-Vb-McK" id="jRC-dC-AvO"/>
-                                                        </connections>
-                                                    </barButtonItem>
-                                                    <barButtonItem enabled="NO" title="|" id="KiK-kX-Ca8">
-                                                        <connections>
-                                                            <action selector="closeView:" destination="1Qo-Vb-McK" id="zvX-xC-A03"/>
-                                                        </connections>
-                                                    </barButtonItem>
-                                                    <barButtonItem title="Valeurs par défaut" id="yKc-cf-wwJ" userLabel="Reinitialiser">
-                                                        <connections>
-                                                            <action selector="resetCoefficients:" destination="1Qo-Vb-McK" id="aMD-bc-7h6"/>
-                                                        </connections>
-                                                    </barButtonItem>
-                                                </leftBarButtonItems>
+                                            <navigationItem title="Créer carte" id="OYg-Sl-dAp">
+                                                <barButtonItem key="leftBarButtonItem" title="Annuler" id="EGS-yh-KQa">
+                                                    <connections>
+                                                        <action selector="closeView:" destination="Rjh-Wh-cdd" id="pNI-Lq-ucd"/>
+                                                    </connections>
+                                                </barButtonItem>
                                                 <barButtonItem key="rightBarButtonItem" title="Sauvegarder" id="Rj9-Wm-qcI" userLabel="Sauvegarder">
                                                     <connections>
-                                                        <action selector="saveGeneralProperties:" destination="1Qo-Vb-McK" id="UkP-GO-6fR"/>
+                                                        <action selector="createMap:" destination="Rjh-Wh-cdd" id="Aiw-Ye-1YA"/>
                                                     </connections>
                                                 </barButtonItem>
                                             </navigationItem>
                                         </items>
                                     </navigationBar>
-                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P0c-UB-l12" userLabel="Coefficient de friction">
-                                        <rect key="frame" x="0.0" y="57" width="319" height="88"/>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="meI-3c-EAF" userLabel="mapName">
+                                        <rect key="frame" x="202" y="68" width="234" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Coefficient de friction [0, 10]" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pn8-jf-Fqv" userLabel="coefficient de friction [0, 10]">
-                                                <rect key="frame" x="13" y="4" width="231" height="21"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="14"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Friction" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zDm-e1-Gxq" userLabel="coefficient Friction Field">
-                                                <rect key="frame" x="12" y="25" width="185" height="30"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <color key="backgroundColor" red="0.86927386549999996" green="0.86927386549999996" blue="0.86927386549999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <nil key="textColor"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
-                                                <connections>
-                                                    <action selector="editCoefficientFriction:" destination="1Qo-Vb-McK" eventType="editingChanged" id="hrD-h3-uqg"/>
-                                                </connections>
-                                            </textField>
-                                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="10" stepValue="0.01" translatesAutoresizingMaskIntoConstraints="NO" id="kcC-eA-Uug" userLabel="stepperFriction">
-                                                <rect key="frame" x="205" y="26" width="94" height="29"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <connections>
-                                                    <action selector="editStepperCoefficientFriction:" destination="1Qo-Vb-McK" eventType="valueChanged" id="KZf-S2-eFC"/>
-                                                </connections>
-                                            </stepper>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Error" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z8V-1P-DIB" userLabel="coefficientFrictionError">
-                                                <rect key="frame" x="13" y="55" width="286" height="23"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                <color key="textColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    </view>
-                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Hdk-u0-yiP" userLabel="Coefficient de rebond">
-                                        <rect key="frame" x="322" y="57" width="319" height="88"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Nom de la carte :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tzd-dO-vVj" userLabel="MapNameLabel">
+                                        <rect key="frame" x="48" y="73" width="131" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Coefficient de rebond [0, 15]" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GYk-Dr-6VL" userLabel="coefficient de rebond [0, 15]">
-                                                <rect key="frame" x="13" y="4" width="231" height="21"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="14"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Rebond" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wH2-jY-1ra" userLabel="coefficient Rebond Field">
-                                                <rect key="frame" x="12" y="25" width="185" height="30"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <color key="backgroundColor" red="0.86927386549999996" green="0.86927386549999996" blue="0.86927386549999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <nil key="textColor"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
-                                                <connections>
-                                                    <action selector="editCoefficientRebond:" destination="1Qo-Vb-McK" eventType="editingChanged" id="iMI-gE-OSU"/>
-                                                </connections>
-                                            </textField>
-                                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="15" stepValue="0.01" translatesAutoresizingMaskIntoConstraints="NO" id="xFc-8s-6jP" userLabel="stepperRebond">
-                                                <rect key="frame" x="205" y="26" width="94" height="29"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <connections>
-                                                    <action selector="editStepperCoefficientRebond:" destination="1Qo-Vb-McK" eventType="valueChanged" id="iRA-UM-dtT"/>
-                                                </connections>
-                                            </stepper>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Error" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pug-sL-Axx" userLabel="coefficientRebondError">
-                                                <rect key="frame" x="13" y="55" width="286" height="23"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                <color key="textColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    </view>
-                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FYX-fW-ZOO" userLabel="Coefficient d'accélération">
-                                        <rect key="frame" x="645" y="57" width="306" height="88"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Carte locale :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2tW-wV-qUw" userLabel="LocalMapLabel">
+                                        <rect key="frame" x="78" y="135" width="101" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Coefficient d'accélération [0, 100]" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lge-Oy-UCa" userLabel="coefficient d'accélération [0, 100]">
-                                                <rect key="frame" x="13" y="4" width="231" height="21"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="14"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Accélération" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rRq-ku-Bf2" userLabel="coefficient Acceleration Field">
-                                                <rect key="frame" x="12" y="25" width="185" height="30"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <color key="backgroundColor" red="0.86927386549999996" green="0.86927386549999996" blue="0.86927386549999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <nil key="textColor"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
-                                                <connections>
-                                                    <action selector="editCoefficientAcceleration:" destination="1Qo-Vb-McK" eventType="editingChanged" id="Qz3-JE-Sus"/>
-                                                </connections>
-                                            </textField>
-                                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" stepValue="0.01" translatesAutoresizingMaskIntoConstraints="NO" id="id0-LE-JuK" userLabel="stepperAcceleration">
-                                                <rect key="frame" x="205" y="26" width="94" height="29"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <connections>
-                                                    <action selector="editStepperCoefficientAcceleration:" destination="1Qo-Vb-McK" eventType="valueChanged" id="X9g-sC-NXF"/>
-                                                </connections>
-                                            </stepper>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Error" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kIF-5J-52P" userLabel="coefficientAccelerationError">
-                                                <rect key="frame" x="13" y="55" width="286" height="25"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                <color key="textColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    </view>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fwd-Wg-xwW" userLabel="isLocalMap">
+                                        <rect key="frame" x="202" y="130" width="51" height="31"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </switch>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Carte privée :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gjy-a6-fTt" userLabel="PrivateMapLabel">
+                                        <rect key="frame" x="75" y="182" width="103" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MwK-fb-SHQ" userLabel="isPrivateMap">
+                                        <rect key="frame" x="202" y="177" width="51" height="31"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </switch>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Error" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zxl-AW-U9P" userLabel="MapNameErrorLabel">
+                                        <rect key="frame" x="202" y="99" width="234" height="23"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <color key="textColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="isLocalMap" destination="Fwd-Wg-xwW" id="Nd9-Wh-ht9"/>
+                        <outlet property="isPrivateMap" destination="MwK-fb-SHQ" id="knp-OI-A6h"/>
+                        <outlet property="mapName" destination="meI-3c-EAF" id="lXJ-lq-eoT"/>
+                        <outlet property="mapNameError" destination="zxl-AW-U9P" id="LQx-3z-IN6"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="olx-im-c4a" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2079" y="1780"/>
+            <point key="canvasLocation" x="-3093" y="1746"/>
         </scene>
         <!--Editor View Controller-->
         <scene sceneID="afO-0W-eS6">
@@ -1396,23 +1316,55 @@
             <point key="canvasLocation" x="-3253" y="-744"/>
         </scene>
         <!--Map Display View Controller-->
+        <scene sceneID="xXa-z5-eHR">
+            <objects>
+                <viewController title="Sélection des cartes" id="8q1-PD-X5V" userLabel="Map Display View Controller" customClass="MapDisplayViewController" customModule="AirHockeyLightClient" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="V5W-Ob-NUN"/>
+                        <viewControllerLayoutGuide type="bottom" id="SKC-9K-Z59"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="MhN-eO-Nll">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bMu-Mx-hmt">
+                                <rect key="frame" x="20" y="64" width="984" height="704"/>
+                                <connections>
+                                    <segue destination="Jfr-uj-nQp" kind="embed" id="NTq-PH-bih"/>
+                                </connections>
+                            </containerView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="bMu-Mx-hmt" firstAttribute="leading" secondItem="MhN-eO-Nll" secondAttribute="leadingMargin" id="QPZ-T2-NDz"/>
+                            <constraint firstItem="SKC-9K-Z59" firstAttribute="top" secondItem="bMu-Mx-hmt" secondAttribute="bottom" id="V1j-ZB-HHS"/>
+                            <constraint firstItem="bMu-Mx-hmt" firstAttribute="top" secondItem="V5W-Ob-NUN" secondAttribute="bottom" id="feM-lR-7KJ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="bMu-Mx-hmt" secondAttribute="trailing" id="pjq-gT-DuE"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="d2z-FI-Hxt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2169" y="418"/>
+        </scene>
+        <!--Map Table View Controller-->
         <scene sceneID="GuB-4P-xLk">
             <objects>
-                <tableViewController title="Sélection des cartes" id="Jfr-uj-nQp" userLabel="Map Display View Controller" customClass="MapDisplayViewController" customModule="AirHockeyLightClient" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController title="Sélection des cartes" id="Jfr-uj-nQp" userLabel="Map Table View Controller" customClass="MapTableViewController" customModule="AirHockeyLightClient" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="lhg-b0-EEZ">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <rect key="frame" x="0.0" y="0.0" width="984" height="704"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Map" id="K2A-q2-Fv2" userLabel="Map">
-                                <rect key="frame" x="0.0" y="28" width="1024" height="44"/>
+                                <rect key="frame" x="0.0" y="28" width="984" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="K2A-q2-Fv2" id="vTT-fA-W0L">
-                                    <rect key="frame" x="0.0" y="0.0" width="1024" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="984" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nom de la carte" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qvg-sL-ds4">
-                                            <rect key="frame" x="451" y="12" width="122" height="21"/>
+                                            <rect key="frame" x="431" y="12" width="122" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -1436,7 +1388,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lcZ-rA-WKR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1446" y="422"/>
+            <point key="canvasLocation" x="-1446" y="418"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

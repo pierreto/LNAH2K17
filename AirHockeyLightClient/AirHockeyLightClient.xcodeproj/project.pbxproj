@@ -30,9 +30,14 @@
 		253E088C1F81858E009F301B /* UIViewShake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253E088B1F81858E009F301B /* UIViewShake.swift */; };
 		253E088E1F818DD2009F301B /* JsonHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253E088D1F818DD2009F301B /* JsonHelper.swift */; };
 		253E08911F81913A009F301B /* ChannelEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253E08901F81913A009F301B /* ChannelEntity.swift */; };
+		25628B9D1FA79B940010B58D /* IMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25628B9C1FA79B940010B58D /* IMapViewModel.swift */; };
+		25628B9F1FA79C070010B58D /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25628B9E1FA79C070010B58D /* MapViewModel.swift */; };
+		25628BA11FA79CFF0010B58D /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25628BA01FA79CFF0010B58D /* Map.swift */; };
 		256539A91F9D643A00D81E2C /* MapEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256539A81F9D643A00D81E2C /* MapEntity.swift */; };
 		25F66FB51FA13071006CB47F /* VisiteurSauvegarde.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F66FB41FA13071006CB47F /* VisiteurSauvegarde.swift */; };
-		25F8091F1FA673050008F048 /* MapDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F8091E1FA673050008F048 /* MapDisplayViewController.swift */; };
+		25F8091F1FA673050008F048 /* MapTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F8091E1FA673050008F048 /* MapTableViewController.swift */; };
+		25F809231FA6A2680008F048 /* MapDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F809221FA6A2680008F048 /* MapDisplayViewController.swift */; };
+		25F809251FA6AB680008F048 /* CreateMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F809241FA6AB680008F048 /* CreateMapViewController.swift */; };
 		3415E6C21F8545B300DB1CAD /* NoeudCommun.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3415E6C11F8545B300DB1CAD /* NoeudCommun.swift */; };
 		3415E6C41F8547CE00DB1CAD /* ArbreRendu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3415E6C31F8547CE00DB1CAD /* ArbreRendu.swift */; };
 		3415E6C71F85649D00DB1CAD /* UsineAbstraite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3415E6C61F85649D00DB1CAD /* UsineAbstraite.swift */; };
@@ -152,9 +157,14 @@
 		253E088B1F81858E009F301B /* UIViewShake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIViewShake.swift; path = InterfaceGraphique/Effects/UIViewShake.swift; sourceTree = "<group>"; };
 		253E088D1F818DD2009F301B /* JsonHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = JsonHelper.swift; path = Noyau/Helper/JsonHelper.swift; sourceTree = "<group>"; };
 		253E08901F81913A009F301B /* ChannelEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChannelEntity.swift; path = Noyau/Entities/ChannelEntity.swift; sourceTree = "<group>"; };
+		25628B9C1FA79B940010B58D /* IMapViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMapViewModel.swift; sourceTree = "<group>"; };
+		25628B9E1FA79C070010B58D /* MapViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
+		25628BA01FA79CFF0010B58D /* Map.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
 		256539A81F9D643A00D81E2C /* MapEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapEntity.swift; sourceTree = "<group>"; };
 		25F66FB41FA13071006CB47F /* VisiteurSauvegarde.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VisiteurSauvegarde.swift; path = Noyau/Arbre/Visiteurs/VisiteurSauvegarde.swift; sourceTree = "<group>"; };
-		25F8091E1FA673050008F048 /* MapDisplayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapDisplayViewController.swift; path = InterfaceGraphique/MapDisplayViewController.swift; sourceTree = "<group>"; };
+		25F8091E1FA673050008F048 /* MapTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapTableViewController.swift; path = InterfaceGraphique/MapTableViewController.swift; sourceTree = "<group>"; };
+		25F809221FA6A2680008F048 /* MapDisplayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapDisplayViewController.swift; sourceTree = "<group>"; };
+		25F809241FA6AB680008F048 /* CreateMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateMapViewController.swift; sourceTree = "<group>"; };
 		3415E6C11F8545B300DB1CAD /* NoeudCommun.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NoeudCommun.swift; path = Noyau/Arbre/Noeuds/NoeudCommun.swift; sourceTree = "<group>"; };
 		3415E6C31F8547CE00DB1CAD /* ArbreRendu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArbreRendu.swift; path = Noyau/Arbre/ArbreRendu.swift; sourceTree = "<group>"; };
 		3415E6C61F85649D00DB1CAD /* UsineAbstraite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UsineAbstraite.swift; path = Noyau/Arbre/Usines/UsineAbstraite.swift; sourceTree = "<group>"; };
@@ -261,7 +271,9 @@
 				1D3D77B61F981BCA0012EF12 /* MainViewController.swift */,
 				1D90AAFA1F98205A003E0764 /* ConnectServerViewController.swift */,
 				1D863DB01F9848E70025B89D /* OfflineMenuViewController.swift */,
-				25F8091E1FA673050008F048 /* MapDisplayViewController.swift */,
+				25F8091E1FA673050008F048 /* MapTableViewController.swift */,
+				25F809221FA6A2680008F048 /* MapDisplayViewController.swift */,
+				25F809241FA6AB680008F048 /* CreateMapViewController.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -270,6 +282,7 @@
 			isa = PBXGroup;
 			children = (
 				1D019A251F911E25004D79B2 /* Dynamic.swift */,
+				25628B9B1FA79B570010B58D /* Map */,
 				34B965D31FA29AB300BD17CC /* GeneralProperties */,
 				1D90AAFC1F982277003E0764 /* ConnectServer */,
 				1D019A351F911F08004D79B2 /* Signup */,
@@ -303,6 +316,7 @@
 				1D019A1F1F911DF6004D79B2 /* Login.swift */,
 				1D90AB011F9824BE003E0764 /* ConnectServer.swift */,
 				34B965CF1FA2976600BD17CC /* GeneralProperties.swift */,
+				25628BA01FA79CFF0010B58D /* Map.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -332,6 +346,15 @@
 				8F76FC0E1F9CF990001BBC99 /* SCNodeHelper.swift */,
 			);
 			name = Helper;
+			sourceTree = "<group>";
+		};
+		25628B9B1FA79B570010B58D /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				25628B9C1FA79B940010B58D /* IMapViewModel.swift */,
+				25628B9E1FA79C070010B58D /* MapViewModel.swift */,
+			);
+			name = Map;
 			sourceTree = "<group>";
 		};
 		3085577F2BC9CDF3683F45B9 /* Pods */ = {
@@ -798,18 +821,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25628B9D1FA79B940010B58D /* IMapViewModel.swift in Sources */,
 				344A6E2C1F994E0D00CFFBEB /* CollisionHelper.swift in Sources */,
 				8F0B94BE1F8DC0F1007F0E82 /* VisiteurSelection.swift in Sources */,
+				25628B9F1FA79C070010B58D /* MapViewModel.swift in Sources */,
 				1D019A261F911E25004D79B2 /* Dynamic.swift in Sources */,
 				0EED627F1F982B3B00CD8C56 /* ModeleEtatCreerMuret.swift in Sources */,
 				8F0B94B81F8D7F11007F0E82 /* ModeleEtatPointControl.swift in Sources */,
+				25F809231FA6A2680008F048 /* MapDisplayViewController.swift in Sources */,
 				256539A91F9D643A00D81E2C /* MapEntity.swift in Sources */,
 				8FB6A9951F81B9C800FAFFCF /* EditorViewController.swift in Sources */,
 				1D90AAFB1F98205A003E0764 /* ConnectServerViewController.swift in Sources */,
 				8F1B4BD71FA65C3C005321AF /* VisiteurInformation.swift in Sources */,
 				8FFC5B481F7C90340031474F /* MessageViewCell.swift in Sources */,
 				8F0B94B41F8D4EC1007F0E82 /* ModeleEtatSelection.swift in Sources */,
-				25F8091F1FA673050008F048 /* MapDisplayViewController.swift in Sources */,
+				25F8091F1FA673050008F048 /* MapTableViewController.swift in Sources */,
 				8F8706BB1F7892F2000E6824 /* ChatMessageEntity.swift in Sources */,
 				253741AC1FA61B0C00E7DBE1 /* DBManager.swift in Sources */,
 				344A6E241F99112000CFFBEB /* NoeudAccelerateur.swift in Sources */,
@@ -825,11 +851,13 @@
 				3475C2461F90144300E8BF86 /* ImmediatePanGestureRecognizer.swift in Sources */,
 				253E088C1F81858E009F301B /* UIViewShake.swift in Sources */,
 				1D019A211F911DF6004D79B2 /* Login.swift in Sources */,
+				25F809251FA6AB680008F048 /* CreateMapViewController.swift in Sources */,
 				3497C3271F9FF3C300C58700 /* VisiteurDuplication.swift in Sources */,
 				8FB6A9CA1F81E38300FAFFCF /* Table.swift in Sources */,
 				8F76FC0F1F9CF990001BBC99 /* SCNodeHelper.swift in Sources */,
 				3415E6C21F8545B300DB1CAD /* NoeudCommun.swift in Sources */,
 				8F8706B91F7892BB000E6824 /* Entity.swift in Sources */,
+				25628BA11FA79CFF0010B58D /* Map.swift in Sources */,
 				34B66FE21F84599100A9CCB9 /* But.swift in Sources */,
 				1D019A2A1F911E33004D79B2 /* LoginViewModel.swift in Sources */,
 				8F97A3861FA2C8BD00421FDC /* IGeneralPropertiesViewModel.swift in Sources */,
