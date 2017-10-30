@@ -9,22 +9,20 @@ namespace InterfaceGraphique.Entities.EditonCommand
 {
     class WallCommand : AbstractEditionCommand
     {
-        private int[] startPosition;
-        private int[] endPosition;
+        private float[] startPosition;
+        private float[] endPosition;
 
-        public WallCommand(string objectUuid, int[] startPosition, int[] endPosition) : base(objectUuid)
+        public WallCommand(string objectUuid) : base(objectUuid)
         {
-            this.startPosition = startPosition;
-            this.endPosition = endPosition;
         }
 
-        public int[] StartPosition
+        public float[] StartPosition
         {
             get => startPosition;
             set => startPosition = value;
         }
 
-        public int[] EndPosition
+        public float[] EndPosition
         {
             get => endPosition;
             set => endPosition = value;
@@ -33,7 +31,7 @@ namespace InterfaceGraphique.Entities.EditonCommand
 
         public override void ExecuteCommand()
         {
-
+            FonctionsNatives.createWall( objectUuid.ToCharArray(), StartPosition, EndPosition);
         }
     }
 }

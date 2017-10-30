@@ -243,7 +243,10 @@
     <Compile Include="Entities\ChannelEntity.cs" />
     <Compile Include="Entities\ChatMessage.cs" />
     <Compile Include="Entities\EditonCommand\AbstractEditionCommand.cs" />
+    <Compile Include="Entities\EditonCommand\BoostCommand.cs" />
+    <Compile Include="Entities\EditonCommand\MoveCommand.cs" />
     <Compile Include="Entities\EditonCommand\PortalCommand.cs" />
+    <Compile Include="Entities\EditonCommand\SelectionCommand.cs" />
     <Compile Include="Entities\EditonCommand\WallCommand.cs" />
     <Compile Include="Entities\GameDataMessage.cs" />
     <Compile Include="Entities\GameEntity.cs" />

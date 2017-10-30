@@ -235,6 +235,8 @@
     <Compile Include="Entities\ChatMessageEntity.cs" />
     <Compile Include="Entities\ConfigurationEntity.cs" />
     <Compile Include="Entities\EditionCommand\AbstractEditionCommand.cs" />
+    <Compile Include="Entities\EditionCommand\BoostCommand.cs" />
+    <Compile Include="Entities\EditionCommand\MoveCommand.cs" />
     <Compile Include="Entities\EditionCommand\PortalCommand.cs" />
     <Compile Include="Entities\EditionCommand\WallCommand.cs" />
     <Compile Include="Entities\OnlineEditedMapInfo.cs" />

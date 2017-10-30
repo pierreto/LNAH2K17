@@ -198,6 +198,7 @@
     <ClCompile Include="Tests\VisiteurSupressionTest.cpp" />
     <ClCompile Include="UI\Panel2D.cpp" />
     <ClCompile Include="UI\Text2D.cpp" />
+    <ClCompile Include="VisitorByUUID.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\FacadeModele.h" />
@@ -273,6 +274,7 @@
     <ClInclude Include="Tests\VisiteurSuppressionTest.h" />
     <ClInclude Include="UI\Panel2D.h" />
     <ClInclude Include="UI\Text2D.h" />
+    <ClInclude Include="VisitorByUUID.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Commun\Utilitaire\Utilitaire.vcxproj">

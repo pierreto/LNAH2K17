@@ -321,6 +321,9 @@
     <ClCompile Include="NodeCreator.cpp">
       <Filter>Source Files\Arbre</Filter>
     </ClCompile>
+    <ClCompile Include="VisitorByUUID.cpp">
+      <Filter>Source Files\Arbre\Visiteurs</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\FacadeModele.h">
@@ -541,6 +544,9 @@
     </ClInclude>
     <ClInclude Include="NodeCreator.h">
       <Filter>Header Files\Arbre</Filter>
+    </ClInclude>
+    <ClInclude Include="VisitorByUUID.h">
+      <Filter>Header Files\Arbre\Visiteurs</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

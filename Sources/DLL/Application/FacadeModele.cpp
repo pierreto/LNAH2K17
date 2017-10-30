@@ -47,6 +47,7 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/type_ptr.hpp"
 #include "../ModeleEtatJeuOnline.h"
+#include "../VisitorByUUID.h"
 
 /// Pointeur vers l'instance unique de la classe.
 FacadeModele* FacadeModele::instance_{ nullptr };
@@ -1006,6 +1007,22 @@ void FacadeModele::toggleOrbit(bool orbit) {
 void FacadeModele::rotateCamera(float angle)
 {
 	vue_->obtenirCamera().orbiterXY(0, angle);
+}
+
+void FacadeModele::selectByUUIDS(std::vector<std::string> uuids)
+{
+	
+}
+
+void FacadeModele::moveByUUID(const char* uuid, const glm::vec3 pos)
+{
+	VisitorByUUID visitorWrapper = VisitorByUUID(uuid);
+	arbre_->accepterVisiteur(&visitorWrapper);
+	NoeudAbstrait* node = visitorWrapper.getNode();
+	if(visitorWrapper.hasFound)
+	{
+		node->assignerPositionRelative(pos);
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////

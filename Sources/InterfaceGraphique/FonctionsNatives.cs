@@ -207,7 +207,42 @@ namespace InterfaceGraphique {
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
         public delegate void PortalCreationCallback([Out,MarshalAs(UnmanagedType.LPStr)] string startUuid, [Out] IntPtr startPos, [Out, MarshalAs(UnmanagedType.LPStr)]string endUuid, [Out] IntPtr endPos);
+
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void setPortalCreationCallback(PortalCreationCallback callback);
+
+
+        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+        public delegate void WallCreationCallback([Out, MarshalAs(UnmanagedType.LPStr)] string uuid,[Out] IntPtr startPos, [Out] IntPtr endPos);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void setWallCreationCallback(WallCreationCallback callback);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void createWall(char[] uuid, float[] startPosition, float[] endPosition);
+
+
+        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+        public delegate void BoostCreationCallback([Out, MarshalAs(UnmanagedType.LPStr)] string uuid, [Out] IntPtr pos);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void setBoostCreationCallback(BoostCreationCallback callback);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void createBoost(char[] uuid, float[] position);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void setElementAsSelected(char[] uuid);
+
+
+        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+        public delegate void MoveEventCallback([Out, MarshalAs(UnmanagedType.LPStr)] string uuidSelected, [Out] IntPtr newPos);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void setMoveEventCallback(MoveEventCallback callback);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void moveByUUID(char[] uuid, float[] newPos);
     }
 }
+

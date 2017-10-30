@@ -30,6 +30,9 @@
 #include "../ModeleEtatJeuOnline.h"
 #include "../NodeCreator.h"
 #include "ModeleEtatCreerPortail.h"
+#include "ModeleEtatCreerMuret.h"
+#include "ModeleEtatCreerBoost.h"
+#include "ModeleEtatDeplacement.h"
 
 extern "C"
 {
@@ -982,4 +985,42 @@ void setPortalCreationCallback(PortalCreationCallback callback)
 {
 
 	ModeleEtatCreerPortail::obtenirInstance()->setPortalCreationCallback(callback);
+}
+
+void createWall(const char* uuid, const float* startPosition, const float* endPosition)
+{
+	glm::vec3 startPosVec = glm::make_vec3(startPosition);
+	glm::vec3 endPosVec = glm::make_vec3(endPosition);
+	return NodeCreator::obtenirInstance()->createWall(uuid, startPosVec,endPosVec);
+
+}
+
+void setWallCreationCallback(WallCreationCallback callback)
+{
+	ModeleEtatCreerMuret::obtenirInstance()->setWallCreationCallback(callback);
+}
+
+void createBoost(const char* uuid, const float* position)
+{
+	glm::vec3 posVec = glm::make_vec3(position);
+	return NodeCreator::obtenirInstance()->createBoost(uuid, posVec);
+}
+
+void setBoostCreationCallback(BoostCreationCallback callback)
+{
+	ModeleEtatCreerBoost::obtenirInstance()->setBoostCreationCallback(callback);
+}
+
+void setElementAsSelected(char* uuid)
+{
+}
+
+void moveByUUID(const char* uuid, const float* delta)
+{
+	FacadeModele::obtenirInstance()->moveByUUID(uuid, glm::make_vec3(delta));
+}
+
+void setMoveEventCallback(MoveEventCallback callback)
+{
+	ModeleEtatDeplacement::obtenirInstance()->setMoveEventCallback(callback);
 }

@@ -16,13 +16,23 @@ namespace InterfaceGraphique.Editor.EditorState
     {
         private EditionHub editionHub;
         private FonctionsNatives.PortalCreationCallback portalCreationCallback;
+        private FonctionsNatives.WallCreationCallback wallCreationCallback;
+        private FonctionsNatives.BoostCreationCallback boostCreationCallback;
+        private FonctionsNatives.MoveEventCallback moveEventCallback;
+
+
         public OnlineEditorState(EditionHub editionHub)
         {
             this.editionHub = editionHub;
             this.editionHub.NewCommand += OnNewCommand;
             this.portalCreationCallback = CurrentUserCreatedPortal;
+            this.wallCreationCallback = CurrentUserCreatedWall;
+            this.boostCreationCallback = CurrentUserCreatedBoost;
+            this.moveEventCallback = CurrentUserMovedObject;
 
         }
+
+
 
         public override void MouseUp(object sender, MouseEventArgs e)
         {
@@ -57,9 +67,12 @@ namespace InterfaceGraphique.Editor.EditorState
             this.editionHub.JoinPublicRoom(mapEntity);
             FonctionsNatives.setOnlineClientType((int)OnlineClientType.ONLINE_EDITION);
             FonctionsNatives.setPortalCreationCallback(this.portalCreationCallback);
+            FonctionsNatives.setWallCreationCallback(this.wallCreationCallback);
+            FonctionsNatives.setBoostCreationCallback(this.boostCreationCallback);
+            FonctionsNatives.setMoveEventCallback(this.moveEventCallback);
 
         }
-        
+
         private void OnNewCommand(AbstractEditionCommand editionCommand)
         {
             editionCommand.ExecuteCommand();
@@ -67,19 +80,60 @@ namespace InterfaceGraphique.Editor.EditorState
 
         private void CurrentUserCreatedPortal(string startUuid, IntPtr startPos, string endUuid, IntPtr endPos)
         {
-            float[] startPosA= new float[3];
-            Marshal.Copy(startPos, startPosA, 0,3);
+            float[] startVec= getVec3FromIntptr(startPos);
 
-            float[] endPosA  = new float[3];
-            Marshal.Copy(endPos, endPosA, 0, 3);
+            float[] endVec = getVec3FromIntptr(endPos);
 
             PortalCommand portalCommand = new PortalCommand(startUuid)
             {
                 EndUuid = endUuid,
-                StartPosition = startPosA,
-                EndPosition = endPosA
+                StartPosition = startVec,
+                EndPosition = endVec
             };
             this.editionHub.SendEditorCommand(portalCommand);
+        }
+
+     
+        private void CurrentUserCreatedWall(string uuid,IntPtr startPos, IntPtr endPos)
+        {
+            float[] startVec = getVec3FromIntptr(startPos);
+            float[] endVec = getVec3FromIntptr(endPos);
+
+            WallCommand wallCommand = new WallCommand(uuid)
+            {
+                StartPosition = startVec,
+                EndPosition = endVec
+            };
+
+            this.editionHub.SendEditorCommand(wallCommand);
+        }
+        private void CurrentUserCreatedBoost(string uuid, IntPtr startpos)
+        {
+            float[] vec = getVec3FromIntptr(startpos);
+
+            BoostCommand boostCommand = new BoostCommand(uuid)
+            {
+                Position = vec,
+            };
+
+            this.editionHub.SendEditorCommand(boostCommand);
+        }
+        private void CurrentUserMovedObject(string uuid, IntPtr pos)
+        {
+            float[] vec = getVec3FromIntptr(pos);
+         
+            this.editionHub.SendEditorCommand(new MoveCommand(uuid)
+            {
+                Position = vec
+            });
+
+        }
+
+        private float[] getVec3FromIntptr(IntPtr ptr)
+        {
+            float[] vec3 = new float[3];
+            Marshal.Copy(ptr, vec3, 0, 3);
+            return vec3;
         }
     }
 }

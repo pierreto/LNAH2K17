@@ -136,7 +136,7 @@ public:
    bool mouseOverControlPoint();
    /// Supprime la sélection en cours
    void deleteSelection();
-   /// Changer la visibilité de la grid
+	/// Changer la visibilité de la grid
    void changeGridVisibility(bool visibility);
    /// Reinitialise la vue
    void resetCameraPosition();
@@ -157,6 +157,10 @@ public:
    void rotateCamera(float angle);
 
    bool modeOrbite_;
+
+
+   void selectByUUIDS(std::vector<std::string> uuids);
+   void moveByUUID(const char* uuid, const glm::vec3 delta);
 
 
    /// Document rapidJSON
