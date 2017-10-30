@@ -10,7 +10,8 @@ namespace AirHockeyServer.Services
     public interface IMapService
     {
         Task<IEnumerable<MapEntity>> GetMaps();
-        Task<MapEntity> GetMapByName(string creator, string name);
+        Task<MapEntity> GetMap(int id);
         Task SaveMap(MapEntity map);
+        Task<int?> GetMapID(MapEntity map);
     }
 }

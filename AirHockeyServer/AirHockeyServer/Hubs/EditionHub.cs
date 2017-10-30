@@ -12,7 +12,7 @@ namespace AirHockeyServer.Hubs
 
         public void JoinPublicRoom(MapEntity map)
         {
-            Groups.Add(Context.ConnectionId, ObtainEditionGroupIdentifier(map.Id));
+            Groups.Add(Context.ConnectionId, ObtainEditionGroupIdentifier((int)map.Id));
         }
         public void JoinPrivateRoom(MapEntity map, string password)
         {
@@ -20,7 +20,7 @@ namespace AirHockeyServer.Hubs
 
 
 
-            Groups.Add(Context.ConnectionId, ObtainEditionGroupIdentifier(map.Id));
+            Groups.Add(Context.ConnectionId, ObtainEditionGroupIdentifier((int)map.Id));
         }
 
         public void SendEditionCommand(int mapId, string editionCommand)
