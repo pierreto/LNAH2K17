@@ -12,13 +12,13 @@ import Foundation
 
 class MapViewModel: NSObject, IMapViewModel {
     
-    private var map: Map
+    private var maps: Maps
     
     var mapNameError: Dynamic<String>
     
-    init(map: Map) {
-        self.map = map
-        self.mapNameError = Dynamic(map.mapNameError)
+    init(maps: Maps) {
+        self.maps = maps
+        self.mapNameError = Dynamic(maps.mapNameError)
         
         super.init()
         
@@ -30,10 +30,10 @@ class MapViewModel: NSObject, IMapViewModel {
     }
     
     func save(mapName: String, isLocalMap: Bool, isPrivateMap: Bool) -> Bool {
-        let valid = map.validateName(mapName: mapName)
+        let valid = self.maps.validateMap(mapName: mapName)
         
         if valid {
-            map.setValues(mapName: mapName, isLocalMap: isLocalMap, isPrivateMap: isPrivateMap)
+            self.maps.saveMap(mapName: mapName, isLocalMap: isLocalMap, isPrivateMap: isPrivateMap)
         }
         
         return valid
@@ -43,7 +43,7 @@ class MapViewModel: NSObject, IMapViewModel {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(savePressed(_:)),
                                                name: NSNotification.Name(rawValue: MapNotification.SaveMapNotification),
-                                               object: self.map)
+                                               object: self.maps)
     }
     
     fileprivate func unsubscribeFromNotifications() {
@@ -51,7 +51,7 @@ class MapViewModel: NSObject, IMapViewModel {
     }
     
     @objc fileprivate func savePressed(_ notification: NSNotification) {
-        self.mapNameError.value = self.map.mapNameError
+        self.mapNameError.value = self.maps.mapNameError
     }
     
 }

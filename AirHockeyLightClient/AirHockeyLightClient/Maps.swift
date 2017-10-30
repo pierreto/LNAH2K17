@@ -14,12 +14,10 @@ enum MapNotification {
     static let SaveMapNotification = "SaveMapNotification"
 }
 
-class Map: NSObject {
+class Maps: NSObject {
     
     /// Propriétés d'une carte
     private var mapName : String?
-    private var isLocalMap : Bool?
-    private var isPrivateMap : Bool?
     
     /// Message d'erreur
     var mapNameError: String
@@ -29,17 +27,19 @@ class Map: NSObject {
         super.init()
     }
     
-    func validateName(mapName: String) -> Bool {
+    func validateMap(mapName: String) -> Bool {
         NotificationCenter.default.post(name: Notification.Name(rawValue: MapNotification.SaveMapNotification), object: self)
-        mapNameError = "Error"
         
-        return false
+        if !DBManager.instance.isMapNameUnique(mapName: mapName) {
+            mapNameError = "La carte doit posséder un nom unique!"
+            return false;
+        }
+        
+        return true
     }
 
-    func setValues(mapName: String, isLocalMap: Bool, isPrivateMap: Bool) {
-        self.mapName = mapName
-        self.isLocalMap = isLocalMap
-        self.isPrivateMap = isPrivateMap
+    func saveMap(mapName: String, isLocalMap: Bool, isPrivateMap: Bool) {
+        print("test")
     }
     
 }

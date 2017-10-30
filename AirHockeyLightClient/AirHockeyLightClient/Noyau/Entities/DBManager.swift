@@ -43,6 +43,11 @@ class DBManager {
         }
     }
     
+    func isMapNameUnique(mapName: String) -> Bool {
+        let maps = self.realm.objects(MapEntity.self).filter("name == %@", mapName)
+        return maps.count == 0
+    }
+    
 }
 
 ///////////////////////////////////////////////////////////////////////////////

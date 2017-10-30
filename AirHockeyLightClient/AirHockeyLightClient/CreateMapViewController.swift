@@ -41,7 +41,7 @@ class CreateMapViewController: UIViewController {
         self.view.backgroundColor = UIColor.black.withAlphaComponent(0.8)
         self.showAnimate()
         
-        self.viewModel = MapViewModel(map: Map())
+        self.viewModel = MapViewModel(maps: Maps())
         self.linkErrorMessagesToViewModel()
         self.resetUI()
     }
