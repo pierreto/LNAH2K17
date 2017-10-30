@@ -96,6 +96,9 @@ class NoeudCommun : SCNNode {
         FacadeModele.instance.obtenirArbreRendu().accepterVisiteur(visiteur: selection)
         let noeuds = selection.obtenirNoeuds()
         FacadeModele.instance.obtenirVue().editorHUDScene?.showSelectContextButtons(activer: (noeuds.count > 0))
+        
+        // Afficher les propriétés sur l'objet sélectionné
+        FacadeModele.instance.obtenirVue().showObjectPropertiesView(activer: noeuds.count == 1)
     }
 
     /// Cette fonction retourne l'état d'être sélectionné ou non du noeud.

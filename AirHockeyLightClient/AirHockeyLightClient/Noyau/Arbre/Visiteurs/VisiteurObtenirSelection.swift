@@ -32,7 +32,7 @@ class VisiteurObtenirSelection: VisiteurAbstrait {
         return self.noeuds
     }
     
-    /// Visiter un accéléateur pour l'obtention de la sélection
+    /// Visiter un accélérateur pour l'obtention de la sélection
     func visiterAccelerateur(noeud: NoeudAccelerateur) {
         self.implementationDefaut(noeud: noeud)
     }

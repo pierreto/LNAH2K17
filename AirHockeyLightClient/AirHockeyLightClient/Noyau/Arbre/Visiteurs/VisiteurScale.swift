@@ -38,7 +38,7 @@ class VisiteurScale: VisiteurAbstrait {
         self.scale = scale
     }
 
-    /// Visiter un accéléateur pour le rendre sélectionnable
+    /// Visiter un accélérateur pour le rendre sélectionnable
     func visiterAccelerateur(noeud: NoeudAccelerateur) {
         if (noeud.estSelectionne()) {
             var scale = GLKVector3Add(

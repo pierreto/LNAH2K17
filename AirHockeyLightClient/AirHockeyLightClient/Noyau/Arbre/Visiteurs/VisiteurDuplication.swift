@@ -41,7 +41,7 @@ class VisiteurDuplication: VisiteurAbstrait {
         return self.centreDuplication
     }
 
-    /// Visiter un accéléateur pour la duplication
+    /// Visiter un accélérateur pour la duplication
     func visiterAccelerateur(noeud: NoeudAccelerateur) {
         if noeud.estSelectionne() {
             let arbre = FacadeModele.instance.obtenirArbreRendu()

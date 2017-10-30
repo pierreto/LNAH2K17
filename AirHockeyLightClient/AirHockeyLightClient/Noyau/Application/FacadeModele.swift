@@ -196,7 +196,36 @@ class FacadeModele {
         // Initialisation de l'etat
         self.etat?.initialiser()
     }
+
+    /// Cette fonction retourne l'information sur un noeud sélectionné.
+    func selectedNodeInfos(infos: inout [Float]?) -> Bool {
+        let information = VisiteurInformation();
+        self.arbre?.accepterVisiteur(visiteur: information);
+        return information.lireInformations(infos: &infos);
+    }
     
+    /// Cette fonction applique l'information sur un noeud sélectionné.
+    func applyNodeInfos(infos: [Float]) {
+        let selection = VisiteurObtenirSelection();
+        self.arbre?.accepterVisiteur(visiteur: selection);
+        let noeud = selection.obtenirNoeuds().first;
+    
+        let rotation = noeud?.eulerAngles;
+        let scale = noeud?.scale;
+        let position = noeud?.position;
+    
+        let information = VisiteurInformation();
+        _ = information.ecrireInformations(infos: infos);
+        self.arbre?.accepterVisiteur(visiteur: information);
+    
+        // Annuler les changements
+        if (!(self.etat?.noeudsSurLaTable())!) {
+            noeud?.position = position!;
+            noeud?.scale = scale!;
+            noeud?.eulerAngles = rotation!;
+        }
+    }
+
     /// Charger une patinoire préalablement sauvegardée
     func chargerCarte(map: MapEntity) {
         self.obtenirArbreRendu().initialiser()

@@ -40,7 +40,7 @@ class VisiteurSelectionnable: VisiteurAbstrait {
         self.selectionnable = selectionnable
     }
     
-    /// Visiter un accéléateur pour le rendre sélectionnable
+    /// Visiter un accélérateur pour le rendre sélectionnable
     func visiterAccelerateur(noeud: NoeudAccelerateur) {
         self.implementationDefaut(noeud: noeud)
     }
