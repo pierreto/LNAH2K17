@@ -28,8 +28,8 @@
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-NoeudPointControl::NoeudPointControl(const std::string& typeNoeud)
-	: NoeudComposite{ typeNoeud }, symmetrie_(glm::vec3(1,1,1)), rayonModele3D_(-1.0)
+NoeudPointControl::NoeudPointControl(const std::string& typeNoeud, const char* uuid)
+	: NoeudComposite{ typeNoeud, uuid }, symmetrie_(glm::vec3(1,1,1)), rayonModele3D_(-1.0)
 {
 
 }

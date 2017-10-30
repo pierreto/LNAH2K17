@@ -41,6 +41,8 @@ public:
 	enum OnlineClientType {
 		SLAVE = 0,
 		MASTER = 1,
+		OFFLINE_EDITION = 2,
+		ONLINE_EDITION = 3
 	};
 	/// Obtient l'instance unique de la classe.
 	static ModeleEtatJeu* obtenirInstance();

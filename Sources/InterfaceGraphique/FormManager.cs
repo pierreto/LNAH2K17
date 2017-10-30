@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InterfaceGraphique.CommunicationInterface;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -63,7 +64,11 @@ namespace InterfaceGraphique {
         ////////////////////////////////////////////////////////////////////////
         public void InitializeEvents()
         {
-            this.FormClosing += (sender, e) => Program.Login.Logout();
+            // TODO: Fix this. Make this is added AFTER authentication 
+            if (User.Instance.IsConnected)
+            {
+                this.FormClosing += async (sender, e) => await Program.HomeMenu.Logout();
+            }
         }
 
 

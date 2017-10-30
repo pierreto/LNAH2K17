@@ -12,20 +12,19 @@ import Foundation
 class LoginViewModel: NSObject, ILoginViewModel {
     
     let loginModel: Login
-    
-    let ipAddressError: Dynamic<String>
     let usernameError: Dynamic<String>
     let passwordError: Dynamic<String>
+    let ipAddressError: Dynamic<String>
     
-    func login(ipAddress: String, username: String, password: String) -> Promise<Bool>{
-        return loginModel.validateFields(ipAddress: ipAddress, username: username, password: password)
+    func login(username: String, password: String) -> Promise<Bool> {
+        return loginModel.validateFields(username: username, password: password)
     }
     
     init(loginModel: Login) {
         self.loginModel = loginModel
-        self.ipAddressError = Dynamic(loginModel.ipAddressError)
         self.usernameError = Dynamic(loginModel.usernameError)
         self.passwordError = Dynamic(loginModel.passwordError)
+        self.ipAddressError = Dynamic("")
         super.init()
         subscribeToNotifications()
     }
@@ -46,7 +45,6 @@ class LoginViewModel: NSObject, ILoginViewModel {
     }
     
     @objc fileprivate func loginPressed(_ notification: NSNotification){
-        self.ipAddressError.value = loginModel.ipAddressError
         self.usernameError.value = loginModel.usernameError
         self.passwordError.value = loginModel.passwordError
     }

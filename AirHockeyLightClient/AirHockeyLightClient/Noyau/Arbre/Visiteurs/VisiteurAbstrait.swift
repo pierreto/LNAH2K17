@@ -18,12 +18,12 @@
 ///////////////////////////////////////////////////////////////////////////
 protocol VisiteurAbstrait {
     /// Fonctions obligatoires
-    //func visiterAccelerateur(noeud: NoeudAccelerateur)
+    func visiterAccelerateur(noeud: NoeudAccelerateur)
     //func visiterMaillet(noeud: NoeudMaillet)
     func visiterPointControl(noeud: NoeudPointControl)
     func visiterTable(noeud: NoeudTable)
-    //func visiterPortail(noeud: NoeudPortail)
-    //func visiterMur(noeud: NoeudMur)
+    func visiterPortail(noeud: NoeudPortail)
+    func visiterMur(noeud: NoeudMur)
     //func visiterRondelle(noeud: NoeudRondelle)
     //func visiterBut(noeud: NoeudBut)
 }

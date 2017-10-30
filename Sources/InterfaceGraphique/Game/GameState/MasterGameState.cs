@@ -30,6 +30,8 @@ namespace InterfaceGraphique.Game.GameState
         public override void InitializeGameState(GameEntity gameEntity)
         {
             FonctionsNatives.setOnlineClientType((int) OnlineClientType.MASTER);
+            FonctionsNatives.setCurrentOpponentType((int)OpponentType.ONLINE_PLAYER);
+
             this.gameHub.InitializeMasterGameHub(gameEntity.GameId);
             this.gameHub.NewPositions += OnNewGamePositions;
 
@@ -119,7 +121,11 @@ namespace InterfaceGraphique.Game.GameState
         public override void EndGame() {
             gameHasEnded = true;
             gameHub.SendGameOver();
-            Program.QuickPlay.EndGame(); 
+            Program.QuickPlay.EndGame();
+            if(IsOnlineTournementMode)
+            {
+                Program.FormManager.CurrentForm = Program.OnlineTournament;
+            }
         }
         private void OnNewGamePositions(GameDataMessage gameData)
         {

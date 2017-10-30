@@ -66,7 +66,13 @@
     <PlatformTarget>x86</PlatformTarget>
     <OutputPath>bin\x86\Release\</OutputPath>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FontAwesome.WPF, Version=4.7.0.37774, Culture=neutral, PublicKeyToken=0758b07a11a4f466, processorArchitecture=MSIL">
+      <HintPath>..\packages\FontAwesome.WPF.4.7.0.9\lib\net40\FontAwesome.WPF.dll</HintPath>
+    </Reference>
     <Reference Include="MaterialDesignColors, Version=1.1.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignColors.1.1.3\lib\net45\MaterialDesignColors.dll</HintPath>
     </Reference>
@@ -97,24 +103,31 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="Prism, Version=6.3.0.0, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Core.6.3.0\lib\net45\Prism.dll</HintPath>
+    </Reference>
+    <Reference Include="Prism.Wpf, Version=6.3.0.0, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Wpf.6.3.0\lib\net45\Prism.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing.Design" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.Extensions, Version=2.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Net.Http.Formatting.Extension.5.2.3.0\lib\System.Net.Http.Extensions.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Net.Http.Formatting.Extension.5.2.3.0\lib\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http.Primitives, Version=4.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Net.Http.Formatting.Extension.5.2.3.0\lib\System.Net.Http.Primitives.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Primitives.dll</HintPath>
     </Reference>
+    <Reference Include="System.Net.Http.WebRequest" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Expression.Blend.Sdk.1.0.2\lib\net45\System.Windows.Interactivity.dll</HintPath>
+      <HintPath>..\packages\Prism.Wpf.6.3.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
@@ -130,13 +143,17 @@
   <ItemGroup>
     <Compile Include="CommunicationInterface\ChatHub.cs" />
     <Compile Include="CommunicationInterface\FriendsHub.cs" />
+    <Compile Include="CommunicationInterface\EditionHub.cs" />
     <Compile Include="CommunicationInterface\GameHub.cs" />
+    <Compile Include="CommunicationInterface\IBaseHub.cs" />
     <Compile Include="CommunicationInterface\RestInterface\HttpResponseParser.cs" />
     <Compile Include="CommunicationInterface\RestInterface\MapsRepository.cs" />
     <Compile Include="CommunicationInterface\RestInterface\Repository.cs" />
+    <Compile Include="CommunicationInterface\WaitingRooms\TournamentWaitingRoomHub.cs" />
+    <Compile Include="CommunicationInterface\WaitingRooms\GameWaitingRoomHub.cs" />
+    <Compile Include="CommunicationInterface\User.cs" />
     <Compile Include="CommunicationInterface\WaitingRoomHub.cs" />
     <Compile Include="CommunicationInterface\HubManager.cs" />
-    <Compile Include="CommunicationInterface\IBaseHub.cs" />
     <Compile Include="Controls\FriendListHost.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -149,6 +166,21 @@
     <Compile Include="Controls\LobbyHost.Designer.cs">
       <DependentUpon>LobbyHost.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\OnlineTournament.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\OnlineTournament.Designer.cs">
+      <DependentUpon>OnlineTournament.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WPF\Navigation\NavigationView.xaml.cs">
+      <DependentUpon>NavigationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WPF\Navigation\NavigationViewModel.cs" />
+    <Compile Include="Controls\WPF\PasswordHelper.cs" />
+    <Compile Include="Controls\WPF\Authenticate\AuthenticateView.xaml.cs">
+      <DependentUpon>AuthenticateView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WPF\Authenticate\AuthenticateViewModel.cs" />
     <Compile Include="Controls\WPF\BringNewItemIntoViewBehavior.cs" />
     <Compile Include="Controls\WPF\Chat\ChatView.xaml.cs">
       <DependentUpon>ChatView.xaml</DependentUpon>
@@ -158,13 +190,50 @@
       <DependentUpon>FriendList.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\WPF\Friends\FriendListViewModel.cs" />
+    <Compile Include="Controls\WPF\ConnectServer\ConnectServerView.xaml.cs">
+      <DependentUpon>ConnectServerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WPF\ConnectServer\ConnectServerViewModel.cs" />
+    <Compile Include="Controls\WPF\Home\HomeView.xaml.cs">
+      <DependentUpon>HomeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WPF\Home\HomeViewModel.cs" />
+    <Compile Include="Controls\EditorHost.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\EditorHost.Designer.cs">
+      <DependentUpon>EditorHost.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WPF\Editor\EditorJoinOrCreateView.xaml.cs">
+      <DependentUpon>EditorJoinOrCreateView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WPF\Editor\EditorModeView.xaml.cs">
+      <DependentUpon>EditorModeView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controls\WPF\Editor\EditorServerBrowser.xaml.cs">
+      <DependentUpon>EditorServerBrowser.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WPF\Editor\EditorViewModel.cs" />
     <Compile Include="Controls\WPF\Matchmaking\MatchmakingView.xaml.cs">
       <DependentUpon>MatchmakingView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\WPF\Matchmaking\MatchmakingViewModel.cs" />
     <Compile Include="Controls\WPF\RelayCommandAsync.cs" />
+    <Compile Include="Controls\WPF\Tournament\TournamentView.xaml.cs">
+      <DependentUpon>TournamentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WPF\Tournament\TournamentViewModel.cs" />
+    <Compile Include="Controls\WPF\Signup\SignupView.xaml.cs">
+      <DependentUpon>SignupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WPF\Signup\SignupViewModel.cs" />
     <Compile Include="Controls\WPF\ViewModelBase.cs" />
     <Compile Include="Controls\WPF\ViewModelLocator.cs" />
+    <Compile Include="Editor\EditorState\AbstractEditorState.cs" />
+    <Compile Include="Editor\EditorState\OfflineEditorState.cs" />
+    <Compile Include="Editor\EditorState\OnlineEditorState.cs" />
+    <Compile Include="Editor\MapManager.cs" />
     <Compile Include="Editor\OpenPrivateMapForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -186,14 +255,23 @@
     <Compile Include="Entities\ChannelEntity.cs" />
     <Compile Include="Entities\ChatMessage.cs" />
     <Compile Include="Entities\FriendRequestEntity.cs" />
+    <Compile Include="Entities\EditonCommand\AbstractEditionCommand.cs" />
+    <Compile Include="Entities\EditonCommand\PortalCommand.cs" />
+    <Compile Include="Entities\EditonCommand\WallCommand.cs" />
     <Compile Include="Entities\GameDataMessage.cs" />
     <Compile Include="Entities\GameEntity.cs" />
     <Compile Include="Entities\GoalMessage.cs" />
+    <Compile Include="Entities\LoginEntity.cs" />
     <Compile Include="Entities\LoginMessage.cs" />
     <Compile Include="Entities\MapEntity.cs" />
     <Compile Include="Entities\MemberEntity.cs" />
     <Compile Include="CommunicationInterface\LoginClient.cs" />
+    <Compile Include="Entities\TournamentEntity.cs" />
+    <Compile Include="Entities\MockObject\MapEntityMock.cs" />
+    <Compile Include="Entities\TournamentOpponentMessage.cs" />
+    <Compile Include="Entities\SignupEntity.cs" />
     <Compile Include="Entities\UserEntity.cs" />
+    <Compile Include="Exceptions\ConnectServerException.cs" />
     <Compile Include="Exceptions\LoginException.cs" />
     <Compile Include="ListMaps.cs">
       <SubType>Form</SubType>
@@ -205,11 +283,11 @@
     <Compile Include="Game\GameState\MasterGameState.cs" />
     <Compile Include="Game\GameState\OfflineGameState.cs" />
     <Compile Include="Game\GameState\SlaveGameState.cs" />
-    <Compile Include="Menus\Login.cs">
+    <Compile Include="Menus\HomeMenu.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Menus\Login.Designer.cs">
-      <DependentUpon>Login.cs</DependentUpon>
+    <Compile Include="Menus\HomeMenu.Designer.cs">
+      <DependentUpon>HomeMenu.cs</DependentUpon>
     </Compile>
     <Compile Include="Menus\CreditsMenu.cs">
       <SubType>Form</SubType>
@@ -299,12 +377,16 @@
     <Compile Include="Game\TestMode.Designer.cs">
       <DependentUpon>TestMode.cs</DependentUpon>
     </Compile>
+    <Compile Include="Services\MapService.cs" />
     <Compile Include="WPFApplication.cs" />
     <EmbeddedResource Include="Controls\FriendListHost.resx">
       <DependentUpon>FriendListHost.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Editor\OpenPrivateMapForm.resx">
       <DependentUpon>OpenPrivateMapForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\EditorHost.resx">
+      <DependentUpon>EditorHost.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Editor\SaveMapForm.resx">
       <DependentUpon>SaveMapForm.cs</DependentUpon>
@@ -318,8 +400,8 @@
     <EmbeddedResource Include="ListMaps.resx">
       <DependentUpon>ListMaps.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Menus\Login.resx">
-      <DependentUpon>Login.cs</DependentUpon>
+    <EmbeddedResource Include="Menus\HomeMenu.resx">
+      <DependentUpon>HomeMenu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Menus\CheatCodesMenu.resx">
       <DependentUpon>CheatCodesMenu.cs</DependentUpon>
@@ -371,6 +453,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="app.manifest" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -426,6 +509,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Controls\WPF\Authenticate\AuthenticateView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\WPF\Chat\ChatView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -434,7 +521,39 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Controls\WPF\ConnectServer\ConnectServerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="Controls\WPF\Home\HomeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\WPF\Editor\EditorJoinOrCreateView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\WPF\Editor\EditorModeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="Controls\WPF\Editor\EditorServerBrowser.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\WPF\Matchmaking\MatchmakingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\WPF\Tournament\TournamentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\WPF\Navigation\NavigationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\WPF\Signup\SignupView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -443,13 +562,20 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Entities\Message\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
     </PostBuildEvent>
   </PropertyGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

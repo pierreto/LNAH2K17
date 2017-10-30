@@ -20,14 +20,11 @@ import SceneKit
 ///////////////////////////////////////////////////////////////////////////
 class VisiteurDeplacement: VisiteurAbstrait {
     
-    /// Vecteur trois dimensions pour le changement de position de l'objet
-    var delta: GLKVector3?
-    
     /// Dernière position du toucher
-    var lastPosition: CGPoint?
+    private var lastPosition: CGPoint?
     
     /// Position du toucher
-    var position: CGPoint?
+    private var position: CGPoint?
     
     /// Constructeur
     init(lastPosition: CGPoint, position: CGPoint) {
@@ -36,7 +33,11 @@ class VisiteurDeplacement: VisiteurAbstrait {
     }
     
     /// Visiter un accélérateur pour le déplacement
-    //virtual void visiterAccelerateur(NoeudAccelerateur* noeud);
+    func visiterAccelerateur(noeud: NoeudAccelerateur) {
+        if (noeud.estSelectionne()) {
+            self.deplacerNoeud(noeud: noeud)
+        }
+    }
     
     /// Visiter un maillet pour le déplacement
     //virtual void visiterMaillet(NoeudMaillet* noeud);
@@ -49,12 +50,7 @@ class VisiteurDeplacement: VisiteurAbstrait {
     func visiterPointControl(noeud: NoeudPointControl) {
         if (noeud.estSelectionne()) {
             var pos = noeud.obtenirPositionRelative()
-            
-            let start = MathHelper.CGPointToSCNVector3(view: FacadeModele.instance.obtenirVue().editorView, depth: pos.z, point: self.lastPosition!)
-            let end = MathHelper.CGPointToSCNVector3(view: FacadeModele.instance.obtenirVue().editorView, depth: pos.z, point: self.position!)
-            self.delta = GLKVector3Make(end.x - start.x, end.y - start.y, end.z - start.z)
-            
-            pos = GLKVector3Add(pos, self.delta!)
+            pos = self.obtenirDeplacement(pos: pos)
             
             // Deplacer le premier noeud
             noeud.deplacer(position: pos)
@@ -70,12 +66,47 @@ class VisiteurDeplacement: VisiteurAbstrait {
     }
     
     /// Visiter un mur pour le déplacement
-    //virtual void visiterMur(NoeudMur* noeud);
+    func visiterMur(noeud: NoeudMur) {
+        if (noeud.estSelectionne()) {
+            // Sauvegarder scale et rotation
+            // TODO : trouver une meilleure solution pour conserver le scaling et la rotation lors d'un déplacement
+            let scale = noeud.scale
+            let rotation = noeud.rotation
+            
+            self.deplacerNoeud(noeud: noeud)
+            
+            // Remettre le scale et la rotation du mur
+            noeud.scale = scale
+            noeud.rotation = rotation
+        }
+    }
     
     /// Visiter un portail pour le déplacement
-    //virtual void visiterPortail(NoeudPortail* noeud);
+    func visiterPortail(noeud: NoeudPortail) {
+        if (noeud.estSelectionne()) {
+            self.deplacerNoeud(noeud: noeud)
+        }
+    }
     
     //virtual void visiterRondelle(NoeudRondelle* noeud);
+    
+    /// Déplace le noeud
+    private func deplacerNoeud(noeud: NoeudCommun) {
+        var pos = noeud.obtenirPositionRelative()
+        pos = self.obtenirDeplacement(pos: pos)
+        
+        // Deplacer le premier noeud
+        noeud.deplacer(position: pos)
+    }
+    
+    /// Détermine le déplacement (delta)
+    private func obtenirDeplacement(pos: GLKVector3) -> GLKVector3 {
+        let start = MathHelper.CGPointToSCNVector3(view: FacadeModele.instance.obtenirVue().editorView, depth: pos.z, point: self.lastPosition!)
+        let end = MathHelper.CGPointToSCNVector3(view: FacadeModele.instance.obtenirVue().editorView, depth: pos.z, point: self.position!)
+        let delta = GLKVector3Make(end.x - start.x, end.y - start.y, end.z - start.z)
+        
+        return GLKVector3Add(pos, delta)
+    }
     
 }
 

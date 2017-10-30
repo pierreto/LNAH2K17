@@ -37,10 +37,9 @@ namespace InterfaceGraphique.CommunicationInterface
             this.masterGameState = masterGameState;
         }
 
-        public void InitializeHub(HubConnection connection, string username)
+        public void InitializeHub(HubConnection connection)
         {
             this.connection = connection;
-            this.username = username;
             GameWaitingRoomProxy = this.connection.CreateHubProxy("GameWaitingRoomHub");
         }
 
@@ -57,13 +56,7 @@ namespace InterfaceGraphique.CommunicationInterface
         public async void JoinGame()
         {
             InitializeEvents();
-            Random random= new Random();
-            UserEntity user = new UserEntity
-            {
-                Id = random.Next(),
-                Username = username
-            };
-            await GameWaitingRoomProxy.Invoke("JoinGame", user);
+            await GameWaitingRoomProxy.Invoke("JoinGame", User.Instance.UserEntity);
         }
 
         private void InitializeEvents()

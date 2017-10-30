@@ -318,6 +318,9 @@
     <ClCompile Include="ModeleEtatJeuOnline.cpp">
       <Filter>Source Files\Application\States</Filter>
     </ClCompile>
+    <ClCompile Include="NodeCreator.cpp">
+      <Filter>Source Files\Arbre</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\FacadeModele.h">
@@ -535,6 +538,9 @@
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="NodeCreator.h">
+      <Filter>Header Files\Arbre</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

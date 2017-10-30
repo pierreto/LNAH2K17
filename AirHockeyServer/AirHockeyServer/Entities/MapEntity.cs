@@ -22,5 +22,6 @@ namespace AirHockeyServer.Entities
         public string Json { get; set; }
         public bool Private { get; set; }
         public string Password { get; set; }
+        public int CurrentNumberOfPlayer { get; set; }
     }
 }

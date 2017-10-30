@@ -70,6 +70,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>Async</ExceptionHandling>
     </ClCompile>
     <Link>
       <AdditionalDependencies>opengl32.lib;glu32.lib;freetype246_D_x64.lib;glew32s.lib;tinyxml_D_x64.lib;assimp.lib;cppunit_D_x64.lib;ftgl.lib;fmodexL64_vc.lib;FreeImage.lib;Box2D_D_x64.lib;legacy_stdio_definitions.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -81,7 +82,7 @@
       <DataExecutionPrevention>
       </DataExecutionPrevention>
       <TargetMachine>MachineX64</TargetMachine>
-      <AdditionalOptions>/NODEFAULTLIB:LIBCMT %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/NODEFAULTLIB:LIBCMT; %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PostBuildEvent>
       <Command>
@@ -182,6 +183,7 @@
     <ClCompile Include="Lighting\LightAnimation.cpp" />
     <ClCompile Include="Lighting\LightManager.cpp" />
     <ClCompile Include="ModeleEtatJeuOnline.cpp" />
+    <ClCompile Include="NodeCreator.cpp" />
     <ClCompile Include="Tests\ArbreRenduTest.cpp" />
     <ClCompile Include="Tests\BancTests.cpp" />
     <ClCompile Include="Tests\CollisionTest.cpp" />
@@ -255,6 +257,7 @@
     <ClInclude Include="Lighting\Light.h" />
     <ClInclude Include="Lighting\LightAnimation.h" />
     <ClInclude Include="Lighting\LightManager.h" />
+    <ClInclude Include="NodeCreator.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Tests\ArbreRenduTest.h" />
     <ClInclude Include="Tests\BancTests.h" />

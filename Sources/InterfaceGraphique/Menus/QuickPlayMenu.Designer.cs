@@ -1,4 +1,6 @@
-﻿namespace InterfaceGraphique {
+﻿using InterfaceGraphique.CommunicationInterface;
+
+namespace InterfaceGraphique {
     partial class QuickPlayMenu {
         private System.ComponentModel.IContainer components = null;
 
@@ -20,6 +22,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            bool onlineMode = User.Instance.IsConnected;
             this.panel1 = new System.Windows.Forms.Panel();
             this.Text_MapName = new System.Windows.Forms.Label();
             this.Button_OpenMap = new System.Windows.Forms.Button();
@@ -33,14 +36,20 @@
             this.Text_Description = new System.Windows.Forms.Label();
             this.Button_Cancel = new System.Windows.Forms.Button();
             this.Button_Play = new System.Windows.Forms.Button();
-            this.Button_Online_Game = new System.Windows.Forms.Button();
+            if (onlineMode)
+            {
+                this.Button_Online_Game = new System.Windows.Forms.Button();
+            }
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.panel1.Controls.Add(this.Button_Online_Game);
+            if (onlineMode)
+            {
+                this.panel1.Controls.Add(this.Button_Online_Game);
+            }
             this.panel1.Controls.Add(this.Text_MapName);
             this.panel1.Controls.Add(this.Button_OpenMap);
             this.panel1.Controls.Add(this.Button_DefaultMap);
@@ -236,21 +245,24 @@
             // 
             // Button_Online_Game
             // 
-            this.Button_Online_Game.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Button_Online_Game.Cursor = System.Windows.Forms.Cursors.Default;
-            this.Button_Online_Game.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Button_Online_Game.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Button_Online_Game.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Button_Online_Game.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Button_Online_Game.ForeColor = System.Drawing.Color.White;
-            this.Button_Online_Game.Location = new System.Drawing.Point(972, 115);
-            this.Button_Online_Game.Margin = new System.Windows.Forms.Padding(6);
-            this.Button_Online_Game.Name = "Button_Online_Game";
-            this.Button_Online_Game.Size = new System.Drawing.Size(150, 48);
-            this.Button_Online_Game.TabIndex = 30;
-            this.Button_Online_Game.TabStop = false;
-            this.Button_Online_Game.Text = "En Ligne";
-            this.Button_Online_Game.UseVisualStyleBackColor = false;
+            if (onlineMode)
+            {
+                this.Button_Online_Game.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+                this.Button_Online_Game.Cursor = System.Windows.Forms.Cursors.Default;
+                this.Button_Online_Game.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+                this.Button_Online_Game.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+                this.Button_Online_Game.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+                this.Button_Online_Game.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+                this.Button_Online_Game.ForeColor = System.Drawing.Color.White;
+                this.Button_Online_Game.Location = new System.Drawing.Point(972, 115);
+                this.Button_Online_Game.Margin = new System.Windows.Forms.Padding(6);
+                this.Button_Online_Game.Name = "Button_Online_Game";
+                this.Button_Online_Game.Size = new System.Drawing.Size(150, 48);
+                this.Button_Online_Game.TabIndex = 30;
+                this.Button_Online_Game.TabStop = false;
+                this.Button_Online_Game.Text = "En Ligne";
+                this.Button_Online_Game.UseVisualStyleBackColor = false;
+            }
             // 
             // QuickPlayMenu
             // 

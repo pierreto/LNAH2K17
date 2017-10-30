@@ -11,28 +11,27 @@ import UIKit
 class LoginViewController: UIViewController {
 
     // Mark: Properties
-    @IBOutlet weak var ipAddressInput: UITextField!
     @IBOutlet weak var usernameInput: UITextField!
     @IBOutlet weak var passwordInput: UITextField!
     
-    @IBOutlet weak var ipAddressErrorLabel: UILabel!
     @IBOutlet weak var usernameErrorLabel: UILabel!
     @IBOutlet weak var passwordErrorLabel: UILabel!
-
-    @IBOutlet weak var connectionIndicator: UIActivityIndicatorView!
+    
+    @IBOutlet weak var loadingSpinner: UIActivityIndicatorView!
+    
 
     // Mark: Actions
     @IBAction func login(_ sender: Any) {
-        self.connectionIndicator.startAnimating()
+        self.loading()
         deactivateInputs()
-        viewModel?.login(ipAddress: ipAddressInput.text!, username: usernameInput.text!, password: passwordInput.text!)
+        viewModel?.login(username: usernameInput.text!, password: passwordInput.text!)
             .then {
                 data -> Void in
                     if(data) {
-                        self.connectionIndicator.stopAnimating()
-                        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                        let vc = storyboard.instantiateViewController(withIdentifier: "ChannelViewController")
-                        self.present(vc, animated: true, completion: nil)
+                        self.loadingDone()
+                        OperationQueue.main.addOperation {
+                            self.performSegue(withIdentifier: "loginSuccess", sender: self)
+                        }
                     } else {
                         self.connectionError()
                     }
@@ -40,9 +39,6 @@ class LoginViewController: UIViewController {
                 //Laisse le temps au message d'erreur d'apparaitre avant le shake
                 let when = DispatchTime.now() + 0.1
                 DispatchQueue.main.asyncAfter(deadline: when) {
-                    if(self.ipAddressErrorLabel.text != ""){
-                        self.notifyErrorInput(textField: self.ipAddressInput)
-                    }
                     if(self.usernameErrorLabel.text != ""){
                         self.notifyErrorInput(textField: self.usernameInput)
                     }
@@ -51,25 +47,6 @@ class LoginViewController: UIViewController {
                     }
                 }
         }
-
-
-    }
-    
-    @IBAction func signup(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "SignupViewController")
-        self.present(vc, animated: true, completion: nil)
-    }
-    
-    @IBAction func editOffline(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "EditorViewController")
-        self.present(vc, animated: true, completion: nil)
-    }
-    
-    @IBAction func editIpAddressInput(_ sender: Any) {
-        resetStyle(textField: ipAddressInput)
-        self.ipAddressErrorLabel.text = ""
     }
     
     @IBAction func editUsernameInput(_ sender: Any) {
@@ -91,6 +68,7 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
         let loginModel: Login = Login()
         viewModel = LoginViewModel(loginModel: loginModel)
         styleUI()
@@ -109,7 +87,6 @@ class LoginViewController: UIViewController {
         guard let viewModel = viewModel else {
             return
         }
-        viewModel.ipAddressError.bindAndFire { [unowned self] in self.ipAddressErrorLabel.text = $0 }
         viewModel.usernameError.bindAndFire { [unowned self] in self.usernameErrorLabel.text = $0 }
         viewModel.passwordError.bindAndFire { [unowned self] in self.passwordErrorLabel.text = $0 }
     }
@@ -124,20 +101,28 @@ class LoginViewController: UIViewController {
     }
  
     private func connectionError() {
-        self.connectionIndicator.stopAnimating()
-        self.ipAddressInput.isEnabled = true
+        self.loadingDone()
         self.usernameInput.isEnabled = true
         self.passwordInput.isEnabled = true
     }
     
     private func deactivateInputs(){
-        self.ipAddressInput.isEnabled = false
         self.usernameInput.isEnabled = false
         self.passwordInput.isEnabled = false
     }
     
     private func resetStyle(textField: UITextField) {
         textField.layer.borderWidth = 0.0
+    }
+    
+    private func loading() {
+        self.loadingSpinner.startAnimating()
+        self.view.alpha = 0.7
+    }
+    
+    private func loadingDone() {
+        self.loadingSpinner.stopAnimating()
+        self.view.alpha = 1.0
     }
 }
 

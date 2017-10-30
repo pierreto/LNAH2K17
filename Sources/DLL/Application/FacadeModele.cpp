@@ -744,8 +744,7 @@ void FacadeModele::ouvrir(std::string filePath, float coefficients[]) {
 void FacadeModele::creerNoeuds(char* type, std::string nomType) {
 	if (nomType == ArbreRenduINF2990::NOM_ACCELERATEUR || nomType == ArbreRenduINF2990::NOM_MUR) {
 		for (unsigned int i = 0; i < docJSON_[type].Size(); i++) {
-			NoeudAbstrait* noeud = arbre_->creerNoeud(nomType);
-
+			NoeudAbstrait* noeud = arbre_->creerNoeud(nomType, static_cast<const char*>(docJSON_[type][i][7].GetString()));
 			noeud->appliquerRotation(docJSON_[type][i][6].GetDouble(), glm::vec3(0, 1, 0));
 
 			glm::dvec3 scale;
@@ -759,6 +758,10 @@ void FacadeModele::creerNoeuds(char* type, std::string nomType) {
 			temp.x = docJSON_[type][i][0].GetDouble();
 			temp.y = docJSON_[type][i][1].GetDouble();
 			temp.z = docJSON_[type][i][2].GetDouble();
+
+
+
+
 			glm::vec3 pos(temp);
 			noeud->deplacer(pos);
 

@@ -22,7 +22,7 @@ namespace InterfaceGraphique.CommunicationInterface
         //public event EventHandler<FriendRequestEntity> CanceledFriendRequestEvent;
         //public event EventHandler<UserEntity> RemovedFriendEvent;
 
-       public void InitializeHub(HubConnection connection, string _)
+       public void InitializeHub(HubConnection connection)
         {
             Connection = connection;
             FriendsProxy = Connection.CreateHubProxy("FriendsHub");

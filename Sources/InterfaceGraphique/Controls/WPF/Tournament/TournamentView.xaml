@@ -1,0 +1,95 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:wpf="clr-namespace:InterfaceGraphique.Controls.WPF"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:InterfaceGraphique.Controls.WPF.Tournament"
+             xmlns:Controls="clr-namespace:InterfaceGraphique.Controls" x:Class="InterfaceGraphique.Controls.WPF.Tournament.TournamentView"
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="591">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <wpf:ViewModelLocator x:Key="VMLocator" d:IsDataSource="True" />
+        </ResourceDictionary>
+
+    </UserControl.Resources>
+    <Grid Background="#FF373A3E">
+        <Grid.DataContext>
+            <Binding Path="TournamentViewModel" Source="{StaticResource VMLocator}"/>
+        </Grid.DataContext>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Height="36" TextWrapping="Wrap" Text="{Binding Player1}" Width="143"/>
+                <TextBlock Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Height="36" TextWrapping="Wrap" Text="{Binding Player2}" Width="143"/>
+                <TextBlock Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center" Height="36" TextWrapping="Wrap" Text="{Binding Player3}" Width="143"/>
+                <TextBlock Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Height="36" TextWrapping="Wrap" Text="{Binding Player4}" Width="143"/>
+            </Grid>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100"></RowDefinition>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" HorizontalAlignment="Center" Height="36" TextWrapping="Wrap" Text="{Binding SemiFinal1}" VerticalAlignment="Center" Width="143"/>
+                <Button Command="{Binding Cancel}">
+                    <TextBlock>JOIN</TextBlock></Button>
+                <TextBlock Grid.Row="1" HorizontalAlignment="Center" Height="36" TextWrapping="Wrap" Text="{Binding SemiFinal2}" VerticalAlignment="Center" Width="143"/>
+            </Grid>
+            <Grid Grid.Column="2">
+                <TextBlock HorizontalAlignment="Center" Height="36" TextWrapping="Wrap" Text="{Binding Winner}" VerticalAlignment="Center" Width="143"/>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50*"></ColumnDefinition>
+                <ColumnDefinition Width="50*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Controls:ChatView Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="300"/>
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0">
+                    <TextBlock Text="Temps avant le début du tournoi:" Foreground="White" HorizontalAlignment="Center"></TextBlock>
+                    <TextBlock Text="{Binding RemainingTime}" VerticalAlignment="Center" Foreground="White" FontWeight="Bold" FontSize="24"></TextBlock>
+                </StackPanel>
+                <StackPanel Grid.Row="1">
+                    <TextBlock Text="Map" Foreground="White"></TextBlock>
+                    <ComboBox Name="mapList" 
+                        Grid.Row="1"
+                        ItemsSource="{Binding MapsAvailable}" 
+                        SelectedItem="{Binding SelectedMap, UpdateSourceTrigger=PropertyChanged}"
+                        IsSynchronizedWithCurrentItem="True"
+                        IsEnabled="{Binding OpponentsFound}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock>
+                                    <TextBlock.Text >
+                                        <Binding Path="MapName" UpdateSourceTrigger="PropertyChanged" />
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

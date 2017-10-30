@@ -109,11 +109,15 @@ namespace InterfaceGraphique.Game.GameState
         {
             gameHasEnded = true;
             Program.QuickPlay.EndGame();
+            if (IsOnlineTournementMode)
+            {
+                Program.FormManager.CurrentForm = Program.OnlineTournament;
+            }
         }
 
         private void OnNewGamePositions(GameDataMessage gameData)
         {
-            if (!gameHasEnded)
+            if (!gameHasEnded && gameData.MasterPosition != null && gameData.SlavePosition != null && gameData.PuckPosition != null)
             {
                  FonctionsNatives.setSlaveGameElementPositions(gameData.SlavePosition,gameData.MasterPosition,gameData.PuckPosition);
             }

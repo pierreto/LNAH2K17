@@ -24,13 +24,14 @@ namespace AirHockeyServer.Controllers
         {
             try
             {
-                await this.SignupService.Signup(signupEntity);
-                return Request.CreateResponse(HttpStatusCode.OK, true);
+                int? id = null;
+                id = await this.SignupService.Signup(signupEntity);
+                return Request.CreateResponse(HttpStatusCode.OK, id);
             }
             catch (SignupException e)
             {
                 System.Diagnostics.Debug.WriteLine(e);
-                return Request.CreateResponse(HttpStatusCode.Forbidden, e);
+                return Request.CreateResponse(HttpStatusCode.Unauthorized, e.Message);
             }
             catch (Exception e)
             {

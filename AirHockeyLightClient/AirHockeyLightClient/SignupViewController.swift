@@ -24,15 +24,15 @@ class SignupViewController: UIViewController {
     // Mark: Actions
     @IBAction func createAccount(_ sender: Any) {
         deactivateInputs()
-        loadingSpinner.startAnimating()
+        loading()
         viewModel?.signup(username: usernameInput.text!, password: passwordInput.text!, confirmPassword: confirmPasswordInput.text!)
             .then{
                 data -> Void in
                 if(data) {
-                    self.loadingSpinner.stopAnimating()
-                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                    let vc = storyboard.instantiateViewController(withIdentifier: "ChannelViewController")
-                    self.present(vc, animated: true, completion: nil)
+                    self.loadingDone()
+                    OperationQueue.main.addOperation {
+                        self.performSegue(withIdentifier: "signupSuccess", sender: self)
+                    }
                 } else {
                     self.connectionError()
                 }
@@ -77,6 +77,7 @@ class SignupViewController: UIViewController {
     
     override func viewDidLoad() {
         let signupModel: Signup = Signup()
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
         viewModel = SignupViewModel(signupModel: signupModel)
         super.viewDidLoad()
         styleUI()
@@ -121,10 +122,20 @@ class SignupViewController: UIViewController {
     }
     
     private func connectionError() {
-        self.loadingSpinner.stopAnimating()
+        self.loadingDone()
         self.usernameInput.isEnabled = true
         self.passwordInput.isEnabled = true
         self.confirmPasswordInput.isEnabled = true
+    }
+    
+    private func loading() {
+        self.loadingSpinner.startAnimating()
+        self.view.alpha = 0.7
+    }
+    
+    private func loadingDone() {
+        self.loadingSpinner.stopAnimating()
+        self.view.alpha = 1.0
     }
 }
 

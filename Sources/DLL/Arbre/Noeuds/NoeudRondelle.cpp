@@ -32,7 +32,7 @@
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-NoeudRondelle::NoeudRondelle(const std::string& typeNoeud)
+NoeudRondelle::NoeudRondelle(const std::string& typeNoeud, const char* uuid)
 	: NoeudAbstrait{ typeNoeud }, collider_{ 0,0,0 }
 {
 	// Pour le testing

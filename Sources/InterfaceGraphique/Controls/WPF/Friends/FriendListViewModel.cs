@@ -12,5 +12,8 @@ namespace InterfaceGraphique.Controls.WPF.Friends
 {
     class FriendListViewModel : ViewModelBase
     {
+        public override async void InitializeViewModel()
+        {
+        }
     }
 }
