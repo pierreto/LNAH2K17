@@ -137,6 +137,12 @@
     <Compile Include="CommunicationInterface\WaitingRoomHub.cs" />
     <Compile Include="CommunicationInterface\HubManager.cs" />
     <Compile Include="CommunicationInterface\IBaseHub.cs" />
+    <Compile Include="Controls\FriendListHost.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\FriendListHost.Designer.cs">
+      <DependentUpon>FriendListHost.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\LobbyHost.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -148,6 +154,10 @@
       <DependentUpon>ChatView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\WPF\Chat\ChatViewModel.cs" />
+    <Compile Include="Controls\WPF\Friends\FriendList.xaml.cs">
+      <DependentUpon>FriendList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WPF\Friends\FriendListViewModel.cs" />
     <Compile Include="Controls\WPF\Matchmaking\MatchmakingView.xaml.cs">
       <DependentUpon>MatchmakingView.xaml</DependentUpon>
     </Compile>
@@ -290,6 +300,9 @@
       <DependentUpon>TestMode.cs</DependentUpon>
     </Compile>
     <Compile Include="WPFApplication.cs" />
+    <EmbeddedResource Include="Controls\FriendListHost.resx">
+      <DependentUpon>FriendListHost.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Editor\OpenPrivateMapForm.resx">
       <DependentUpon>OpenPrivateMapForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -416,6 +429,10 @@
     <Page Include="Controls\WPF\Chat\ChatView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\WPF\Friends\FriendList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\WPF\Matchmaking\MatchmakingView.xaml">
       <SubType>Designer</SubType>

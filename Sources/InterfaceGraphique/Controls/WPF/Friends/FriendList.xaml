@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="InterfaceGraphique.Controls.WPF.Friends.FriendList"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:InterfaceGraphique.Controls.WPF.Friends"
+             mc:Ignorable="d" 
+             d:DesignHeight="444.111" d:DesignWidth="717.783">
+    <Grid Margin="0,-21,-34.4,0">
+        <Grid>
+            <Label Content="Liste d'amis" Height="38" Margin="313,18,297,0" VerticalAlignment="Top" FontSize="24" Foreground="#FF2288F7"/>
+            <Label Content="Ajouter un ami :" HorizontalAlignment="Left" Margin="33,76,0,0" VerticalAlignment="Top" Width="98" Foreground="#FF2288F7"/>
+            <TextBox HorizontalAlignment="Left" Height="26" Margin="131,76,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="193"/>
+            <Label Content="Amis :" HorizontalAlignment="Left" Height="30" Margin="33,124,0,0" VerticalAlignment="Top" Width="47" Foreground="#FF2288F7"/>
+            <Label Content="Demandes d'amis&#xA;en attentes :" HorizontalAlignment="Left" Height="44" Margin="410,119,0,0" VerticalAlignment="Top" Width="118" Foreground="#FF2288F7"/>
+            <DataGrid x:Name="FriendsGrid" HorizontalAlignment="Left" Height="290" Margin="33,154,0,0" VerticalAlignment="Top" Width="285"/>
+
+        </Grid>
+
+    </Grid>
+</UserControl>
