@@ -70,31 +70,31 @@ namespace InterfaceGraphique.CommunicationInterface
             });
         }
 
-        public void SendGameData(GameMasterData gameDataMessage)
+        public async void SendGameData(GameMasterData gameDataMessage)
         {
-            gameHubProxy.Invoke("SendGameData", gameGuid, gameDataMessage);
+            await gameHubProxy.Invoke("SendGameData", gameGuid, gameDataMessage);
         }
 
-        public void SendGameData(GameSlaveData gameDataMessage)
+        public async void SendGameData(GameSlaveData gameDataMessage)
         {
-            gameHubProxy.Invoke("SendSlaveGameData", gameGuid, gameDataMessage);
+            await gameHubProxy.Invoke("SendSlaveGameData", gameGuid, gameDataMessage);
         }
 
-        public void SendGameOver()
+        public async void SendGameOver()
         {
-            gameHubProxy.Invoke("GameOver", gameGuid);
+            await gameHubProxy.Invoke("GameOver", gameGuid);
         }
 
-        public void SendGoal(int player)
+        public async void SendGoal(int player)
         {
             GoalMessage goalMessage = new GoalMessage(player);
-            gameHubProxy.Invoke("SendGoal", gameGuid, goalMessage);
+            await gameHubProxy.Invoke("SendGoal", gameGuid, goalMessage);
 
         }
 
-        public void Logout()
+        public async void Logout()
         {
-            gameHubProxy.Invoke("LeaveRoom", gameGuid);
+            await gameHubProxy.Invoke("LeaveRoom", gameGuid);
 
             gameHubProxy?.Invoke("Disconnect", User.Instance.UserEntity.Username).Wait();
         }
