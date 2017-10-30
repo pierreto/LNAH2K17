@@ -99,6 +99,7 @@
 		8F6AE2C21F6592EB00A29E8B /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6AE2C11F6592EB00A29E8B /* GameScene.swift */; };
 		8F6AE2C91F6592EB00A29E8B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8F6AE2C81F6592EB00A29E8B /* Assets.xcassets */; };
 		8F76FC0F1F9CF990001BBC99 /* SCNodeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F76FC0E1F9CF990001BBC99 /* SCNodeHelper.swift */; };
+		8F7F0BC81FA6CFDB00C4F022 /* ObjectPropertiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F0BC71FA6CFDA00C4F022 /* ObjectPropertiesView.swift */; };
 		8F8706B91F7892BB000E6824 /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8706B81F7892BB000E6824 /* Entity.swift */; };
 		8F8706BB1F7892F2000E6824 /* ChatMessageEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8706BA1F7892F2000E6824 /* ChatMessageEntity.swift */; };
 		8F8706BD1F78A67F000E6824 /* ChannelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8706BC1F78A67F000E6824 /* ChannelViewController.swift */; };
@@ -225,6 +226,7 @@
 		8F6AE2C81F6592EB00A29E8B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8F6AE2CD1F6592EB00A29E8B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8F76FC0E1F9CF990001BBC99 /* SCNodeHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SCNodeHelper.swift; path = Noyau/Helper/SCNodeHelper.swift; sourceTree = "<group>"; };
+		8F7F0BC71FA6CFDA00C4F022 /* ObjectPropertiesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ObjectPropertiesView.swift; path = InterfaceGraphique/Editor/ObjectPropertiesView.swift; sourceTree = "<group>"; };
 		8F8706B81F7892BB000E6824 /* Entity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Entity.swift; path = Noyau/Entities/Entity.swift; sourceTree = "<group>"; };
 		8F8706BA1F7892F2000E6824 /* ChatMessageEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatMessageEntity.swift; path = Noyau/Entities/ChatMessageEntity.swift; sourceTree = "<group>"; };
 		8F8706BC1F78A67F000E6824 /* ChannelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChannelViewController.swift; path = InterfaceGraphique/Chat/ChannelViewController.swift; sourceTree = "<group>"; };
@@ -561,6 +563,7 @@
 				8FCDF6171FA1BEDF00631551 /* EditorNotificationScene.sks */,
 				8FCDF6181FA1BEDF00631551 /* EditorNotificationScene.swift */,
 				34B965CD1FA26EDE00BD17CC /* GeneralPropertiesViewController.swift */,
+				8F7F0BC71FA6CFDA00C4F022 /* ObjectPropertiesView.swift */,
 			);
 			name = Editor;
 			sourceTree = "<group>";
@@ -841,6 +844,7 @@
 				3415E6C41F8547CE00DB1CAD /* ArbreRendu.swift in Sources */,
 				0EED627D1F9825B500CD8C56 /* NoeudMur.swift in Sources */,
 				8F690D621F9D5E7F003F051A /* ModeleEtatRotation.swift in Sources */,
+				8F7F0BC81FA6CFDB00C4F022 /* ObjectPropertiesView.swift in Sources */,
 				8FCDF61A1FA1BEDF00631551 /* EditorNotificationScene.swift in Sources */,
 				8F1D52AA1F9D99C700135A53 /* VisiteurScale.swift in Sources */,
 				8FFC5B4A1F7CA7170031474F /* PaddingLabel.swift in Sources */,

@@ -426,7 +426,7 @@
             </objects>
             <point key="canvasLocation" x="-2079" y="1780"/>
         </scene>
-        <!--Édition-->
+        <!--Editor View Controller-->
         <scene sceneID="afO-0W-eS6">
             <objects>
                 <viewController storyboardIdentifier="EditorViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="a5z-US-HJw" customClass="EditorViewController" customModule="AirHockeyLightClient" customModuleProvider="target" sceneMemberID="viewController">
@@ -446,7 +446,7 @@
                                 <rect key="frame" x="0.0" y="39" width="1024" height="100"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </sceneKitView>
-                            <view alpha="0.94999999999999996" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="U3z-hc-25V" userLabel="Object Properties View">
+                            <view alpha="0.94999999999999996" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="U3z-hc-25V" userLabel="Object Properties View" customClass="ObjectPropertiesView" customModule="AirHockeyLightClient" customModuleProvider="target">
                                 <rect key="frame" x="745" y="147" width="268" height="231"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
@@ -458,7 +458,7 @@
                                         <color key="tintColor" red="0.15631430286180881" green="0.53730528641695718" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" title="Cacher"/>
                                         <connections>
-                                            <action selector="hideObjectProperties:" destination="a5z-US-HJw" eventType="touchUpInside" id="qlj-h3-lf6"/>
+                                            <action selector="hideObjectProperties:" destination="U3z-hc-25V" eventType="touchUpInside" id="HCg-qz-kuq"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rh6-BX-CQ3" userLabel="Afficher">
@@ -469,7 +469,7 @@
                                         <color key="tintColor" red="0.15631430290000001" green="0.53730528639999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" title="Afficher"/>
                                         <connections>
-                                            <action selector="showObjectProperties:" destination="a5z-US-HJw" eventType="touchUpInside" id="NQU-eU-mp9"/>
+                                            <action selector="showObjectProperties:" destination="U3z-hc-25V" eventType="touchUpInside" id="nXu-JQ-D7C"/>
                                         </connections>
                                     </button>
                                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jfh-EL-rt8" userLabel="Properties">
@@ -601,18 +601,35 @@
                                             <navigationItem title="Propriété" id="AAl-it-Fjh" userLabel="Configuration d'un objet">
                                                 <barButtonItem key="leftBarButtonItem" title="Annuler" id="eK9-L9-pbr">
                                                     <connections>
-                                                        <action selector="resetObjectProperties:" destination="a5z-US-HJw" id="cja-CM-a6K"/>
+                                                        <action selector="resetObjectProperties:" destination="U3z-hc-25V" id="Rnv-oy-STA"/>
                                                     </connections>
                                                 </barButtonItem>
                                                 <barButtonItem key="rightBarButtonItem" title="Appliquer" id="dc8-6J-Fl7">
                                                     <connections>
-                                                        <action selector="applyObjectProperties:" destination="a5z-US-HJw" id="jSU-2G-WJC"/>
+                                                        <action selector="applyObjectProperties:" destination="U3z-hc-25V" id="3uK-vk-krT"/>
                                                     </connections>
                                                 </barButtonItem>
                                             </navigationItem>
                                         </items>
                                     </navigationBar>
                                 </subviews>
+                                <connections>
+                                    <outlet property="applyButton" destination="dc8-6J-Fl7" id="Kg9-ah-eVm"/>
+                                    <outlet property="editorViewController" destination="a5z-US-HJw" id="wuc-KD-Zho"/>
+                                    <outlet property="hideButton" destination="wuj-di-XBE" id="jw7-CD-z8h"/>
+                                    <outlet property="objectProperties" destination="Jfh-EL-rt8" id="fHf-BI-uM0"/>
+                                    <outlet property="positionX" destination="hRn-kB-E8s" id="QtZ-Q2-vkT"/>
+                                    <outlet property="positionY" destination="Mz3-7U-hcm" id="gNF-73-q3e"/>
+                                    <outlet property="positionZ" destination="qlh-3X-OD7" id="fUK-i5-1b2"/>
+                                    <outlet property="resetButton" destination="eK9-L9-pbr" id="W1o-ud-vA0"/>
+                                    <outlet property="rotationX" destination="ftb-eW-8Q7" id="LW5-QG-SUk"/>
+                                    <outlet property="rotationY" destination="bgC-ce-oIc" id="agx-hL-mjn"/>
+                                    <outlet property="rotationZ" destination="zan-xX-xM7" id="sUU-xF-Jfn"/>
+                                    <outlet property="scaleX" destination="7Ai-BN-d52" id="ce9-FA-rHQ"/>
+                                    <outlet property="scaleY" destination="Qoy-tP-5Gv" id="Uit-eC-RHh"/>
+                                    <outlet property="scaleZ" destination="dwc-ew-f1o" id="B1n-UL-Tb3"/>
+                                    <outlet property="showButton" destination="rh6-BX-CQ3" id="IvQ-XG-DNR"/>
+                                </connections>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -635,24 +652,10 @@
                         </connections>
                     </navigationItem>
                     <connections>
-                        <outlet property="applyButton" destination="dc8-6J-Fl7" id="PRd-18-gi7"/>
                         <outlet property="editorView" destination="nQ0-Ye-2E0" id="lFW-mx-rzE"/>
-                        <outlet property="hideButton" destination="wuj-di-XBE" id="Oby-L5-ZnX"/>
                         <outlet property="hudView" destination="aV8-1q-JCY" id="Xcf-9i-JaZ"/>
                         <outlet property="navigationBar" destination="07a-Zg-bjU" id="DR5-RF-hC3"/>
-                        <outlet property="objectProperties" destination="Jfh-EL-rt8" id="vJD-Mb-pX4"/>
                         <outlet property="objectPropertiesView" destination="U3z-hc-25V" id="Qd3-Zt-8MV"/>
-                        <outlet property="positionX" destination="hRn-kB-E8s" id="8r3-r8-ikd"/>
-                        <outlet property="positionY" destination="Mz3-7U-hcm" id="i6s-aU-qeg"/>
-                        <outlet property="positionZ" destination="qlh-3X-OD7" id="y58-OY-dXU"/>
-                        <outlet property="resetButton" destination="eK9-L9-pbr" id="BRe-Je-aXa"/>
-                        <outlet property="rotationX" destination="ftb-eW-8Q7" id="jc6-kL-jhI"/>
-                        <outlet property="rotationY" destination="bgC-ce-oIc" id="PC6-KG-EKF"/>
-                        <outlet property="rotationZ" destination="zan-xX-xM7" id="kmm-l4-Joc"/>
-                        <outlet property="scaleX" destination="7Ai-BN-d52" id="vzk-cA-HVd"/>
-                        <outlet property="scaleY" destination="Qoy-tP-5Gv" id="zGd-Zg-WFp"/>
-                        <outlet property="scaleZ" destination="dwc-ew-f1o" id="sHN-Sg-7rH"/>
-                        <outlet property="showButton" destination="rh6-BX-CQ3" id="uPv-nl-UGn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n15-76-e5h" userLabel="First Responder" sceneMemberID="firstResponder"/>
