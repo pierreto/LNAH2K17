@@ -2,6 +2,8 @@
 using Microsoft.AspNet.SignalR;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace AirHockeyServer.Services.ChatServiceServer
@@ -12,6 +14,8 @@ namespace AirHockeyServer.Services.ChatServiceServer
         private readonly static Dictionary<int, string> ConnectionsMapping = new Dictionary<int, string>();
         // Should be thread-safe?
         private static HashSet<string> usernames = new HashSet<string>();
+
+        private static ObservableCollection<ChannelEntity> channels = new ObservableCollection<ChannelEntity>();
 
         public IChannelService ChannelService { get; }
 
@@ -48,7 +52,8 @@ namespace AirHockeyServer.Services.ChatServiceServer
 
         public async Task SendChannel(string channelName, ChatMessageEntity message)
         {
-            await Clients.Group(channelName).ChatMessageReceived(message);
+            ChannelEntity cE = channels.Where(s => s.Name == channelName).First();
+            await Clients.Group(channelName).ChatMessageReceivedChannel(message, cE);
         }
 
         public void SendPrivateMessage(int userId, ChatMessageEntity message)
@@ -62,14 +67,21 @@ namespace AirHockeyServer.Services.ChatServiceServer
         public async Task<ChannelEntity> CreateChannel(ChannelEntity channel)
         {
             ChannelEntity channelCreated = await this.ChannelService.CreateChannel(channel);
+            channels.Add(channelCreated);
             await Groups.Add(Context.ConnectionId, channel.Name);
             return channel;
         }
 
-        public async Task JoinChannel(string channelName)
+        public async Task<ChannelEntity> JoinChannel(string channelName)
         {
-            //Channel channelCreated = await this.ChannelService.JoinChannel(channelName);
+            ChannelEntity channelJoined = channels.Where(s => s.Name == channelName).First();
             await Groups.Add(Context.ConnectionId, channelName);
+            return channelJoined;
+        }
+
+        public Task LeaveRoom(string roomName)
+        {
+            return Groups.Remove(Context.ConnectionId, roomName);
         }
 
         public void Disconnect(string username)

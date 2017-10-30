@@ -5,18 +5,29 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Microsoft.Practices.Unity;
 
 namespace InterfaceGraphique.Controls.WPF.Chat.Channel
 {
     public class ChatListViewModel : ViewModelBase
     {
-        public override void InitializeViewModel()
+        public ChatListViewModel()
         {
-            //  throw new NotImplementedException();
+            ChannelEntity cE = new ChannelEntity() { Name = "Principal", IsSelected = true };
+            ActiveChannel.Instance.ChannelEntity = cE;
+            Program.unityContainer.Resolve<ChatViewModel>().MainChannel = cE;
+            Items = new ObservableCollection<ChatListItemViewModel>
+            {
+                new ChatListItemViewModel(cE)
+                {
+
+                }
+            };
         }
 
-        private List<ChatListItemViewModel> items;
-        public List<ChatListItemViewModel> Items
+        private ObservableCollection<ChatListItemViewModel> items;
+        public ObservableCollection<ChatListItemViewModel> Items
         {
             get
             {
@@ -28,32 +39,10 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
                 OnPropertyChanged();
             }
         }
-        public ChatListViewModel()
+
+        public override void InitializeViewModel()
         {
-            ChannelEntity cE = new ChannelEntity() { Name = "Principal" };
-            ActiveChannel.Instance.ChannelEntity = cE;
-            Items = new List<ChatListItemViewModel>
-            {
-                new ChatListItemViewModel(cE)
-                {
-
-                },
-                new ChatListItemViewModel(new ChannelEntity(){ Name = "Secondaire"})
-                {
-
-                }
-            };
-        }
-
-        private ObservableCollection<ChannelEntity> channels;
-        public ObservableCollection<ChannelEntity> Channels
-        {
-            get => channels;
-            set
-            {
-                this.channels = value;
-                this.OnPropertyChanged();
-            }
+            //  throw new NotImplementedException();
         }
     }
 }

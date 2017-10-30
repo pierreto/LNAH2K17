@@ -167,6 +167,7 @@ namespace InterfaceGraphique
             unityContainer.RegisterType<ChatListViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<ChatListItemViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<ChatViewModel>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<ChannelViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<TournamentViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<AuthenticateViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<ConnectServerViewModel>(new ContainerControlledLifetimeManager());
@@ -176,9 +177,7 @@ namespace InterfaceGraphique
 
             //Rest services instantiations
             unityContainer.RegisterType<MapService>();
-
-
-        }
+         }
 
         static void ExecuterQuandInactif(object sender, EventArgs e)
         {

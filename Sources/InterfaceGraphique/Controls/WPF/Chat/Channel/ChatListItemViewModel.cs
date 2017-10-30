@@ -5,20 +5,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Microsoft.Practices.Unity;
+
 
 namespace InterfaceGraphique.Controls.WPF.Chat.Channel
 {
     public class ChatListItemViewModel : ViewModelBase
     {
+        public ChatListItemViewModel(ChannelEntity channelEntity)
+        {
+            ChannelEntity = channelEntity;
+        }
+
         private ChannelEntity channelEntity;
         public ChannelEntity ChannelEntity
         {
             get { return channelEntity; }
             set { channelEntity = value; }
-        }
-        public ChatListItemViewModel(ChannelEntity channelEntity)
-        {
-            ChannelEntity = channelEntity;
         }
 
         private ICommand openChannelCommand;
@@ -34,10 +37,16 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
             }
         }
 
-        private async Task OpenChannel()
+        public async Task OpenChannel()
         {
+            foreach(var item in Program.unityContainer.Resolve<ChatListViewModel>().Items)
+            {
+                item.IsSelected = false;
+            }
             ActiveChannel.Instance.ChannelEntity = ChannelEntity;
             IsSelected = true;
+            NewContentAvailable = false;
+            Program.unityContainer.Resolve<ChannelViewModel>().OnPropertyChanged("ChannelSelected");
         }
 
         public string Name
@@ -61,7 +70,16 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
         }
 
         private bool newContentAvailable;
-        public bool NewContentAvailable { get; set; }
+        public bool NewContentAvailable
+        {
+            get { return newContentAvailable; }
+            set
+            {
+                newContentAvailable = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         public override void InitializeViewModel()
         {

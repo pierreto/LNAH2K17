@@ -1,5 +1,6 @@
 ﻿using InterfaceGraphique.Entities;
 using Microsoft.Practices.Unity;
+using System.Collections.Generic;
 
 namespace InterfaceGraphique.Controls.WPF.Chat.Channel
 {
@@ -16,12 +17,11 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
             }
             set
             {
-                channelEntity = value;
-                Program.unityContainer.Resolve<ChatViewModel>().CurrentChannel = value;
-                //foreach (var item in Program.unityContainer.Resolve<ChatListViewModel>().Items)
-                //{
-                //    item.IsSelected = false;
-                //}
+                if(channelEntity != value)
+                {
+                    channelEntity = value;
+                    Program.unityContainer.Resolve<ChatViewModel>().CurrentChannel = value;
+                }
             }
         }
 

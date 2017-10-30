@@ -42,6 +42,10 @@ namespace InterfaceGraphique.Controls.WPF
             get { return container.Resolve<SignupViewModel>(); }
         }
 
+        public ChannelViewModel ChannelViewModel
+        {
+            get { return container.Resolve<ChannelViewModel>(); }
+        }
 
         public ChatListViewModel ChatListViewModel
         {

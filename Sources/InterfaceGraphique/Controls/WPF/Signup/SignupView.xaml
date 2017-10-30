@@ -50,7 +50,7 @@
                     </Border>
                 </Grid>
                 <TextBlock HorizontalAlignment="Center" Margin="0,0,0,10" TextWrapping="Wrap" Text="{Binding ConfirmPasswordErrMsg}" VerticalAlignment="Top" Foreground="Red" FontSize="18"/>
-                <Button Content="Créer Compte" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="145" Command="{Binding SignupCommand}" IsDefault="True"/>
+                <Button Content="Créer Compte" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="145" Command="{Binding SignupCommand}" IsDefault="True" BorderThickness="0"/>
             </StackPanel>
         </Grid>
     </Border>

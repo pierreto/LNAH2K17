@@ -62,6 +62,7 @@ namespace InterfaceGraphique.Controls.WPF.ConnectServer
                 {
                     //Task resolved within delay
                     Program.client.BaseAddress = new System.Uri("http://" + IpAddress + ":63056/");
+                    IpAddress = "";
                     Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<AuthenticateViewModel>());
                 }
                 else

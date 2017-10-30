@@ -13,6 +13,9 @@
     <Color x:Key="VeryDarkGrayColor">#555555</Color>
     <SolidColorBrush x:Key="VeryDarkGrayBrush" Color="{StaticResource VeryDarkGrayColor}" />
 
+    <Color x:Key="UltraDarkGrayColor">#333333</Color>
+    <SolidColorBrush x:Key="UltraDarkGrayBrush" Color="{StaticResource UltraDarkGrayColor}" />
+
     <Color x:Key="TextColor">#bababa</Color>
     <SolidColorBrush x:Key="TextColorBrush" Color="{StaticResource TextColor}" />
 </ResourceDictionary>

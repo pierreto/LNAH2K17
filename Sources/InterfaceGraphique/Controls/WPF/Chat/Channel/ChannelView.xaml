@@ -3,12 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:convert="clr-namespace:InterfaceGraphique.Controls.WPF.Converters"
              xmlns:local="clr-namespace:InterfaceGraphique.Controls.WPF.Chat.Channel"
              xmlns:fa="http://schemas.fontawesome.io/icons/"
+             xmlns:wpf="clr-namespace:InterfaceGraphique.Controls.WPF"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <ResourceDictionary>
+            <wpf:ViewModelLocator x:Key="VMLocator" d:IsDataSource="True" />
             <ResourceDictionary.MergedDictionaries >
                 <ResourceDictionary Source="../../Styles/Colors.xaml" />
                 <ResourceDictionary Source="/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
@@ -21,14 +24,17 @@
     <UserControl.Template>
         <ControlTemplate TargetType="UserControl">
             <Border Background="White">
-                <!-- This will become the ChannelMenu-->
+                <!-- Contient le topbar des channels-->
                 <Grid>
+                    <Grid.DataContext>
+                        <Binding Path="ChannelViewModel" Source="{StaticResource VMLocator}"/>
+                    </Grid.DataContext>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <!-- Top Menu -->
+                    <!-- Top Bar Channels -->
                     <Grid Height="50" Background="DarkGray">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
@@ -37,16 +43,55 @@
                         </Grid.ColumnDefinitions>
 
                         <StackPanel Margin="8" Orientation="Horizontal">
-                            <Button Content="X" fa:Awesome.Content="Comments" Background="{StaticResource DarkGrayBrush}" BorderThickness="0" Margin="0,0,8,0"/>
+                            <Button Content="X" fa:Awesome.Content="Comments" Background="{StaticResource DarkGrayBrush}" BorderThickness="0" Margin="0,0,8,0" Command="{Binding JoinChannelCommand}"/>
                             <Button Content="X" fa:Awesome.Content="Users" Background="{StaticResource DarkGrayBrush}" BorderThickness="0"/>
                         </StackPanel>
                         <StackPanel Margin="8" Orientation="Horizontal" Grid.Column="2">
-                            <Button Grid.Column="1" fa:Awesome.Content="Trash" BorderThickness="0" Background="{StaticResource DeleteBrush}" Margin="0,0,8,0"/>
-                            <Button Grid.Column="2" fa:Awesome.Content="Plus" BorderThickness="0" Background="{StaticResource AddBrush}"/>
+                            <Button Name="Options" Visibility ="{Binding ChannelSelected, Converter={convert:BooleanToVisibilityConverter}, ConverterParameter=True}" Grid.Column="1" fa:Awesome.Content="EllipsisH" BorderThickness="0" Background="{StaticResource DarkGrayBrush}" Margin="0,0,8,0" Command="{Binding OpenOptionsPopupCommand}"/>
+                            <Button Name="CreateChannel"  Grid.Column="2" fa:Awesome.Content="Plus" BorderThickness="0" Background="{StaticResource AddBrush}" Command="{Binding OpenAddPopupCommand}"/>
                         </StackPanel>
-
+                        <!-- Popup pour ajouter un canal -->
+                        <Popup PopupAnimation="Scroll" IsOpen="{Binding IsOpenAdd}" Closed="Popup_Closed" StaysOpen="False" LostFocus="Popup_LostFocus"  PlacementTarget="{Binding ElementName=CreateChannel}" VerticalOffset="10" AllowsTransparency="True">
+                            <Border Background="{StaticResource UltraDarkGrayBrush}" Width="250" Height="150" BorderThickness="2" BorderBrush="White" CornerRadius="10">
+                                <Border.Effect>
+                                    <DropShadowEffect BlurRadius="5" Opacity="0.4"/>
+                                </Border.Effect>
+                                <StackPanel Margin="15" VerticalAlignment="Center">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="2*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock VerticalAlignment="Center" TextAlignment="Center" Grid.Row="0" Grid.Column="0" TextWrapping="Wrap" Text="Nom" Padding="0 0 10 0" FontSize="20" Margin="0,0,0,10" Foreground="White"/>
+                                        <Border Grid.Row="0"  Grid.Column="1" Padding="5" CornerRadius="5" BorderThickness="1" BorderBrush="LightGray" SnapsToDevicePixels="True" Background="White" Margin="0,0,0,10">
+                                            <TextBox x:Name="Name" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0" MaxLength="16"/>
+                                        </Border>
+                                    </Grid>
+                                    <Border>
+                                        <Button BorderThickness="0" Background="{StaticResource DarkGrayBrush}"  Grid.Row="1" Width="110"  Content="Créer Canal" Margin="0,10,0,0" IsDefault="True" Command="{Binding CreateChannelCommand}"/>
+                                    </Border>
+                                </StackPanel>
+                            </Border>
+                        </Popup>
+                        <!--- Popup pour supprimer un canal-->
+                        <Popup PopupAnimation="Scroll" IsOpen="{Binding IsOpenOptions}" StaysOpen="False" Closed="Popup_Closed" LostFocus="Popup_LostFocus" PlacementTarget="{Binding ElementName=Options}" VerticalOffset="10" AllowsTransparency="True">
+                            <Border Background="{StaticResource UltraDarkGrayBrush}" Padding ="2" BorderThickness="2" BorderBrush="White" CornerRadius="10">
+                                <Border.Effect>
+                                    <DropShadowEffect BlurRadius="5" Opacity="0.4"/>
+                                </Border.Effect>
+                                <StackPanel Margin="4" VerticalAlignment="Center">
+                                    <Button BorderThickness="0" Background="{StaticResource DeleteBrush}"  Grid.Row="1" fa:Awesome.Content="Trash" IsDefault="True" Command="{Binding DeleteChannelCommand}"/>
+                                </StackPanel>
+                            </Border>
+                        </Popup>
                     </Grid>
-                    <ContentPresenter Grid.Row="1"/>
+                    
+                    <!-- Contient la liste de tous les canaux -->
+                    <ContentPresenter Grid.Row="1">
+                        <ContentPresenter.DataContext>
+                            <Binding Path="ChatListViewModel" Source="{StaticResource VMLocator}"/>
+                        </ContentPresenter.DataContext>
+                    </ContentPresenter>
                 </Grid>
             </Border>
         </ControlTemplate>

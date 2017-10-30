@@ -24,7 +24,6 @@ namespace InterfaceGraphique.Controls.WPF.Chat
         public TestChatView()
         {
             InitializeComponent();
-            ShadowAssist.SetShadowDepth(this, ShadowDepth.Depth0);
         }
     }
 }

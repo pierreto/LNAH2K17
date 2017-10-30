@@ -162,6 +162,7 @@
     <Compile Include="Controls\WPF\Chat\Channel\ChannelView.xaml.cs">
       <DependentUpon>ChannelView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\WPF\Chat\Channel\ChannelViewModel.cs" />
     <Compile Include="Controls\WPF\Chat\Channel\ChatListView.xaml.cs">
       <DependentUpon>ChatListView.xaml</DependentUpon>
     </Compile>

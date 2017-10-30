@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.Practices.Unity;
 
 namespace InterfaceGraphique.Controls.WPF.Chat.Channel
 {
@@ -23,6 +24,18 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
         public ChannelView()
         {
             InitializeComponent();
+        }
+
+        private void Popup_LostFocus(object sender, RoutedEventArgs e)
+        {
+            Program.unityContainer.Resolve<ChatViewModel>().Opacity = 1.0f;
+            Program.unityContainer.Resolve<ChatViewModel>().OnPropertyChanged("Opacity");
+        }
+
+        private void Popup_Closed(object sender, EventArgs e)
+        {
+            Program.unityContainer.Resolve<ChatViewModel>().Opacity = 1.0f;
+            Program.unityContainer.Resolve<ChatViewModel>().OnPropertyChanged("Opacity");
         }
     }
 }

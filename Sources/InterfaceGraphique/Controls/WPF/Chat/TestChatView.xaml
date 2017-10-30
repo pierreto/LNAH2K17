@@ -20,7 +20,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid>
+    <Grid Background="Black" Opacity="{Binding Opacity}">
         <Grid.DataContext>
             <Binding Path="ChatViewModel" Source="{StaticResource VMLocator}"/>
         </Grid.DataContext>

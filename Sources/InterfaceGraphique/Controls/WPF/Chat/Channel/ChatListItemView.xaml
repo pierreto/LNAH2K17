@@ -54,7 +54,7 @@
                                     Padding="8 15"
                                     >
                                         <!-- Profile picture background -->
-                                        <Border Background="DarkOrange" 
+                                        <Border Background="{StaticResource UltraDarkGrayBrush}" 
                                         Height="40"
                                                 BorderThickness="2"
                                                 BorderBrush="{StaticResource TextColorBrush}"

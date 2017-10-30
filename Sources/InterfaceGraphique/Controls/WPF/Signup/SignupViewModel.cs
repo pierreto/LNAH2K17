@@ -72,6 +72,7 @@ namespace InterfaceGraphique.Controls.WPF.Signup
                     User.Instance.IsConnected = true;
                     await chatHub.InitializeChat();
                     Program.InitAfterConnection();
+                    Username = Password = ConfirmPassword = "";
                     Program.FormManager.CurrentForm = Program.MainMenu;
                 }
                 else
