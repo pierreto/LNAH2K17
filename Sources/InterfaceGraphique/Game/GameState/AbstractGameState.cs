@@ -11,7 +11,7 @@ namespace InterfaceGraphique.Game.GameState
     public abstract class AbstractGameState
     {
         protected DateTime ElapsedTime;
-        protected const double SERVER_INTERVAL = 10;
+        protected const double SERVER_INTERVAL = 100;
 
         protected bool moveUpKeyDown = false;
         protected bool moveDownKeyDown = false;

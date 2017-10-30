@@ -101,18 +101,18 @@ namespace AirHockeyServer.Hubs
 
         public void SendGameData(int gameId, GameMasterData gameData)
         {
-            //Clients.Group(gameId.ToString(), Context.ConnectionId).ReceivedMasterData(gameData);
+            Clients.Group(gameId.ToString(), Context.ConnectionId).ReceivedMasterData(gameData);
 
-            Groupcaster.Instance.SetGame(gameId);
-            Groupcaster.Instance.MasterUpdated(gameData);
+            //Groupcaster.Instance.SetGame(gameId);
+            //Groupcaster.Instance.MasterUpdated(gameData);
         }
 
         public void SendSlaveGameData(int gameId, GameSlaveData gameData)
         {
-            //Clients.Group(gameId.ToString(), Context.ConnectionId).ReceivedSlaveData(gameData);
+            Clients.Group(gameId.ToString(), Context.ConnectionId).ReceivedSlaveData(gameData);
 
-            Groupcaster.Instance.SetGame(gameId);
-            Groupcaster.Instance.SlaveUpdated(gameData);
+            //Groupcaster.Instance.SetGame(gameId);
+            //Groupcaster.Instance.SlaveUpdated(gameData);
         }
 
         public void SendGoal(int gameId, GoalMessage goal)
