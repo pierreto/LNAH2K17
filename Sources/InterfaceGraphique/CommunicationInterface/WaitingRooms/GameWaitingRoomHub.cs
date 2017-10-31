@@ -41,11 +41,11 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
             WaitingRoomProxy = this.HubConnection.CreateHubProxy("GameWaitingRoomHub");
         }
         
-        public void Join()
+        public async void Join()
         {
             InitializeEvents();
             
-            WaitingRoomProxy.Invoke("Join", User.Instance.UserEntity);
+            await WaitingRoomProxy.Invoke("Join", User.Instance.UserEntity);
         }
         
         public async Task LeaveGame()
