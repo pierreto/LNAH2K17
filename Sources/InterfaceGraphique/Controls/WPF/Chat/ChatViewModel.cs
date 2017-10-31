@@ -15,28 +15,20 @@ namespace InterfaceGraphique.Controls.WPF.Chat
 {
     public class ChatViewModel : ViewModelBase
     {
+
+        #region Private Properties
+        private readonly int CHAT_TAB_HEIGHT = 40;
         private ChatHub chatHub;
         private TaskFactory ctxTaskFactory;
-        public Window UndockedChat { get; private set; }
-        public ChatViewModel(ChatHub chatHub)
-        {
-            this.chatHub = chatHub;
-            docked = true;
-            chatHub.NewMessage += NewMessage;
-            chatHub.NewMessageFromChannel += NewMessageFromChannel;
-            ctxTaskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
-            currentChannel = CurrentChannel;
-            ChatTabHeight = 40;
-        }
-
-        private void OnUnDockedWindowClosing(object sender, CancelEventArgs e)
-        {
-            Program.MainMenu.ShowChat();
-            Docked = true;
-            ChatTabHeight = 40;
-        }
-
         private bool docked;
+        private int chatTabHeight;
+        private string messageTextBox;
+        private ChannelEntity currentChannel;
+        private Visibility collapsed;
+        #endregion
+
+        #region Public Properties
+        public Window UndockedChat { get; private set; }
         public bool Docked
         {
             get
@@ -49,6 +41,86 @@ namespace InterfaceGraphique.Controls.WPF.Chat
                 OnPropertyChanged(nameof(Docked));
             }
         }
+        public int ChatTabHeight
+        {
+            get { return chatTabHeight; }
+            set
+            {
+                chatTabHeight = value;
+                OnPropertyChanged(nameof(ChatTabHeight));
+            }
+        }
+        public string MessageTextBox
+        {
+            get => messageTextBox;
+            set
+            {
+                messageTextBox = value;
+                OnPropertyChanged("MessageTextBox");
+            }
+        }
+        public ChannelEntity CurrentChannel
+        {
+            get => currentChannel;
+            set
+            {
+                if (value == currentChannel)
+                {
+                    return;
+                }
+                currentChannel = value;
+                OnPropertyChanged("CurrentChannel");
+                OnPropertyChanged("Messages");
+            }
+        }
+        public ChannelEntity MainChannel { get; set; }
+        public ObservableCollection<ChatMessage> Messages
+        {
+            get
+            {
+                if (CurrentChannel != null)
+                {
+                    return CurrentChannel.Messages;
+                }
+                return null;
+            }
+            set
+            {
+                if (CurrentChannel != null)
+                {
+                    CurrentChannel.Messages = value;
+                    this.OnPropertyChanged();
+                }
+            }
+        }
+        public Visibility Collapsed
+        {
+            get
+            {
+                return collapsed;
+            }
+            set
+            {
+                collapsed = value;
+                OnPropertyChanged(nameof(Collapsed));
+            }
+        }
+        #endregion
+
+        #region Constructor
+        public ChatViewModel(ChatHub chatHub)
+        {
+            this.chatHub = chatHub;
+            docked = true;
+            chatHub.NewMessage += NewMessage;
+            chatHub.NewMessageFromChannel += NewMessageFromChannel;
+            ctxTaskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
+            currentChannel = CurrentChannel;
+            ChatTabHeight = CHAT_TAB_HEIGHT;
+        }
+        #endregion
+
+        #region Commands
         private ICommand sendMessageCommand;
         public ICommand SendMessageCommand
         {
@@ -63,40 +135,36 @@ namespace InterfaceGraphique.Controls.WPF.Chat
             }
         }
 
-        private ICommand dockCommand;
-        public ICommand DockCommand
+        private ICommand unDockCommand;
+        public ICommand UnDockCommand
         {
             get
             {
-                if (dockCommand == null)
+                if (unDockCommand == null)
                 {
-                    dockCommand = new RelayCommandAsync(UnDock);
+                    unDockCommand = new RelayCommand(UnDock);
 
                 }
-                return dockCommand;
+                return unDockCommand;
             }
         }
 
-        private async Task UnDock()
+        private ICommand minimizeCommand;
+        public ICommand MinimizeCommand
         {
-            Docked = false;
-            Program.MainMenu.HideChat();
-            UndockedChat = new Window
+            get
             {
-                Title = "UnDocked",
-                Content = new TestChatView()
+                if (minimizeCommand == null)
                 {
-                    Titre = "UnDocked",
-                    DataContext = Program.unityContainer.Resolve<ChatViewModel>(),
+                    minimizeCommand = new RelayCommand(Minimize);
+
                 }
-
-            };
-            UndockedChat.Closing += this.OnUnDockedWindowClosing;
-            System.Windows.Forms.Integration.ElementHost.EnableModelessKeyboardInterop(UndockedChat);
-            ChatTabHeight = 0;
-            UndockedChat.Show();
+                return minimizeCommand;
+            }
         }
+        #endregion
 
+        #region Command Methods
         private async Task SendMessage()
         {
             if (CurrentChannel == MainChannel)
@@ -117,30 +185,49 @@ namespace InterfaceGraphique.Controls.WPF.Chat
             }
             MessageTextBox = "";
         }
+        private void UnDock()
+        {
+            Docked = false;
+            Program.MainMenu.HideChat();
+            UndockedChat = new Window
+            {
+                Title = "UnDocked",
+                Content = new TestChatView()
+                {
+                    Titre = "UnDocked",
+                    DataContext = Program.unityContainer.Resolve<ChatViewModel>(),
+                }
 
+            };
+            UndockedChat.Closing += this.OnUnDockedWindowClosing;
+            System.Windows.Forms.Integration.ElementHost.EnableModelessKeyboardInterop(UndockedChat);
+            ChatTabHeight = 0;
+            UndockedChat.Show();
+        }
+        public void Minimize()
+        {
+            if (Collapsed == System.Windows.Visibility.Visible)
+            {
+                Collapsed = System.Windows.Visibility.Collapsed;
+            }
+            else
+            {
+                Collapsed = System.Windows.Visibility.Visible;
+            }
+        }
+        #endregion
+
+        #region Private Methods
+        private void OnUnDockedWindowClosing(object sender, CancelEventArgs e)
+        {
+            Program.MainMenu.ShowChat();
+            Docked = true;
+            ChatTabHeight = CHAT_TAB_HEIGHT;
+        }
         private bool CanSendMessage()
         {
             return !string.IsNullOrEmpty(MessageTextBox);
         }
-
-        private ChannelEntity currentChannel;
-        public ChannelEntity CurrentChannel
-        {
-            get => currentChannel;
-            set
-            {
-                if (value == currentChannel)
-                {
-                    return;
-                }
-                currentChannel = value;
-                OnPropertyChanged("CurrentChannel");
-                OnPropertyChanged("Messages");
-            }
-        }
-
-        public ChannelEntity MainChannel { get; set; }
-
         private void NewMessage(ChatMessage message)
         {
             ctxTaskFactory.StartNew(() =>
@@ -156,7 +243,6 @@ namespace InterfaceGraphique.Controls.WPF.Chat
                 MainChannel.Messages.Add(message);
             }).Wait();
         }
-
         private void NewMessageFromChannel(ChatMessage message, ChannelEntity channelEntity)
         {
             var items = Program.unityContainer.Resolve<ChatListViewModel>().Items;
@@ -174,104 +260,8 @@ namespace InterfaceGraphique.Controls.WPF.Chat
                 cE.Messages.Add(message);
             }).Wait();
         }
+        #endregion
 
-        public ObservableCollection<ChatMessage> Messages
-        {
-            get
-            {
-                if (CurrentChannel != null)
-                {
-                    return CurrentChannel.Messages;
-                }
-                return null;
-            }
-            set
-            {
-                if (CurrentChannel != null)
-                {
-                    CurrentChannel.Messages = value;
-                    this.OnPropertyChanged();
-                }
-            }
-        }
-
-        private string messageTextBox;
-        public string MessageTextBox
-        {
-            get => messageTextBox;
-            set
-            {
-                messageTextBox = value;
-                OnPropertyChanged("MessageTextBox");
-            }
-        }
-
-        private ICommand minimizeCommand;
-        public ICommand MinimizeCommand
-        {
-            get
-            {
-                if (minimizeCommand == null)
-                {
-                    minimizeCommand = new RelayCommand(Minimize);
-
-                }
-                return minimizeCommand;
-            }
-        }
-
-        public void Minimize()
-        {
-            if (Collapsed == System.Windows.Visibility.Visible)
-            {
-                Collapsed = System.Windows.Visibility.Collapsed;
-            }
-            else
-            {
-                Collapsed = System.Windows.Visibility.Visible;
-            }
-        }
-
-        private Visibility collapsed;
-        public Visibility Collapsed
-        {
-            get
-            {
-                return collapsed;
-            }
-            set
-            {
-                collapsed = value;
-                OnPropertyChanged(nameof(Collapsed));
-                OnPropertyChanged(nameof(NotCollapsed));
-            }
-        }
-
-        public Visibility NotCollapsed
-        {
-            get
-            {
-                if (Collapsed == System.Windows.Visibility.Visible)
-                {
-                    return System.Windows.Visibility.Collapsed;
-                }
-                else
-                {
-                    return System.Windows.Visibility.Visible;
-                }
-            }
-        }
-
-        private int chatTabHeight;
-        public int ChatTabHeight
-        {
-            get { return chatTabHeight; }
-            set
-            {
-                chatTabHeight = value;
-                OnPropertyChanged(nameof(ChatTabHeight));
-            }
-        }
         public override void InitializeViewModel()
         {
             //Empty for the moment
