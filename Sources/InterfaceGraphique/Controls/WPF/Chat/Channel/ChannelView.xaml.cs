@@ -1,18 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Microsoft.Practices.Unity;
+using System.Windows.Controls.Primitives;
+using System.Threading;
+using System.Windows.Threading;
 
 namespace InterfaceGraphique.Controls.WPF.Chat.Channel
 {
@@ -26,16 +18,16 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
             InitializeComponent();
         }
 
-        private void Popup_LostFocus(object sender, RoutedEventArgs e)
+        private void Border_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            Program.unityContainer.Resolve<ChatViewModel>().Opacity = 1.0f;
-            Program.unityContainer.Resolve<ChatViewModel>().OnPropertyChanged("Opacity");
-        }
 
-        private void Popup_Closed(object sender, EventArgs e)
-        {
-            Program.unityContainer.Resolve<ChatViewModel>().Opacity = 1.0f;
-            Program.unityContainer.Resolve<ChatViewModel>().OnPropertyChanged("Opacity");
+            if (this.Visibility == Visibility.Visible)
+            {
+                ((Border)sender).Focus();
+            }
+            else
+            {
+            }
         }
     }
 }

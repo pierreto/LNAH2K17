@@ -7,8 +7,9 @@
              xmlns:channel="clr-namespace:InterfaceGraphique.Controls.WPF.Chat.Channel"
              xmlns:wpf="clr-namespace:InterfaceGraphique.Controls.WPF"
              xmlns:controls="clr-namespace:InterfaceGraphique.Controls"
-             mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="900">
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
+             xmlns:convert="clr-namespace:InterfaceGraphique.Controls.WPF.Converters"
+             mc:Ignorable="d">
     <UserControl.Resources>
         <ResourceDictionary>
             <wpf:ViewModelLocator x:Key="VMLocator" d:IsDataSource="True" />
@@ -20,18 +21,27 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid Background="Black" Opacity="{Binding Opacity}">
-        <Grid.DataContext>
-            <Binding Path="ChatViewModel" Source="{StaticResource VMLocator}"/>
-        </Grid.DataContext>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="225"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <channel:ChannelView Panel.ZIndex="2">
-            <channel:ChatListView/>
-        </channel:ChannelView>
-        <controls:ChatView Grid.Column="1">
-        </controls:ChatView>
+    <UserControl.DataContext>
+        <Binding Path="ChatViewModel" Source="{StaticResource VMLocator}"/>
+    </UserControl.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Visibility="{Binding Collapsed}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="225"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <channel:ChannelView Panel.ZIndex="2" Grid.Row="1">
+                <channel:ChatListView/>
+            </channel:ChannelView>
+            <controls:ChatView Grid.Column="1" Grid.Row="1">
+            </controls:ChatView>
+        </Grid>
+        <DockPanel Background="{StaticResource VeryDarkGrayBrush}" Grid.Row="1" LastChildFill="True" Height="Auto" Visibility="{Binding Docked, Converter={convert:BooleanToVisibilityConverter}, ConverterParameter=False}">
+            <Button Foreground="White" Height="Auto" fa:Awesome.Content="Comment" Background="Transparent" Command="{Binding MinimizeCommand}" BorderThickness="0" Focusable="False"/>
+        </DockPanel>
     </Grid>
 </UserControl>

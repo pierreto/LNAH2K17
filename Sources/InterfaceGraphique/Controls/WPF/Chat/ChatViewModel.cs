@@ -6,6 +6,10 @@ using InterfaceGraphique.Entities;
 using Microsoft.Practices.Unity;
 using InterfaceGraphique.Controls.WPF.Chat.Channel;
 using System.Linq;
+using System.Windows;
+using System;
+using System.ComponentModel;
+using System.Windows.Forms;
 
 namespace InterfaceGraphique.Controls.WPF.Chat
 {
@@ -13,18 +17,35 @@ namespace InterfaceGraphique.Controls.WPF.Chat
     {
         private ChatHub chatHub;
         private TaskFactory ctxTaskFactory;
-        private ChannelEntity mainChannel;
         public ChatViewModel(ChatHub chatHub)
         {
             this.chatHub = chatHub;
+            docked = true;
             chatHub.NewMessage += NewMessage;
             chatHub.NewMessageFromChannel += NewMessageFromChannel;
             ctxTaskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
-            this.currentChannel = CurrentChannel;
-            
-            opacity = 1.0f;
+            currentChannel = CurrentChannel;
         }
 
+        private void OnUnDockedWindowClosing(object sender, CancelEventArgs e)
+        {
+            Program.MainMenu.ShowChat();
+            Docked = true;
+        }
+
+        private bool docked;
+        public bool Docked
+        {
+            get
+            {
+                return docked;
+            }
+            set
+            {
+                docked = value;
+                OnPropertyChanged(nameof(Docked));
+            }
+        }
         private ICommand sendMessageCommand;
         public ICommand SendMessageCommand
         {
@@ -39,9 +60,42 @@ namespace InterfaceGraphique.Controls.WPF.Chat
             }
         }
 
+        private ICommand dockCommand;
+        public ICommand DockCommand
+        {
+            get
+            {
+                if (dockCommand == null)
+                {
+                    dockCommand = new RelayCommandAsync(UnDock);
+
+                }
+                return dockCommand;
+            }
+        }
+
+        private async Task UnDock()
+        {
+            Docked = false;
+            Program.MainMenu.HideChat();
+            Window window = new Window
+            {
+                Title = "UnDocked",
+                Content = new TestChatView()
+                {
+                    Titre = "UnDocked",
+                    DataContext = Program.unityContainer.Resolve<ChatViewModel>(),
+                }
+
+            };
+            window.Closing += this.OnUnDockedWindowClosing;
+            System.Windows.Forms.Integration.ElementHost.EnableModelessKeyboardInterop(window);
+            window.Show();
+        }
+
         private async Task SendMessage()
         {
-            if(CurrentChannel == MainChannel)
+            if (CurrentChannel == MainChannel)
             {
                 this.chatHub.SendMessage(new ChatMessage()
                 {
@@ -54,8 +108,8 @@ namespace InterfaceGraphique.Controls.WPF.Chat
                 this.chatHub.SendChannel(new ChatMessage()
                 {
                     MessageValue = MessageTextBox,
-                    SentByMe = false                   
-                });
+                    SentByMe = false
+                }, CurrentChannel.Name);
             }
             MessageTextBox = "";
         }
@@ -148,19 +202,58 @@ namespace InterfaceGraphique.Controls.WPF.Chat
             }
         }
 
-        private float opacity;
-        public float Opacity
+        private ICommand minimizeCommand;
+        public ICommand MinimizeCommand
         {
             get
             {
-                return opacity;
+                if (minimizeCommand == null)
+                {
+                    minimizeCommand = new RelayCommand(Minimize);
+
+                }
+                return minimizeCommand;
+            }
+        }
+
+        public void Minimize()
+        {
+            if (Collapsed == System.Windows.Visibility.Visible)
+            {
+                Collapsed = System.Windows.Visibility.Collapsed;
+            }
+            else
+            {
+                Collapsed = System.Windows.Visibility.Visible;
+            }
+        }
+
+        private Visibility collapsed;
+        public Visibility Collapsed
+        {
+            get
+            {
+                return collapsed;
             }
             set
             {
-                if (opacity != value)
+                collapsed = value;
+                OnPropertyChanged(nameof(Collapsed));
+                OnPropertyChanged(nameof(NotCollapsed));
+            }
+        }
+
+        public Visibility NotCollapsed
+        {
+            get
+            {
+                if (Collapsed == System.Windows.Visibility.Visible)
                 {
-                    opacity = value;
-                    OnPropertyChanged("Opacity");
+                    return System.Windows.Visibility.Collapsed;
+                }
+                else
+                {
+                    return System.Windows.Visibility.Visible;
                 }
             }
         }
@@ -168,7 +261,6 @@ namespace InterfaceGraphique.Controls.WPF.Chat
         {
             //Empty for the moment
         }
-
     }
 
 

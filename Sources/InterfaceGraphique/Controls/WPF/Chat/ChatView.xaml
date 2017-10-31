@@ -11,6 +11,7 @@
              xmlns:interfaceGraphique="clr-namespace:InterfaceGraphique"
              xmlns:entities="clr-namespace:InterfaceGraphique.Entities"
              xmlns:convert="clr-namespace:InterfaceGraphique.Controls.WPF.Converters"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="600"
              >
@@ -47,12 +48,12 @@
                     </Grid>
                 </Border>
             </DataTemplate>
-         
+
         </ResourceDictionary>
 
     </UserControl.Resources>
     <Grid>
-        <Border BorderBrush="{StaticResource VeryDarkGrayBrush}" BorderThickness="10,0,0,0" CornerRadius="5" Margin="-14" Panel.ZIndex="1">
+        <Border BorderBrush="{StaticResource VeryDarkGrayBrush}" BorderThickness="10,0,0,0" CornerRadius="5" Margin="-14,0,0,0" Panel.ZIndex="1">
             <Border.Effect>
                 <DropShadowEffect BlurRadius="20" ShadowDepth="5" />
             </Border.Effect>
@@ -60,16 +61,24 @@
         <Grid Background="{StaticResource VeryDarkGrayBrush}">
 
             <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
                 <RowDefinition/>
-
                 <RowDefinition Height="Auto" MinHeight="47"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
+            <Grid HorizontalAlignment="Stretch" Background="{StaticResource UltraDarkGrayBrush}">
+                <TextBlock Text="{Binding CurrentChannel.Name}" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource DarkGrayBrush}" FontSize="40" FontWeight="Bold"></TextBlock>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Visibility="{Binding DataContext.Docked, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Converter={convert:BooleanToVisibilityConverter}, ConverterParameter=True}">
+                    <Button fa:Awesome.Content="WindowMinimize" VerticalAlignment="Center" HorizontalAlignment="Right" Background="{StaticResource DarkGrayBrush}" Command="{Binding DataContext.MinimizeCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" BorderThickness="0"/>
+                    <Button Margin="5" VerticalAlignment="Center" fa:Awesome.Content="WindowRestore" Background="{StaticResource DarkGrayBrush}" BorderThickness="0" HorizontalAlignment="Right" Command="{Binding DockCommand}"/>
+                </StackPanel>
+            </Grid>
+
             <!-- Messages -->
-            <ItemsControl  x:Name="MessagesItemsCtrl" Grid.Row="0" Grid.Column="1" Margin="0,5,0,0" 
+            <ItemsControl  x:Name="MessagesItemsCtrl" Grid.Row="1" Grid.Column="1" Margin="0,5,0,0" 
             ItemsSource="{Binding Messages}" 
         
             ItemTemplate="{DynamicResource MessagesDataTemplate}"
@@ -87,7 +96,7 @@
                 </ItemsControl.Template>
             </ItemsControl>
 
-            <Border Grid.Row="1" Grid.Column="1" SnapsToDevicePixels="True"
+            <Border Grid.Row="2" Grid.Column="1" SnapsToDevicePixels="True"
 
             BorderBrush="{DynamicResource MaterialDesignDivider}">
 

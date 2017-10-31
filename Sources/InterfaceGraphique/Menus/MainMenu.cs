@@ -18,7 +18,6 @@ namespace InterfaceGraphique
     ///////////////////////////////////////////////////////////////////////////
     public partial class MainMenu : Form
     {
-
         static HttpClient client = new HttpClient();
         ////////////////////////////////////////////////////////////////////////
         ///
@@ -120,6 +119,18 @@ namespace InterfaceGraphique
         public void UnsuscribeEventHandlers()
         {
             Program.FormManager.SizeChanged -= new EventHandler(WindowSizeChanged);
+        }
+
+        public void HideChat()
+        {
+            this.elementHost1.Hide();
+            //this.testChatView.Visibility = System.Windows.Visibility.Hidden;
+        }
+
+        public void ShowChat()
+        {
+            this.elementHost1.Show();
+            //this.testChatView.Visibility = System.Windows.Visibility.Visible;
         }
     }
 }

@@ -26,24 +26,21 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
             {
                 if (openAddPopupCommand == null)
                 {
-                    openAddPopupCommand = new RelayCommandAsync(ToggleAddPopup);
+                    openAddPopupCommand = new RelayCommand(ToggleAddPopup);
                 }
                 return openAddPopupCommand;
             }
         }
 
-        private async Task ToggleAddPopup()
+        private void ToggleAddPopup()
         {
             if (IsOpenAdd)
             {
                 IsOpenAdd = false;
-                Program.unityContainer.Resolve<ChatViewModel>().Opacity = 1.0f;
             } else
             {
                 IsOpenAdd = true;
-                Program.unityContainer.Resolve<ChatViewModel>().Opacity = 0.2f;
             }
-            Program.unityContainer.Resolve<ChatViewModel>().OnPropertyChanged("Opacity");
         }
 
         private ICommand openOptionsPopupCommand;
@@ -53,25 +50,22 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
             {
                 if (openOptionsPopupCommand == null)
                 {
-                    openOptionsPopupCommand = new RelayCommandAsync(ToggleOptionsPopup);
+                    openOptionsPopupCommand = new RelayCommand(ToggleOptionsPopup);
                 }
                 return openOptionsPopupCommand;
             }
         }
 
-        private async Task ToggleOptionsPopup()
+        private void ToggleOptionsPopup()
         {
             if (IsOpenOptions)
             {
                 IsOpenOptions = false;
-                Program.unityContainer.Resolve<ChatViewModel>().Opacity = 1.0f;
             }
             else
             {
                 IsOpenOptions = true;
-                Program.unityContainer.Resolve<ChatViewModel>().Opacity = 0.2f;
             }
-            Program.unityContainer.Resolve<ChatViewModel>().OnPropertyChanged("Opacity");
         }
 
         private ICommand createChannelCommand;
@@ -81,13 +75,13 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
             {
                 if (createChannelCommand == null)
                 {
-                    createChannelCommand = new RelayCommandAsync(CreateChannel);
+                    createChannelCommand = new RelayCommand(CreateChannel);
                 }
                 return createChannelCommand;
             }
         }
 
-        private async Task CreateChannel()
+        private void CreateChannel()
         {
             ChannelEntity cE = new ChannelEntity() { Name = Name };
             ChatListItemViewModel clivm = new ChatListItemViewModel(cE);
@@ -118,17 +112,16 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
             {
                 if (deleteChannelCommand == null)
                 {
-                    deleteChannelCommand = new RelayCommandAsync(DeleteChannel);
+                    deleteChannelCommand = new RelayCommand(DeleteChannel);
                 }
                 return deleteChannelCommand;
             }
         }
 
-        private async Task DeleteChannel()
+        private void DeleteChannel()
         {
             var clivm = Program.unityContainer.Resolve<ChatListViewModel>().Items;
             //Remove the selected ChatListItemViewModel containing the current channel
-
             clivm.Remove(clivm.Single(s => s.ChannelEntity == ActiveChannel.Instance.ChannelEntity));
             OnPropertyChanged("Items");
             chatHub.LeaveRoom(ActiveChannel.Instance.ChannelEntity.Name);
@@ -145,7 +138,7 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
             
             //Refresh the possibility to hide the options button
             OnPropertyChanged("ChannelSelected");
-            ToggleOptionsPopup();
+            IsOpenOptions = false;
         }
 
         //Name of the channel
@@ -193,15 +186,12 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
                 ChannelEntity cE = ActiveChannel.Instance.ChannelEntity;
                 if(Program.unityContainer.Resolve<ChatViewModel>().MainChannel == cE)
                 {
+                    //Disable user from deleting main channel
+                    IsOpenOptions = false;
                     return false;
                 }
                 return cE != null;
             }
-        }
-
-        public override void InitializeViewModel()
-        {
-            //throw new NotImplementedException();
         }
 
         private ICommand joinChannelCommand;
@@ -222,6 +212,37 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
             ChannelEntity cE = await chatHub.JoinChannel("Secondaire");
             Program.unityContainer.Resolve<ChatListViewModel>().Items.Add(new ChatListItemViewModel(cE));
             Program.unityContainer.Resolve<ChatListViewModel>().OnPropertyChanged("Items");
+        }
+
+        private ICommand closeCreateChannelCommand;
+        public ICommand CloseCreateChannelCommand
+        {
+            get
+            {
+                if (closeCreateChannelCommand == null)
+                {
+                    closeCreateChannelCommand = new RelayCommand(ToggleAddPopup);
+                }
+                return closeCreateChannelCommand;
+            }
+        }
+
+        private ICommand closeOptionsCommand;
+        public ICommand CloseOptionsCommand
+        {
+            get
+            {
+                if (closeOptionsCommand == null)
+                {
+                    closeOptionsCommand = new RelayCommand(ToggleOptionsPopup);
+                }
+                return closeOptionsCommand;
+            }
+        }
+
+        public override void InitializeViewModel()
+        {
+            //throw new NotImplementedException();
         }
     }
 }

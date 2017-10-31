@@ -21,6 +21,8 @@ namespace InterfaceGraphique.Controls.WPF.Chat
     /// </summary>
     public partial class TestChatView : UserControl
     {
+
+        public string Titre { get; set; }
         public TestChatView()
         {
             InitializeComponent();

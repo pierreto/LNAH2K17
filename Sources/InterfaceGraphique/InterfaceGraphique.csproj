@@ -178,6 +178,7 @@
     <Compile Include="Controls\WPF\Converters\BaseValueConverter.cs" />
     <Compile Include="Controls\WPF\Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Controls\WPF\Converters\SentByMeToAlignmentConverter.cs" />
+    <Compile Include="Controls\WPF\DraggablePopup.cs" />
     <Compile Include="Controls\WPF\Navigation\NavigationView.xaml.cs">
       <DependentUpon>NavigationView.xaml</DependentUpon>
     </Compile>

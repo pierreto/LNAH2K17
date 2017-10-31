@@ -60,11 +60,11 @@ namespace InterfaceGraphique.CommunicationInterface
             return cE.Result;
         }
 
-        public async void SendChannel(ChatMessage message)
+        public async void SendChannel(ChatMessage message, string channelName)
         {
             message.Sender = User.Instance.UserEntity.Username;
             message.TimeStamp = DateTime.Now;
-            await chatHubProxy.Invoke("SendChannel", "Secondaire", message);
+            await chatHubProxy.Invoke("SendChannel", channelName, message);
         }
 
         public async void LeaveRoom(String roomName)
