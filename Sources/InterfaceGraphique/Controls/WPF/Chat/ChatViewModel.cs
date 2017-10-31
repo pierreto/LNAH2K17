@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -48,6 +49,13 @@ namespace InterfaceGraphique.Controls.WPF.Chat
 
        
         }
+
+
+        public override void InitializeViewModel()
+        {
+            //Empty for the moment
+        }
+
         private ICommand sendMessageCommand;
         public ICommand SendMessageCommand
         {
@@ -149,6 +157,7 @@ namespace InterfaceGraphique.Controls.WPF.Chat
             get => currentChannel;
             set => currentChannel = value;
         }
+
     }
 
 

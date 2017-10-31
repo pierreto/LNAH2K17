@@ -17,6 +17,7 @@
 #include "ArbreRenduINF2990.h"
 
 #include <vector>
+#include "ModeleEtatJeu.h"
 /// Pointeur vers l'instance unique de la classe.
 ModeleEtatCreerPortail* ModeleEtatCreerPortail::instance_{ nullptr };
 
@@ -127,7 +128,13 @@ void ModeleEtatCreerPortail::mouseUpL() {
 				noeud->assignerOppose(premierNoeud_);
 				premierNoeud_->assignerOppose(noeud);
 				premierNoeud_->effetFantome(false);
+				if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
+				{
+
+					portalCreationCallback_(premierNoeud_->getUUID(), glm::value_ptr(premierNoeud_->obtenirPositionRelative()), noeud->getUUID(), glm::value_ptr(noeud->obtenirPositionRelative()));
+				}
 				premierNoeud_ = nullptr;
+		
 			}
 			else { // Annulation de la commande
 				escape();

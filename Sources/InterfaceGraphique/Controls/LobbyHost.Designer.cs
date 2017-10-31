@@ -29,18 +29,17 @@
         private void InitializeComponent()
         {
             this.elementHost1 = new System.Windows.Forms.Integration.ElementHost();
-            this.matchmakingView1 = new InterfaceGraphique.Controls.WPF.Matchmaking.MatchmakingView();
             this.SuspendLayout();
             // 
             // elementHost1
             // 
             this.elementHost1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.elementHost1.Location = new System.Drawing.Point(2, -2);
+            this.elementHost1.Location = new System.Drawing.Point(0, 0);
             this.elementHost1.Name = "elementHost1";
-            this.elementHost1.Size = new System.Drawing.Size(1181, 649);
+            this.elementHost1.Size = new System.Drawing.Size(1186, 636);
             this.elementHost1.TabIndex = 0;
             this.elementHost1.Text = "elementHost1";
-            this.elementHost1.Child = this.matchmakingView1;
+            this.elementHost1.Child = null;
             // 
             // LobbyHost
             // 
@@ -58,6 +57,5 @@
         #endregion
 
         private System.Windows.Forms.Integration.ElementHost elementHost1;
-        private WPF.Matchmaking.MatchmakingView matchmakingView1;
     }
 }

@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using InterfaceGraphique.Controls;
 using InterfaceGraphique.Menus;
 using Microsoft.Practices.Unity;
+using InterfaceGraphique.CommunicationInterface;
 
 namespace InterfaceGraphique {
 
@@ -47,10 +48,17 @@ namespace InterfaceGraphique {
             //this.boutonPartieRapide.Click += (sender, e) => Program.FormManager.CurrentForm = Program.LobbyHost;
             this.boutonTournoi.Click += (sender, e) => Program.FormManager.CurrentForm = Program.TournementMenu;
             this.buttonConfiguration.Click += (sender, e) => Program.ConfigurationMenu.ShowDialog();
-            this.buttonEditeur.Click += (sender, e) => Program.FormManager.CurrentForm = Program.Editeur;
+            this.buttonEditeur.Click += async (sender, e) =>
+            {
+                await Program.Editeur.ResetDefaultTable();
+                Program.FormManager.CurrentForm = Program.Editeur;
+            };
             this.Button_Credits.Click += (sender, e) => Program.FormManager.CurrentForm = Program.CreditsMenu;
             this.buttonQuitter.Click += (sender, e) => System.Windows.Forms.Application.Exit();
-            this.buttonLogout.Click += (sender, e) => Program.Login.Logout();
+            if (User.Instance.IsConnected)
+            {
+                this.buttonLogout.Click += (sender, e) => Program.HomeMenu.Logout();
+            }
         }
 
 

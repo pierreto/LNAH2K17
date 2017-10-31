@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AirHockeyServer.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,9 @@ namespace AirHockeyServer.Repositories
 {
     public interface IMapRepository
     {
+
+        Task UpdateMap(MapEntity updatedMap);
+
+        Task<IEnumerable<MapEntity>> GetMaps();
     }
 }

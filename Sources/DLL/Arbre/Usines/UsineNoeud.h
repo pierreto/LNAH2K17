@@ -28,7 +28,7 @@ class NoeudAbstrait;
 ///////////////////////////////////////////////////////////////////////////
 class UsineAbstraite{
 public:
-	virtual NoeudAbstrait* creerNoeud() const = 0;
+	virtual NoeudAbstrait* creerNoeud(const char* uuid) const = 0;
 	UsineAbstraite(std::string nom) : nom_(nom) {}
 protected:
 	
@@ -76,7 +76,7 @@ public:
    }
 
    /// Fonction à surcharger pour la création d'un noeud.
-   virtual NoeudAbstrait* creerNoeud() const override;
+   virtual NoeudAbstrait* creerNoeud(const char* uuid) const override;
 
    /// Constructeur qui prend le nom associé à l'usine.
 	UsineNoeud(const std::string& nomUsine, const std::string& nomModele) 
@@ -107,10 +107,10 @@ protected:
 ///
 ////////////////////////////////////////////////////////////////////////
 template <typename Noeud>
-NoeudAbstrait* UsineNoeud<Noeud>::creerNoeud() const
+NoeudAbstrait* UsineNoeud<Noeud>::creerNoeud(const char* uuid) const
 {
 	static_assert(std::is_base_of<NoeudAbstrait, Noeud>::value, R"(Une usine de noeuds ne peut creer que des types de noeuds dérivant de NoeudAbstrait.)");
-	auto noeud = new Noeud{ obtenirNom() };
+	auto noeud = new Noeud( obtenirNom(), uuid );
 	noeud->assignerObjetRendu(&modele_, &vbo_);
 	noeud->calculerCollider();
 	return noeud;

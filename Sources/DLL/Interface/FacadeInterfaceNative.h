@@ -8,6 +8,7 @@
 ////////////////////////////////////////////////
 #ifndef __FACADE_INTERFACE_NATIVE_H__
 #define __FACADE_INTERFACE_NATIVE_H__
+#include <string>
 
 extern "C" {
 
@@ -40,6 +41,7 @@ extern "C" {
 	__declspec(dllexport) void applyNodeInfos(float infos[]);
 	__declspec(dllexport) void enregistrerSous(char* filePath, float coefficients[]);
 	__declspec(dllexport) void ouvrir(char* filePath, float coefficients[]);
+	__declspec(dllexport) void chargerCarte(const char* filePath, float coefficients[]);
 	__declspec(dllexport) bool mouseOverTable();
 	__declspec(dllexport) bool mouseOverControlPoint();
 	__declspec(dllexport) void resetNodeTree();
@@ -86,6 +88,10 @@ extern "C" {
 	__declspec(dllexport) void slaveGoal();
 	
 	__declspec(dllexport) void masterGoal();
+
+	__declspec(dllexport) void createPortal(float* startPos, float* endPosd);
+	typedef void(__stdcall * PortalCreationCallback)(char* startUuid, const float* startPos, char* endUuid, const float* endPosd);
+	__declspec(dllexport) void setPortalCreationCallback(PortalCreationCallback callback);
 
 
 }

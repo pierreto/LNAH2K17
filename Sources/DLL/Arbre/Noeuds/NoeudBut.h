@@ -31,7 +31,7 @@ class NoeudPointControl;
 class NoeudBut : public NoeudAbstrait {
 public:
 	/// Constructeur à partir du type du noeud.
-	NoeudBut(const std::string& typeNoeud);
+	NoeudBut(const std::string& typeNoeud, const char* uuid = nullptr);
 	/// Destructeur.
 	~NoeudBut();
 

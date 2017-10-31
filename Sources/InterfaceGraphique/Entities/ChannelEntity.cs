@@ -9,7 +9,7 @@ using InterfaceGraphique.Controls.WPF;
 
 namespace InterfaceGraphique.Entities
 {
-    public class ChannelEntity : ViewModelBase
+    public class ChannelEntity
     {
         public Guid Id { get; set; }
 

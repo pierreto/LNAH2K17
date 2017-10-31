@@ -28,6 +28,8 @@
 #include <iomanip>
 #include "glm/gtc/type_ptr.hpp"
 #include "../ModeleEtatJeuOnline.h"
+#include "../NodeCreator.h"
+#include "ModeleEtatCreerPortail.h"
 
 extern "C"
 {
@@ -454,6 +456,22 @@ extern "C"
 		FacadeModele::obtenirInstance()->ouvrir(filePath, coefficients);
 	}
 
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void chargerCarte(const char* json, float coefficients[])
+	///
+	/// Cette fonction permet l'ouverture d'un fichier de sauvegarde pour 
+	/// charger un arbre enregistré
+	///
+	/// @param[in] json : JSON représentant l'arbre enregistré (= la carte)
+	/// @param[in] coefficients[] : Coefficients de la carte
+	///
+	/// @return Aucune
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) void chargerCarte(const char* json, float coefficients[]) {
+		FacadeModele::obtenirInstance()->chargerCarte(json, coefficients);
+	}
 
 	////////////////////////////////////////////////////////////////////////
 	///
@@ -948,4 +966,20 @@ void masterGoal()
 {
 	ModeleEtatJeu::obtenirInstance()->player1Goal();
 
+}
+
+
+__declspec(dllexport) void createPortal(float* startPos, float* endPosd)
+{
+	glm::vec3 startPosVec = glm::make_vec3(startPos);
+	glm::vec3 endPosVec = glm::make_vec3(endPosd);
+
+	return NodeCreator::obtenirInstance()->createPortal(startPosVec,endPosVec);
+
+}
+
+void setPortalCreationCallback(PortalCreationCallback callback)
+{
+
+	ModeleEtatCreerPortail::obtenirInstance()->setPortalCreationCallback(callback);
 }

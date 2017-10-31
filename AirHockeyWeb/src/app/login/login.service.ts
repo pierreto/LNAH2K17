@@ -12,7 +12,8 @@ export class LoginService {
     login(user: User): any {
         const body = {
             Username: user.Username,
-            Password: user.Password
+            Password: user.Password,
+            LoginFromWebApp: true
         };
 
         return this.http.post('/api/login', body)

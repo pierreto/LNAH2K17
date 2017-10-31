@@ -679,38 +679,9 @@ std::wstring s2ws(const std::string& s) {
 	return r;
 }
 
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void FacadeModele::ouvrir(std::string filePath, float coefficients[])
-///
-/// Cette fonction permet de charger une patinoire préalablement suavegarder
-///
-/// @param[in] filePath : Nom du filepath du fichier d'ouverture
-/// @param[in] coefficients[] : Coefficients de la carte
-///
-/// @return Aucune
-///
-////////////////////////////////////////////////////////////////////////
-void FacadeModele::ouvrir(std::string filePath, float coefficients[]) {
-
-	std::ifstream fileBin(filePath, std::ios::binary);
-	std::streampos sizeTemp = 0;
-	sizeTemp = fileBin.tellg();
-	fileBin.seekg(0, std::ios::end);
-	sizeTemp = fileBin.tellg() - sizeTemp;
-	fileBin.close();
-
-	std::string data;
-	std::ifstream file(filePath);
-	std::string::size_type size = sizeTemp;
-	data.resize(size);
-	file.read(&data[0], size);
-
-	char buffer2[65536];
-	strncpy_s(buffer2, data.c_str(), 65536);
-	if (docJSON_.ParseInsitu(buffer2).HasParseError()) {
-		if (filePath != "") {
+void FacadeModele::chargerCarte(std::string json, float coefficients[])
+{
+	if (docJSON_.Parse(json.c_str()).HasParseError()) {
 			std::string temp = "Le fichier de sauvegarde contient des erreurs... \n\nsorry   \n\n:(";
 			std::wstring stemp = s2ws(temp);
 			LPCWSTR message = stemp.c_str();
@@ -720,7 +691,6 @@ void FacadeModele::ouvrir(std::string filePath, float coefficients[]) {
 			LPCWSTR title = stemp2.c_str();
 
 			MessageBox(0, message, title, MB_OK);
-		}
 	}
 	else {
 		obtenirArbreRenduINF2990()->initialiser();
@@ -739,6 +709,24 @@ void FacadeModele::ouvrir(std::string filePath, float coefficients[]) {
 	}
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void FacadeModele::ouvrir(std::string filePath, float coefficients[])
+///
+/// Cette fonction permet de charger une patinoire préalablement suavegarder
+///
+/// @param[in] filePath : Nom du filepath du fichier d'ouverture
+/// @param[in] coefficients[] : Coefficients de la carte
+///
+/// @return Aucune
+///
+////////////////////////////////////////////////////////////////////////
+void FacadeModele::ouvrir(std::string filePath, float coefficients[]) {
+	std::ifstream file(filePath);
+	std::stringstream buffer;
+	buffer << file.rdbuf();
+	chargerCarte(buffer.str(), coefficients);
+}
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -756,8 +744,7 @@ void FacadeModele::ouvrir(std::string filePath, float coefficients[]) {
 void FacadeModele::creerNoeuds(char* type, std::string nomType) {
 	if (nomType == ArbreRenduINF2990::NOM_ACCELERATEUR || nomType == ArbreRenduINF2990::NOM_MUR) {
 		for (unsigned int i = 0; i < docJSON_[type].Size(); i++) {
-			NoeudAbstrait* noeud = arbre_->creerNoeud(nomType);
-
+			NoeudAbstrait* noeud = arbre_->creerNoeud(nomType, static_cast<const char*>(docJSON_[type][i][7].GetString()));
 			noeud->appliquerRotation(docJSON_[type][i][6].GetDouble(), glm::vec3(0, 1, 0));
 
 			glm::dvec3 scale;
@@ -771,6 +758,10 @@ void FacadeModele::creerNoeuds(char* type, std::string nomType) {
 			temp.x = docJSON_[type][i][0].GetDouble();
 			temp.y = docJSON_[type][i][1].GetDouble();
 			temp.z = docJSON_[type][i][2].GetDouble();
+
+
+
+
 			glm::vec3 pos(temp);
 			noeud->deplacer(pos);
 

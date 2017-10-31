@@ -12,7 +12,7 @@ namespace AirHockeyServer.Services
         private UserService UserService = new UserService();
         private PasswordService PasswordService = new PasswordService();
 
-        public async Task<bool> ValidateCredentials(LoginEntity loginEntity)
+        public async Task<int> ValidateCredentials(LoginEntity loginEntity)
         {
             try
             {
@@ -22,13 +22,21 @@ namespace AirHockeyServer.Services
                     PasswordEntity pE = await PasswordService.GetPasswordByUserId(uE.Id);
                     if (pE != null)
                     {
-                        if (uE.Username == loginEntity.Username && pE.Password == loginEntity.Password)
+                        if (uE.Username != loginEntity.Username || pE.Password != loginEntity.Password)
                         {
-                            return true;
+                            throw new LoginException("Nom d'usager ou mot de passe invalide");
                         }
                         else
                         {
-                            return false;
+                            if (!loginEntity.LoginFromWebApp)
+                            {
+                                if (_usernames.Contains(loginEntity.Username))
+                                {
+                                    throw new LoginException("Déjà connecté");
+                                }
+                                _usernames.Add(loginEntity.Username);
+                            }
+                            return uE.Id;
                         }
                     }
                     else
@@ -38,7 +46,7 @@ namespace AirHockeyServer.Services
                 }
                 else
                 {
-                    return false;
+                    throw new LoginException("Nom d'usager ou mot de passe invalide");
                 }
                 //if (_usernames.Contains(loginEntity.Username))
                 //{
@@ -61,9 +69,12 @@ namespace AirHockeyServer.Services
 
         public void Logout(LoginEntity loginEntity)
         {
-            if (_usernames.Contains(loginEntity.Username))
+            if (!loginEntity.LoginFromWebApp)
             {
-                _usernames.Remove(loginEntity.Username);
+                if (_usernames.Contains(loginEntity.Username))
+                {
+                    _usernames.Remove(loginEntity.Username);
+                }
             }
         }
     }

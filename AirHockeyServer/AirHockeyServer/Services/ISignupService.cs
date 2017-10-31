@@ -5,6 +5,6 @@ namespace AirHockeyServer.Services
 {
     public interface ISignupService
     {
-        Task Signup(SignupEntity signupEntity);
+        Task<int> Signup(SignupEntity signupEntity);
     }
 }

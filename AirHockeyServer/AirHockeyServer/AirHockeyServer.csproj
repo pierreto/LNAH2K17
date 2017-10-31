@@ -18,7 +18,7 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress />
+    <Use64BitIISExpress>true</Use64BitIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -234,6 +234,10 @@
     <Compile Include="Entities\ChannelEntity.cs" />
     <Compile Include="Entities\ChatMessageEntity.cs" />
     <Compile Include="Entities\ConfigurationEntity.cs" />
+    <Compile Include="Entities\EditionCommand\AbstractEditionCommand.cs" />
+    <Compile Include="Entities\EditionCommand\PortalCommand.cs" />
+    <Compile Include="Entities\EditionCommand\WallCommand.cs" />
+    <Compile Include="Entities\OnlineEditedMapInfo.cs" />
     <Compile Include="Entities\PasswordEntity.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\GoalMessage.cs" />
@@ -243,14 +247,25 @@
     <Compile Include="Entities\LoginEntity.cs" />
     <Compile Include="Entities\SignupEntity.cs" />
     <Compile Include="Entities\PlayersMatchEntity.cs" />
+    <Compile Include="Entities\TournamentEntity.cs" />
     <Compile Include="Entities\UserEntity.cs" />
+    <Compile Include="Events\EventManagers\GameManager.cs" />
+    <Compile Include="Events\EventManagers\GameManagerInstance.cs" />
     <Compile Include="Events\EventManagers\GameWaitingRoomEventManager.cs" />
+    <Compile Include="Events\EventManagers\TournamentManagerInstance.cs" />
+    <Compile Include="Events\EventManagers\TournamentsManager.cs" />
+    <Compile Include="Events\EventManagers\TournamentWaitingRoomEventManager.cs" />
+    <Compile Include="Events\EventManagers\WaitingRoomEventManager.cs" />
     <Compile Include="Events\MatchFoundArgs.cs" />
+    <Compile Include="Events\UserWaitingArgs.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Hubs\EditionBrowserHub.cs" />
+    <Compile Include="Hubs\EditionHub.cs" />
     <Compile Include="Hubs\GameWaitingRoomHub.cs" />
     <Compile Include="Hubs\ConnectionMapper.cs" />
+    <Compile Include="Hubs\TournamentWaitingRoomHub.cs" />
     <Compile Include="Mapping\MapperManager.cs" />
     <Compile Include="Pocos\LoginPoco.cs" />
     <Compile Include="Pocos\MapPoco.cs" />
@@ -273,6 +288,7 @@
     <Compile Include="Services\ChatService.cs" />
     <Compile Include="Hubs\ChatHub.cs" />
     <Compile Include="Services\ChatServiceServer\ChatServer.cs" />
+    <Compile Include="Services\EditionService.cs" />
     <Compile Include="Services\GameService.cs" />
     <Compile Include="Services\IChannelService.cs" />
     <Compile Include="Services\IChatService.cs" />
@@ -281,10 +297,16 @@
     <Compile Include="Services\IMapService.cs" />
     <Compile Include="Services\IService.cs" />
     <Compile Include="Services\ISignupService.cs" />
+    <Compile Include="Services\ITournamentService.cs" />
     <Compile Include="Services\LoginService.cs" />
     <Compile Include="Services\PasswordService.cs" />
     <Compile Include="Services\MapService.cs" />
-    <Compile Include="Services\MatchMakerService.cs" />
+    <Compile Include="Services\MatchMaking\GameMatchMaker.cs" />
+    <Compile Include="Services\MatchMaking\GameMatchMakerService.cs" />
+    <Compile Include="Services\MatchMaking\MatchMaker.cs" />
+    <Compile Include="Services\MatchMaking\TournamentMatchMaker.cs" />
+    <Compile Include="Services\MatchMaking\TournamentMatchMakerService.cs" />
+    <Compile Include="Services\TournamentService.cs" />
     <Compile Include="Utilities\HttpResponseGenerator.cs" />
     <Compile Include="Services\SignupService.cs" />
     <Compile Include="Services\UserService.cs" />
@@ -348,6 +370,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Entities\Messages\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

@@ -28,61 +28,35 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.titleLabel = new System.Windows.Forms.Label();
-            this.onlineButton = new System.Windows.Forms.Button();
-            this.offlineButton = new System.Windows.Forms.Button();
+            this.elementHost1 = new System.Windows.Forms.Integration.ElementHost();
+            this.navigationView1 = new InterfaceGraphique.Controls.WPF.Navigation.NavigationView();
             this.SuspendLayout();
             // 
-            // titleLabel
+            // elementHost1
             // 
-            this.titleLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.titleLabel.AutoSize = true;
-            this.titleLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.titleLabel.Location = new System.Drawing.Point(59, 59);
-            this.titleLabel.Name = "titleLabel";
-            this.titleLabel.Size = new System.Drawing.Size(166, 31);
-            this.titleLabel.TabIndex = 0;
-            this.titleLabel.Text = "LNAH 2K17";
-            // 
-            // onlineButton
-            // 
-            this.onlineButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.onlineButton.Location = new System.Drawing.Point(93, 118);
-            this.onlineButton.Name = "onlineButton";
-            this.onlineButton.Size = new System.Drawing.Size(98, 23);
-            this.onlineButton.TabIndex = 1;
-            this.onlineButton.Text = "Mode En Ligne";
-            this.onlineButton.UseVisualStyleBackColor = true;
-            // 
-            // offlineButton
-            // 
-            this.offlineButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.offlineButton.Location = new System.Drawing.Point(93, 161);
-            this.offlineButton.Name = "offlineButton";
-            this.offlineButton.Size = new System.Drawing.Size(98, 23);
-            this.offlineButton.TabIndex = 2;
-            this.offlineButton.Text = "Mode Hors Ligne";
-            this.offlineButton.UseVisualStyleBackColor = true;
+            this.elementHost1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.elementHost1.Location = new System.Drawing.Point(0, 0);
+            this.elementHost1.Name = "elementHost1";
+            this.elementHost1.Size = new System.Drawing.Size(708, 462);
+            this.elementHost1.TabIndex = 0;
+            this.elementHost1.Text = "elementHost1";
+            this.elementHost1.Child = this.navigationView1;
             // 
             // HomeMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 261);
-            this.Controls.Add(this.offlineButton);
-            this.Controls.Add(this.onlineButton);
-            this.Controls.Add(this.titleLabel);
+            this.ClientSize = new System.Drawing.Size(708, 462);
+            this.Controls.Add(this.elementHost1);
             this.Name = "HomeMenu";
             this.Text = "HomeMenu";
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Label titleLabel;
-        private System.Windows.Forms.Button onlineButton;
-        private System.Windows.Forms.Button offlineButton;
+        private System.Windows.Forms.Integration.ElementHost elementHost1;
+        private Controls.WPF.Navigation.NavigationView navigationView1;
     }
 }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using InterfaceGraphique.CommunicationInterface;
+using InterfaceGraphique.Controls.WPF;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,30 +9,35 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Practices.Unity;
+using InterfaceGraphique.Controls.WPF.Home;
+using System.Net.Http;
+using InterfaceGraphique.Entities;
 
 namespace InterfaceGraphique.Menus
 {
-    public partial class HomeMenu : Form
+    public partial class HomeMenu: Form
     {
+        //Rendre singleton?
+        static HttpClient client = new HttpClient();
+
         public HomeMenu()
         {
             InitializeComponent();
-            InitializeEvents();
         }
 
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// Initialise les events sur la form courrante
-        ///
-        /// @return Void
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void InitializeEvents()
+        public void ChangeViewTo(ViewModelBase vmb)
         {
-            this.onlineButton.Click += (sender, e) => Program.FormManager.CurrentForm = Program.ConnectServerMenu;
-            this.offlineButton.Click += (sender, e) => Program.FormManager.CurrentForm = Program.MainMenu;
+            navigationView1.DataContext = vmb;
         }
 
+        public async Task Logout()
+        {
+            var response = await client.PostAsJsonAsync(Program.client.BaseAddress + "api/logout", User.Instance.UserEntity);
+            HubManager.Instance.Logout();
+            Program.FormManager.CurrentForm = Program.HomeMenu;
+            ChangeViewTo(Program.unityContainer.Resolve<HomeViewModel>());
+        }
         ////////////////////////////////////////////////////////////////////////
         ///
         /// Fonction vide appelée sur toutes les forms de facon 
@@ -44,6 +51,7 @@ namespace InterfaceGraphique.Menus
         {
 
         }
+
 
         ////////////////////////////////////////////////////////////////////////
         ///
@@ -59,6 +67,7 @@ namespace InterfaceGraphique.Menus
             this.Size = new Size(Program.FormManager.ClientSize.Width, Program.FormManager.ClientSize.Height);
         }
 
+
         ////////////////////////////////////////////////////////////////////////
         ///
         /// Ajoute le panneau openGL à la Form en cours. Les controles sont
@@ -72,6 +81,7 @@ namespace InterfaceGraphique.Menus
         {
             Program.FormManager.SizeChanged += new EventHandler(WindowSizeChanged);
         }
+
 
         ////////////////////////////////////////////////////////////////////////
         ///

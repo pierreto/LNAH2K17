@@ -27,8 +27,9 @@
 ////////////////////////////////////////////////////////////////////////
 NoeudComposite::NoeudComposite(
 	const std::string& type //= std::string{ "" }
+	, const char* uuid
 	) :
-	NoeudAbstrait{ type }
+	NoeudAbstrait{ type, uuid }
 {
 }
 

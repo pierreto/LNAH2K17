@@ -53,6 +53,8 @@
             this.Fichier_Ouvrir = new System.Windows.Forms.ToolStripMenuItem();
             this.Fichier_Enregistrer = new System.Windows.Forms.ToolStripMenuItem();
             this.Fichier_EnregistrerSous = new System.Windows.Forms.ToolStripMenuItem();
+            this.Fichier_EnregistrerSous_Ordinateur = new System.Windows.Forms.ToolStripMenuItem();
+            this.Fichier_EnregistrerSous_Serveur = new System.Windows.Forms.ToolStripMenuItem();
             this.Fichier_Propriete = new System.Windows.Forms.ToolStripMenuItem();
             this.Fichier_ModeTest = new System.Windows.Forms.ToolStripMenuItem();
             this.Fichier_MenuPrincipal = new System.Windows.Forms.ToolStripMenuItem();
@@ -91,8 +93,8 @@
             this.Toolbar_SeparatorBottom = new System.Windows.Forms.ToolStripSeparator();
             this.Edition = new System.Windows.Forms.Panel();
             this.Panel_PropertiesBack = new System.Windows.Forms.Panel();
-            this.Fichier_EnregistrerSous_Ordinateur = new System.Windows.Forms.ToolStripMenuItem();
-            this.Fichier_EnregistrerSous_Serveur = new System.Windows.Forms.ToolStripMenuItem();
+            this.Fichier_OuvrirLocalement = new System.Windows.Forms.ToolStripMenuItem();
+            this.Fichier_OuvrirEnLigne = new System.Windows.Forms.ToolStripMenuItem();
             this.PropertiesEditPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ScaleZText)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ScaleXText)).BeginInit();
@@ -157,7 +159,7 @@
             0,
             131072});
             this.ScaleZText.Location = new System.Drawing.Point(247, 206);
-            this.ScaleZText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ScaleZText.Margin = new System.Windows.Forms.Padding(4);
             this.ScaleZText.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -191,7 +193,7 @@
             0,
             131072});
             this.ScaleXText.Location = new System.Drawing.Point(33, 206);
-            this.ScaleXText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ScaleXText.Margin = new System.Windows.Forms.Padding(4);
             this.ScaleXText.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -225,7 +227,7 @@
             0,
             131072});
             this.ScaleYText.Location = new System.Drawing.Point(140, 206);
-            this.ScaleYText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ScaleYText.Margin = new System.Windows.Forms.Padding(4);
             this.ScaleYText.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -259,7 +261,7 @@
             0,
             131072});
             this.RotationZText.Location = new System.Drawing.Point(247, 144);
-            this.RotationZText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.RotationZText.Margin = new System.Windows.Forms.Padding(4);
             this.RotationZText.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -287,7 +289,7 @@
             0,
             131072});
             this.RotationYText.Location = new System.Drawing.Point(140, 144);
-            this.RotationYText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.RotationYText.Margin = new System.Windows.Forms.Padding(4);
             this.RotationYText.Maximum = new decimal(new int[] {
             360,
             0,
@@ -316,7 +318,7 @@
             0,
             131072});
             this.RotationXText.Location = new System.Drawing.Point(33, 144);
-            this.RotationXText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.RotationXText.Margin = new System.Windows.Forms.Padding(4);
             this.RotationXText.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -344,7 +346,7 @@
             0,
             131072});
             this.PositionZText.Location = new System.Drawing.Point(247, 82);
-            this.PositionZText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.PositionZText.Margin = new System.Windows.Forms.Padding(4);
             this.PositionZText.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -373,7 +375,7 @@
             0,
             131072});
             this.PositionYText.Location = new System.Drawing.Point(140, 82);
-            this.PositionYText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.PositionYText.Margin = new System.Windows.Forms.Padding(4);
             this.PositionYText.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -401,7 +403,7 @@
             0,
             131072});
             this.PositionXText.Location = new System.Drawing.Point(33, 82);
-            this.PositionXText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.PositionXText.Margin = new System.Windows.Forms.Padding(4);
             this.PositionXText.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -655,6 +657,9 @@
             // Fichier_Ouvrir
             // 
             this.Fichier_Ouvrir.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Fichier_Ouvrir.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Fichier_OuvrirLocalement,
+            this.Fichier_OuvrirEnLigne});
             this.Fichier_Ouvrir.ForeColor = System.Drawing.Color.White;
             this.Fichier_Ouvrir.Name = "Fichier_Ouvrir";
             this.Fichier_Ouvrir.Size = new System.Drawing.Size(197, 26);
@@ -678,6 +683,18 @@
             this.Fichier_EnregistrerSous.Name = "Fichier_EnregistrerSous";
             this.Fichier_EnregistrerSous.Size = new System.Drawing.Size(197, 26);
             this.Fichier_EnregistrerSous.Text = "Enregistrer sous...";
+            // 
+            // Fichier_EnregistrerSous_Ordinateur
+            // 
+            this.Fichier_EnregistrerSous_Ordinateur.Name = "Fichier_EnregistrerSous_Ordinateur";
+            this.Fichier_EnregistrerSous_Ordinateur.Size = new System.Drawing.Size(181, 26);
+            this.Fichier_EnregistrerSous_Ordinateur.Text = "Ordinateur";
+            // 
+            // Fichier_EnregistrerSous_Serveur
+            // 
+            this.Fichier_EnregistrerSous_Serveur.Name = "Fichier_EnregistrerSous_Serveur";
+            this.Fichier_EnregistrerSous_Serveur.Size = new System.Drawing.Size(181, 26);
+            this.Fichier_EnregistrerSous_Serveur.Text = "Serveur";
             // 
             // Fichier_Propriete
             // 
@@ -1050,7 +1067,7 @@
             this.Edition.Controls.Add(this.MenuBar);
             this.Edition.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Edition.Location = new System.Drawing.Point(0, 0);
-            this.Edition.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Edition.Margin = new System.Windows.Forms.Padding(4);
             this.Edition.Name = "Edition";
             this.Edition.Size = new System.Drawing.Size(1259, 838);
             this.Edition.TabIndex = 6;
@@ -1062,23 +1079,23 @@
             this.Panel_PropertiesBack.BackColor = System.Drawing.Color.Blue;
             this.Panel_PropertiesBack.Controls.Add(this.PropertiesEditPanel);
             this.Panel_PropertiesBack.Location = new System.Drawing.Point(917, 523);
-            this.Panel_PropertiesBack.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Panel_PropertiesBack.Margin = new System.Windows.Forms.Padding(4);
             this.Panel_PropertiesBack.Name = "Panel_PropertiesBack";
             this.Panel_PropertiesBack.Size = new System.Drawing.Size(341, 315);
             this.Panel_PropertiesBack.TabIndex = 21;
             this.Panel_PropertiesBack.Visible = false;
             // 
-            // Fichier_EnregistrerSous_Ordinateur
+            // Fichier_OuvrirLocalement
             // 
-            this.Fichier_EnregistrerSous_Ordinateur.Name = "Fichier_EnregistrerSous_Ordinateur";
-            this.Fichier_EnregistrerSous_Ordinateur.Size = new System.Drawing.Size(181, 26);
-            this.Fichier_EnregistrerSous_Ordinateur.Text = "Ordinateur";
+            this.Fichier_OuvrirLocalement.Name = "Fichier_OuvrirLocalement";
+            this.Fichier_OuvrirLocalement.Size = new System.Drawing.Size(181, 26);
+            this.Fichier_OuvrirLocalement.Text = "Localement";
             // 
-            // Fichier_EnregistrerSous_Serveur
+            // Fichier_OuvrirEnLigne
             // 
-            this.Fichier_EnregistrerSous_Serveur.Name = "Fichier_EnregistrerSous_Serveur";
-            this.Fichier_EnregistrerSous_Serveur.Size = new System.Drawing.Size(181, 26);
-            this.Fichier_EnregistrerSous_Serveur.Text = "Serveur";
+            this.Fichier_OuvrirEnLigne.Name = "Fichier_OuvrirEnLigne";
+            this.Fichier_OuvrirEnLigne.Size = new System.Drawing.Size(181, 26);
+            this.Fichier_OuvrirEnLigne.Text = "En ligne";
             // 
             // Editeur
             // 
@@ -1087,7 +1104,7 @@
             this.ClientSize = new System.Drawing.Size(1259, 838);
             this.Controls.Add(this.Edition);
             this.MainMenuStrip = this.MenuBar;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Editeur";
             this.Text = "Jeu";
             this.PropertiesEditPanel.ResumeLayout(false);
@@ -1185,5 +1202,7 @@
         private System.Windows.Forms.NumericUpDown RotationYText;
         private System.Windows.Forms.ToolStripMenuItem Fichier_EnregistrerSous_Ordinateur;
         private System.Windows.Forms.ToolStripMenuItem Fichier_EnregistrerSous_Serveur;
+        private System.Windows.Forms.ToolStripMenuItem Fichier_OuvrirLocalement;
+        private System.Windows.Forms.ToolStripMenuItem Fichier_OuvrirEnLigne;
     }
 }

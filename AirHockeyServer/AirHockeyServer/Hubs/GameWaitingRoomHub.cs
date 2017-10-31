@@ -7,6 +7,7 @@ using AirHockeyServer.Services;
 using AirHockeyServer.Entities;
 using System.Threading.Tasks;
 using AirHockeyServer.Events;
+using System.Diagnostics;
 
 namespace AirHockeyServer.Hubs
 {
@@ -36,7 +37,7 @@ namespace AirHockeyServer.Hubs
         {
             GameService = gameService;
         }
-
+        
         /// @fn void JoinGame(UserEntity user)
         ///
         /// Cette fonction permet de gérer la demande d'un utilisateur de se joindre à une partie. 
@@ -50,7 +51,7 @@ namespace AirHockeyServer.Hubs
 
             GameService.JoinGame(user);
         }
-
+        
         ////////////////////////////////////////////////////////////////////////
         ///
         /// @fn async Task<GameEntity> UpdateMap(GameEntity gameEntity)
@@ -63,47 +64,46 @@ namespace AirHockeyServer.Hubs
         ////////////////////////////////////////////////////////////////////////
         public async Task<GameEntity> UpdateMap(GameEntity gameEntity)
         {
-            var updatedGame = await GameService.UpdateGame(gameEntity);
-
-            Clients.Group(gameEntity.GameId.ToString()).GameMapUpdatedEvent(updatedGame);
-
-            return updatedGame;
+            Clients.Group(gameEntity.GameId.ToString()).GameMapUpdatedEvent(gameEntity);
+            return await GameService.UpdateGame(gameEntity);
         }
 
         ////////////////////////////////////////////////////////////////////////
         ///
-        /// @fn async Task<GameEntity> UpdateConfiguration(GameEntity gameEntity)
+        /// @fn void JoinGame(UserEntity user)
         ///
-        /// Cette fonction permet d'updater les paramètres de parties et
-        /// d'avertir les autres clients
-        /// 
-        /// @return la partie mise à jour
+        /// Cette fonction permet de gérer la demande d'un utilisateur de se joindre à une partie. 
+        /// On appel simplement la classe GameService
         ///
         ////////////////////////////////////////////////////////////////////////
-        public async Task<GameEntity> UpdateConfiguration(GameEntity gameEntity)
+        public void Join(UserEntity user)
         {
-            var updatedGame = await GameService.UpdateGame(gameEntity);
+            // TO REMOVE, WAITING FOR AUTHENTIFICATION
+            ConnectionMapper.AddConnection(user.Id, Context.ConnectionId);
 
-            Clients.Group(gameEntity.GameId.ToString()).GameConfigurationUpdatedEvent(updatedGame);
-
-            return updatedGame;
+            GameService.JoinGame(user);
         }
 
+        public void LeaveGame(UserEntity user)
+        {
+            GameService.LeaveGame(user);
+        }
 
-
-        public void SendGameData(Guid gameId, GameDataMessage gameData)
+        public void SendGameData(int gameId, GameDataMessage gameData)
         {
              Clients.Group(gameId.ToString(), Context.ConnectionId).ReceivedGameData(gameData);
         }
 
-        public void SendGoal(Guid gameId, GoalMessage goal)
+        public void SendGoal(int gameId, GoalMessage goal)
         {
-             Clients.Group(gameId.ToString(), Context.ConnectionId).ReceivedGoal(goal);
+            GameService.GoalScored(gameId, goal.PlayerNumber);
+            Clients.Group(gameId.ToString(), Context.ConnectionId).ReceivedGoal(goal);
         }
 
-        public void GameOver(Guid gameId)
+        public void GameOver(int gameId)
         {
-             Clients.Group(gameId.ToString(), Context.ConnectionId).ReceivedGameOver();
+            GameService.GameOver(gameId);
+            Clients.Group(gameId.ToString(), Context.ConnectionId).ReceivedGameOver();
         }
 
     }

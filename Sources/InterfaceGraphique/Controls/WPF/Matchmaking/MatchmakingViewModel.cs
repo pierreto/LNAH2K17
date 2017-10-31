@@ -2,32 +2,43 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using InterfaceGraphique.CommunicationInterface;
+using InterfaceGraphique.CommunicationInterface.WaitingRooms;
 using InterfaceGraphique.Entities;
 using InterfaceGraphique.CommunicationInterface.RestInterface;
+using System.Collections.ObjectModel;
 
 namespace InterfaceGraphique.Controls.WPF.Matchmaking
 {
     public class MatchmakingViewModel : ViewModelBase
     {
-        private WaitingRoomHub waitingRoomHub;
+        private GameWaitingRoomHub waitingRoomHub;
         private bool isStarted;
 
         protected MapsRepository MapsRepository { get; set; }
 
-        public MatchmakingViewModel(WaitingRoomHub matchmakingHub)
+        public MatchmakingViewModel(GameWaitingRoomHub matchmakingHub)
         {
 
             this.waitingRoomHub = matchmakingHub;
             this.isStarted = false;
             this.MapsRepository = new MapsRepository();
-
-            InitializeEvents();
-
-            LoadData();
         }
+        public override void InitializeViewModel()
+        {
+            LoadData();
+            InitializeEvents();
+            this.waitingRoomHub.Join();
+            SetDefaultValues();
+        }
+
+        private void SetDefaultValues()
+        {
+            RemainingTime = 30;
+        }
+
 
         private void InitializeEvents()
         {
@@ -35,11 +46,19 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
 
             waitingRoomHub.OpponentFoundEvent += (sender, args) =>
             {
-                OpponentName = args.Username;
-                
+                OpponentName = args.Players[0].Username;
+                PlayerName = args.Players[1].Username;
+                SetVisibility(false);
             };
 
-            waitingRoomHub.MapUpdatedEvent += (sender, args) => { SelectedMap = args.Map; };
+            waitingRoomHub.MapUpdatedEvent += (sender, args) => { SelectedMap = args; };
+
+        }
+
+        private void SetVisibility(bool isWaitingForOpponentValue)
+        {
+            IsWaitingForOpponent = isWaitingForOpponentValue ? "Visible" : "Hidden";
+            OpponentFound = isWaitingForOpponentValue ? "Hidden" : "Visible";
         }
 
         private void OnRemainingTimeEvent(int remainingTime)
@@ -49,8 +68,9 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
 
         private async void LoadData()
         {
+            GameEntity gg = new GameEntity();
             //MapsAvailable = await MapsRepository.GetMaps();
-            MapsAvailable = new List<MapEntity>
+            MapsAvailable = new ObservableCollection<MapEntity>
             {
                 new MapEntity
                 {
@@ -62,34 +82,9 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
                 }
             };
 
-            RemainingTime = 15;
+            SelectedMap = mapsAvailable[1];
+            
         }
-
-        private ICommand matchmakingCommand;
-        public ICommand MatchmakingCommand
-        {
-            get
-            {
-                return matchmakingCommand ??
-                       (matchmakingCommand = new RelayCommandAsync(Matchmaking, (o) => CanStart()));
-            }
-        }
-        private async Task Matchmaking()
-        {
-            if (this.isStarted)
-            {
-                this.waitingRoomHub.Cancel();
-                this.IsStarted = false;
-
-            }
-            else
-            {
-                this.waitingRoomHub.JoinGame();
-                this.IsStarted = true;
-            }
-
-        }
-
 
         private ICommand mainMenuCommand;
         public ICommand MainMenuCommand
@@ -100,9 +95,31 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
                        (mainMenuCommand = new RelayCommandAsync(MainMenu, (o) => true));
             }
         }
+
+        private ICommand cancel;
+        public ICommand Cancel
+        {
+            get
+            {
+                return cancel ?? (cancel = new RelayCommandAsync(LeaveGame, (o) => true));
+            }
+        }
+
+        private async Task LeaveGame()
+        {
+            await this.waitingRoomHub.LeaveGame();
+            SetDefaultValues();
+            Program.FormManager.CurrentForm = Program.MainMenu;
+        }
+
         private async Task MainMenu()
         {
-            Program.FormManager.CurrentForm=Program.QuickPlay;
+            Program.FormManager.CurrentForm=Program.MainMenu;
+        }
+
+        private void StartGame()
+        {
+            Program.FormManager.CurrentForm = Program.QuickPlay;
         }
 
         private bool CanStart()
@@ -120,8 +137,8 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
             }
         }
 
-        private List<MapEntity> mapsAvailable;
-        public List<MapEntity> MapsAvailable
+        private ObservableCollection<MapEntity> mapsAvailable;
+        public ObservableCollection<MapEntity> MapsAvailable
         {
             get => mapsAvailable;
             set
@@ -137,8 +154,19 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
             get => selectedMap;
             set
             {
-                selectedMap = value;
-                this.OnPropertyChanged();
+                if (selectedMap==null || !string.Equals(selectedMap.MapName, value.MapName))
+                {
+                    foreach(MapEntity map in mapsAvailable)
+                    {
+
+                        if(string.Equals(map.MapName, value.MapName))
+                        {
+                            selectedMap = map ;
+                        }
+                    }
+                    this.OnPropertyChanged();
+                    waitingRoomHub.UpdateSelectedMap(value);
+                }
             }
         }
 
@@ -163,5 +191,52 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
                 this.OnPropertyChanged();
             }
         }
+
+        private string playerName;
+        public string PlayerName
+        {
+            get => playerName;
+            set
+            {
+                playerName = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        public string ImageSrc
+        {
+            get
+            {
+                var test = Directory.GetCurrentDirectory() + "\\media\\image\\No_image_available.png";
+                return test;
+            }
+        }
+
+        private string isWaitingForOpponent = "Visible";
+        public string IsWaitingForOpponent
+        {
+            get
+            {
+                return isWaitingForOpponent;
+            }
+            set
+            {
+                isWaitingForOpponent = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        private string opponentFound = "Hidden";
+        public string OpponentFound
+        {
+            get => opponentFound;
+
+            set
+            {
+                opponentFound = value;
+                this.OnPropertyChanged();
+            }
+        }
+
     }
 }

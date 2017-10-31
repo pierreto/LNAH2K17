@@ -107,6 +107,15 @@ void VisiteurSauvegarde::sauvegarderNoeud(NoeudAbstrait* noeud, char* nom) {
 	tempArray.PushBack(scale.y, FacadeModele::obtenirInstance()->docJSON_.GetAllocator());
 	tempArray.PushBack(scale.z, FacadeModele::obtenirInstance()->docJSON_.GetAllocator());
 	tempArray.PushBack(angle, FacadeModele::obtenirInstance()->docJSON_.GetAllocator());
+	if(noeud->getUUID()!=nullptr)
+	{
+		std::string uuidString = std::string(noeud->getUUID());
+
+		rapidjson::Value strVal;
+		strVal.SetString(uuidString.c_str(), uuidString.length(), FacadeModele::obtenirInstance()->docJSON_.GetAllocator());
+		tempArray.PushBack(strVal, FacadeModele::obtenirInstance()->docJSON_.GetAllocator());
+	}
+
 
 	FacadeModele::obtenirInstance()->docJSON_[nom].PushBack(tempArray, FacadeModele::obtenirInstance()->docJSON_.GetAllocator());
 }

@@ -91,6 +91,9 @@ namespace InterfaceGraphique {
         public static extern void ouvrir(StringBuilder filePath, float[] coefficients);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void chargerCarte(StringBuilder json, float[] coefficients);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern bool mouseOverTable();
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
@@ -198,5 +201,13 @@ namespace InterfaceGraphique {
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void masterGoal();
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void createPortal(float[] startPos, float[] endPos);
+
+        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+        public delegate void PortalCreationCallback(char[] startUuid, float[] startPos, char[] endUuid, float[] endPos);
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void setPortalCreationCallback(PortalCreationCallback callback);
     }
 }
