@@ -58,8 +58,8 @@ namespace InterfaceGraphique.Game.GameState
             FonctionsNatives.dessinerOpenGL();
             ELapsedTime++;
 
-            if (ELapsedTime >= SERVER_INTERVAL)
-            {
+            //if (ELapsedTime >= SERVER_INTERVAL)
+            //{
                 ELapsedTime = 0;
 
                 float[] slavePosition = new float[3];
@@ -69,7 +69,7 @@ namespace InterfaceGraphique.Game.GameState
                 FonctionsNatives.getGameElementPositions(slavePosition,masterPosition,puckPosition);
             
                 gameHub.SendGameData(slavePosition, masterPosition, puckPosition);
-            }
+            //}
 
 
         }

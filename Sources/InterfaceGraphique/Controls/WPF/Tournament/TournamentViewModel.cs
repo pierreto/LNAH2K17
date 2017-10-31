@@ -11,7 +11,7 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
 {
     public class TournamentViewModel : ViewModelBase
     {
-        private const string DEFAULT_PLAYER_NAME = "En attente d'un joueur";
+        private const string DEFAULT_PLAYER_NAME = "En attente";
 
         private TournamentWaitingRoomHub waitingRoomHub;
 
@@ -55,7 +55,7 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
         {
             this.waitingRoomHub.OpponentFoundEvent += (e, args) => OnOpponentFount(e, args);
 
-            this.waitingRoomHub.TournamentAllOpponentsFound += (e, args) => { OnPropertyChanged("OpponentsFound"); };
+            this.waitingRoomHub.TournamentAllOpponentsFound += (e, args) => { OnPropertyChanged("OpponentsFound"); OnPropertyChanged("EnabledMaps"); };
 
             this.waitingRoomHub.RemainingTimeEvent += (e, args) => { RemainingTime = args; };
 
@@ -213,5 +213,10 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
         {
           //  throw new NotImplementedException();
         }
-    }
+
+        public bool EnabledMaps
+        {
+            get => Players.Count == 4;
+        }
+}
 }
