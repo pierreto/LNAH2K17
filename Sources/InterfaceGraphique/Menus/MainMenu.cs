@@ -6,6 +6,7 @@ using Microsoft.Practices.Unity;
 using InterfaceGraphique.CommunicationInterface;
 using InterfaceGraphique.Controls.WPF.Home;
 using System.Net.Http;
+using InterfaceGraphique.Controls.WPF.Chat;
 
 namespace InterfaceGraphique
 {
@@ -47,9 +48,10 @@ namespace InterfaceGraphique
             this.buttonConfiguration.Click += (sender, e) => Program.ConfigurationMenu.ShowDialog();
             this.buttonEditeur.Click += (sender, e) => Program.FormManager.CurrentForm = Program.Editeur;
             this.Button_Credits.Click += (sender, e) => Program.FormManager.CurrentForm = Program.CreditsMenu;
-            this.buttonQuitter.Click += (sender, e) => System.Windows.Forms.Application.Exit();
+            this.buttonQuitter.Click += (sender, e) => { Program.unityContainer.Resolve<ChatViewModel>().UndockedChat?.Close(); System.Windows.Forms.Application.Exit();  };
             if (User.Instance.IsConnected)
             {
+                this.FormClosing += (sender, e) => Program.unityContainer.Resolve<ChatViewModel>().UndockedChat?.Close();
                 this.buttonLogout.Click += async (sender, e) => await this.Logout();
             }
         }
@@ -124,13 +126,11 @@ namespace InterfaceGraphique
         public void HideChat()
         {
             this.elementHost1.Hide();
-            //this.testChatView.Visibility = System.Windows.Visibility.Hidden;
         }
 
         public void ShowChat()
         {
             this.elementHost1.Show();
-            //this.testChatView.Visibility = System.Windows.Visibility.Visible;
         }
     }
 }

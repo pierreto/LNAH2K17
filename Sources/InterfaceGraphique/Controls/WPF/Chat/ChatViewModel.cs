@@ -17,6 +17,7 @@ namespace InterfaceGraphique.Controls.WPF.Chat
     {
         private ChatHub chatHub;
         private TaskFactory ctxTaskFactory;
+        public Window UndockedChat { get; private set; }
         public ChatViewModel(ChatHub chatHub)
         {
             this.chatHub = chatHub;
@@ -80,7 +81,7 @@ namespace InterfaceGraphique.Controls.WPF.Chat
         {
             Docked = false;
             Program.MainMenu.HideChat();
-            Window window = new Window
+            UndockedChat = new Window
             {
                 Title = "UnDocked",
                 Content = new TestChatView()
@@ -90,10 +91,10 @@ namespace InterfaceGraphique.Controls.WPF.Chat
                 }
 
             };
-            window.Closing += this.OnUnDockedWindowClosing;
-            System.Windows.Forms.Integration.ElementHost.EnableModelessKeyboardInterop(window);
+            UndockedChat.Closing += this.OnUnDockedWindowClosing;
+            System.Windows.Forms.Integration.ElementHost.EnableModelessKeyboardInterop(UndockedChat);
             ChatTabHeight = 0;
-            window.Show();
+            UndockedChat.Show();
         }
 
         private async Task SendMessage()

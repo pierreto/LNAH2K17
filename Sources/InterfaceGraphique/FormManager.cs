@@ -8,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Practices.Unity;
+using InterfaceGraphique.Controls.WPF.Chat;
 
 namespace InterfaceGraphique {
 
@@ -68,6 +70,7 @@ namespace InterfaceGraphique {
             if (User.Instance.IsConnected)
             {
                 this.FormClosing += async (sender, e) => await Program.MainMenu.Logout();
+                this.FormClosing += (sender, e) => Program.unityContainer.Resolve<ChatViewModel>().UndockedChat.Close();
             }
         }
 
