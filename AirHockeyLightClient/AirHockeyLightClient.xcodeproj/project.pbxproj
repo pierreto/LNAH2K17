@@ -26,6 +26,7 @@
 		1D90AB021F9824BE003E0764 /* ConnectServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D90AB011F9824BE003E0764 /* ConnectServer.swift */; };
 		1DFE2E4C1F91A8FD0048892D /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFE2E4B1F91A8FD0048892D /* SignupViewController.swift */; };
 		25163A891F9CE62600142418 /* ILoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25163A881F9CE62500142418 /* ILoginViewModel.swift */; };
+		252EC9161FA80FAD008D119C /* EditionHub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252EC9151FA80FAD008D119C /* EditionHub.swift */; };
 		253741AC1FA61B0C00E7DBE1 /* DBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253741AB1FA61B0C00E7DBE1 /* DBManager.swift */; };
 		253E088C1F81858E009F301B /* UIViewShake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253E088B1F81858E009F301B /* UIViewShake.swift */; };
 		253E088E1F818DD2009F301B /* JsonHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253E088D1F818DD2009F301B /* JsonHelper.swift */; };
@@ -38,6 +39,8 @@
 		25F8091F1FA673050008F048 /* MapTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F8091E1FA673050008F048 /* MapTableViewController.swift */; };
 		25F809231FA6A2680008F048 /* MapDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F809221FA6A2680008F048 /* MapDisplayViewController.swift */; };
 		25F809251FA6AB680008F048 /* CreateMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F809241FA6AB680008F048 /* CreateMapViewController.swift */; };
+		25FDE43B1FA80D4D0089D9FE /* ClientConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25FDE43A1FA80D4D0089D9FE /* ClientConnection.swift */; };
+		25FDE43D1FA80DA60089D9FE /* IBaseHub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25FDE43C1FA80DA60089D9FE /* IBaseHub.swift */; };
 		3415E6C21F8545B300DB1CAD /* NoeudCommun.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3415E6C11F8545B300DB1CAD /* NoeudCommun.swift */; };
 		3415E6C41F8547CE00DB1CAD /* ArbreRendu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3415E6C31F8547CE00DB1CAD /* ArbreRendu.swift */; };
 		3415E6C71F85649D00DB1CAD /* UsineAbstraite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3415E6C61F85649D00DB1CAD /* UsineAbstraite.swift */; };
@@ -114,7 +117,6 @@
 		8FB6A9CA1F81E38300FAFFCF /* Table.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB6A9C91F81E38300FAFFCF /* Table.swift */; };
 		8FCDF6191FA1BEDF00631551 /* EditorNotificationScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8FCDF6171FA1BEDF00631551 /* EditorNotificationScene.sks */; };
 		8FCDF61A1FA1BEDF00631551 /* EditorNotificationScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCDF6181FA1BEDF00631551 /* EditorNotificationScene.swift */; };
-		8FE1EB051F75A96900A01514 /* ClientConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE1EB041F75A96900A01514 /* ClientConnection.swift */; };
 		8FFC5B481F7C90340031474F /* MessageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFC5B471F7C90340031474F /* MessageViewCell.swift */; };
 		8FFC5B4A1F7CA7170031474F /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFC5B491F7CA7170031474F /* PaddingLabel.swift */; };
 		E7B7E3DDFEF5DC14C25C5EF5 /* Pods_AirHockeyLightClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7585740DC43877CD99CDDF6A /* Pods_AirHockeyLightClient.framework */; };
@@ -153,6 +155,7 @@
 		1D90AB011F9824BE003E0764 /* ConnectServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectServer.swift; sourceTree = "<group>"; };
 		1DFE2E4B1F91A8FD0048892D /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
 		25163A881F9CE62500142418 /* ILoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ILoginViewModel.swift; sourceTree = "<group>"; };
+		252EC9151FA80FAD008D119C /* EditionHub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditionHub.swift; path = InterfaceGraphique/Communication/EditionHub.swift; sourceTree = "<group>"; };
 		253741AB1FA61B0C00E7DBE1 /* DBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DBManager.swift; path = Noyau/Entities/DBManager.swift; sourceTree = "<group>"; };
 		253E088B1F81858E009F301B /* UIViewShake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIViewShake.swift; path = InterfaceGraphique/Effects/UIViewShake.swift; sourceTree = "<group>"; };
 		253E088D1F818DD2009F301B /* JsonHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = JsonHelper.swift; path = Noyau/Helper/JsonHelper.swift; sourceTree = "<group>"; };
@@ -165,6 +168,8 @@
 		25F8091E1FA673050008F048 /* MapTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapTableViewController.swift; path = InterfaceGraphique/MapTableViewController.swift; sourceTree = "<group>"; };
 		25F809221FA6A2680008F048 /* MapDisplayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapDisplayViewController.swift; sourceTree = "<group>"; };
 		25F809241FA6AB680008F048 /* CreateMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateMapViewController.swift; sourceTree = "<group>"; };
+		25FDE43A1FA80D4D0089D9FE /* ClientConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ClientConnection.swift; path = InterfaceGraphique/Communication/ClientConnection.swift; sourceTree = "<group>"; };
+		25FDE43C1FA80DA60089D9FE /* IBaseHub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IBaseHub.swift; path = InterfaceGraphique/Communication/IBaseHub.swift; sourceTree = "<group>"; };
 		3415E6C11F8545B300DB1CAD /* NoeudCommun.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NoeudCommun.swift; path = Noyau/Arbre/Noeuds/NoeudCommun.swift; sourceTree = "<group>"; };
 		3415E6C31F8547CE00DB1CAD /* ArbreRendu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ArbreRendu.swift; path = Noyau/Arbre/ArbreRendu.swift; sourceTree = "<group>"; };
 		3415E6C61F85649D00DB1CAD /* UsineAbstraite.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UsineAbstraite.swift; path = Noyau/Arbre/Usines/UsineAbstraite.swift; sourceTree = "<group>"; };
@@ -246,7 +251,6 @@
 		8FB6A9C91F81E38300FAFFCF /* Table.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Table.swift; path = Noyau/Arbre/Noeuds/Table.swift; sourceTree = "<group>"; };
 		8FCDF6171FA1BEDF00631551 /* EditorNotificationScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = EditorNotificationScene.sks; path = InterfaceGraphique/Editor/EditorNotificationScene.sks; sourceTree = "<group>"; };
 		8FCDF6181FA1BEDF00631551 /* EditorNotificationScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditorNotificationScene.swift; path = InterfaceGraphique/Editor/EditorNotificationScene.swift; sourceTree = "<group>"; };
-		8FE1EB041F75A96900A01514 /* ClientConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ClientConnection.swift; path = Noyau/Communication/ClientConnection.swift; sourceTree = "<group>"; };
 		8FFC5B471F7C90340031474F /* MessageViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageViewCell.swift; path = InterfaceGraphique/Chat/MessageViewCell.swift; sourceTree = "<group>"; };
 		8FFC5B491F7CA7170031474F /* PaddingLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PaddingLabel.swift; path = InterfaceGraphique/Chat/PaddingLabel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -266,14 +270,12 @@
 		1D019A311F911EDC004D79B2 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				25FDE4391FA80C620089D9FE /* Sélection des cartes */,
 				1D019A1D1F911DE2004D79B2 /* LoginViewController.swift */,
 				1DFE2E4B1F91A8FD0048892D /* SignupViewController.swift */,
 				1D3D77B61F981BCA0012EF12 /* MainViewController.swift */,
 				1D90AAFA1F98205A003E0764 /* ConnectServerViewController.swift */,
 				1D863DB01F9848E70025B89D /* OfflineMenuViewController.swift */,
-				25F8091E1FA673050008F048 /* MapTableViewController.swift */,
-				25F809221FA6A2680008F048 /* MapDisplayViewController.swift */,
-				25F809241FA6AB680008F048 /* CreateMapViewController.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -355,6 +357,16 @@
 				25628B9E1FA79C070010B58D /* MapViewModel.swift */,
 			);
 			name = Map;
+			sourceTree = "<group>";
+		};
+		25FDE4391FA80C620089D9FE /* Sélection des cartes */ = {
+			isa = PBXGroup;
+			children = (
+				25F8091E1FA673050008F048 /* MapTableViewController.swift */,
+				25F809221FA6A2680008F048 /* MapDisplayViewController.swift */,
+				25F809241FA6AB680008F048 /* CreateMapViewController.swift */,
+			);
+			name = "Sélection des cartes";
 			sourceTree = "<group>";
 		};
 		3085577F2BC9CDF3683F45B9 /* Pods */ = {
@@ -480,6 +492,7 @@
 				8F64C0121F7754FD00F14AC7 /* LaunchScreen.storyboard */,
 				8F64C0141F77550800F14AC7 /* Main.storyboard */,
 				8FB6A9C31F81DCA000FAFFCF /* Assets */,
+				8FE1EB031F75A90D00A01514 /* Communication */,
 				1D019A331F911EEF004D79B2 /* ViewModel */,
 				1D019A311F911EDC004D79B2 /* View */,
 				3475C2441F90142600E8BF86 /* Gestures */,
@@ -496,7 +509,6 @@
 			children = (
 				8F0B94AF1F8D4B9D007F0E82 /* Application */,
 				8FB6A9C71F81E35D00FAFFCF /* Arbre */,
-				8FE1EB031F75A90D00A01514 /* Communication */,
 				8F8706B71F789266000E6824 /* Entities */,
 				253E088F1F818DE1009F301B /* Helper */,
 				1D019A381F911F1E004D79B2 /* Model */,
@@ -642,7 +654,9 @@
 		8FE1EB031F75A90D00A01514 /* Communication */ = {
 			isa = PBXGroup;
 			children = (
-				8FE1EB041F75A96900A01514 /* ClientConnection.swift */,
+				25FDE43A1FA80D4D0089D9FE /* ClientConnection.swift */,
+				25FDE43C1FA80DA60089D9FE /* IBaseHub.swift */,
+				252EC9151FA80FAD008D119C /* EditionHub.swift */,
 			);
 			name = Communication;
 			sourceTree = "<group>";
@@ -821,6 +835,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25FDE43D1FA80DA60089D9FE /* IBaseHub.swift in Sources */,
 				25628B9D1FA79B940010B58D /* IMapViewModel.swift in Sources */,
 				344A6E2C1F994E0D00CFFBEB /* CollisionHelper.swift in Sources */,
 				8F0B94BE1F8DC0F1007F0E82 /* VisiteurSelection.swift in Sources */,
@@ -842,7 +857,6 @@
 				3415E6C71F85649D00DB1CAD /* UsineAbstraite.swift in Sources */,
 				25F66FB51FA13071006CB47F /* VisiteurSauvegarde.swift in Sources */,
 				8F0B94AE1F8D450B007F0E82 /* VisiteurSelectionnable.swift in Sources */,
-				8FE1EB051F75A96900A01514 /* ClientConnection.swift in Sources */,
 				1D3D77B71F981BCA0012EF12 /* MainViewController.swift in Sources */,
 				8F6AE2C21F6592EB00A29E8B /* GameScene.swift in Sources */,
 				25163A891F9CE62600142418 /* ILoginViewModel.swift in Sources */,
@@ -857,6 +871,7 @@
 				8F76FC0F1F9CF990001BBC99 /* SCNodeHelper.swift in Sources */,
 				3415E6C21F8545B300DB1CAD /* NoeudCommun.swift in Sources */,
 				8F8706B91F7892BB000E6824 /* Entity.swift in Sources */,
+				252EC9161FA80FAD008D119C /* EditionHub.swift in Sources */,
 				25628BA11FA79CFF0010B58D /* Maps.swift in Sources */,
 				34B66FE21F84599100A9CCB9 /* But.swift in Sources */,
 				1D019A2A1F911E33004D79B2 /* LoginViewModel.swift in Sources */,
@@ -893,6 +908,7 @@
 				3497C3251F9FECA600C58700 /* ModeleEtatDuplication.swift in Sources */,
 				253E08911F81913A009F301B /* ChannelEntity.swift in Sources */,
 				8F69F4BF1F8AF871004D5129 /* MathHelper.swift in Sources */,
+				25FDE43B1FA80D4D0089D9FE /* ClientConnection.swift in Sources */,
 				1D019A2E1F911E49004D79B2 /* ISignupViewModel.swift in Sources */,
 				1D019A2D1F911E49004D79B2 /* SignupViewModel.swift in Sources */,
 				8F0B94BA1F8D8C95007F0E82 /* ModeleEtatDeplacement.swift in Sources */,
