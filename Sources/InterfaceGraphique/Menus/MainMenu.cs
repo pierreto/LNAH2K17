@@ -51,8 +51,9 @@ namespace InterfaceGraphique
             this.buttonQuitter.Click += (sender, e) => { Program.unityContainer.Resolve<ChatViewModel>().UndockedChat?.Close(); System.Windows.Forms.Application.Exit();  };
             if (User.Instance.IsConnected)
             {
-                this.FormClosing += (sender, e) => Program.unityContainer.Resolve<ChatViewModel>().UndockedChat?.Close();
                 this.buttonLogout.Click += async (sender, e) => await this.Logout();
+                Program.FormManager.FormClosing += async (sender, e) => await Logout();
+                Program.FormManager.FormClosing += (sender, e) => Program.unityContainer.Resolve<ChatViewModel>().UndockedChat?.Close();
             }
         }
 

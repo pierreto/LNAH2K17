@@ -66,12 +66,7 @@ namespace InterfaceGraphique {
         ////////////////////////////////////////////////////////////////////////
         public void InitializeEvents()
         {
-            // TODO: Fix this. Make this is added AFTER authentication 
-            if (User.Instance.IsConnected)
-            {
-                this.FormClosing += async (sender, e) => await Program.MainMenu.Logout();
-                this.FormClosing += (sender, e) => Program.unityContainer.Resolve<ChatViewModel>().UndockedChat.Close();
-            }
+
         }
 
 
