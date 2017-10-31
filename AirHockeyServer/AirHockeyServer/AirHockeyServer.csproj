@@ -18,7 +18,8 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress>true</Use64BitIISExpress>
+    <Use64BitIISExpress>
+    </Use64BitIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -225,6 +226,7 @@
     <Compile Include="Controllers\SignupController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Core\Connector.cs" />
+    <Compile Include="Core\Cache.cs" />
     <Compile Include="Core\IConnector.cs" />
     <Compile Include="DatabaseCore\IDataProvider.cs" />
     <Compile Include="Core\IRequestsManager.cs" />
@@ -266,6 +268,7 @@
     <Compile Include="Hubs\GameWaitingRoomHub.cs" />
     <Compile Include="Hubs\ConnectionMapper.cs" />
     <Compile Include="Hubs\TournamentWaitingRoomHub.cs" />
+    <Compile Include="Manager\GameManager.cs" />
     <Compile Include="Mapping\MapperManager.cs" />
     <Compile Include="Pocos\LoginPoco.cs" />
     <Compile Include="Pocos\MapPoco.cs" />
