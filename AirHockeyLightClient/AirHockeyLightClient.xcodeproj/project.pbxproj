@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0EE1745E1FA92D310090C45A /* AbstractEditionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE1745D1FA92D310090C45A /* AbstractEditionCommand.swift */; };
+		0EE174601FA92E8D0090C45A /* PortalCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EE1745F1FA92E8D0090C45A /* PortalCommand.swift */; };
 		0EED627D1F9825B500CD8C56 /* NoeudMur.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EED627C1F9825B500CD8C56 /* NoeudMur.swift */; };
 		0EED627F1F982B3B00CD8C56 /* ModeleEtatCreerMuret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0EED627E1F982B3B00CD8C56 /* ModeleEtatCreerMuret.swift */; };
 		0EED62811F98301C00CD8C56 /* mur.obj in Resources */ = {isa = PBXBuildFile; fileRef = 0EED62801F98301C00CD8C56 /* mur.obj */; };
@@ -136,6 +138,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0EE1745D1FA92D310090C45A /* AbstractEditionCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AbstractEditionCommand.swift; path = InterfaceGraphique/Editor/Commands/AbstractEditionCommand.swift; sourceTree = "<group>"; };
+		0EE1745F1FA92E8D0090C45A /* PortalCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PortalCommand.swift; path = InterfaceGraphique/Editor/Commands/PortalCommand.swift; sourceTree = "<group>"; };
 		0EED627C1F9825B500CD8C56 /* NoeudMur.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NoeudMur.swift; path = Noyau/Arbre/Noeuds/NoeudMur.swift; sourceTree = "<group>"; };
 		0EED627E1F982B3B00CD8C56 /* ModeleEtatCreerMuret.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ModeleEtatCreerMuret.swift; path = Noyau/Application/States/ModeleEtatCreerMuret.swift; sourceTree = "<group>"; };
 		0EED62801F98301C00CD8C56 /* mur.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mur.obj; sourceTree = "<group>"; };
@@ -267,6 +271,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0EE1745C1FA92CF70090C45A /* Commands */ = {
+			isa = PBXGroup;
+			children = (
+				0EE1745D1FA92D310090C45A /* AbstractEditionCommand.swift */,
+				0EE1745F1FA92E8D0090C45A /* PortalCommand.swift */,
+			);
+			name = Commands;
+			sourceTree = "<group>";
+		};
 		1D019A311F911EDC004D79B2 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -592,6 +605,7 @@
 		8FB6A9931F81B9AA00FAFFCF /* Editor */ = {
 			isa = PBXGroup;
 			children = (
+				0EE1745C1FA92CF70090C45A /* Commands */,
 				8FB6A9941F81B9C800FAFFCF /* EditorViewController.swift */,
 				3475C2271F8FAF8D00E8BF86 /* EditorHUDScene.sks */,
 				3475C2281F8FAF8D00E8BF86 /* EditorHUDScene.swift */,
@@ -883,6 +897,7 @@
 				344A6E221F99101700CFFBEB /* ModeleEtatCreerBoost.swift in Sources */,
 				8F64C0111F7754EF00F14AC7 /* ChatViewController.swift in Sources */,
 				1D019A221F911DF6004D79B2 /* Signup.swift in Sources */,
+				0EE1745E1FA92D310090C45A /* AbstractEditionCommand.swift in Sources */,
 				8F0B94BC1F8D8EA6007F0E82 /* VisiteurDeplacement.swift in Sources */,
 				3415E6C41F8547CE00DB1CAD /* ArbreRendu.swift in Sources */,
 				0EED627D1F9825B500CD8C56 /* NoeudMur.swift in Sources */,
@@ -896,6 +911,7 @@
 				342E7C541F9859770062017A /* NoeudPortail.swift in Sources */,
 				1D019A1E1F911DE2004D79B2 /* LoginViewController.swift in Sources */,
 				1D019A301F911E78004D79B2 /* Http.swift in Sources */,
+				0EE174601FA92E8D0090C45A /* PortalCommand.swift in Sources */,
 				3475C22A1F8FAF8D00E8BF86 /* EditorHUDScene.swift in Sources */,
 				34B965CE1FA26EDE00BD17CC /* GeneralPropertiesViewController.swift in Sources */,
 				253E088E1F818DD2009F301B /* JsonHelper.swift in Sources */,
