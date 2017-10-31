@@ -24,10 +24,10 @@
     <UserControl.DataContext>
         <Binding Path="ChatViewModel" Source="{StaticResource VMLocator}"/>
     </UserControl.DataContext>
-    <Grid>
+    <Grid Height="Auto">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="{Binding ChatTabHeight}"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Visibility="{Binding Collapsed}">
             <Grid.ColumnDefinitions>
@@ -40,8 +40,8 @@
             <controls:ChatView Grid.Column="1" Grid.Row="1">
             </controls:ChatView>
         </Grid>
-        <DockPanel Background="{StaticResource VeryDarkGrayBrush}" Grid.Row="1" LastChildFill="True" Height="Auto" Visibility="{Binding Docked, Converter={convert:BooleanToVisibilityConverter}, ConverterParameter=False}">
-            <Button Foreground="White" Height="Auto" fa:Awesome.Content="Comment" Background="Transparent" Command="{Binding MinimizeCommand}" BorderThickness="0" Focusable="False"/>
+        <DockPanel Background="{StaticResource VeryDarkGrayBrush}" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" LastChildFill="True" Height="Auto" Visibility="{Binding Docked, Converter={convert:BooleanToVisibilityConverter}, ConverterParameter=False}">
+            <Button Foreground="White" Height="Auto" fa:Awesome.Content="Comment" Background="Transparent" Command="{Binding MinimizeCommand}" BorderThickness="0" Focusable="False" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Center" VerticalAlignment="Center"/>
         </DockPanel>
     </Grid>
 </UserControl>

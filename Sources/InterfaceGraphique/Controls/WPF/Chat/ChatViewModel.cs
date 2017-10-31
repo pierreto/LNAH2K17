@@ -25,12 +25,14 @@ namespace InterfaceGraphique.Controls.WPF.Chat
             chatHub.NewMessageFromChannel += NewMessageFromChannel;
             ctxTaskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
             currentChannel = CurrentChannel;
+            ChatTabHeight = 40;
         }
 
         private void OnUnDockedWindowClosing(object sender, CancelEventArgs e)
         {
             Program.MainMenu.ShowChat();
             Docked = true;
+            ChatTabHeight = 40;
         }
 
         private bool docked;
@@ -90,6 +92,7 @@ namespace InterfaceGraphique.Controls.WPF.Chat
             };
             window.Closing += this.OnUnDockedWindowClosing;
             System.Windows.Forms.Integration.ElementHost.EnableModelessKeyboardInterop(window);
+            ChatTabHeight = 0;
             window.Show();
         }
 
@@ -255,6 +258,17 @@ namespace InterfaceGraphique.Controls.WPF.Chat
                 {
                     return System.Windows.Visibility.Visible;
                 }
+            }
+        }
+
+        private int chatTabHeight;
+        public int ChatTabHeight
+        {
+            get { return chatTabHeight; }
+            set
+            {
+                chatTabHeight = value;
+                OnPropertyChanged(nameof(ChatTabHeight));
             }
         }
         public override void InitializeViewModel()
