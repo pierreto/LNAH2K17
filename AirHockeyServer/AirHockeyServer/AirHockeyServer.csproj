@@ -296,6 +296,7 @@
     <Compile Include="Services\GameService.cs" />
     <Compile Include="Services\IChannelService.cs" />
     <Compile Include="Services\IChatService.cs" />
+    <Compile Include="Services\IEditionService.cs" />
     <Compile Include="Services\IGameService.cs" />
     <Compile Include="Services\ILoginService.cs" />
     <Compile Include="Services\IMapService.cs" />
@@ -311,6 +312,7 @@
     <Compile Include="Services\MatchMaking\TournamentMatchMaker.cs" />
     <Compile Include="Services\MatchMaking\TournamentMatchMakerService.cs" />
     <Compile Include="Services\TournamentService.cs" />
+    <Compile Include="SignalRUnityDependencyResolver.cs" />
     <Compile Include="Utilities\HttpResponseGenerator.cs" />
     <Compile Include="Services\SignupService.cs" />
     <Compile Include="Services\UserService.cs" />

@@ -3,7 +3,7 @@ using AirHockeyServer.Entities;
 using AirHockeyServer.Entities.EditionCommand;
 using AirHockeyServer.Services;
 
-public class EditionService : IService
+public class EditionService : IEditionService
 {
     private List<OnlineEditedMapInfo> _availableMapInfos;
     private Dictionary<string, List<OnlineUser>> usersPerGame;

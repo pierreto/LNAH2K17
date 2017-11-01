@@ -17,11 +17,11 @@ namespace AirHockeyServer.Controllers
 {
     public class MapController : ApiController
     {
-        private EditionService editionService;
-        public MapController(IMapService mapService, EditionService editionService)
+        private IEditionService editionService;
+        public MapController(IMapService mapService, IEditionService editionService)
         {
             MapService = mapService;
-            editionService = this.editionService;
+            this.editionService = editionService;
         }
 
         public IMapService MapService { get; }
@@ -36,7 +36,15 @@ namespace AirHockeyServer.Controllers
                 maps.ForEach(action =>
                 {
                     string gameId = EditionHub.ObtainEditionGroupIdentifier((int)action.Id);
-                    action.CurrentNumberOfPlayer = editionService.UsersPerGame[gameId].Count;
+                    if (editionService.UsersPerGame.ContainsKey(gameId))
+                    {
+                        action.CurrentNumberOfPlayer = editionService.UsersPerGame[gameId].Count;
+
+                    }
+                    else
+                    {
+                        action.CurrentNumberOfPlayer = 0;
+                    }
                 });
                 return HttpResponseGenerator.CreateSuccesResponseMessage(HttpStatusCode.OK, maps);
             }
