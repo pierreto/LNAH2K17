@@ -15,9 +15,9 @@ namespace AirHockeyServer.Controllers
 {
     public class MapController : ApiController 
     {
-        public MapController(IMapService mapService)
+        public MapController()
         {
-            MapService = mapService;
+            MapService = new MapService();
         }
 
         public IMapService MapService { get; }
