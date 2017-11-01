@@ -50,7 +50,8 @@ namespace AirHockeyServer.Events.EventManagers
 
 
             var connection = ConnectionMapper.GetConnection(user.Id);
-            await HubContext.Groups.Add(connection, Tournament.Id.ToString());
+            string tournamentIdString = Tournament.Id.ToString();
+            await HubContext.Groups.Add(connection, tournamentIdString);
 
             Tournament.Players.Add(user);
 
@@ -71,6 +72,8 @@ namespace AirHockeyServer.Events.EventManagers
 
                 System.Timers.Timer timer = CreateTimeoutTimer(Tournament);
                 Tournament = null;
+
+                timer.Start();
             }
 
         }
@@ -120,10 +123,10 @@ namespace AirHockeyServer.Events.EventManagers
             else
             {
                 timer.Stop();
-                
-                Tournament.State = TournamentState.SemiFinals;
-                TournamentManager.AddTournament(Tournament);
-                HubContext.Clients.Group(tournament.Id.ToString()).TournamentStarting(Tournament);
+
+                tournament.State = TournamentState.SemiFinals;
+                TournamentManager.AddTournament(tournament);
+                HubContext.Clients.Group(tournament.Id.ToString()).TournamentStarting(tournament);
             }
         }
 

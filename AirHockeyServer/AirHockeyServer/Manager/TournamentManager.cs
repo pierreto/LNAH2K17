@@ -39,7 +39,7 @@ namespace AirHockeyServer.Manager
             }
         }
 
-        public void UpdateTournamentState(int tournamentId, GameEntity gameUpdated)
+        public async void UpdateTournamentState(int tournamentId, GameEntity gameUpdated)
         {
             UpdateTournamentGames(gameUpdated, tournamentId);
             if (Cache.Tournaments.ContainsKey(tournamentId))
@@ -57,7 +57,7 @@ namespace AirHockeyServer.Manager
                         hub.Clients.Group(tournament.Id.ToString()).TournamentFinalResult(tournament);
 
                         // save to DB
-                        PlayerStatsService.IncrementTournamentsWon(tournament.Winner.Id);
+                        await PlayerStatsService.IncrementTournamentsWon(tournament.Winner.Id);
                         Cache.Tournaments.Remove(tournamentId);
                     }
                     else

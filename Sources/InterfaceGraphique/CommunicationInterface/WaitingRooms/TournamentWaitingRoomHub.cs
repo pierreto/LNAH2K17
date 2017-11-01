@@ -122,7 +122,6 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
                                 Program.QuickPlay.CurrentGameState = this.SlaveGameState;
 
                                 FonctionsNatives.rotateCamera(180);
-
                             }
 
                             Program.FormManager.CurrentForm = Program.QuickPlay;
