@@ -28,7 +28,7 @@ namespace AirHockeyServer
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            Register(GlobalConfiguration.Configuration);
+            //Register(GlobalConfiguration.Configuration);
             //ChatServer server = new ChatServer();
             //Task running_server = Task.Run(() => server.StartListeningAsync());
             // We make the server running asynchronously so the REST API can
@@ -36,7 +36,8 @@ namespace AirHockeyServer
             //await running_server;
 
             Cache cache = new Cache();
-
+            GameWaitingRoomEventManager gameWaitingRoomEventManager = new GameWaitingRoomEventManager();
+            TournamentWaitingRoomEventManager tournamentWaitingRoomEventManager = new TournamentWaitingRoomEventManager();
         }
 
         public static void Register(HttpConfiguration config)

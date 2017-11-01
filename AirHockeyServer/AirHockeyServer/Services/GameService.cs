@@ -20,7 +20,7 @@ namespace AirHockeyServer.Services
     public class GameService : IGameService
     {
         private List<GameEntity> games;
-        private static IGameRepository GameRepository = new GameRepository();
+        //private GameRepository GameRepository { get; set; }
 
         public GameManager GameManager { get; }
 
@@ -28,6 +28,7 @@ namespace AirHockeyServer.Services
         {
             this.games = new List<GameEntity>();
             GameManager = new GameManager();
+            //GameRepository = new GameRepository();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -96,5 +97,10 @@ namespace AirHockeyServer.Services
         {
             GameManager.GameEnded(gameId);
         }
-    }
+
+        public async Task SaveGame(GameEntity game)
+        {
+            //await GameRepository.CreateGame(game);
+        }
+}
 }

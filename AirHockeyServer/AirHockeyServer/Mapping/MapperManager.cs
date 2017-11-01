@@ -50,6 +50,21 @@ namespace AirHockeyServer.Mapping
                 //    dest => dest.Id,
                 //    opt => opt.MapFrom(src => src.Id)
                 //);
+
+                cfg.CreateMap<StatsEntity, StatsPoco>();
+                cfg.CreateMap<StatsPoco, StatsEntity>();
+
+                cfg.CreateMap<GameEntity, GamePoco>()
+                .ForMember(
+                    dest => dest.Id,
+                    opt => opt.MapFrom(src => src.GameId))
+                .ForMember(
+                    dest => dest.PlayedMap,
+                    opt => opt.MapFrom(src => src.SelectedMap.Id))
+                .ForMember(
+                    dest => dest.Winner,
+                    opt => opt.MapFrom(src => src.Winner.Id));
+
             });
 
             //config.AssertConfigurationIsValid();

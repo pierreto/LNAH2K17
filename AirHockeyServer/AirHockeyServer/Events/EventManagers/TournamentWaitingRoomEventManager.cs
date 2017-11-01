@@ -26,7 +26,7 @@ namespace AirHockeyServer.Events.EventManagers
 
         public TournamentManager TournamentManager { get; }
 
-        public TournamentWaitingRoomEventManager(IGameService gameService)
+        public TournamentWaitingRoomEventManager()
         {
             this.RemainingTime = new ConcurrentDictionary<int, int>();
             TournamentMatchMakerService.Instance().OpponentFound += OnOpponentFound;

@@ -12,10 +12,12 @@ namespace AirHockeyServer.Repositories
     public class GameRepository : Repository<GameEntity>, IGameRepository
     {
         private Table<GamePoco> GameTable;
+        protected MapRepository MapRepository { get; private set; }
 
         public GameRepository()
         {
             this.GameTable = DataProvider.DC.GetTable<GamePoco>();
+            MapRepository = new MapRepository();
         }
 
         public async Task<GameEntity> CreateGame(GameEntity game)
@@ -45,9 +47,23 @@ namespace AirHockeyServer.Repositories
 
                 var results = await Task<IEnumerable<GamePoco>>.Run(
                     () => queryable.ToArray());
+                
+                GamePoco gamePoco = results.Length > 0 ? results.First() : null;
+                
+                GameEntity result = new GameEntity();
 
-                GamePoco result = results.Length > 0 ? results.First() : null;
-                return MapperManager.Map<GamePoco, GameEntity>(result);
+                IEnumerable<MapEntity> maps = await MapRepository.GetMaps();
+                // TODO : UPDATE WHEN MAP DONE
+                result.SelectedMap = maps.First();
+                // TODO GET USER
+                result.Winner = new UserEntity
+                {
+                    Id = gamePoco.Winner
+                };
+                
+                result.GameId = gamePoco.Id;
+
+                return result;
             }
             catch (Exception e)
             {
