@@ -312,7 +312,6 @@
     <Compile Include="Services\MatchMaking\TournamentMatchMaker.cs" />
     <Compile Include="Services\MatchMaking\TournamentMatchMakerService.cs" />
     <Compile Include="Services\TournamentService.cs" />
-    <Compile Include="SignalRUnityDependencyResolver.cs" />
     <Compile Include="Utilities\HttpResponseGenerator.cs" />
     <Compile Include="Services\SignupService.cs" />
     <Compile Include="Services\UserService.cs" />
