@@ -49,9 +49,10 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
         }
 
-        public void Join()
+        public async void Join()
         {
-            WaitingRoomProxy.Invoke("Join", User.Instance.UserEntity);
+            InitializeWaitingRoomEvents();
+            await WaitingRoomProxy.Invoke("Join", User.Instance.UserEntity);
         }
 
         public void Logout()
@@ -119,7 +120,11 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
                                 this.SlaveGameState.InitializeGameState(userGame);
                                 this.SlaveGameState.IsOnlineTournementMode = true;
                                 Program.QuickPlay.CurrentGameState = this.SlaveGameState;
+
+                                FonctionsNatives.rotateCamera(180);
+
                             }
+
                             Program.FormManager.CurrentForm = Program.QuickPlay;
                         }
                         else
@@ -154,6 +159,8 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
                             this.SlaveGameState.InitializeGameState(tournament.Final);
                             this.MasterGameState.IsOnlineTournementMode = true;
                             Program.QuickPlay.CurrentGameState = this.SlaveGameState;
+
+                            FonctionsNatives.rotateCamera(180);
                         }
 
                         Program.FormManager.CurrentForm = Program.QuickPlay;
