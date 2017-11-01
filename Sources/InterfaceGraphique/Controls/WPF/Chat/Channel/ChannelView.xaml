@@ -62,7 +62,7 @@
                             Grid.Row="1" 
                             Background="{StaticResource UltraDarkGrayBrush}" 
                             Width="225" 
-                            Height="170" 
+                            Height="Auto" 
                             Opacity="1.0"
                             BorderThickness="2" 
                             BorderBrush="White"
@@ -70,7 +70,7 @@
                         <Border.Effect>
                             <DropShadowEffect BlurRadius="5" Opacity="0.4"/>
                         </Border.Effect>
-                        <StackPanel Margin="15" VerticalAlignment="Center">
+                        <StackPanel Margin="15" VerticalAlignment="Center" Height="Auto">
                             <Button fa:Awesome.Content="AngleUp"
                                     HorizontalAlignment="Right"
                                     Margin=" 0,0,0,15"
@@ -98,6 +98,7 @@
                                     <TextBox x:Name="Names" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0" MaxLength="16"/>
                                 </Border>
                             </Grid>
+                            <TextBlock HorizontalAlignment="Center" Margin="0,0,0,2" TextWrapping="Wrap" Text="{Binding ChannelErrMsg}" VerticalAlignment="Top" Foreground="Red" FontSize="18" Visibility="{Binding ChannelErrMsg,Converter={convert:StringToVisibilityConverter}, ConverterParameter=True}"/>
                             <Border>
                                 <Button BorderThickness="0" 
                                         Background="{StaticResource DarkGrayBrush}"  

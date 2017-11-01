@@ -156,7 +156,6 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
                     User.Instance.IsConnected = true;
 
                     await chatHub.InitializeChat();
-                    await chatHub.AuthenticateUser();
 
                     //On reset le nom d'usager et le mot de passe (Au cas ou il fait un retour a l'arriere ou deconnexion)
                     Username = Password = "";

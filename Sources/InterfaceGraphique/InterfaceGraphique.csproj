@@ -178,6 +178,7 @@
     <Compile Include="Controls\WPF\Converters\BaseValueConverter.cs" />
     <Compile Include="Controls\WPF\Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Controls\WPF\Converters\SentByMeToAlignmentConverter.cs" />
+    <Compile Include="Controls\WPF\Converters\StringToVisibilityConverter.cs" />
     <Compile Include="Controls\WPF\DraggablePopup.cs" />
     <Compile Include="Controls\WPF\Navigation\NavigationView.xaml.cs">
       <DependentUpon>NavigationView.xaml</DependentUpon>
@@ -274,6 +275,7 @@
     <Compile Include="Entities\UserEntity.cs" />
     <Compile Include="Exceptions\ConnectServerException.cs" />
     <Compile Include="Exceptions\LoginException.cs" />
+    <Compile Include="Exceptions\SignupException.cs" />
     <Compile Include="ListMaps.cs">
       <SubType>Form</SubType>
     </Compile>

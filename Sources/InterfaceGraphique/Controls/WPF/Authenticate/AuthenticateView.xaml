@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:wpf="clr-namespace:InterfaceGraphique.Controls.WPF"
+             xmlns:convert="clr-namespace:InterfaceGraphique.Controls.WPF.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="400">
     <UserControl.Resources>
@@ -33,7 +34,7 @@
                     <TextBox x:Name="Username" Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding InputsEnabled}" Background="Transparent" BorderThickness="0" MaxLength="16"/>
                 </Border>
             </Grid>
-            <TextBlock HorizontalAlignment="Center" Margin="0,0,0,10" TextWrapping="Wrap" Text="{Binding UsernameErrMsg}" VerticalAlignment="Top" Foreground="Red" FontSize="18"/>
+            <TextBlock HorizontalAlignment="Center" Margin="0,0,0,10" TextWrapping="Wrap" Text="{Binding UsernameErrMsg}" VerticalAlignment="Top" Foreground="Red" FontSize="18" Visibility="{Binding UsernameErrMsg, Converter={convert:StringToVisibilityConverter}, ConverterParameter=True}"/>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -44,7 +45,7 @@
                     <PasswordBox x:Name="Password" wpf:PasswordHelper.Attach="True" wpf:PasswordHelper.Password="{Binding Password, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" IsEnabled="{Binding InputsEnabled}" Background="Transparent" BorderThickness="0" MaxLength="16"/>
                 </Border>
             </Grid>
-            <TextBlock HorizontalAlignment="Center" Margin="0,0,0,10" TextWrapping="Wrap" Text="{Binding PasswordErrMsg}" VerticalAlignment="Top" Foreground="Red" FontSize="18"/>
+            <TextBlock HorizontalAlignment="Center" Margin="0,0,0,10" TextWrapping="Wrap" Text="{Binding PasswordErrMsg}" VerticalAlignment="Top" Foreground="Red" FontSize="18" Visibility="{Binding PasswordErrMsg, Converter={convert:StringToVisibilityConverter}, ConverterParameter=True}"/>
             <Button Content="Se Connecter" HorizontalAlignment="Center" Margin="0,0,0,10" VerticalAlignment="Top" Width="145" Command="{Binding AuthenticateCommand}" IsDefault="True" IsEnabled="{Binding InputsEnabled}" BorderThickness="0"/>
             <Button Content="Créer Compte" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="145" Command="{Binding SignupCommand}" IsEnabled="{Binding InputsEnabled}" Background="#3ccc71" BorderThickness="0"/>
         </StackPanel>

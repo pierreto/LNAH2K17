@@ -13,7 +13,7 @@ namespace AirHockeyServer.Services.ChatServiceServer
         // Should be thread-safe?
         private readonly static Dictionary<int, string> ConnectionsMapping = new Dictionary<int, string>();
         // Should be thread-safe?
-        private static HashSet<string> usernames = new HashSet<string>();
+        private static HashSet<string> channelNames = new HashSet<string>();
 
         private static ObservableCollection<ChannelEntity> channels = new ObservableCollection<ChannelEntity>();
 
@@ -22,19 +22,6 @@ namespace AirHockeyServer.Services.ChatServiceServer
         public ChatHub(IChannelService channelService)
         {
             ChannelService = channelService;
-        }
-
-        public bool Authenticate(string username)
-        {
-            if (usernames.Contains(username))
-            {
-                return false;
-            }
-            else
-            {
-                usernames.Add(username);
-                return true;
-            }
         }
 
         public void Subscribe(int userId)
@@ -66,10 +53,19 @@ namespace AirHockeyServer.Services.ChatServiceServer
 
         public async Task<ChannelEntity> CreateChannel(ChannelEntity channel)
         {
-            ChannelEntity channelCreated = await this.ChannelService.CreateChannel(channel);
-            channels.Add(channelCreated);
-            await Groups.Add(Context.ConnectionId, channel.Name);
-            return channel;
+            if (channelNames.Contains(channel.Name))
+            {
+                return null;
+            }
+            else
+            {
+                //TODO: Peut-etre pas necessaire d'avoir les nom et les canaux... map? 
+                channelNames.Add(channel.Name);
+                ChannelEntity channelCreated = await this.ChannelService.CreateChannel(channel);
+                channels.Add(channelCreated);
+                await Groups.Add(Context.ConnectionId, channel.Name);
+                return channel;
+            }
         }
 
         public async Task<ChannelEntity> JoinChannel(string channelName)
@@ -82,14 +78,6 @@ namespace AirHockeyServer.Services.ChatServiceServer
         public Task LeaveRoom(string roomName)
         {
             return Groups.Remove(Context.ConnectionId, roomName);
-        }
-
-        public void Disconnect(string username)
-        {
-            if (usernames.Contains(username))
-            {
-                usernames.Remove(username);
-            }
         }
     }
 }

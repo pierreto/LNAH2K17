@@ -168,18 +168,23 @@ namespace InterfaceGraphique.Controls.WPF.Signup
                 if (response.IsSuccessStatusCode)
                 {
                     int userId = response.Content.ReadAsAsync<int>().Result;
+
+                    //On set l'instance statique du user.
                     User.Instance.UserEntity = new UserEntity { Id = userId, Username = signupEntity.Username };
                     User.Instance.IsConnected = true;
+
                     await chatHub.InitializeChat();
-                    Program.InitAfterConnection();
+
+                    //On reset le nom d'usagermle mot de passe et la confirmation (Au cas ou il fait un retour a l'arriere ou deconnexion)
                     Username = Password = ConfirmPassword = "";
+
+                    //On initie tous les formes qui on besoin de savoir si on est en mode en ligne
+                    Program.InitAfterConnection();
                     Program.FormManager.CurrentForm = Program.MainMenu;
                 }
                 else
                 {
                     var res = response.Content.ReadAsAsync<string>().Result;
-                    //response.EnsureSuccessStatusCode();
-                    // return URI of the created resource.
                     UsernameErrMsg = res;
                 }
                 return response.Headers.Location;

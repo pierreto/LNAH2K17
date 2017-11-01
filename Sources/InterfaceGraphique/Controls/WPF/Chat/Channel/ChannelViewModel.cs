@@ -7,6 +7,7 @@ using System.Windows.Input;
 using Microsoft.Practices.Unity;
 using InterfaceGraphique.Entities;
 using InterfaceGraphique.CommunicationInterface;
+using System.Text.RegularExpressions;
 
 namespace InterfaceGraphique.Controls.WPF.Chat.Channel
 {
@@ -21,6 +22,7 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
 
         private bool isOpenOptions;
 
+        private string channelErrMsg;
         #endregion
 
         #region Public Properties
@@ -29,9 +31,17 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
             get { return name; }
             set
             {
-                if (name == value) return;
-                name = value;
-                OnPropertyChanged("Name");
+                if (name != value && value != "")
+                {
+                    ChannelErrMsg = "";
+                    name = value;
+                    this.OnPropertyChanged();
+                }
+                else if (value == "")
+                {
+                    name = value;
+                    this.OnPropertyChanged();
+                }
             }
         }
 
@@ -57,6 +67,11 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
             }
         }
 
+        public string ChannelErrMsg
+        {
+            get { return channelErrMsg; }
+            set { channelErrMsg = value; OnPropertyChanged(nameof(ChannelErrMsg)); }
+        }
         // This will determine if no channel is selected (After Delete)
         public bool ChannelSelected
         {
@@ -115,7 +130,7 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
             {
                 if (createChannelCommand == null)
                 {
-                    createChannelCommand = new RelayCommand(CreateChannel);
+                    createChannelCommand = new RelayCommandAsync(CreateChannel);
                 }
                 return createChannelCommand;
             }
@@ -199,8 +214,12 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
             }
         }
 
-        private void CreateChannel()
+        private async Task CreateChannel()
         {
+            //Valider le nom
+            if (!ValidChannelName()) return;
+            //return si nom invalide
+
             ChannelEntity cE = new ChannelEntity() { Name = Name };
             ChatListItemViewModel clivm = new ChatListItemViewModel(cE);
             Program.unityContainer.Resolve<ChatListViewModel>().Items.Add(clivm);
@@ -220,7 +239,7 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
             clivm.IsSelected = true;
             OnPropertyChanged("ChannelSelected");
 
-            chatHub.CreateChannel(cE);
+            ChannelErrMsg = await chatHub.CreateChannel(cE);
         }
 
         private void DeleteChannel()
@@ -252,6 +271,25 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
             ChannelEntity cE = await chatHub.JoinChannel("Secondaire");
             Program.unityContainer.Resolve<ChatListViewModel>().Items.Add(new ChatListItemViewModel(cE));
             Program.unityContainer.Resolve<ChatListViewModel>().OnPropertyChanged("Items");
+        }
+        #endregion
+
+        #region Private Methods
+        private bool ValidChannelName()
+        {
+            bool valid = true;
+            Regex rgx = new Regex(@"^[a-zA-Z0-9_.-]*$");
+            if (Name == "" || Name == null)
+            {
+                ChannelErrMsg = "Nom requis";
+                valid = false;
+            }
+            else if (!rgx.IsMatch(Name))
+            {
+                ChannelErrMsg = "Nom invalide";
+                valid = false;
+            }
+            return valid;
         }
         #endregion
 

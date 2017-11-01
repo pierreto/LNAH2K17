@@ -23,22 +23,16 @@ namespace InterfaceGraphique.CommunicationInterface
             await chatHubProxy.Invoke("Subscribe", User.Instance.UserEntity.Id);
 
             // Inscription à l'event "ChatMessageReceived". Quand l'event est lancé du serveur on veut print le message:
+            //Message envoye pour le canal principal
             chatHubProxy.On<ChatMessage>("ChatMessageReceived", message =>
             {
                 NewMessage?.Invoke(message);
             });
-
+            //On distingue un message recu d'un canal
             chatHubProxy.On<ChatMessage, ChannelEntity>("ChatMessageReceivedChannel", (message, cE) =>
             {
                 NewMessageFromChannel?.Invoke(message, cE);
             });
-        }
-
-        public async Task<bool> AuthenticateUser()
-        {
-            var authentication = chatHubProxy.Invoke<bool>("Authenticate", User.Instance.UserEntity.Username);
-            await authentication;
-            return authentication.Result;
         }
 
         public async void SendMessage(ChatMessage message)
@@ -48,9 +42,11 @@ namespace InterfaceGraphique.CommunicationInterface
             await chatHubProxy.Invoke("SendBroadcast", message);
         }
 
-        public async void CreateChannel(ChannelEntity channelEntity)
+        public async Task<string> CreateChannel(ChannelEntity channelEntity)
         {
-            await chatHubProxy.Invoke<ChannelEntity>("CreateChannel", channelEntity);
+            ChannelEntity cE = await chatHubProxy.Invoke<ChannelEntity>("CreateChannel", channelEntity);
+            if(cE == null) { return "Canal déjà crée"; }
+            return "";
         }
 
         public async Task<ChannelEntity> JoinChannel(string channelName)
@@ -74,7 +70,7 @@ namespace InterfaceGraphique.CommunicationInterface
 
         public async Task Logout()
         {
-           await chatHubProxy?.Invoke("Disconnect", User.Instance.UserEntity.Username);
+            //
         }
 
     }
