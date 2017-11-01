@@ -324,6 +324,12 @@
     <ClCompile Include="VisitorByUUID.cpp">
       <Filter>Source Files\Arbre\Visiteurs</Filter>
     </ClCompile>
+    <ClCompile Include="OnlineUser.cpp">
+      <Filter>Source Files\Arbre</Filter>
+    </ClCompile>
+    <ClCompile Include="UserManager.cpp">
+      <Filter>Source Files\Arbre</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\FacadeModele.h">
@@ -547,6 +553,12 @@
     </ClInclude>
     <ClInclude Include="VisitorByUUID.h">
       <Filter>Header Files\Arbre\Visiteurs</Filter>
+    </ClInclude>
+    <ClInclude Include="OnlineUser.h">
+      <Filter>Header Files\Arbre</Filter>
+    </ClInclude>
+    <ClInclude Include="UserManager.h">
+      <Filter>Header Files\Arbre</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

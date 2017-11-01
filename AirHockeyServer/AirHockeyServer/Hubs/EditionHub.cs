@@ -1,4 +1,5 @@
-﻿using AirHockeyServer.Entities;
+﻿using System.Collections.Generic;
+using AirHockeyServer.Entities;
 using AirHockeyServer.Entities.EditionCommand;
 using AirHockeyServer.Entities.Messages;
 using AirHockeyServer.Entities.Messages.Edition;
@@ -9,16 +10,17 @@ namespace AirHockeyServer.Hubs
 {
     public class EditionHub : Hub
     {
+        private Dictionary<string, List<OnlineUser>> users;
 
-        public void JoinPublicRoom(string username, MapEntity map)
+        public List<OnlineUser> JoinPublicRoom(string username, MapEntity map)
         {
-            Groups.Add(Context.ConnectionId, ObtainEditionGroupIdentifier(map.Id));
-            Clients.Group(ObtainEditionGroupIdentifier((int)map.Id), Context.ConnectionId);
+            Groups.Add(Context.ConnectionId, ObtainEditionGroupIdentifier((int) map.Id));
+            Clients.Group(ObtainEditionGroupIdentifier((int) map.Id), Context.ConnectionId).NewUser(username, "#ff0000");
+            return users[ObtainEditionGroupIdentifier((int) map.Id)];
         }
         public void JoinPrivateRoom(string username, MapEntity map, string password)
         {
             //Password validation
-
 
 
             Groups.Add(Context.ConnectionId, ObtainEditionGroupIdentifier((int)map.Id));

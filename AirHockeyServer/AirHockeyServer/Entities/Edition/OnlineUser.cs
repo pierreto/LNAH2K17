@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AirHockeyServer.Entities.EditionCommand
 {
-    interface OnlineUser
+    public class OnlineUser
     {
     }
 }
