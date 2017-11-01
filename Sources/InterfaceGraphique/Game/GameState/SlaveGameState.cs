@@ -52,6 +52,10 @@ namespace InterfaceGraphique.Game.GameState
         {
             FonctionsNatives.animer(tempsInterAffichage);
             FonctionsNatives.dessinerOpenGL();
+
+            float[] slavePosition = new float[3];
+            FonctionsNatives.getSlavePosition(slavePosition);
+            this.gameHub.SendSlavePosition(slavePosition);
         }
 
     
@@ -68,9 +72,7 @@ namespace InterfaceGraphique.Game.GameState
         {
 
                 FonctionsNatives.opponentMouseMove(e.Location.X, e.Location.Y);
-                float[] slavePosition = new float[3];
-                FonctionsNatives.getSlavePosition(slavePosition);
-                this.gameHub.SendSlavePosition(slavePosition);
+                
         }
         ////////////////////////////////////////////////////////////////////////
         ///
