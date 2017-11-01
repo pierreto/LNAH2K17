@@ -315,6 +315,7 @@
     <Compile Include="Services\MatchMaking\MatchMaker.cs" />
     <Compile Include="Services\MatchMaking\TournamentMatchMaker.cs" />
     <Compile Include="Services\MatchMaking\TournamentMatchMakerService.cs" />
+    <Compile Include="Services\PlayerStatsService.cs" />
     <Compile Include="Services\TournamentService.cs" />
     <Compile Include="Utilities\HttpResponseGenerator.cs" />
     <Compile Include="Services\SignupService.cs" />
