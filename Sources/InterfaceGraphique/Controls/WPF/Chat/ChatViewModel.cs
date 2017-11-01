@@ -7,9 +7,7 @@ using Microsoft.Practices.Unity;
 using InterfaceGraphique.Controls.WPF.Chat.Channel;
 using System.Linq;
 using System.Windows;
-using System;
 using System.ComponentModel;
-using System.Windows.Forms;
 
 namespace InterfaceGraphique.Controls.WPF.Chat
 {

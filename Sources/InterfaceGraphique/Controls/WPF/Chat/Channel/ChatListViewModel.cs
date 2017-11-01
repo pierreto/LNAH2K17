@@ -1,17 +1,31 @@
 ﻿using InterfaceGraphique.Entities;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
 using Microsoft.Practices.Unity;
 
 namespace InterfaceGraphique.Controls.WPF.Chat.Channel
 {
     public class ChatListViewModel : ViewModelBase
     {
+        #region Private Properties
+        private ObservableCollection<ChatListItemViewModel> items;
+        #endregion
+
+        #region Public Properties
+        public ObservableCollection<ChatListItemViewModel> Items
+        {
+            get
+            {
+                return items;
+            }
+            set
+            {
+                items = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+
+        #region Constructor
         public ChatListViewModel()
         {
             ChannelEntity cE = new ChannelEntity() { Name = "Principal", IsSelected = true };
@@ -25,20 +39,7 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
                 }
             };
         }
-
-        private ObservableCollection<ChatListItemViewModel> items;
-        public ObservableCollection<ChatListItemViewModel> Items
-        {
-            get
-            {
-                return items;
-            }
-            set
-            {
-                items = value;
-                OnPropertyChanged();
-            }
-        }
+        #endregion
 
         public override void InitializeViewModel()
         {
