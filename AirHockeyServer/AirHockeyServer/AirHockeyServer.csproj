@@ -249,6 +249,7 @@
     <Compile Include="Entities\LoginEntity.cs" />
     <Compile Include="Entities\SignupEntity.cs" />
     <Compile Include="Entities\PlayersMatchEntity.cs" />
+    <Compile Include="Entities\StatsEntity.cs" />
     <Compile Include="Entities\TournamentEntity.cs" />
     <Compile Include="Entities\UserEntity.cs" />
     <Compile Include="Events\EventManagers\GameManager.cs" />
@@ -270,10 +271,13 @@
     <Compile Include="Hubs\TournamentWaitingRoomHub.cs" />
     <Compile Include="Manager\GameManager.cs" />
     <Compile Include="Mapping\MapperManager.cs" />
+    <Compile Include="Pocos\GamePoco.cs" />
     <Compile Include="Pocos\LoginPoco.cs" />
     <Compile Include="Pocos\MapPoco.cs" />
     <Compile Include="Pocos\PasswordPoco.cs" />
     <Compile Include="Pocos\Poco.cs" />
+    <Compile Include="Pocos\StatsPoco.cs" />
+    <Compile Include="Pocos\TournamentPoco.cs" />
     <Compile Include="Pocos\UserPoco.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ChannelRepository.cs" />
@@ -284,7 +288,9 @@
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Repositories\LoginRepository.cs" />
     <Compile Include="Repositories\MapRepository.cs" />
+    <Compile Include="Repositories\PlayerStatesRepository.cs" />
     <Compile Include="Repositories\Repository.cs" />
+    <Compile Include="Repositories\TournamentRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Repositories\PasswordRepository.cs" />
     <Compile Include="Services\ChannelService.cs" />

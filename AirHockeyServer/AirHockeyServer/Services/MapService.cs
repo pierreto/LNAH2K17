@@ -10,6 +10,7 @@ using AirHockeyServer.DatabaseCore;
 
 namespace AirHockeyServer.Services
 {
+
     ///////////////////////////////////////////////////////////////////////////////
     /// @file MapService.cs
     /// @author Ariane Tourangeau
