@@ -10,11 +10,12 @@ namespace AirHockeyServer.Hubs
     public class EditionHub : Hub
     {
 
-        public void JoinPublicRoom(MapEntity map)
+        public void JoinPublicRoom(string username, MapEntity map)
         {
             Groups.Add(Context.ConnectionId, ObtainEditionGroupIdentifier(map.Id));
+            Clients.Group(ObtainEditionGroupIdentifier(1), Context.ConnectionId);
         }
-        public void JoinPrivateRoom(MapEntity map, string password)
+        public void JoinPrivateRoom(string username, MapEntity map, string password)
         {
             //Password validation
 

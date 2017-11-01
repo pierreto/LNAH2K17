@@ -61,6 +61,7 @@ const std::string FacadeModele::FICHIER_CONFIGURATION{ "configuration.xml" };
 FacadeModele::FacadeModele()
 	: etat_(ModeleEtatSelection::obtenirInstance()), rectangleActif_(false)
 {
+	userManager_ = UserManager();
 }
 
 

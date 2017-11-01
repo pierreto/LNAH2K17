@@ -24,6 +24,7 @@
 #include "rapidjson/filewritestream.h"
 #include "rapidjson/filereadstream.h"
 #include "BoiteEnvironnement.h"
+#include "../UserManager.h"
 
 class NoeudAbstrait;
 class ArbreRenduINF2990;
@@ -162,6 +163,7 @@ public:
    void selectByUUIDS(std::vector<std::string> uuids);
    void moveByUUID(const char* uuid, const glm::vec3 delta);
 
+   UserManager& getUserManager() { return userManager_; }
 
    /// Document rapidJSON
    rapidjson::Document docJSON_;
@@ -209,6 +211,8 @@ private:
    std::string _getMapJson(float coefficients[]);
 
    utilitaire::BoiteEnvironnement* skybox_;
+
+   UserManager userManager_;
 };
 
 
