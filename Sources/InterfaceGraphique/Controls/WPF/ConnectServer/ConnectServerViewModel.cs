@@ -122,7 +122,7 @@ namespace InterfaceGraphique.Controls.WPF.ConnectServer
             catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine("[ConnectServerViewModel.ConnectToServer] " + e.ToString());
-                IpAddressErrMsg = "Adresse IP non rejoinable";
+                IpAddressErrMsg = "Adresse IP non rejoignable";
             }
             finally
             {

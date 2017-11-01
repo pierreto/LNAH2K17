@@ -8,7 +8,7 @@
              xmlns:fa="http://schemas.fontawesome.io/icons/"
              xmlns:wpf="clr-namespace:InterfaceGraphique.Controls.WPF"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="225" d:DesignWidth="300">
     <UserControl.Resources>
         <ResourceDictionary>
             <wpf:ViewModelLocator x:Key="VMLocator" d:IsDataSource="True" />
@@ -30,11 +30,11 @@
                     <Grid.DataContext>
                         <Binding Path="ChannelViewModel" Source="{StaticResource VMLocator}"/>
                     </Grid.DataContext>
+
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-
                     <!-- Top Bar Channels -->
                     <Grid Height="50" Background="DarkGray">
                         <Grid.ColumnDefinitions>
@@ -45,12 +45,13 @@
 
                         <StackPanel Margin="8" Orientation="Horizontal">
                             <Button Content="X" fa:Awesome.Content="Comments" Background="{StaticResource DarkGrayBrush}" BorderThickness="0" Margin="0,0,8,0" Command="{Binding JoinChannelCommand}"/>
-                            <Button Content="X" fa:Awesome.Content="Users" Background="{StaticResource DarkGrayBrush}" BorderThickness="0"/>
+                            <!--<Button Content="X" fa:Awesome.Content="Users" Background="{StaticResource DarkGrayBrush}" BorderThickness="0"/>-->
                             <!--{Binding DataContext.Titre, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl, AncestorLevel=1}}-->
                         </StackPanel>
                         <StackPanel Margin="8" Orientation="Horizontal" Grid.Column="2">
-                            <Button Name="Options" Visibility ="{Binding ChannelSelected, Converter={convert:BooleanToVisibilityConverter}, ConverterParameter=True}" Grid.Column="1" fa:Awesome.Content="EllipsisH" BorderThickness="0" Background="{StaticResource DarkGrayBrush}" Margin="0,0,8,0" Command="{Binding OpenOptionsPopupCommand}"/>
-                            <Button Name="CreateChannel"  Grid.Column="2" fa:Awesome.Content="Plus" BorderThickness="0" Background="{StaticResource AddBrush}" Command="{Binding OpenAddPopupCommand}"/>
+                            <Button Name="Options" Visibility ="{Binding ChannelSelected, Converter={convert:BooleanToVisibilityConverter}, ConverterParameter=True}" fa:Awesome.Content="EllipsisH" BorderThickness="0" Background="{StaticResource DarkGrayBrush}" Margin="0,0,8,0" Command="{Binding OpenOptionsPopupCommand}"/>
+                            <Button Name="CreateChannel"   fa:Awesome.Content="Plus" BorderThickness="0" Background="{StaticResource AddBrush}" Command="{Binding OpenAddPopupCommand}" Margin="0,0,8,0"/>
+                            <Button Name="JoinChannel"  fa:Awesome.Content="ArrowRight" BorderThickness="0" Background="{StaticResource DarkGrayBrush}" Margin="0,0,10,0" Command="{Binding OpenJoinChannelCommand}"/>
                         </StackPanel>
                     </Grid>
                     <!-- Popup for Adding channel -->
@@ -132,7 +133,7 @@
                         </StackPanel>
                     </Border>
                     <!-- Contient la liste de tous les canaux -->
-                    <ContentPresenter Grid.Row="1">
+                    <ContentPresenter Grid.Row="1" Grid.Column="0">
                         <ContentPresenter.DataContext>
                             <Binding Path="ChatListViewModel" Source="{StaticResource VMLocator}"/>
                         </ContentPresenter.DataContext>

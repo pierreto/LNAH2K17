@@ -172,10 +172,15 @@
     <Compile Include="Controls\WPF\Chat\Channel\ChatListItemViewModel.cs" />
     <Compile Include="Controls\WPF\Chat\Channel\ChatListViewModel.cs" />
     <Compile Include="Controls\WPF\Chat\Channel\ActiveChannel.cs" />
+    <Compile Include="Controls\WPF\Chat\Channel\JoinChannelView.xaml.cs">
+      <DependentUpon>JoinChannelView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WPF\Chat\Channel\JoinChannelViewModel.cs" />
     <Compile Include="Controls\WPF\Chat\TestChatView.xaml.cs">
       <DependentUpon>TestChatView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\WPF\Converters\BaseValueConverter.cs" />
+    <Compile Include="Controls\WPF\Converters\BooleanToCollapsedConverter.cs" />
     <Compile Include="Controls\WPF\Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Controls\WPF\Converters\SentByMeToAlignmentConverter.cs" />
     <Compile Include="Controls\WPF\Converters\StringToVisibilityConverter.cs" />
@@ -543,6 +548,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\WPF\Chat\Channel\ChatListItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\WPF\Chat\Channel\JoinChannelView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

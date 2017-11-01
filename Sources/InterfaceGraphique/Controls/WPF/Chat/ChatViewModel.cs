@@ -19,6 +19,7 @@ namespace InterfaceGraphique.Controls.WPF.Chat
         private ChatHub chatHub;
         private TaskFactory ctxTaskFactory;
         private bool docked;
+        private bool joinMenuOpen;
         private int chatTabHeight;
         private string messageTextBox;
         private ChannelEntity currentChannel;
@@ -37,6 +38,18 @@ namespace InterfaceGraphique.Controls.WPF.Chat
             {
                 docked = value;
                 OnPropertyChanged(nameof(Docked));
+            }
+        }
+        public bool JoinMenuOpen
+        {
+            get
+            {
+                return joinMenuOpen;
+            }
+            set
+            {
+                joinMenuOpen = value;
+                OnPropertyChanged(nameof(JoinMenuOpen));
             }
         }
         public int ChatTabHeight
@@ -110,6 +123,7 @@ namespace InterfaceGraphique.Controls.WPF.Chat
         {
             this.chatHub = chatHub;
             docked = true;
+            this.joinMenuOpen = false;
             chatHub.NewMessage += NewMessage;
             chatHub.NewMessageFromChannel += NewMessageFromChannel;
             ctxTaskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());

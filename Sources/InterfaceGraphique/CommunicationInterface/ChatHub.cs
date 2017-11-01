@@ -46,7 +46,7 @@ namespace InterfaceGraphique.CommunicationInterface
         {
             ChannelEntity cE = await chatHubProxy.Invoke<ChannelEntity>("CreateChannel", channelEntity);
             if(cE == null) { return "Canal déjà crée"; }
-            return "";
+            return null;
         }
 
         public async Task<ChannelEntity> JoinChannel(string channelName)
@@ -70,7 +70,7 @@ namespace InterfaceGraphique.CommunicationInterface
 
         public async Task Logout()
         {
-            //
+            //TODO: Leave Room pour tous les canaux de l'utilisateur
         }
 
     }

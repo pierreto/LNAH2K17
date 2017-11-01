@@ -13,7 +13,7 @@ namespace AirHockeyServer.Services.ChatServiceServer
         // Should be thread-safe?
         private readonly static Dictionary<int, string> ConnectionsMapping = new Dictionary<int, string>();
         // Should be thread-safe?
-        private static HashSet<string> channelNames = new HashSet<string>();
+        private static Dictionary<string, int> roomPpl = new Dictionary<string, int>(); 
 
         private static ObservableCollection<ChannelEntity> channels = new ObservableCollection<ChannelEntity>();
 
@@ -53,14 +53,14 @@ namespace AirHockeyServer.Services.ChatServiceServer
 
         public async Task<ChannelEntity> CreateChannel(ChannelEntity channel)
         {
-            if (channelNames.Contains(channel.Name))
+            if (roomPpl.ContainsKey(channel.Name) && roomPpl[channel.Name] > 0)
             {
                 return null;
             }
             else
-            {
-                //TODO: Peut-etre pas necessaire d'avoir les nom et les canaux... map? 
-                channelNames.Add(channel.Name);
+            {   
+                //BroadCastChannelToAll
+                roomPpl[channel.Name] = 1;
                 ChannelEntity channelCreated = await this.ChannelService.CreateChannel(channel);
                 channels.Add(channelCreated);
                 await Groups.Add(Context.ConnectionId, channel.Name);
@@ -72,11 +72,13 @@ namespace AirHockeyServer.Services.ChatServiceServer
         {
             ChannelEntity channelJoined = channels.Where(s => s.Name == channelName).First();
             await Groups.Add(Context.ConnectionId, channelName);
+            roomPpl[channelName]++;
             return channelJoined;
         }
 
         public Task LeaveRoom(string roomName)
         {
+            roomPpl[roomName]--;
             return Groups.Remove(Context.ConnectionId, roomName);
         }
     }

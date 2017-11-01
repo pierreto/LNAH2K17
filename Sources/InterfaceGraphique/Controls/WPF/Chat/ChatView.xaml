@@ -9,6 +9,7 @@
              xmlns:communicationInterface="clr-namespace:InterfaceGraphique.CommunicationInterface"
              xmlns:wpf="clr-namespace:InterfaceGraphique.Controls.WPF"
              xmlns:interfaceGraphique="clr-namespace:InterfaceGraphique"
+             xmlns:channel="clr-namespace:InterfaceGraphique.Controls.WPF.Chat.Channel"
              xmlns:entities="clr-namespace:InterfaceGraphique.Entities"
              xmlns:convert="clr-namespace:InterfaceGraphique.Controls.WPF.Converters"
              xmlns:fa="http://schemas.fontawesome.io/icons/"
@@ -17,15 +18,8 @@
              >
     <UserControl.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries >
-                <ResourceDictionary Source="../Styles/Colors.xaml" />
-                <ResourceDictionary Source="/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
-                <ResourceDictionary Source="/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
-                <ResourceDictionary Source="/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Blue.xaml" />
-                <ResourceDictionary Source="/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Green.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-
             <wpf:ViewModelLocator x:Key="VMLocator" d:IsDataSource="True" />
+            
             <!-- Template d'un message -->
             <DataTemplate x:Key="MessagesDataTemplate" DataType="entities:ChatMessage" >
 
@@ -68,6 +62,9 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
+            <channel:JoinChannelView Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" Width="225" HorizontalAlignment="Left" Panel.ZIndex="100" Visibility="{Binding JoinMenuOpen, Converter={convert:BooleanToCollapsedConverter}, ConverterParameter=false}">
+                
+            </channel:JoinChannelView>
 
             <Grid HorizontalAlignment="Stretch" Background="{StaticResource UltraDarkGrayBrush}">
                 <TextBlock Text="{Binding CurrentChannel.Name}" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource DarkGrayBrush}" FontSize="40" FontWeight="Bold"></TextBlock>

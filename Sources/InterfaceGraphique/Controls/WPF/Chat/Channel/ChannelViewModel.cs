@@ -187,6 +187,19 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
                 return closeOptionsCommand;
             }
         }
+
+        private ICommand openJoinChannelCommand;
+        public ICommand OpenJoinChannelCommand
+        {
+            get
+            {
+                if (openJoinChannelCommand == null)
+                {
+                    openJoinChannelCommand = new RelayCommand(ToggleJoinChannel);
+                }
+                return openJoinChannelCommand;
+            }
+        }
         #endregion
 
         #region Command Methods
@@ -198,6 +211,9 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
             }
             else
             {
+                //Refresh if there were errors remaining when popup closed
+                Name = "";
+                ChannelErrMsg = "";
                 IsOpenAdd = true;
             }
         }
@@ -221,25 +237,29 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
             //return si nom invalide
 
             ChannelEntity cE = new ChannelEntity() { Name = Name };
-            ChatListItemViewModel clivm = new ChatListItemViewModel(cE);
-            Program.unityContainer.Resolve<ChatListViewModel>().Items.Add(clivm);
-            OnPropertyChanged("Items");
-            ToggleAddPopup();
-            Name = "";
 
-            //Make sure the previously selected channel is unselected
-            foreach (var item in Program.unityContainer.Resolve<ChatListViewModel>().Items)
-            {
-                item.IsSelected = false;
-            }
-
-            //Set to current channel
-            var clivmList = Program.unityContainer.Resolve<ChatListViewModel>().Items;
-            ActiveChannel.Instance.ChannelEntity = clivmList.Where(s => s.ChannelEntity == cE).First().ChannelEntity;
-            clivm.IsSelected = true;
-            OnPropertyChanged("ChannelSelected");
-
+            //On cree le canal seulement s'il n'existe pas deja
             ChannelErrMsg = await chatHub.CreateChannel(cE);
+            if(ChannelErrMsg == null)
+            {
+                ChatListItemViewModel clivm = new ChatListItemViewModel(cE);
+                Program.unityContainer.Resolve<ChatListViewModel>().Items.Add(clivm);
+                OnPropertyChanged("Items");
+                ToggleAddPopup();
+                Name = "";
+
+                //Make sure the previously selected channel is unselected
+                foreach (var item in Program.unityContainer.Resolve<ChatListViewModel>().Items)
+                {
+                    item.IsSelected = false;
+                }
+
+                //Set to current channel
+                var clivmList = Program.unityContainer.Resolve<ChatListViewModel>().Items;
+                ActiveChannel.Instance.ChannelEntity = clivmList.Where(s => s.ChannelEntity == cE).First().ChannelEntity;
+                clivm.IsSelected = true;
+                OnPropertyChanged("ChannelSelected");
+            }
         }
 
         private void DeleteChannel()
@@ -271,6 +291,12 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
             ChannelEntity cE = await chatHub.JoinChannel("Secondaire");
             Program.unityContainer.Resolve<ChatListViewModel>().Items.Add(new ChatListItemViewModel(cE));
             Program.unityContainer.Resolve<ChatListViewModel>().OnPropertyChanged("Items");
+        }
+
+        private void ToggleJoinChannel()
+        {
+            Program.unityContainer.Resolve<ChatViewModel>().JoinMenuOpen ^= true;
+            Program.unityContainer.Resolve<ChatViewModel>().OnPropertyChanged("JoinMenuOpen");
         }
         #endregion
 
