@@ -15,9 +15,9 @@ namespace AirHockeyServer.Services.ChatServiceServer
 
         public IChannelService ChannelService { get; }
 
-        public ChatHub(IChannelService channelService)
+        public ChatHub()
         {
-            ChannelService = channelService;
+            ChannelService = new ChannelService();
         }
 
         public bool Authenticate(string username)

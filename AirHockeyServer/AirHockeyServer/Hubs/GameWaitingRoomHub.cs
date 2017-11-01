@@ -33,9 +33,9 @@ namespace AirHockeyServer.Hubs
         /// @return Aucune (Constructeur).
         ///
         ////////////////////////////////////////////////////////////////////////
-        public GameWaitingRoomHub(IGameService gameService)
+        public GameWaitingRoomHub()
         {
-            GameService = gameService;
+            GameService = new GameService();
         }
         
         /// @fn void JoinGame(UserEntity user)
