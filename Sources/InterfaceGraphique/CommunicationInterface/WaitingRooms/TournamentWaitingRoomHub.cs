@@ -132,10 +132,6 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
                         }
 
                     }));
-
-                // start tournament
-
-                //Program.FormManager.CurrentForm = Program.FormManager;
             });
 
             WaitingRoomProxy.On<TournamentEntity>("StartFinal", tournament =>
@@ -167,7 +163,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
                 }
                 else
                 {
-                    // you lost
+                    Program.FormManager.CurrentForm = Program.MainMenu;
                 }
             });
 
