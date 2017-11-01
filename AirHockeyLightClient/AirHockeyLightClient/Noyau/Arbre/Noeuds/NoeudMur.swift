@@ -10,12 +10,6 @@
 
 import SceneKit
 
-// TODO : Déplacer dans utilitaire
-struct BoiteEnglobante {
-    var coinMin: GLKVector3?
-    var coinMax: GLKVector3?
-}
-
 ///////////////////////////////////////////////////////////////////////////
 /// @class NoeudMur
 /// @brief Classe pour afficher un point de contrôle
@@ -25,12 +19,13 @@ struct BoiteEnglobante {
 ///////////////////////////////////////////////////////////////////////////
 class NoeudMur : NoeudCommun {
 
-    private var collider: BoiteEnglobante?
+    private var collider: SCNNodeHelper.BoiteEnglobante?
     
     /// Constructeur
     required init(type: String, geometry: SCNGeometry) {
         super.init(type: type, geometry: geometry)
-        self.collider = BoiteEnglobante(coinMin: GLKVector3.init(v: (0, 0, 0)), coinMax: GLKVector3.init(v : (0,0,0)));
+        self.collider = SCNNodeHelper.BoiteEnglobante(coinMin: GLKVector3.init(v: (0, 0, 0)),
+                                                      coinMax: GLKVector3.init(v: (0, 0, 0)));
     }
     
     /// Le point de contrôle a un modèle obj
@@ -42,7 +37,7 @@ class NoeudMur : NoeudCommun {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func obtenirCollider() -> BoiteEnglobante {
+    func obtenirCollider() -> SCNNodeHelper.BoiteEnglobante {
         return self.collider!;
     }
     

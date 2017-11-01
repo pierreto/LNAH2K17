@@ -38,8 +38,8 @@
         <Grid Margin="0,0,0,40" Grid.RowSpan="2">
             <Grid Margin="5,57,5,272">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition   Width="*" />
-
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
@@ -48,6 +48,7 @@
                 <TextBlock HorizontalAlignment="Center" Grid.Column="1" Text="MapName" Foreground="#DDFFFFFF" Margin="0,0,7,0" />
                 <TextBlock HorizontalAlignment="Center" Grid.Column="2" Text="Number Of Player" Foreground="#DDFFFFFF" />
                 <TextBlock HorizontalAlignment="Center" Grid.Column="3" Text="Creator" Foreground="#DDFFFFFF" />
+                <TextBlock HorizontalAlignment="Center" Grid.Column="4" Text="Id" Foreground="#DDFFFFFF" />
 
             </Grid>
             <ListBox ItemsSource="{Binding OnlineEditedMapInfos}" 
@@ -64,7 +65,7 @@
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
-
+                                <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
@@ -73,6 +74,7 @@
                             <TextBlock HorizontalAlignment="Center" Grid.Column="1" Text="{Binding MapName}" Foreground="#DDFFFFFF" Margin="0,0,0,0" />
                             <TextBlock HorizontalAlignment="Center" Grid.Column="2" Text="{Binding CurrentNumberOfPlayer, StringFormat= ' {0}/4'}" Foreground="#DDFFFFFF" />
                             <TextBlock HorizontalAlignment="Center" Grid.Column="3" Text="{Binding Creator}" Foreground="#DDFFFFFF" />
+                            <TextBlock HorizontalAlignment="Center" Grid.Column="4" Text="{Binding Id}" Foreground="#DDFFFFFF" />
 
                         </Grid>
                     </DataTemplate>

@@ -45,6 +45,16 @@ class NoeudPointControl : NoeudCommun {
     required init(type: String, geometry: SCNGeometry) {
         super.init(type: type, geometry: geometry)
         self.symetrie = GLKVector3(v: (1.0, 1.0, 1.0))
+        
+        // Un point de contrôle n'est pas sélectionnable par défaut
+        self.assignerEstSelectionnable(selectionnable: false)
+        
+        // Couleur du point de contrôle par défaut
+        self.assignerDefaultColor(color: self.geometry?.firstMaterial?.diffuse.contents as! UIColor)
+        
+        // Couleur du point de contrôle lorsqu'il est sélectionnable
+        let selectionnableColor = UIColor(red: 1.0, green: 85.0/255.0, blue: 82.0/255.0, alpha: 1.0)
+        self.assignerSelectionnableColor(color: selectionnableColor)
     }
     
     /// Le point de contrôle a un modèle obj

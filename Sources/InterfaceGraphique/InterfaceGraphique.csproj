@@ -222,6 +222,7 @@
     <Compile Include="Editor\EditorState\AbstractEditorState.cs" />
     <Compile Include="Editor\EditorState\OfflineEditorState.cs" />
     <Compile Include="Editor\EditorState\OnlineEditorState.cs" />
+    <Compile Include="Editor\MapManager.cs" />
     <Compile Include="Editor\OpenPrivateMapForm.cs">
       <SubType>Form</SubType>
     </Compile>

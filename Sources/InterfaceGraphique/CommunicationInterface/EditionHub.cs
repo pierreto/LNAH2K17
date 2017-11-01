@@ -28,7 +28,6 @@ namespace InterfaceGraphique.CommunicationInterface
         public void JoinPublicRoom(MapEntity mapEntity)
         {
             this.map = mapEntity;
-            mapEntity.Id = 1;
             hubProxy.Invoke("JoinPublicRoom", mapEntity);
 
             hubProxy.On<string>("NewCommand", command =>

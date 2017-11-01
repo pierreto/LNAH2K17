@@ -16,7 +16,7 @@
 /// @author Mikael Ferland et Pierre
 /// @date 2017-10-10
 ///////////////////////////////////////////////////////////////////////////
-class VisiteurSelectionnable : VisiteurAbstrait {
+class VisiteurSelectionnable: VisiteurAbstrait {
 
     /// Type du noeud
     private var type: String
@@ -40,7 +40,7 @@ class VisiteurSelectionnable : VisiteurAbstrait {
         self.selectionnable = selectionnable
     }
     
-    /// Visiter un accéléateur pour le rendre sélectionnable
+    /// Visiter un accélérateur pour le rendre sélectionnable
     func visiterAccelerateur(noeud: NoeudAccelerateur) {
         self.implementationDefaut(noeud: noeud)
     }

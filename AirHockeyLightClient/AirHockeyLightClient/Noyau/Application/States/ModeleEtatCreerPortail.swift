@@ -65,31 +65,28 @@ class ModeleEtatCreerPortail: ModeleEtat {
     
     /// Évènement appelé lorsque l'utilisateur tap sur l'écran
     override func tapGesture(point: CGPoint) {
-        // TODO : Vérifier que c'est au-dessus de la table tapOverTable()
-        //if (mouseDownL_ && isAClick() && mouseOverTable()) {
-        
         super.tapGesture(point: point)
         
         // Création du noeud
-        let noeud = FacadeModele.instance.obtenirArbreRendu().creerNoeud(typeNouveauNoeud: ArbreRendu.instance.NOM_PORTAIL) as! NoeudPortail
+        let arbre = FacadeModele.instance.obtenirArbreRendu()
+        let noeud = arbre.creerNoeud(typeNouveauNoeud: ArbreRendu.instance.NOM_PORTAIL) as! NoeudPortail
             
         // Déplacement du noeud
         // Transformation du point dans l'espace virtuelle
-        let arbre = FacadeModele.instance.obtenirArbreRendu()
-        
         let convertedPoint = MathHelper.GetHitTestSceneViewCoordinates(point: self.position)
         
         if convertedPoint != nil {
-        let position = GLKVector3.init(v: ((convertedPoint?.x)!, (convertedPoint?.y)!, (convertedPoint?.z)!))
+            let position = GLKVector3.init(v: ((convertedPoint?.x)!, (convertedPoint?.y)!, (convertedPoint?.z)!))
             noeud.assignerPositionRelative(positionRelative: position)
         
             // Ajout du noeud à l'arbre de rendu
-            arbre.addChildNode(noeud)
+            let table = arbre.childNode(withName: arbre.NOM_TABLE, recursively: true) as! NoeudTable
+            table.addChildNode(noeud)
             
             // Etat de l'operation
             if (self.premierNoeud == nil) {
                 self.premierNoeud = noeud
-                self.premierNoeud?.effetFantome(activer: true)
+                self.premierNoeud?.appliquerMaterielSelection(activer: true)
                 FacadeModele.instance.obtenirVue().editorHUDScene?.showCancelButton(activer: true)
             }
             else {
@@ -99,7 +96,7 @@ class ModeleEtatCreerPortail: ModeleEtat {
                     // Link portal together
                     noeud.assignerOppose(portail: self.premierNoeud!);
                     self.premierNoeud?.assignerOppose(portail: noeud);
-                    self.premierNoeud?.effetFantome(activer: false);
+                    self.premierNoeud?.appliquerMaterielSelection(activer: false)
                     self.premierNoeud = nil;
                     FacadeModele.instance.obtenirVue().editorHUDScene?.showCancelButton(activer: false)
                 }
@@ -108,6 +105,10 @@ class ModeleEtatCreerPortail: ModeleEtat {
                     noeud.removeFromParentNode()
                 }
             }
+        }
+        else {
+            // Afficher un message d'erreur
+            FacadeModele.instance.obtenirVue().editorNotificationScene?.showErrorOutOfBoundMessage(activer: true)
         }
     }
     
