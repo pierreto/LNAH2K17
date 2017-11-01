@@ -1,5 +1,6 @@
 ﻿using AirHockeyServer.Entities;
 using AirHockeyServer.Hubs;
+using AirHockeyServer.Manager;
 using AirHockeyServer.Services;
 using AirHockeyServer.Services.MatchMaking;
 using Microsoft.AspNet.SignalR;
@@ -20,22 +21,22 @@ namespace AirHockeyServer.Events.EventManagers
         protected TournamentEntity Tournament { get; set; }
 
         protected IHubContext HubContext { get; set; }
+
         public IGameService GameService { get; }
+
+        public TournamentManager TournamentManager { get; }
 
         public TournamentWaitingRoomEventManager(IGameService gameService)
         {
             this.RemainingTime = new ConcurrentDictionary<int, int>();
             TournamentMatchMakerService.Instance().OpponentFound += OnOpponentFound;
             HubContext = GlobalHost.ConnectionManager.GetHubContext<TournamentWaitingRoomHub>();
-            GameService = gameService;
+            GameService = new GameService();
+            TournamentManager = new TournamentManager();
         }
 
         protected async void OnOpponentFound(object sender, UserEntity user)
         {
-            if(Tournament?.Players?.Count >= 4)
-            {
-                Tournament = null;
-            }
 
             if (Tournament == null)
             {
@@ -68,8 +69,8 @@ namespace AirHockeyServer.Events.EventManagers
 
                 HubContext.Clients.Group(Tournament.Id.ToString()).TournamentAllOpponentsFound(Tournament);
 
-                System.Timers.Timer timer = CreateTimeoutTimer(Tournament.Id);
-                timer.Start();
+                System.Timers.Timer timer = CreateTimeoutTimer(Tournament);
+                Tournament = null;
             }
 
         }
@@ -108,21 +109,21 @@ namespace AirHockeyServer.Events.EventManagers
         /// les clients du démarrage de la partie
         ///
         ////////////////////////////////////////////////////////////////////////
-        protected void WaitingRoomTimeOut(object source, ElapsedEventArgs e, int tournamentId, System.Timers.Timer timer)
+        protected void WaitingRoomTimeOut(object source, ElapsedEventArgs e, TournamentEntity tournament, System.Timers.Timer timer)
         {
-            if (RemainingTime[tournamentId] < WAITING_TIMEOUT)
+            if (RemainingTime[tournament.Id] < WAITING_TIMEOUT)
             {
-                RemainingTime[tournamentId] += 1000;
-                
-                HubContext.Clients.Group(tournamentId.ToString()).WaitingRoomRemainingTime((WAITING_TIMEOUT - RemainingTime[tournamentId]) / 1000);
+                RemainingTime[tournament.Id] += 1000;
+
+                HubContext.Clients.Group(tournament.Id.ToString()).WaitingRoomRemainingTime((WAITING_TIMEOUT - RemainingTime[tournament.Id]) / 1000);
             }
             else
             {
                 timer.Stop();
                 
                 Tournament.State = TournamentState.SemiFinals;
-                TournamentsManager.Instance().AddTournament(Tournament);
-                HubContext.Clients.Group(tournamentId.ToString()).TournamentStarting(Tournament);
+                TournamentManager.AddTournament(Tournament);
+                HubContext.Clients.Group(tournament.Id.ToString()).TournamentStarting(Tournament);
             }
         }
 
@@ -136,11 +137,11 @@ namespace AirHockeyServer.Events.EventManagers
         /// @return le timer créé
         ///
         ////////////////////////////////////////////////////////////////////////
-        protected System.Timers.Timer CreateTimeoutTimer(int gameId)
+        protected System.Timers.Timer CreateTimeoutTimer(TournamentEntity tournament)
         {
             System.Timers.Timer timer = new System.Timers.Timer();
             timer.Interval = 1000;
-            timer.Elapsed += (timerSender, e) => WaitingRoomTimeOut(timerSender, e, gameId, timer);
+            timer.Elapsed += (timerSender, e) => WaitingRoomTimeOut(timerSender, e, tournament, timer);
 
             return timer;
         }

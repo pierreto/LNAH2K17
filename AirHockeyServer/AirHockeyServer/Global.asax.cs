@@ -34,6 +34,9 @@ namespace AirHockeyServer
             // We make the server running asynchronously so the REST API can
             // still continue to run:
             //await running_server;
+
+            Cache cache = new Cache();
+
         }
 
         public static void Register(HttpConfiguration config)

@@ -1,5 +1,6 @@
 ﻿using AirHockeyServer.Entities;
 using AirHockeyServer.Hubs;
+using AirHockeyServer.Manager;
 using AirHockeyServer.Services;
 using AirHockeyServer.Services.MatchMaking;
 using Microsoft.AspNet.SignalR;
@@ -33,12 +34,15 @@ namespace AirHockeyServer.Events.EventManagers
 
         public IGameService GameService { get; }
 
-        public GameWaitingRoomEventManager(IGameService gameService)
+        public GameManager GameManager { get; private set; }
+
+        public GameWaitingRoomEventManager()
         {
             this.RemainingTime = new ConcurrentDictionary<int, int>();
             GameMatchMakerService.Instance().MatchFoundEvent += OnMatchFound;
             HubContext = GlobalHost.ConnectionManager.GetHubContext<GameWaitingRoomHub>();
-            GameService = gameService;
+            GameService = new GameService();
+            GameManager = new GameManager();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -110,7 +114,7 @@ namespace AirHockeyServer.Events.EventManagers
                 //    game.SelectedMap = new MapEntity();
 
                 //}
-                GameManager.Instance().AddGame(game);
+                GameManager.AddGame(game);
                 HubContext.Clients.Group(game.GameId.ToString()).GameStartingEvent(game);
             }
         }

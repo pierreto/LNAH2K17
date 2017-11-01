@@ -6,40 +6,45 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Timers;
+using AirHockeyServer.Services;
+using AirHockeyServer.Core;
 
-namespace AirHockeyServer.Events.EventManagers
+namespace AirHockeyServer.Manager
 {
-    public class TournamentManagerInstance
+    public class TournamentManager
     {
         private const int FINAL_DELAI = 10000;
 
-        protected Dictionary<int, TournamentEntity> Tournaments { get; set; }
-
         protected Dictionary<int, int> ElapsedTime { get; set; }
+        public PlayerStatsService PlayerStatsService { get; }
+        public GameManager GameManager { get; private set; }
 
-        public TournamentManagerInstance()
+        public TournamentManager()
         {
-            this.Tournaments = new Dictionary<int, TournamentEntity>();
             this.ElapsedTime = new Dictionary<int, int>();
+            PlayerStatsService = new PlayerStatsService();
+            GameManager = new GameManager();
+
+            GameManager.TournamentUpdateNeeded += (sender, game) => UpdateTournamentGames(game, game.TournamentId);
         }
 
         public void AddTournament(TournamentEntity tournament)
         {
-            if (!Tournaments.ContainsKey(tournament.Id))
+            if (!Cache.Tournaments.ContainsKey(tournament.Id))
             {
-                Tournaments[tournament.Id] = tournament;
+                Cache.Tournaments[tournament.Id] = tournament;
 
-                GameManager.Instance().AddGame(tournament.SemiFinals[0]);
-                GameManager.Instance().AddGame(tournament.SemiFinals[1]);
+                GameManager.AddGame(tournament.SemiFinals[0]);
+                GameManager.AddGame(tournament.SemiFinals[1]);
             }
         }
 
         public void UpdateTournamentState(int tournamentId, GameEntity gameUpdated)
         {
             UpdateTournamentGames(gameUpdated, tournamentId);
-            if (Tournaments.ContainsKey(tournamentId))
+            if (Cache.Tournaments.ContainsKey(tournamentId))
             {
-                var tournament = Tournaments[tournamentId];
+                var tournament = Cache.Tournaments[tournamentId];
                 var hub = GlobalHost.ConnectionManager.GetHubContext<TournamentWaitingRoomHub>();
 
                 if (tournament.SemiFinals.All(game => game.GameState == GameState.Ended))
@@ -52,8 +57,8 @@ namespace AirHockeyServer.Events.EventManagers
                         hub.Clients.Group(tournament.Id.ToString()).TournamentFinalResult(tournament);
 
                         // save to DB
-
-                        Tournaments.Remove(tournamentId);
+                        PlayerStatsService.IncrementTournamentsWon(tournament.Winner.Id);
+                        Cache.Tournaments.Remove(tournamentId);
                     }
                     else
                     {
@@ -71,10 +76,10 @@ namespace AirHockeyServer.Events.EventManagers
 
                         tournament.State = TournamentState.Final;
                         tournament.Final = finalGame;
-                        
 
-                        GameManager.Instance().AddGame(finalGame);
-                        Tournaments[tournament.Id] = tournament;
+
+                        GameManager.AddGame(finalGame);
+                        Cache.Tournaments[tournament.Id] = tournament;
 
                         hub.Clients.Group(tournament.Id.ToString()).TournamentSemiFinalResults(tournament);
 
@@ -93,14 +98,14 @@ namespace AirHockeyServer.Events.EventManagers
                     //testFlow(tournament.Id);
                 }
 
-                Tournaments[tournament.Id] = tournament;
+                Cache.Tournaments[tournament.Id] = tournament;
             }
         }
 
         private void testFlow(int tournamentId)
         {
             var hub = GlobalHost.ConnectionManager.GetHubContext<TournamentWaitingRoomHub>();
-            var tournament = Tournaments[tournamentId];
+            var tournament = Cache.Tournaments[tournamentId];
 
             tournament.SemiFinals[1].Winner = tournament.SemiFinals[1].Players[0];
             tournament.SemiFinals[1].GameState = GameState.Ended;
@@ -116,12 +121,12 @@ namespace AirHockeyServer.Events.EventManagers
             finalGame.Master = finalGame.Players[0];
             finalGame.Slave = finalGame.Players[1];
 
-            GameManager.Instance().AddGame(finalGame);
+            GameManager.AddGame(finalGame);
 
             tournament.State = TournamentState.Final;
             tournament.Final = finalGame;
-            
-            Tournaments[tournament.Id] = tournament;
+
+            Cache.Tournaments[tournament.Id] = tournament;
 
             hub.Clients.Group(tournament.Id.ToString()).TournamentSemiFinalResults(tournament);
 
@@ -136,20 +141,20 @@ namespace AirHockeyServer.Events.EventManagers
 
         private void UpdateTournamentGames(GameEntity gameUpdated, int tournamentId)
         {
-            if (Tournaments.ContainsKey(tournamentId))
+            if (Cache.Tournaments.ContainsKey(tournamentId))
             {
                 for (int i = 0; i < 2; i++)
                 {
-                    if (Tournaments[tournamentId].SemiFinals[i].GameId == gameUpdated.GameId)
+                    if (Cache.Tournaments[tournamentId].SemiFinals[i].GameId == gameUpdated.GameId)
                     {
-                        Tournaments[tournamentId].SemiFinals[i] = gameUpdated;
+                        Cache.Tournaments[tournamentId].SemiFinals[i] = gameUpdated;
                         break;
                     }
                 }
 
-                if (Tournaments[tournamentId].Final?.GameId == gameUpdated.GameId)
+                if (Cache.Tournaments[tournamentId].Final?.GameId == gameUpdated.GameId)
                 {
-                    Tournaments[tournamentId].Final = gameUpdated;
+                    Cache.Tournaments[tournamentId].Final = gameUpdated;
                 }
             }
         }
@@ -166,5 +171,6 @@ namespace AirHockeyServer.Events.EventManagers
                 hub.Clients.Group(tournament.Id.ToString()).StartFinal(tournament);
             }
         }
+
     }
 }
