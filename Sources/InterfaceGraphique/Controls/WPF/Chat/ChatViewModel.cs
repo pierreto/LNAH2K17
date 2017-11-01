@@ -260,10 +260,12 @@ namespace InterfaceGraphique.Controls.WPF.Chat
         }
         #endregion
 
+        #region Overwritten Methods
         public override void InitializeViewModel()
         {
             //Empty for the moment
         }
+        #endregion
     }
 
 

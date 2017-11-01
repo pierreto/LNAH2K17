@@ -26,13 +26,13 @@ namespace InterfaceGraphique.Controls.WPF
             {
                 if (backCommand == null)
                 {
-                    backCommand = new RelayCommandAsync(GoBack);
+                    backCommand = new RelayCommand(GoBack);
                 }
                 return backCommand;
             }
         }
 
-        protected virtual async Task GoBack() { }
+        protected virtual void GoBack() { }
 
         public abstract void InitializeViewModel();
 

@@ -255,9 +255,11 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
         }
         #endregion
 
+        #region Overwritten Methods
         public override void InitializeViewModel()
         {
             //throw new NotImplementedException();
         }
+        #endregion
     }
 }
