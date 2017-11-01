@@ -22,15 +22,59 @@ class EditionHub : IBaseHub {
     }
     
     func initializeHub() {
-        self.hubProxy = self.connection?.createHubProxy("EditionHub");
+        self.hubProxy = self.connection?.createHubProxy("EditionHub")
+        self.connection?.addHub(self.hubProxy!)
+        self.connection?.start()
     }
     
     func joinPublicRoom(mapEntity: MapEntity) {
         self.map = mapEntity
+        
+        do {
+            try self.hubProxy?.invoke("JoinPublicRoom", arguments: [mapEntity])
+        }
+        catch {
+            print("Error JoinPublicRoom")
+        }
+        
+        self.hubProxy?.on("NewCommand") { args in
+            print("new command received")
+        }
+    }
+    
+    func joinPrivateRoom(mapEntity: MapEntity, password: String) {
+        self.map = mapEntity
+        
+        do {
+            try self.hubProxy?.invoke("JoinPrivateRoom", arguments: [mapEntity, password])
+        }
+        catch {
+            print("Error JoinPrivateRoom")
+        }
+    }
+    
+    func sendEditorCommand(command: AnyObject) {
+        // TODO : convertir command en json
+        do {
+            try self.hubProxy?.invoke("SendEditionCommand", arguments: ["map_id", "command_string"])
+        }
+        catch {
+            print("Error SendEditionCommand")
+        }
+    }
+    
+    func leaveRoom() {
+        do {
+            try self.hubProxy?.invoke("LeaveRoom", arguments: ["map_id"])
+        }
+        catch {
+            print("Error LeaveRoom")
+        }
     }
     
     func logout() {
         // TODO
+        print("logout")
     }
     
 }
