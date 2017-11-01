@@ -243,12 +243,13 @@
     </Compile>
     <Compile Include="Entities\ChannelEntity.cs" />
     <Compile Include="Entities\ChatMessage.cs" />
-    <Compile Include="Entities\EditonCommand\AbstractEditionCommand.cs" />
-    <Compile Include="Entities\EditonCommand\BoostCommand.cs" />
-    <Compile Include="Entities\EditonCommand\MoveCommand.cs" />
-    <Compile Include="Entities\EditonCommand\PortalCommand.cs" />
-    <Compile Include="Entities\EditonCommand\SelectionCommand.cs" />
-    <Compile Include="Entities\EditonCommand\WallCommand.cs" />
+    <Compile Include="Entities\Editor\EditonCommand\AbstractEditionCommand.cs" />
+    <Compile Include="Entities\Editor\EditonCommand\BoostCommand.cs" />
+    <Compile Include="Entities\Editor\EditonCommand\MoveCommand.cs" />
+    <Compile Include="Entities\Editor\EditonCommand\PortalCommand.cs" />
+    <Compile Include="Entities\Editor\EditonCommand\SelectionCommand.cs" />
+    <Compile Include="Entities\Editor\EditonCommand\WallCommand.cs" />
+    <Compile Include="Entities\Editor\OnlineUser.cs" />
     <Compile Include="Entities\GameDataMessage.cs" />
     <Compile Include="Entities\GameEntity.cs" />
     <Compile Include="Entities\GoalMessage.cs" />
@@ -553,9 +554,7 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Entities\Message\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

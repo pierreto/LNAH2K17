@@ -9,13 +9,14 @@ namespace InterfaceGraphique.Entities.EditonCommand
 {
     class SelectionCommand : AbstractEditionCommand
     {
+        public string Username { get; set; }
         public SelectionCommand(string objectUuid) : base(objectUuid)
         {
         }
 
         public override void ExecuteCommand()
         {
-            FonctionsNatives.setElementAsSelected(objectUuid.ToCharArray());
+            FonctionsNatives.setElementAsSelected(Username.ToCharArray(),objectUuid.ToCharArray());
         }
     }
 }

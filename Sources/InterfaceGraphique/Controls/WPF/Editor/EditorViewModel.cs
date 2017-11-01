@@ -31,6 +31,7 @@ namespace InterfaceGraphique.Controls.WPF.Editor
         }
         public override async void  InitializeViewModel()
         {
+            this.onlineEditedMapInfos.Clear();
             //TODO:Not optimized should use a list here but for testing purpose i'll leave it this way
             List<MapEntity> list = await this.mapService.GetMaps();
             list.ForEach(map => this.onlineEditedMapInfos.Add(map));

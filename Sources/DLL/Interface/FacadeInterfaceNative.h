@@ -101,12 +101,18 @@ extern "C" {
 	typedef void(__stdcall * BoostCreationCallback)(const char* uuid, const float* pos);
 	__declspec(dllexport) void setBoostCreationCallback(BoostCreationCallback callback);
 
-	__declspec(dllexport) void setElementAsSelected(char* uuid);
+	typedef void(__stdcall * SelectionEventCallback)(const char* username, const char* uuid);
+	__declspec(dllexport) void setSelectionEventCallback(SelectionEventCallback callback);
+	__declspec(dllexport) void setElementAsSelected(char* username, char* uuid);
 
 
 	typedef void(__stdcall * MoveEventCallback)(const char* uuid, const float* newPosition);
 	__declspec(dllexport) void setMoveEventCallback(MoveEventCallback callback);
 	__declspec(dllexport) void moveByUUID(const char* uuid,const float* position);
+
+	__declspec(dllexport) void addNewUser(char* username, char* hexColor);
+	__declspec(dllexport) void removeUser(char* username);
+
 
 } 
 

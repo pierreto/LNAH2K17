@@ -237,6 +237,7 @@
     <Compile Include="Entities\Edition\EditionCommand\AbstractEditionCommand.cs" />
     <Compile Include="Entities\Edition\EditionCommand\BoostCommand.cs" />
     <Compile Include="Entities\Edition\EditionCommand\MoveCommand.cs" />
+    <Compile Include="Entities\Edition\EditionCommand\SelectionCommand.cs" />
     <Compile Include="Entities\Edition\OnlineUser.cs" />
     <Compile Include="Entities\Edition\EditionCommand\PortalCommand.cs" />
     <Compile Include="Entities\Edition\EditionCommand\WallCommand.cs" />

@@ -33,6 +33,7 @@
 #include "ModeleEtatCreerMuret.h"
 #include "ModeleEtatCreerBoost.h"
 #include "ModeleEtatDeplacement.h"
+#include "ModeleEtatSelection.h"
 
 extern "C"
 {
@@ -1011,9 +1012,19 @@ void setBoostCreationCallback(BoostCreationCallback callback)
 	ModeleEtatCreerBoost::obtenirInstance()->setBoostCreationCallback(callback);
 }
 
-void setElementAsSelected(char* uuid)
+
+void setSelectionEventCallback(SelectionEventCallback callback)
 {
+	ModeleEtatSelection::obtenirInstance()->setSelectionEventCallback(callback);
 }
+
+void setElementAsSelected(char* username,char* uuid)
+{
+	FacadeModele::obtenirInstance()->getUserManager().getUser(username)->select(uuid);
+
+}
+
+
 
 void moveByUUID(const char* uuid, const float* delta)
 {
@@ -1023,4 +1034,14 @@ void moveByUUID(const char* uuid, const float* delta)
 void setMoveEventCallback(MoveEventCallback callback)
 {
 	ModeleEtatDeplacement::obtenirInstance()->setMoveEventCallback(callback);
+}
+
+
+void addNewUser(char* username,char* hexColor)
+{
+	FacadeModele::obtenirInstance()->getUserManager().addNewUser(username, hexColor);
+}
+void removeUser(char* username)
+{
+	FacadeModele::obtenirInstance()->getUserManager().removeUser(username);
 }

@@ -24,11 +24,13 @@
 /// @return Aucune
 ///
 ////////////////////////////////////////////////////////////////////////
-VisiteurSelection::VisiteurSelection(glm::dvec3 rayStart, glm::dvec3 rayEnd, bool ctrl) 
+VisiteurSelection::VisiteurSelection(glm::dvec3 rayStart, glm::dvec3 rayEnd, bool ctrl, SelectionEventCallback callback)
 : nbSelections_(0), multiSelection_(false) {
 	ctrl_ = ctrl;
 	pointDebut_ = rayStart;
 	pointFin_ = rayEnd;
+	selectionEventCallback_ = callback;
+
 }
 
 
@@ -45,12 +47,13 @@ VisiteurSelection::VisiteurSelection(glm::dvec3 rayStart, glm::dvec3 rayEnd, boo
 /// @return Aucune
 ///
 ////////////////////////////////////////////////////////////////////////
-VisiteurSelection::VisiteurSelection(glm::dvec3 pointAncrage, glm::dvec3 pointFinal, bool multiSelection, bool ctrl) 
+VisiteurSelection::VisiteurSelection(glm::dvec3 pointAncrage, glm::dvec3 pointFinal, bool multiSelection, bool ctrl, SelectionEventCallback callback)
  : nbSelections_(0) {
 	multiSelection_ = multiSelection;
 	ctrl_ = ctrl;
 	pointDebut_ = pointAncrage;
 	pointFin_ = pointFinal;
+	selectionEventCallback_ = callback;
 }
 
 

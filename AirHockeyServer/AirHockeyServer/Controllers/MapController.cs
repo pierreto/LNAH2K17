@@ -10,14 +10,18 @@ using System.Net.Http;
 using System.Web;
 using System.Web.Http;
 using System.Threading.Tasks;
+using AirHockeyServer.Hubs;
+using Microsoft.Practices.ObjectBuilder2;
 
 namespace AirHockeyServer.Controllers
 {
-    public class MapController : ApiController 
+    public class MapController : ApiController
     {
-        public MapController(IMapService mapService)
+        private EditionService editionService;
+        public MapController(IMapService mapService, EditionService editionService)
         {
             MapService = mapService;
+            editionService = this.editionService;
         }
 
         public IMapService MapService { get; }
@@ -29,6 +33,11 @@ namespace AirHockeyServer.Controllers
             try
             {
                 IEnumerable<MapEntity> maps = await MapService.GetMaps();
+                maps.ForEach(action =>
+                {
+                    string gameId = EditionHub.ObtainEditionGroupIdentifier((int)action.Id);
+                    action.CurrentNumberOfPlayer = editionService.UsersPerGame[gameId].Count;
+                });
                 return HttpResponseGenerator.CreateSuccesResponseMessage(HttpStatusCode.OK, maps);
             }
             catch

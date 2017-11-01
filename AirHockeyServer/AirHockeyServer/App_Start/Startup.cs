@@ -15,8 +15,12 @@ namespace AirHockeyServer.App_Start
 {
     public class Startup
     {
+
+        private EditionService editionService;
         public void Configuration(IAppBuilder app)
         {
+            editionService= new EditionService();
+            
             // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=316888
             GlobalHost.DependencyResolver.Register(
                 typeof(ChatHub),
@@ -29,7 +33,9 @@ namespace AirHockeyServer.App_Start
             GlobalHost.DependencyResolver.Register(
                 typeof(TournamentWaitingRoomHub),
                 () => new TournamentWaitingRoomHub(new TournamentService()));
-
+            GlobalHost.DependencyResolver.Register(
+                typeof(EditionHub),
+                () => new EditionHub(editionService));
             app.MapSignalR("/signalr", new HubConfiguration());
         }
     }

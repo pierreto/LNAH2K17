@@ -48,6 +48,8 @@ namespace AirHockeyServer
             container.RegisterType<IGameService, GameService>(new HierarchicalLifetimeManager());
             container.RegisterType<ITournamentService, TournamentService>(new HierarchicalLifetimeManager());
             container.RegisterType<IMapService, MapService>(new HierarchicalLifetimeManager());
+            container.RegisterType<EditionService>(new HierarchicalLifetimeManager());
+
 
             //Core
             container.RegisterType<IConnector, Connector>(new HierarchicalLifetimeManager());

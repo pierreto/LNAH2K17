@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AirHockeyServer.Entities.EditionCommand
+namespace InterfaceGraphique.Entities.Editor
 {
     public class OnlineUser
     {

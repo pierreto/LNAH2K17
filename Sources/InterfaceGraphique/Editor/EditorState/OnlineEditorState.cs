@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using InterfaceGraphique.CommunicationInterface;
 using InterfaceGraphique.Entities;
 using InterfaceGraphique.Entities.EditonCommand;
+using InterfaceGraphique.Entities.Editor;
 using InterfaceGraphique.Entities.EditorCommand;
 
 namespace InterfaceGraphique.Editor.EditorState
@@ -19,17 +20,37 @@ namespace InterfaceGraphique.Editor.EditorState
         private FonctionsNatives.WallCreationCallback wallCreationCallback;
         private FonctionsNatives.BoostCreationCallback boostCreationCallback;
         private FonctionsNatives.MoveEventCallback moveEventCallback;
+        private FonctionsNatives.SelectionEventCallback selectionEventCallback;
 
 
         public OnlineEditorState(EditionHub editionHub)
         {
             this.editionHub = editionHub;
+
             this.editionHub.NewCommand += OnNewCommand;
+            this.editionHub.NewUser += OnNewUser;
+            this.editionHub.UserLeft += OnUserLeft;
+
+
+
             this.portalCreationCallback = CurrentUserCreatedPortal;
             this.wallCreationCallback = CurrentUserCreatedWall;
             this.boostCreationCallback = CurrentUserCreatedBoost;
             this.moveEventCallback = CurrentUserMovedObject;
+            this.selectionEventCallback = CurrentUserSelectedObject;
 
+        }
+
+
+        private void OnUserLeft(string username)
+        {
+            FonctionsNatives.removeUser(username.ToCharArray());
+
+        }
+
+        private void OnNewUser(OnlineUser user)
+        {
+            FonctionsNatives.addNewUser(user.Username.ToCharArray(),user.HexColor.ToCharArray());
         }
 
 
@@ -70,7 +91,12 @@ namespace InterfaceGraphique.Editor.EditorState
             FonctionsNatives.setWallCreationCallback(this.wallCreationCallback);
             FonctionsNatives.setBoostCreationCallback(this.boostCreationCallback);
             FonctionsNatives.setMoveEventCallback(this.moveEventCallback);
+            FonctionsNatives.setSelectionEventCallback(this.selectionEventCallback);
 
+        }
+        public override void LeaveEdition()
+        {
+            this.editionHub.LeaveRoom();
         }
 
         private void OnNewCommand(AbstractEditionCommand editionCommand)
@@ -128,12 +154,21 @@ namespace InterfaceGraphique.Editor.EditorState
             });
 
         }
-
+        private void CurrentUserSelectedObject(string username, string uuidselected)
+        {
+            this.editionHub.SendEditorCommand(new SelectionCommand(uuidselected)
+            {
+                Username = username
+            });
+        }
         private float[] getVec3FromIntptr(IntPtr ptr)
         {
             float[] vec3 = new float[3];
             Marshal.Copy(ptr, vec3, 0, 3);
             return vec3;
         }
+
+
+    
     }
 }

@@ -10,13 +10,40 @@ namespace AirHockeyServer.Hubs
 {
     public class EditionHub : Hub
     {
-        private Dictionary<string, List<OnlineUser>> users;
+        private EditionService editionService;
+        public EditionHub(EditionService editionService)
+        {
+            this.editionService = editionService;
+        }
 
         public List<OnlineUser> JoinPublicRoom(string username, MapEntity map)
         {
-            Groups.Add(Context.ConnectionId, ObtainEditionGroupIdentifier((int) map.Id));
-            Clients.Group(ObtainEditionGroupIdentifier((int) map.Id), Context.ConnectionId).NewUser(username, "#ff0000");
-            return users[ObtainEditionGroupIdentifier((int) map.Id)];
+
+            string mapGroupId = ObtainEditionGroupIdentifier((int) map.Id);
+
+            OnlineUser newUser = new OnlineUser()
+            {
+                Username = username,
+                HexColor = "#ff0000"
+            };
+
+            ConnectionMapper.AddUserConnection(Context.ConnectionId, newUser);
+            if (!editionService.UsersPerGame.ContainsKey(mapGroupId))
+            {
+                List<OnlineUser> newEditionGroup = new List<OnlineUser>();
+                editionService.UsersPerGame.Add(mapGroupId, newEditionGroup);
+            }
+            editionService.UsersPerGame[mapGroupId].Add(newUser);
+
+            //Add the connection id to the map group
+            Groups.Add(Context.ConnectionId, mapGroupId);
+
+            //Broadcast to others users of the group that a new user arrived 
+           // Clients.Group(mapGroupId, Context.ConnectionId).NewUser(newUser);
+            Clients.Group(mapGroupId).NewUser(newUser);
+
+
+            return editionService.UsersPerGame[ObtainEditionGroupIdentifier((int) map.Id)];
         }
         public void JoinPrivateRoom(string username, MapEntity map, string password)
         {
@@ -28,19 +55,24 @@ namespace AirHockeyServer.Hubs
 
         public void SendEditionCommand(int mapId, string editionCommand)
         {
-            Clients.Group(ObtainEditionGroupIdentifier(mapId), Context.ConnectionId).NewCommand(editionCommand);
+            //Clients.Group(ObtainEditionGroupIdentifier(mapId), Context.ConnectionId).NewCommand(editionCommand);
 
-            //Clients.Group(ObtainEditionGroupIdentifier(mapId)).NewCommand(editionCommand);
+            Clients.Group(ObtainEditionGroupIdentifier(mapId)).NewCommand(editionCommand);
         }
 
         public void LeaveRoom(int gameId)
         {
             Groups.Remove(Context.ConnectionId, this.GetType().Name + gameId);
+
+            OnlineUser userThatLeft = ConnectionMapper.GetUserFromConnectionId(Context.ConnectionId);
+            editionService.UsersPerGame[ObtainEditionGroupIdentifier(gameId)].Remove(userThatLeft);
+            Clients.Group(ObtainEditionGroupIdentifier(gameId), Context.ConnectionId).UserLeaved(userThatLeft.Username);
+            ConnectionMapper.RemoveUserConnection(Context.ConnectionId);
         }
 
-        private string ObtainEditionGroupIdentifier(int id)
+        public static string ObtainEditionGroupIdentifier(int id)
         {
-            return this.GetType().Name + id;
+            return "EditionHub" + id;
         }
     }
 }
