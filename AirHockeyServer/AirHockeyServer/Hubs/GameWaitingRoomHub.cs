@@ -91,19 +91,20 @@ namespace AirHockeyServer.Hubs
 
         public void SendGameData(int gameId, GameDataMessage gameData)
         {
+            //GameService.GameOver(gameId);
              Clients.Group(gameId.ToString(), Context.ConnectionId).ReceivedGameData(gameData);
         }
 
         public void SendGoal(int gameId, GoalMessage goal)
         {
-            GameService.GoalScored(gameId, goal.PlayerNumber);
             Clients.Group(gameId.ToString(), Context.ConnectionId).ReceivedGoal(goal);
+            GameService.GoalScored(gameId, goal.PlayerNumber);
         }
 
         public void GameOver(int gameId)
         {
-            GameService.GameOver(gameId);
             Clients.Group(gameId.ToString(), Context.ConnectionId).ReceivedGameOver();
+            GameService.GameOver(gameId);
         }
 
     }
