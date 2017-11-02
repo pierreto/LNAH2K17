@@ -22,6 +22,7 @@
 ///////////////////////////////////////////////////////////////////////////
 
 #include "ModeleEtat.h"
+#include "FacadeInterfaceNative.h"
 
 class ModeleEtatCreerMuret : public ModeleEtat
 {
@@ -40,6 +41,7 @@ public:
 	virtual void escape();
 	/// Fonction pour nettoyer l'état
 	virtual void nettoyerEtat();
+	void setWallCreationCallback(WallCreationCallback callback){ wallCreationCallback_ = callback; }
 
 private:
 
@@ -63,6 +65,8 @@ private:
 
 	/// Point initial pour la création du muret
 	glm::vec3 pointInitial_;
+
+	WallCreationCallback wallCreationCallback_;
 };
 
 

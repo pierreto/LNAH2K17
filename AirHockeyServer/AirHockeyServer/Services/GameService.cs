@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AirHockeyServer.Repositories;
 using AirHockeyServer.Services.MatchMaking;
 using AirHockeyServer.Manager;
+using AirHockeyServer.Services.Interfaces;
 
 namespace AirHockeyServer.Services
 {

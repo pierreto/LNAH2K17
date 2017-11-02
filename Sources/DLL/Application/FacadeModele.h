@@ -24,6 +24,7 @@
 #include "rapidjson/filewritestream.h"
 #include "rapidjson/filereadstream.h"
 #include "BoiteEnvironnement.h"
+#include "../UserManager.h"
 
 class NoeudAbstrait;
 class ArbreRenduINF2990;
@@ -136,7 +137,7 @@ public:
    bool mouseOverControlPoint();
    /// Supprime la sélection en cours
    void deleteSelection();
-   /// Changer la visibilité de la grid
+	/// Changer la visibilité de la grid
    void changeGridVisibility(bool visibility);
    /// Reinitialise la vue
    void resetCameraPosition();
@@ -158,6 +159,10 @@ public:
 
    bool modeOrbite_;
 
+
+   void moveByUUID(const char* uuid, const glm::vec3 newPos);
+
+   UserManager& getUserManager() { return userManager_; }
 
    /// Document rapidJSON
    rapidjson::Document docJSON_;
@@ -205,6 +210,8 @@ private:
    std::string _getMapJson(float coefficients[]);
 
    utilitaire::BoiteEnvironnement* skybox_;
+
+   UserManager userManager_;
 };
 
 

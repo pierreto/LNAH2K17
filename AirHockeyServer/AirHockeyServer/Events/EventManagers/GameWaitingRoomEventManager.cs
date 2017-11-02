@@ -2,6 +2,7 @@
 using AirHockeyServer.Hubs;
 using AirHockeyServer.Manager;
 using AirHockeyServer.Services;
+using AirHockeyServer.Services.Interfaces;
 using AirHockeyServer.Services.MatchMaking;
 using Microsoft.AspNet.SignalR;
 using System;

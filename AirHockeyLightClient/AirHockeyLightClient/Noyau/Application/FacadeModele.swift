@@ -10,6 +10,7 @@
 
 import UIKit
 import SceneKit
+import SwiftyJSON
 import UIKit.UIGestureRecognizerSubclass
 
 /// Les différents états du modèle
@@ -27,6 +28,15 @@ enum MODELE_ETAT : Int {
     case POINTS_CONTROLE = 10
     // TODO : Avoir une caméra libre en tout temps
     case CAMERA_CONTROLE = 11
+}
+
+extension JSON {
+    mutating func appendArray(json:JSON){
+        if var arr = self.array{
+            arr.append(json)
+            self = JSON(arr)
+        }
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////
@@ -48,9 +58,32 @@ class FacadeModele {
     /// Arbre de rendu contenant les différents objets de la scène.
     private var arbre: ArbreRendu?
     
+    /// Document JSON
+    var docJSON: JSON?
+    
+    /// Propriétés générales de la zone de jeu (coefficients)
+    private var generalProperties: GeneralProperties?
+    
+    /// Les différentes couleurs pour chaque utilisateur en édition
+    // TODO : Mettre ceci dans les infos de l'utilisateur lors de l'édition en ligne
+    private let COLOR_USERS : [UIColor] =
+        [
+            UIColor(red: 0.0,       green: 123.0/255.0, blue: 194.0/255.0, alpha: 1.0), // USER 1
+            UIColor(red: 194.0/255, green: 0.0,         blue: 158.0/255.0, alpha: 1.0), // USER 2
+            UIColor(red: 194.0/255, green: 87.0/255.0,  blue: 0.0,         alpha: 1.0), // USER 3
+            UIColor(red: 107.0/255, green: 194.0/255.0, blue: 0.0,         alpha: 1.0)  // USER 4
+        ]
+    private var colorPicker = 0
+    public func getUserColor() -> UIColor {
+        let color = COLOR_USERS[(colorPicker % COLOR_USERS.count)]
+        colorPicker += 1
+        return color
+    }
+    
     /// Gesture recognizer
     var tapGestureRecognizer: UITapGestureRecognizer?
     var panGestureRecognizer: ImmediatePanGestureRecognizer?
+    var pinchGestureRecognizer: UIPinchGestureRecognizer?
     
     /// Etat du modèle
     private var etat: ModeleEtat?
@@ -60,9 +93,11 @@ class FacadeModele {
         self.arbre = ArbreRendu.instance
         self.viewController = EditorViewController.instance
         self.etat = ModeleEtatCameraControl.instance
+        self.generalProperties = GeneralProperties()
         
         self.tapGestureRecognizer = UITapGestureRecognizer(target: self, action:  #selector (self.tapGesture (_:)))
         self.panGestureRecognizer = ImmediatePanGestureRecognizer(target: self, action: #selector (self.panGesture(_:)))
+        self.pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector (self.pinchGesture(_:)))
         
         self.arbre?.initialiser()
         self.etat?.initialiser()
@@ -84,6 +119,11 @@ class FacadeModele {
         return self.etat!
     }
     
+    /// Retourne l'état courant
+    func obtenirGeneralProperties() -> GeneralProperties {
+        return self.generalProperties!
+    }
+    
     func initVue() {
         self.viewController?.editorScene.rootNode.addChildNode(self.arbre!)
         
@@ -100,6 +140,10 @@ class FacadeModele {
         self.etat?.panGesture(sender: sender)
     }
     
+    @objc func pinchGesture(_ sender: UIPinchGestureRecognizer) {
+        self.etat?.pinchGesture(sender: sender)
+    }
+    
     /// Réinitialise la scène.
     func reinitialiser() {
         self.arbre?.initialiser()
@@ -108,49 +152,231 @@ class FacadeModele {
     /// Modifie le modèle état en cours
     func changerModeleEtat(etat: MODELE_ETAT) {
         // Nettoyer l'état courant
-        self.etat?.nettoyerEtat();
+        self.etat?.nettoyerEtat()
         
         switch (etat) {
             case .AUCUN:
-                self.etat = nil;
-                break;
+                self.etat = nil
+                break
             case .SELECTION:
                 self.etat = ModeleEtatSelection.instance
-                break;
+                break
             case .DEPLACEMENT:
                 self.etat = ModeleEtatDeplacement.instance
-                break;
+                break
             case .ROTATION:
-                //self.etat = ModeleEtatRotation.instance
-                break;
+                self.etat = ModeleEtatRotation.instance
+                break
             case .MISE_A_ECHELLE:
-                //self.etat = ModeleEtatScale.instance
-                break;
+                self.etat = ModeleEtatScale.instance
+                break
             case .ZOOM:
                 //self.etat = ModeleEtatZoom.instance
-                break;
+                break
             case .DUPLIQUER:
-                //self.etat = ModeleEtatDuplication.instance
-                break;
+                self.etat = ModeleEtatDuplication.instance
+                break
             case .POINTS_CONTROLE:
                 self.etat = ModeleEtatPointControl.instance
-                break;
+                break
             case .CREATION_ACCELERATEUR:
                 self.etat = ModeleEtatCreerBoost.instance
-                break;
+                break
             case .CREATION_MURET:
                 self.etat = ModeleEtatCreerMuret.instance
-                break;
+                break
             case .CREATION_PORTAIL:
                 self.etat = ModeleEtatCreerPortail.instance
-                break;
+                break
             case .CAMERA_CONTROLE:
                 self.etat = ModeleEtatCameraControl.instance
-                break;
+                break
         }
         
         // Initialisation de l'etat
-        self.etat?.initialiser();
+        self.etat?.initialiser()
+    }
+
+    /// Cette fonction retourne l'information sur un noeud sélectionné.
+    func selectedNodeInfos(infos: inout [Float]?) -> Bool {
+        let information = VisiteurInformation();
+        self.arbre?.accepterVisiteur(visiteur: information);
+        return information.lireInformations(infos: &infos);
+    }
+    
+    /// Cette fonction applique l'information sur un noeud sélectionné.
+    func applyNodeInfos(infos: [Float]) {
+        let selection = VisiteurObtenirSelection();
+        self.arbre?.accepterVisiteur(visiteur: selection);
+        let noeud = selection.obtenirNoeuds().first;
+    
+        let rotation = noeud?.eulerAngles;
+        let scale = noeud?.scale;
+        let position = noeud?.position;
+    
+        let information = VisiteurInformation();
+        _ = information.ecrireInformations(infos: infos);
+        self.arbre?.accepterVisiteur(visiteur: information);
+    
+        // Annuler les changements
+        if (!(self.etat?.noeudsSurLaTable())!) {
+            noeud?.position = position!;
+            noeud?.scale = scale!;
+            noeud?.eulerAngles = rotation!;
+        }
+    }
+
+    /// Charger une patinoire préalablement sauvegardée
+    func chargerCarte(map: MapEntity) {
+        self.obtenirArbreRendu().initialiser()
+        self.initializeJson()
+        
+        if map.json == nil {
+            return
+        }
+        
+        if let dataFromString = map.json!.data(using: .utf8, allowLossyConversion: false) {
+            self.docJSON = JSON(data: dataFromString)
+        }
+        
+        self.chargerPntCtrl()
+
+        self.creerNoeuds(type: "Accelerateur", nomType: ArbreRendu.instance.NOM_ACCELERATEUR)
+        self.creerNoeuds(type: "Portail", nomType: ArbreRendu.instance.NOM_PORTAIL)
+        self.creerNoeuds(type: "Muret", nomType: ArbreRendu.instance.NOM_MUR)
+        
+        /*
+        coefficients[0] = docJSON_["Coefficients"][0].GetDouble()
+        coefficients[1] = docJSON_["Coefficients"][1].GetDouble()
+        coefficients[2] = docJSON_["Coefficients"][2].GetDouble()
+         */
+    }
+    
+    /// Placer les points de contrôle sur la patinoire
+    func chargerPntCtrl() {
+        let table = self.arbre?.childNode(withName: ArbreRendu.instance.NOM_TABLE, recursively: true) as! NoeudTable
+        var count = 0
+        
+        for child in table.childNodes {
+            if child.name == ArbreRendu.instance.NOM_POINT_CONTROL {
+                let x = self.docJSON!["PointControle"][count][0].float!
+                let y = self.docJSON!["PointControle"][count][1].float!
+                let z = self.docJSON!["PointControle"][count][2].float!
+                let pos = GLKVector3.init(v: (x, y, z))
+                let noeud = child as! NoeudCommun
+                noeud.assignerPositionRelative(positionRelative: pos)
+                count += 1
+            }
+        }
+        table.updateGeometry()
+    }
+
+    /// Cette fonction permet de créer les noeuds sur la patinoire
+    func creerNoeuds(type: String, nomType: String) {
+        let table = self.arbre?.childNode(withName: ArbreRendu.instance.NOM_TABLE, recursively: true)
+        
+        if nomType == ArbreRendu.instance.NOM_ACCELERATEUR || nomType == ArbreRendu.instance.NOM_MUR {
+            // S'il n'y a aucun accélérateur ou de muret dans la carte à charger
+            if self.docJSON![type].count == 0 {
+                return
+            }
+            
+            for i in 0...self.docJSON![type].count - 1 {
+                let noeud: NoeudCommun
+                if nomType == ArbreRendu.instance.NOM_ACCELERATEUR {
+                    noeud = self.arbre?.creerNoeud(typeNouveauNoeud: nomType) as! NoeudAccelerateur
+                } else {
+                    noeud = self.arbre?.creerNoeud(typeNouveauNoeud: nomType) as! NoeudMur
+                }
+                
+                // Appliquer rotation
+                let angle = self.docJSON![type][i][6].float!
+                noeud.appliquerRotation(angle: angle, axes: GLKVector3.init(v: (0, 1, 0)))
+                
+                // Appliquer scale
+                var scale = SCNVector3.init()
+                scale.x = self.docJSON![type][i][3].float!
+                scale.y = self.docJSON![type][i][4].float!
+                scale.z = self.docJSON![type][i][5].float!
+                noeud.scale = scale
+                table?.addChildNode(noeud)
+                
+                // Appliquer déplacement
+                var deplacement = GLKVector3.init()
+                deplacement.x = self.docJSON![type][i][0].float!
+                deplacement.y = self.docJSON![type][i][1].float!
+                deplacement.z = self.docJSON![type][i][2].float!
+                noeud.appliquerDeplacement(deplacement: deplacement)
+            }
+        }
+        else if nomType == ArbreRendu.instance.NOM_PORTAIL {
+            // S'il n'y a aucun portail dans la carte à charger
+            if self.docJSON![type].count == 0 {
+                return
+            }
+            
+            for i in stride(from: 0, to: self.docJSON![type].count - 1, by: 2) {
+                var linkedPortals = Set<NoeudPortail>()
+                
+                for j in 0...1 {
+                    let portal = self.arbre?.creerNoeud(typeNouveauNoeud: nomType) as! NoeudPortail
+                    linkedPortals.insert(portal)
+                    
+                    // Appliquer rotation
+                    let angle = self.docJSON![type][i + j][6].float!
+                    portal.appliquerRotation(angle: angle, axes: GLKVector3.init(v: (0, 1, 0)))
+                    
+                    // Appliquer scale
+                    var scale = SCNVector3.init()
+                    scale.x = self.docJSON![type][i + j][3].float!
+                    scale.y = self.docJSON![type][i + j][4].float!
+                    scale.z = self.docJSON![type][i + j][5].float!
+                    portal.scale = scale
+                    table?.addChildNode(portal)
+                    
+                    // Appliquer déplacement
+                    var deplacement = GLKVector3.init()
+                    deplacement.x = self.docJSON![type][i + j][0].float!
+                    deplacement.y = self.docJSON![type][i + j][1].float!
+                    deplacement.z = self.docJSON![type][i + j][2].float!
+                    portal.appliquerDeplacement(deplacement: deplacement)
+                }
+                
+                // Assigner portails opposés
+                let portalA = linkedPortals[linkedPortals.index(linkedPortals.startIndex, offsetBy: 0)]
+                let portalB = linkedPortals[linkedPortals.index(linkedPortals.startIndex, offsetBy: 1)]
+                portalA.assignerOppose(portail: portalB)
+                portalB.assignerOppose(portail: portalA)
+            }
+        }
+    }
+    
+    /// Cette fonction permet d'enregistrer la patinoire en format JSON
+    func sauvegarderCarte(map: MapEntity) {
+        self.initializeJson()
+        let visiteur = VisiteurSauvegarde()
+        self.arbre?.accepterVisiteur(visiteur: visiteur)
+        
+        // Sauver le fichier localement ou TODO : via le serveur
+        DBManager.instance.sauvegarderCarte(map: map)
+    }
+    
+    private func initializeJson() {
+        self.docJSON = [
+            "PointControle": [],
+            "Accelerateur": [],
+            "Muret": [],
+            "Portail": [],
+            "Coefficients": [0, 0, 0]
+        ]
+    }
+    
+    private func recuperateCurrentDateTime() -> String {
+        let date = Date()
+        let formatter = DateFormatter()
+
+        formatter.dateFormat = "dd.MM.yyyy HH:mm:ss"
+        return formatter.string(from: date)
     }
     
 }

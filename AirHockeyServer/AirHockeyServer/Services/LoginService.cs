@@ -3,14 +3,21 @@ using System.Collections.Generic;
 using AirHockeyServer.Entities;
 using AirHockeyServer.Repositories;
 using System.Threading.Tasks;
+using AirHockeyServer.Services.Interfaces;
 
 namespace AirHockeyServer.Services
 {
     public class LoginService : ILoginService, IService
     {
         private static HashSet<string> _usernames = new HashSet<string>();
-        private UserService UserService = new UserService();
-        private PasswordService PasswordService = new PasswordService();
+        private IUserService UserService { get; set; }
+        private IPasswordService PasswordService { get; set; }
+
+        public LoginService(IUserService userService, IPasswordService passwordService)
+        {
+            UserService = userService;
+            PasswordService = passwordService;
+        }
 
         public async Task<int> ValidateCredentials(LoginEntity loginEntity)
         {

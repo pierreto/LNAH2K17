@@ -1,5 +1,8 @@
-﻿using AirHockeyServer.Entities;
+﻿using AirHockeyServer.DatabaseCore;
+using AirHockeyServer.Entities;
+using AirHockeyServer.Mapping;
 using AirHockeyServer.Pocos;
+using AirHockeyServer.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data.Linq;
@@ -9,15 +12,16 @@ using System.Web;
 
 namespace AirHockeyServer.Repositories
 {
-    public class TournamentRepository : Repository<TournamentEntity>
+    public class TournamentRepository : Repository, ITournamentRepository
     {
         private Table<TournamentPoco> TournamentTable;
 
-        protected MapRepository MapRepository { get; private set; }
+        protected IMapRepository MapRepository { get; private set; }
 
-        public TournamentRepository()
+        public TournamentRepository(DataProvider dataProvider, MapperManager mapperManager, IMapRepository mapRepository)
+            :base(dataProvider, mapperManager)
         {
-            MapRepository = new MapRepository();
+            MapRepository = mapRepository;
             this.TournamentTable = DataProvider.DC.GetTable<TournamentPoco>();
         }
 

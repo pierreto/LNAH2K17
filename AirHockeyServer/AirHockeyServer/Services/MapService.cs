@@ -7,6 +7,8 @@ using AirHockeyServer.Core;
 using AirHockeyServer.Repositories;
 using System.Threading.Tasks;
 using AirHockeyServer.DatabaseCore;
+using AirHockeyServer.Repositories.Interfaces;
+using AirHockeyServer.Services.Interfaces;
 
 namespace AirHockeyServer.Services
 {
@@ -21,11 +23,11 @@ namespace AirHockeyServer.Services
     ///////////////////////////////////////////////////////////////////////////////
     public class MapService : IMapService
     {
-        private MapRepository MapRepository;
+        private IMapRepository MapRepository;
 
-        public MapService()
+        public MapService(IMapRepository mapRepository)
         {
-            MapRepository = new MapRepository();
+            MapRepository = mapRepository;
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -38,9 +40,9 @@ namespace AirHockeyServer.Services
         /// @return une carte
         ///
         ////////////////////////////////////////////////////////////////////////
-        public async Task<MapEntity> GetMapByName(string creator, string name)
+        public async Task<MapEntity> GetMap(int id)
         {
-            return await MapRepository.GetMapByName(creator, name);
+            return await MapRepository.GetMap(id);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -55,16 +57,19 @@ namespace AirHockeyServer.Services
         ////////////////////////////////////////////////////////////////////////
         public async Task SaveMap(MapEntity map)
         {
-            MapEntity existingMap = await GetMapByName(map.Creator, map.MapName);
-            
-            if (existingMap != null)
-            {
-                await MapRepository.UpdateMap(map);
-            }
-            else
+            if (map.Id == null)
             {
                 await MapRepository.CreateNewMap(map);
             }
+            else
+            {
+                await MapRepository.UpdateMap(map);
+            }
+        }
+
+        public async Task<int?> GetMapID(MapEntity map)
+        {
+            return await MapRepository.GetMapID(map);
         }
 
         ////////////////////////////////////////////////////////////////////////

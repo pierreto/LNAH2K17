@@ -15,11 +15,18 @@ using System.Web.Routing;
 using System.Web.SessionState;
 using System.Threading.Tasks;
 using AirHockeyServer.Events.EventManagers;
+using Microsoft.AspNet.SignalR;
+using AirHockeyServer.Repositories.Interfaces;
+using AirHockeyServer.Manager;
+using AirHockeyServer.DatabaseCore;
+using AirHockeyServer.Mapping;
+using AirHockeyServer.Services.Interfaces;
 
 namespace AirHockeyServer
 {
     public class WebApiApplication : System.Web.HttpApplication
     {
+        public static UnityContainer UnityContainer { get; set; }
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
@@ -36,31 +43,52 @@ namespace AirHockeyServer
             //await running_server;
 
             Cache cache = new Cache();
-            GameWaitingRoomEventManager gameWaitingRoomEventManager = new GameWaitingRoomEventManager();
-            TournamentWaitingRoomEventManager tournamentWaitingRoomEventManager = new TournamentWaitingRoomEventManager();
         }
 
         public static void Register(HttpConfiguration config)
         {
-            var container = new UnityContainer();
+            UnityContainer = new UnityContainer();
+
             // Repositories
-            container.RegisterType<IChannelRepository, ChannelRepository>(new HierarchicalLifetimeManager());
+            UnityContainer.RegisterType<IChannelRepository, ChannelRepository>(new HierarchicalLifetimeManager());
+            UnityContainer.RegisterType<IMapRepository, MapRepository>(new HierarchicalLifetimeManager());
+            UnityContainer.RegisterType<IGameRepository, GameRepository>(new HierarchicalLifetimeManager());
+            UnityContainer.RegisterType<IChannelRepository, ChannelRepository>(new HierarchicalLifetimeManager());
+            UnityContainer.RegisterType<ILoginRepository, LoginRepository>(new HierarchicalLifetimeManager());
+            UnityContainer.RegisterType<IPasswordRepository, IPasswordRepository>(new HierarchicalLifetimeManager());
+            UnityContainer.RegisterType<IPlayerStatsRepository, PlayerStatsRepository>(new HierarchicalLifetimeManager());
+            UnityContainer.RegisterType<IUserRepository, UserRepository>(new HierarchicalLifetimeManager());
 
             // Services
-            container.RegisterType<IChatService, ChatService>(new HierarchicalLifetimeManager());
-            container.RegisterType<IChannelService, ChannelService>(new HierarchicalLifetimeManager());
-            container.RegisterType<IGameService, GameService>(new HierarchicalLifetimeManager());
-            container.RegisterType<ITournamentService, TournamentService>(new HierarchicalLifetimeManager());
-            container.RegisterType<IMapService, MapService>(new HierarchicalLifetimeManager());
-
-            //Core
-            container.RegisterType<IConnector, Connector>(new HierarchicalLifetimeManager());
-            container.RegisterType<IRequestsManager, RequestsManager>(new HierarchicalLifetimeManager());
-
-            config.DependencyResolver = new UnityResolver(container);
+            UnityContainer.RegisterType<IChatService, ChatService>(new HierarchicalLifetimeManager());
+            UnityContainer.RegisterType<IChannelService, ChannelService>(new HierarchicalLifetimeManager());
+            UnityContainer.RegisterType<IGameService, GameService>(new HierarchicalLifetimeManager());
+            UnityContainer.RegisterType<ITournamentService, TournamentService>(new HierarchicalLifetimeManager());
+            UnityContainer.RegisterType<IMapService, MapService>(new ContainerControlledLifetimeManager());
+            UnityContainer.RegisterType<IEditionService, EditionService>(new ContainerControlledLifetimeManager());
+            UnityContainer.RegisterType<ILoginService, LoginService>(new ContainerControlledLifetimeManager());
+            UnityContainer.RegisterType<IPasswordService, PasswordService>(new ContainerControlledLifetimeManager());
+            UnityContainer.RegisterType<IPlayerStatsService, PlayerStatsService>(new ContainerControlledLifetimeManager());
+            UnityContainer.RegisterType<ISignupService, SignupService>(new ContainerControlledLifetimeManager());
+            UnityContainer.RegisterType<ITournamentService, TournamentService>(new ContainerControlledLifetimeManager());
+            UnityContainer.RegisterType<ILoginService, LoginService>(new ContainerControlledLifetimeManager());
+            UnityContainer.RegisterType<IUserService, UserService>(new ContainerControlledLifetimeManager());
             
-            GameWaitingRoomEventManager gameWaitingRoomEventManager = container.Resolve<GameWaitingRoomEventManager>();
-            TournamentWaitingRoomEventManager tournamentWaitingRoomEventManager = container.Resolve<TournamentWaitingRoomEventManager>();
+            // Core
+            UnityContainer.RegisterType<IConnector, Connector>(new ContainerControlledLifetimeManager());
+            UnityContainer.RegisterType<IRequestsManager, RequestsManager>(new ContainerControlledLifetimeManager());
+            UnityContainer.RegisterType<DataProvider>(new ContainerControlledLifetimeManager());
+
+            // Mapping
+            UnityContainer.RegisterType<MapperManager>(new ContainerControlledLifetimeManager());
+
+            // Managers
+            UnityContainer.RegisterType<IGameManager, GameManager>(new ContainerControlledLifetimeManager());
+            UnityContainer.RegisterType<ITournamentManager, TournamentManager>(new ContainerControlledLifetimeManager());
+
+            config.DependencyResolver = new UnityResolver(UnityContainer);
+            GameWaitingRoomEventManager gameWaitingRoomEventManager = UnityContainer.Resolve<GameWaitingRoomEventManager>();
+            TournamentWaitingRoomEventManager tournamentWaitingRoomEventManager = UnityContainer.Resolve<TournamentWaitingRoomEventManager>();
 
         }
 

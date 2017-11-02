@@ -1,5 +1,8 @@
-﻿using AirHockeyServer.Entities;
+﻿using AirHockeyServer.DatabaseCore;
+using AirHockeyServer.Entities;
+using AirHockeyServer.Mapping;
 using AirHockeyServer.Pocos;
+using AirHockeyServer.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data.Linq;
@@ -9,11 +12,12 @@ using System.Web;
 
 namespace AirHockeyServer.Repositories
 {
-    public class PlayerStatsRepository : Repository<StatsEntity>
+    public class PlayerStatsRepository : Repository, IPlayerStatsRepository
     {
         private Table<StatsPoco> StatsTable;
 
-        public PlayerStatsRepository()
+        public PlayerStatsRepository(DataProvider dataProvider, MapperManager mapperManager)
+            :base(dataProvider, mapperManager)
         {
             this.StatsTable = DataProvider.DC.GetTable<StatsPoco>();
         }

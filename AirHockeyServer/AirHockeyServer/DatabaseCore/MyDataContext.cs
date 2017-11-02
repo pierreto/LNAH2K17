@@ -1,4 +1,5 @@
-﻿using AirHockeyServer.Pocos;
+﻿using AirHockeyServer.DatabaseCore;
+using AirHockeyServer.Pocos;
 using MySql.Data.MySqlClient;
 using System.Configuration;
 using System.Data.Linq;

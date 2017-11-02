@@ -15,6 +15,7 @@
 #include "FacadeModele.h"
 #include "Vue.h"
 #include "ArbreRenduINF2990.h"
+#include "ModeleEtatJeu.h"
 
 /// Pointeur vers l'instance unique de la classe.
 ModeleEtatCreerBoost* ModeleEtatCreerBoost::instance_{ nullptr };
@@ -116,6 +117,10 @@ void ModeleEtatCreerBoost::mouseUpL() {
 		// On annule si le noeud n'est pas sur la table
 		if (!noeudsSurLaTable()) {
 			FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->effacer(noeud);
+		}
+		else if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
+		{
+			boostCreationCallback_(noeud->getUUID(), glm::value_ptr(noeud->obtenirPositionRelative()));
 		}
 	}
 	mouseDownL_ = false;

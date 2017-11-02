@@ -6,6 +6,7 @@ using System.Web.Http;
 using AirHockeyServer.Entities;
 using AirHockeyServer.Services;
 using System.Threading.Tasks;
+using AirHockeyServer.Services.Interfaces;
 
 namespace AirHockeyServer.Controllers
 {
@@ -13,9 +14,9 @@ namespace AirHockeyServer.Controllers
     {
         public ILoginService LoginService { get; }
 
-        public LoginController()
+        public LoginController(ILoginService loginService)
         {
-            this.LoginService = new LoginService();
+            this.LoginService = loginService;
         }
 
         public IChatService ChatService { get; }

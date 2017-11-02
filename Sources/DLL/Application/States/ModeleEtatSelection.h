@@ -40,6 +40,8 @@ public:
 	/// Évènement appelé lorsque la touche escape est enfoncée
 	virtual void escape();
 
+	void setSelectionEventCallback(SelectionEventCallback callback) { selectionCallback_ = callback; }
+
 private:
 	/// Booléen pour savoir si le rectangle est visible
 	bool rectangleVisible_;
@@ -62,6 +64,7 @@ private:
 	/// Pointeur vers l'instance unique de la classe.
 	static ModeleEtatSelection* instance_;
 
+	SelectionEventCallback selectionCallback_;
 };
 
 

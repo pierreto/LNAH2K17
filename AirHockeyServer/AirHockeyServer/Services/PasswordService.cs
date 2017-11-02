@@ -2,16 +2,18 @@
 using AirHockeyServer.Entities;
 using System.Threading.Tasks;
 using AirHockeyServer.Repositories;
+using AirHockeyServer.Repositories.Interfaces;
+using AirHockeyServer.Services.Interfaces;
 
 namespace AirHockeyServer.Services
 {
-    public class PasswordService
+    public class PasswordService : IPasswordService
     {
-        private PasswordRepository PasswordRepository;
+        private IPasswordRepository PasswordRepository;
 
-        public PasswordService()
+        public PasswordService(IPasswordRepository passwordRepository)
         {
-            PasswordRepository = new PasswordRepository();
+            PasswordRepository = passwordRepository;
         }
 
         public async Task<PasswordEntity> GetPasswordById(int id)

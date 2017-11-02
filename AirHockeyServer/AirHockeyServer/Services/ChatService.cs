@@ -7,6 +7,7 @@ using AirHockeyServer.Core;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
+using AirHockeyServer.Services.Interfaces;
 
 namespace AirHockeyServer.Services
 {

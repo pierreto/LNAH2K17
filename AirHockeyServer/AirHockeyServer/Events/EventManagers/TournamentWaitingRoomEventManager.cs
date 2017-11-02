@@ -2,6 +2,7 @@
 using AirHockeyServer.Hubs;
 using AirHockeyServer.Manager;
 using AirHockeyServer.Services;
+using AirHockeyServer.Services.Interfaces;
 using AirHockeyServer.Services.MatchMaking;
 using Microsoft.AspNet.SignalR;
 using System;
@@ -24,15 +25,15 @@ namespace AirHockeyServer.Events.EventManagers
 
         public IGameService GameService { get; }
 
-        public TournamentManager TournamentManager { get; }
+        public ITournamentManager TournamentManager { get; }
 
-        public TournamentWaitingRoomEventManager()
+        public TournamentWaitingRoomEventManager(IGameService gameService, ITournamentManager tournamentManager)
         {
             this.RemainingTime = new ConcurrentDictionary<int, int>();
             TournamentMatchMakerService.Instance().OpponentFound += OnOpponentFound;
             HubContext = GlobalHost.ConnectionManager.GetHubContext<TournamentWaitingRoomHub>();
-            GameService = new GameService();
-            TournamentManager = new TournamentManager();
+            GameService = gameService;
+            TournamentManager = tournamentManager;
         }
 
         protected async void OnOpponentFound(object sender, UserEntity user)

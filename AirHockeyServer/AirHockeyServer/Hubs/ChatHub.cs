@@ -1,4 +1,5 @@
 ﻿using AirHockeyServer.Entities;
+using AirHockeyServer.Services.Interfaces;
 using Microsoft.AspNet.SignalR;
 using System;
 using System.Collections.Generic;
@@ -15,9 +16,9 @@ namespace AirHockeyServer.Services.ChatServiceServer
 
         public IChannelService ChannelService { get; }
 
-        public ChatHub()
+        public ChatHub(IChannelService channelService)
         {
-            ChannelService = new ChannelService();
+            ChannelService = channelService;
         }
 
         public bool Authenticate(string username)

@@ -13,7 +13,7 @@ class ConnectServerViewController: UIViewController {
     @IBOutlet weak var ipAddressErrorLabel: UILabel!
     @IBOutlet weak var loadingSpinner: UIActivityIndicatorView!
     
-    private let clientConnection = ClientConnection.sharedConnection
+    private let clientConnection = HubManager.sharedConnection
     
     // Mark: Actions
     @IBAction func connectServer(_ sender: Any) {

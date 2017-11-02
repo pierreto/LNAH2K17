@@ -1,5 +1,6 @@
 ﻿using AirHockeyServer.Entities;
 using AirHockeyServer.Services;
+using AirHockeyServer.Services.Interfaces;
 using Microsoft.AspNet.SignalR;
 using System;
 using System.Collections.Generic;
@@ -11,9 +12,9 @@ namespace AirHockeyServer.Hubs
 {
     public class TournamentWaitingRoomHub : Hub
     {
-        public TournamentWaitingRoomHub( )
+        public TournamentWaitingRoomHub(TournamentService tournamentService)
         {
-            TournamentService = new TournamentService();
+            TournamentService = tournamentService;
         }
 
         public ITournamentService TournamentService { get; }

@@ -6,16 +6,17 @@ using System.Web.Http;
 using AirHockeyServer.Entities;
 using AirHockeyServer.Services;
 using System.Threading.Tasks;
+using AirHockeyServer.Services.Interfaces;
 
 namespace AirHockeyServer.Controllers
 {
     public class SignupController : ApiController
     {
-        public SignupService SignupService { get; }
+        public ISignupService SignupService { get; }
 
-        public SignupController()
+        public SignupController(ISignupService signupService)
         {
-            this.SignupService = new SignupService();
+            this.SignupService = signupService;
         }
 
         [HttpPost]

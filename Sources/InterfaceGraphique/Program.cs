@@ -32,6 +32,7 @@ using InterfaceGraphique.Controls.WPF.Home;
 using InterfaceGraphique.Controls.WPF.ConnectServer;
 using InterfaceGraphique.Controls.WPF.Signup;
 using InterfaceGraphique.Services;
+using InterfaceGraphique.Editor;
 
 namespace InterfaceGraphique
 {
@@ -118,6 +119,7 @@ namespace InterfaceGraphique
             homeMenu = new HomeMenu();
             //mainMenu = new MainMenu();
             editeur = unityContainer.Resolve<Editeur>();
+            Editeur.mapManager = unityContainer.Resolve<MapManager>();
             configurationMenu = new ConfigurationMenu();
             quickPlay = new QuickPlay();
             testMode = new TestMode();
@@ -175,6 +177,9 @@ namespace InterfaceGraphique
 
             //Rest services instantiations
             unityContainer.RegisterType<MapService>();
+
+            //Other services
+            unityContainer.RegisterType<MapManager>();
 
 
         }

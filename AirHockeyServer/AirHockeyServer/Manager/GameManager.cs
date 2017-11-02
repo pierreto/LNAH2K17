@@ -10,7 +10,7 @@ using System.Web;
 
 namespace AirHockeyServer.Manager
 {
-    public class GameManager
+    public class GameManager : IGameManager
     {
         //public IPlayerStatsService PlayerStatsService { get; }
 

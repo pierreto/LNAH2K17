@@ -24,11 +24,21 @@ class EditorViewController: UIViewController {
     /// Instance singleton
     static var instance = EditorViewController()
     
-    //public var editorView: SCNView!
+    public var currentMap: MapEntity?
+    
     @IBOutlet weak var editorView: SCNView!
     public var editorScene: SCNScene!
+    public var editorNotificationScene: EditorNotificationScene?
     public var cameraNode: SCNNode!
+    
+    @IBOutlet weak var hudView: SCNView!
+    public var hudScene: SCNScene!
     public var editorHUDScene: EditorHUDScene?
+    
+    @IBOutlet weak var navigationBar: UINavigationItem!
+    
+    /// Object Properties View
+    @IBOutlet weak var objectPropertiesView: ObjectPropertiesView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,8 +56,23 @@ class EditorViewController: UIViewController {
         if self.editorHUDScene != nil {
             // Set the scale mode to scale to fit the window
             self.editorHUDScene?.scaleMode = .aspectFill
-            self.editorView.overlaySKScene = self.editorHUDScene
+            self.hudView.overlaySKScene = self.editorHUDScene
         }
+        
+        // Load the SKScene from 'EditorNotificationScene.sks'
+        self.editorNotificationScene = SKScene(fileNamed: "EditorNotificationScene") as? EditorNotificationScene
+        if self.editorNotificationScene != nil {
+            // Set the scale mode to scale to fit the window
+            self.editorNotificationScene?.scaleMode = .aspectFill
+            self.editorView.overlaySKScene = self.editorNotificationScene
+        }
+        
+        FacadeModele.instance.chargerCarte(map: currentMap!)
+
+        // Cacher les propriétés de l'objet par défaut
+        self.showObjectPropertiesView(activer: false)
+        self.objectPropertiesView.objectProperties.isHidden = true;
+        self.objectPropertiesView.hideObjectPropertiesButtons()
     }
     
     func initView() {
@@ -58,8 +83,11 @@ class EditorViewController: UIViewController {
     func initScene() {
         self.editorScene = SCNScene()
         self.editorView.scene = editorScene
-        
         self.editorView.isPlaying = true
+        
+        self.hudScene = SCNScene()
+        self.hudView.scene = hudScene
+        self.hudView.isPlaying = true
     }
     
     func initCamera() {
@@ -70,6 +98,41 @@ class EditorViewController: UIViewController {
     func initFacadeModele() {
         let facade = FacadeModele.instance
         facade.initialiser()
+    }
+    
+    /// Affichage de la vue de configuration des propriétés de la zone de jeu
+    @IBAction func showGeneralProperties(_ sender: Any) {
+        let generalPropertiesVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "GeneralPropertiesVCID") as! GeneralPropertiesViewController
+        self.addChildViewController(generalPropertiesVC)
+        
+        generalPropertiesVC.view.frame = self.view.frame
+        self.view.addSubview(generalPropertiesVC.view)
+        generalPropertiesVC.didMove(toParentViewController: self)
+        
+        // Désactiver la barre de navigation
+        self.enableNavigationBar(activer: false)
+    }
+    
+    func enableNavigationBar(activer: Bool) {
+        self.navigationBar.hidesBackButton = !activer
+        
+        for button in self.navigationBar.rightBarButtonItems! {
+            button.isEnabled = activer
+        }
+    }
+    
+    /// Afficher/Cacher la vue
+    func showObjectPropertiesView(activer: Bool) {
+        self.objectPropertiesView.isHidden = !activer
+        
+        if activer {
+            // Charger les informations de l'objet sélectionné
+            self.objectPropertiesView.loadObjectProperties()
+        }
+    }
+    
+    @IBAction func sauvegarderCarte(_ sender: Any) {
+        FacadeModele.instance.sauvegarderCarte(map: currentMap!)
     }
     
     override var shouldAutorotate: Bool {

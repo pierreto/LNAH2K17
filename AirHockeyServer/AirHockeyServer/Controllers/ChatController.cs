@@ -9,15 +9,16 @@ using System.Net;
 using System.Threading.Tasks;
 using AirHockeyServer.Entities;
 using AirHockeyServer.Services;
+using AirHockeyServer.Services.Interfaces;
 
 namespace AirHockeyServer.Controllers
 {
     public class ChatController : ApiController
     {
 
-        public ChatController()
+        public ChatController(IChatService chatService)
         {
-            ChatService = new ChatService();
+            ChatService = chatService;
         }
 
         public IChatService ChatService { get; }

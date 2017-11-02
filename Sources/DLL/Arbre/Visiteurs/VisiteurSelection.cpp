@@ -9,6 +9,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "VisiteurSelection.h"
+#include "ModeleEtatJeu.h"
 
 
 ////////////////////////////////////////////////////////////////////////
@@ -24,11 +25,13 @@
 /// @return Aucune
 ///
 ////////////////////////////////////////////////////////////////////////
-VisiteurSelection::VisiteurSelection(glm::dvec3 rayStart, glm::dvec3 rayEnd, bool ctrl) 
+VisiteurSelection::VisiteurSelection(glm::dvec3 rayStart, glm::dvec3 rayEnd, bool ctrl, SelectionEventCallback callback)
 : nbSelections_(0), multiSelection_(false) {
 	ctrl_ = ctrl;
 	pointDebut_ = rayStart;
 	pointFin_ = rayEnd;
+	selectionEventCallback_ = callback;
+
 }
 
 
@@ -45,12 +48,13 @@ VisiteurSelection::VisiteurSelection(glm::dvec3 rayStart, glm::dvec3 rayEnd, boo
 /// @return Aucune
 ///
 ////////////////////////////////////////////////////////////////////////
-VisiteurSelection::VisiteurSelection(glm::dvec3 pointAncrage, glm::dvec3 pointFinal, bool multiSelection, bool ctrl) 
+VisiteurSelection::VisiteurSelection(glm::dvec3 pointAncrage, glm::dvec3 pointFinal, bool multiSelection, bool ctrl, SelectionEventCallback callback)
  : nbSelections_(0) {
 	multiSelection_ = multiSelection;
 	ctrl_ = ctrl;
 	pointDebut_ = pointAncrage;
 	pointFin_ = pointFinal;
+	selectionEventCallback_ = callback;
 }
 
 
@@ -146,12 +150,8 @@ void VisiteurSelection::sphereCollisionTest(NoeudAbstrait* noeud) {
 	aidecollision::DetailsCollision collisionDetails = aidecollision::calculerCollisionSegment(pointDebut_, pointFin_, noeud->obtenirPositionRelative(), sphereCollider.rayon, true);
 
 	if (collisionDetails.type != aidecollision::COLLISION_AUCUNE) {
-		if (ctrl_)
-			noeud->inverserSelection();
-		else
-			noeud->selectionnerTout();
+		handleSelection(noeud);
 
-		nbSelections_++;
 	}
 }
 
@@ -174,12 +174,7 @@ void VisiteurSelection::cubeCollisionTest(NoeudAbstrait* noeud) {
 	aidecollision::DetailsCollision collisionDetails = aidecollision::calculerCollisionSegment(pointDebut_, pointFin_, cubeCollider.coinMin, cubeCollider.coinMax, noeud->obtenirScale(), noeud->obtenirMatriceRotationTranslation());
 
 	if (collisionDetails.type != aidecollision::COLLISION_AUCUNE) {
-		if (ctrl_) 
-			noeud->inverserSelection();
-		else
-			noeud->selectionnerTout();
-
-		nbSelections_++;
+		handleSelection(noeud);
 	}
 }
 
@@ -202,16 +197,37 @@ void VisiteurSelection::cylinderCollisionTest(NoeudAbstrait* noeud) {
 	glm::vec3 pos = noeud->obtenirPositionRelative();
 
 	if(utilitaire::segmentCercleIntersect(pointDebut_, pointFin_, glm::vec3(pos.x, 0, pos.z), cylinderCollider.rayon)) {
-		if (ctrl_)
-			noeud->inverserSelection();
-		else
-			noeud->selectionnerTout();
 
-		nbSelections_++;
+		handleSelection(noeud);
 	}
 }
 
+void VisiteurSelection::handleSelection(NoeudAbstrait* node)
+{
+	if(!node->isSelectedByAnotherUser())
+	{
+		if (ctrl_)
+		{
+			if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
+			{
+				selectionEventCallback_(node->getUUID(), !node->estSelectionne(), false);
+			}
+			node->inverserSelection();
 
+		}
+		else
+		{
+			node->selectionnerTout();
+			if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
+			{
+				selectionEventCallback_(node->getUUID(), node->estSelectionne(), false);
+			}
+		}
+		nbSelections_++;
+	}
+
+
+}
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn VisiteurSelection::selectionCentreNoeud(NoeudAbstrait* noeud, std::string typeObjet)
@@ -228,12 +244,8 @@ void VisiteurSelection::selectionCentreNoeud(NoeudAbstrait* noeud) {
 	glm::vec3 positionRelative = noeud->obtenirPositionRelative();
 
 	if ((positionRelative.x >= min(pointDebut_.x, pointFin_.x)) && (positionRelative.x <= max(pointDebut_.x, pointFin_.x)) && (positionRelative.z >= min(pointDebut_.z, pointFin_.z)) && (positionRelative.z <= max(pointDebut_.z, pointFin_.z))) {
-		if (ctrl_)
-			noeud->inverserSelection();
-		else
-			noeud->selectionnerTout();
+		handleSelection(noeud);
 			
-		nbSelections_++;
 	}
 }
 

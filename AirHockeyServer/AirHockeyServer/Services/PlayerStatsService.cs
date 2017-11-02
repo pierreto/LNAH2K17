@@ -1,5 +1,7 @@
 ﻿using AirHockeyServer.Entities;
 using AirHockeyServer.Repositories;
+using AirHockeyServer.Repositories.Interfaces;
+using AirHockeyServer.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,14 +10,14 @@ using System.Web;
 
 namespace AirHockeyServer.Services
 {
-    public class PlayerStatsService
+    public class PlayerStatsService : IPlayerStatsService
     {
-        public PlayerStatsService()
-        {
-            PlayerStatsRepository = new PlayerStatsRepository();
-        }
+        protected IPlayerStatsRepository PlayerStatsRepository { get; set; }
 
-        public PlayerStatsRepository PlayerStatsRepository { get; }
+        public PlayerStatsService(IPlayerStatsRepository playerStatsRepository)
+        {
+            PlayerStatsRepository = playerStatsRepository;
+        }
 
         public async Task AddPoints(int userId, int pointsNb)
         {

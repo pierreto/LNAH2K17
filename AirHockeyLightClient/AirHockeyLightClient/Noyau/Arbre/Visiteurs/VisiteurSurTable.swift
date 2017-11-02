@@ -58,6 +58,11 @@ class VisiteurSurTable: VisiteurAbstrait {
     
     /// Visiter un mur pour la vérification sur la table
     func visiterMur(noeud: NoeudMur) {
+        if self.table != nil {
+            // Test de l'intersection d'un cube avec la table
+            self.testPoints(noeud: noeud)
+            self.intersectCubeTable(noeud: noeud)
+        }
     }
     
     /// Visiter un portail pour la vérification sur la table
@@ -70,23 +75,15 @@ class VisiteurSurTable: VisiteurAbstrait {
     
     //virtual void visiterRondelle(NoeudRondelle* noeud);
     
-    /// Cette fonction test si les points d'un noeud sont tous sur la table
+    /// Cette fonction teste si les points d'un noeud sont tous sur la table
     private func testPoints(noeud: NoeudCommun) {
-        // Ramasser les sommets du noeuds
-        var sommets: [SCNVector3] = self.obtenirSommets(noeud: noeud)
-    
-        // Appliquer les transformations sur les points
-        for i in 0..<sommets.count {
-            var sommetTransforme = GLKVector4.init(v: (sommets[i].x, sommets[i].y, sommets[i].z, 1.0))
-            sommetTransforme = GLKMatrix4MultiplyVector4(SCNMatrix4ToGLKMatrix4(noeud.transform), sommetTransforme)
-            sommets[i] = SCNVector3.init(sommetTransforme.x, sommetTransforme.y, sommetTransforme.z)
-        }
-    
-        // Ajouter le centre du noeud
-        sommets.append(SCNVector3FromGLKVector3(noeud.obtenirPositionRelative()))
-    
-        // Enleve les doublons
-        sommets = self.enleverDoublons(vec: sommets);
+        var sommets = [SCNVector3]()
+        
+        // Point minimal
+        sommets.append(noeud.convertPosition(noeud.boundingBox.min, to: FacadeModele.instance.obtenirVue().editorScene.rootNode))
+        
+        // Point maximal
+        sommets.append(noeud.convertPosition(noeud.boundingBox.max, to: FacadeModele.instance.obtenirVue().editorScene.rootNode))
     
         // Verifier que tous les noeuds sont sur la table
         for sommet in sommets {
@@ -95,20 +92,6 @@ class VisiteurSurTable: VisiteurAbstrait {
                 return;
             }
         }
-    }
-    
-    /// Cette fonction retourne les points d'un noeud de l'arbre de rendu
-    private func obtenirSommets(noeud: NoeudCommun) -> [SCNVector3] {
-        let vertexSources = noeud.geometry?.getGeometrySources(for: SCNGeometrySource.Semantic.vertex)
-        
-        if let vertexSource = vertexSources?.first {
-            let count = vertexSource.data.count / MemoryLayout<SCNVector3>.size
-            return vertexSource.data.withUnsafeBytes {
-                [SCNVector3](UnsafeBufferPointer<SCNVector3>(start: $0, count: count))
-            }
-        }
-        
-        return []
     }
     
     /// Cette fonction enleve les doublons pour un vecteur de sommets
@@ -164,6 +147,37 @@ class VisiteurSurTable: VisiteurAbstrait {
         }
     
         return false;
+    }
+    
+    /// Cette fonction trouve si les segments d'un cube croise le contour de la table.
+    func intersectCubeTable(noeud: NoeudCommun) {
+        // Les sommets de la table
+        let sommetsTable = self.table?.obtenirSommetsPatinoire()
+    
+        // Recherche des points pertinents
+        let c = noeud.boundingBox
+        let cMin = noeud.convertPosition(c.min, to: FacadeModele.instance.obtenirVue().editorScene.rootNode)
+        let cMax = noeud.convertPosition(c.max, to: FacadeModele.instance.obtenirVue().editorScene.rootNode)
+        
+        var sommets = [GLKVector3]()
+        sommets.append(GLKVector3.init(v: (cMin.x, 0, cMin.z)))
+        sommets.append(GLKVector3.init(v: (cMin.x, 0, cMax.z)))
+        sommets.append(GLKVector3.init(v: (cMax.x, 0, cMax.z)))
+        sommets.append(GLKVector3.init(v: (cMax.x, 0, cMin.z)))
+    
+        let sommetsTableCount: Int! = sommetsTable?.count
+        let sommetsCount = sommets.count
+        for i in 1..<sommetsTableCount {
+            for j in 0..<sommetsCount {
+                if MathHelper.segmentsIntersect(
+                    s11: SCNVector3ToGLKVector3(sommetsTable![i]),
+                    s12: SCNVector3ToGLKVector3(sommetsTable![(i % (sommetsTableCount - 1)) + 1]),
+                    s21: sommets[j],
+                    s22: sommets[(j + 1) % sommetsCount]) {
+                        self.sontSurTable = false
+                }
+            }
+        }
     }
     
     /// Cette fonction trouve si un accélérateur croise les côtés de la table

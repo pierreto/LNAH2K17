@@ -8,6 +8,7 @@ using AirHockeyServer.Entities;
 using System.Threading.Tasks;
 using AirHockeyServer.Events;
 using System.Diagnostics;
+using AirHockeyServer.Services.Interfaces;
 
 namespace AirHockeyServer.Hubs
 {
@@ -33,9 +34,9 @@ namespace AirHockeyServer.Hubs
         /// @return Aucune (Constructeur).
         ///
         ////////////////////////////////////////////////////////////////////////
-        public GameWaitingRoomHub()
+        public GameWaitingRoomHub(IGameService gameService)
         {
-            GameService = new GameService();
+            GameService = gameService;
         }
         
         /// @fn void JoinGame(UserEntity user)

@@ -1,4 +1,5 @@
 ﻿using AirHockeyServer.Services;
+using AirHockeyServer.Services.Interfaces;
 using System;
 using System.Net;
 using System.Net.Http;
@@ -10,11 +11,11 @@ namespace AirHockeyServer.Controllers
     public class UserController : ApiController
     {
 
-        public UserService UserService { get; }
+        public IUserService UserService { get; }
 
-        public UserController()
+        public UserController(IUserService userService)
         {
-            this.UserService = new UserService();
+            this.UserService = userService;
         }
 
         [HttpGet]

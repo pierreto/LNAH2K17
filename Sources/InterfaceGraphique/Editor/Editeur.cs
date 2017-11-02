@@ -15,6 +15,8 @@ using System.IO;
 using InterfaceGraphique.Entities;
 using InterfaceGraphique.CommunicationInterface.RestInterface;
 using InterfaceGraphique.Editor.EditorState;
+using InterfaceGraphique.Services;
+using InterfaceGraphique.Editor;
 
 namespace InterfaceGraphique {
 
@@ -26,11 +28,16 @@ namespace InterfaceGraphique {
     ///////////////////////////////////////////////////////////////////////////
     public partial class Editeur : Form
     {
+        public static MapManager mapManager; // Initialized in Program.cs
+
         private OfflineEditorState offlineState;
         private OnlineEditorState onlineState;
         private MODELE_ETAT outilCourrant = MODELE_ETAT.AUCUN;
-        private string nameSavedMap;
-        private bool savedOnline;
+
+        public MODELE_ETAT OutilCourrant
+        {
+            get => outilCourrant;
+        }
 
         public AbstractEditorState CurrentState { get; set; }
 
@@ -45,12 +52,9 @@ namespace InterfaceGraphique {
             InitializeComponent();
             InitializeEvents();
 
-            nameSavedMap = null;
-            savedOnline = false;
-
             this.offlineState = offlineState;
             this.onlineState = onlineState;
-            CurrentState= offlineState;
+            CurrentState = offlineState;
         }
 
 
@@ -157,13 +161,22 @@ namespace InterfaceGraphique {
             this.Toolbar_Wall.Click += async (sender, e) => await changerEtatEdition(sender, e, MODELE_ETAT.CREATION_MURET);
 
             // Menu dropdown options events
-            this.Fichier_Enregistrer.Click += async (sender, e) => await SaveFile();
-            this.Fichier_EnregistrerSous_Ordinateur.Click += (sender, e) => SaveFileAs();
-            this.Fichier_EnregistrerSous_Serveur.Click += async (sender, e) => await SaveMapOnline(); 
-            this.Fichier_OuvrirLocalement.Click += (sender, e) => OpenFile();
-            this.Fichier_OuvrirEnLigne.Click += async (sender, e) => await OpenOnlineMap();
-            this.Fichier_Nouveau.Click += async (sender, e) => await ResetDefaultTable();
-            this.Fichier_MenuPrincipal.Click += async (sender, e) => { await ResetDefaultTable(); Program.FormManager.CurrentForm = Program.MainMenu; };
+            this.Fichier_Enregistrer.Click += async (sender, e) => await mapManager.SaveMap();
+            this.Fichier_EnregistrerSous_Ordinateur.Click += (sender, e) => mapManager.ManageSavingLocalMap();
+            this.Fichier_EnregistrerSous_Serveur.Click += async (sender, e) => await mapManager.ManageSavingOnlineMap(); 
+            this.Fichier_OuvrirLocalement.Click += (sender, e) => mapManager.OpenLocalMap();
+            this.Fichier_OuvrirEnLigne.Click += (sender, e) => OpenOnlineMap();
+            this.Fichier_Nouveau.Click += async (sender, e) =>
+            { 
+                await ResetDefaultTable();
+                await CurrentState.LeaveEdition();
+            };
+            this.Fichier_MenuPrincipal.Click += async (sender, e) =>
+            {
+                await ResetDefaultTable();
+                CurrentState.LeaveEdition();
+                Program.FormManager.CurrentForm = Program.MainMenu;
+            };
             this.Fichier_ModeTest.Click += (sender, e) => Program.FormManager.CurrentForm = Program.TestMode;
             this.Fichier_Propriete.Click += (sender, e) => Program.GeneralProperties.ShowDialog();
 
@@ -363,208 +376,20 @@ namespace InterfaceGraphique {
         }
 
 
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// Cette fonction prend en charge l'ouverture d'un fichier de 
-        /// sauvegarde deja existant en JSON.
-        ///
-        /// @return Void 
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void OpenFile() {
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Filter = "JSON Files (JSON)|*.json";
-            ofd.InitialDirectory = Directory.GetCurrentDirectory() + "\\zones";
-
-            if (ofd.ShowDialog() == DialogResult.OK) {
-                StringBuilder json = new StringBuilder(File.ReadAllText(ofd.FileName));
-                float[] coefficients = new float[3];
-                FonctionsNatives.chargerCarte(json, coefficients);
-                Program.GeneralProperties.SetCoefficientValues(coefficients);
-                nameSavedMap = ofd.FileName;
-            }
-        }
-
-        public void JoinEdition(MapEntity map)
+        public async Task JoinEdition(MapEntity map)
         {
-            this.CurrentState= this.onlineState;
+            this.CurrentState = this.onlineState;
+            await this.CurrentState.LeaveEdition();
             this.CurrentState.JoinEdition(map);
-            this.LoadMap(map);
+            await mapManager.OpenOnlineMap(map);
         }
 
-        private async Task OpenOnlineMap()
+        private void OpenOnlineMap()
         {
-
             Program.EditorHost.SwitchViewToServerBrowser();
             Program.EditorHost.ShowDialog();
-            /*
-
-                            if (SelectedMap.Private)
-                            {
-                                InterfaceGraphique.Editor.OpenPrivateMapForm passwordForm = new InterfaceGraphique.Editor.OpenPrivateMapForm();
-
-                                if (passwordForm.ShowDialog() != DialogResult.OK || passwordForm.Text_MapPassword.Text != SelectedMap.Password)
-                                {
-                                    MessageBox.Show(
-                                        @"Mot de passe erroné.",
-                                        @"Erreur",
-                                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                    return;
-                                }
-                            }
-
-                            StringBuilder json = new StringBuilder(SelectedMap.Json);
-                            float[] coefficients = new float[3];
-                            FonctionsNatives.chargerCarte(json, coefficients);
-                            Program.GeneralProperties.SetCoefficientValues(coefficients);
-                            nameSavedMap = SelectedMap.MapName;
-                        }
-                        else
-                        {
-                            MessageBox.Show(
-                                @"Impossible de charger les cartes, veuillez réessayer plus tard.",
-                                @"Internal error",
-                                MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }*/
         }
 
-        private void LoadMap(MapEntity map)
-        {
-            StringBuilder json = new StringBuilder(map.Json);
-            float[] coefficients = new float[3];
-            FonctionsNatives.chargerCarte(json, coefficients);
-            Program.GeneralProperties.SetCoefficientValues(coefficients);
-            nameSavedMap = map.MapName;
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// Cette fonction prend en charge la sauvegarde d'un fichier .json 
-        /// déjà existant. Dans le cas il n'existe pas, ouvrir la fentetre
-        /// d'enregistrment complete.
-        ///
-        /// @return Void 
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private async Task SaveFile() {
-            if (nameSavedMap != null)
-            {
-                if (savedOnline)
-                {
-                    await _SaveMapOnline(nameSavedMap);
-                }
-                else if (File.Exists(nameSavedMap))
-                {
-                    StringBuilder filePath = new StringBuilder(nameSavedMap.Length);
-                    filePath.Append(nameSavedMap);
-                    FonctionsNatives.enregistrerSous(filePath, Program.GeneralProperties.GetCoefficientValues());
-                }
-            }
-            else
-            {
-                Editor.SaveMapForm form = new Editor.SaveMapForm();
-                form.ShowDialog();
-                if (form.SaveOnline)
-                {
-                    await SaveMapOnline();
-                }
-                else
-                {
-                    SaveFileAs();
-                }
-            }
-        }
-
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// Cette fonction prend en charge la sauvegarde d'un nouveau 
-        /// fichier .json pour conserver la carte en cours d'édition.
-        ///
-        /// @return Void 
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void SaveFileAs() {
-            SaveFileDialog sfd = new SaveFileDialog();
-            sfd.DefaultExt = "json";
-            sfd.AddExtension = true;
-            sfd.Filter = "JSON Files (JSON)|*.json";
-            sfd.InitialDirectory = Directory.GetCurrentDirectory() + "\\zones";
-
-            if (sfd.ShowDialog() == DialogResult.OK) {
-                StringBuilder filePath = new StringBuilder(sfd.FileName.Length);
-                filePath.Append(sfd.FileName);
-                FonctionsNatives.enregistrerSous(filePath, Program.GeneralProperties.GetCoefficientValues());
-                nameSavedMap = sfd.FileName;
-            }
-        }
-
-        private async Task _SaveMapOnline(string mapName, string pwdMap = null)
-        {
-                StringBuilder sb = new StringBuilder(2000);
-                FonctionsNatives.getMapJson(Program.GeneralProperties.GetCoefficientValues(), sb);
-                string json = sb.ToString();
-
-                MapEntity map = new MapEntity {
-                    Creator = Program.user.Username,
-                    MapName = mapName,
-                    LastBackup = DateTime.Now,
-                    Json = json,
-                    Private = (pwdMap != null) ? true : false,
-                    Password = pwdMap
-                };
-
-                HttpResponseMessage response = await Program.client.PostAsJsonAsync("api/maps/save", map);
-                if (!response.IsSuccessStatusCode)
-                {
-                    MessageBox.Show(
-                        @"Impossible de sauvegarder la carte. Veuillez ré-essayer plus tard.",
-                        @"Internal error",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                else
-                {
-                    nameSavedMap = mapName;
-                    savedOnline = true;
-                }
-        }
-
-        private async Task SaveMapOnline()
-        {
-            Editor.SaveMapOnlineForm form = new Editor.SaveMapOnlineForm();
-
-            if (form.ShowDialog() == DialogResult.OK && form.Text_MapName.Text.Length > 0)
-            {
-                string MapName = form.Text_MapName.Text;
-
-                if (form.Button_PrivateMap.Checked)
-                {
-                    if (form.Text_PwdMap.Text.Length >= 5)
-                    {
-                        await _SaveMapOnline(MapName, form.Text_PwdMap.Text);
-                    }
-                    else
-                    {
-                        MessageBox.Show(
-                            @"Le mot de passe pour accéder à la carte doit contenir au moins 5 caractères.",
-                            @"Error",
-                            MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-                else
-                {
-                    await _SaveMapOnline(MapName);
-                }
-            }
-            else
-            {
-                MessageBox.Show(
-                    @"Le nom de carte ne peut être vide.",
-                    @"Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
 
         ////////////////////////////////////////////////////////////////////////
         ///
@@ -574,13 +399,13 @@ namespace InterfaceGraphique {
         /// @return Void 
         ///
         ////////////////////////////////////////////////////////////////////////
-        private async Task ResetDefaultTable() {
+        public async Task ResetDefaultTable() {
             FonctionsNatives.resetNodeTree();
             FonctionsNatives.resetCameraPosition();
             FonctionsNatives.redimensionnerFenetre(this.Size.Width + Toolbar.Size.Width, this.Size.Height - MenuBar.Size.Height);
             Program.GeneralProperties.ResetProperties();
+            mapManager.resetMapInfo();
             await changerEtatEdition(this.Toolbar_Select, null, MODELE_ETAT.SELECTION);
-            nameSavedMap = null;
         }
 
 
@@ -595,11 +420,6 @@ namespace InterfaceGraphique {
         private async Task selectionSupprimee() {
             Edition_Supprimer.Enabled = false;
             this.Panel_PropertiesBack.Visible = false;
-
-            if (nameSavedMap != null)
-            {
-                await SaveFile();
-            }
         }
 
 
@@ -624,11 +444,6 @@ namespace InterfaceGraphique {
             FonctionsNatives.changerModeleEtat((int)etatEdition);
             this.Edition_Supprimer.Enabled = FonctionsNatives.verifierSelection();
             this.Cursor = Cursors.Default;
-
-            if (nameSavedMap != null)
-            {
-                await SaveFile();
-            }
         }
 
 
@@ -702,44 +517,44 @@ namespace InterfaceGraphique {
                     return true;
 
                 case Keys.D:
-                    Task.Run(() => changerEtatEdition(Toolbar_Move, null, MODELE_ETAT.DEPLACEMENT));
+                    Task.Run(async () => await changerEtatEdition(Toolbar_Move, null, MODELE_ETAT.DEPLACEMENT));
                     return true;
 
                 case Keys.S:
-                    Task.Run(() => changerEtatEdition(Toolbar_Select, null, MODELE_ETAT.SELECTION));
+                    Task.Run(async () => await changerEtatEdition(Toolbar_Select, null, MODELE_ETAT.SELECTION));
                     return true;
 
                 case Keys.R:
-                    Task.Run(() => changerEtatEdition(Toolbar_Rotate, null, MODELE_ETAT.ROTATION));
+                    Task.Run(async () => await changerEtatEdition(Toolbar_Rotate, null, MODELE_ETAT.ROTATION));
                     return true;
 
                 case Keys.E:
-                    Task.Run(() => changerEtatEdition(Toolbar_Scale, null, MODELE_ETAT.MISE_A_ECHELLE));
+                    Task.Run(async () => await changerEtatEdition(Toolbar_Scale, null, MODELE_ETAT.MISE_A_ECHELLE));
                     return true;
 
                 case Keys.C:
-                    Task.Run(() => changerEtatEdition(Toolbar_Duplicate, null, MODELE_ETAT.DUPLIQUER));
+                    Task.Run(async () => await changerEtatEdition(Toolbar_Duplicate, null, MODELE_ETAT.DUPLIQUER));
                     return true;
 
                 case Keys.Z:
                     if(Toolbar_Zoom.Enabled)
-                        Task.Run(() => changerEtatEdition(Toolbar_Zoom, null, MODELE_ETAT.ZOOM));
+                        Task.Run(async () => await changerEtatEdition(Toolbar_Zoom, null, MODELE_ETAT.ZOOM));
                     return true;
 
                 case Keys.G:
-                    Task.Run(() => changerEtatEdition(Toolbar_ControlPoint, null, MODELE_ETAT.POINTS_CONTROLE));
+                    Task.Run(async () => await changerEtatEdition(Toolbar_ControlPoint, null, MODELE_ETAT.POINTS_CONTROLE));
                     return true;
 
                 case Keys.M:
-                    Task.Run(() => changerEtatEdition(Toolbar_Wall, null, MODELE_ETAT.CREATION_MURET));
+                    Task.Run(async () => await changerEtatEdition(Toolbar_Wall, null, MODELE_ETAT.CREATION_MURET));
                     return true;
 
                 case Keys.P:
-                    Task.Run(() => changerEtatEdition(Toolbar_Portal, null, MODELE_ETAT.CREATION_PORTAIL));
+                    Task.Run(async () => await changerEtatEdition(Toolbar_Portal, null, MODELE_ETAT.CREATION_PORTAIL));
                     return true;
 
                 case Keys.B:
-                    Task.Run(() => changerEtatEdition(Toolbar_Booster, null, MODELE_ETAT.CREATION_ACCELERATEUR));
+                    Task.Run(async () => await changerEtatEdition(Toolbar_Booster, null, MODELE_ETAT.CREATION_ACCELERATEUR));
                     return true;
 
                 case Keys.T:
@@ -747,19 +562,19 @@ namespace InterfaceGraphique {
                     return true;
 
                 case (Keys.N | Keys.Control):
-                    Task.Run(() => ResetDefaultTable());
+                    Task.Run(async () => await ResetDefaultTable());
                     return true;
 
                 case (Keys.O | Keys.Control):
-                    OpenFile();
+                    mapManager.OpenLocalMap();
                     return true;
 
                 case (Keys.S | Keys.Control):
-                    Task.Run(() => SaveFile());
+                    Task.Run(async () => await mapManager.SaveMap());
                     return true;
 
                 case (Keys.Q | Keys.Control):
-                    Task.Run(() => ResetDefaultTable());
+                    Task.Run(async () => await ResetDefaultTable());
                     Program.FormManager.CurrentForm = Program.MainMenu;
                     return true;
 
@@ -780,11 +595,11 @@ namespace InterfaceGraphique {
                     return true;
                     
                 case Keys.D1:
-                    Task.Run(() => ToggleOrbit(false));
+                    Task.Run(async () => await ToggleOrbit(false));
                     return true;
 
                 case Keys.D2:
-                    Task.Run(() => ToggleOrbit(true));
+                    Task.Run(async () => await ToggleOrbit(true));
                     return true;
             }
 

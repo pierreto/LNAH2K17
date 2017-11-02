@@ -8,24 +8,27 @@ using System.Web;
 using System.Timers;
 using AirHockeyServer.Services;
 using AirHockeyServer.Core;
+using AirHockeyServer.Services.Interfaces;
 
 namespace AirHockeyServer.Manager
 {
-    public class TournamentManager
+    public class TournamentManager : ITournamentManager
     {
         private const int FINAL_DELAI = 10000;
 
         protected Dictionary<int, int> ElapsedTime { get; set; }
-        public PlayerStatsService PlayerStatsService { get; }
-        public GameManager GameManager { get; private set; }
 
-        public TournamentManager()
+        public IPlayerStatsService PlayerStatsService { get; }
+
+        public IGameManager GameManager { get; private set; }
+
+        public TournamentManager(IPlayerStatsService playerStatsService, IGameManager gameManager)
         {
             this.ElapsedTime = new Dictionary<int, int>();
-            PlayerStatsService = new PlayerStatsService();
-            GameManager = new GameManager();
+            PlayerStatsService = playerStatsService;
+            GameManager = gameManager;
 
-            GameManager.TournamentUpdateNeeded += (sender, game) => UpdateTournamentGames(game, game.TournamentId);
+            //GameManager.TournamentUpdateNeeded += (sender, game) => UpdateTournamentGames(game, game.TournamentId);
         }
 
         public void AddTournament(TournamentEntity tournament)

@@ -9,6 +9,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 import UIKit
+import GLKit
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class ModeleEtat
@@ -44,6 +45,10 @@ class ModeleEtat {
         self.position = sender.location(in: sender.view)
     }
     
+    // PINCH
+    func pinchGesture(sender: UIPinchGestureRecognizer) {
+    }
+    
     /// Fonction pour obtenir la vue rapidement
     func obtenirVue() -> UIViewController {
         return FacadeModele.instance.obtenirVue()
@@ -53,7 +58,51 @@ class ModeleEtat {
     func noeudsSurLaTable() -> Bool {
         let visiteur = VisiteurSurTable()
         FacadeModele.instance.obtenirArbreRendu().accepterVisiteur(visiteur: visiteur)
-        return visiteur.obtenirSontSurTable()
+        let sontSurTable = visiteur.obtenirSontSurTable()
+        
+        // Faire apparaître un message d'erreur
+        if !sontSurTable {
+            FacadeModele.instance.obtenirVue().editorNotificationScene?.showErrorOutOfBoundMessage(activer: true)
+        }
+        
+        return sontSurTable
+    }
+    
+    /// Détermine le déplacement (delta)
+    func obtenirDeplacement() -> GLKVector3 {
+        let arbre = FacadeModele.instance.obtenirArbreRendu()
+        let table = arbre.childNode(withName: arbre.NOM_TABLE, recursively: true) as! NoeudTable
+        
+        let start = MathHelper.CGPointToSCNVector3(view: FacadeModele.instance.obtenirVue().editorView,
+                                                   depth: table.position.z, point: self.lastPosition)
+        let end = MathHelper.CGPointToSCNVector3(view: FacadeModele.instance.obtenirVue().editorView,
+                                                 depth: table.position.z, point: self.position)
+        let delta = GLKVector3Make(end.x - start.x, end.y - start.y, end.z - start.z)
+        
+        return delta
+    }
+    
+    /// Supprimer les noeuds sélectionnés
+    final func supprimerSelection() {
+        let arbre = FacadeModele.instance.obtenirArbreRendu()
+        
+        /// Supprimer les objets sélectionnés
+        let visiteur = VisiteurObtenirSelection()
+        arbre.accepterVisiteur(visiteur: visiteur)
+        let noeuds = visiteur.obtenirNoeuds()
+        
+        for noeud in noeuds {
+            // Suppression du portail opposé qu'il soit sélectionné ou non
+            if noeud.obtenirType() == arbre.NOM_PORTAIL {
+                let portail = noeud as! NoeudPortail
+                portail.obtenirOppose().removeFromParentNode()
+            }
+            
+            noeud.removeFromParentNode()
+        }
+        
+        let table = arbre.childNode(withName: arbre.NOM_TABLE, recursively: true) as! NoeudTable
+        table.deselectionnerTout()
     }
 }
 

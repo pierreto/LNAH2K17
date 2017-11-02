@@ -122,7 +122,7 @@ void ModeleEtatDeplacement::playerMouseMove(int x, int y) {
 		FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(lastMousePosX_, lastMousePosY_, start);
 		FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(mousePosX_, mousePosY_, end);
 
-		VisiteurDeplacement visiteur = VisiteurDeplacement(end - start);
+		VisiteurDeplacement visiteur = VisiteurDeplacement(end - start,moveEventCallback_);
 		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(&visiteur);
 
 		deplacementTotal_  += (end - start);
