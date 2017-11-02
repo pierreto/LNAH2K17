@@ -38,13 +38,19 @@ class DBManager {
     
     func effacerCarte(mapName: String) {
         try! realm.write {
-            let map = self.realm.objects(MapEntity.self).filter("name == %@", mapName)
+            let map = self.realm.objects(MapEntity.self).filter("mapName == %@", mapName)
             realm.delete(map)
         }
     }
     
+    func effacerToutesCartes() {
+        try! realm.write {
+            self.realm.deleteAll()
+        }
+    }
+    
     func isMapNameUnique(mapName: String) -> Bool {
-        let maps = self.realm.objects(MapEntity.self).filter("name == %@", mapName)
+        let maps = self.realm.objects(MapEntity.self).filter("mapName == %@", mapName)
         return maps.count == 0
     }
     

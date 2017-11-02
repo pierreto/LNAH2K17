@@ -92,10 +92,10 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBAction func sendMessage(_ sender: UIButton?) {
         if chatInput.text != "" {
             let message = [
-                "Sender": clientConnection.getUsername(),
+                "Sender": clientConnection.getUsername()!,
                 "MessageValue": self.chatInput.text!,
                 "TimeStamp": Date().description
-            ]
+            ] as [String : Any]
             let chatHub = clientConnection.getChatHub()
             chatHub.SendBroadcast(message : message)
 

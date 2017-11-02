@@ -40,7 +40,7 @@ class Maps: NSObject {
 
     func saveMap(mapName: String, isLocalMap: Bool, isPrivateMap: Bool) {
         let map = MapEntity()
-        map.name = mapName
+        map.mapName = mapName
         
         DBManager.instance.sauvegarderCarte(map: map)
     }

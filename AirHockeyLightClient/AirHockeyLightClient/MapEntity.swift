@@ -19,11 +19,14 @@ import RealmSwift
 ///////////////////////////////////////////////////////////////////////////
 class MapEntity : Object {
     
-    dynamic var name: String?
-    dynamic var creationDate: String?
+    let id = RealmOptional<Int>()
     dynamic var creator: String?
-    dynamic var type: String?
+    dynamic var mapName: String?
+    dynamic var lastBackup: Date?
     dynamic var json: String?
+    let privacy = RealmOptional<Bool>()
+    dynamic var password: String?
+    let currentNumberOfPlayer = RealmOptional<Int>()
     
 }
 
