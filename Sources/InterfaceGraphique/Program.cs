@@ -120,7 +120,6 @@ namespace InterfaceGraphique
             openGLPanel = new Panel();
             formManager = new FormManager();
             homeMenu = new HomeMenu();
-            editeur = unityContainer.Resolve<Editeur>();
             Editeur.mapManager = unityContainer.Resolve<MapManager>();
             configurationMenu = new ConfigurationMenu();
             quickPlay = new QuickPlay();
@@ -143,7 +142,7 @@ namespace InterfaceGraphique
         public static void InitAfterConnection()
         {
             mainMenu = new MainMenu();
-            //editeur = unityContainer.Resolve<Editeur>();
+            editeur = unityContainer.Resolve<Editeur>();
             quickPlayMenu = new QuickPlayMenu();
             tournementMenu = new TournementMenu();
             tournementTree = new TournementTree();
