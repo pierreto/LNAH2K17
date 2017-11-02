@@ -15,7 +15,8 @@ namespace InterfaceGraphique.Game.GameState
         private GameHub gameHub;
         private bool gameHasEnded = false;
         private FonctionsNatives.GoalCallback callback;
-
+        private int ELapsedTime = 0;
+        private const int SERVER_INTERVAL = 5;
         public MasterGameState(GameHub gameHub)
         {
             this.gameHub = gameHub;
@@ -55,15 +56,21 @@ namespace InterfaceGraphique.Game.GameState
             FonctionsNatives.moveMaillet();
             FonctionsNatives.animer(tempsInterAffichage);
             FonctionsNatives.dessinerOpenGL();
+            ELapsedTime++;
 
-            float[] slavePosition = new float[3];
-            float[] masterPosition = new float[3];
-            float[] puckPosition = new float[3];
+            //if (ELapsedTime >= SERVER_INTERVAL)
+            //{
+                ELapsedTime = 0;
 
-            FonctionsNatives.getGameElementPositions(slavePosition,masterPosition,puckPosition);
+                float[] slavePosition = new float[3];
+                float[] masterPosition = new float[3];
+                float[] puckPosition = new float[3];
 
-             gameHub.SendMasterPosition(slavePosition, masterPosition, puckPosition);
-       
+                FonctionsNatives.getGameElementPositions(slavePosition,masterPosition,puckPosition);
+            
+                gameHub.SendGameData(slavePosition, masterPosition, puckPosition);
+            //}
+
 
         }
         ////////////////////////////////////////////////////////////////////////

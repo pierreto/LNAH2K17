@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace AirHockeyServer.Services
+namespace AirHockeyServer.Repositories
 {
-    public interface IService
+    public interface ITournamentRepository
     {
     }
 }

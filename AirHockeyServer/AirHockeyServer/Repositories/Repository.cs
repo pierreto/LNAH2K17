@@ -3,16 +3,16 @@ using AirHockeyServer.Mapping;
 
 namespace AirHockeyServer.Repositories
 {
-    public abstract class Repository<T> where T : class, new()
+    public abstract class Repository
     {
-
         protected DataProvider DataProvider { get; set; }
+
         protected MapperManager MapperManager { get; set; }
 
-        public Repository()
+        public Repository(DataProvider dataProvider, MapperManager mapperManager)
         {
-            DataProvider = new DataProvider();
-            MapperManager = new MapperManager();
+            DataProvider = dataProvider;
+            MapperManager = mapperManager;
         }
     }
 }

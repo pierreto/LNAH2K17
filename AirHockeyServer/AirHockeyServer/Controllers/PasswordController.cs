@@ -1,4 +1,5 @@
 ﻿using AirHockeyServer.Services;
+using AirHockeyServer.Services.Interfaces;
 using System;
 using System.Net;
 using System.Net.Http;
@@ -10,11 +11,11 @@ namespace AirHockeyServer.Controllers
     public class PasswordController : ApiController
     {
 
-        public PasswordService PasswordService { get; }
+        public IPasswordService PasswordService { get; }
 
-        public PasswordController()
+        public PasswordController(IPasswordService passwordService)
         {
-            this.PasswordService = new PasswordService();
+            this.PasswordService = passwordService;
         }
 
         [HttpGet]

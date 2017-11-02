@@ -7,16 +7,18 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 using AirHockeyServer.Services;
+using AirHockeyServer.Repositories.Interfaces;
 
 namespace AirHockeyServer.Repositories
 {
-    public class PasswordRepository : Repository<PasswordRepository>
+    public class PasswordRepository : Repository, IPasswordRepository
     {
-        UserRepository UserRepository;
+        IUserRepository UserRepository;
 
-        public PasswordRepository()
+        public PasswordRepository(DataProvider dataProvider, MapperManager mapperManager, IUserRepository userRepository)
+            : base(dataProvider, mapperManager)
         {
-            UserRepository = new UserRepository();
+            UserRepository = userRepository;
         }
 
         public async Task<PasswordEntity> GetPasswordById(int id)

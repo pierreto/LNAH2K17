@@ -1,18 +1,20 @@
 ﻿using AirHockeyServer.Entities;
 using AirHockeyServer.Repositories;
+using AirHockeyServer.Repositories.Interfaces;
+using AirHockeyServer.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace AirHockeyServer.Services
 {
-    public class UserService
+    public class UserService : IUserService
     {
-        private UserRepository UserRepository;
+        private IUserRepository UserRepository;
 
-        public UserService()
+        public UserService(IUserRepository userRepository)
         {
-            UserRepository = new UserRepository();
+            UserRepository = userRepository;
         }
 
         public async Task<UserEntity> GetUserById(int id)

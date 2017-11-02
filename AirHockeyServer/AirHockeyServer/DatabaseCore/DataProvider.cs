@@ -10,7 +10,7 @@ using AirHockeyServer.Services;
 
 namespace AirHockeyServer.DatabaseCore
 {
-    public class DataProvider : IDataProvider
+    public class DataProvider
     {
         public MyDataContext DC { get; set; }
 

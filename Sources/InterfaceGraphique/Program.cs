@@ -120,15 +120,13 @@ namespace InterfaceGraphique
             openGLPanel = new Panel();
             formManager = new FormManager();
             homeMenu = new HomeMenu();
-            //mainMenu = new MainMenu();
+            editeur = unityContainer.Resolve<Editeur>();
+            Editeur.mapManager = unityContainer.Resolve<MapManager>();
             configurationMenu = new ConfigurationMenu();
             quickPlay = new QuickPlay();
             testMode = new TestMode();
             generalProperties = new GeneralProperties();
             testChatMenu = new TestChatMenu();
-            //quickPlayMenu = new QuickPlayMenu();
-            //tournementMenu = new TournementMenu();
-            //tournementTree = new TournementTree();
             creditsMenu = new CreditsMenu();
             lobbyHost = new LobbyHost();
             onlineTournament = new OnlineTournament();
@@ -137,7 +135,6 @@ namespace InterfaceGraphique
             FonctionsNatives.loadSounds();
 
             formManager.CurrentForm = homeMenu;
-            // formManager.CurrentForm = login;
             Application.Run(formManager);
 
         }
@@ -146,7 +143,7 @@ namespace InterfaceGraphique
         public static void InitAfterConnection()
         {
             mainMenu = new MainMenu();
-            editeur = unityContainer.Resolve<Editeur>();
+            //editeur = unityContainer.Resolve<Editeur>();
             quickPlayMenu = new QuickPlayMenu();
             tournementMenu = new TournementMenu();
             tournementTree = new TournementTree();

@@ -21,7 +21,7 @@ namespace InterfaceGraphique.CommunicationInterface
         public void InitializeHub(HubConnection connection)
         {
             //   gameHubProxy = connection.CreateHubProxy("GameWaitingRoomHub");
-            gameHubProxy = WaitingRoomHub.GameWaitingRoomProxy;
+            gameHubProxy = GameWaitingRoomHub.WaitingRoomProxy;
         }
 
         //For the slave
@@ -74,7 +74,7 @@ namespace InterfaceGraphique.CommunicationInterface
             });
         }
 
-        public void SendMasterPosition(float[] slavePosition, float[] masterPosition, float[] puckPosition)
+        public void SendGameData(float[] slavePosition, float[] masterPosition, float[] puckPosition)
         {
             GameDataMessage gameDataMessage = new GameDataMessage(slavePosition, masterPosition,puckPosition);
 

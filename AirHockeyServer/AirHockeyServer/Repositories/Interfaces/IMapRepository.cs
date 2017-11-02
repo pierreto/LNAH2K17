@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AirHockeyServer.Repositories
+namespace AirHockeyServer.Repositories.Interfaces
 {
     public interface IMapRepository
     {
@@ -13,5 +13,13 @@ namespace AirHockeyServer.Repositories
         Task UpdateMap(MapEntity updatedMap);
 
         Task<IEnumerable<MapEntity>> GetMaps();
+
+        Task CreateNewMap(MapEntity map);
+
+        Task<int?> GetMapID(MapEntity savedMap);
+
+        Task<MapEntity> GetMap(int idMap);
+
+
     }
 }

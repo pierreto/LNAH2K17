@@ -145,7 +145,6 @@
     <Compile Include="CommunicationInterface\WaitingRooms\TournamentWaitingRoomHub.cs" />
     <Compile Include="CommunicationInterface\WaitingRooms\GameWaitingRoomHub.cs" />
     <Compile Include="CommunicationInterface\User.cs" />
-    <Compile Include="CommunicationInterface\WaitingRoomHub.cs" />
     <Compile Include="CommunicationInterface\HubManager.cs" />
     <Compile Include="Controls\LobbyHost.cs">
       <SubType>Form</SubType>

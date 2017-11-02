@@ -5,6 +5,7 @@ using System.Web;
 using AirHockeyServer.Entities;
 using AirHockeyServer.Services;
 using System.Threading.Tasks;
+using AirHockeyServer.Repositories.Interfaces;
 
 namespace AirHockeyServer.Repositories
 {

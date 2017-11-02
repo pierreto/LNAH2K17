@@ -1,4 +1,5 @@
 ﻿using AirHockeyServer.Entities;
+using AirHockeyServer.Services.Interfaces;
 using Microsoft.AspNet.SignalR;
 using System;
 using System.Collections.Generic;

@@ -52,7 +52,13 @@ namespace InterfaceGraphique.Game.GameState
         {
             FonctionsNatives.animer(tempsInterAffichage);
             FonctionsNatives.dessinerOpenGL();
+
+            float[] slavePosition = new float[3];
+            FonctionsNatives.getSlavePosition(slavePosition);
+            this.gameHub.SendSlavePosition(slavePosition);
         }
+
+    
         ////////////////////////////////////////////////////////////////////////
         ///
         /// Cette fonction suit le mouvement de la souris.
@@ -64,10 +70,9 @@ namespace InterfaceGraphique.Game.GameState
         ////////////////////////////////////////////////////////////////////////
         public override void MouseMoved(object sender, MouseEventArgs e)
         {
-            FonctionsNatives.opponentMouseMove(e.Location.X, e.Location.Y);
-            float[] slavePosition = new float[3];
-            FonctionsNatives.getSlavePosition(slavePosition);
-            this.gameHub.SendSlavePosition(slavePosition);
+
+                FonctionsNatives.opponentMouseMove(e.Location.X, e.Location.Y);
+                
         }
         ////////////////////////////////////////////////////////////////////////
         ///
@@ -119,7 +124,7 @@ namespace InterfaceGraphique.Game.GameState
         {
             if (!gameHasEnded && gameData.MasterPosition != null && gameData.SlavePosition != null && gameData.PuckPosition != null)
             {
-                 FonctionsNatives.setSlaveGameElementPositions(gameData.SlavePosition,gameData.MasterPosition,gameData.PuckPosition);
+                FonctionsNatives.setSlaveGameElementPositions(gameData.SlavePosition, gameData.MasterPosition, gameData.PuckPosition);
             }
         }
 

@@ -12,16 +12,19 @@ using System.Web.Http;
 using System.Threading.Tasks;
 using AirHockeyServer.Hubs;
 using Microsoft.Practices.ObjectBuilder2;
+using AirHockeyServer.Services.Interfaces;
 
 namespace AirHockeyServer.Controllers
 {
     public class MapController : ApiController
     {
+        
         private IEditionService editionService;
         public MapController(IMapService mapService, IEditionService editionService)
         {
             MapService = mapService;
             this.editionService = editionService;
+
         }
 
         public IMapService MapService { get; }

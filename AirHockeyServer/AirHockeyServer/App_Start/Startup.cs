@@ -31,6 +31,7 @@ namespace AirHockeyServer.App_Start
              GlobalHost.DependencyResolver.Register(
                  typeof(TournamentWaitingRoomHub),
                  () => new TournamentWaitingRoomHub(WebApiApplication.UnityContainer.Resolve<TournamentService>())); 
+
               GlobalHost.DependencyResolver.Register(
                  typeof(EditionHub),
                  () => new EditionHub(WebApiApplication.UnityContainer.Resolve<EditionService>())); 

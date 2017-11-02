@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace AirHockeyServer.Repositories
+namespace AirHockeyServer.Repositories.Interfaces
 {
     public interface IChannelRepository
     {

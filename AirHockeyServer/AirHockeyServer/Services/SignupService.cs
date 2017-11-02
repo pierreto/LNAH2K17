@@ -1,6 +1,7 @@
 ﻿using AirHockeyServer.DatabaseCore;
 using AirHockeyServer.Entities;
 using AirHockeyServer.Repositories;
+using AirHockeyServer.Services.Interfaces;
 using System;
 using System.Threading.Tasks;
 
@@ -8,8 +9,14 @@ namespace AirHockeyServer.Services
 {
     public class SignupService: ISignupService, IService
     {
-        private UserService UserService = new UserService();
-        private PasswordService PasswordService = new PasswordService();
+        private IUserService UserService { get; set; }
+        private IPasswordService PasswordService { get; set; }
+
+        public SignupService(IUserService userService, IPasswordService passwordService)
+        {
+            UserService = userService;
+            PasswordService = passwordService;
+        }
 
         public async Task<int> Signup(SignupEntity signupEntity)
         {
