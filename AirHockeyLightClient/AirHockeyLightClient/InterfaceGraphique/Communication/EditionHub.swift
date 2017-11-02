@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////////
-/// @file IBaseHub.swift
+/// @file EditionHub.swift
 /// @author Mikael Ferland
 /// @date 2017-10-30
 /// @version 1
@@ -10,21 +10,12 @@
 
 import SwiftR
 
-class EditionHub : IBaseHub {
-
-    private var hubProxy: Hub?
+class EditionHub: BaseHub {
     private var map: MapEntity?
-    private var connection: SignalR?
     
-    init() {
-        let ipAddress = "127.0.0.1"
-        self.connection = SignalR("http://" + ipAddress + ":63056")
-    }
-    
-    func initializeHub() {
-        self.hubProxy = self.connection?.createHubProxy("EditionHub")
-        self.connection?.addHub(self.hubProxy!)
-        self.connection?.start()
+    init(connection: SignalR?) {
+        super.init()
+        self.hubProxy = connection?.createHubProxy("EditionHub")
     }
     
     func joinPublicRoom(mapEntity: MapEntity) {
@@ -72,7 +63,7 @@ class EditionHub : IBaseHub {
         }
     }
     
-    func logout() {
+    override func logout() {
         // TODO
         print("logout")
     }

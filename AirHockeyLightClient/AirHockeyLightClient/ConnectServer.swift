@@ -16,7 +16,7 @@ class ConnectServer: NSObject {
     
     // Mark: Properties
     var ipAddressError: String
-    private let clientConnection = ClientConnection.sharedConnection
+    private let clientConnection = HubManager.sharedConnection
     
     override init() {
         print("init")
@@ -52,7 +52,7 @@ class ConnectServer: NSObject {
             clientConnection.EstablishConnection(ipAddress: ipAddress, hubName: "ChatHub")
             /// Avertir l'utilisateur s'il n'est pas possible de se connecter au serveur après 5 secondes
             let timerTask = DispatchWorkItem {
-                if !(ClientConnection.sharedConnection.getConnection().state == .connected) {
+                if !(HubManager.sharedConnection.getConnection().state == .connected) {
                     self.ipAddressError = "Adresse non joinable"
                     NotificationCenter.default.post(name: Notification.Name(rawValue: LoginNotification.SubmitNotification), object: self)
                     fullfil(false)
@@ -79,7 +79,7 @@ class ConnectServer: NSObject {
             }
             
             /// Transmettre un message reçu du serveur au ChatViewController
-            clientConnection.getChatHub().on("ChatMessageReceived") { args in
+            clientConnection.getChatHub().getHub().on("ChatMessageReceived") { args in
                 ChatViewController.sharedChatViewController.receiveMessage(message: args?[0] as! Dictionary<String, String>)
             }
             

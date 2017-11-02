@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////////
-/// @file IBaseHub.swift
+/// @file BaseHub.swift
 /// @author Mikael Ferland
 /// @date 2017-10-30
 /// @version 1
@@ -10,10 +10,15 @@
 
 import SwiftR
 
-protocol IBaseHub {
+public class BaseHub {
+    internal var hubProxy: Hub?
     
-    func initializeHub()
-    func logout()
+    func getHub() -> Hub {
+        return hubProxy!
+    }
+    
+    func logout() {
+    }
     
 }
 
