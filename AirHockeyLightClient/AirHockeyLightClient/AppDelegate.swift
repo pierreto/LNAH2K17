@@ -38,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
         
         // App does not support background running
-        deregisterUsername(ipAddress: HubManager.sharedConnection.getIpAddress(), username: HubManager.sharedConnection.getUsername())
+        deregisterUsername(ipAddress: HubManager.sharedConnection.getIpAddress()!, username: HubManager.sharedConnection.getUsername()!)
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
@@ -51,11 +51,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-        deregisterUsername(ipAddress: HubManager.sharedConnection.getIpAddress(), username: HubManager.sharedConnection.getUsername())
+        deregisterUsername(ipAddress: HubManager.sharedConnection.getIpAddress()!, username: HubManager.sharedConnection.getUsername()!)
     }
     
     func deregisterUsername(ipAddress: String, username: String) {
-        if (!HubManager.sharedConnection.getIpAddress().isEmpty) {
+        if (!(HubManager.sharedConnection.getIpAddress()?.isEmpty)!) {
             HubManager.sharedConnection.Logout()
         }
     }

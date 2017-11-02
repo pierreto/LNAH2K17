@@ -38,7 +38,7 @@ class Login: NSObject {
                     "Password" : password
                 ]
 
-                Alamofire.request("http://" + self.clientConnection.getIpAddress() + ":63056/api/login", method: .post, parameters: parameters, encoding: JSONEncoding.default)
+                Alamofire.request("http://" + self.clientConnection.getIpAddress()! + ":63056/api/login", method: .post, parameters: parameters, encoding: JSONEncoding.default)
                     .responseJSON { response in
                         if(response.response?.statusCode == 200) {
                             self.clientConnection.setUsername(username: username)

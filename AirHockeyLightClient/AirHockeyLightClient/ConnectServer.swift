@@ -52,7 +52,7 @@ class ConnectServer: NSObject {
             clientConnection.EstablishConnection(ipAddress: ipAddress, hubName: "ChatHub")
             /// Avertir l'utilisateur s'il n'est pas possible de se connecter au serveur après 5 secondes
             let timerTask = DispatchWorkItem {
-                if !(HubManager.sharedConnection.getConnection().state == .connected) {
+                if !(HubManager.sharedConnection.getConnection()?.state == .connected) {
                     self.ipAddressError = "Adresse non joinable"
                     NotificationCenter.default.post(name: Notification.Name(rawValue: LoginNotification.SubmitNotification), object: self)
                     fullfil(false)
@@ -63,14 +63,14 @@ class ConnectServer: NSObject {
             DispatchQueue.main.asyncAfter(deadline: timer, execute: timerTask)
             
             /// Avertir l'utilisateur en cas d'erreur au moment de la connexion
-            clientConnection.getConnection().error = { error in
+            clientConnection.getConnection()?.error = { error in
                 self.ipAddressError = "Une erreur est survenue durant la connection"
                 NotificationCenter.default.post(name: Notification.Name(rawValue: LoginNotification.SubmitNotification), object: self)
                 fullfil(false)
                 timerTask.cancel()
             }
             
-            clientConnection.getConnection().connectionFailed = { error in
+            clientConnection.getConnection()?.connectionFailed = { error in
                 print("Connection failed")
                 self.ipAddressError = "La connexion a échouée"
                 NotificationCenter.default.post(name: Notification.Name(rawValue: LoginNotification.SubmitNotification), object: self)
@@ -84,7 +84,7 @@ class ConnectServer: NSObject {
             }
             
             /// Connexion au serveur réussie
-            clientConnection.getConnection().connected = {
+            clientConnection.getConnection()?.connected = {
                 print("Connected with ip: " + ipAddress)
                 fullfil(true)
                 self.clientConnection.setIpAddress(ipAddress: ipAddress)

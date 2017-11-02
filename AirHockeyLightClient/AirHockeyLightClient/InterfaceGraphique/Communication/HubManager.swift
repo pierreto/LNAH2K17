@@ -41,8 +41,8 @@ class HubManager {
         }
     }
     
-    public func getConnection() -> SignalR {
-        return self.connection!
+    public func getConnection() -> SignalR? {
+        return self.connection
     }
     
     public func getChatHub() -> ChatHub {
@@ -53,16 +53,16 @@ class HubManager {
         return self.hubs.first(where: { $0 is EditionHub }) as! EditionHub
     }
     
-    public func getIpAddress() -> String {
-        return self.ipAddress!
+    public func getIpAddress() -> String? {
+        return self.ipAddress
     }
     
     public func setIpAddress(ipAddress: String) {
         self.ipAddress = ipAddress
     }
     
-    public func getUsername() -> String {
-        return self.username!
+    public func getUsername() -> String? {
+        return self.username
     }
     
     public func setUsername(username: String) {

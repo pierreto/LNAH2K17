@@ -153,7 +153,7 @@ class AuthentificationViewController: UIViewController {
         
         /// Avertir l'utilisateur s'il n'est pas possible de se connecter au serveur après 5 secondes
         let timerTask = DispatchWorkItem {
-            if !(HubManager.sharedConnection.getConnection().state == .connected) {
+            if !(HubManager.sharedConnection.getConnection()?.state == .connected) {
                 print("Connection timeout")
                 self.notifyErrorInput(textField: self.ipAddessInput)
                 self.ipAddressNotConnectedErrorMessage.isHidden = false
@@ -167,7 +167,7 @@ class AuthentificationViewController: UIViewController {
         DispatchQueue.main.asyncAfter(deadline: timer, execute: timerTask)
         
         /// Avertir l'utilisateur en cas d'erreur au moment de la connexion
-        clientConnection.getConnection().error = { error in
+        clientConnection.getConnection()?.error = { error in
             print("Error: (error)")
             self.notifyErrorInput(textField: self.ipAddessInput)
             self.ipAddressNotConnectedErrorMessage.isHidden = false
@@ -178,7 +178,7 @@ class AuthentificationViewController: UIViewController {
             timerTask.cancel()
         }
         
-        clientConnection.getConnection().connectionFailed = { error in
+        clientConnection.getConnection()?.connectionFailed = { error in
             print("Connection failed")
             self.notifyErrorInput(textField: self.ipAddessInput)
             self.ipAddressNotConnectedErrorMessage.isHidden = false
@@ -195,7 +195,7 @@ class AuthentificationViewController: UIViewController {
         }
         
         /// Connexion au serveur réussie
-        clientConnection.getConnection().connected = {
+        clientConnection.getConnection()?.connected = {
             print("Connected with ip: " + ipAddress)
             self.connectionIndicator.stopAnimating()
             self.clientConnection.setIpAddress(ipAddress: ipAddress)
