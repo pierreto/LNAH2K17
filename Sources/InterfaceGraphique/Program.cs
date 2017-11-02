@@ -168,6 +168,8 @@ namespace InterfaceGraphique
             unityContainer.RegisterType<ChatListItemViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<ChatViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<ChannelViewModel>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<JoinChannelListViewModel>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<JoinChannelViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<TournamentViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<AuthenticateViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<ConnectServerViewModel>(new ContainerControlledLifetimeManager());

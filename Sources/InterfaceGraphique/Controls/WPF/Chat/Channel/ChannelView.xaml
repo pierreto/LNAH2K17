@@ -44,14 +44,14 @@
                         </Grid.ColumnDefinitions>
 
                         <StackPanel Margin="8" Orientation="Horizontal">
-                            <Button Content="X" fa:Awesome.Content="Comments" Background="{StaticResource DarkGrayBrush}" BorderThickness="0" Margin="0,0,8,0" Command="{Binding JoinChannelCommand}"/>
-                            <!--<Button Content="X" fa:Awesome.Content="Users" Background="{StaticResource DarkGrayBrush}" BorderThickness="0"/>-->
-                            <!--{Binding DataContext.Titre, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl, AncestorLevel=1}}-->
+                            <Button Content="X" fa:Awesome.Content="User" Background="{StaticResource DarkGrayBrush}" BorderThickness="0" Margin="0,0,8,0"/>
                         </StackPanel>
                         <StackPanel Margin="8" Orientation="Horizontal" Grid.Column="2">
-                            <Button Name="Options" Visibility ="{Binding ChannelSelected, Converter={convert:BooleanToVisibilityConverter}, ConverterParameter=True}" fa:Awesome.Content="EllipsisH" BorderThickness="0" Background="{StaticResource DarkGrayBrush}" Margin="0,0,8,0" Command="{Binding OpenOptionsPopupCommand}"/>
-                            <Button Name="CreateChannel"   fa:Awesome.Content="Plus" BorderThickness="0" Background="{StaticResource AddBrush}" Command="{Binding OpenAddPopupCommand}" Margin="0,0,8,0"/>
-                            <Button Name="JoinChannel"  fa:Awesome.Content="ArrowRight" BorderThickness="0" Background="{StaticResource DarkGrayBrush}" Margin="0,0,10,0" Command="{Binding OpenJoinChannelCommand}"/>
+                            <StackPanel Orientation="Horizontal" Visibility ="{Binding JoinChannelMenuOpen}">
+                                <Button Name="Options" Visibility ="{Binding ChannelSelected, Converter={convert:BooleanToVisibilityConverter}, ConverterParameter=True}" fa:Awesome.Content="EllipsisH" BorderThickness="0" Background="{StaticResource DarkGrayBrush}" Margin="0,0,8,0" Command="{Binding OpenOptionsPopupCommand}"/>
+                                <Button Name="CreateChannel"   fa:Awesome.Content="Plus" BorderThickness="0" Background="{StaticResource AddBrush}" Command="{Binding OpenAddPopupCommand}" Margin="0,0,8,0"/>
+                            </StackPanel>
+                            <Button Name="JoinChannel"  fa:Awesome.Content="{Binding Arrow}" BorderThickness="0" Background="{StaticResource DarkGrayBrush}" Margin="0,0,10,0" Command="{Binding OpenJoinChannelCommand}"/>
                         </StackPanel>
                     </Grid>
                     <!-- Popup for Adding channel -->

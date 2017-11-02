@@ -11,7 +11,7 @@ namespace AirHockeyServer.Services.ChatServiceServer
     public class ChatHub : Hub
     {
         // Should be thread-safe?
-        private readonly static Dictionary<int, string> ConnectionsMapping = new Dictionary<int, string>();
+        private static Dictionary<int, string> ConnectionsMapping = new Dictionary<int, string>();
         // Should be thread-safe?
         private static Dictionary<string, int> roomPpl = new Dictionary<string, int>(); 
 
@@ -24,12 +24,15 @@ namespace AirHockeyServer.Services.ChatServiceServer
             ChannelService = channelService;
         }
 
-        public void Subscribe(int userId)
+        public ObservableCollection<string> Subscribe(int userId)
         {
             if(!ConnectionsMapping.ContainsKey(userId))
             {
                 ConnectionsMapping.Add(userId, Context.ConnectionId);
+                //Fetch all the channels 
+                return new ObservableCollection<string>(channels.Select(x => x.Name));
             }
+            return null;
         }
 
         public void SendBroadcast(ChatMessageEntity chatMessage)
@@ -59,11 +62,12 @@ namespace AirHockeyServer.Services.ChatServiceServer
             }
             else
             {   
-                //BroadCastChannelToAll
                 roomPpl[channel.Name] = 1;
                 ChannelEntity channelCreated = await this.ChannelService.CreateChannel(channel);
                 channels.Add(channelCreated);
                 await Groups.Add(Context.ConnectionId, channel.Name);
+                //BroadCastChannelToAll
+                Clients.Others.NewJoinableChannel(channelCreated.Name);
                 return channel;
             }
         }
@@ -80,6 +84,15 @@ namespace AirHockeyServer.Services.ChatServiceServer
         {
             roomPpl[roomName]--;
             return Groups.Remove(Context.ConnectionId, roomName);
+        }
+
+        public void Disconnect(ObservableCollection<string> roomNames, int userId)
+        {
+            ConnectionsMapping.Remove(userId);
+            foreach(var roomName in roomNames)
+            {
+                LeaveRoom(roomName);
+            }
         }
     }
 }

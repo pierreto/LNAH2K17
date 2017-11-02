@@ -66,7 +66,7 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
             {
                 if (openChannelCommand == null)
                 {
-                    openChannelCommand = new RelayCommandAsync(OpenChannel);
+                    openChannelCommand = new RelayCommand(OpenChannel);
                 }
                 return openChannelCommand;
             }
@@ -74,16 +74,27 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
         #endregion
 
         #region Command Methods
-        public async Task OpenChannel()
+        public void OpenChannel()
         {
-            foreach (var item in Program.unityContainer.Resolve<ChatListViewModel>().Items)
+            if (Program.unityContainer.Resolve<ChatViewModel>().JoinMenuOpen)
             {
-                item.IsSelected = false;
+                foreach (var item in Program.unityContainer.Resolve<JoinChannelListViewModel>().Items)
+                {
+                    item.IsSelected = false;
+                }
+                ActiveChannel.Instance.JoinChannelEntity = ChannelEntity;
             }
-            ActiveChannel.Instance.ChannelEntity = ChannelEntity;
+            else
+            {
+                foreach (var item in Program.unityContainer.Resolve<ChatListViewModel>().Items)
+                {
+                    item.IsSelected = false;
+                }
+                ActiveChannel.Instance.ChannelEntity = ChannelEntity;
+                NewContentAvailable = false;
+                Program.unityContainer.Resolve<ChannelViewModel>().OnPropertyChanged("ChannelSelected");
+            }
             IsSelected = true;
-            NewContentAvailable = false;
-            Program.unityContainer.Resolve<ChannelViewModel>().OnPropertyChanged("ChannelSelected");
         }
         #endregion
 

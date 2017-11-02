@@ -47,7 +47,6 @@ namespace InterfaceGraphique.Controls.WPF
             get { return container.Resolve<ChannelViewModel>(); }
         }
 
-
         public ChatListViewModel ChatListViewModel
         {
             get { return container.Resolve<ChatListViewModel>(); }
@@ -64,6 +63,10 @@ namespace InterfaceGraphique.Controls.WPF
         public JoinChannelViewModel JoinChannelViewModel
         {
             get { return container.Resolve<JoinChannelViewModel>(); }
+        }
+        public JoinChannelListViewModel JoinChannelListViewModel
+        {
+            get { return container.Resolve<JoinChannelListViewModel>(); }
         }
         public MatchmakingViewModel MatchmakingViewModel
         {

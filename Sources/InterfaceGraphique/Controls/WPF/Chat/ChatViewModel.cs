@@ -24,6 +24,7 @@ namespace InterfaceGraphique.Controls.WPF.Chat
         private string messageTextBox;
         private ChannelEntity currentChannel;
         private Visibility collapsed;
+        private string tabIcon;
         #endregion
 
         #region Public Properties
@@ -116,6 +117,19 @@ namespace InterfaceGraphique.Controls.WPF.Chat
                 OnPropertyChanged(nameof(Collapsed));
             }
         }
+
+        public string TabIcon
+        {
+            get
+            {
+                return tabIcon;
+            }
+            set
+            {
+                tabIcon = value;
+                OnPropertyChanged(nameof(TabIcon));
+            }
+        }
         #endregion
 
         #region Constructor
@@ -124,6 +138,7 @@ namespace InterfaceGraphique.Controls.WPF.Chat
             this.chatHub = chatHub;
             docked = true;
             this.joinMenuOpen = false;
+            tabIcon = "AngleDown";
             chatHub.NewMessage += NewMessage;
             chatHub.NewMessageFromChannel += NewMessageFromChannel;
             ctxTaskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
@@ -220,10 +235,12 @@ namespace InterfaceGraphique.Controls.WPF.Chat
         {
             if (Collapsed == System.Windows.Visibility.Visible)
             {
+                TabIcon = "Comment";
                 Collapsed = System.Windows.Visibility.Collapsed;
             }
             else
             {
+                TabIcon = "AngleDown";
                 Collapsed = System.Windows.Visibility.Visible;
             }
         }

@@ -36,5 +36,8 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
                 return instance;
             }
         }
+
+        private ChannelEntity joinChannelEntity;
+        public ChannelEntity JoinChannelEntity { get; set; }
     }
 }

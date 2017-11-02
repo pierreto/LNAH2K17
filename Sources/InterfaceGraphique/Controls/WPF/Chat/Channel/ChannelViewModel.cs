@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Microsoft.Practices.Unity;
 using InterfaceGraphique.Entities;
 using InterfaceGraphique.CommunicationInterface;
 using System.Text.RegularExpressions;
+using System.Windows;
 
 namespace InterfaceGraphique.Controls.WPF.Chat.Channel
 {
@@ -23,6 +21,10 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
         private bool isOpenOptions;
 
         private string channelErrMsg;
+
+        private string arrow;
+
+        private Visibility joinChannelMenuOpen;
         #endregion
 
         #region Public Properties
@@ -87,12 +89,35 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
                 return cE != null;
             }
         }
+
+        public string Arrow
+        {
+            get { return arrow; }
+            set
+            {
+                if (arrow == value) return;
+                arrow = value;
+                OnPropertyChanged(nameof(Arrow));
+            }
+        }
+
+        public Visibility JoinChannelMenuOpen
+        {
+            get { return joinChannelMenuOpen; }
+            set
+            {
+                joinChannelMenuOpen = value;
+                OnPropertyChanged(nameof(JoinChannelMenuOpen));
+            }
+        }
         #endregion
 
         #region Constructor
         public ChannelViewModel(ChatHub chatHub)
         {
             this.chatHub = chatHub;
+            this.arrow = "ArrowRight";
+            joinChannelMenuOpen = System.Windows.Visibility.Visible;
         }
         #endregion
 
@@ -146,19 +171,6 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
                     deleteChannelCommand = new RelayCommand(DeleteChannel);
                 }
                 return deleteChannelCommand;
-            }
-        }
-
-        private ICommand joinChannelCommand;
-        public ICommand JoinChannelCommand
-        {
-            get
-            {
-                if (joinChannelCommand == null)
-                {
-                    joinChannelCommand = new RelayCommandAsync(JoinChannel);
-                }
-                return joinChannelCommand;
             }
         }
 
@@ -286,16 +298,20 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
             IsOpenOptions = false;
         }
 
-        public async Task JoinChannel()
+        public void ToggleJoinChannel()
         {
-            ChannelEntity cE = await chatHub.JoinChannel("Secondaire");
-            Program.unityContainer.Resolve<ChatListViewModel>().Items.Add(new ChatListItemViewModel(cE));
-            Program.unityContainer.Resolve<ChatListViewModel>().OnPropertyChanged("Items");
-        }
-
-        private void ToggleJoinChannel()
-        {
-            Program.unityContainer.Resolve<ChatViewModel>().JoinMenuOpen ^= true;
+            if (Program.unityContainer.Resolve<ChatViewModel>().JoinMenuOpen)
+            {
+                Program.unityContainer.Resolve<ChatViewModel>().JoinMenuOpen = false;
+                JoinChannelMenuOpen = System.Windows.Visibility.Visible;
+                Arrow = "ArrowRight";
+            } else
+            {
+                Program.unityContainer.Resolve<ChatViewModel>().JoinMenuOpen = true;
+                Program.unityContainer.Resolve<JoinChannelViewModel>().ChannelName = "";
+                JoinChannelMenuOpen = System.Windows.Visibility.Hidden;
+                Arrow = "ArrowLeft";
+            }
             Program.unityContainer.Resolve<ChatViewModel>().OnPropertyChanged("JoinMenuOpen");
         }
         #endregion

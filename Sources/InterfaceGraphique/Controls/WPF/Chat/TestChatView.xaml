@@ -41,7 +41,7 @@
             </controls:ChatView>
         </Grid>
         <DockPanel Background="{StaticResource VeryDarkGrayBrush}" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" LastChildFill="True" Height="Auto" Visibility="{Binding Docked, Converter={convert:BooleanToVisibilityConverter}, ConverterParameter=False}">
-            <Button Foreground="White" Height="Auto" fa:Awesome.Content="Comment" Background="Transparent" Command="{Binding MinimizeCommand}" BorderThickness="0" Focusable="False" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Center" VerticalAlignment="Center"/>
+            <Button Foreground="White" Height="Auto" fa:Awesome.Content="{Binding TabIcon}" Background="Transparent" Command="{Binding MinimizeCommand}" BorderThickness="0" Focusable="False" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Center" VerticalAlignment="Center"/>
         </DockPanel>
     </Grid>
 </UserControl>
