@@ -148,7 +148,7 @@ class AuthentificationViewController: UIViewController {
         self.ipAddessInput.isEnabled = false
         self.usernameInput.isEnabled = false
         
-        clientConnection.EstablishConnection(ipAddress: ipAddress, hubName: "ChatHub")
+        clientConnection.EstablishConnection(ipAddress: ipAddress)
         self.connectionIndicator.startAnimating()
         
         /// Avertir l'utilisateur s'il n'est pas possible de se connecter au serveur après 5 secondes

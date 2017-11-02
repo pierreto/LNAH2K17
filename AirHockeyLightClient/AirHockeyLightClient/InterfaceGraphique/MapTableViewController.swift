@@ -115,11 +115,14 @@ class MapTableViewController: UITableViewController {
             Alamofire.request("http://" + self.clientConnection.getIpAddress()! + ":63056/api/maps/get/" + (mapId?.description)!, method: .get, parameters: nil, encoding: JSONEncoding.default)
                 .responseJSON { response in
                     if(response.response?.statusCode == 200) {
-                        print("Succeed to fetch map with id " + mapId + " from server")
+                        print("Succeed to fetch map with id from server")
                         let maps = JSON(response.result.value!)
                         editor.currentMap = self.buildMapEntity(json: maps)
                         
                         self.navigationController?.pushViewController(editor, animated: true)
+                        
+                        // Rejoindre la salle d'édition
+                        self.clientConnection.getEditionHub().joinPublicRoom(username: "username111", mapEntity: editor.currentMap!)
                     } else {
                         print("Failed to fetch map with id from server")
                     }

@@ -81,7 +81,7 @@ class HubManager {
     /// @return Aucune
     ///
     ////////////////////////////////////////////////////////////////////////
-    public func EstablishConnection(ipAddress: String, hubName: String) {
+    public func EstablishConnection(ipAddress: String) {
         self.connection = SignalR("http://" + ipAddress + ":63056")
         self.AddHubs()
         

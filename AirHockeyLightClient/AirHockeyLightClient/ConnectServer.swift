@@ -49,7 +49,7 @@ class ConnectServer: NSObject {
     
     private func connectToServer(ipAddress: String) -> Promise<Bool> {
         return Promise { fullfil, error in
-            clientConnection.EstablishConnection(ipAddress: ipAddress, hubName: "ChatHub")
+            clientConnection.EstablishConnection(ipAddress: ipAddress)
             /// Avertir l'utilisateur s'il n'est pas possible de se connecter au serveur après 5 secondes
             let timerTask = DispatchWorkItem {
                 if !(HubManager.sharedConnection.getConnection()?.state == .connected) {
@@ -82,6 +82,10 @@ class ConnectServer: NSObject {
             clientConnection.getChatHub().getHub().on("ChatMessageReceived") { args in
                 ChatViewController.sharedChatViewController.receiveMessage(message: args?[0] as! Dictionary<String, String>)
             }
+            
+            //clientConnection.getEditionHub().getHub().on("NewUser") { args in
+                //print("NEW USER")
+            //}
             
             /// Connexion au serveur réussie
             clientConnection.getConnection()?.connected = {

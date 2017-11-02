@@ -18,11 +18,25 @@ class EditionHub: BaseHub {
         self.hubProxy = connection?.createHubProxy("EditionHub")
     }
     
-    func joinPublicRoom(mapEntity: MapEntity) {
+    func convertMapEntity(mapEntity: MapEntity) -> Any {
+        let map = [
+            "Id": mapEntity.id.value!.description,
+            "Creator": mapEntity.creator!,
+            "MapName": mapEntity.mapName!,
+            "LastBackup": mapEntity.lastBackup!.description,
+            "Json": mapEntity.json!,
+            "Private": mapEntity.privacy.value!.description,
+            "Password": mapEntity.password?.description as Any,
+            "CurrentNumberOfPlayer": mapEntity.currentNumberOfPlayer.value!.description
+        ] as [String : Any]
+        return map
+    }
+    
+    func joinPublicRoom(username: String, mapEntity: MapEntity) {
         self.map = mapEntity
         
         do {
-            try self.hubProxy?.invoke("JoinPublicRoom", arguments: [mapEntity])
+            try self.hubProxy?.invoke("JoinPublicRoom", arguments: [username, convertMapEntity(mapEntity: mapEntity)])
         }
         catch {
             print("Error JoinPublicRoom")
@@ -33,30 +47,30 @@ class EditionHub: BaseHub {
         }
     }
     
-    func joinPrivateRoom(mapEntity: MapEntity, password: String) {
+    func joinPrivateRoom(username: String, mapEntity: MapEntity, password: String) {
         self.map = mapEntity
         
         do {
-            try self.hubProxy?.invoke("JoinPrivateRoom", arguments: [mapEntity, password])
+            try self.hubProxy?.invoke("JoinPrivateRoom", arguments: [username, mapEntity, password])
         }
         catch {
             print("Error JoinPrivateRoom")
         }
     }
     
-    func sendEditorCommand(command: AnyObject) {
+    func sendEditionCommand(mapId: Int, command: AnyObject) {
         // TODO : convertir command en json
         do {
-            try self.hubProxy?.invoke("SendEditionCommand", arguments: ["map_id", "command_string"])
+            try self.hubProxy?.invoke("SendEditionCommand", arguments: [mapId, command])
         }
         catch {
             print("Error SendEditionCommand")
         }
     }
     
-    func leaveRoom() {
+    func leaveRoom(mapId: Int) {
         do {
-            try self.hubProxy?.invoke("LeaveRoom", arguments: ["map_id"])
+            try self.hubProxy?.invoke("LeaveRoom", arguments: [mapId])
         }
         catch {
             print("Error LeaveRoom")
