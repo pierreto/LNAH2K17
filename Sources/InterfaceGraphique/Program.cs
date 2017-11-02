@@ -37,7 +37,7 @@ using InterfaceGraphique.Editor;
 namespace InterfaceGraphique
 {
     static class Program {
-        private const int NB_IMAGES_PAR_SECONDE = 30;
+        private const int NB_IMAGES_PAR_SECONDE = 120;
 
         public static Object unLock = new Object();
         public static bool peutAfficher = true;
