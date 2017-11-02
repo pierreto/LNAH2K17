@@ -16,6 +16,11 @@ class EditionHub: BaseHub {
     init(connection: SignalR?) {
         super.init()
         self.hubProxy = connection?.createHubProxy("EditionHub")
+        
+        /// Reception de l'évènement de rejoindre une salle d'édition
+        self.hubProxy?.on("NewUser") { args in
+            print("NEW USER")
+        }
     }
     
     func convertMapEntity(mapEntity: MapEntity) -> Any {
