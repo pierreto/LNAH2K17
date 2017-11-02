@@ -6,7 +6,7 @@ OnlineUser::OnlineUser(std::string name, std::string hexColor)
 {
 	name_ = name;
 	color_ = hexadecimalToRGB(hexColor);
-	nodesSelected_ = std::list<NoeudAbstrait*>();
+	nodesSelected_ = std::vector<NoeudAbstrait*>();
 }
 
 
@@ -19,18 +19,53 @@ void OnlineUser::select(std::string uuid)
 	NoeudAbstrait* node = getNodeFromRenderTree(uuid);
 	if(node)
 	{
+		node->setSelectedByAnotherUser(true);
 		node->useOtherColor(true, color_);
+
 		nodesSelected_.push_back(node);
 	}
 }
-
 void OnlineUser::deselect(std::string uuid)
 {
-	nodesSelected_.remove(getNodeFromRenderTree(uuid));
+
+	NoeudAbstrait* node = findNodeAndRemoveFromVector(uuid);
+	node->setSelectedByAnotherUser(false);
+	node->useOtherColor(false, color_);
+}
+
+
+NoeudAbstrait* OnlineUser::findNode(std::string uuid)
+{
+	for(NoeudAbstrait* node : nodesSelected_)
+	{
+		if (node->getUUID() == uuid.c_str())
+		{
+			return node;
+		}
+	}
+}
+NoeudAbstrait* OnlineUser::findNodeAndRemoveFromVector(std::string uuid)
+{
+	std::vector<NoeudAbstrait*>::iterator it;  // declare an iterator to a vector of strings
+
+	for (it = nodesSelected_.begin(); it != nodesSelected_.end();) {
+		// found nth element..print and break.
+		if((*it)->getUUID()==uuid.c_str())
+		{
+			nodesSelected_.erase(it);
+			return *it;
+
+		}
+	}
 }
 
 void OnlineUser::deselectAll()
 {
+	for(NoeudAbstrait* node : nodesSelected_)
+	{
+		node->setSelectedByAnotherUser(false);
+		node->useOtherColor(false, color_);
+	}
 	nodesSelected_.clear();
 }
 

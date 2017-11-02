@@ -1018,16 +1018,30 @@ void setSelectionEventCallback(SelectionEventCallback callback)
 	ModeleEtatSelection::obtenirInstance()->setSelectionEventCallback(callback);
 }
 
-void setElementAsSelected(char* username,char* uuid)
+void setElementSelection(const char* username, const char* uuid, const bool isSelected, const bool deselectAll)
 {
 	
 	if(FacadeModele::obtenirInstance()->getUserManager().userExist(std::string(username)))
 	{
-		FacadeModele::obtenirInstance()->getUserManager().getUser(std::string(username))->select(std::string(uuid,36));
+		if(deselectAll)
+		{
+			FacadeModele::obtenirInstance()->getUserManager().getUser(std::string(username))->deselectAll();
+
+		}else
+		{
+			if(isSelected)
+			{
+				FacadeModele::obtenirInstance()->getUserManager().getUser(std::string(username))->select(std::string(uuid, 36));
+
+			}else
+			{
+				FacadeModele::obtenirInstance()->getUserManager().getUser(std::string(username))->deselect(std::string(uuid, 36));
+
+			}
+		}
 	}
 
 }
-
 
 
 void moveByUUID(const char* uuid, const float* delta)
@@ -1055,3 +1069,4 @@ void clearUsers()
 	FacadeModele::obtenirInstance()->getUserManager().clearUsers();
 
 }
+

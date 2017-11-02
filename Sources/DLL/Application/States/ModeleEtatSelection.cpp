@@ -127,8 +127,11 @@ void ModeleEtatSelection::mouseUpL() {
 		if (isAClick()) {
 			ArbreRendu* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
 
-			if (!ctrlDown_) 
+			if (!ctrlDown_)
+			{
 				arbre->deselectionnerTout();
+				selectionCallback_("", false, true);
+			}
 
 			Raycast ray(mousePosX_, mousePosY_);
 			VisiteurSelection visiteur(ray.getRayStart(), ray.getRayEnd(), ctrlDown_,selectionCallback_);
@@ -138,7 +141,11 @@ void ModeleEtatSelection::mouseUpL() {
 			ArbreRenduINF2990* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
 			
 			if (!ctrlDown_)
+			{
 				arbre->deselectionnerTout();
+
+				selectionCallback_("", false, true);
+			}
 
 			glm::dvec3 pointAncrage, pointFinal;
 			FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(initMousePosX_, initMousePosY_, pointAncrage);

@@ -101,10 +101,9 @@ extern "C" {
 	typedef void(__stdcall * BoostCreationCallback)(const char* uuid, const float* pos);
 	__declspec(dllexport) void setBoostCreationCallback(BoostCreationCallback callback);
 
-	typedef void(__stdcall * SelectionEventCallback)(const char* uuid);
+	typedef void(__stdcall * SelectionEventCallback)(const char* uuid, const bool isSelected, const bool deselectAll);
 	__declspec(dllexport) void setSelectionEventCallback(SelectionEventCallback callback);
-	__declspec(dllexport) void setElementAsSelected(char* username, char* uuid);
-
+	__declspec(dllexport) void setElementSelection(const char* username, const char* uuid, const bool isSelected, const bool deselectAll);
 
 	typedef void(__stdcall * MoveEventCallback)(const char* uuid, const float* newPosition);
 	__declspec(dllexport) void setMoveEventCallback(MoveEventCallback callback);
@@ -113,7 +112,6 @@ extern "C" {
 	__declspec(dllexport) void addNewUser(char* username, char* hexColor);
 	__declspec(dllexport) void removeUser(char* username);
 	__declspec(dllexport) void clearUsers();
-
 } 
 
 #endif // __FACADE_INTERFACE_NATIVE_H__

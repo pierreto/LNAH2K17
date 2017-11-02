@@ -203,25 +203,22 @@ void VisiteurSelection::cylinderCollisionTest(NoeudAbstrait* noeud) {
 
 void VisiteurSelection::handleSelection(NoeudAbstrait* node)
 {
-	if (ctrl_)
+	if(!node->isSelectedByAnotherUser())
 	{
-		if (!node->estSelectionne())
+		if (ctrl_)
 		{
-			selectionEventCallback_(node->getUUID());
+			selectionEventCallback_(node->getUUID(), !node->estSelectionne(), false);
+			node->inverserSelection();
+
 		}
 		else
 		{
-
+			node->selectionnerTout();
+			selectionEventCallback_(node->getUUID(), node->estSelectionne(), false);
 		}
-		node->inverserSelection();
+		nbSelections_++;
+	}
 
-	}
-	else
-	{
-		node->selectionnerTout();
-		selectionEventCallback_(node->getUUID());
-	}
-	nbSelections_++;
 
 }
 ////////////////////////////////////////////////////////////////////////

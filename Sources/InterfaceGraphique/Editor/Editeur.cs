@@ -34,6 +34,10 @@ namespace InterfaceGraphique {
         private OnlineEditorState onlineState;
         private MODELE_ETAT outilCourrant = MODELE_ETAT.AUCUN;
 
+        public MODELE_ETAT OutilCourrant
+        {
+            get => outilCourrant;
+        }
 
         public AbstractEditorState CurrentState { get; set; }
 

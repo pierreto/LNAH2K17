@@ -159,11 +159,13 @@ namespace InterfaceGraphique.Editor.EditorState
             });
 
         }
-        private void CurrentUserSelectedObject(string uuidselected)
+        private void CurrentUserSelectedObject(string uuidselected, bool isSelected, bool deselectAll)
         {
             this.editionHub.SendEditorCommand(new SelectionCommand(uuidselected)
             {
-                Username = User.Instance.UserEntity.Username
+                Username = User.Instance.UserEntity.Username,
+                IsSelected = isSelected,
+                DeselectAll = deselectAll
             });
         }
         private float[] getVec3FromIntptr(IntPtr ptr)

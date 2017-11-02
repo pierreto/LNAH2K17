@@ -5,7 +5,7 @@ using AirHockeyServer.Services;
 
 public class EditionService : IEditionService
 {
-    public readonly string[] Colors = { "ff0000", "0c00ff", "00ff00", "#ffff00" };
+    public readonly string[] Colors = { "ff0000", "0c00ff", "00ff00", "ffff00" };
     private List<OnlineEditedMapInfo> _availableMapInfos;
     private Dictionary<string, List<OnlineUser>> usersPerGame;
 

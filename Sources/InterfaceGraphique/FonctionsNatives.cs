@@ -234,12 +234,11 @@ namespace InterfaceGraphique {
 
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        public delegate void SelectionEventCallback([Out, MarshalAs(UnmanagedType.LPStr)] string uuidSelected);
+        public delegate void SelectionEventCallback([Out, MarshalAs(UnmanagedType.LPStr)] string uuid, bool isSelected, bool deselectAll);
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void setSelectionEventCallback(SelectionEventCallback callback);
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void setElementAsSelected(string username, string uuid);
-
+        public static extern void setElementSelection(string username, string uuid, bool isSelected, bool deselectAll);
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
         public delegate void MoveEventCallback([Out, MarshalAs(UnmanagedType.LPStr)] string uuidSelected, [Out] IntPtr newPos);
@@ -259,6 +258,8 @@ namespace InterfaceGraphique {
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void clearUsers();
 
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void deselectAll(string username);
 
     }
 }
