@@ -42,6 +42,8 @@ namespace AirHockeyServer
             // still continue to run:
             //await running_server;
 
+            Register(GlobalConfiguration.Configuration);
+
             Cache cache = new Cache();
         }
 
@@ -55,7 +57,7 @@ namespace AirHockeyServer
             UnityContainer.RegisterType<IGameRepository, GameRepository>(new HierarchicalLifetimeManager());
             UnityContainer.RegisterType<IChannelRepository, ChannelRepository>(new HierarchicalLifetimeManager());
             UnityContainer.RegisterType<ILoginRepository, LoginRepository>(new HierarchicalLifetimeManager());
-            UnityContainer.RegisterType<IPasswordRepository, IPasswordRepository>(new HierarchicalLifetimeManager());
+            UnityContainer.RegisterType<IPasswordRepository, PasswordRepository>(new HierarchicalLifetimeManager());
             UnityContainer.RegisterType<IPlayerStatsRepository, PlayerStatsRepository>(new HierarchicalLifetimeManager());
             UnityContainer.RegisterType<IUserRepository, UserRepository>(new HierarchicalLifetimeManager());
 

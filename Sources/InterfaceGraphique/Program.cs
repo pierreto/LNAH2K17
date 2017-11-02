@@ -32,16 +32,18 @@ using InterfaceGraphique.Controls.WPF.Home;
 using InterfaceGraphique.Controls.WPF.ConnectServer;
 using InterfaceGraphique.Controls.WPF.Signup;
 using InterfaceGraphique.Services;
+using InterfaceGraphique.Controls.WPF.Chat.Channel;
 using InterfaceGraphique.Editor;
 
 namespace InterfaceGraphique
 {
     static class Program {
-        private const int NB_IMAGES_PAR_SECONDE = 30;
+        private const int NB_IMAGES_PAR_SECONDE = 120;
 
         public static Object unLock = new Object();
         public static bool peutAfficher = true;
 
+        public static TestChatMenu TestChatMenu { get { return testChatMenu; } }
         public static FormManager FormManager { get { return formManager; } }
         public static MainMenu MainMenu { get { return mainMenu; } }
         public static HomeMenu HomeMenu { get { return homeMenu; } }
@@ -62,6 +64,7 @@ namespace InterfaceGraphique
         public static EditorHost EditorHost { get { return editorHost; } set { editorHost = value; } }
 
 
+        private static TestChatMenu testChatMenu;
         private static FormManager formManager;
         private static MainMenu mainMenu;
         private static HomeMenu homeMenu;
@@ -117,16 +120,13 @@ namespace InterfaceGraphique
             openGLPanel = new Panel();
             formManager = new FormManager();
             homeMenu = new HomeMenu();
-            //mainMenu = new MainMenu();
             editeur = unityContainer.Resolve<Editeur>();
             Editeur.mapManager = unityContainer.Resolve<MapManager>();
             configurationMenu = new ConfigurationMenu();
             quickPlay = new QuickPlay();
             testMode = new TestMode();
             generalProperties = new GeneralProperties();
-            //quickPlayMenu = new QuickPlayMenu();
-            tournementMenu = new TournementMenu();
-            tournementTree = new TournementTree();
+            testChatMenu = new TestChatMenu();
             creditsMenu = new CreditsMenu();
             lobbyHost = new LobbyHost();
             onlineTournament = new OnlineTournament();
@@ -135,7 +135,6 @@ namespace InterfaceGraphique
             FonctionsNatives.loadSounds();
 
             formManager.CurrentForm = homeMenu;
-            // formManager.CurrentForm = login;
             Application.Run(formManager);
 
         }
@@ -144,7 +143,10 @@ namespace InterfaceGraphique
         public static void InitAfterConnection()
         {
             mainMenu = new MainMenu();
+            //editeur = unityContainer.Resolve<Editeur>();
             quickPlayMenu = new QuickPlayMenu();
+            tournementMenu = new TournementMenu();
+            tournementTree = new TournementTree();
         }
 
         private static void InitializeUnityDependencyInjection()
@@ -152,28 +154,27 @@ namespace InterfaceGraphique
             unityContainer = new UnityContainer();
 
             //Hub instantiations
-            //unityContainer.RegisterType<IBaseHub, ChatHub>(new ContainerControlledLifetimeManager());
-            //unityContainer.RegisterType<IBaseHub,GameWaitingRoomHub>(new ContainerControlledLifetimeManager());
-            //unityContainer.RegisterType<IBaseHub, TournamentWaitingRoomHub>(new ContainerControlledLifetimeManager());
-            //unityContainer.RegisterType<IBaseHub,GameHub>(new ContainerControlledLifetimeManager());
-            unityContainer.RegisterInstance<ChatHub>(new ChatHub());
-            unityContainer.RegisterInstance(new GameHub());
-            unityContainer.RegisterInstance(new GameWaitingRoomHub(new Game.GameState.SlaveGameState(unityContainer.Resolve<GameHub>()), new Game.GameState.MasterGameState(unityContainer.Resolve<GameHub>())));
-            unityContainer.RegisterInstance(new TournamentWaitingRoomHub(new Game.GameState.SlaveGameState(unityContainer.Resolve<GameHub>()), new Game.GameState.MasterGameState(unityContainer.Resolve<GameHub>())));
-
+            unityContainer.RegisterType<IBaseHub, ChatHub>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<IBaseHub,GameWaitingRoomHub>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<IBaseHub, TournamentWaitingRoomHub>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<IBaseHub,GameHub>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<IBaseHub, EditionHub>(new ContainerControlledLifetimeManager());
 
 
             //View models instantiations
             unityContainer.RegisterType<MatchmakingViewModel>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<ChatListViewModel>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<ChatListItemViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<ChatViewModel>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<ChannelViewModel>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<JoinChannelListViewModel>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<JoinChannelViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<TournamentViewModel>(new ContainerControlledLifetimeManager());
-            unityContainer.RegisterType<AuthenticateViewModel>();
-            unityContainer.RegisterType<SignupViewModel>();
-            unityContainer.RegisterType<HomeViewModel>();
-            unityContainer.RegisterType<ConnectServerViewModel>(); 
+            unityContainer.RegisterType<AuthenticateViewModel>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<ConnectServerViewModel>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<SignupViewModel>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<HomeViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<EditorViewModel>(new ContainerControlledLifetimeManager());
-
 
             //Rest services instantiations
             unityContainer.RegisterType<MapService>();

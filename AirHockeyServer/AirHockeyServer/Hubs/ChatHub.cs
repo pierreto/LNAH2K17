@@ -3,6 +3,8 @@ using AirHockeyServer.Services.Interfaces;
 using Microsoft.AspNet.SignalR;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace AirHockeyServer.Services.ChatServiceServer
@@ -10,9 +12,11 @@ namespace AirHockeyServer.Services.ChatServiceServer
     public class ChatHub : Hub
     {
         // Should be thread-safe?
-        private readonly static Dictionary<int, string> ConnectionsMapping = new Dictionary<int, string>();
+        private static Dictionary<int, string> ConnectionsMapping = new Dictionary<int, string>();
         // Should be thread-safe?
-        private static HashSet<string> usernames = new HashSet<string>();
+        private static Dictionary<string, int> roomPpl = new Dictionary<string, int>(); 
+
+        private static ObservableCollection<ChannelEntity> channels = new ObservableCollection<ChannelEntity>();
 
         public IChannelService ChannelService { get; }
 
@@ -21,25 +25,15 @@ namespace AirHockeyServer.Services.ChatServiceServer
             ChannelService = channelService;
         }
 
-        public bool Authenticate(string username)
-        {
-            if (usernames.Contains(username))
-            {
-                return false;
-            }
-            else
-            {
-                usernames.Add(username);
-                return true;
-            }
-        }
-
-        public void Subscribe(int userId)
+        public ObservableCollection<string> Subscribe(int userId)
         {
             if(!ConnectionsMapping.ContainsKey(userId))
             {
                 ConnectionsMapping.Add(userId, Context.ConnectionId);
+                //Fetch all the channels 
+                return new ObservableCollection<string>(channels.Select(x => x.Name));
             }
+            return null;
         }
 
         public void SendBroadcast(ChatMessageEntity chatMessage)
@@ -49,7 +43,8 @@ namespace AirHockeyServer.Services.ChatServiceServer
 
         public async Task SendChannel(string channelName, ChatMessageEntity message)
         {
-            await Clients.Group(channelName).ChatMessageReceived(message);
+            ChannelEntity cE = channels.Where(s => s.Name == channelName).First();
+            await Clients.Group(channelName).ChatMessageReceivedChannel(message, cE);
         }
 
         public void SendPrivateMessage(int userId, ChatMessageEntity message)
@@ -62,24 +57,46 @@ namespace AirHockeyServer.Services.ChatServiceServer
 
         public async Task<ChannelEntity> CreateChannel(ChannelEntity channel)
         {
-            ChannelEntity channelCreated = await this.ChannelService.CreateChannel(channel);
-            await Groups.Add(Context.ConnectionId, channel.Name);
-            return channel;
-        }
-
-        public async Task JoinChannel(string channelName)
-        {
-            //Channel channelCreated = await this.ChannelService.JoinChannel(channelName);
-            await Groups.Add(Context.ConnectionId, channelName);
-        }
-
-        public void Disconnect(string username)
-        {
-            if (usernames.Contains(username))
+            if (roomPpl.ContainsKey(channel.Name) && roomPpl[channel.Name] > 0)
             {
-                usernames.Remove(username);
+                return null;
+            }
+            else
+            {   
+                roomPpl[channel.Name] = 1;
+                ChannelEntity channelCreated = await this.ChannelService.CreateChannel(channel);
+                channels.Add(channelCreated);
+                await Groups.Add(Context.ConnectionId, channel.Name);
+                //BroadCastChannelToAll
+                Clients.Others.NewJoinableChannel(channelCreated.Name);
+                return channel;
             }
         }
-        
+
+        public async Task<ChannelEntity> JoinChannel(string channelName)
+        {
+            ChannelEntity channelJoined = channels.Where(s => s.Name == channelName).First();
+            await Groups.Add(Context.ConnectionId, channelName);
+            roomPpl[channelName]++;
+            return channelJoined;
+        }
+
+        public Task LeaveRoom(string roomName)
+        {
+            if (--roomPpl[roomName] == 0)
+            {
+                Clients.Others.ChannelDeleted(roomName);
+            }
+            return Groups.Remove(Context.ConnectionId, roomName);
+        }
+
+        public void Disconnect(ObservableCollection<string> roomNames, int userId)
+        {
+            ConnectionsMapping.Remove(userId);
+            foreach(var roomName in roomNames)
+            {
+                LeaveRoom(roomName);
+            }
+        }
     }
 }

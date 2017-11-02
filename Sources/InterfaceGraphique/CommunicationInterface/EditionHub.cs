@@ -90,7 +90,7 @@ namespace InterfaceGraphique.CommunicationInterface
         }
 
 
-        public void Logout()
+        public async Task Logout()
         {
            /* hubProxy?.Invoke("Disconnect", this.username).Wait();
             this.map = null;*/

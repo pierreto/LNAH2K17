@@ -2,169 +2,31 @@
 using InterfaceGraphique.Controls.WPF.Authenticate;
 using InterfaceGraphique.Entities;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Microsoft.Practices.Unity;
+using InterfaceGraphique.Exceptions;
 
 namespace InterfaceGraphique.Controls.WPF.Signup
 {
     public class SignupViewModel : ViewModelBase
     {
+        //TODO: Mettre ailleurs?
+        static HttpClient client = new HttpClient();
 
+        #region Private Properties
         private SignupEntity signupEntity;
         private HubManager hubManager;
         private ChatHub chatHub;
+        private string usernameErrMsg;
+        private string passwordErrMsg;
+        private string confirmPasswordErrMsg;
+        private bool inputsEnabled;
+        #endregion
 
-        static HttpClient client = new HttpClient();
-
-        public SignupViewModel(SignupEntity signupEntity, ChatHub chatHub)
-        {
-            Title = "Créer un compte";
-            this.chatHub = chatHub;
-            this.signupEntity = signupEntity;
-            this.hubManager = HubManager.Instance;
-            this.inputsEnabled = true;
-        }
-
-        protected override async Task GoBack()
-        {
-            Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<AuthenticateViewModel>());
-        }
-
-        public override void InitializeViewModel()
-        {
-           // throw new NotImplementedException();
-        }
-
-        private ICommand signupCommand;
-        public ICommand SignupCommand
-        {
-            get
-            {
-                if (signupCommand == null)
-                {
-                    signupCommand = new RelayCommandAsync(Signup);
-                }
-                return signupCommand;
-            }
-        }
-
-        private async Task<Uri> Signup()
-        {
-            try
-            {
-                Loading();
-                ResetErrMsg();
-                if (!ValidateFields())
-                {
-                    return null;
-                }
-                var response = await client.PostAsJsonAsync(Program.client.BaseAddress + "api/signup", signupEntity);
-                if (response.IsSuccessStatusCode)
-                {
-                    int userId = response.Content.ReadAsAsync<int>().Result;
-                    User.Instance.UserEntity = new UserEntity { Id = userId, Username = signupEntity.Username };
-                    User.Instance.IsConnected = true;
-                    await chatHub.InitializeChat();
-                    Program.InitAfterConnection();
-                    Program.FormManager.CurrentForm = Program.MainMenu;
-                }
-                else
-                {
-                    var res = response.Content.ReadAsAsync<string>().Result;
-                    //response.EnsureSuccessStatusCode();
-                    // return URI of the created resource.
-                    UsernameErrMsg = res;
-                }
-                return response.Headers.Location;
-            }
-            catch (Exception e)
-            {
-                System.Diagnostics.Debug.WriteLine(e);
-                return null;
-            }
-            finally
-            {
-                LoadingDone();
-            }
-        }
-
-        private bool ValidateFields()
-        {
-            bool valid = true;
-            if (Username == "")
-            {
-                UsernameErrMsg = "Nom d'usager requis";
-                valid = false;
-            }
-            else if (Username.Length < 2)
-            {
-                UsernameErrMsg = "Minimum 2 charactères requis";
-                valid = false;
-            }
-            else
-            {
-                Regex rgx = new Regex(@"^[a-zA-Z0-9_.-]*$");
-                if (!rgx.IsMatch(Username))
-                {
-                    UsernameErrMsg = "Seul les charactères alphanumériqus et les tirets sont acceptés";
-                    valid = false;
-                }
-            }
-            if (Password == "")
-            {
-                PasswordErrMsg = "Mot de passe requis";
-                valid = false;
-            }
-            else if (Password.Length < 8)
-            {
-                PasswordErrMsg = "Minimum 8 charactères requis";
-                valid = false;
-            }
-            else
-            {
-                Regex rgx = new Regex(@"(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]");
-                if (!rgx.IsMatch(Password))
-                {
-                    PasswordErrMsg = "Minimum une lettre minuscule, une lettre majuscule et un chiffre";
-                    valid = false;
-                }
-            }
-            if (ConfirmPassword == "")
-            {
-                ConfirmPasswordErrMsg = "Confirmation mot de passe requise";
-                valid = false;
-            }
-            if (Password != ConfirmPassword)
-            {
-                ConfirmPasswordErrMsg = "Mots de passes pas identiques";
-                valid = false;
-            }
-            return valid;
-        }
-
-        private void Loading()
-        {
-            InputsEnabled = false;
-        }
-
-        private void LoadingDone()
-        {
-            InputsEnabled = true;
-            CommandManager.InvalidateRequerySuggested();
-        }
-
-        private void ResetErrMsg()
-        {
-            UsernameErrMsg = "";
-            PasswordErrMsg = "";
-        }
-
+        #region Public Properties
         public string Username
         {
             get => signupEntity.Username;
@@ -184,7 +46,6 @@ namespace InterfaceGraphique.Controls.WPF.Signup
             }
         }
 
-        private string usernameErrMsg;
         public string UsernameErrMsg
         {
             get => usernameErrMsg;
@@ -214,7 +75,6 @@ namespace InterfaceGraphique.Controls.WPF.Signup
             }
         }
 
-        private string passwordErrMsg;
         public string PasswordErrMsg
         {
             get => passwordErrMsg;
@@ -244,7 +104,6 @@ namespace InterfaceGraphique.Controls.WPF.Signup
             }
         }
 
-        private string confirmPasswordErrMsg;
         public string ConfirmPasswordErrMsg
         {
             get => confirmPasswordErrMsg;
@@ -255,7 +114,6 @@ namespace InterfaceGraphique.Controls.WPF.Signup
             }
         }
 
-        private bool inputsEnabled;
         public bool InputsEnabled
         {
             get { return inputsEnabled; }
@@ -270,5 +128,166 @@ namespace InterfaceGraphique.Controls.WPF.Signup
                 this.OnPropertyChanged();
             }
         }
+        #endregion
+
+        #region Constructor
+        public SignupViewModel(SignupEntity signupEntity, ChatHub chatHub)
+        {
+            Title = "Créer un compte";
+            this.chatHub = chatHub;
+            this.signupEntity = signupEntity;
+            this.hubManager = HubManager.Instance;
+            this.inputsEnabled = true;
+        }
+        #endregion
+
+        #region Commands
+        private ICommand signupCommand;
+        public ICommand SignupCommand
+        {
+            get
+            {
+                if (signupCommand == null)
+                {
+                    signupCommand = new RelayCommandAsync(Signup);
+                }
+                return signupCommand;
+            }
+        }
+        #endregion
+
+        #region Command Methods
+        private async Task<Uri> Signup()
+        {
+            try
+            {
+                Loading();
+                ResetErrMsg();
+                ValidateFields();
+                var response = await client.PostAsJsonAsync(Program.client.BaseAddress + "api/signup", signupEntity);
+                if (response.IsSuccessStatusCode)
+                {
+                    int userId = response.Content.ReadAsAsync<int>().Result;
+
+                    //On set l'instance statique du user.
+                    User.Instance.UserEntity = new UserEntity { Id = userId, Username = signupEntity.Username };
+                    User.Instance.IsConnected = true;
+
+                    await chatHub.InitializeChat();
+
+                    //On reset le nom d'usagermle mot de passe et la confirmation (Au cas ou il fait un retour a l'arriere ou deconnexion)
+                    Username = Password = ConfirmPassword = "";
+
+                    //On initie tous les formes qui on besoin de savoir si on est en mode en ligne
+                    Program.InitAfterConnection();
+                    Program.FormManager.CurrentForm = Program.MainMenu;
+                }
+                else
+                {
+                    var res = response.Content.ReadAsAsync<string>().Result;
+                    UsernameErrMsg = res;
+                }
+                return response.Headers.Location;
+            }
+            catch(SignupException e)
+            {
+                System.Diagnostics.Debug.WriteLine("[SignupViewModel.Signup] " + e.ToString());
+                return null;
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("[SignupViewModel.Signup] " + e.ToString());
+                return null;
+            }
+            finally
+            {
+                LoadingDone();
+            }
+        }
+        #endregion
+
+        #region Private Methods
+        private void ValidateFields()
+        {
+            if (Username == "")
+            {
+                UsernameErrMsg = "Nom d'usager requis";
+                throw new SignupException(UsernameErrMsg);
+            }
+            else if (Username.Length < 2)
+            {
+                UsernameErrMsg = "Minimum 2 charactères requis";
+                throw new SignupException(UsernameErrMsg);
+            }
+            else
+            {
+                Regex rgx = new Regex(@"^[a-zA-Z0-9_.-]*$");
+                if (!rgx.IsMatch(Username))
+                {
+                    UsernameErrMsg = "Seul les charactères alphanumériqus et les tirets sont acceptés";
+                    throw new SignupException(UsernameErrMsg);
+                }
+            }
+            if (Password == "")
+            {
+                PasswordErrMsg = "Mot de passe requis";
+                throw new SignupException(PasswordErrMsg);
+            }
+            else if (Password.Length < 8)
+            {
+                PasswordErrMsg = "Minimum 8 charactères requis";
+                throw new SignupException(PasswordErrMsg);
+            }
+            else
+            {
+                Regex rgx = new Regex(@"(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]");
+                if (!rgx.IsMatch(Password))
+                {
+                    PasswordErrMsg = "Minimum une lettre minuscule, une lettre majuscule et un chiffre";
+                    throw new SignupException(PasswordErrMsg);
+                }
+            }
+            if (ConfirmPassword == "")
+            {
+                ConfirmPasswordErrMsg = "Confirmation mot de passe requise";
+                throw new SignupException(ConfirmPasswordErrMsg);
+            }
+            if (Password != ConfirmPassword)
+            {
+                ConfirmPasswordErrMsg = "Mots de passes pas identiques";
+                throw new SignupException(ConfirmPasswordErrMsg);
+            }
+        }
+
+        private void Loading()
+        {
+            InputsEnabled = false;
+        }
+
+        private void LoadingDone()
+        {
+            InputsEnabled = true;
+            CommandManager.InvalidateRequerySuggested();
+        }
+
+        private void ResetErrMsg()
+        {
+            UsernameErrMsg = "";
+            PasswordErrMsg = "";
+        }
+
+        #endregion
+
+        #region Overwritten Methods
+        protected override void GoBack()
+        {
+            Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<AuthenticateViewModel>());
+        }
+
+        public override void InitializeViewModel()
+        {
+            // throw new NotImplementedException();
+        }
+        #endregion
     }
 }

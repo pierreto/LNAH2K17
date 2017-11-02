@@ -1,12 +1,8 @@
 ﻿using InterfaceGraphique.CommunicationInterface;
 using InterfaceGraphique.Controls.WPF.Authenticate;
-using InterfaceGraphique.Entities;
 using InterfaceGraphique.Exceptions;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Microsoft.Practices.Unity;
@@ -14,54 +10,103 @@ using InterfaceGraphique.Controls.WPF.Home;
 
 namespace InterfaceGraphique.Controls.WPF.ConnectServer
 {
-    public class ConnectServerViewModel: ViewModelBase
+    public class ConnectServerViewModel : ViewModelBase
     {
+        #region Private Properties
         private readonly string LOCALHOST = "localhost";
-
+        private readonly int TIMEOUT = 5000;
         private HubManager hubManager;
+        private string ipAddress;
+        private string ipAddressErrMsg;
+        private bool ipAddressInputEnabled;
+        #endregion
+
+        #region Public Properties
+        public string IpAddress
+        {
+            get => ipAddress;
+            set
+            {
+                if (IpAddress != value && value != "")
+                {
+                    IpAddressErrMsg = "";
+                    ipAddress = value;
+                    this.OnPropertyChanged();
+                }
+                else if (value == "")
+                {
+                    ipAddress = value;
+                    this.OnPropertyChanged();
+                }
+            }
+        }
+
+        public string IpAddressErrMsg
+        {
+            get => ipAddressErrMsg;
+            set
+            {
+                ipAddressErrMsg = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        public bool IpAddressInputEnabled
+        {
+            get { return ipAddressInputEnabled; }
+
+            set
+            {
+                if (ipAddressInputEnabled == value)
+                {
+                    return;
+                }
+                ipAddressInputEnabled = value;
+                this.OnPropertyChanged();
+            }
+        }
+        #endregion
+
+        #region Constructor
         public ConnectServerViewModel()
         {
             Title = "Connexion";
             this.hubManager = HubManager.Instance;
             this.IpAddressInputEnabled = true;
         }
+        #endregion
 
-        protected override async Task GoBack()
-        {
-            Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<HomeViewModel>());
-        }
-
-        public override void InitializeViewModel()
-        {
-           // throw new NotImplementedException();
-        }
-
-        private ICommand enterKeyCommand;
-        public ICommand EnterKeyCommand
+        #region Commands
+        private ICommand connectServerCommand;
+        public ICommand ConnectServerCommand
         {
             get
             {
-                if (enterKeyCommand == null)
+                if (connectServerCommand == null)
                 {
-                    enterKeyCommand = new RelayCommandAsync(ConnectToServer);
+                    connectServerCommand = new RelayCommandAsync(ConnectServer);
                 }
-                return enterKeyCommand;
+                return connectServerCommand;
             }
         }
+        #endregion
 
-        private async Task ConnectToServer()
+        #region Command Methods
+        private async Task ConnectServer()
         {
             try
             {
                 Loading();
                 ValidateIpAddress();
-                int timeout = 5000;
+                int timeout = TIMEOUT;
                 var task = hubManager.EstablishConnection(IpAddress);
                 await task;
+                // Permet de voir si le task est realise dans le bon delai
                 if (await Task.WhenAny(task, Task.Delay(timeout)) == task)
                 {
                     //Task resolved within delay
                     Program.client.BaseAddress = new System.Uri("http://" + IpAddress + ":63056/");
+                    IpAddress = "";
                     Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<AuthenticateViewModel>());
                 }
                 else
@@ -77,14 +122,16 @@ namespace InterfaceGraphique.Controls.WPF.ConnectServer
             catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine("[ConnectServerViewModel.ConnectToServer] " + e.ToString());
-                IpAddressErrMsg = "Adresse IP non rejoinable";
+                IpAddressErrMsg = "Adresse IP non rejoignable";
             }
             finally
             {
                 LoadingDone();
             }
         }
+        #endregion
 
+        #region Private Methods
         private void ValidateIpAddress()
         {
             if (!LOCALHOST.Equals(IpAddress) && !ValidateIP())
@@ -93,7 +140,7 @@ namespace InterfaceGraphique.Controls.WPF.ConnectServer
             }
         }
 
-        public bool ValidateIP()
+        private bool ValidateIP()
         {
             if (String.IsNullOrWhiteSpace(IpAddress))
             {
@@ -130,52 +177,18 @@ namespace InterfaceGraphique.Controls.WPF.ConnectServer
             IpAddressInputEnabled = true;
             CommandManager.InvalidateRequerySuggested();
         }
+        #endregion
 
-        private string ipAddress;
-        public string IpAddress
+        #region Overwritten Methods
+        protected override void GoBack()
         {
-            get => ipAddress;
-            set
-            {
-                if (IpAddress != value && value != "")
-                {
-                    IpAddressErrMsg = "";
-                    ipAddress = value;
-                    this.OnPropertyChanged();
-                }
-                else if (value == "")
-                {
-                    ipAddress = value;
-                    this.OnPropertyChanged();
-                }
-            }
+            Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<HomeViewModel>());
         }
-
-        private string ipAddressErrMsg;
-        public string IpAddressErrMsg
+        public override void InitializeViewModel()
         {
-            get => ipAddressErrMsg;
-            set
-            {
-                ipAddressErrMsg = value;
-                this.OnPropertyChanged();
-            }
+            // throw new NotImplementedException();
         }
+        #endregion
 
-        private bool ipAddressInputEnabled;
-        public bool IpAddressInputEnabled
-        {
-            get { return ipAddressInputEnabled; }
-
-            set
-            {
-                if (ipAddressInputEnabled == value)
-                {
-                    return;
-                }
-                ipAddressInputEnabled = value;
-                this.OnPropertyChanged();
-            }
-        }
     }
 }

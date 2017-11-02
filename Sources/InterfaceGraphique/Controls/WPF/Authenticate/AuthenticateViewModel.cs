@@ -2,145 +2,30 @@
 using InterfaceGraphique.Controls.WPF.Signup;
 using InterfaceGraphique.Entities;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Microsoft.Practices.Unity;
 using InterfaceGraphique.Controls.WPF.ConnectServer;
+using InterfaceGraphique.Exceptions;
 
 namespace InterfaceGraphique.Controls.WPF.Authenticate
 {
     public class AuthenticateViewModel : ViewModelBase
     {
+        //TODO: Mettre ailleurs?
         static HttpClient client = new HttpClient();
 
+        #region Private Properties
         private LoginEntity loginEntity;
         private HubManager hubManager;
         private ChatHub chatHub;
-        public AuthenticateViewModel(LoginEntity loginEntity, ChatHub chatHub)
-        {
-            Title = "Authentification";
-            this.loginEntity = loginEntity;
-            this.chatHub = chatHub;
-            this.hubManager = HubManager.Instance;
-            this.inputsEnabled = true;
-        }
+        private string usernameErrMsg;
+        private string passwordErrMsg;
+        private bool inputsEnabled;
+        #endregion
 
-        protected override async Task GoBack()
-        {
-            Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<ConnectServerViewModel>());
-        }
-
-        public override void InitializeViewModel()
-        {
-            //throw new NotImplementedException();
-        }
-
-        private ICommand authenticateCommand;
-        public ICommand AuthenticateCommand
-        {
-            get
-            {
-                if (authenticateCommand == null)
-                {
-                    authenticateCommand = new RelayCommandAsync(Authenticate);
-                }
-                return authenticateCommand;
-            }
-        }
-
-        private async Task<Uri> Authenticate()
-        {
-            try
-            {
-                Loading();
-                if (!ValidateLoginEntity())
-                {
-                    return null;
-                }
-                var response = await client.PostAsJsonAsync(Program.client.BaseAddress + "api/login", loginEntity);
-                if (response.IsSuccessStatusCode)
-                {
-                    int userId = response.Content.ReadAsAsync<int>().Result;
-                    User.Instance.UserEntity = new UserEntity { Id = userId, Username = loginEntity.Username };
-                    User.Instance.IsConnected = true;
-                    await chatHub.InitializeChat();
-                    //N'est plus necessaire?
-                    await chatHub.AuthenticateUser();
-                    Program.InitAfterConnection();
-                    Program.FormManager.CurrentForm = Program.MainMenu;
-                }
-                else
-                {
-                    var res = response.Content.ReadAsAsync<string>().Result;
-                    //response.EnsureSuccessStatusCode();
-                    // return URI of the created resource.
-                    UsernameErrMsg = res;
-                    PasswordErrMsg = res;
-                }
-                return response.Headers.Location;
-            }
-            catch (Exception e)
-            {
-                System.Diagnostics.Debug.WriteLine(e);
-                return null;
-            }
-            finally
-            {
-                LoadingDone();
-            }
-        }
-
-        private ICommand signupCommand;
-        public ICommand SignupCommand
-        {
-            get
-            {
-                if (signupCommand == null)
-                {
-                    signupCommand = new RelayCommandAsync(Signup);
-                }
-                return signupCommand;
-            }
-        }
-
-        private async Task Signup()
-        {
-            Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<SignupViewModel>());
-        }
-
-        private bool ValidateLoginEntity()
-        {
-            bool valid = true;
-            if (loginEntity.Username == null || loginEntity.Username == "")
-            {
-                UsernameErrMsg = "Nom d'usager requis";
-                valid = false;
-            }
-            if (loginEntity.Password == null || loginEntity.Password == "")
-            {
-                PasswordErrMsg = "Mot de passe requis";
-                valid = false;
-            }
-            return valid;
-        }
-
-        private void Loading()
-        {
-            UsernameErrMsg = "";
-            PasswordErrMsg = "";
-            InputsEnabled = false;
-        }
-
-        private void LoadingDone()
-        {
-            InputsEnabled = true;
-            CommandManager.InvalidateRequerySuggested();
-        }
-
+        #region Public Properties
         public string Username
         {
             get => loginEntity.Username;
@@ -160,7 +45,6 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
             }
         }
 
-        private string usernameErrMsg;
         public string UsernameErrMsg
         {
             get => usernameErrMsg;
@@ -190,7 +74,6 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
             }
         }
 
-        private string passwordErrMsg;
         public string PasswordErrMsg
         {
             get => passwordErrMsg;
@@ -201,7 +84,6 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
             }
         }
 
-        private bool inputsEnabled;
         public bool InputsEnabled
         {
             get { return inputsEnabled; }
@@ -216,5 +98,144 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
                 this.OnPropertyChanged();
             }
         }
+        #endregion
+
+        #region Constructor
+        public AuthenticateViewModel(LoginEntity loginEntity, ChatHub chatHub)
+        {
+            Title = "Authentification";
+            this.loginEntity = loginEntity;
+            this.chatHub = chatHub;
+            this.hubManager = HubManager.Instance;
+            this.inputsEnabled = true;
+        }
+        #endregion
+
+        #region Commands
+        private ICommand authenticateCommand;
+        public ICommand AuthenticateCommand
+        {
+            get
+            {
+                if (authenticateCommand == null)
+                {
+                    authenticateCommand = new RelayCommandAsync(Authenticate);
+                }
+                return authenticateCommand;
+            }
+        }
+
+        private ICommand signupCommand;
+        public ICommand SignupCommand
+        {
+            get
+            {
+                if (signupCommand == null)
+                {
+                    signupCommand = new RelayCommand(Signup);
+                }
+                return signupCommand;
+            }
+        }
+        #endregion
+
+        #region Command Methods
+        private async Task<Uri> Authenticate()
+        {
+            try
+            {
+                Loading();
+                ValidateLoginEntity();
+                var response = await client.PostAsJsonAsync(Program.client.BaseAddress + "api/login", loginEntity);
+                if (response.IsSuccessStatusCode)
+                {
+                    int userId = response.Content.ReadAsAsync<int>().Result;
+                    
+                    //On set l'instance statique du user.
+                    User.Instance.UserEntity = new UserEntity { Id = userId, Username = loginEntity.Username };
+                    User.Instance.IsConnected = true;
+
+                    await chatHub.InitializeChat();
+
+                    //On reset le nom d'usager et le mot de passe (Au cas ou il fait un retour a l'arriere ou deconnexion)
+                    Username = Password = "";
+
+                    //On initie tous les formes qui on besoin de savoir si on est en mode en ligne 
+                    Program.InitAfterConnection();
+
+                    Program.FormManager.CurrentForm = Program.MainMenu;
+                }
+                else
+                {
+                    //Du cote serveur, on retourne un message d'erreur
+                    var res = response.Content.ReadAsAsync<string>().Result;
+
+                    //On met une erreur seulement sur le password pour indiquer que soit le mdp, soit nom d'usager invalide
+                    PasswordErrMsg = res;
+                }
+                return response.Headers.Location;
+            }
+            catch(LoginException e)
+            {
+                System.Diagnostics.Debug.WriteLine("[AuthenticateViewModel.Authenticate] " + e.ToString());
+                return null;
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("[AuthenticateViewModel.Authenticate] " + e.ToString());
+                return null;
+            }
+            finally
+            {
+                LoadingDone();
+            }
+        }
+
+        private void Signup()
+        {
+            Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<SignupViewModel>());
+        }
+        #endregion
+
+        #region Private Methods
+        private void ValidateLoginEntity()
+        {
+            if (loginEntity.Username == null || loginEntity.Username == "")
+            {
+                UsernameErrMsg = "Nom d'usager requis";
+                throw new LoginException(UsernameErrMsg);
+            }
+            if (loginEntity.Password == null || loginEntity.Password == "")
+            {
+                PasswordErrMsg = "Mot de passe requis";
+                throw new LoginException(PasswordErrMsg);
+            }
+        }
+
+        private void Loading()
+        {
+            UsernameErrMsg = "";
+            PasswordErrMsg = "";
+            InputsEnabled = false;
+        }
+
+        private void LoadingDone()
+        {
+            InputsEnabled = true;
+            CommandManager.InvalidateRequerySuggested();
+        }
+        #endregion
+
+        #region Overwritten Methods
+        protected override void GoBack()
+        {
+            Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<ConnectServerViewModel>());
+        }
+
+        public override void InitializeViewModel()
+        {
+            //throw new NotImplementedException();
+        }
+        #endregion 
     }
 }

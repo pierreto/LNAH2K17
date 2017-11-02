@@ -108,5 +108,9 @@ namespace AirHockeyServer.Hubs
             GameService.GameOver(gameId);
         }
 
+        public void Disconnect(string username)
+        {
+            //
+        }
     }
 }

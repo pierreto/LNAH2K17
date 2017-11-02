@@ -7,12 +7,13 @@ using AirHockeyServer.Entities;
 using AirHockeyServer.Services;
 using System.Threading.Tasks;
 using AirHockeyServer.Services.Interfaces;
+using Microsoft.Practices.Unity;
 
 namespace AirHockeyServer.Controllers
 {
     public class LoginController : ApiController
     {
-        public ILoginService LoginService { get; }
+        public ILoginService LoginService { get; set; }
 
         public LoginController(ILoginService loginService)
         {
