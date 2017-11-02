@@ -29,7 +29,7 @@ namespace AirHockeyServer.Manager
 
         public void AddGame(GameEntity game)
         {
-            if(!Cache.Games.ContainsKey(game.GameId))
+            if(game != null && !Cache.Games.ContainsKey(game.GameId))
             {
                 Cache.Games[game.GameId] = game;
             }

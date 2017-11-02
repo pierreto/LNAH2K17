@@ -33,7 +33,7 @@ namespace AirHockeyServer.Manager
 
         public void AddTournament(TournamentEntity tournament)
         {
-            if (!Cache.Tournaments.ContainsKey(tournament.Id))
+            if (tournament != null && !Cache.Tournaments.ContainsKey(tournament.Id))
             {
                 Cache.Tournaments[tournament.Id] = tournament;
 

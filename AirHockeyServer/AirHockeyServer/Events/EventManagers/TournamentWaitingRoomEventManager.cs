@@ -83,6 +83,7 @@ namespace AirHockeyServer.Events.EventManagers
         {
             GameEntity game = new GameEntity()
             {
+                GameId = new Random().Next(),
                 CreationDate = DateTime.Now,
                 Players = new UserEntity[2] { player1, player2 },
                 Master = player1,
@@ -93,7 +94,7 @@ namespace AirHockeyServer.Events.EventManagers
             GameEntity gameCreated = await GameService.CreateGame(game);
 
             var stringGameId = gameCreated.GameId.ToString();
-
+            
             foreach (var player in gameCreated.Players)
             {
                 var connection = ConnectionMapper.GetConnection(player.Id);
