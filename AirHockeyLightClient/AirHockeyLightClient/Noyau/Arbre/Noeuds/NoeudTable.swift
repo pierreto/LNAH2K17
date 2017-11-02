@@ -20,17 +20,20 @@ import SceneKit
 ///////////////////////////////////////////////////////////////////////////
 class NoeudTable : NoeudCommun {
     
+    /// Identifiant de la table (utilisé pour le hit test)
+    public static let CATEGORY_BIT_MASK = 0b100
+    
     /// Le modèle de la table
     private let table = Table()
-    
-    /// Les sommets du modèle de la table
-    public  var sommets = [SCNVector3]()
     
     /// Les buts associés à la table
     private var buts = [NoeudBut]()
     
     /// Ligne du centre
     private var ligneCentreNoeud: NoeudCommun?
+    
+    /// Les sommets du modèle de la table
+    public  var sommets = [SCNVector3]()
     
     /// La table n'a pas un modèle obj
     required init(type: String, geometry: SCNGeometry) {
@@ -47,6 +50,11 @@ class NoeudTable : NoeudCommun {
         
         // Mettre à jour la géométrie de la table
         self.updateGeometry()
+        
+        // La table n'est pas sélectionnable
+        self.assignerEstSelectionnable(selectionnable: false)
+        
+        self.categoryBitMask = 0b100
     }
     
     required init(coder aDecoder: NSCoder) {
@@ -266,6 +274,9 @@ class NoeudTable : NoeudCommun {
         
         // Matériel de la ligne
         self.ligneCentreNoeud?.geometry?.firstMaterial?.diffuse.contents = UIColor(red: 1.0, green: 0, blue: 0, alpha: 1.0)
+        
+        // La ligne du centre n'est pas sélectionnable
+        self.ligneCentreNoeud?.assignerEstSelectionnable(selectionnable: false)
         
         self.addChildNode(self.ligneCentreNoeud!)
     }

@@ -31,9 +31,10 @@ namespace InterfaceGraphique.Controls.WPF.Editor
         }
         public override async void  InitializeViewModel()
         {
+            this.onlineEditedMapInfos.Clear();
             //TODO:Not optimized should use a list here but for testing purpose i'll leave it this way
-            List<MapEntity> list = await this.mapService.GetOnlineMap();
-            list.ForEach(x => this.onlineEditedMapInfos.Add(x));
+            List<MapEntity> list = await this.mapService.GetMaps();
+            list.ForEach(map => this.onlineEditedMapInfos.Add(map));
         }
 
         public ICommand ServerListViewCommand
@@ -81,7 +82,7 @@ namespace InterfaceGraphique.Controls.WPF.Editor
 
         private async Task JoinEdition()
         {
-            Program.Editeur.JoinEdition(this.selectedMap);
+            await Program.Editeur.JoinEdition(this.selectedMap);
             Program.EditorHost.Close();
         }
 

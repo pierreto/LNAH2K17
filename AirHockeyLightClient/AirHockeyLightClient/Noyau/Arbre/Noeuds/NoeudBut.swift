@@ -40,6 +40,9 @@ class NoeudBut : NoeudCommun {
     required init(type: String) {
         super.init(type: type)
         self.sommets = [SCNVector3].init(repeating: SCNVector3(0.0, 0.0, 0.0), count: 12)
+        
+        // Les buts ne sont pas sélectionnable
+        self.assignerEstSelectionnable(selectionnable: false)
     }
     
     required init(coder aDecoder: NSCoder) {

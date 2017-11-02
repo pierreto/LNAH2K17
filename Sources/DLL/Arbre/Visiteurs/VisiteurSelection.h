@@ -11,6 +11,7 @@
 #define __APPLICATION_VISITEURS_VISITEURSELECTION_H__
 
 #include "Visiteurs/VisiteurAbstrait.h"
+#include "FacadeInterfaceNative.h"
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class VisiteurSelection
@@ -23,9 +24,9 @@
 class VisiteurSelection : public VisiteurAbstrait {
 public:
 	/// Constructeur pour sélection avec clic
-	VisiteurSelection(glm::dvec3 rayStart, glm::dvec3 rayEnd, bool ctrl);
+	VisiteurSelection(glm::dvec3 rayStart, glm::dvec3 rayEnd, bool ctrl, SelectionEventCallback callback = nullptr);
 	/// Constructeur avec sélection par rectangle élastique
-	VisiteurSelection(glm::dvec3 pointAncrage, glm::dvec3 pointFinal, bool multiSelection, bool ctrl);
+	VisiteurSelection(glm::dvec3 pointAncrage, glm::dvec3 pointFinal, bool multiSelection, bool ctrl , SelectionEventCallback callback = nullptr);
 	/// Destructeur
 	virtual ~VisiteurSelection() {};
 
@@ -54,6 +55,7 @@ private:
 	void cubeCollisionTest(NoeudAbstrait* noeud);
 	/// Effectue un test par collision cylindrique à l'aide de raycast pour confirmer la sélection
 	void cylinderCollisionTest(NoeudAbstrait* noeud);
+	void handleSelection(NoeudAbstrait* node);
 	/// Sélectionne le centre du noeud
 	void selectionCentreNoeud(NoeudAbstrait* noeud);
 
@@ -67,6 +69,8 @@ private:
 	glm::dvec3 pointDebut_;
 	/// Vecteur trois dimensions pour la position finale de la souris lors d'une sélection
 	glm::dvec3 pointFin_;
+
+	SelectionEventCallback selectionEventCallback_;
 };
 
 

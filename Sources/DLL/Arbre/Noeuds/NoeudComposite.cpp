@@ -464,8 +464,8 @@ void NoeudComposite::afficherConcret(const glm::mat4& vueProjection) const
 {
 	NoeudAbstrait::afficherConcret(vueProjection);
 
-	for (NoeudAbstrait const* enfant : enfants_){
-		enfant->afficher(vueProjection * transformationRelative_);
+	for (int i = 0; i < enfants_.size();i++) {
+		enfants_[i]->afficher(vueProjection * transformationRelative_);
 	}
 }
 

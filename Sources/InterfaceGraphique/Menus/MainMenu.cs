@@ -46,7 +46,11 @@ namespace InterfaceGraphique
             //this.boutonPartieRapide.Click += (sender, e) => Program.FormManager.CurrentForm = Program.LobbyHost;
             this.boutonTournoi.Click += (sender, e) => Program.FormManager.CurrentForm = Program.TournementMenu;
             this.buttonConfiguration.Click += (sender, e) => Program.ConfigurationMenu.ShowDialog();
-            this.buttonEditeur.Click += (sender, e) => Program.FormManager.CurrentForm = Program.Editeur;
+            this.buttonEditeur.Click += async (sender, e) =>
+            {
+                await Program.Editeur.ResetDefaultTable();
+                Program.FormManager.CurrentForm = Program.Editeur;
+            };
             this.Button_Credits.Click += (sender, e) => Program.FormManager.CurrentForm = Program.CreditsMenu;
             this.buttonQuitter.Click += (sender, e) => { Program.unityContainer.Resolve<ChatViewModel>().UndockedChat?.Close(); System.Windows.Forms.Application.Exit();  };
             if (User.Instance.IsConnected)

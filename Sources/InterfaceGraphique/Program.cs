@@ -33,6 +33,7 @@ using InterfaceGraphique.Controls.WPF.ConnectServer;
 using InterfaceGraphique.Controls.WPF.Signup;
 using InterfaceGraphique.Services;
 using InterfaceGraphique.Controls.WPF.Chat.Channel;
+using InterfaceGraphique.Editor;
 
 namespace InterfaceGraphique
 {
@@ -119,6 +120,7 @@ namespace InterfaceGraphique
             openGLPanel = new Panel();
             formManager = new FormManager();
             homeMenu = new HomeMenu();
+            //mainMenu = new MainMenu();
             configurationMenu = new ConfigurationMenu();
             quickPlay = new QuickPlay();
             testMode = new TestMode();
@@ -179,7 +181,12 @@ namespace InterfaceGraphique
 
             //Rest services instantiations
             unityContainer.RegisterType<MapService>();
-         }
+
+            //Other services
+            unityContainer.RegisterType<MapManager>();
+
+
+        }
 
         static void ExecuterQuandInactif(object sender, EventArgs e)
         {

@@ -23,7 +23,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     static var sharedChatViewController = ChatViewController()
     
     var messagesData = [ChatMessageEntity]()
-    let clientConnection = ClientConnection.sharedConnection
+    let clientConnection = HubManager.sharedConnection
     
     @IBOutlet weak var chatBodyView: UIView!
     @IBOutlet weak var chatInput: UITextField!
@@ -92,11 +92,12 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBAction func sendMessage(_ sender: UIButton?) {
         if chatInput.text != "" {
             let message = [
-                "Sender": clientConnection.getUsername(),
+                "Sender": clientConnection.getUsername()!,
                 "MessageValue": self.chatInput.text!,
                 "TimeStamp": Date().description
-            ]
-            clientConnection.SendBroadcast(message : message)
+            ] as [String : Any]
+            let chatHub = clientConnection.getChatHub()
+            chatHub.SendBroadcast(message : message)
 
             // Clear chat box
             self.chatInput.text = ""

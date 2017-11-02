@@ -246,6 +246,7 @@
     <Compile Include="Editor\EditorState\AbstractEditorState.cs" />
     <Compile Include="Editor\EditorState\OfflineEditorState.cs" />
     <Compile Include="Editor\EditorState\OnlineEditorState.cs" />
+    <Compile Include="Editor\MapManager.cs" />
     <Compile Include="Editor\OpenPrivateMapForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -266,9 +267,13 @@
     </Compile>
     <Compile Include="Entities\ChannelEntity.cs" />
     <Compile Include="Entities\ChatMessage.cs" />
-    <Compile Include="Entities\EditonCommand\AbstractEditionCommand.cs" />
-    <Compile Include="Entities\EditonCommand\PortalCommand.cs" />
-    <Compile Include="Entities\EditonCommand\WallCommand.cs" />
+    <Compile Include="Entities\Editor\EditonCommand\AbstractEditionCommand.cs" />
+    <Compile Include="Entities\Editor\EditonCommand\BoostCommand.cs" />
+    <Compile Include="Entities\Editor\EditonCommand\MoveCommand.cs" />
+    <Compile Include="Entities\Editor\EditonCommand\PortalCommand.cs" />
+    <Compile Include="Entities\Editor\EditonCommand\SelectionCommand.cs" />
+    <Compile Include="Entities\Editor\EditonCommand\WallCommand.cs" />
+    <Compile Include="Entities\Editor\OnlineUser.cs" />
     <Compile Include="Entities\GameDataMessage.cs" />
     <Compile Include="Entities\GameEntity.cs" />
     <Compile Include="Entities\GoalMessage.cs" />
@@ -616,9 +621,7 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Entities\Message\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />

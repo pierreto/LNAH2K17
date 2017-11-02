@@ -16,7 +16,7 @@ class ConnectServer: NSObject {
     
     // Mark: Properties
     var ipAddressError: String
-    private let clientConnection = ClientConnection.sharedConnection
+    private let clientConnection = HubManager.sharedConnection
     
     override init() {
         print("init")
@@ -49,10 +49,10 @@ class ConnectServer: NSObject {
     
     private func connectToServer(ipAddress: String) -> Promise<Bool> {
         return Promise { fullfil, error in
-            clientConnection.EstablishConnection(ipAddress: ipAddress, hubName: "ChatHub")
+            clientConnection.EstablishConnection(ipAddress: ipAddress)
             /// Avertir l'utilisateur s'il n'est pas possible de se connecter au serveur après 5 secondes
             let timerTask = DispatchWorkItem {
-                if !(ClientConnection.sharedConnection.getConnection().state == .connected) {
+                if !(HubManager.sharedConnection.getConnection()?.state == .connected) {
                     self.ipAddressError = "Adresse non joinable"
                     NotificationCenter.default.post(name: Notification.Name(rawValue: LoginNotification.SubmitNotification), object: self)
                     fullfil(false)
@@ -63,14 +63,14 @@ class ConnectServer: NSObject {
             DispatchQueue.main.asyncAfter(deadline: timer, execute: timerTask)
             
             /// Avertir l'utilisateur en cas d'erreur au moment de la connexion
-            clientConnection.getConnection().error = { error in
+            clientConnection.getConnection()?.error = { error in
                 self.ipAddressError = "Une erreur est survenue durant la connection"
                 NotificationCenter.default.post(name: Notification.Name(rawValue: LoginNotification.SubmitNotification), object: self)
                 fullfil(false)
                 timerTask.cancel()
             }
             
-            clientConnection.getConnection().connectionFailed = { error in
+            clientConnection.getConnection()?.connectionFailed = { error in
                 print("Connection failed")
                 self.ipAddressError = "La connexion a échouée"
                 NotificationCenter.default.post(name: Notification.Name(rawValue: LoginNotification.SubmitNotification), object: self)
@@ -79,12 +79,16 @@ class ConnectServer: NSObject {
             }
             
             /// Transmettre un message reçu du serveur au ChatViewController
-            clientConnection.getChatHub().on("ChatMessageReceived") { args in
+            clientConnection.getChatHub().getHub().on("ChatMessageReceived") { args in
                 ChatViewController.sharedChatViewController.receiveMessage(message: args?[0] as! Dictionary<String, String>)
             }
             
+            //clientConnection.getEditionHub().getHub().on("NewUser") { args in
+                //print("NEW USER")
+            //}
+            
             /// Connexion au serveur réussie
-            clientConnection.getConnection().connected = {
+            clientConnection.getConnection()?.connected = {
                 print("Connected with ip: " + ipAddress)
                 fullfil(true)
                 self.clientConnection.setIpAddress(ipAddress: ipAddress)

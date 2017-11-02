@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Web;
+using AirHockeyServer.Entities.EditionCommand;
 
 namespace AirHockeyServer.Hubs
 {
@@ -37,6 +39,31 @@ namespace AirHockeyServer.Hubs
             {
                 _ConnectionsMapping = value;
             }
+        }
+
+
+        private static ConcurrentDictionary<string, OnlineUser> usersConnectionMapping;
+
+        private static ConcurrentDictionary<string, OnlineUser> UsersConnectionMapping
+        {
+            get
+            {
+                return usersConnectionMapping ??
+                       (usersConnectionMapping = new ConcurrentDictionary<string, OnlineUser>());
+            }
+            set => usersConnectionMapping = value;
+        }
+        public static void AddUserConnection( string connectionId, OnlineUser Users)
+        {
+            UsersConnectionMapping[connectionId] = Users;
+        }
+        public static void RemoveUserConnection(string connectionId)
+        {
+            ((IDictionary)UsersConnectionMapping).Remove(connectionId);
+        }
+        public static OnlineUser GetUserFromConnectionId(string connectionId)
+        {
+            return UsersConnectionMapping[connectionId];
         }
 
         ////////////////////////////////////////////////////////////////////////

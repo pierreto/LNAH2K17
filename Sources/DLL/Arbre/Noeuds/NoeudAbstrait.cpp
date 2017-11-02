@@ -31,7 +31,7 @@ NoeudAbstrait::NoeudAbstrait(
 	const std::string& type //= std::string{ "" }
 	,const char* uuid
 	) :
-	type_(type), axisLock_(glm::ivec3(1, 0, 1)), enCollision_(false)
+	type_(type), axisLock_(glm::ivec3(1, 0, 1)), enCollision_(false), selectedByAnotherUser_(false)
 {
 	if(uuid==nullptr)
 	{

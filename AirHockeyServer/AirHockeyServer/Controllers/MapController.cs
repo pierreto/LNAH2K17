@@ -10,14 +10,18 @@ using System.Net.Http;
 using System.Web;
 using System.Web.Http;
 using System.Threading.Tasks;
+using AirHockeyServer.Hubs;
+using Microsoft.Practices.ObjectBuilder2;
 
 namespace AirHockeyServer.Controllers
 {
-    public class MapController : ApiController 
+    public class MapController : ApiController
     {
-        public MapController(IMapService mapService)
+        private IEditionService editionService;
+        public MapController(IMapService mapService, IEditionService editionService)
         {
             MapService = mapService;
+            this.editionService = editionService;
         }
 
         public IMapService MapService { get; }
@@ -29,8 +33,20 @@ namespace AirHockeyServer.Controllers
             try
             {
                 IEnumerable<MapEntity> maps = await MapService.GetMaps();
-                var response = HttpResponseGenerator.CreateSuccesResponseMessage(HttpStatusCode.OK, maps);
-                return response;
+                maps.ForEach(action =>
+                {
+                    string gameId = EditionHub.ObtainEditionGroupIdentifier((int)action.Id);
+                    if (editionService.UsersPerGame.ContainsKey(gameId))
+                    {
+                        action.CurrentNumberOfPlayer = editionService.UsersPerGame[gameId].Count;
+
+                    }
+                    else
+                    {
+                        action.CurrentNumberOfPlayer = 0;
+                    }
+                });
+                return HttpResponseGenerator.CreateSuccesResponseMessage(HttpStatusCode.OK, maps);
             }
             catch
             {
@@ -53,11 +69,36 @@ namespace AirHockeyServer.Controllers
             }
         }
 
-        [Route("api/maps/get/{name}")]
-        public async Task<HttpResponseMessage> GetMapByName(string name)
+        // Hack for returning the db-generated id of a new map.
+        // Should only be used ONCE after saving a new map for the first time:
+        [HttpPost]
+        [Route("api/maps/get_id_new_map")]
+        public async Task<HttpResponseMessage> GetMapID([FromBody]MapEntity map)
         {
-            MapEntity map = await MapService.GetMapByName("misg", name);
-            return Request.CreateResponse(HttpStatusCode.OK);
+            try
+            {
+                int? id = await MapService.GetMapID(map);
+                return HttpResponseGenerator.CreateSuccesResponseMessage(HttpStatusCode.OK, id);
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
+        }
+
+        [HttpGet]
+        [Route("api/maps/get/{id}")]
+        public async Task<HttpResponseMessage> GetMapByID(int id)
+        {
+            try
+            {
+                MapEntity map = await MapService.GetMap(id);
+                return HttpResponseGenerator.CreateSuccesResponseMessage(HttpStatusCode.OK, map);
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
         }
     }
 }

@@ -11,6 +11,7 @@
 #define __APPLICATION_VISITEURS_VISITEURDEPLACEMENT_H__
 
 #include "Visiteurs/VisiteurAbstrait.h"
+#include "FacadeInterfaceNative.h"
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class VisiteurDeplacement
@@ -24,7 +25,9 @@ class VisiteurDeplacement : public VisiteurAbstrait
 {
 public:
 	/// Constructeur
-	VisiteurDeplacement(glm::vec3 delta);
+	VisiteurDeplacement(glm::vec3 delta, MoveEventCallback move=nullptr);
+
+
 	/// Destructeur
 	virtual ~VisiteurDeplacement();
 
@@ -46,6 +49,7 @@ public:
 private:
 	/// Vecteur trois dimensions pour le changement de position de l'objet
 	glm::vec3 delta_;
+	MoveEventCallback moveEventCallback_;
 };
 
 

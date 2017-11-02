@@ -66,15 +66,12 @@ class ModeleEtatCreerMuret: ModeleEtat {
     override func panGesture(sender: ImmediatePanGestureRecognizer) {
         super.panGesture(sender: sender)
         
-        // TODO
-        // if (mouseDownL_ && isAClick() && mouseOverTable()) {
-
             if sender.state == UIGestureRecognizerState.began && self.noeud == nil {
                 print("BEGIN")
                 
                 // Création du noeud
                 let arbre = FacadeModele.instance.obtenirArbreRendu()
-                self.noeud = FacadeModele.instance.obtenirArbreRendu().creerNoeud(typeNouveauNoeud: arbre.NOM_MUR) as! NoeudMur
+                self.noeud = arbre.creerNoeud(typeNouveauNoeud: arbre.NOM_MUR) as! NoeudMur
                 
                 // Déplacement du noeud (avec transformation du point dans l'espace virtuelle)
                 let point = MathHelper.GetHitTestSceneViewCoordinates(point: self.position)
@@ -86,24 +83,28 @@ class ModeleEtatCreerMuret: ModeleEtat {
                 
                     self.pointInitial = GLKVector3.init(v: ((point?.x)!, (point?.y)!, (point?.z)!))
                 
-                    // Activer effet fantome
-                    self.noeud?.effetFantome(activer: true)
+                    // Activer effet sélection
+                    self.noeud?.appliquerMaterielSelection(activer: true)
                 
                     // Ajout du noeud à l'arbre de rendu
-                    arbre.addChildNode(self.noeud!)
+                    let table = arbre.childNode(withName: arbre.NOM_TABLE, recursively: true) as! NoeudTable
+                    table.addChildNode(self.noeud!)
+                }
+                else {
+                    // Afficher un message d'erreur
+                    FacadeModele.instance.obtenirVue().editorNotificationScene?.showErrorOutOfBoundMessage(activer: true)
                 }
             }
             else if sender.state == UIGestureRecognizerState.ended {
                 print("END")
                 
                 if (self.noeudsSurLaTable()) {
-                    // Desactiver effet fantome
-                    self.noeud?.effetFantome(activer: false)
+                    // Desactiver effet sélection
+                    self.noeud?.appliquerMaterielSelection(activer: false)
                     self.noeud = nil
                 }
                 else {
-                    if (self.noeud != nil)
-                    {
+                    if (self.noeud != nil) {
                         self.noeud?.removeFromParentNode()
                         self.noeud = nil
                     }
@@ -119,6 +120,7 @@ class ModeleEtatCreerMuret: ModeleEtat {
 
                     // Calculer la distance pour le scaling
                     let distance = GLKVector3Distance(point, self.pointInitial)
+                    self.noeud?.scale = SCNVector3(1, 1, distance)
                 
                     // Calculer l'angle pour la rotation
                     let node2mouse = GLKVector3Subtract(point, self.pointInitial)
@@ -133,15 +135,13 @@ class ModeleEtatCreerMuret: ModeleEtat {
                     let crossProduct = GLKVector3CrossProduct(x, y)
                     let dotCrossProduct = GLKVector3DotProduct(ref, crossProduct)
                     let finalAngle = dotCrossProduct >= 0 ? angle : -angle
-                
-                    // Calculer le déplecement
+                    self.noeud?.rotation = SCNVector4(0, 1, 0, finalAngle)
+                    
+                    // Calculer le déplacement
                     var position = GLKVector3.init(v: (self.pointInitial.x, self.pointInitial.y, self.pointInitial.z));
                     position.x += Float(sin(finalAngle) * distance / 2)
                     position.z += Float(cos(finalAngle) * distance / 2)
-                
-                    self.noeud?.deplacer(position: position)
-                    self.noeud?.scale = SCNVector3(1, 1, distance)
-                    self.noeud?.rotation = SCNVector4(0, 1, 0, finalAngle)
+                    self.noeud?.position = SCNVector3FromGLKVector3(position)
                 }
             }
     }
