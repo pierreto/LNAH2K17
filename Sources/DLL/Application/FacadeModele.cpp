@@ -1010,19 +1010,15 @@ void FacadeModele::rotateCamera(float angle)
 	vue_->obtenirCamera().orbiterXY(0, angle);
 }
 
-void FacadeModele::selectByUUIDS(std::vector<std::string> uuids)
-{
-	
-}
 
-void FacadeModele::moveByUUID(const char* uuid, const glm::vec3 pos)
+void FacadeModele::moveByUUID(const char* uuid, const glm::vec3 newPos)
 {
 	VisitorByUUID visitorWrapper = VisitorByUUID(uuid);
 	arbre_->accepterVisiteur(&visitorWrapper);
 	NoeudAbstrait* node = visitorWrapper.getNode();
 	if(visitorWrapper.hasFound)
 	{
-		node->assignerPositionRelative(pos);
+		node->assignerPositionRelative(newPos);
 	}
 }
 

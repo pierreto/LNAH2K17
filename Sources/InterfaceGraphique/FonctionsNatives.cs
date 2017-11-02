@@ -247,7 +247,7 @@ namespace InterfaceGraphique {
         public static extern void setMoveEventCallback(MoveEventCallback callback);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void moveByUUID(string uuid, float[] newPos);
+        public static extern void moveByUUID(string username,string uuid, float[] newPos);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void addNewUser(string username, string userHexColor);

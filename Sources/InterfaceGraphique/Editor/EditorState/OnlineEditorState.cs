@@ -155,6 +155,7 @@ namespace InterfaceGraphique.Editor.EditorState
          
             this.editionHub.SendEditorCommand(new MoveCommand(uuid)
             {
+                Username = User.Instance.UserEntity.Username,
                 Position = vec
             });
 

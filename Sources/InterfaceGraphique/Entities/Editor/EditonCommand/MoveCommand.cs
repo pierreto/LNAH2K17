@@ -9,6 +9,7 @@ namespace InterfaceGraphique.Entities.EditonCommand
 {
     class MoveCommand : AbstractEditionCommand
     {
+        public string Username { get; set; }
         public float[] Position { get; set; }
 
         public MoveCommand(string uuid ) : base(uuid)
@@ -17,7 +18,8 @@ namespace InterfaceGraphique.Entities.EditonCommand
 
         public override void ExecuteCommand()
         {
-            FonctionsNatives.moveByUUID(objectUuid, Position);
+            FonctionsNatives.moveByUUID(Username, objectUuid, Position);
+            
         }
     }
 }

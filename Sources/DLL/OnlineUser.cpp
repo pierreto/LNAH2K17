@@ -43,6 +43,7 @@ NoeudAbstrait* OnlineUser::findNode(std::string uuid)
 			return node;
 		}
 	}
+	return nullptr;
 }
 NoeudAbstrait* OnlineUser::findNodeAndRemoveFromVector(std::string uuid)
 {

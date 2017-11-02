@@ -160,8 +160,7 @@ public:
    bool modeOrbite_;
 
 
-   void selectByUUIDS(std::vector<std::string> uuids);
-   void moveByUUID(const char* uuid, const glm::vec3 delta);
+   void moveByUUID(const char* uuid, const glm::vec3 newPos);
 
    UserManager& getUserManager() { return userManager_; }
 

@@ -9,6 +9,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "VisiteurSelection.h"
+#include "ModeleEtatJeu.h"
 
 
 ////////////////////////////////////////////////////////////////////////
@@ -207,14 +208,20 @@ void VisiteurSelection::handleSelection(NoeudAbstrait* node)
 	{
 		if (ctrl_)
 		{
-			selectionEventCallback_(node->getUUID(), !node->estSelectionne(), false);
+			if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
+			{
+				selectionEventCallback_(node->getUUID(), !node->estSelectionne(), false);
+			}
 			node->inverserSelection();
 
 		}
 		else
 		{
 			node->selectionnerTout();
-			selectionEventCallback_(node->getUUID(), node->estSelectionne(), false);
+			if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
+			{
+				selectionEventCallback_(node->getUUID(), node->estSelectionne(), false);
+			}
 		}
 		nbSelections_++;
 	}

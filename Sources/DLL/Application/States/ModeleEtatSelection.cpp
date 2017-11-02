@@ -14,6 +14,7 @@
 
 #include "FacadeModele.h"
 #include "Vue.h"
+#include "ModeleEtatJeu.h"
 
 
 /// Pointeur vers l'instance unique de la classe.
@@ -130,10 +131,14 @@ void ModeleEtatSelection::mouseUpL() {
 			if (!ctrlDown_)
 			{
 				arbre->deselectionnerTout();
-				selectionCallback_("", false, true);
+				if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
+				{
+					selectionCallback_("", false, true);
+				}
 			}
 
 			Raycast ray(mousePosX_, mousePosY_);
+
 			VisiteurSelection visiteur(ray.getRayStart(), ray.getRayEnd(), ctrlDown_,selectionCallback_);
 			arbre->accepterVisiteur(&visiteur);		
 		}
@@ -143,8 +148,10 @@ void ModeleEtatSelection::mouseUpL() {
 			if (!ctrlDown_)
 			{
 				arbre->deselectionnerTout();
-
-				selectionCallback_("", false, true);
+				if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
+				{
+					selectionCallback_("", false, true);
+				}
 			}
 
 			glm::dvec3 pointAncrage, pointFinal;

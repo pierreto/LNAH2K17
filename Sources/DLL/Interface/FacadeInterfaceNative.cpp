@@ -1044,9 +1044,21 @@ void setElementSelection(const char* username, const char* uuid, const bool isSe
 }
 
 
-void moveByUUID(const char* uuid, const float* delta)
+void moveByUUID(const char* username, const char* uuid, const float* newPosition)
 {
-	FacadeModele::obtenirInstance()->moveByUUID(uuid, glm::make_vec3(delta));
+
+	NoeudAbstrait* node =  FacadeModele::obtenirInstance()->getUserManager().getUser(std::string(username))->findNode(std::string(uuid));
+	if(node)
+	{
+		node->assignerPositionRelative(glm::make_vec3(newPosition));
+	}
+	else //if it isnt in the selected list of the other player anymore, we find it in the entire tree 
+	{
+		FacadeModele::obtenirInstance()->moveByUUID(uuid, glm::make_vec3(newPosition));
+
+	}
+
+
 }
 
 void setMoveEventCallback(MoveEventCallback callback)
