@@ -39,10 +39,11 @@ class Maps: NSObject {
     }
 
     func saveMap(mapName: String, isLocalMap: Bool, isPrivateMap: Bool) {
+        // TODO : add other params to map
         let map = MapEntity()
         map.mapName = mapName
         
-        DBManager.instance.sauvegarderCarte(map: map)
+        DBManager.instance.sauvegarderCarte(map: map, json: nil)
     }
     
 }

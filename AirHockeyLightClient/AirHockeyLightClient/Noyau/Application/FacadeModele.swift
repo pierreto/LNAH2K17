@@ -240,16 +240,10 @@ class FacadeModele {
         }
         
         self.chargerPntCtrl()
-
         self.creerNoeuds(type: "Accelerateur", nomType: ArbreRendu.instance.NOM_ACCELERATEUR)
         self.creerNoeuds(type: "Portail", nomType: ArbreRendu.instance.NOM_PORTAIL)
         self.creerNoeuds(type: "Muret", nomType: ArbreRendu.instance.NOM_MUR)
-        
-        /*
-        coefficients[0] = docJSON_["Coefficients"][0].GetDouble()
-        coefficients[1] = docJSON_["Coefficients"][1].GetDouble()
-        coefficients[2] = docJSON_["Coefficients"][2].GetDouble()
-         */
+        self.chargerCoefficients()
     }
     
     /// Placer les points de contrôle sur la patinoire
@@ -351,14 +345,30 @@ class FacadeModele {
         }
     }
     
+    func chargerCoefficients() {
+        let cFriction = self.docJSON?["Coefficients"][0][0].rawString(options: [])
+        let cRebond = self.docJSON?["Coefficients"][0][1].rawString(options: [])
+        let cAcceleration = self.docJSON?["Coefficients"][0][2].rawString(options: [])
+        
+        self.generalProperties?.setCoefficientValues(coefficientFriction: cFriction!, coefficientRebond: cRebond!, coefficientAcceleration: cAcceleration!)
+    }
+    
+    func sauvegarderCoefficients() {
+        let coefficients = self.generalProperties?.getCoefficientValues()
+        let cJSON = JSON([coefficients?[0], coefficients?[1], coefficients?[2]])
+        self.docJSON?["Coefficients"].appendArray(json: cJSON)
+    }
+    
     /// Cette fonction permet d'enregistrer la patinoire en format JSON
     func sauvegarderCarte(map: MapEntity) {
+        // Mettre à jour la représentation JSON de la carte
         self.initializeJson()
         let visiteur = VisiteurSauvegarde()
         self.arbre?.accepterVisiteur(visiteur: visiteur)
+        self.sauvegarderCoefficients()
         
-        // Sauver le fichier localement ou TODO : via le serveur
-        DBManager.instance.sauvegarderCarte(map: map)
+        // Sauvegarder la carte localement
+        DBManager.instance.sauvegarderCarte(map: map, json: (self.docJSON?.rawString(options: []))!)
     }
     
     private func initializeJson() {
@@ -367,16 +377,8 @@ class FacadeModele {
             "Accelerateur": [],
             "Muret": [],
             "Portail": [],
-            "Coefficients": [0, 0, 0]
+            "Coefficients": []
         ]
-    }
-    
-    private func recuperateCurrentDateTime() -> String {
-        let date = Date()
-        let formatter = DateFormatter()
-
-        formatter.dateFormat = "dd.MM.yyyy HH:mm:ss"
-        return formatter.string(from: date)
     }
     
 }
