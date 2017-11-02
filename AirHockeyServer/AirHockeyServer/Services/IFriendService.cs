@@ -11,6 +11,8 @@ namespace AirHockeyServer.Services
     {
         Task<List<UserEntity>> GetAllFriends(UserEntity user);
 
+        Task<List<FriendRequestEntity>> GetAllPendingRequests(UserEntity user);
+
         Task<FriendRequestEntity> SendFriendRequest(UserEntity user, UserEntity friend);
 
         Task<FriendRequestEntity> AcceptFriendRequest(FriendRequestEntity request);

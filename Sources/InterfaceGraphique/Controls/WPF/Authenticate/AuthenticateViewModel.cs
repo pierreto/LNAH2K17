@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Microsoft.Practices.Unity;
 using InterfaceGraphique.Controls.WPF.ConnectServer;
+using InterfaceGraphique.Controls.WPF.Friends;
 
 namespace InterfaceGraphique.Controls.WPF.Authenticate
 {
@@ -72,6 +73,10 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
                     await chatHub.AuthenticateUser();
                     Program.InitAfterConnection();
                     Program.FormManager.CurrentForm = Program.MainMenu;
+
+                    // Open the friend list windows:
+                    Program.FriendListHost.Show();
+                    Program.unityContainer.Resolve<FriendListViewModel>().InitializeViewModel();
                 }
                 else
                 {

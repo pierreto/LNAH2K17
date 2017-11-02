@@ -22,6 +22,11 @@ namespace AirHockeyServer.Services
             return await FriendRepository.GetAllFriends(user.Id);
         }
 
+        public async Task<List<FriendRequestEntity>> GetAllPendingRequests(UserEntity user)
+        {
+            return await FriendRepository.GetAllPendingRequests(user.Id);
+        }
+
         public async Task<FriendRequestEntity> SendFriendRequest(UserEntity user, UserEntity friend)
         {
             var request = new FriendRequestEntity{

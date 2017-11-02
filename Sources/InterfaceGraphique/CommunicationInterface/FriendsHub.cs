@@ -17,10 +17,10 @@ namespace InterfaceGraphique.CommunicationInterface
         private static HubConnection Connection;
         private UserEntity user;
 
-        //public event EventHandler<FriendRequestEntity> FriendRequestEvent;
-        //public event EventHandler<UserEntity> NewFriendEvent;
-        //public event EventHandler<FriendRequestEntity> CanceledFriendRequestEvent;
-        //public event EventHandler<UserEntity> RemovedFriendEvent;
+        public event Action<FriendRequestEntity> FriendRequestEvent;
+        public event Action<UserEntity> NewFriendEvent;
+        public event Action<UserEntity> RemovedFriendEvent;
+        public event Action<FriendRequestEntity> CanceledFriendRequestEvent;
 
        public void InitializeHub(HubConnection connection)
         {
@@ -37,21 +37,24 @@ namespace InterfaceGraphique.CommunicationInterface
 
         private void InitializeEvents()
         {
-            /*
-            FriendsProxy.On<FriendRequestEntity>("FriendRequestEvent", request =>
+            FriendsProxy.On<FriendRequestEntity>("FriendRequestEvent", friendRequest =>
             {
-                Task.Run(() => FriendsProxy.Invoke("AcceptFriendRequest", request));    
+                FriendRequestEvent?.Invoke(friendRequest);
             });
-            */
 
             FriendsProxy.On<UserEntity>("NewFriendEvent", friend =>
             {
-                Console.WriteLine("New friend: " + friend.Username);
+                NewFriendEvent?.Invoke(friend);
             });
 
             FriendsProxy.On<UserEntity>("RemovedFriendEvent", ex_friend =>
             {
-                Console.WriteLine("Removed friend: " + ex_friend.Username);
+                RemovedFriendEvent?.Invoke(ex_friend);
+            });
+
+            FriendsProxy.On<FriendRequestEntity>("CanceledFriendRequestEvent", request =>
+            {
+                CanceledFriendRequestEvent?.Invoke(request);
             });
         }
 
@@ -60,18 +63,14 @@ namespace InterfaceGraphique.CommunicationInterface
             return await FriendsProxy.Invoke<List<UserEntity>>("GetAllFriends", this.user);
         }
 
+        public async Task<List<FriendRequestEntity>> GetAllPendingRequests()
+        {
+            return await FriendsProxy.Invoke<List<FriendRequestEntity>>("GetAllPendingRequests", this.user);
+        }
+
         public async Task<FriendRequestEntity> SendFriendRequest(UserEntity friend)
         {
-            var res = await FriendsProxy.Invoke<FriendRequestEntity>("SendFriendRequest", this.user, friend);
-
-            if (res != null)
-            {
-                Console.WriteLine("user=" + res.Requestor.Username);
-                Console.WriteLine("friend=" + res.Friend.Username);
-                Console.WriteLine("status=" + res.Status);
-            }
-
-            return res;
+            return await FriendsProxy.Invoke<FriendRequestEntity>("SendFriendRequest", this.user, friend);
         }
 
         public async Task<bool> AcceptFriendRequest(FriendRequestEntity request)
@@ -80,6 +79,11 @@ namespace InterfaceGraphique.CommunicationInterface
             return (res != null) ? true : false;
         }
 
+        public async Task<bool> RefuseFriendRequest(FriendRequestEntity request)
+        {
+            var res = await FriendsProxy.Invoke<FriendRequestEntity>("RefuseFriendRequest", request);
+            return (res != null) ? true : false;
+        }
         public async Task<bool> RemoveFriend(UserEntity ex_friend)
         {
             return await FriendsProxy.Invoke<bool>("RemoveFriend", this.user, ex_friend);

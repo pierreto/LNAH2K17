@@ -18,6 +18,21 @@ namespace AirHockeyServer.Controllers
         }
 
         [HttpGet]
+        [Route("api/user/u/{username}")]
+        public async Task<HttpResponseMessage> GetUser(string username)
+        {
+            try
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, await UserService.GetUserByUsername(username));
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+                return Request.CreateResponse(HttpStatusCode.NotFound, e);
+            }
+        }
+
+        [HttpGet]
         [Route("api/user/{id}")]
         public async Task<HttpResponseMessage> GetUser(int id)
         {

@@ -36,7 +36,7 @@ namespace AirHockeyServer.Pocos
             set { this._Friend.Entity = value; }
         }
 
-        [Column(Name = "status", DbType = "tinyint(4) NOT NULL", CanBeNull = false)]
+        [Column(Name = "status", DbType = "int(4) NOT NULL", CanBeNull = false)]
         public int Status { get; set; }
     }
 }

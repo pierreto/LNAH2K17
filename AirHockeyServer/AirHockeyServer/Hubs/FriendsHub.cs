@@ -29,17 +29,21 @@ namespace AirHockeyServer.Hubs
             return await FriendService.GetAllFriends(user);
         }
 
+        public async Task<List<FriendRequestEntity>> GetAllPendingRequests(UserEntity user)
+        {
+            return await FriendService.GetAllPendingRequests(user);
+        }
+
         public async Task<FriendRequestEntity> SendFriendRequest(UserEntity user, UserEntity friend)
         {
             var friendRequest = await FriendService.SendFriendRequest(user, friend);
 
             // On notifie l'utilisateur dont on veut être l'ami de la demande:
-            /*
-            if (friendRequest != null)
+            string friendConnection = ConnectionMapper.GetConnection(friend.Id);
+            if (friendRequest != null && friendConnection.Length > 0) 
             {
-                Clients.Client(ConnectionMapper.GetConnection(friend.Id)).FriendRequestEvent(friendRequest);
+                Clients.Client(friendConnection).FriendRequestEvent(friendRequest);
             }
-            */
 
             return friendRequest;
         }
@@ -50,10 +54,13 @@ namespace AirHockeyServer.Hubs
 
             // Si la demande d'ami a été acceptée avec succès, on notifie les deux
             // nouveaux amis (requestor et friend) :
+            string friendConnection = ConnectionMapper.GetConnection(relation.Friend.Id);
             if (relation != null)
             {
                 Clients.Client(ConnectionMapper.GetConnection(relation.Requestor.Id)).NewFriendEvent(relation.Friend);
-                //Clients.Client(ConnectionMapper.GetConnection(relation.Friend.Id)).NewFriendEvent(relation.Requestor);
+
+                if (friendConnection.Length > 0)
+                    Clients.Client(friendConnection).NewFriendEvent(relation.Requestor);
             }
 
             return relation;
@@ -71,9 +78,10 @@ namespace AirHockeyServer.Hubs
 
             // Si la demande a été annulée avec succès, on notifie le client à qui on a envoyé
             // la demande :
-            if (canceled_request)
+            string friendConnection = ConnectionMapper.GetConnection(request.Friend.Id);
+            if (canceled_request && friendConnection.Length > 0)
             {
-                Clients.Client(ConnectionMapper.GetConnection(request.Friend.Id)).CanceledFriendRequestEvent(request);
+                Clients.Client(friendConnection).CanceledFriendRequestEvent(request);
             }
 
             return canceled_request;
@@ -85,10 +93,13 @@ namespace AirHockeyServer.Hubs
 
             // Si la relation a été supprimée avec succès, on notifie chaque utilisateur de la
             // perte de son ami :
+            string ex_friendConnection = ConnectionMapper.GetConnection(ex_friend.Id);
             if (removed_friend)
             {
                 Clients.Client(ConnectionMapper.GetConnection(user.Id)).RemovedFriendEvent(ex_friend);
-                //Clients.Client(ConnectionMapper.GetConnection(ex_friend.Id)).RemovedFriendEvent(user);
+               
+                if (ex_friendConnection.Length > 0)
+                    Clients.Client(ex_friendConnection).RemovedFriendEvent(user);
             }
 
             return removed_friend;

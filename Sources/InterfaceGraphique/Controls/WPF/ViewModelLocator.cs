@@ -7,6 +7,7 @@ using InterfaceGraphique.Controls.WPF.Tournament;
 using InterfaceGraphique.Controls.WPF.Home;
 using InterfaceGraphique.Controls.WPF.Authenticate;
 using InterfaceGraphique.Controls.WPF.Signup;
+using InterfaceGraphique.Controls.WPF.Friends;
 
 namespace InterfaceGraphique.Controls.WPF
 {
@@ -55,6 +56,8 @@ namespace InterfaceGraphique.Controls.WPF
         }
 
         public EditorViewModel EditorViewModel => container.Resolve<EditorViewModel>();
+
+        public FriendListViewModel FriendListViewModel => container.Resolve<FriendListViewModel>();
 
     }
 }

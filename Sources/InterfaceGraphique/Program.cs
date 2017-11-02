@@ -19,6 +19,7 @@ using InterfaceGraphique.Controls;
 using InterfaceGraphique.Controls.WPF;
 using InterfaceGraphique.Controls.WPF.Chat;
 using InterfaceGraphique.Controls.WPF.Editor;
+using InterfaceGraphique.Controls.WPF.Friends;
 using InterfaceGraphique.Entities;
 using InterfaceGraphique.Menus;
 using Microsoft.AspNet.SignalR.Client;
@@ -60,6 +61,7 @@ namespace InterfaceGraphique
         public static LobbyHost LobbyHost { get { return lobbyHost; } set { lobbyHost = value; } }
         public static OnlineTournament OnlineTournament { get { return onlineTournament;  } set { onlineTournament = value; } }
         public static EditorHost EditorHost { get { return editorHost; } set { editorHost = value; } }
+        public static FriendListHost FriendListHost {  get { return friendListHost; } set { friendListHost = value; } }
 
 
         private static FormManager formManager;
@@ -77,6 +79,7 @@ namespace InterfaceGraphique
         private static LobbyHost lobbyHost;
         private static EditorHost editorHost;
         private static OnlineTournament onlineTournament;
+        private static FriendListHost friendListHost;
 
         private static Panel openGLPanel;
         //private static Login login;
@@ -131,6 +134,7 @@ namespace InterfaceGraphique
             lobbyHost = new LobbyHost();
             onlineTournament = new OnlineTournament();
             editorHost = new EditorHost();
+            friendListHost = new FriendListHost();
 
             FonctionsNatives.loadSounds();
 
@@ -169,6 +173,7 @@ namespace InterfaceGraphique
             unityContainer.RegisterType<HomeViewModel>();
             unityContainer.RegisterType<ConnectServerViewModel>(); 
             unityContainer.RegisterType<EditorViewModel>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<FriendListViewModel>(new ContainerControlledLifetimeManager());
 
 
             //Rest services instantiations
