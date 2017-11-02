@@ -1,27 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
-using System.Net.WebSockets;
-using System.Text;
-using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Net.Sockets;
-using System.Threading;
-using System.Windows;
 using InterfaceGraphique.CommunicationInterface;
-using InterfaceGraphique.CommunicationInterface.RestInterface;
 using InterfaceGraphique.Controls;
 using InterfaceGraphique.Controls.WPF;
 using InterfaceGraphique.Controls.WPF.Chat;
 using InterfaceGraphique.Controls.WPF.Editor;
 using InterfaceGraphique.Entities;
 using InterfaceGraphique.Menus;
-using Microsoft.AspNet.SignalR.Client;
 using Microsoft.Practices.Unity;
 using Application = System.Windows.Forms.Application;
 using InterfaceGraphique.Controls.WPF.Matchmaking;
@@ -62,7 +50,6 @@ namespace InterfaceGraphique
         public static LobbyHost LobbyHost { get { return lobbyHost; } set { lobbyHost = value; } }
         public static OnlineTournament OnlineTournament { get { return onlineTournament;  } set { onlineTournament = value; } }
         public static EditorHost EditorHost { get { return editorHost; } set { editorHost = value; } }
-
 
         private static TestChatMenu testChatMenu;
         private static FormManager formManager;
@@ -148,7 +135,7 @@ namespace InterfaceGraphique
             tournementTree = new TournementTree();
         }
 
-        private static void InitializeUnityDependencyInjection()
+        public static void InitializeUnityDependencyInjection()
         {
             unityContainer = new UnityContainer();
 
@@ -180,8 +167,6 @@ namespace InterfaceGraphique
 
             //Other services
             unityContainer.RegisterType<MapManager>();
-
-
         }
 
         static void ExecuterQuandInactif(object sender, EventArgs e)

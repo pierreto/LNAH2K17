@@ -35,14 +35,14 @@ namespace AirHockeyServer.Services
                         }
                         else
                         {
-                            //if (!loginEntity.LoginFromWebApp)
-                            //{
-                            //    if (_usernames.Contains(loginEntity.Username))
-                            //    {
-                            //        throw new LoginException("Déjà connecté");
-                            //    }
-                            //    _usernames.Add(loginEntity.Username);
-                            //}
+                            if (!loginEntity.LoginFromWebApp)
+                            {
+                                if (_usernames.Contains(loginEntity.Username))
+                                {
+                                    throw new LoginException("Déjà connecté");
+                                }
+                                _usernames.Add(loginEntity.Username);
+                            }
                             return uE.Id;
                         }
                     }
@@ -55,12 +55,6 @@ namespace AirHockeyServer.Services
                 {
                     throw new LoginException("Nom d'usager ou mot de passe invalide");
                 }
-                //if (_usernames.Contains(loginEntity.Username))
-                //{
-                //    throw new LoginException("Username already taken.");
-                //}
-                //_usernames.Add(loginEntity.Username);
-                //return false;
             }
             catch (LoginException e)
             {
@@ -90,6 +84,7 @@ namespace AirHockeyServer.Services
     {
         public LoginException(string message) : base(message)
         {
+
         }
     }
 }
