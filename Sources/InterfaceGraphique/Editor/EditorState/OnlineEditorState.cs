@@ -44,13 +44,13 @@ namespace InterfaceGraphique.Editor.EditorState
 
         private void OnUserLeft(string username)
         {
-            FonctionsNatives.removeUser(username.ToCharArray());
+            FonctionsNatives.removeUser(username);
 
         }
 
         private void OnNewUser(OnlineUser user)
         {
-            FonctionsNatives.addNewUser(user.Username.ToCharArray(),user.HexColor.ToCharArray());
+            FonctionsNatives.addNewUser(user.Username,user.HexColor);
         }
 
 
@@ -96,10 +96,8 @@ namespace InterfaceGraphique.Editor.EditorState
             List<OnlineUser> usersInTheGame = await this.editionHub.JoinPublicRoom(mapEntity);
             foreach (OnlineUser users in usersInTheGame)
             {
-                FonctionsNatives.addNewUser(users.Username.ToCharArray(),users.HexColor.ToCharArray());
+                FonctionsNatives.addNewUser(users.Username,users.HexColor);
             }
-        
-
         }
         public override async Task LeaveEdition()
         {

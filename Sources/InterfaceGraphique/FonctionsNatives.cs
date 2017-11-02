@@ -203,7 +203,7 @@ namespace InterfaceGraphique {
         public static extern void masterGoal();
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void createPortal(char[] startUuid, float[] startPos, char[] endUuid, float[] endPos);
+        public static extern void createPortal(string startUuid, float[] startPos, string endUuid, float[] endPos);
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
         public delegate void PortalCreationCallback([Out,MarshalAs(UnmanagedType.LPStr)] string startUuid, [Out] IntPtr startPos, [Out, MarshalAs(UnmanagedType.LPStr)]string endUuid, [Out] IntPtr endPos);
@@ -219,7 +219,7 @@ namespace InterfaceGraphique {
         public static extern void setWallCreationCallback(WallCreationCallback callback);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void createWall(char[] uuid, float[] startPosition, float[] endPosition);
+        public static extern void createWall(string uuid, float[] startPosition, float[] endPosition);
 
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
@@ -229,7 +229,7 @@ namespace InterfaceGraphique {
         public static extern void setBoostCreationCallback(BoostCreationCallback callback);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void createBoost(char[] uuid, float[] position);
+        public static extern void createBoost(string uuid, float[] position);
 
 
 
@@ -238,7 +238,7 @@ namespace InterfaceGraphique {
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void setSelectionEventCallback(SelectionEventCallback callback);
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void setElementAsSelected(char[] username, char[] uuid);
+        public static extern void setElementAsSelected(string username, string uuid);
 
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
@@ -248,13 +248,13 @@ namespace InterfaceGraphique {
         public static extern void setMoveEventCallback(MoveEventCallback callback);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void moveByUUID(char[] uuid, float[] newPos);
+        public static extern void moveByUUID(string uuid, float[] newPos);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void addNewUser(char[] username, char[] userHexColor);
+        public static extern void addNewUser(string username, string userHexColor);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void removeUser(char[] toCharArray);
+        public static extern void removeUser(string toCharArray);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void clearUsers();

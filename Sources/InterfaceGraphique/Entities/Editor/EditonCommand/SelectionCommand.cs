@@ -16,7 +16,7 @@ namespace InterfaceGraphique.Entities.EditonCommand
 
         public override void ExecuteCommand()
         {
-            FonctionsNatives.setElementAsSelected(Username.ToCharArray(),objectUuid.ToCharArray());
+            FonctionsNatives.setElementAsSelected(Username,objectUuid);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace InterfaceGraphique.Entities.EditonCommand
 
         public override void ExecuteCommand()
         {
-            FonctionsNatives.moveByUUID(objectUuid.ToCharArray(), Position);
+            FonctionsNatives.moveByUUID(objectUuid, Position);
         }
     }
 }

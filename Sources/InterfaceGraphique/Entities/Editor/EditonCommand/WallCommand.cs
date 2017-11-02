@@ -31,7 +31,7 @@ namespace InterfaceGraphique.Entities.EditonCommand
 
         public override void ExecuteCommand()
         {
-            FonctionsNatives.createWall( objectUuid.ToCharArray(), StartPosition, EndPosition);
+            FonctionsNatives.createWall( objectUuid, StartPosition, EndPosition);
         }
     }
 }

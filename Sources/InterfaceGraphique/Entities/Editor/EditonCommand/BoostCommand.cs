@@ -17,7 +17,7 @@ namespace InterfaceGraphique.Entities.EditonCommand
 
         public override void ExecuteCommand()
         {
-            FonctionsNatives.createBoost(objectUuid.ToCharArray(), Position);
+            FonctionsNatives.createBoost(objectUuid, Position);
         }
     }
 }

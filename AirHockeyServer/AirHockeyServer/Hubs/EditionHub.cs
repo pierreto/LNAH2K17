@@ -22,19 +22,21 @@ namespace AirHockeyServer.Hubs
 
             string mapGroupId = ObtainEditionGroupIdentifier((int) map.Id);
 
-            OnlineUser newUser = new OnlineUser()
-            {
-                Username = username,
-                HexColor = "#ff0000"
-            };
-            //This shouldnt be managed here... He should be managed at the login point at least
-            //But i have no choice for now
-            ConnectionMapper.AddUserConnection(Context.ConnectionId, newUser);
+   
             if (!editionService.UsersPerGame.ContainsKey(mapGroupId))
             {
                 List<OnlineUser> newEditionGroup = new List<OnlineUser>();
                 editionService.UsersPerGame.Add(mapGroupId, newEditionGroup);
             }
+            OnlineUser newUser = new OnlineUser()
+            {
+                Username = username,
+                HexColor = this.editionService.Colors[editionService.UsersPerGame[mapGroupId].Count]
+            };
+            //This shouldnt be managed here... He should be managed at the login point at least
+            //But i have no choice for now
+            ConnectionMapper.AddUserConnection(Context.ConnectionId, newUser);
+
             editionService.UsersPerGame[mapGroupId].Add(newUser);
 
             //Add the connection id to the map group

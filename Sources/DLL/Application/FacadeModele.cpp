@@ -773,7 +773,7 @@ void FacadeModele::creerNoeuds(char* type, std::string nomType) {
 		for (unsigned int i = 0; i < docJSON_[type].Size(); i+=2) {
 			std::vector<NoeudPortail*> linkedPortals;
 			for (unsigned int j = 0; j < 2; j++) {
-				linkedPortals.push_back((NoeudPortail*)arbre_->creerNoeud(nomType));
+				linkedPortals.push_back((NoeudPortail*)arbre_->creerNoeud(nomType, static_cast<const char*>(docJSON_[type][i][7].GetString())));
 
 				linkedPortals[j]->appliquerRotation(docJSON_[type][i + j][6].GetDouble(), glm::vec3(0, 1, 0));
 

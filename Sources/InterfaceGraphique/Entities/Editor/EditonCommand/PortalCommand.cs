@@ -20,7 +20,7 @@ namespace InterfaceGraphique.Entities.EditonCommand
 
         public override void ExecuteCommand()
         {
-            FonctionsNatives.createPortal( objectUuid.ToCharArray(), StartPosition, EndUuid.ToCharArray(), EndPosition);  
+            FonctionsNatives.createPortal( objectUuid, StartPosition, EndUuid, EndPosition);  
         }
     }
 }
