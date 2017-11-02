@@ -82,7 +82,10 @@ namespace AirHockeyServer.Services.ChatServiceServer
 
         public Task LeaveRoom(string roomName)
         {
-            roomPpl[roomName]--;
+            if (--roomPpl[roomName] == 0)
+            {
+                Clients.Others.ChannelDeleted(roomName);
+            }
             return Groups.Remove(Context.ConnectionId, roomName);
         }
 

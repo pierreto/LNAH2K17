@@ -49,7 +49,7 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
             {
                 if (joinChannelCommand == null)
                 {
-                    joinChannelCommand = new RelayCommandAsync(JoinChannel);
+                    joinChannelCommand = new RelayCommandAsync(JoinChannel, (o) => CanJoin());
                 }
                 return joinChannelCommand;
             }
@@ -63,6 +63,12 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
             Program.unityContainer.Resolve<ChannelViewModel>().ToggleJoinChannel();
             Program.unityContainer.Resolve<ChatListViewModel>().Items.Add(new ChatListItemViewModel(cE));
             Program.unityContainer.Resolve<JoinChannelListViewModel>().Items.Remove(Program.unityContainer.Resolve<JoinChannelListViewModel>().Items.Single(x => x.Name == cE.Name));
+            ActiveChannel.Instance.JoinChannelEntity = null;
+        }
+
+        public bool CanJoin()
+        {
+            return ActiveChannel.Instance.JoinChannelEntity != null;
         }
         #endregion
 

@@ -47,6 +47,7 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
         {
             this.chatHub = chatHub;
             this.chatHub.NewJoinableChannel += NewJoinableChannel;
+            this.chatHub.ChannelDeleted += ChannelDeleted;
             ctxTaskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
             Items = new ObservableCollection<ChatListItemViewModel>();
             ItemsView.Filter = new Predicate<object>(o => Filter(o as ChatListItemViewModel));
@@ -58,6 +59,14 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
             string channelName = Program.unityContainer.Resolve<JoinChannelViewModel>().ChannelName;
             return channelName == null || channelName == "" || clivm.Name.IndexOf(channelName) != -1;
 
+        }
+
+        private void ChannelDeleted(string channelName)
+        {
+            ctxTaskFactory.StartNew(() =>
+            {
+                this.Items.Remove(Items.Single(s => s.Name == channelName));
+            }).Wait();
         }
         private void NewJoinableChannel(string channelName)
         {

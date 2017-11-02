@@ -15,6 +15,7 @@ namespace InterfaceGraphique.CommunicationInterface
         public event Action<ChatMessage> NewMessage;
         public event Action<ChatMessage,ChannelEntity> NewMessageFromChannel;
         public event Action<string> NewJoinableChannel;
+        public event Action<string> ChannelDeleted;
         private IHubProxy chatHubProxy;
 
         public void InitializeHub(HubConnection connection)
@@ -45,6 +46,11 @@ namespace InterfaceGraphique.CommunicationInterface
             chatHubProxy.On<string>("NewJoinableChannel", (channelName) =>
             {
                 NewJoinableChannel?.Invoke(channelName);
+            });
+            //Reception de l'evenement de la supression canal
+            chatHubProxy.On<string>("ChannelDeleted", (channelName) =>
+            {
+                ChannelDeleted?.Invoke(channelName);
             });
         }
 
