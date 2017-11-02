@@ -33,7 +33,7 @@ namespace AirHockeyServer.Services.ChatServiceServer
                 //Fetch all the channels 
                 return new ObservableCollection<string>(channels.Select(x => x.Name));
             }
-            return null;
+            return new ObservableCollection<string>();
         }
 
         public void SendBroadcast(ChatMessageEntity chatMessage)
