@@ -20,7 +20,7 @@ import SceneKit
 /// @date 2017-10-01
 ///////////////////////////////////////////////////////////////////////////
 class EditorViewController: UIViewController {
-    
+
     /// Instance singleton
     static var instance = EditorViewController()
     

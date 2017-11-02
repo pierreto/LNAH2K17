@@ -7,6 +7,7 @@ using InterfaceGraphique.CommunicationInterface;
 using InterfaceGraphique.Controls.WPF.Home;
 using System.Net.Http;
 using InterfaceGraphique.Controls.WPF.Chat;
+using InterfaceGraphique.Controls.WPF.Chat.Channel;
 
 namespace InterfaceGraphique
 {
@@ -29,6 +30,12 @@ namespace InterfaceGraphique
         {
             InitializeComponent();
             InitializeEvents();
+            //if (onlineMode)
+            //{
+            //    this.buttonLogout = new System.Windows.Forms.Button();
+            //    this.elementHost1 = new System.Windows.Forms.Integration.ElementHost();
+            //    this.testChatView = new InterfaceGraphique.Controls.WPF.Chat.TestChatView();
+            //}
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -68,6 +75,7 @@ namespace InterfaceGraphique
             User.Instance.UserEntity = null;
             User.Instance.IsConnected = false;
             Program.FormManager.CurrentForm = Program.HomeMenu;
+            Program.InitializeUnityDependencyInjection(); 
             Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<HomeViewModel>());
         }
         ////////////////////////////////////////////////////////////////////////

@@ -28,9 +28,19 @@ void OnlineUser::select(std::string uuid)
 void OnlineUser::deselect(std::string uuid)
 {
 
-	NoeudAbstrait* node = findNodeAndRemoveFromVector(uuid);
-	node->setSelectedByAnotherUser(false);
-	node->useOtherColor(false, color_);
+	std::vector<NoeudAbstrait*>::iterator it = nodesSelected_.begin();;  // declare an iterator to a vector of strings
+
+	while (it != nodesSelected_.end()) 
+	{
+		// found nth element..print and break.
+		if (std::string((*it)->getUUID()) == uuid)
+		{
+			(*it)->setSelectedByAnotherUser(false);
+			(*it)->useOtherColor(false, color_);
+			nodesSelected_.erase(it);
+			break;
+		}
+	}
 }
 
 
@@ -45,20 +55,7 @@ NoeudAbstrait* OnlineUser::findNode(std::string uuid)
 	}
 	return nullptr;
 }
-NoeudAbstrait* OnlineUser::findNodeAndRemoveFromVector(std::string uuid)
-{
-	std::vector<NoeudAbstrait*>::iterator it;  // declare an iterator to a vector of strings
 
-	for (it = nodesSelected_.begin(); it != nodesSelected_.end();) {
-		// found nth element..print and break.
-		if((*it)->getUUID()==uuid.c_str())
-		{
-			nodesSelected_.erase(it);
-			return *it;
-
-		}
-	}
-}
 
 void OnlineUser::deselectAll()
 {

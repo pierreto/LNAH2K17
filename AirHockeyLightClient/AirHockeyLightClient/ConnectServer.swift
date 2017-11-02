@@ -78,15 +78,6 @@ class ConnectServer: NSObject {
                 timerTask.cancel()
             }
             
-            /// Transmettre un message reçu du serveur au ChatViewController
-            clientConnection.getChatHub().getHub().on("ChatMessageReceived") { args in
-                ChatViewController.sharedChatViewController.receiveMessage(message: args?[0] as! Dictionary<String, String>)
-            }
-            
-            //clientConnection.getEditionHub().getHub().on("NewUser") { args in
-                //print("NEW USER")
-            //}
-            
             /// Connexion au serveur réussie
             clientConnection.getConnection()?.connected = {
                 print("Connected with ip: " + ipAddress)

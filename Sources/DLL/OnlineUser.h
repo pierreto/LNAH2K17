@@ -11,7 +11,6 @@ public:
 	void select(std::string uuid);
 	void deselect(std::string uuid);
 	NoeudAbstrait* findNode(std::string uuid);
-	NoeudAbstrait* findNodeAndRemoveFromVector(std::string uuid);
 	void deselectAll();
 
 private:

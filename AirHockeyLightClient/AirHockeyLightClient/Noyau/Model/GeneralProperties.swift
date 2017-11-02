@@ -133,9 +133,12 @@ class GeneralProperties: NSObject {
     
     /// Retourne les valeurs des trois coefficients de la zone en cours
     public func setCoefficientValues(coefficientFriction: String, coefficientRebond: String, coefficientAcceleration: String) {
-        self.coefficientFriction = Float.init(coefficientFriction)!
-        self.coefficientRebond = Float.init(coefficientRebond)!
-        self.coefficientAcceleration = Float.init(coefficientAcceleration)!
+        let coefficientFriction = Float.init(coefficientFriction)
+        self.coefficientFriction = coefficientFriction == nil ? DefaultValues.coefficientFriction : coefficientFriction!
+        let coefficientRebond = Float.init(coefficientRebond)
+        self.coefficientRebond = coefficientRebond == nil ? DefaultValues.coefficientRebond : coefficientRebond!
+        let coefficientAcceleration = Float.init(coefficientAcceleration)
+        self.coefficientAcceleration = coefficientAcceleration == nil ? DefaultValues.coefficientAcceleration : coefficientAcceleration!
     }
     
 }
