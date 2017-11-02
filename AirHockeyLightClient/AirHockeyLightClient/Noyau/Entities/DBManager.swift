@@ -9,6 +9,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 import RealmSwift
+import SwiftyJSON
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class DBManager
@@ -25,9 +26,10 @@ class DBManager {
     // Base de données locale
     private let realm = try! Realm()
     
-    func sauvegarderCarte(map : MapEntity) {
+    func sauvegarderCarte(map: MapEntity, json: String?) {
         // Persist map in the realm
         try! self.realm.write {
+            map.json = json
             self.realm.add(map)
         }
     }

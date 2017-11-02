@@ -34,9 +34,6 @@ namespace InterfaceGraphique.CommunicationInterface
             InializeEvents();
             this.map = mapEntity;
             return await hubProxy.Invoke<List<OnlineUser>>("JoinPublicRoom", User.Instance.UserEntity.Username, mapEntity);
-
-
-     
         }
 
         private void InializeEvents()
