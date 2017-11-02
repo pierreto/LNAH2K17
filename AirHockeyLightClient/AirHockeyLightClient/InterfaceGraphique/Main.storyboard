@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="5ax-Bq-PLF">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="5ax-Bq-PLF">
     <device id="ipad9_7" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
@@ -1088,7 +1088,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="riN-hG-6w2">
-                                <rect key="frame" x="362" y="249.5" width="300" height="269"/>
+                                <rect key="frame" x="362" y="228" width="300" height="312"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Nom d'usager" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Tue-6k-iTD" userLabel="usernameInput">
                                         <rect key="frame" x="0.0" y="0.0" width="300" height="45"/>
@@ -1146,11 +1146,22 @@
                                             <segue destination="v1r-pC-DK7" kind="show" id="CGT-bE-ucb"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rd9-6b-NY7" userLabel="onlineEditorButton">
+                                        <rect key="frame" x="0.0" y="249" width="300" height="35"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <state key="normal" title="Édition en ligne"/>
+                                        <connections>
+                                            <segue destination="8q1-PD-X5V" kind="show" id="LKe-KA-ZAB"/>
+                                        </connections>
+                                    </button>
                                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="hyr-YX-cKZ" userLabel="loadingSpinner">
-                                        <rect key="frame" x="0.0" y="249" width="300" height="20"/>
+                                        <rect key="frame" x="0.0" y="292" width="300" height="20"/>
                                     </activityIndicatorView>
                                 </subviews>
                                 <constraints>
+                                    <constraint firstItem="rd9-6b-NY7" firstAttribute="width" secondItem="riN-hG-6w2" secondAttribute="width" id="1x0-YO-B7a"/>
                                     <constraint firstItem="aPb-LQ-zVe" firstAttribute="centerX" secondItem="riN-hG-6w2" secondAttribute="centerX" id="LoW-h2-My4"/>
                                     <constraint firstAttribute="trailing" secondItem="Tue-6k-iTD" secondAttribute="trailing" id="MiA-ek-XZX"/>
                                     <constraint firstAttribute="trailing" secondItem="kZ7-IX-vjq" secondAttribute="trailing" id="Mtc-u0-nFw"/>
@@ -1349,6 +1360,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="bMu-Mx-hmt" secondAttribute="trailing" id="pjq-gT-DuE"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="Cyt-ZN-GS6"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d2z-FI-Hxt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1399,6 +1411,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="ekN-4s-to3"/>
+        <segue reference="GGZ-Yu-kfi"/>
+        <segue reference="LKe-KA-ZAB"/>
     </inferredMetricsTieBreakers>
 </document>

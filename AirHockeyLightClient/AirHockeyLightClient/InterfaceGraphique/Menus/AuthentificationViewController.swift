@@ -19,7 +19,7 @@ import UIKit
 ///////////////////////////////////////////////////////////////////////////
 class AuthentificationViewController: UIViewController {
     
-    private let clientConnection = ClientConnection.sharedConnection
+    private let clientConnection = HubManager.sharedConnection
     
     @IBOutlet weak var usernameInput: UITextField!
     @IBOutlet weak var ipAddessInput: UITextField!
@@ -153,7 +153,7 @@ class AuthentificationViewController: UIViewController {
         
         /// Avertir l'utilisateur s'il n'est pas possible de se connecter au serveur après 5 secondes
         let timerTask = DispatchWorkItem {
-            if !(ClientConnection.sharedConnection.getConnection().state == .connected) {
+            if !(HubManager.sharedConnection.getConnection().state == .connected) {
                 print("Connection timeout")
                 self.notifyErrorInput(textField: self.ipAddessInput)
                 self.ipAddressNotConnectedErrorMessage.isHidden = false
@@ -190,7 +190,7 @@ class AuthentificationViewController: UIViewController {
         }
         
         /// Transmettre un message reçu du serveur au ChatViewController
-        clientConnection.getChatHub().on("ChatMessageReceived") { args in
+        clientConnection.getChatHub().getHub().on("ChatMessageReceived") { args in
             ChatViewController.sharedChatViewController.receiveMessage(message: args?[0] as! Dictionary<String, String>)
         }
         
@@ -208,7 +208,7 @@ class AuthentificationViewController: UIViewController {
     /// Authentifier l'utilisateur
     func registerUsername(ipAddress: String, username: String) {
         do {
-            try clientConnection.getChatHub().invoke("Authenticate", arguments: [username])  { (result, error) in
+            try clientConnection.getChatHub().getHub().invoke("Authenticate", arguments: [username])  { (result, error) in
                 if error != nil {
                     print("Authentification error")
                     self.notifyErrorInput(textField: self.usernameInput)

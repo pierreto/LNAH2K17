@@ -21,7 +21,7 @@ class Signup: NSObject {
     var passwordError: String
     var confirmPasswordError: String
     
-    private let clientConnection = ClientConnection.sharedConnection
+    private let clientConnection = HubManager.sharedConnection
     
     override init() {
         self.usernameError = ""

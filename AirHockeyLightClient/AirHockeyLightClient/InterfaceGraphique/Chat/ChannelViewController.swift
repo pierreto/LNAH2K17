@@ -40,7 +40,7 @@ class ChannelViewController: UIViewController, UITableViewDelegate, UITableViewD
     /// Enclenché lorsque l'utilisateur se déconnecte
     @IBAction func deregisterClient(_ sender: Any) {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        appDelegate.deregisterUsername(ipAddress: ClientConnection.sharedConnection.getIpAddress(), username: ClientConnection.sharedConnection.getUsername())
+        appDelegate.deregisterUsername(ipAddress: HubManager.sharedConnection.getIpAddress(), username: HubManager.sharedConnection.getUsername())
     }
     
     // Table view delegate methods

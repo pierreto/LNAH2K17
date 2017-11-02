@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////////
-/// @file IBaseHub.swift
+/// @file PortalCommand.swift
 /// @author Mikael Ferland
 /// @date 2017-10-30
 /// @version 1
@@ -8,12 +8,20 @@
 /// @{
 ///////////////////////////////////////////////////////////////////////////////
 
-import SwiftR
-
-protocol IBaseHub {
+class PortalCommand: AbstractEditionCommand {
     
-    func initializeHub()
-    func logout()
+    var objectUuid: String = ""
+    var endUuid: String = ""
+    var startPosition: [Float] = []
+    var endPosition: [Float] = []
+    
+    init(objectUuid: String) {
+        self.objectUuid = objectUuid
+    }
+    
+    func executeCommand() {
+        FacadeModele.instance.creerNoeuds(type: "", nomType: "")
+    }
     
 }
 

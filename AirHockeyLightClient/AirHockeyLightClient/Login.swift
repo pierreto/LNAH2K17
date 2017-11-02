@@ -18,7 +18,7 @@ class Login: NSObject {
     var usernameError: String
     var passwordError: String
     
-    private let clientConnection = ClientConnection.sharedConnection
+    private let clientConnection = HubManager.sharedConnection
     
     override init() {
         self.usernameError = ""
@@ -40,7 +40,7 @@ class Login: NSObject {
 
                 Alamofire.request("http://" + self.clientConnection.getIpAddress() + ":63056/api/login", method: .post, parameters: parameters, encoding: JSONEncoding.default)
                     .responseJSON { response in
-                        if(response.result.value as! Int == 1) {
+                        if(response.response?.statusCode == 200) {
                             self.clientConnection.setUsername(username: username)
                             fullfil(true)
                         } else {
