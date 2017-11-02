@@ -7,6 +7,7 @@ using AirHockeyServer.Repositories;
 using AirHockeyServer.Services.MatchMaking;
 using AirHockeyServer.Manager;
 using AirHockeyServer.Services.Interfaces;
+using AirHockeyServer.Repositories.Interfaces;
 
 namespace AirHockeyServer.Services
 {
@@ -21,15 +22,16 @@ namespace AirHockeyServer.Services
     public class GameService : IGameService
     {
         private List<GameEntity> games;
-        //private GameRepository GameRepository { get; set; }
 
-        public GameManager GameManager { get; }
+        private IGameRepository GameRepository { get; set; }
 
-        public GameService()
+        public IGameManager GameManager { get; }
+
+        public GameService(IGameManager gameManager, IGameRepository gameRepository)
         {
             this.games = new List<GameEntity>();
-            GameManager = new GameManager();
-            //GameRepository = new GameRepository();
+            GameManager = gameManager;
+            GameRepository = gameRepository;
         }
 
         ////////////////////////////////////////////////////////////////////////

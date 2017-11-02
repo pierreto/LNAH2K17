@@ -35,15 +35,15 @@ namespace AirHockeyServer.Events.EventManagers
 
         public IGameService GameService { get; }
 
-        public GameManager GameManager { get; private set; }
+        public IGameManager GameManager { get; private set; }
 
-        public GameWaitingRoomEventManager()
+        public GameWaitingRoomEventManager(IGameManager gameManager, IGameService gameService)
         {
             this.RemainingTime = new ConcurrentDictionary<int, int>();
             GameMatchMakerService.Instance().MatchFoundEvent += OnMatchFound;
             HubContext = GlobalHost.ConnectionManager.GetHubContext<GameWaitingRoomHub>();
-            GameService = new GameService();
-            GameManager = new GameManager();
+            GameService = gameService;
+            GameManager = gameManager;
         }
 
         ////////////////////////////////////////////////////////////////////////

@@ -1,6 +1,7 @@
 ﻿using AirHockeyServer.Core;
 using AirHockeyServer.Entities;
 using AirHockeyServer.Hubs;
+using AirHockeyServer.Services.Interfaces;
 using Microsoft.AspNet.SignalR;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace AirHockeyServer.Manager
 {
     public class GameManager : IGameManager
     {
-        //public IPlayerStatsService PlayerStatsService { get; }
+        public IPlayerStatsService PlayerStatsService { get; }
 
         public EventHandler<GameEntity> TournamentUpdateNeeded { get; set; }
 
@@ -20,10 +21,10 @@ namespace AirHockeyServer.Manager
 
         protected Dictionary<int, int> ElapsedTime { get; set; }
 
-        public GameManager()
+        public GameManager(IPlayerStatsService playerStatsService)
         {
             ElapsedTime = new Dictionary<int, int>();
-            //PlayerStatsService = new PlayerStatsService();
+            PlayerStatsService = playerStatsService;
         }
 
         public void AddGame(GameEntity game)
