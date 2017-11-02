@@ -234,7 +234,7 @@ namespace InterfaceGraphique {
 
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        public delegate void SelectionEventCallback([Out, MarshalAs(UnmanagedType.LPStr)] string username,[Out, MarshalAs(UnmanagedType.LPStr)] string uuidSelected);
+        public delegate void SelectionEventCallback([Out, MarshalAs(UnmanagedType.LPStr)] string uuidSelected);
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void setSelectionEventCallback(SelectionEventCallback callback);
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
@@ -256,6 +256,8 @@ namespace InterfaceGraphique {
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void removeUser(char[] toCharArray);
 
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void clearUsers();
 
 
     }

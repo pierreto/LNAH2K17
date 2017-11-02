@@ -165,7 +165,7 @@ namespace InterfaceGraphique {
             this.Fichier_Nouveau.Click += async (sender, e) =>
             { 
                 await ResetDefaultTable();
-                CurrentState.LeaveEdition();
+                await CurrentState.LeaveEdition();
             };
             this.Fichier_MenuPrincipal.Click += async (sender, e) =>
             {
@@ -375,7 +375,7 @@ namespace InterfaceGraphique {
         public async Task JoinEdition(MapEntity map)
         {
             this.CurrentState = this.onlineState;
-            this.CurrentState.LeaveEdition();
+            await this.CurrentState.LeaveEdition();
             this.CurrentState.JoinEdition(map);
             await mapManager.OpenOnlineMap(map);
         }

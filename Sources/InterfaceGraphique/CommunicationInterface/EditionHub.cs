@@ -29,11 +29,18 @@ namespace InterfaceGraphique.CommunicationInterface
 
         }
 
-        public void JoinPublicRoom(MapEntity mapEntity)
+        public async Task<List<OnlineUser>> JoinPublicRoom(MapEntity mapEntity)
         {
+            InializeEvents();
             this.map = mapEntity;
-            hubProxy.Invoke("JoinPublicRoom", User.Instance.UserEntity.Username, mapEntity);
+            return await hubProxy.Invoke<List<OnlineUser>>("JoinPublicRoom", User.Instance.UserEntity.Username, mapEntity);
 
+
+     
+        }
+
+        private void InializeEvents()
+        {
             hubProxy.On<string>("NewCommand", command =>
             {
                 var rcmd = JsonConvert.DeserializeObject<AbstractEditionCommand>(
@@ -44,18 +51,18 @@ namespace InterfaceGraphique.CommunicationInterface
                     });
                 NewCommand?.Invoke(rcmd);
             });
+
             hubProxy.On<OnlineUser>("NewUser", user =>
             {
-                  NewUser?.Invoke(user);
-                
+                NewUser?.Invoke(user);
+
             });
             hubProxy.On<string>("UserLeaved", username =>
             {
-                  UserLeft?.Invoke(username);
+                UserLeft?.Invoke(username);
 
             });
         }
-
         
         public void JoinPrivateRoom(MapEntity mapEntity, string password)
         {
@@ -74,11 +81,11 @@ namespace InterfaceGraphique.CommunicationInterface
 
 
 
-        public void LeaveRoom()
+        public async Task LeaveRoom()
         {
             if (map != null)
             {
-                hubProxy.Invoke("LeaveRoom", this.map.Id);
+                await hubProxy.Invoke("LeaveRoom", this.map.Id);
             }
         }
 

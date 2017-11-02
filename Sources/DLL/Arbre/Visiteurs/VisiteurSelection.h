@@ -55,6 +55,7 @@ private:
 	void cubeCollisionTest(NoeudAbstrait* noeud);
 	/// Effectue un test par collision cylindrique à l'aide de raycast pour confirmer la sélection
 	void cylinderCollisionTest(NoeudAbstrait* noeud);
+	void handleSelection(NoeudAbstrait* node);
 	/// Sélectionne le centre du noeud
 	void selectionCentreNoeud(NoeudAbstrait* noeud);
 

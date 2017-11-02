@@ -51,7 +51,7 @@ glm::vec4 OnlineUser::hexadecimalToRGB(std::string hex) const
 	int g = hexadecimalToDecimal(hex.substr(2, 2));
 	int b = hexadecimalToDecimal(hex.substr(4, 2));
 
-	return glm::vec4(r, g, b, 1);
+	return glm::vec4(r, g, b, 0.5);
 }
 
 int OnlineUser::hexadecimalToDecimal(std::string hex) const

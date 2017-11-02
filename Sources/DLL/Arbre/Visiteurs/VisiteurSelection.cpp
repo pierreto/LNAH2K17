@@ -149,12 +149,8 @@ void VisiteurSelection::sphereCollisionTest(NoeudAbstrait* noeud) {
 	aidecollision::DetailsCollision collisionDetails = aidecollision::calculerCollisionSegment(pointDebut_, pointFin_, noeud->obtenirPositionRelative(), sphereCollider.rayon, true);
 
 	if (collisionDetails.type != aidecollision::COLLISION_AUCUNE) {
-		if (ctrl_)
-			noeud->inverserSelection();
-		else
-			noeud->selectionnerTout();
+		handleSelection(noeud);
 
-		nbSelections_++;
 	}
 }
 
@@ -177,12 +173,7 @@ void VisiteurSelection::cubeCollisionTest(NoeudAbstrait* noeud) {
 	aidecollision::DetailsCollision collisionDetails = aidecollision::calculerCollisionSegment(pointDebut_, pointFin_, cubeCollider.coinMin, cubeCollider.coinMax, noeud->obtenirScale(), noeud->obtenirMatriceRotationTranslation());
 
 	if (collisionDetails.type != aidecollision::COLLISION_AUCUNE) {
-		if (ctrl_) 
-			noeud->inverserSelection();
-		else
-			noeud->selectionnerTout();
-
-		nbSelections_++;
+		handleSelection(noeud);
 	}
 }
 
@@ -205,16 +196,34 @@ void VisiteurSelection::cylinderCollisionTest(NoeudAbstrait* noeud) {
 	glm::vec3 pos = noeud->obtenirPositionRelative();
 
 	if(utilitaire::segmentCercleIntersect(pointDebut_, pointFin_, glm::vec3(pos.x, 0, pos.z), cylinderCollider.rayon)) {
-		if (ctrl_)
-			noeud->inverserSelection();
-		else
-			noeud->selectionnerTout();
 
-		nbSelections_++;
+		handleSelection(noeud);
 	}
 }
 
+void VisiteurSelection::handleSelection(NoeudAbstrait* node)
+{
+	if (ctrl_)
+	{
+		if (!node->estSelectionne())
+		{
+			selectionEventCallback_(node->getUUID());
+		}
+		else
+		{
 
+		}
+		node->inverserSelection();
+
+	}
+	else
+	{
+		node->selectionnerTout();
+		selectionEventCallback_(node->getUUID());
+	}
+	nbSelections_++;
+
+}
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn VisiteurSelection::selectionCentreNoeud(NoeudAbstrait* noeud, std::string typeObjet)
@@ -231,12 +240,8 @@ void VisiteurSelection::selectionCentreNoeud(NoeudAbstrait* noeud) {
 	glm::vec3 positionRelative = noeud->obtenirPositionRelative();
 
 	if ((positionRelative.x >= min(pointDebut_.x, pointFin_.x)) && (positionRelative.x <= max(pointDebut_.x, pointFin_.x)) && (positionRelative.z >= min(pointDebut_.z, pointFin_.z)) && (positionRelative.z <= max(pointDebut_.z, pointFin_.z))) {
-		if (ctrl_)
-			noeud->inverserSelection();
-		else
-			noeud->selectionnerTout();
+		handleSelection(noeud);
 			
-		nbSelections_++;
 	}
 }
 

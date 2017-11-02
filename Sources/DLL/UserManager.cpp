@@ -27,3 +27,18 @@ void UserManager::removeUser(std::string name)
 	delete usersMap_.at(name);
 	usersMap_.erase(name);
 }
+
+bool UserManager::userExist(std::string name)
+{
+	return usersMap_.count(name);
+}
+
+void UserManager::clearUsers()
+{
+	std::map<std::string, OnlineUser*>::iterator itr = usersMap_.begin();
+	if (itr != usersMap_.end())
+	{
+		delete itr->second;
+	}
+	usersMap_.clear();
+}

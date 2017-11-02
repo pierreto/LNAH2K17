@@ -44,9 +44,10 @@ namespace InterfaceGraphique.Editor.EditorState
             FonctionsNatives.setOnlineClientType((int)OnlineClientType.OFFLINE_EDITION);
         }
 
-        public override void LeaveEdition()
+        public override Task LeaveEdition()
         {
             //Nothing
+            return null;
         }
     }
 }

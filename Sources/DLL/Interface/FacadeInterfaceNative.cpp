@@ -1020,7 +1020,11 @@ void setSelectionEventCallback(SelectionEventCallback callback)
 
 void setElementAsSelected(char* username,char* uuid)
 {
-	FacadeModele::obtenirInstance()->getUserManager().getUser(username)->select(uuid);
+	
+	if(FacadeModele::obtenirInstance()->getUserManager().userExist(std::string(username)))
+	{
+		FacadeModele::obtenirInstance()->getUserManager().getUser(std::string(username))->select(std::string(uuid,36));
+	}
 
 }
 
@@ -1044,4 +1048,10 @@ void addNewUser(char* username,char* hexColor)
 void removeUser(char* username)
 {
 	FacadeModele::obtenirInstance()->getUserManager().removeUser(username);
+}
+
+void clearUsers()
+{
+	FacadeModele::obtenirInstance()->getUserManager().clearUsers();
+
 }

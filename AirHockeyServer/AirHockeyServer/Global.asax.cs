@@ -49,13 +49,13 @@ namespace AirHockeyServer
             UnityContainer.RegisterType<IChannelService, ChannelService>(new HierarchicalLifetimeManager());
             UnityContainer.RegisterType<IGameService, GameService>(new HierarchicalLifetimeManager());
             UnityContainer.RegisterType<ITournamentService, TournamentService>(new HierarchicalLifetimeManager());
-            UnityContainer.RegisterType<IMapService, MapService>(new HierarchicalLifetimeManager());
+            UnityContainer.RegisterType<IMapService, MapService>(new ContainerControlledLifetimeManager());
             UnityContainer.RegisterType<IEditionService, EditionService>(new ContainerControlledLifetimeManager());
 
 
             //Core
-            UnityContainer.RegisterType<IConnector, Connector>(new HierarchicalLifetimeManager());
-            UnityContainer.RegisterType<IRequestsManager, RequestsManager>(new HierarchicalLifetimeManager());
+            UnityContainer.RegisterType<IConnector, Connector>(new ContainerControlledLifetimeManager());
+            UnityContainer.RegisterType<IRequestsManager, RequestsManager>(new ContainerControlledLifetimeManager());
 
             config.DependencyResolver = new UnityResolver(UnityContainer);
             GameWaitingRoomEventManager gameWaitingRoomEventManager = UnityContainer.Resolve<GameWaitingRoomEventManager>();

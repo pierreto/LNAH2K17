@@ -83,20 +83,27 @@ namespace InterfaceGraphique.Editor.EditorState
             }
         }
 
-        public override void JoinEdition(MapEntity mapEntity)
+        public override async void JoinEdition(MapEntity mapEntity)
         {
-            this.editionHub.JoinPublicRoom(mapEntity);
+            FonctionsNatives.clearUsers();
+
             FonctionsNatives.setOnlineClientType((int)OnlineClientType.ONLINE_EDITION);
             FonctionsNatives.setPortalCreationCallback(this.portalCreationCallback);
             FonctionsNatives.setWallCreationCallback(this.wallCreationCallback);
             FonctionsNatives.setBoostCreationCallback(this.boostCreationCallback);
             FonctionsNatives.setMoveEventCallback(this.moveEventCallback);
             FonctionsNatives.setSelectionEventCallback(this.selectionEventCallback);
+            List<OnlineUser> usersInTheGame = await this.editionHub.JoinPublicRoom(mapEntity);
+            foreach (OnlineUser users in usersInTheGame)
+            {
+                FonctionsNatives.addNewUser(users.Username.ToCharArray(),users.HexColor.ToCharArray());
+            }
+        
 
         }
-        public override void LeaveEdition()
+        public override async Task LeaveEdition()
         {
-            this.editionHub.LeaveRoom();
+            await this.editionHub.LeaveRoom();
         }
 
         private void OnNewCommand(AbstractEditionCommand editionCommand)
@@ -154,11 +161,11 @@ namespace InterfaceGraphique.Editor.EditorState
             });
 
         }
-        private void CurrentUserSelectedObject(string username, string uuidselected)
+        private void CurrentUserSelectedObject(string uuidselected)
         {
             this.editionHub.SendEditorCommand(new SelectionCommand(uuidselected)
             {
-                Username = username
+                Username = User.Instance.UserEntity.Username
             });
         }
         private float[] getVec3FromIntptr(IntPtr ptr)
