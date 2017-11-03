@@ -42,7 +42,9 @@
                     </Grid>
                 </Border>
             </DataTemplate>
-
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/InterfaceGraphique;component/Resource/appresources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
 
     </UserControl.Resources>
@@ -116,8 +118,8 @@
                         <TextBox x:Name="MessageTextBox" MaxHeight="80"
                              BorderThickness="0"
                                  Padding="4,0,0,0"
-                        TextWrapping="Wrap" AcceptsReturn="True" CaretBrush="#7F000000" 
-                        VerticalScrollBarVisibility="Auto"
+                        TextWrapping="Wrap" CaretBrush="#7F000000" 
+                        VerticalScrollBarVisibility="Disabled"
                         VerticalAlignment="Center"
                         Margin="30,4,4,4"
                                  FontSize="18"

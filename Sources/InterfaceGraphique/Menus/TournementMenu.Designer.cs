@@ -59,10 +59,7 @@ namespace InterfaceGraphique {
             this.Button_DefaultMap = new System.Windows.Forms.Button();
             this.Label_MapDescription = new System.Windows.Forms.Label();
             this.Button_OpenMap = new System.Windows.Forms.Button();
-            if (onlineMode)
-            {
-                this.OnlineTournamentButton = new System.Windows.Forms.Button();
-            }
+            this.OnlineTournamentButton = new System.Windows.Forms.Button();
             this.Panel_Player2BorderColor.SuspendLayout();
             this.Panel_Player2BackColor.SuspendLayout();
             this.Panel_Player1BorderColor.SuspendLayout();
@@ -595,23 +592,20 @@ namespace InterfaceGraphique {
             // 
             // OnlineTournamentButton
             // 
-            if (onlineMode)
-            {
-                this.OnlineTournamentButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-                this.OnlineTournamentButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-                this.OnlineTournamentButton.Cursor = System.Windows.Forms.Cursors.Hand;
-                this.OnlineTournamentButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-                this.OnlineTournamentButton.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-                this.OnlineTournamentButton.ForeColor = System.Drawing.Color.White;
-                this.OnlineTournamentButton.Location = new System.Drawing.Point(918, 163);
-                this.OnlineTournamentButton.Margin = new System.Windows.Forms.Padding(6);
-                this.OnlineTournamentButton.Name = "OnlineTournamentButton";
-                this.OnlineTournamentButton.Size = new System.Drawing.Size(200, 58);
-                this.OnlineTournamentButton.TabIndex = 35;
-                this.OnlineTournamentButton.TabStop = false;
-                this.OnlineTournamentButton.Text = "En Ligne";
-                this.OnlineTournamentButton.UseVisualStyleBackColor = false;
-            }
+            this.OnlineTournamentButton.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.OnlineTournamentButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.OnlineTournamentButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.OnlineTournamentButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.OnlineTournamentButton.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.OnlineTournamentButton.ForeColor = System.Drawing.Color.White;
+            this.OnlineTournamentButton.Location = new System.Drawing.Point(918, 163);
+            this.OnlineTournamentButton.Margin = new System.Windows.Forms.Padding(6);
+            this.OnlineTournamentButton.Name = "OnlineTournamentButton";
+            this.OnlineTournamentButton.Size = new System.Drawing.Size(200, 58);
+            this.OnlineTournamentButton.TabIndex = 35;
+            this.OnlineTournamentButton.TabStop = false;
+            this.OnlineTournamentButton.Text = "En Ligne";
+            this.OnlineTournamentButton.UseVisualStyleBackColor = false;
             // 
             // TournementMenu
             // 
@@ -619,10 +613,7 @@ namespace InterfaceGraphique {
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.ClientSize = new System.Drawing.Size(1568, 1079);
-            if (onlineMode)
-            {
-                this.Controls.Add(this.OnlineTournamentButton);
-            }
+            this.Controls.Add(this.OnlineTournamentButton);
             this.Controls.Add(this.Button_OpenMap);
             this.Controls.Add(this.Label_MapDescription);
             this.Controls.Add(this.Button_DefaultMap);

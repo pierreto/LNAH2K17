@@ -416,6 +416,9 @@
     <EmbeddedResource Include="Controls\FriendListHost.resx">
       <DependentUpon>FriendListHost.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\OnlineTournament.resx">
+      <DependentUpon>OnlineTournament.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Editor\OpenPrivateMapForm.resx">
       <DependentUpon>OpenPrivateMapForm.cs</DependentUpon>
     </EmbeddedResource>

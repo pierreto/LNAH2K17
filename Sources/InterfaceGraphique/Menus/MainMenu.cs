@@ -21,6 +21,9 @@ namespace InterfaceGraphique
     public partial class MainMenu : Form
     {
         static HttpClient client = new HttpClient();
+        private int chatHeight;
+        private Point chatLocation;
+        private readonly int COLLAPSED_CHAT_HEIGHT = 40;
         ////////////////////////////////////////////////////////////////////////
         ///
         /// Constructeur de la classe MainMenu
@@ -30,6 +33,15 @@ namespace InterfaceGraphique
         {
             InitializeComponent();
             InitializeEvents();
+            chatHeight = elementHost1.Height;
+            chatLocation = elementHost1.Location;
+            if (User.Instance.IsConnected)
+            {
+
+            } else
+            {
+                HideCompletely();
+            }
             //if (onlineMode)
             //{
             //    this.buttonLogout = new System.Windows.Forms.Button();
@@ -136,6 +148,21 @@ namespace InterfaceGraphique
             Program.FormManager.SizeChanged -= new EventHandler(WindowSizeChanged);
         }
 
+        public void MinimizeChat()
+        {
+            HideChat();
+            elementHost1.Size = new Size(elementHost1.Width, COLLAPSED_CHAT_HEIGHT);
+            elementHost1.Location = new Point(elementHost1.Location.X, elementHost1.Location.Y + chatHeight - COLLAPSED_CHAT_HEIGHT);
+            ShowChat();
+        }
+
+        public void MaximizeChat()
+        {
+            HideChat();
+            elementHost1.Location = chatLocation;
+            elementHost1.Size = new Size(elementHost1.Width, chatHeight);
+            ShowChat();
+        }
         public void HideChat()
         {
             this.elementHost1.Hide();
@@ -144,6 +171,12 @@ namespace InterfaceGraphique
         public void ShowChat()
         {
             this.elementHost1.Show();
+        }
+
+        public void HideCompletely()
+        {
+            HideChat();
+            elementHost1.Size = new Size(0, 0);
         }
     }
 }
