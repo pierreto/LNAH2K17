@@ -30,6 +30,8 @@ namespace InterfaceGraphique.Game.GameState
             player2Name.Append(gameEntity.Master.Username);
             FonctionsNatives.setPlayerNames(player1Name, player2Name);
 
+            gameHasEnded = false;
+
             this.gameHub.InitializeSlaveGameHub(gameEntity.GameId);
             this.gameHub.NewPositions += OnNewGamePositions;
             this.gameHub.NewGoal += OnNewGoal;
@@ -55,7 +57,7 @@ namespace InterfaceGraphique.Game.GameState
 
             float[] slavePosition = new float[3];
             FonctionsNatives.getSlavePosition(slavePosition);
-            this.gameHub.SendSlavePosition(slavePosition);
+            Task.Run(() =>this.gameHub.SendSlavePosition(slavePosition));
         }
 
     
@@ -116,7 +118,10 @@ namespace InterfaceGraphique.Game.GameState
             Program.QuickPlay.EndGame();
             if (IsOnlineTournementMode)
             {
-                Program.FormManager.CurrentForm = Program.OnlineTournament;
+                Program.OnlineTournament.Invoke(new MethodInvoker(() =>
+                {
+                    Program.FormManager.CurrentForm = Program.OnlineTournament;
+                }));
             }
         }
 

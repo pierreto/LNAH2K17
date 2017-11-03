@@ -95,7 +95,6 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
             WaitingRoomProxy.On<MapEntity>("TournamentMapUpdatedEvent", map =>
             {
-                CurrentTournament.SelectedMap = map;
                 this.MapUpdatedEvent.Invoke(this, map);
             });
         }
@@ -136,13 +135,11 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
             WaitingRoomProxy.On<TournamentEntity>("StartFinal", tournament =>
             {
-
-                //if (tournament.Final.Players.Contains(user))
-                if (tournament.Final.Players[0].Id == User.Instance.UserEntity.Id || tournament.Final.Players[1].Id== User.Instance.UserEntity.Id)
+                Program.OnlineTournament.Invoke(new MethodInvoker(() =>
                 {
-                    Program.OnlineTournament.Invoke(new MethodInvoker(() =>
+                    if (tournament.Final.Players[0].Id == User.Instance.UserEntity.Id || tournament.Final.Players[1].Id == User.Instance.UserEntity.Id)
                     {
-                        //if (tournament.Final.Master.UserId == user.UserId)
+                        
                         if (tournament.Final.Master.Id == User.Instance.UserEntity.Id)
                         {
                             this.MasterGameState.InitializeGameState(tournament.Final);
@@ -159,12 +156,14 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
                         }
 
                         Program.FormManager.CurrentForm = Program.QuickPlay;
-                    }));
-                }
-                else
-                {
-                    Program.FormManager.CurrentForm = Program.MainMenu;
-                }
+
+                    }
+                    else
+                    {
+                        Program.FormManager.CurrentForm = Program.MainMenu;
+                    }
+
+                }));
             });
 
             WaitingRoomProxy.On<TournamentEntity>("TournamentSemiFinalResults", tournament =>

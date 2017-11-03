@@ -24,7 +24,7 @@ namespace InterfaceGraphique.Game.GameState
                 (player) =>
                 {
                     Console.WriteLine("Player {0} scored", player);
-                    this.gameHub.SendGoal(player);
+                    Task.Run(() =>this.gameHub.SendGoal(player));
                 };
         }
 
@@ -36,7 +36,7 @@ namespace InterfaceGraphique.Game.GameState
             this.gameHub.InitializeMasterGameHub(gameEntity.GameId);
             this.gameHub.NewPositions += OnNewGamePositions;
 
-        
+            gameHasEnded = false;
             FonctionsNatives.setOnGoalCallback(callback);
 
             StringBuilder player1Name = new StringBuilder(gameEntity.Master.Username.Length);
@@ -51,6 +51,7 @@ namespace InterfaceGraphique.Game.GameState
             if (FonctionsNatives.isGameOver(neededGoalsToWin) == 1)
             {
                 EndGame();
+                gameHasEnded = true;
                 return;
             }
             FonctionsNatives.moveMaillet();
@@ -68,7 +69,7 @@ namespace InterfaceGraphique.Game.GameState
 
                 FonctionsNatives.getGameElementPositions(slavePosition,masterPosition,puckPosition);
             
-                gameHub.SendGameData(slavePosition, masterPosition, puckPosition);
+                Task.Run(() =>gameHub.SendGameData(slavePosition, masterPosition, puckPosition));
             //}
 
 
@@ -127,11 +128,14 @@ namespace InterfaceGraphique.Game.GameState
         ////////////////////////////////////////////////////////////////////////
         public override void EndGame() {
             gameHasEnded = true;
-            gameHub.SendGameOver();
+            Task.Run(() => gameHub.SendGameOver());
             Program.QuickPlay.EndGame();
             if(IsOnlineTournementMode)
             {
-                Program.FormManager.CurrentForm = Program.OnlineTournament;
+                Program.OnlineTournament.Invoke(new MethodInvoker(() =>
+                {
+                    Program.FormManager.CurrentForm = Program.OnlineTournament;
+                }));
             }
         }
         private void OnNewGamePositions(GameDataMessage gameData)
