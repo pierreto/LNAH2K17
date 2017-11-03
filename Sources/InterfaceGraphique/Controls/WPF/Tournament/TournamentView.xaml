@@ -58,16 +58,19 @@
                     <RowDefinition Height="*"></RowDefinition>
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
-                <Border Grid.Row="0" BorderThickness="2" BorderBrush="White" Margin="10,-10,0,0" Height="35">
-                    <TextBlock HorizontalAlignment="Center" FontSize="15" TextWrapping="Wrap" Text="{Binding SemiFinal1}" VerticalAlignment="Center" TextAlignment="Center" Width="143"/>
+                <Border Grid.Row="0" BorderThickness="2" BorderBrush="White" Margin="10,-15,0,0" Height="35">
+                    <TextBlock HorizontalAlignment="Center" FontSize="15" TextWrapping="Wrap" Text="{Binding SemiFinal1}" VerticalAlignment="Center" TextAlignment="Center" Width="143"
+                               Foreground="White"/>
                 </Border>
-                <Border Grid.Row="1" BorderThickness="2" BorderBrush="White" Margin="10,30,0,0" Height="35">
-                    <TextBlock HorizontalAlignment="Center" FontSize="15" TextWrapping="Wrap" Text="{Binding SemiFinal2}" VerticalAlignment="Center" TextAlignment="Center" Width="143"/>
+                <Border Grid.Row="1" BorderThickness="2" BorderBrush="White" Margin="10,-50,0,0" Height="35">
+                    <TextBlock HorizontalAlignment="Center" FontSize="15" TextWrapping="Wrap" Text="{Binding SemiFinal2}" VerticalAlignment="Center" TextAlignment="Center" Width="143"
+                               Foreground="White"/>
                 </Border>
             </Grid>
             <Grid Grid.Column="2">
-                <Border BorderThickness="2" BorderBrush="White" Margin="10,0,0,0" Height="35">
-                    <TextBlock HorizontalAlignment="Center" FontSize="15" TextWrapping="Wrap" Text="{Binding Winner}" VerticalAlignment="Center" TextAlignment="Center" Width="143"/>
+                <Border BorderThickness="2" BorderBrush="White" Margin="10,-35,10,0" Height="35">
+                    <TextBlock HorizontalAlignment="Center" FontSize="15" TextWrapping="Wrap" Text="{Binding Winner}" VerticalAlignment="Center" TextAlignment="Center" Width="143"
+                               Foreground="White"/>
                 </Border>
             </Grid>
         </Grid>

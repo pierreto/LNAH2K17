@@ -6,6 +6,7 @@ using System;
 using System.Windows.Input;
 using System.Threading.Tasks;
 using InterfaceGraphique.CommunicationInterface;
+using InterfaceGraphique.CommunicationInterface.RestInterface;
 
 namespace InterfaceGraphique.Controls.WPF.Tournament
 {
@@ -30,8 +31,9 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
 
         private void InitializeData()
         {
-            GameEntity gg = new GameEntity();
-            //MapsAvailable = await MapsRepository.GetMaps();
+            var mapsRepo = new MapsRepository();
+
+            //MapsAvailable = new ObservableCollection<MapEntity>(Task.Run(() => mapsRepo.GetMaps()).Result);
             MapsAvailable = new ObservableCollection<MapEntity>
             {
                 new MapEntity
@@ -79,18 +81,7 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
             }
         }
 
-        private void LoadData()
-        {
-            Players.Add(
-                new UserEntity
-                {
-                    Username = User.Instance.UserEntity.Username
-                }
-            );
-
-        }
-
-        private int remainingTime = 30;
+        private int remainingTime = 0;
         public int RemainingTime
         {
             get => remainingTime;
@@ -102,8 +93,7 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
         }
 
         private List<UserEntity> Players { get; set; }
-
-        private string player1;
+        
         public string Player1
         {
             get => Players.Count > 0 ? Players[0].Username : DEFAULT_PLAYER_NAME;
