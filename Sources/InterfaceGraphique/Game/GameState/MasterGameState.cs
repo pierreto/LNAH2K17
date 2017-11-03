@@ -36,7 +36,7 @@ namespace InterfaceGraphique.Game.GameState
             this.gameHub.InitializeMasterGameHub(gameEntity.GameId);
             this.gameHub.NewPositions += OnNewGamePositions;
 
-        
+            gameHasEnded = false;
             FonctionsNatives.setOnGoalCallback(callback);
 
             StringBuilder player1Name = new StringBuilder(gameEntity.Master.Username.Length);
@@ -51,6 +51,7 @@ namespace InterfaceGraphique.Game.GameState
             if (FonctionsNatives.isGameOver(neededGoalsToWin) == 1)
             {
                 EndGame();
+                gameHasEnded = true;
                 return;
             }
             FonctionsNatives.moveMaillet();

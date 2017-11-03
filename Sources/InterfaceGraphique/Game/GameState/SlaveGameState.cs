@@ -30,6 +30,8 @@ namespace InterfaceGraphique.Game.GameState
             player2Name.Append(gameEntity.Master.Username);
             FonctionsNatives.setPlayerNames(player1Name, player2Name);
 
+            gameHasEnded = false;
+
             this.gameHub.InitializeSlaveGameHub(gameEntity.GameId);
             this.gameHub.NewPositions += OnNewGamePositions;
             this.gameHub.NewGoal += OnNewGoal;
