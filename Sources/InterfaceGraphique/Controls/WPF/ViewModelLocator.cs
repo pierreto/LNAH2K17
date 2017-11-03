@@ -56,22 +56,27 @@ namespace InterfaceGraphique.Controls.WPF
         {
             get { return container.Resolve<ChatListItemViewModel>(); }
         }
+
         public ChatViewModel ChatViewModel
         {
             get { return container.Resolve<ChatViewModel>(); }
         }
+
         public JoinChannelViewModel JoinChannelViewModel
         {
             get { return container.Resolve<JoinChannelViewModel>(); }
         }
+
         public JoinChannelListViewModel JoinChannelListViewModel
         {
             get { return container.Resolve<JoinChannelListViewModel>(); }
         }
+
         public MatchmakingViewModel MatchmakingViewModel
         {
             get { return container.Resolve<MatchmakingViewModel>(); }
         }
+
         public TournamentViewModel TournamentViewModel
         {
             get { return container.Resolve<TournamentViewModel>(); }

@@ -68,6 +68,8 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
                 this.Items.Remove(Items.Single(s => s.Name == channelName));
             }).Wait();
         }
+
+
         private void NewJoinableChannel(string channelName)
         {
             ctxTaskFactory.StartNew(() =>

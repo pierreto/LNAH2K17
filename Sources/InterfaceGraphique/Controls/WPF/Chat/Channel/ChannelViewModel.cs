@@ -260,17 +260,7 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
                 ToggleAddPopup();
                 Name = "";
 
-                //Make sure the previously selected channel is unselected
-                foreach (var item in Program.unityContainer.Resolve<ChatListViewModel>().Items)
-                {
-                    item.IsSelected = false;
-                }
-
-                //Set to current channel
-                var clivmList = Program.unityContainer.Resolve<ChatListViewModel>().Items;
-                ActiveChannel.Instance.ChannelEntity = clivmList.Where(s => s.ChannelEntity == cE).First().ChannelEntity;
-                clivm.IsSelected = true;
-                OnPropertyChanged("ChannelSelected");
+                SetAsCurrentChannel(cE);
             }
         }
 
@@ -332,6 +322,23 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
                 valid = false;
             }
             return valid;
+        }
+
+        public void SetAsCurrentChannel(ChannelEntity cE)
+        {
+            ChatListItemViewModel clivm = new ChatListItemViewModel(cE);
+
+            //Make sure the previously selected channel is unselected
+            foreach (var item in Program.unityContainer.Resolve<ChatListViewModel>().Items)
+            {
+                item.IsSelected = false;
+            }
+
+            //Set to current channel
+            var clivmList = Program.unityContainer.Resolve<ChatListViewModel>().Items;
+            ActiveChannel.Instance.ChannelEntity = clivmList.Where(s => s.ChannelEntity == cE).First().ChannelEntity;
+            clivm.IsSelected = true;
+            OnPropertyChanged("ChannelSelected");
         }
         #endregion
 

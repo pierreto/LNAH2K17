@@ -84,7 +84,7 @@ namespace InterfaceGraphique.CommunicationInterface
 
         public async void LeaveRoom(String roomName)
         {
-            await chatHubProxy.Invoke("LeaveRoom", roomName);
+            await chatHubProxy.Invoke("LeaveRoom", roomName, User.Instance.UserEntity.Id);
         }
 
         public async Task Logout()
