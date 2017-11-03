@@ -15,7 +15,7 @@ namespace InterfaceGraphique.CommunicationInterface
         public event Action<GoalMessage> NewGoal;
         public event Action NewGameOver;
 
-        private int gameGuid;
+        private Guid gameGuid;
 
         private IHubProxy gameHubProxy;
         public void InitializeHub(HubConnection connection)
@@ -25,7 +25,7 @@ namespace InterfaceGraphique.CommunicationInterface
         }
 
         //For the slave
-        public  void InitializeSlaveGameHub(int gameGuid)
+        public  void InitializeSlaveGameHub(Guid gameGuid)
         {
             this.gameGuid = gameGuid;
 
@@ -62,7 +62,7 @@ namespace InterfaceGraphique.CommunicationInterface
 
 
         //For the master
-        public void InitializeMasterGameHub(int gameId)
+        public void InitializeMasterGameHub(Guid gameId)
         {
             this.gameGuid = gameId;
             // Étape necessaire pour que le serveur sache que la connexion est reliée au bon userId:
