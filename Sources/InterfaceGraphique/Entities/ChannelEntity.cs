@@ -14,20 +14,22 @@ namespace InterfaceGraphique.Entities
         public Guid Id { get; set; }
 
         public List<MemberEntity> Members { get; set; }
-        public ObservableCollection<ChatMessage> channelMessages;
 
         public string Name { get; set; }
 
-        public ChannelEntity(ObservableCollection<ChatMessage> channelMessages)
+        public bool IsSelected { get; set; }
+
+        public ChannelEntity()
         {
             this.Members = new List<MemberEntity>();
-            this.channelMessages = channelMessages;
+            this.messages = new ObservableCollection<ChatMessage>();
         }
 
-        public ObservableCollection<ChatMessage> ChannelMessages
+        private ObservableCollection<ChatMessage> messages;
+        public ObservableCollection<ChatMessage> Messages
         {
-            get => channelMessages;
-            set => channelMessages = value;
+            get => messages;
+            set => messages = value;
         }
         
     }

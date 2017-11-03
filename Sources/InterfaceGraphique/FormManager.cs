@@ -8,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Practices.Unity;
+using InterfaceGraphique.Controls.WPF.Chat;
 
 namespace InterfaceGraphique {
 
@@ -64,11 +66,7 @@ namespace InterfaceGraphique {
         ////////////////////////////////////////////////////////////////////////
         public void InitializeEvents()
         {
-            // TODO: Fix this. Make this is added AFTER authentication 
-            if (User.Instance.IsConnected)
-            {
-                this.FormClosing += async (sender, e) => await Program.HomeMenu.Logout();
-            }
+
         }
 
 

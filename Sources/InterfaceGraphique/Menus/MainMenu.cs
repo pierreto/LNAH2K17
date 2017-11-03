@@ -1,19 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using InterfaceGraphique.Controls;
-using InterfaceGraphique.Menus;
 using Microsoft.Practices.Unity;
 using InterfaceGraphique.CommunicationInterface;
+using InterfaceGraphique.Controls.WPF.Home;
+using System.Net.Http;
+using InterfaceGraphique.Controls.WPF.Chat;
+using InterfaceGraphique.Controls.WPF.Chat.Channel;
 
-namespace InterfaceGraphique {
+namespace InterfaceGraphique
+{
 
     ///////////////////////////////////////////////////////////////////////////
     /// @class MainMenu
@@ -21,8 +18,9 @@ namespace InterfaceGraphique {
     /// @author Julien Charbonneau
     /// @date 2016-09-13
     ///////////////////////////////////////////////////////////////////////////
-    public partial class MainMenu : Form {
-
+    public partial class MainMenu : Form
+    {
+        static HttpClient client = new HttpClient();
         ////////////////////////////////////////////////////////////////////////
         ///
         /// Constructeur de la classe MainMenu
@@ -32,6 +30,12 @@ namespace InterfaceGraphique {
         {
             InitializeComponent();
             InitializeEvents();
+            //if (onlineMode)
+            //{
+            //    this.buttonLogout = new System.Windows.Forms.Button();
+            //    this.elementHost1 = new System.Windows.Forms.Integration.ElementHost();
+            //    this.testChatView = new InterfaceGraphique.Controls.WPF.Chat.TestChatView();
+            //}
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -41,7 +45,8 @@ namespace InterfaceGraphique {
         /// @return Void
         ///
         ////////////////////////////////////////////////////////////////////////
-        private void InitializeEvents() {
+        private void InitializeEvents()
+        {
 
             this.boutonPartieRapide.Click += (sender, e) => Program.QuickPlayMenu.ShowDialog();
 
@@ -54,14 +59,25 @@ namespace InterfaceGraphique {
                 Program.FormManager.CurrentForm = Program.Editeur;
             };
             this.Button_Credits.Click += (sender, e) => Program.FormManager.CurrentForm = Program.CreditsMenu;
-            this.buttonQuitter.Click += (sender, e) => System.Windows.Forms.Application.Exit();
+            this.buttonQuitter.Click += (sender, e) => { Program.unityContainer.Resolve<ChatViewModel>().UndockedChat?.Close(); System.Windows.Forms.Application.Exit();  };
             if (User.Instance.IsConnected)
             {
-                this.buttonLogout.Click += (sender, e) => Program.HomeMenu.Logout();
+                this.buttonLogout.Click += async (sender, e) => await this.Logout();
+                Program.FormManager.FormClosing += async (sender, e) => await Logout();
+                Program.FormManager.FormClosing += (sender, e) => Program.unityContainer.Resolve<ChatViewModel>().UndockedChat?.Close();
             }
         }
 
-
+        public async Task Logout()
+        {
+            var response = await client.PostAsJsonAsync(Program.client.BaseAddress + "api/logout", User.Instance.UserEntity);
+            HubManager.Instance.Logout();
+            User.Instance.UserEntity = null;
+            User.Instance.IsConnected = false;
+            Program.FormManager.CurrentForm = Program.HomeMenu;
+            Program.InitializeUnityDependencyInjection(); 
+            Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<HomeViewModel>());
+        }
         ////////////////////////////////////////////////////////////////////////
         ///
         /// Fonction vide appelée sur toutes les forms de facon 
@@ -71,7 +87,8 @@ namespace InterfaceGraphique {
         /// @return     Void
         ///
         ////////////////////////////////////////////////////////////////////////
-        public void MettreAJour(double tempsInterAffichage) {
+        public void MettreAJour(double tempsInterAffichage)
+        {
 
         }
 
@@ -85,7 +102,8 @@ namespace InterfaceGraphique {
         /// @return     Void
         /// 
         ////////////////////////////////////////////////////////////////////////
-        private void WindowSizeChanged(object sender, EventArgs e) {
+        private void WindowSizeChanged(object sender, EventArgs e)
+        {
             this.Size = new Size(Program.FormManager.ClientSize.Width, Program.FormManager.ClientSize.Height);
         }
 
@@ -99,7 +117,8 @@ namespace InterfaceGraphique {
         /// @return Void
         ///
         ////////////////////////////////////////////////////////////////////////
-        public void InitializeOpenGlPanel() {
+        public void InitializeOpenGlPanel()
+        {
             Program.FormManager.SizeChanged += new EventHandler(WindowSizeChanged);
         }
 
@@ -112,8 +131,19 @@ namespace InterfaceGraphique {
         /// @return Void 
         ///
         ////////////////////////////////////////////////////////////////////////
-        public void UnsuscribeEventHandlers() {
+        public void UnsuscribeEventHandlers()
+        {
             Program.FormManager.SizeChanged -= new EventHandler(WindowSizeChanged);
+        }
+
+        public void HideChat()
+        {
+            this.elementHost1.Hide();
+        }
+
+        public void ShowChat()
+        {
+            this.elementHost1.Show();
         }
     }
 }

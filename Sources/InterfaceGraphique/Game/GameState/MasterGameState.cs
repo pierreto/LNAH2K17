@@ -15,7 +15,8 @@ namespace InterfaceGraphique.Game.GameState
         private GameHub gameHub;
         private bool gameHasEnded = false;
         private FonctionsNatives.GoalCallback callback;
-
+        private int ELapsedTime = 0;
+        private const int SERVER_INTERVAL = 5;
         public MasterGameState(GameHub gameHub)
         {
             this.gameHub = gameHub;
@@ -23,7 +24,7 @@ namespace InterfaceGraphique.Game.GameState
                 (player) =>
                 {
                     Console.WriteLine("Player {0} scored", player);
-                    this.gameHub.SendGoal(player);
+                    Task.Run(() =>this.gameHub.SendGoal(player));
                 };
         }
 
@@ -35,7 +36,7 @@ namespace InterfaceGraphique.Game.GameState
             this.gameHub.InitializeMasterGameHub(gameEntity.GameId);
             this.gameHub.NewPositions += OnNewGamePositions;
 
-        
+            gameHasEnded = false;
             FonctionsNatives.setOnGoalCallback(callback);
 
             StringBuilder player1Name = new StringBuilder(gameEntity.Master.Username.Length);
@@ -47,23 +48,30 @@ namespace InterfaceGraphique.Game.GameState
 
         public override void MettreAJour(double tempsInterAffichage, int neededGoalsToWin)
         {
-            if (FonctionsNatives.isGameOver(neededGoalsToWin) == 1)
+            if (!gameHasEnded && FonctionsNatives.isGameOver(neededGoalsToWin) == 1)
             {
                 EndGame();
+                gameHasEnded = true;
                 return;
             }
             FonctionsNatives.moveMaillet();
             FonctionsNatives.animer(tempsInterAffichage);
             FonctionsNatives.dessinerOpenGL();
+            ELapsedTime++;
 
-            float[] slavePosition = new float[3];
-            float[] masterPosition = new float[3];
-            float[] puckPosition = new float[3];
+            //if (ELapsedTime >= SERVER_INTERVAL)
+            //{
+                ELapsedTime = 0;
 
-            FonctionsNatives.getGameElementPositions(slavePosition,masterPosition,puckPosition);
+                float[] slavePosition = new float[3];
+                float[] masterPosition = new float[3];
+                float[] puckPosition = new float[3];
 
-             gameHub.SendMasterPosition(slavePosition, masterPosition, puckPosition);
-       
+                FonctionsNatives.getGameElementPositions(slavePosition,masterPosition,puckPosition);
+            
+                Task.Run(() =>gameHub.SendGameData(slavePosition, masterPosition, puckPosition));
+            //}
+
 
         }
         ////////////////////////////////////////////////////////////////////////
@@ -120,11 +128,14 @@ namespace InterfaceGraphique.Game.GameState
         ////////////////////////////////////////////////////////////////////////
         public override void EndGame() {
             gameHasEnded = true;
-            gameHub.SendGameOver();
+            Task.Run(() => gameHub.SendGameOver());
             Program.QuickPlay.EndGame();
             if(IsOnlineTournementMode)
             {
-                Program.FormManager.CurrentForm = Program.OnlineTournament;
+                Program.OnlineTournament.Invoke(new MethodInvoker(() =>
+                {
+                    Program.FormManager.CurrentForm = Program.OnlineTournament;
+                }));
             }
         }
         private void OnNewGamePositions(GameDataMessage gameData)

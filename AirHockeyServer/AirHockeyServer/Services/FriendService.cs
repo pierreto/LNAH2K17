@@ -5,16 +5,18 @@ using System.Web;
 using AirHockeyServer.Repositories;
 using System.Threading.Tasks;
 using AirHockeyServer.Entities;
+using AirHockeyServer.Services.Interfaces;
+using AirHockeyServer.Repositories.Interfaces;
 
 namespace AirHockeyServer.Services
 {
-    public class FriendService : IFriendService, IService
+    public class FriendService : IFriendService
     {
-        private FriendRequestRepository FriendRepository;
+        private IFriendRequestRepository FriendRepository { get; set; }
 
-        public FriendService()
+        public FriendService(IFriendRequestRepository friendRequestRepository)
         {
-            FriendRepository = new FriendRequestRepository();
+            FriendRepository = friendRequestRepository;
         }
 
         public async Task<List<UserEntity>> GetAllFriends(UserEntity user)

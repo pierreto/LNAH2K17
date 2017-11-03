@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Practices.Unity;
+using InterfaceGraphique.CommunicationInterface;
 
 namespace InterfaceGraphique
 {
@@ -49,8 +50,12 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void InitializeEvents()
         {
+            bool onlineMode = User.Instance.IsConnected;
             // Button events
-            this.OnlineTournamentButton.Click += (sender, e) => { SwitchButtonsState(this.OnlineTournamentButton, this.OnlineTournamentButton); };
+            if (onlineMode)
+            {
+                this.OnlineTournamentButton.Click += (sender, e) => { SwitchButtonsState(this.OnlineTournamentButton, this.OnlineTournamentButton); };
+            }
             this.Button_Play.Click += new EventHandler(ValidateSettings);
             this.Button_MainMenu.Click += (sender, e) => Program.FormManager.CurrentForm = Program.MainMenu;
             this.Button_OpenMap.Click += (sender, e) => fileDialog.ShowDialog();

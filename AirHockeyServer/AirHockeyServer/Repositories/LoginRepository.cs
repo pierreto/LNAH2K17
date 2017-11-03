@@ -7,10 +7,11 @@ using AirHockeyServer.Entities;
 using System.Data.Linq;
 using MySql.Data.MySqlClient;
 using AirHockeyServer.Pocos;
+using AirHockeyServer.Repositories.Interfaces;
 
 namespace AirHockeyServer.Repositories
 {
-    public class LoginRepository
+    public class LoginRepository : ILoginRepository
     {
         public LoginRepository()
         {

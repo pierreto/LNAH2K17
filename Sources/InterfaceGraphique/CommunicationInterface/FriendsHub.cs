@@ -89,7 +89,7 @@ namespace InterfaceGraphique.CommunicationInterface
             return await FriendsProxy.Invoke<bool>("RemoveFriend", this.user, ex_friend);
         }
 
-        public void Logout()
+        public async Task Logout()
         {
             // TODO(misg)
         }

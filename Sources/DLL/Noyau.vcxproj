@@ -184,6 +184,7 @@
     <ClCompile Include="Lighting\LightManager.cpp" />
     <ClCompile Include="ModeleEtatJeuOnline.cpp" />
     <ClCompile Include="NodeCreator.cpp" />
+    <ClCompile Include="OnlineUser.cpp" />
     <ClCompile Include="Tests\ArbreRenduTest.cpp" />
     <ClCompile Include="Tests\BancTests.cpp" />
     <ClCompile Include="Tests\CollisionTest.cpp" />
@@ -199,6 +200,8 @@
     <ClCompile Include="Tests\VisiteurSupressionTest.cpp" />
     <ClCompile Include="UI\Panel2D.cpp" />
     <ClCompile Include="UI\Text2D.cpp" />
+    <ClCompile Include="UserManager.cpp" />
+    <ClCompile Include="VisitorByUUID.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\FacadeModele.h" />
@@ -258,6 +261,7 @@
     <ClInclude Include="Lighting\LightAnimation.h" />
     <ClInclude Include="Lighting\LightManager.h" />
     <ClInclude Include="NodeCreator.h" />
+    <ClInclude Include="OnlineUser.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Tests\ArbreRenduTest.h" />
     <ClInclude Include="Tests\BancTests.h" />
@@ -274,6 +278,8 @@
     <ClInclude Include="Tests\VisiteurSuppressionTest.h" />
     <ClInclude Include="UI\Panel2D.h" />
     <ClInclude Include="UI\Text2D.h" />
+    <ClInclude Include="UserManager.h" />
+    <ClInclude Include="VisitorByUUID.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Commun\Utilitaire\Utilitaire.vcxproj">

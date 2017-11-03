@@ -1,16 +1,11 @@
 ﻿using InterfaceGraphique.Entities;
 using Microsoft.AspNet.SignalR.Client;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Net;
-using System.Text;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using System.Windows.Data;
-using System.Windows.Threading;
-using Newtonsoft.Json;
-using System.Threading;
+using Microsoft.Practices.Unity;
+using InterfaceGraphique.Controls.WPF.Chat.Channel;
 
 namespace InterfaceGraphique.CommunicationInterface
 {
@@ -18,45 +13,45 @@ namespace InterfaceGraphique.CommunicationInterface
     {
 
         public event Action<ChatMessage> NewMessage;
+        public event Action<ChatMessage,ChannelEntity> NewMessageFromChannel;
+        public event Action<string> NewJoinableChannel;
+        public event Action<string> ChannelDeleted;
         private IHubProxy chatHubProxy;
-
-        private ChannelEntity mainChannel;
-        private ObservableCollection<ChannelEntity> channels;
-
 
         public void InitializeHub(HubConnection connection)
         {
             chatHubProxy = connection.CreateHubProxy("ChatHub");
         }
 
-        public async Task<bool> AuthenticateUser()
-        {
-            var authentication = chatHubProxy.Invoke<bool>("Authenticate", User.Instance.UserEntity.Username);
-            await authentication;
-            return authentication.Result;
-        }
-
         public async Task InitializeChat()
         {
-            // Étape necessaire pour que le serveur sache que la connexion est reliée au bon userId:
-            // J-M: Cette Etape est encore necessaire?
-            Random random = new Random();
-            var userId = random.Next();
-
-            Program.user = new UserEntity { Id = userId, Username = User.Instance.UserEntity.Username };
-
-            await chatHubProxy.Invoke("Subscribe", userId);
+            var items = await chatHubProxy.Invoke<ObservableCollection<string>>("Subscribe", User.Instance.UserEntity.Id);
+            foreach (var item in items)
+            {
+                Program.unityContainer.Resolve<JoinChannelListViewModel>().Items.Add(new ChatListItemViewModel(new ChannelEntity { Name = item }));
+            }
 
             // Inscription à l'event "ChatMessageReceived". Quand l'event est lancé du serveur on veut print le message:
+            //Message envoye pour le canal principal
             chatHubProxy.On<ChatMessage>("ChatMessageReceived", message =>
             {
                 NewMessage?.Invoke(message);
             });
-        }
-
-        public void Logout()
-        {
-            chatHubProxy?.Invoke("Disconnect", User.Instance.UserEntity.Username).Wait();
+            //On distingue un message recu d'un canal
+            chatHubProxy.On<ChatMessage, ChannelEntity>("ChatMessageReceivedChannel", (message, cE) =>
+            {
+                NewMessageFromChannel?.Invoke(message, cE);
+            });
+            //Reception de l'evenement de la creation d'un nouveau canal
+            chatHubProxy.On<string>("NewJoinableChannel", (channelName) =>
+            {
+                NewJoinableChannel?.Invoke(channelName);
+            });
+            //Reception de l'evenement de la supression canal
+            chatHubProxy.On<string>("ChannelDeleted", (channelName) =>
+            {
+                ChannelDeleted?.Invoke(channelName);
+            });
         }
 
         public async void SendMessage(ChatMessage message)
@@ -64,6 +59,38 @@ namespace InterfaceGraphique.CommunicationInterface
             message.Sender = User.Instance.UserEntity.Username;
             message.TimeStamp = DateTime.Now;
             await chatHubProxy.Invoke("SendBroadcast", message);
+        }
+
+        public async Task<string> CreateChannel(ChannelEntity channelEntity)
+        {
+            ChannelEntity cE = await chatHubProxy.Invoke<ChannelEntity>("CreateChannel", channelEntity);
+            if(cE == null) { return "Canal déjà crée"; }
+            return null;
+        }
+
+        public async Task<ChannelEntity> JoinChannel(string channelName)
+        {
+            var cE = chatHubProxy.Invoke<ChannelEntity>("JoinChannel", channelName);
+            await cE;
+            return cE.Result;
+        }
+
+        public async void SendChannel(ChatMessage message, string channelName)
+        {
+            message.Sender = User.Instance.UserEntity.Username;
+            message.TimeStamp = DateTime.Now;
+            await chatHubProxy.Invoke("SendChannel", channelName, message);
+        }
+
+        public async void LeaveRoom(String roomName)
+        {
+            await chatHubProxy.Invoke("LeaveRoom", roomName, User.Instance.UserEntity.Id);
+        }
+
+        public async Task Logout()
+        {
+            var roomNames = Program.unityContainer.Resolve<ChatListViewModel>().Items.Where(x=> x.Name != "Principal").Select(x => x.Name);
+            await chatHubProxy.Invoke("Disconnect", roomNames, User.Instance.UserEntity.Id);
         }
     }
 }

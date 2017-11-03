@@ -7,17 +7,16 @@ using AirHockeyServer.Core;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using Newtonsoft.Json;
+using AirHockeyServer.Services.Interfaces;
 
 namespace AirHockeyServer.Services
 {
     public class ChatService : IChatService, IService
     {   
-        public ChatService(IRequestsManager requestsManager)
+        public ChatService()
         {
-            RequestsManager = requestsManager;
         }
         
-        public IRequestsManager RequestsManager { get; }
 
         public void SendPrivateMessage(ChatMessageEntity message)
         {

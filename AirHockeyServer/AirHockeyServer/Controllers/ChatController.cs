@@ -9,6 +9,7 @@ using System.Net;
 using System.Threading.Tasks;
 using AirHockeyServer.Entities;
 using AirHockeyServer.Services;
+using AirHockeyServer.Services.Interfaces;
 
 namespace AirHockeyServer.Controllers
 {

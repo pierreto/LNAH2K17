@@ -7,11 +7,18 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Linq;
 using AirHockeyServer.Services;
+using AirHockeyServer.Repositories.Interfaces;
 
 namespace AirHockeyServer.Repositories
 {
-    public class UserRepository : Repository<UserRepository>
+    public class UserRepository : Repository, IUserRepository
     {
+
+        public UserRepository(DataProvider dataProvider, MapperManager mapperManager)
+            : base(dataProvider, mapperManager)
+        {
+
+        }
 
         public async Task<UserEntity> GetUserById(int id)
         {

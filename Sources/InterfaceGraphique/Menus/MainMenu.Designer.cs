@@ -44,7 +44,7 @@ namespace InterfaceGraphique
             {
                 this.buttonLogout = new System.Windows.Forms.Button();
                 this.elementHost1 = new System.Windows.Forms.Integration.ElementHost();
-                this.chatView1 = new InterfaceGraphique.Controls.ChatView();
+                this.testChatView = new InterfaceGraphique.Controls.WPF.Chat.TestChatView();
             }
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -179,7 +179,7 @@ namespace InterfaceGraphique
                 this.elementHost1.Size = new System.Drawing.Size(1004, 407);
                 this.elementHost1.TabIndex = 10;
                 this.elementHost1.Text = "s";
-                this.elementHost1.Child = this.chatView1;
+                this.elementHost1.Child = this.testChatView;
             }
             // 
             // MainMenu
@@ -230,6 +230,6 @@ namespace InterfaceGraphique
         private System.Windows.Forms.Button Button_Credits;
         private System.Windows.Forms.Button buttonLogout;
         private System.Windows.Forms.Integration.ElementHost elementHost1;
-        private Controls.ChatView chatView1;
+        private Controls.WPF.Chat.TestChatView testChatView;
     }
 }

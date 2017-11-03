@@ -82,7 +82,7 @@ namespace InterfaceGraphique {
     /// Enum contenant les différents état possible du modele etat du programme
     ///
     ///////////////////////////////////////////////////////////////////////////
-    enum MODELE_ETAT {
+    public enum MODELE_ETAT {
         AUCUN = 0,
         SELECTION = 1,
         CREATION_ACCELERATEUR = 2,

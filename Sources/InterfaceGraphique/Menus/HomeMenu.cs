@@ -31,13 +31,6 @@ namespace InterfaceGraphique.Menus
             navigationView1.DataContext = vmb;
         }
 
-        public async Task Logout()
-        {
-            var response = await client.PostAsJsonAsync(Program.client.BaseAddress + "api/logout", User.Instance.UserEntity);
-            HubManager.Instance.Logout();
-            Program.FormManager.CurrentForm = Program.HomeMenu;
-            ChangeViewTo(Program.unityContainer.Resolve<HomeViewModel>());
-        }
         ////////////////////////////////////////////////////////////////////////
         ///
         /// Fonction vide appelée sur toutes les forms de facon 

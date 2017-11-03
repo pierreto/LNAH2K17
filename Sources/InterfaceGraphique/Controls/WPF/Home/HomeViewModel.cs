@@ -11,7 +11,7 @@ namespace InterfaceGraphique.Controls.WPF.Home
         public HomeViewModel()
         {
             Title = "LNAH 2K17";
-            Hidden = "Hidden";
+            Visibility = "Hidden";
         }
 
         private ICommand onlineCommand;

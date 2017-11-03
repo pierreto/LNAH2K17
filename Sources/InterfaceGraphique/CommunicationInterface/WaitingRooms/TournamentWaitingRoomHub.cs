@@ -49,14 +49,15 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
         }
 
-        public void Join()
+        public async void Join()
         {
-            WaitingRoomProxy.Invoke("Join", User.Instance.UserEntity);
+            InitializeWaitingRoomEvents();
+            await WaitingRoomProxy.Invoke("Join", User.Instance.UserEntity);
         }
 
-        public void Logout()
+        public async Task Logout()
         {
-            WaitingRoomProxy?.Invoke("Disconnect", User.Instance.UserEntity.Username).Wait();
+            await WaitingRoomProxy.Invoke("Disconnect", User.Instance.UserEntity.Username);
         }
 
         public async void UpdateSelectedMap(MapEntity map)
@@ -94,8 +95,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
             WaitingRoomProxy.On<MapEntity>("TournamentMapUpdatedEvent", map =>
             {
-                CurrentTournament.SelectedMap = map;
-                this.MapUpdatedEvent.Invoke(this, map);
+                //this.MapUpdatedEvent.Invoke(this, map);
             });
         }
 
@@ -119,7 +119,10 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
                                 this.SlaveGameState.InitializeGameState(userGame);
                                 this.SlaveGameState.IsOnlineTournementMode = true;
                                 Program.QuickPlay.CurrentGameState = this.SlaveGameState;
+
+                                FonctionsNatives.rotateCamera(180);
                             }
+
                             Program.FormManager.CurrentForm = Program.QuickPlay;
                         }
                         else
@@ -128,21 +131,15 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
                         }
 
                     }));
-
-                // start tournament
-
-                //Program.FormManager.CurrentForm = Program.FormManager;
             });
 
             WaitingRoomProxy.On<TournamentEntity>("StartFinal", tournament =>
             {
-
-                //if (tournament.Final.Players.Contains(user))
-                if (tournament.Final.Players[0].Id == User.Instance.UserEntity.Id || tournament.Final.Players[1].Id== User.Instance.UserEntity.Id)
+                Program.OnlineTournament.Invoke(new MethodInvoker(() =>
                 {
-                    Program.OnlineTournament.Invoke(new MethodInvoker(() =>
+                    if (tournament.Final.Players[0].Id == User.Instance.UserEntity.Id || tournament.Final.Players[1].Id == User.Instance.UserEntity.Id)
                     {
-                        //if (tournament.Final.Master.UserId == user.UserId)
+                        
                         if (tournament.Final.Master.Id == User.Instance.UserEntity.Id)
                         {
                             this.MasterGameState.InitializeGameState(tournament.Final);
@@ -154,15 +151,19 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
                             this.SlaveGameState.InitializeGameState(tournament.Final);
                             this.MasterGameState.IsOnlineTournementMode = true;
                             Program.QuickPlay.CurrentGameState = this.SlaveGameState;
+
+                            FonctionsNatives.rotateCamera(180);
                         }
 
                         Program.FormManager.CurrentForm = Program.QuickPlay;
-                    }));
-                }
-                else
-                {
-                    // you lost
-                }
+
+                    }
+                    else
+                    {
+                        Program.FormManager.CurrentForm = Program.MainMenu;
+                    }
+
+                }));
             });
 
             WaitingRoomProxy.On<TournamentEntity>("TournamentSemiFinalResults", tournament =>

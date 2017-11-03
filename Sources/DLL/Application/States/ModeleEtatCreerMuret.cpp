@@ -21,6 +21,7 @@
 #include "Mesh.h"
 
 #include "glm/gtx/vector_angle.hpp"
+#include "ModeleEtatJeu.h"
 
 /// Pointeur vers l'instance unique de la classe.
 ModeleEtatCreerMuret* ModeleEtatCreerMuret::instance_{ nullptr };
@@ -129,13 +130,25 @@ void ModeleEtatCreerMuret::mouseUpL() {
 
 			// Ajout du noeud à l'arbre de rendu
 			FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->ajouter(noeud_);
+
 		}
 		// Second Clic
 		else {
 			if (noeudsSurLaTable()) {
 				// Desactiver effet fantome
 				noeud_->effetFantome(false);
+
+				if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
+				{
+					glm::dvec3 point;
+					obtenirVue()->convertirClotureAVirtuelle(mousePosX_, mousePosY_, point);
+
+					float pointFloat[3] = { point.x, point.y, point.z };
+					wallCreationCallback_( noeud_->getUUID(),glm::value_ptr(pointInitial_), pointFloat);
+				}
+
 				noeud_ = nullptr;
+
 			}
 			else {
 				escape();

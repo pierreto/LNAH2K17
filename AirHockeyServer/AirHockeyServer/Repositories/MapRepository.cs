@@ -9,14 +9,16 @@ using AirHockeyServer.Entities;
 using AirHockeyServer.Pocos;
 using System.Threading.Tasks;
 using AirHockeyServer.Mapping;
+using AirHockeyServer.Repositories.Interfaces;
 
 namespace AirHockeyServer.Repositories
 {
-    public class MapRepository : Repository<MapRepository>
+    public class MapRepository : Repository, IMapRepository
     {
         private Table<MapPoco> Maps;
 
-        public MapRepository()
+        public MapRepository(DataProvider dataProvider, MapperManager mapperManager)
+            : base(dataProvider, mapperManager)
         {
             Maps = DataProvider.DC.GetTable<MapPoco>();
         }

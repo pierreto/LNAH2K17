@@ -22,6 +22,12 @@ namespace AirHockeyServer.Mapping
             var config = new MapperConfiguration(cfg =>
             {
                 // À faire pour chaque pair poco/entity:
+				//Not necessary if same attribute names from poco to entity
+                //cfg.CreateMap<UserPoco, UserEntity>()
+                //.ForMember(
+                //    dest => dest.Id,
+                //    opt => opt.MapFrom(src => src.Id)
+                //);
 
                 cfg.CreateMap<UserPoco, UserEntity>();
                 cfg.CreateMap<UserEntity, UserPoco>();
@@ -65,6 +71,20 @@ namespace AirHockeyServer.Mapping
                 .ForMember(
                     dest => dest.Friend,
                     opt => opt.MapFrom(src => new UserPoco { Id = src.Friend.Id, Username = src.Friend.Username }));
+                
+                cfg.CreateMap<StatsEntity, StatsPoco>();
+                cfg.CreateMap<StatsPoco, StatsEntity>();
+
+                cfg.CreateMap<GameEntity, GamePoco>()
+                .ForMember(
+                    dest => dest.Id,
+                    opt => opt.MapFrom(src => src.GameId))
+                .ForMember(
+                    dest => dest.PlayedMap,
+                    opt => opt.MapFrom(src => src.SelectedMap.Id))
+                .ForMember(
+                    dest => dest.Winner,
+                    opt => opt.MapFrom(src => src.Winner.Id));
             });
 
             //config.AssertConfigurationIsValid();

@@ -14,6 +14,8 @@
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <IsWebBootstrapper>false</IsWebBootstrapper>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -28,8 +30,6 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -113,14 +113,8 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing.Design" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="System.Net.Http.Extensions, Version=2.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Extensions.dll</HintPath>
-    </Reference>
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Net.Http.Formatting.Extension.5.2.3.0\lib\System.Net.Http.Formatting.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Net.Http.Primitives, Version=4.2.29.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Primitives.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http.WebRequest" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -152,7 +146,6 @@
     <Compile Include="CommunicationInterface\WaitingRooms\TournamentWaitingRoomHub.cs" />
     <Compile Include="CommunicationInterface\WaitingRooms\GameWaitingRoomHub.cs" />
     <Compile Include="CommunicationInterface\User.cs" />
-    <Compile Include="CommunicationInterface\WaitingRoomHub.cs" />
     <Compile Include="CommunicationInterface\HubManager.cs" />
     <Compile Include="Controls\FriendListHost.cs">
       <SubType>Form</SubType>
@@ -172,6 +165,36 @@
     <Compile Include="Controls\OnlineTournament.Designer.cs">
       <DependentUpon>OnlineTournament.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\WPF\Chat\Channel\ChannelView.xaml.cs">
+      <DependentUpon>ChannelView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WPF\Chat\Channel\ChannelViewModel.cs" />
+    <Compile Include="Controls\WPF\Chat\Channel\ChatListView.xaml.cs">
+      <DependentUpon>ChatListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WPF\Chat\Channel\ChatListItemView.xaml.cs">
+      <DependentUpon>ChatListItemView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WPF\Chat\Channel\ChatListItemViewModel.cs" />
+    <Compile Include="Controls\WPF\Chat\Channel\ChatListViewModel.cs" />
+    <Compile Include="Controls\WPF\Chat\Channel\ActiveChannel.cs" />
+    <Compile Include="Controls\WPF\Chat\Channel\JoinChannelListView.xaml.cs">
+      <DependentUpon>JoinChannelListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WPF\Chat\Channel\JoinChannelListViewModel.cs" />
+    <Compile Include="Controls\WPF\Chat\Channel\JoinChannelView.xaml.cs">
+      <DependentUpon>JoinChannelView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WPF\Chat\Channel\JoinChannelViewModel.cs" />
+    <Compile Include="Controls\WPF\Chat\TestChatView.xaml.cs">
+      <DependentUpon>TestChatView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WPF\Converters\BaseValueConverter.cs" />
+    <Compile Include="Controls\WPF\Converters\BooleanToCollapsedConverter.cs" />
+    <Compile Include="Controls\WPF\Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Controls\WPF\Converters\SentByMeToAlignmentConverter.cs" />
+    <Compile Include="Controls\WPF\Converters\StringToVisibilityConverter.cs" />
+    <Compile Include="Controls\WPF\DraggablePopup.cs" />
     <Compile Include="Controls\WPF\Navigation\NavigationView.xaml.cs">
       <DependentUpon>NavigationView.xaml</DependentUpon>
     </Compile>
@@ -255,9 +278,13 @@
     <Compile Include="Entities\ChannelEntity.cs" />
     <Compile Include="Entities\ChatMessage.cs" />
     <Compile Include="Entities\FriendRequestEntity.cs" />
-    <Compile Include="Entities\EditonCommand\AbstractEditionCommand.cs" />
-    <Compile Include="Entities\EditonCommand\PortalCommand.cs" />
-    <Compile Include="Entities\EditonCommand\WallCommand.cs" />
+    <Compile Include="Entities\Editor\EditonCommand\AbstractEditionCommand.cs" />
+    <Compile Include="Entities\Editor\EditonCommand\BoostCommand.cs" />
+    <Compile Include="Entities\Editor\EditonCommand\MoveCommand.cs" />
+    <Compile Include="Entities\Editor\EditonCommand\PortalCommand.cs" />
+    <Compile Include="Entities\Editor\EditonCommand\SelectionCommand.cs" />
+    <Compile Include="Entities\Editor\EditonCommand\WallCommand.cs" />
+    <Compile Include="Entities\Editor\OnlineUser.cs" />
     <Compile Include="Entities\GameDataMessage.cs" />
     <Compile Include="Entities\GameEntity.cs" />
     <Compile Include="Entities\GoalMessage.cs" />
@@ -273,6 +300,7 @@
     <Compile Include="Entities\UserEntity.cs" />
     <Compile Include="Exceptions\ConnectServerException.cs" />
     <Compile Include="Exceptions\LoginException.cs" />
+    <Compile Include="Exceptions\SignupException.cs" />
     <Compile Include="ListMaps.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -357,6 +385,12 @@
     <Compile Include="Menus\QuickPlayMenu.Designer.cs">
       <DependentUpon>QuickPlayMenu.cs</DependentUpon>
     </Compile>
+    <Compile Include="Menus\TestChatMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Menus\TestChatMenu.Designer.cs">
+      <DependentUpon>TestChatMenu.cs</DependentUpon>
+    </Compile>
     <Compile Include="Menus\TournementMenu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -440,6 +474,9 @@
     <EmbeddedResource Include="Menus\QuickPlayMenu.resx">
       <DependentUpon>QuickPlayMenu.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Menus\TestChatMenu.resx">
+      <DependentUpon>TestChatMenu.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Menus\TournementMenu.resx">
       <DependentUpon>TournementMenu.cs</DependentUpon>
     </EmbeddedResource>
@@ -454,6 +491,11 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.manifest" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\FontAwesome.otf" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -513,13 +555,37 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\WPF\Chat\Channel\ChannelView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\WPF\Chat\Channel\ChatListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\WPF\Chat\Channel\ChatListItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\WPF\Chat\Channel\JoinChannelListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\WPF\Chat\Channel\JoinChannelView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\WPF\Chat\ChatView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\WPF\Friends\FriendList.xaml">
       <Generator>MSBuild:Compile</Generator>
+	  <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\WPF\Chat\TestChatView.xaml">
       <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\WPF\ConnectServer\ConnectServerView.xaml">
       <SubType>Designer</SubType>
@@ -545,6 +611,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\WPF\Styles\Colors.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\WPF\Tournament\TournamentView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -562,8 +632,11 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Entities\Message\" />
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\font-awesome.min.css" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InterfaceGraphique.CommunicationInterface;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,13 +13,14 @@ namespace InterfaceGraphique.Entities
         {
         }
 
-
         public ChatMessage(string sender, string messageValue, DateTime timeStamp)
         {
             Sender = sender;
             MessageValue = messageValue;
             TimeStamp = timeStamp;
         }
+
+        public bool SentByMe { get; set; }
 
         public string Sender { get; set; }
 

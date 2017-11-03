@@ -30,6 +30,10 @@
 #include "../ModeleEtatJeuOnline.h"
 #include "../NodeCreator.h"
 #include "ModeleEtatCreerPortail.h"
+#include "ModeleEtatCreerMuret.h"
+#include "ModeleEtatCreerBoost.h"
+#include "ModeleEtatDeplacement.h"
+#include "ModeleEtatSelection.h"
 
 extern "C"
 {
@@ -969,12 +973,12 @@ void masterGoal()
 }
 
 
-__declspec(dllexport) void createPortal(float* startPos, float* endPosd)
+__declspec(dllexport) void createPortal(char* startUuid, float* startPos, char* endUuid, float* endPos)
 {
 	glm::vec3 startPosVec = glm::make_vec3(startPos);
-	glm::vec3 endPosVec = glm::make_vec3(endPosd);
+	glm::vec3 endPosVec = glm::make_vec3(endPos);
 
-	return NodeCreator::obtenirInstance()->createPortal(startPosVec,endPosVec);
+	return NodeCreator::obtenirInstance()->createPortal(startUuid,startPosVec, endUuid,endPosVec);
 
 }
 
@@ -983,3 +987,98 @@ void setPortalCreationCallback(PortalCreationCallback callback)
 
 	ModeleEtatCreerPortail::obtenirInstance()->setPortalCreationCallback(callback);
 }
+
+void createWall(const char* uuid, const float* startPosition, const float* endPosition)
+{
+	glm::vec3 startPosVec = glm::make_vec3(startPosition);
+	glm::vec3 endPosVec = glm::make_vec3(endPosition);
+	return NodeCreator::obtenirInstance()->createWall(uuid, startPosVec,endPosVec);
+
+}
+
+void setWallCreationCallback(WallCreationCallback callback)
+{
+	ModeleEtatCreerMuret::obtenirInstance()->setWallCreationCallback(callback);
+}
+
+void createBoost(const char* uuid, const float* position)
+{
+	glm::vec3 posVec = glm::make_vec3(position);
+	return NodeCreator::obtenirInstance()->createBoost(uuid, posVec);
+}
+
+void setBoostCreationCallback(BoostCreationCallback callback)
+{
+	ModeleEtatCreerBoost::obtenirInstance()->setBoostCreationCallback(callback);
+}
+
+
+void setSelectionEventCallback(SelectionEventCallback callback)
+{
+	ModeleEtatSelection::obtenirInstance()->setSelectionEventCallback(callback);
+}
+
+void setElementSelection(const char* username, const char* uuid, const bool isSelected, const bool deselectAll)
+{
+	
+	if(FacadeModele::obtenirInstance()->getUserManager().userExist(std::string(username)))
+	{
+		if(deselectAll)
+		{
+			FacadeModele::obtenirInstance()->getUserManager().getUser(std::string(username))->deselectAll();
+
+		}else
+		{
+			if(isSelected)
+			{
+				FacadeModele::obtenirInstance()->getUserManager().getUser(std::string(username))->select(std::string(uuid, 36));
+
+			}else
+			{
+				FacadeModele::obtenirInstance()->getUserManager().getUser(std::string(username))->deselect(std::string(uuid, 36));
+
+			}
+		}
+	}
+
+}
+
+
+void moveByUUID(const char* username, const char* uuid, const float* newPosition)
+{
+
+	NoeudAbstrait* node =  FacadeModele::obtenirInstance()->getUserManager().getUser(std::string(username))->findNode(std::string(uuid));
+	if(node)
+	{
+		node->assignerPositionRelative(glm::make_vec3(newPosition));
+	}
+	else //if it isnt in the selected list of the other player anymore, we find it in the entire tree 
+	{
+		FacadeModele::obtenirInstance()->moveByUUID(uuid, glm::make_vec3(newPosition));
+
+	}
+
+
+}
+
+void setMoveEventCallback(MoveEventCallback callback)
+{
+	ModeleEtatDeplacement::obtenirInstance()->setMoveEventCallback(callback);
+}
+
+
+void addNewUser(char* username,char* hexColor)
+{
+	FacadeModele::obtenirInstance()->getUserManager().addNewUser(username, hexColor);
+}
+void removeUser(char* username)
+{
+	FacadeModele::obtenirInstance()->getUserManager().removeUser(username);
+}
+
+void clearUsers()
+{
+	FacadeModele::obtenirInstance()->getUserManager().clearUsers();
+
+}
+

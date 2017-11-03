@@ -25,20 +25,20 @@
         private void InitializeComponent() {
             this.Label_Programmation = new System.Windows.Forms.Label();
             this.Panel_ProgBack = new System.Windows.Forms.Panel();
+            this.Panel_ProgFront = new System.Windows.Forms.Panel();
             this.Label_Anthony = new System.Windows.Forms.Label();
+            this.Label_Julien = new System.Windows.Forms.Label();
+            this.Label_Nam = new System.Windows.Forms.Label();
             this.Label_Francis = new System.Windows.Forms.Label();
             this.Label_Clint = new System.Windows.Forms.Label();
-            this.Label_Nam = new System.Windows.Forms.Label();
-            this.Label_Julien = new System.Windows.Forms.Label();
             this.Panel_MusicBack = new System.Windows.Forms.Panel();
-            this.Label_Music = new System.Windows.Forms.Label();
-            this.Label_Leandre = new System.Windows.Forms.Label();
-            this.Panel_ProgFront = new System.Windows.Forms.Panel();
             this.Panel_MusicFront = new System.Windows.Forms.Panel();
+            this.Label_Leandre = new System.Windows.Forms.Label();
+            this.Label_Music = new System.Windows.Forms.Label();
             this.Button_Return = new System.Windows.Forms.Button();
             this.Panel_ProgBack.SuspendLayout();
-            this.Panel_MusicBack.SuspendLayout();
             this.Panel_ProgFront.SuspendLayout();
+            this.Panel_MusicBack.SuspendLayout();
             this.Panel_MusicFront.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -65,6 +65,20 @@
             this.Panel_ProgBack.Size = new System.Drawing.Size(400, 250);
             this.Panel_ProgBack.TabIndex = 32;
             // 
+            // Panel_ProgFront
+            // 
+            this.Panel_ProgFront.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.Panel_ProgFront.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Panel_ProgFront.Controls.Add(this.Label_Anthony);
+            this.Panel_ProgFront.Controls.Add(this.Label_Julien);
+            this.Panel_ProgFront.Controls.Add(this.Label_Nam);
+            this.Panel_ProgFront.Controls.Add(this.Label_Francis);
+            this.Panel_ProgFront.Controls.Add(this.Label_Clint);
+            this.Panel_ProgFront.Location = new System.Drawing.Point(3, 3);
+            this.Panel_ProgFront.Name = "Panel_ProgFront";
+            this.Panel_ProgFront.Size = new System.Drawing.Size(394, 244);
+            this.Panel_ProgFront.TabIndex = 0;
+            // 
             // Label_Anthony
             // 
             this.Label_Anthony.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -77,6 +91,32 @@
             this.Label_Anthony.TabIndex = 36;
             this.Label_Anthony.Text = "Anthony Abboud";
             this.Label_Anthony.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // Label_Julien
+            // 
+            this.Label_Julien.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.Label_Julien.AutoSize = true;
+            this.Label_Julien.Font = new System.Drawing.Font("Segoe UI Black", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label_Julien.ForeColor = System.Drawing.Color.White;
+            this.Label_Julien.Location = new System.Drawing.Point(57, 20);
+            this.Label_Julien.Name = "Label_Julien";
+            this.Label_Julien.Size = new System.Drawing.Size(280, 37);
+            this.Label_Julien.TabIndex = 32;
+            this.Label_Julien.Text = "Julien Charbonneau";
+            this.Label_Julien.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // Label_Nam
+            // 
+            this.Label_Nam.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.Label_Nam.AutoSize = true;
+            this.Label_Nam.Font = new System.Drawing.Font("Segoe UI Black", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label_Nam.ForeColor = System.Drawing.Color.White;
+            this.Label_Nam.Location = new System.Drawing.Point(101, 60);
+            this.Label_Nam.Name = "Label_Nam";
+            this.Label_Nam.Size = new System.Drawing.Size(191, 37);
+            this.Label_Nam.TabIndex = 33;
+            this.Label_Nam.Text = "Nam Lessage";
+            this.Label_Nam.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // Label_Francis
             // 
@@ -104,32 +144,6 @@
             this.Label_Clint.Text = "Clint Phoeuk";
             this.Label_Clint.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // Label_Nam
-            // 
-            this.Label_Nam.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.Label_Nam.AutoSize = true;
-            this.Label_Nam.Font = new System.Drawing.Font("Segoe UI Black", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label_Nam.ForeColor = System.Drawing.Color.White;
-            this.Label_Nam.Location = new System.Drawing.Point(101, 60);
-            this.Label_Nam.Name = "Label_Nam";
-            this.Label_Nam.Size = new System.Drawing.Size(191, 37);
-            this.Label_Nam.TabIndex = 33;
-            this.Label_Nam.Text = "Nam Lessage";
-            this.Label_Nam.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // Label_Julien
-            // 
-            this.Label_Julien.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.Label_Julien.AutoSize = true;
-            this.Label_Julien.Font = new System.Drawing.Font("Segoe UI Black", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label_Julien.ForeColor = System.Drawing.Color.White;
-            this.Label_Julien.Location = new System.Drawing.Point(57, 20);
-            this.Label_Julien.Name = "Label_Julien";
-            this.Label_Julien.Size = new System.Drawing.Size(280, 37);
-            this.Label_Julien.TabIndex = 32;
-            this.Label_Julien.Text = "Julien Charbonneau";
-            this.Label_Julien.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
             // Panel_MusicBack
             // 
             this.Panel_MusicBack.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -140,18 +154,15 @@
             this.Panel_MusicBack.Size = new System.Drawing.Size(400, 100);
             this.Panel_MusicBack.TabIndex = 33;
             // 
-            // Label_Music
+            // Panel_MusicFront
             // 
-            this.Label_Music.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.Label_Music.AutoSize = true;
-            this.Label_Music.Font = new System.Drawing.Font("Segoe UI Black", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label_Music.ForeColor = System.Drawing.Color.Chartreuse;
-            this.Label_Music.Location = new System.Drawing.Point(299, 325);
-            this.Label_Music.Name = "Label_Music";
-            this.Label_Music.Size = new System.Drawing.Size(185, 47);
-            this.Label_Music.TabIndex = 34;
-            this.Label_Music.Text = "MUSIQUE";
-            this.Label_Music.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.Panel_MusicFront.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.Panel_MusicFront.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Panel_MusicFront.Controls.Add(this.Label_Leandre);
+            this.Panel_MusicFront.Location = new System.Drawing.Point(3, 3);
+            this.Panel_MusicFront.Name = "Panel_MusicFront";
+            this.Panel_MusicFront.Size = new System.Drawing.Size(394, 94);
+            this.Panel_MusicFront.TabIndex = 34;
             // 
             // Label_Leandre
             // 
@@ -166,29 +177,18 @@
             this.Label_Leandre.Text = "Léandre Monette";
             this.Label_Leandre.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
-            // Panel_ProgFront
+            // Label_Music
             // 
-            this.Panel_ProgFront.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.Panel_ProgFront.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Panel_ProgFront.Controls.Add(this.Label_Anthony);
-            this.Panel_ProgFront.Controls.Add(this.Label_Julien);
-            this.Panel_ProgFront.Controls.Add(this.Label_Nam);
-            this.Panel_ProgFront.Controls.Add(this.Label_Francis);
-            this.Panel_ProgFront.Controls.Add(this.Label_Clint);
-            this.Panel_ProgFront.Location = new System.Drawing.Point(3, 3);
-            this.Panel_ProgFront.Name = "Panel_ProgFront";
-            this.Panel_ProgFront.Size = new System.Drawing.Size(394, 244);
-            this.Panel_ProgFront.TabIndex = 0;
-            // 
-            // Panel_MusicFront
-            // 
-            this.Panel_MusicFront.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.Panel_MusicFront.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Panel_MusicFront.Controls.Add(this.Label_Leandre);
-            this.Panel_MusicFront.Location = new System.Drawing.Point(3, 3);
-            this.Panel_MusicFront.Name = "Panel_MusicFront";
-            this.Panel_MusicFront.Size = new System.Drawing.Size(394, 94);
-            this.Panel_MusicFront.TabIndex = 34;
+            this.Label_Music.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.Label_Music.AutoSize = true;
+            this.Label_Music.Font = new System.Drawing.Font("Segoe UI Black", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Label_Music.ForeColor = System.Drawing.Color.Chartreuse;
+            this.Label_Music.Location = new System.Drawing.Point(299, 325);
+            this.Label_Music.Name = "Label_Music";
+            this.Label_Music.Size = new System.Drawing.Size(185, 47);
+            this.Label_Music.TabIndex = 34;
+            this.Label_Music.Text = "MUSIQUE";
+            this.Label_Music.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // Button_Return
             // 
@@ -219,9 +219,9 @@
             this.Name = "CreditsMenu";
             this.Text = "Crédits";
             this.Panel_ProgBack.ResumeLayout(false);
-            this.Panel_MusicBack.ResumeLayout(false);
             this.Panel_ProgFront.ResumeLayout(false);
             this.Panel_ProgFront.PerformLayout();
+            this.Panel_MusicBack.ResumeLayout(false);
             this.Panel_MusicFront.ResumeLayout(false);
             this.Panel_MusicFront.PerformLayout();
             this.ResumeLayout(false);

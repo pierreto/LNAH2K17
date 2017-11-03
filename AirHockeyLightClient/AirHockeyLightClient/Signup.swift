@@ -21,7 +21,7 @@ class Signup: NSObject {
     var passwordError: String
     var confirmPasswordError: String
     
-    private let clientConnection = ClientConnection.sharedConnection
+    private let clientConnection = HubManager.sharedConnection
     
     override init() {
         self.usernameError = ""
@@ -43,7 +43,7 @@ class Signup: NSObject {
                 "Password" : password
             ]
             return Promise { fullfil, error in
-                Alamofire.request("http://" + self.clientConnection.getIpAddress() + ":63056/api/signup", method: .post, parameters: parameters, encoding: JSONEncoding.default)
+                Alamofire.request("http://" + self.clientConnection.getIpAddress()! + ":63056/api/signup", method: .post, parameters: parameters, encoding: JSONEncoding.default)
                     .responseJSON { response in
                         if(response.response?.statusCode == 200) {
                             fullfil(true)

@@ -5,7 +5,9 @@ using AirHockeyServer.Entities;
 using System.Threading.Tasks;
 using AirHockeyServer.Repositories;
 using AirHockeyServer.Services.MatchMaking;
-using AirHockeyServer.Events.EventManagers;
+using AirHockeyServer.Manager;
+using AirHockeyServer.Services.Interfaces;
+using AirHockeyServer.Repositories.Interfaces;
 
 namespace AirHockeyServer.Services
 {
@@ -20,11 +22,16 @@ namespace AirHockeyServer.Services
     public class GameService : IGameService
     {
         private List<GameEntity> games;
-        private static IGameRepository GameRepository = new GameRepository();
-        
-        public GameService()
+
+        private IGameRepository GameRepository { get; set; }
+
+        public IGameManager GameManager { get; }
+
+        public GameService(IGameManager gameManager, IGameRepository gameRepository)
         {
             this.games = new List<GameEntity>();
+            GameManager = gameManager;
+            GameRepository = gameRepository;
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -86,12 +93,17 @@ namespace AirHockeyServer.Services
 
         public void GoalScored(int gameId, int playerId)
         {
-            GameManager.Instance().GoalScored(gameId, playerId);
+            GameManager.GoalScored(gameId, playerId);
         }
 
         public void GameOver(int gameId)
         {
-            GameManager.Instance().GameEnded(gameId);
+            GameManager.GameEnded(gameId);
         }
-    }
+
+        public async Task SaveGame(GameEntity game)
+        {
+            //await GameRepository.CreateGame(game);
+        }
+}
 }

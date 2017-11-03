@@ -15,24 +15,30 @@ namespace AirHockeyServer.App_Start
 {
     public class Startup
     {
+
         public void Configuration(IAppBuilder app)
         {
             // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=316888
-            GlobalHost.DependencyResolver.Register(
-                typeof(ChatHub),
-                () => new ChatHub(new ChannelService()));
 
-            GlobalHost.DependencyResolver.Register(
-                typeof(GameWaitingRoomHub),
-                () => new GameWaitingRoomHub(new GameService()));
+             GlobalHost.DependencyResolver.Register(
+                 typeof(ChatHub),
+                 () => new ChatHub(WebApiApplication.UnityContainer.Resolve<ChannelService>()));
 
             GlobalHost.DependencyResolver.Register(
                 typeof(FriendsHub),
-                () => new FriendsHub(new FriendService()));
+                () => new FriendsHub(WebApiApplication.UnityContainer.Resolve<FriendService>()));
 
             GlobalHost.DependencyResolver.Register(
-                typeof(TournamentWaitingRoomHub),
-                () => new TournamentWaitingRoomHub(new TournamentService()));
+                 typeof(GameWaitingRoomHub),
+                 () => new GameWaitingRoomHub(WebApiApplication.UnityContainer.Resolve<GameService>()));
+
+             GlobalHost.DependencyResolver.Register(
+                 typeof(TournamentWaitingRoomHub),
+                 () => new TournamentWaitingRoomHub(WebApiApplication.UnityContainer.Resolve<TournamentService>())); 
+
+              GlobalHost.DependencyResolver.Register(
+                 typeof(EditionHub),
+                 () => new EditionHub(WebApiApplication.UnityContainer.Resolve<EditionService>())); 
 
             app.MapSignalR("/signalr", new HubConfiguration());
         }

@@ -41,11 +41,11 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
             WaitingRoomProxy = this.HubConnection.CreateHubProxy("GameWaitingRoomHub");
         }
         
-        public void Join()
+        public async void Join()
         {
             InitializeEvents();
             
-            WaitingRoomProxy.Invoke("Join", User.Instance.UserEntity);
+            await WaitingRoomProxy.Invoke("Join", User.Instance.UserEntity);
         }
         
         public async Task LeaveGame()
@@ -106,7 +106,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
                 CurrentGame = await WaitingRoomProxy.Invoke<GameEntity>("UpdateMap", CurrentGame);
             }
         }
-        public virtual void Logout()
+        public async Task Logout()
         {
             //TODO: IMPLEMENT THE LOGOUT MECANISM
         }

@@ -45,7 +45,7 @@ class VisiteurSelection: VisiteurAbstrait {
     
     /// Visiter une table pour la sélection
     func visiterTable(noeud: NoeudTable) {
-        if (!self.multiSelection && noeud.estSelectionnable()) {
+        if (!self.multiSelection) {
             let vue = FacadeModele.instance.obtenirVue()
             let options = [SCNHitTestOption.sortResults: NSNumber(value: true)]
             
@@ -59,13 +59,15 @@ class VisiteurSelection: VisiteurAbstrait {
                     if hitResult.node is NoeudCommun {
                         let noeud = hitResult.node as! NoeudCommun
                         
-                        // Selectioner le noeud
-                        if !noeud.estSelectionne() {
-                            noeud.assignerSelection(selectionne: true)
-                        }
-                        // Déselectionner le noeud sauf pour le point de contrôle
-                        else if (noeud.obtenirType() != FacadeModele.instance.obtenirArbreRendu().NOM_POINT_CONTROL) {
-                            noeud.assignerSelection(selectionne: false)
+                        if noeud.estSelectionnable() {
+                            // Selectioner le noeud
+                            if !noeud.estSelectionne() {
+                                noeud.assignerSelection(selectionne: true)
+                            }
+                            // Déselectionner le noeud sauf pour le point de contrôle
+                            else if (noeud.obtenirType() != FacadeModele.instance.obtenirArbreRendu().NOM_POINT_CONTROL) {
+                                noeud.assignerSelection(selectionne: false)
+                            }
                         }
                     }
                 }

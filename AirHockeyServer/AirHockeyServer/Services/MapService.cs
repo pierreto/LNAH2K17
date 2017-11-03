@@ -7,9 +7,12 @@ using AirHockeyServer.Core;
 using AirHockeyServer.Repositories;
 using System.Threading.Tasks;
 using AirHockeyServer.DatabaseCore;
+using AirHockeyServer.Repositories.Interfaces;
+using AirHockeyServer.Services.Interfaces;
 
 namespace AirHockeyServer.Services
 {
+
     ///////////////////////////////////////////////////////////////////////////////
     /// @file MapService.cs
     /// @author Ariane Tourangeau
@@ -20,11 +23,11 @@ namespace AirHockeyServer.Services
     ///////////////////////////////////////////////////////////////////////////////
     public class MapService : IMapService
     {
-        private MapRepository MapRepository;
+        private IMapRepository MapRepository;
 
-        public MapService()
+        public MapService(IMapRepository mapRepository)
         {
-            MapRepository = new MapRepository();
+            MapRepository = mapRepository;
         }
 
         ////////////////////////////////////////////////////////////////////////

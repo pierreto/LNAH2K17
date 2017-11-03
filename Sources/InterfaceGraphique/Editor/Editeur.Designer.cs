@@ -1,4 +1,6 @@
-﻿namespace InterfaceGraphique
+﻿using InterfaceGraphique.CommunicationInterface;
+
+namespace InterfaceGraphique
 {
     partial class Editeur {
         private System.ComponentModel.IContainer components = null;

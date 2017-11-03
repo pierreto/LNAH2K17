@@ -3,14 +3,21 @@ using System.Collections.Generic;
 using AirHockeyServer.Entities;
 using AirHockeyServer.Repositories;
 using System.Threading.Tasks;
+using AirHockeyServer.Services.Interfaces;
 
 namespace AirHockeyServer.Services
 {
     public class LoginService : ILoginService, IService
     {
         private static HashSet<string> _usernames = new HashSet<string>();
-        private UserService UserService = new UserService();
-        private PasswordService PasswordService = new PasswordService();
+        private IUserService UserService { get; set; }
+        private IPasswordService PasswordService { get; set; }
+
+        public LoginService(IUserService userService, IPasswordService passwordService)
+        {
+            UserService = userService;
+            PasswordService = passwordService;
+        }
 
         public async Task<int> ValidateCredentials(LoginEntity loginEntity)
         {
@@ -48,12 +55,6 @@ namespace AirHockeyServer.Services
                 {
                     throw new LoginException("Nom d'usager ou mot de passe invalide");
                 }
-                //if (_usernames.Contains(loginEntity.Username))
-                //{
-                //    throw new LoginException("Username already taken.");
-                //}
-                //_usernames.Add(loginEntity.Username);
-                //return false;
             }
             catch (LoginException e)
             {
@@ -83,6 +84,7 @@ namespace AirHockeyServer.Services
     {
         public LoginException(string message) : base(message)
         {
+
         }
     }
 }

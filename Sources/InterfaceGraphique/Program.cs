@@ -1,20 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
-using System.Net.WebSockets;
-using System.Text;
-using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Net.Sockets;
-using System.Threading;
-using System.Windows;
 using InterfaceGraphique.CommunicationInterface;
-using InterfaceGraphique.CommunicationInterface.RestInterface;
 using InterfaceGraphique.Controls;
 using InterfaceGraphique.Controls.WPF;
 using InterfaceGraphique.Controls.WPF.Chat;
@@ -22,7 +11,6 @@ using InterfaceGraphique.Controls.WPF.Editor;
 using InterfaceGraphique.Controls.WPF.Friends;
 using InterfaceGraphique.Entities;
 using InterfaceGraphique.Menus;
-using Microsoft.AspNet.SignalR.Client;
 using Microsoft.Practices.Unity;
 using Application = System.Windows.Forms.Application;
 using InterfaceGraphique.Controls.WPF.Matchmaking;
@@ -33,6 +21,7 @@ using InterfaceGraphique.Controls.WPF.Home;
 using InterfaceGraphique.Controls.WPF.ConnectServer;
 using InterfaceGraphique.Controls.WPF.Signup;
 using InterfaceGraphique.Services;
+using InterfaceGraphique.Controls.WPF.Chat.Channel;
 using InterfaceGraphique.Editor;
 
 namespace InterfaceGraphique
@@ -43,6 +32,7 @@ namespace InterfaceGraphique
         public static Object unLock = new Object();
         public static bool peutAfficher = true;
 
+        public static TestChatMenu TestChatMenu { get { return testChatMenu; } }
         public static FormManager FormManager { get { return formManager; } }
         public static MainMenu MainMenu { get { return mainMenu; } }
         public static HomeMenu HomeMenu { get { return homeMenu; } }
@@ -63,7 +53,7 @@ namespace InterfaceGraphique
         public static EditorHost EditorHost { get { return editorHost; } set { editorHost = value; } }
         public static FriendListHost FriendListHost {  get { return friendListHost; } set { friendListHost = value; } }
 
-
+        private static TestChatMenu testChatMenu;
         private static FormManager formManager;
         private static MainMenu mainMenu;
         private static HomeMenu homeMenu;
@@ -120,16 +110,12 @@ namespace InterfaceGraphique
             openGLPanel = new Panel();
             formManager = new FormManager();
             homeMenu = new HomeMenu();
-            //mainMenu = new MainMenu();
-            editeur = unityContainer.Resolve<Editeur>();
             Editeur.mapManager = unityContainer.Resolve<MapManager>();
             configurationMenu = new ConfigurationMenu();
             quickPlay = new QuickPlay();
             testMode = new TestMode();
             generalProperties = new GeneralProperties();
-            //quickPlayMenu = new QuickPlayMenu();
-            tournementMenu = new TournementMenu();
-            tournementTree = new TournementTree();
+            testChatMenu = new TestChatMenu();
             creditsMenu = new CreditsMenu();
             lobbyHost = new LobbyHost();
             onlineTournament = new OnlineTournament();
@@ -139,7 +125,6 @@ namespace InterfaceGraphique
             FonctionsNatives.loadSounds();
 
             formManager.CurrentForm = homeMenu;
-            // formManager.CurrentForm = login;
             Application.Run(formManager);
 
         }
@@ -148,10 +133,13 @@ namespace InterfaceGraphique
         public static void InitAfterConnection()
         {
             mainMenu = new MainMenu();
+            editeur = unityContainer.Resolve<Editeur>();
             quickPlayMenu = new QuickPlayMenu();
+            tournementMenu = new TournementMenu();
+            tournementTree = new TournementTree();
         }
 
-        private static void InitializeUnityDependencyInjection()
+        public static void InitializeUnityDependencyInjection()
         {
             unityContainer = new UnityContainer();
 
@@ -166,15 +154,19 @@ namespace InterfaceGraphique
 
             //View models instantiations
             unityContainer.RegisterType<MatchmakingViewModel>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<ChatListViewModel>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<ChatListItemViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<ChatViewModel>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<ChannelViewModel>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<JoinChannelListViewModel>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<JoinChannelViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<TournamentViewModel>(new ContainerControlledLifetimeManager());
-            unityContainer.RegisterType<AuthenticateViewModel>();
-            unityContainer.RegisterType<SignupViewModel>();
-            unityContainer.RegisterType<HomeViewModel>();
-            unityContainer.RegisterType<ConnectServerViewModel>(); 
+            unityContainer.RegisterType<AuthenticateViewModel>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<ConnectServerViewModel>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<SignupViewModel>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<HomeViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<EditorViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<FriendListViewModel>(new ContainerControlledLifetimeManager());
-
 
             //Rest services instantiations
             unityContainer.RegisterType<MapService>();

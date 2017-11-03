@@ -1,4 +1,5 @@
-﻿using AirHockeyServer.Pocos;
+﻿using AirHockeyServer.DatabaseCore;
+using AirHockeyServer.Pocos;
 using MySql.Data.MySqlClient;
 using System.Configuration;
 using System.Data.Linq;
@@ -16,5 +17,15 @@ public class MyDataContext : DataContext
     public Table<PasswordPoco> Passwords
     {
         get { return this.GetTable<PasswordPoco>(); }
+    }
+
+    public Table<UserPoco> UsersTable
+    {
+        get { return this.GetTable<UserPoco>(); }
+    }
+
+    public Table<FriendPoco> FriendsTable
+    {
+        get { return this.GetTable<FriendPoco>(); }
     }
 }

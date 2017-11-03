@@ -22,6 +22,7 @@
 ///////////////////////////////////////////////////////////////////////////
 
 #include "ModeleEtat.h"
+#include "FacadeInterfaceNative.h"
 
 class ModeleEtatCreerBoost : public ModeleEtat
 {
@@ -34,6 +35,7 @@ public:
 	// Fonctions gérant les entrées de l'utilisateur
 	/// Évènement appelé lorsque le bouton gauche de la souris est levé
 	virtual void mouseUpL();
+	void setBoostCreationCallback(BoostCreationCallback callback) { boostCreationCallback_ = callback; }
 
 private:
 
@@ -49,6 +51,8 @@ private:
 
 	/// Pointeur vers l'instance unique de la classe.
 	static ModeleEtatCreerBoost* instance_;
+
+	BoostCreationCallback boostCreationCallback_;
 };
 
 

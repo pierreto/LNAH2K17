@@ -34,6 +34,10 @@ namespace InterfaceGraphique {
         private OnlineEditorState onlineState;
         private MODELE_ETAT outilCourrant = MODELE_ETAT.AUCUN;
 
+        public MODELE_ETAT OutilCourrant
+        {
+            get => outilCourrant;
+        }
 
         public AbstractEditorState CurrentState { get; set; }
 
@@ -162,8 +166,17 @@ namespace InterfaceGraphique {
             this.Fichier_EnregistrerSous_Serveur.Click += async (sender, e) => await mapManager.ManageSavingOnlineMap(); 
             this.Fichier_OuvrirLocalement.Click += (sender, e) => mapManager.OpenLocalMap();
             this.Fichier_OuvrirEnLigne.Click += (sender, e) => OpenOnlineMap();
-            this.Fichier_Nouveau.Click += async (sender, e) => await ResetDefaultTable();
-            this.Fichier_MenuPrincipal.Click += async (sender, e) => { await ResetDefaultTable(); Program.FormManager.CurrentForm = Program.MainMenu; };
+            this.Fichier_Nouveau.Click += async (sender, e) =>
+            { 
+                await ResetDefaultTable();
+                await CurrentState.LeaveEdition();
+            };
+            this.Fichier_MenuPrincipal.Click += async (sender, e) =>
+            {
+                await ResetDefaultTable();
+                CurrentState.LeaveEdition();
+                Program.FormManager.CurrentForm = Program.MainMenu;
+            };
             this.Fichier_ModeTest.Click += (sender, e) => Program.FormManager.CurrentForm = Program.TestMode;
             this.Fichier_Propriete.Click += (sender, e) => Program.GeneralProperties.ShowDialog();
 
@@ -366,6 +379,7 @@ namespace InterfaceGraphique {
         public async Task JoinEdition(MapEntity map)
         {
             this.CurrentState = this.onlineState;
+            await this.CurrentState.LeaveEdition();
             this.CurrentState.JoinEdition(map);
             await mapManager.OpenOnlineMap(map);
         }

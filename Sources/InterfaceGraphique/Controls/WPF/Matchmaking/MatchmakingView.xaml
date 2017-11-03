@@ -60,18 +60,20 @@
         </DockPanel>
         <fa:ImageAwesome Icon="Spinner" Panel.ZIndex="99998" Spin="True" SpinDuration="4" Visibility="{Binding IsWaitingForOpponent}" Grid.ColumnSpan="2" Height="200">
         </fa:ImageAwesome>
-        <TextBlock HorizontalAlignment="Center" FontSize="18" Panel.ZIndex="99999" Visibility="{Binding IsWaitingForOpponent}" FontWeight="Bold" Height="40" Grid.ColumnSpan="2" Margin="205,285,204,24.5">En attente d'un joueur</TextBlock>
-        <Button Visibility="{Binding IsWaitingForOpponent}" Command="{Binding Cancel}" Height="40" Width="100" Background="Transparent" Panel.ZIndex="99999" Grid.ColumnSpan="2" Margin="274,311,276,19.5" >
+        <TextBlock HorizontalAlignment="Center" FontSize="18" Panel.ZIndex="99999" Visibility="{Binding IsWaitingForOpponent}" 
+                   FontWeight="Bold" Height="40" Grid.ColumnSpan="2" Margin="200,285,204,24.5">En attente d'un joueur</TextBlock>
+        <Button Visibility="{Binding IsWaitingForOpponent}" Command="{Binding Cancel}" Height="40" Width="100" 
+                Background="Transparent" Panel.ZIndex="99999" Grid.ColumnSpan="2" Margin="250,345,273,19.5" BorderBrush="Transparent" >
             <TextBlock FontWeight="Bold">Annuler</TextBlock>
         </Button>
-        
+
         <Grid Grid.Row="0" Grid.Column="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-            <Button IsEnabled="{Binding OpponentFound}" Command="{Binding MainMenuCommand}" Grid.Row="0" HorizontalAlignment="Left">
+            <Button IsEnabled="{Binding EnabledMap}" Command="{Binding MainMenuCommand}" Grid.Row="0" HorizontalAlignment="Left">
                 <Button.Content>
                     <fa:FontAwesome Icon="ArrowLeft"></fa:FontAwesome>
                 </Button.Content>
@@ -107,7 +109,7 @@
                   ItemsSource="{Binding MapsAvailable}" 
                   SelectedItem="{Binding SelectedMap, UpdateSourceTrigger=PropertyChanged}"
                   IsSynchronizedWithCurrentItem="True"
-                  IsEnabled="{Binding OpponentFound}" Margin="0,0,86,0">
+                  IsEnabled="{Binding EnabledMap}" Margin="0,0,86,0">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock>

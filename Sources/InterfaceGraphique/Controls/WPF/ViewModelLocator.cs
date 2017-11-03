@@ -8,6 +8,7 @@ using InterfaceGraphique.Controls.WPF.Home;
 using InterfaceGraphique.Controls.WPF.Authenticate;
 using InterfaceGraphique.Controls.WPF.Signup;
 using InterfaceGraphique.Controls.WPF.Friends;
+using InterfaceGraphique.Controls.WPF.Chat.Channel;
 
 namespace InterfaceGraphique.Controls.WPF
 {
@@ -42,14 +43,41 @@ namespace InterfaceGraphique.Controls.WPF
             get { return container.Resolve<SignupViewModel>(); }
         }
 
+        public ChannelViewModel ChannelViewModel
+        {
+            get { return container.Resolve<ChannelViewModel>(); }
+        }
+
+        public ChatListViewModel ChatListViewModel
+        {
+            get { return container.Resolve<ChatListViewModel>(); }
+        }
+
+        public ChatListItemViewModel ChatListItemViewModel
+        {
+            get { return container.Resolve<ChatListItemViewModel>(); }
+        }
+
         public ChatViewModel ChatViewModel
         {
             get { return container.Resolve<ChatViewModel>(); }
         }
+
+        public JoinChannelViewModel JoinChannelViewModel
+        {
+            get { return container.Resolve<JoinChannelViewModel>(); }
+        }
+
+        public JoinChannelListViewModel JoinChannelListViewModel
+        {
+            get { return container.Resolve<JoinChannelListViewModel>(); }
+        }
+
         public MatchmakingViewModel MatchmakingViewModel
         {
             get { return container.Resolve<MatchmakingViewModel>(); }
         }
+
         public TournamentViewModel TournamentViewModel
         {
             get { return container.Resolve<TournamentViewModel>(); }

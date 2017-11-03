@@ -192,6 +192,10 @@ public:
 
 	char* getUUID() const { return uuid_; };
 
+	bool isSelectedByAnotherUser() { return selectedByAnotherUser_; }
+
+	void setSelectedByAnotherUser(bool isSelectedByAnotherUser) { selectedByAnotherUser_ = isSelectedByAnotherUser; }
+
 protected:
 	void generateUUID();
 
@@ -247,6 +251,8 @@ protected:
 	OptionsDessin options_;
 
 	char* uuid_;
+
+	bool selectedByAnotherUser_;
 };
 
 

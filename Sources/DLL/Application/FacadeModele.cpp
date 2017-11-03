@@ -47,6 +47,7 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/type_ptr.hpp"
 #include "../ModeleEtatJeuOnline.h"
+#include "../VisitorByUUID.h"
 
 /// Pointeur vers l'instance unique de la classe.
 FacadeModele* FacadeModele::instance_{ nullptr };
@@ -60,6 +61,7 @@ const std::string FacadeModele::FICHIER_CONFIGURATION{ "configuration.xml" };
 FacadeModele::FacadeModele()
 	: etat_(ModeleEtatSelection::obtenirInstance()), rectangleActif_(false)
 {
+	userManager_ = UserManager();
 }
 
 
@@ -771,7 +773,8 @@ void FacadeModele::creerNoeuds(char* type, std::string nomType) {
 		for (unsigned int i = 0; i < docJSON_[type].Size(); i+=2) {
 			std::vector<NoeudPortail*> linkedPortals;
 			for (unsigned int j = 0; j < 2; j++) {
-				linkedPortals.push_back((NoeudPortail*)arbre_->creerNoeud(nomType));
+				std::string idPOrtal = static_cast<const char*>(docJSON_[type][i + j][7].GetString());
+				linkedPortals.push_back((NoeudPortail*)arbre_->creerNoeud(nomType, static_cast<const char*>(docJSON_[type][i + j][7].GetString())));
 
 				linkedPortals[j]->appliquerRotation(docJSON_[type][i + j][6].GetDouble(), glm::vec3(0, 1, 0));
 
@@ -1006,6 +1009,18 @@ void FacadeModele::toggleOrbit(bool orbit) {
 void FacadeModele::rotateCamera(float angle)
 {
 	vue_->obtenirCamera().orbiterXY(0, angle);
+}
+
+
+void FacadeModele::moveByUUID(const char* uuid, const glm::vec3 newPos)
+{
+	VisitorByUUID visitorWrapper = VisitorByUUID(uuid);
+	arbre_->accepterVisiteur(&visitorWrapper);
+	NoeudAbstrait* node = visitorWrapper.getNode();
+	if(visitorWrapper.hasFound)
+	{
+		node->assignerPositionRelative(newPos);
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////

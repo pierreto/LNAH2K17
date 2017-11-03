@@ -9,6 +9,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "VisiteurDeplacement.h"
+#include "ModeleEtatJeu.h"
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -21,9 +22,11 @@
 /// @return Aucune
 ///
 ////////////////////////////////////////////////////////////////////////
-VisiteurDeplacement::VisiteurDeplacement(glm::vec3 delta){
+VisiteurDeplacement::VisiteurDeplacement(glm::vec3 delta, MoveEventCallback move) {
 	delta_ = delta;
+	moveEventCallback_ = move;
 }
+
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -53,7 +56,14 @@ VisiteurDeplacement::~VisiteurDeplacement() {
 ////////////////////////////////////////////////////////////////////////
 void VisiteurDeplacement::visiterAccelerateur(NoeudAccelerateur* noeud) {
 	if (noeud->estSelectionne())
+	{
 		noeud->deplacer(noeud->obtenirPositionRelative() + delta_);
+		if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
+		{
+			moveEventCallback_(noeud->getUUID(), glm::value_ptr(noeud->obtenirPositionRelative()));
+		}
+
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -78,6 +88,12 @@ void VisiteurDeplacement::visiterPointControl(NoeudPointControl * noeud)
 
 		// Deplacer son opposé
 		noeud->obtenirNoeudOppose()->deplacer(pos * glm::dvec3(noeud->obtenirSymmetrie()));
+		if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
+		{
+			moveEventCallback_(noeud->getUUID(), glm::value_ptr(noeud->obtenirPositionRelative()));
+
+			moveEventCallback_(noeud->obtenirNoeudOppose()->getUUID(), glm::value_ptr(noeud->obtenirNoeudOppose()->obtenirPositionRelative()));
+		}
 	}
 }
 
@@ -94,7 +110,14 @@ void VisiteurDeplacement::visiterPointControl(NoeudPointControl * noeud)
 ////////////////////////////////////////////////////////////////////////
 void VisiteurDeplacement::visiterMur(NoeudMur* noeud) {
 	if (noeud->estSelectionne())
+	{
 		noeud->deplacer(noeud->obtenirPositionRelative() + delta_);
+		if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
+		{
+			moveEventCallback_(noeud->getUUID(), glm::value_ptr(noeud->obtenirPositionRelative()));
+		}
+
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -110,7 +133,13 @@ void VisiteurDeplacement::visiterMur(NoeudMur* noeud) {
 ////////////////////////////////////////////////////////////////////////
 void VisiteurDeplacement::visiterPortail(NoeudPortail* noeud) {
 	if (noeud->estSelectionne())
+	{
 		noeud->deplacer(noeud->obtenirPositionRelative() + delta_);
+		if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
+		{
+			moveEventCallback_(noeud->getUUID(), glm::value_ptr(noeud->obtenirPositionRelative()));
+		}
+	}
 }
 
 void VisiteurDeplacement::visiterRondelle(NoeudRondelle * noeud)

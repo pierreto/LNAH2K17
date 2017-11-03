@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:wpf="clr-namespace:InterfaceGraphique.Controls.WPF"
+             xmlns:convert="clr-namespace:InterfaceGraphique.Controls.WPF.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="400">
     <UserControl.Resources>
@@ -28,25 +29,25 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="2*"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock VerticalAlignment="Center" TextAlignment="Right" Grid.Row="0" Grid.Column="0" TextWrapping="Wrap" Text="Username" Padding="0 0 10 0" FontSize="20" Margin="0,0,0,10"/>
+                <TextBlock VerticalAlignment="Center" TextAlignment="Right" Grid.Row="0" Grid.Column="0" TextWrapping="Wrap" Text="Username" Padding="0 0 10 0" FontSize="20" Margin="0,0,0,10" Foreground="White"/>
                 <Border Grid.Row="0"  Grid.Column="1" Padding="5" CornerRadius="5" BorderThickness="1" BorderBrush="LightGray" SnapsToDevicePixels="True" Background="White" Margin="0,0,0,10">
                     <TextBox x:Name="Username" Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding InputsEnabled}" Background="Transparent" BorderThickness="0" MaxLength="16"/>
                 </Border>
             </Grid>
-            <TextBlock HorizontalAlignment="Center" Margin="0,0,0,10" TextWrapping="Wrap" Text="{Binding UsernameErrMsg}" VerticalAlignment="Top" Foreground="Red" FontSize="18"/>
+            <TextBlock HorizontalAlignment="Center" Margin="0,0,0,10" TextWrapping="Wrap" Text="{Binding UsernameErrMsg}" VerticalAlignment="Top" Foreground="Red" FontSize="18" Visibility="{Binding UsernameErrMsg, Converter={convert:StringToVisibilityConverter}, ConverterParameter=True}"/>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="2*"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock VerticalAlignment="Center" TextAlignment="Right" Grid.Row="1" Grid.Column="0" TextWrapping="Wrap" Text="Password" Padding="0 0 10 0" FontSize="20" Margin="0,0,0,10"/>
+                <TextBlock VerticalAlignment="Center" TextAlignment="Right" Grid.Row="1" Grid.Column="0" TextWrapping="Wrap" Text="Password" Padding="0 0 10 0" FontSize="20" Margin="0,0,0,10" Foreground="White"/>
                 <Border Grid.Row="1"  Grid.Column="1" Padding="5" CornerRadius="5" BorderThickness="1" BorderBrush="LightGray" SnapsToDevicePixels="True" Background="White" Margin="0,0,0,10">
                     <PasswordBox x:Name="Password" wpf:PasswordHelper.Attach="True" wpf:PasswordHelper.Password="{Binding Password, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" IsEnabled="{Binding InputsEnabled}" Background="Transparent" BorderThickness="0" MaxLength="16"/>
                 </Border>
             </Grid>
-            <TextBlock HorizontalAlignment="Center" Margin="0,0,0,10" TextWrapping="Wrap" Text="{Binding PasswordErrMsg}" VerticalAlignment="Top" Foreground="Red" FontSize="18"/>
-            <Button Content="Se Connecter" HorizontalAlignment="Center" Margin="0,0,0,10" VerticalAlignment="Top" Width="145" Command="{Binding AuthenticateCommand}" IsDefault="True" IsEnabled="{Binding InputsEnabled}"/>
-            <Button Content="Créer Compte" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="145" Command="{Binding SignupCommand}" IsEnabled="{Binding InputsEnabled}" Background="#3ccc71" />
+            <TextBlock HorizontalAlignment="Center" Margin="0,0,0,10" TextWrapping="Wrap" Text="{Binding PasswordErrMsg}" VerticalAlignment="Top" Foreground="Red" FontSize="18" Visibility="{Binding PasswordErrMsg, Converter={convert:StringToVisibilityConverter}, ConverterParameter=True}"/>
+            <Button Content="Se Connecter" HorizontalAlignment="Center" Margin="0,0,0,10" VerticalAlignment="Top" Width="145" Command="{Binding AuthenticateCommand}" IsDefault="True" IsEnabled="{Binding InputsEnabled}" BorderThickness="0"/>
+            <Button Content="Créer Compte" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="145" Command="{Binding SignupCommand}" IsEnabled="{Binding InputsEnabled}" Background="#3ccc71" BorderThickness="0"/>
         </StackPanel>
     </Border>
 </UserControl>

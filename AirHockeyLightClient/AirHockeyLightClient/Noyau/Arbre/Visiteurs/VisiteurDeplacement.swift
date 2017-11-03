@@ -20,16 +20,12 @@ import SceneKit
 ///////////////////////////////////////////////////////////////////////////
 class VisiteurDeplacement: VisiteurAbstrait {
     
-    /// Dernière position du toucher
-    private var lastPosition: CGPoint?
-    
-    /// Position du toucher
-    private var position: CGPoint?
+    /// Vecteur trois dimensions pour le changement de position de l'objet
+    private var delta: GLKVector3?
     
     /// Constructeur
-    init(lastPosition: CGPoint, position: CGPoint) {
-        self.lastPosition = lastPosition
-        self.position = position
+    init(delta: GLKVector3) {
+        self.delta = delta
     }
     
     /// Visiter un accélérateur pour le déplacement
@@ -50,7 +46,7 @@ class VisiteurDeplacement: VisiteurAbstrait {
     func visiterPointControl(noeud: NoeudPointControl) {
         if (noeud.estSelectionne()) {
             var pos = noeud.obtenirPositionRelative()
-            pos = self.obtenirDeplacement(pos: pos)
+            pos = GLKVector3Add(pos, self.delta!)
             
             // Deplacer le premier noeud
             noeud.deplacer(position: pos)
@@ -93,19 +89,8 @@ class VisiteurDeplacement: VisiteurAbstrait {
     /// Déplace le noeud
     private func deplacerNoeud(noeud: NoeudCommun) {
         var pos = noeud.obtenirPositionRelative()
-        pos = self.obtenirDeplacement(pos: pos)
-        
-        // Deplacer le premier noeud
+        pos = GLKVector3Add(pos, self.delta!)
         noeud.deplacer(position: pos)
-    }
-    
-    /// Détermine le déplacement (delta)
-    private func obtenirDeplacement(pos: GLKVector3) -> GLKVector3 {
-        let start = MathHelper.CGPointToSCNVector3(view: FacadeModele.instance.obtenirVue().editorView, depth: pos.z, point: self.lastPosition!)
-        let end = MathHelper.CGPointToSCNVector3(view: FacadeModele.instance.obtenirVue().editorView, depth: pos.z, point: self.position!)
-        let delta = GLKVector3Make(end.x - start.x, end.y - start.y, end.z - start.z)
-        
-        return GLKVector3Add(pos, delta)
     }
     
 }

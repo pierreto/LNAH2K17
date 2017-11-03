@@ -1,5 +1,6 @@
 ﻿using AirHockeyServer.Entities;
 using AirHockeyServer.Services;
+using AirHockeyServer.Services.Interfaces;
 using Microsoft.AspNet.SignalR;
 using System;
 using System.Collections.Generic;
@@ -20,9 +21,7 @@ namespace AirHockeyServer.Hubs
 
         public void Join(UserEntity user)
         {
-            // TO REMOVE, WAITING FOR AUTHENTIFICATION
             ConnectionMapper.AddConnection(user.Id, Context.ConnectionId);
-
             TournamentService.JoinTournament(user);
         }
 
@@ -47,5 +46,9 @@ namespace AirHockeyServer.Hubs
             TournamentService.LeaveTournamentWaitingRoom(user);
         }
 
+        public void Disconnect(string username)
+        {
+            //
+        }
     }
 }

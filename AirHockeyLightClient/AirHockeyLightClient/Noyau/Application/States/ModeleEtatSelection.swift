@@ -33,6 +33,14 @@ class ModeleEtatSelection: ModeleEtat {
         arbre.accepterVisiteur(visiteur: VisiteurSelectionnable(type: arbre.NOM_PORTAIL, selectionnable: true));
         arbre.accepterVisiteur(visiteur: VisiteurSelectionnable(type: arbre.NOM_ACCELERATEUR, selectionnable: true));
         arbre.accepterVisiteur(visiteur: VisiteurSelectionnable(type: arbre.NOM_POINT_CONTROL, selectionnable: false));
+        
+        /// Afficher la configuration des propriétés de l'objet
+        FacadeModele.instance.obtenirVue().showObjectPropertiesView(activer: true)
+    }
+    
+    override func nettoyerEtat() {
+        /// Cacher la configuration des propriétés de l'objet
+        FacadeModele.instance.obtenirVue().showObjectPropertiesView(activer: false)
     }
     
     // Fonctions gérant les entrées de l'utilisateur
