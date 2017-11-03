@@ -95,7 +95,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
             WaitingRoomProxy.On<MapEntity>("TournamentMapUpdatedEvent", map =>
             {
-                this.MapUpdatedEvent.Invoke(this, map);
+                //this.MapUpdatedEvent.Invoke(this, map);
             });
         }
 

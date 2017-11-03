@@ -48,7 +48,7 @@ namespace InterfaceGraphique.Game.GameState
 
         public override void MettreAJour(double tempsInterAffichage, int neededGoalsToWin)
         {
-            if (FonctionsNatives.isGameOver(neededGoalsToWin) == 1)
+            if (!gameHasEnded && FonctionsNatives.isGameOver(neededGoalsToWin) == 1)
             {
                 EndGame();
                 gameHasEnded = true;
