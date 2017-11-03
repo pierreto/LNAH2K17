@@ -62,6 +62,8 @@ namespace AirHockeyServer.Manager
                         // save to DB
                         await PlayerStatsService.IncrementTournamentsWon(tournament.Winner.Id);
                         Cache.Tournaments.Remove(tournamentId);
+
+                        return;
                     }
                     else
                     {

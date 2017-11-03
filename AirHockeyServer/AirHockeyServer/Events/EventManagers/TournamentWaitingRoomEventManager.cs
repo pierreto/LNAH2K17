@@ -91,17 +91,17 @@ namespace AirHockeyServer.Events.EventManagers
                 TournamentId = Tournament.Id
             };
 
-            GameEntity gameCreated = await GameService.CreateGame(game);
+            //GameEntity gameCreated = await GameService.CreateGame(game);
 
-            var stringGameId = gameCreated.GameId.ToString();
+            var stringGameId = game.GameId.ToString();
             
-            foreach (var player in gameCreated.Players)
+            foreach (var player in game.Players)
             {
                 var connection = ConnectionMapper.GetConnection(player.Id);
                 await GlobalHost.ConnectionManager.GetHubContext<GameWaitingRoomHub>().Groups.Add(connection, stringGameId);
             }
 
-            return gameCreated;
+            return game;
         }
 
         ////////////////////////////////////////////////////////////////////////

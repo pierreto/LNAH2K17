@@ -111,15 +111,19 @@ namespace AirHockeyServer.Manager
                             CreationDate = DateTime.Now,
                             TournamentId = tournament.Id
                         };
+
                         finalGame.Master = finalGame.Players[0];
                         finalGame.Slave = finalGame.Players[1];
 
                         tournament.State = TournamentState.Final;
                         tournament.Final = finalGame;
-
-
+                        
                         AddGame(finalGame);
                         Cache.Tournaments[tournament.Id] = tournament;
+
+                        var gameHub = GlobalHost.ConnectionManager.GetHubContext<GameWaitingRoomHub>();
+                        gameHub.Groups.Add(ConnectionMapper.GetConnection(finalGame.Players[0].Id), finalGame.GameId.ToString());
+                        gameHub.Groups.Add(ConnectionMapper.GetConnection(finalGame.Players[1].Id), finalGame.GameId.ToString());
 
                         hub.Clients.Group(tournament.Id.ToString()).TournamentSemiFinalResults(tournament);
 
