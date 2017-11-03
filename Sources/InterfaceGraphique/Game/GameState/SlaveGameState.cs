@@ -55,7 +55,7 @@ namespace InterfaceGraphique.Game.GameState
 
             float[] slavePosition = new float[3];
             FonctionsNatives.getSlavePosition(slavePosition);
-            this.gameHub.SendSlavePosition(slavePosition);
+            Task.Run(() =>this.gameHub.SendSlavePosition(slavePosition));
         }
 
     
@@ -116,7 +116,10 @@ namespace InterfaceGraphique.Game.GameState
             Program.QuickPlay.EndGame();
             if (IsOnlineTournementMode)
             {
-                Program.FormManager.CurrentForm = Program.OnlineTournament;
+                Program.OnlineTournament.Invoke(new MethodInvoker(() =>
+                {
+                    Program.FormManager.CurrentForm = Program.OnlineTournament;
+                }));
             }
         }
 

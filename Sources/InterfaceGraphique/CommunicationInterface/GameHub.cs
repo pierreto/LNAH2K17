@@ -53,11 +53,11 @@ namespace InterfaceGraphique.CommunicationInterface
             });
         }
 
-        public void SendSlavePosition(float[] slavePosition)
+        public async Task SendSlavePosition(float[] slavePosition)
         {
             GameDataMessage gameDataMessage = new GameDataMessage(slavePosition);
 
-            gameHubProxy.Invoke("SendGameData", gameGuid, gameDataMessage);
+            await gameHubProxy.Invoke("SendGameData", gameGuid, gameDataMessage);
         }
 
 
@@ -74,22 +74,22 @@ namespace InterfaceGraphique.CommunicationInterface
             });
         }
 
-        public void SendGameData(float[] slavePosition, float[] masterPosition, float[] puckPosition)
+        public async Task SendGameData(float[] slavePosition, float[] masterPosition, float[] puckPosition)
         {
             GameDataMessage gameDataMessage = new GameDataMessage(slavePosition, masterPosition,puckPosition);
 
-            gameHubProxy.Invoke("SendGameData", gameGuid, gameDataMessage);
+            await gameHubProxy.Invoke("SendGameData", gameGuid, gameDataMessage);
         }
 
-        public void SendGameOver()
+        public async Task SendGameOver()
         {
-            gameHubProxy.Invoke("GameOver", gameGuid);
+            await gameHubProxy.Invoke("GameOver", gameGuid);
         }
 
-        public void SendGoal(int player)
+        public async Task SendGoal(int player)
         {
             GoalMessage goalMessage = new GoalMessage(player);
-            gameHubProxy.Invoke("SendGoal", gameGuid, goalMessage);
+            await gameHubProxy.Invoke("SendGoal", gameGuid, goalMessage);
 
         }
 
