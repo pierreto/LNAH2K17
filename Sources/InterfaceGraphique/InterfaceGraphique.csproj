@@ -405,6 +405,9 @@
     </Compile>
     <Compile Include="Services\MapService.cs" />
     <Compile Include="WPFApplication.cs" />
+    <EmbeddedResource Include="Controls\OnlineTournament.resx">
+      <DependentUpon>OnlineTournament.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Editor\OpenPrivateMapForm.resx">
       <DependentUpon>OpenPrivateMapForm.cs</DependentUpon>
     </EmbeddedResource>
