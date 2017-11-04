@@ -42,6 +42,7 @@ public:
 	virtual void escape();
 
 	void setMoveEventCallback(MoveEventCallback callback) { moveEventCallback_ = callback; }
+	MoveEventCallback getMoveEventCallback() const {return moveEventCallback_; }
 
 private:
 

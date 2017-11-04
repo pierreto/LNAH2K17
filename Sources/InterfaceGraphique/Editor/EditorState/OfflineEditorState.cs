@@ -47,7 +47,7 @@ namespace InterfaceGraphique.Editor.EditorState
         public override Task LeaveEdition()
         {
             //Nothing
-            return null;
+            return Task.FromResult(0);
         }
     }
 }

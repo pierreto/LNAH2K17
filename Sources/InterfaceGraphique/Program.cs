@@ -101,6 +101,15 @@ namespace InterfaceGraphique
             Application.Idle += ExecuterQuandInactif;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            // When the app exits
+            Application.ApplicationExit += AppExit;
+            // Unhandled exceptions for our Application Domain
+            AppDomain.CurrentDomain.UnhandledException += new System.UnhandledExceptionEventHandler(AppExit);
+            // Unhandled exceptions for the executing UI thread
+            Application.ThreadException += new System.Threading.ThreadExceptionEventHandler(AppExit);
+
+
             WPFApplication.Start();
 
             InitializeUnityDependencyInjection();
@@ -127,7 +136,16 @@ namespace InterfaceGraphique
             Application.Run(formManager);
 
         }
-        
+
+        private static void AppExit(object sender, EventArgs e)
+        {
+            HubManager.Instance.Logout();
+            if (client.BaseAddress != null)
+            {
+             client.PostAsJsonAsync(client.BaseAddress + "api/logout", User.Instance.UserEntity);
+            }
+        }
+
 
         public static void InitAfterConnection()
         {

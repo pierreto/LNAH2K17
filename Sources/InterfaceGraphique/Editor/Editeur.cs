@@ -174,7 +174,7 @@ namespace InterfaceGraphique {
             this.Fichier_MenuPrincipal.Click += async (sender, e) =>
             {
                 await ResetDefaultTable();
-                CurrentState.LeaveEdition();
+                await CurrentState.LeaveEdition();
                 Program.FormManager.CurrentForm = Program.MainMenu;
             };
             this.Fichier_ModeTest.Click += (sender, e) => Program.FormManager.CurrentForm = Program.TestMode;

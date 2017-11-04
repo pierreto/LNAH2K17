@@ -25,7 +25,7 @@ class VisiteurDeplacement : public VisiteurAbstrait
 {
 public:
 	/// Constructeur
-	VisiteurDeplacement(glm::vec3 delta, MoveEventCallback move=nullptr);
+	VisiteurDeplacement(glm::vec3 delta);
 
 
 	/// Destructeur
@@ -45,11 +45,11 @@ public:
 	virtual void visiterPortail(NoeudPortail* noeud);
 
 	virtual void visiterRondelle(NoeudRondelle* noeud);
+	void defaultVisit(NoeudAbstrait* noeud);
 
 private:
 	/// Vecteur trois dimensions pour le changement de position de l'objet
 	glm::vec3 delta_;
-	MoveEventCallback moveEventCallback_;
 };
 
 

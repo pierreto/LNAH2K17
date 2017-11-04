@@ -72,11 +72,15 @@ namespace InterfaceGraphique.CommunicationInterface
 
         public void Logout()
         {
-            foreach (IBaseHub hub in this.hubs)
+            if (this.hubs != null)
             {
-                hub.Logout();
+                foreach (IBaseHub hub in this.hubs)
+                {
+                    hub.Logout();
+                }
+                this.connection.Stop();
             }
-            this.connection.Stop();
+    
         }
     }
 }

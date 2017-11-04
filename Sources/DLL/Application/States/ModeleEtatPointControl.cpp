@@ -18,6 +18,7 @@
 
 #include "visiteurSelectionnable.h"
 #include "ArbreRenduINF2990.h"
+#include "ModeleEtatDeplacement.h"
 
 /// Pointeur vers l'instance unique de la classe.
 ModeleEtatPointControl* ModeleEtatPointControl::instance_{ nullptr };
@@ -280,6 +281,9 @@ void ModeleEtatPointControl::revertPosition()
 	for (auto noeud : noeuds) {
 		noeud->revertPosition();
 		static_cast<NoeudPointControl*>(noeud)->obtenirNoeudOppose()->revertPosition();
+		 ModeleEtatDeplacement::obtenirInstance()->getMoveEventCallback()(noeud->getUUID(), glm::value_ptr(noeud->obtenirPositionRelative()));
+
+
 	}
 }
 

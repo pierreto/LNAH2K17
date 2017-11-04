@@ -315,9 +315,6 @@
     <ClCompile Include="Console\Logger.cpp">
       <Filter>Source Files\Console</Filter>
     </ClCompile>
-    <ClCompile Include="ModeleEtatJeuOnline.cpp">
-      <Filter>Source Files\Application\States</Filter>
-    </ClCompile>
     <ClCompile Include="NodeCreator.cpp">
       <Filter>Source Files\Arbre</Filter>
     </ClCompile>

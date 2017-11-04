@@ -1050,7 +1050,7 @@ void moveByUUID(const char* username, const char* uuid, const float* newPosition
 	NoeudAbstrait* node =  FacadeModele::obtenirInstance()->getUserManager().getUser(std::string(username))->findNode(std::string(uuid));
 	if(node)
 	{
-		node->assignerPositionRelative(glm::make_vec3(newPosition));
+		node->deplacer(glm::make_vec3(newPosition));
 	}
 	else //if it isnt in the selected list of the other player anymore, we find it in the entire tree 
 	{

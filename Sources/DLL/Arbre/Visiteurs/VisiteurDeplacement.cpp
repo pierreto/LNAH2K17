@@ -10,6 +10,7 @@
 
 #include "VisiteurDeplacement.h"
 #include "ModeleEtatJeu.h"
+#include "ModeleEtatDeplacement.h"
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -22,9 +23,8 @@
 /// @return Aucune
 ///
 ////////////////////////////////////////////////////////////////////////
-VisiteurDeplacement::VisiteurDeplacement(glm::vec3 delta, MoveEventCallback move) {
+VisiteurDeplacement::VisiteurDeplacement(glm::vec3 delta) {
 	delta_ = delta;
-	moveEventCallback_ = move;
 }
 
 
@@ -55,15 +55,7 @@ VisiteurDeplacement::~VisiteurDeplacement() {
 ///
 ////////////////////////////////////////////////////////////////////////
 void VisiteurDeplacement::visiterAccelerateur(NoeudAccelerateur* noeud) {
-	if (noeud->estSelectionne())
-	{
-		noeud->deplacer(noeud->obtenirPositionRelative() + delta_);
-		if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
-		{
-			moveEventCallback_(noeud->getUUID(), glm::value_ptr(noeud->obtenirPositionRelative()));
-		}
-
-	}
+	defaultVisit(noeud);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -90,9 +82,14 @@ void VisiteurDeplacement::visiterPointControl(NoeudPointControl * noeud)
 		noeud->obtenirNoeudOppose()->deplacer(pos * glm::dvec3(noeud->obtenirSymmetrie()));
 		if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
 		{
-			moveEventCallback_(noeud->getUUID(), glm::value_ptr(noeud->obtenirPositionRelative()));
+			MoveEventCallback callback = ModeleEtatDeplacement::obtenirInstance()->getMoveEventCallback();
+			if(callback)
+			{
+				callback(noeud->getUUID(), glm::value_ptr(noeud->obtenirPositionRelative()));
 
-			moveEventCallback_(noeud->obtenirNoeudOppose()->getUUID(), glm::value_ptr(noeud->obtenirNoeudOppose()->obtenirPositionRelative()));
+				callback(noeud->obtenirNoeudOppose()->getUUID(), glm::value_ptr(noeud->obtenirNoeudOppose()->obtenirPositionRelative()));
+			}
+
 		}
 	}
 }
@@ -109,15 +106,7 @@ void VisiteurDeplacement::visiterPointControl(NoeudPointControl * noeud)
 ///
 ////////////////////////////////////////////////////////////////////////
 void VisiteurDeplacement::visiterMur(NoeudMur* noeud) {
-	if (noeud->estSelectionne())
-	{
-		noeud->deplacer(noeud->obtenirPositionRelative() + delta_);
-		if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
-		{
-			moveEventCallback_(noeud->getUUID(), glm::value_ptr(noeud->obtenirPositionRelative()));
-		}
-
-	}
+	defaultVisit(noeud);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -132,21 +121,29 @@ void VisiteurDeplacement::visiterMur(NoeudMur* noeud) {
 ///
 ////////////////////////////////////////////////////////////////////////
 void VisiteurDeplacement::visiterPortail(NoeudPortail* noeud) {
-	if (noeud->estSelectionne())
-	{
-		noeud->deplacer(noeud->obtenirPositionRelative() + delta_);
-		if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
-		{
-			moveEventCallback_(noeud->getUUID(), glm::value_ptr(noeud->obtenirPositionRelative()));
-		}
-	}
+	defaultVisit(noeud);
 }
 
 void VisiteurDeplacement::visiterRondelle(NoeudRondelle * noeud)
 {
 }
 
+void VisiteurDeplacement::defaultVisit(NoeudAbstrait* noeud)
+{
+		if (noeud->estSelectionne())
+	{
+		noeud->deplacer(noeud->obtenirPositionRelative() + delta_);
+		if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
+		{
+			MoveEventCallback callback = ModeleEtatDeplacement::obtenirInstance()->getMoveEventCallback();
 
+			if (callback)
+			{
+				callback(noeud->getUUID(), glm::value_ptr(noeud->obtenirPositionRelative()));
+			}
+		}
+	}
+}
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////
