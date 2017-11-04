@@ -24,10 +24,25 @@ class EditionHub: BaseHub {
         super.init()
         self.hubProxy = connection?.createHubProxy("EditionHub")
         
+        /// Reception de l'évènement d'une commande
+        self.hubProxy?.on("NewCommand") { args in
+            print("NEW COMMAND")
+            self.receiveCommand(command: args?[0] as! Dictionary<String, String>)
+        }
+        
         /// Reception de l'évènement de rejoindre une salle d'édition
         self.hubProxy?.on("NewUser") { args in
-            print("NEW USER")
+            let newUser = args?[0] as! Dictionary<String, String>
+            let username = newUser["Username"]
+            let hexColor = newUser["HexColor"]
+            print("New user: \(String(describing: username! + " (" + hexColor! + ")"))\n")
+            
+            FacadeModele.instance.obtenirUserManager()?.addUser(username: username!, hexColor: hexColor!)
         }
+    }
+    
+    func receiveCommand(command: Dictionary<String, String>) {
+        print(command.description)
     }
     
     func convertMapEntity(mapEntity: MapEntity) -> Any {
@@ -46,16 +61,29 @@ class EditionHub: BaseHub {
     
     func joinPublicRoom(username: String, mapEntity: MapEntity) {
         self.map = mapEntity
+        var usersInRoom = [Dictionary<String, String>]()
         
         do {
-            try self.hubProxy?.invoke("JoinPublicRoom", arguments: [username, convertMapEntity(mapEntity: mapEntity)])
+            try self.hubProxy?.invoke("JoinPublicRoom",
+                                      arguments: [username, convertMapEntity(mapEntity: mapEntity)])
+            { (result, error) in
+                if let e = error {
+                    print("Error JoinPublicRoom: \(e)")
+                }
+                else {
+                    print("Success JoinPublicRoom")
+                    usersInRoom = result as! [Dictionary<String, String>]
+                    print("Users in room: " + usersInRoom.description)
+                    
+                    for user in usersInRoom {
+                        FacadeModele.instance.obtenirUserManager()?.addUser(username: user["Username"]!,
+                                                                           hexColor: user["HexColor"]!)
+                    }
+                }
+            }
         }
         catch {
             print("Error JoinPublicRoom")
-        }
-        
-        self.hubProxy?.on("NewCommand") { args in
-            print("new command received")
         }
     }
     
@@ -70,10 +98,11 @@ class EditionHub: BaseHub {
         }
     }
     
-    func sendEditionCommand(mapId: Int, command: AnyObject) {
-        // TODO : convertir command en json
+    func sendEditionCommand(command: EditionCommand) {
+        let jsonCommand = command.toJSON()
+        
         do {
-            try self.hubProxy?.invoke("SendEditionCommand", arguments: [mapId, command])
+            try self.hubProxy?.invoke("SendEditionCommand", arguments: [self.map?.id.value, jsonCommand])
         }
         catch {
             print("Error SendEditionCommand")

@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////////
-/// @file PortalCommand.swift
+/// @file EditionCommand.swift
 /// @author Mikael Ferland
 /// @date 2017-10-30
 /// @version 1
@@ -8,19 +8,18 @@
 /// @{
 ///////////////////////////////////////////////////////////////////////////////
 
-class PortalCommand: AbstractEditionCommand {
+class EditionCommand {
     
-    var objectUuid: String = ""
-    var endUuid: String = ""
-    var startPosition: [Float] = []
-    var endPosition: [Float] = []
+    var objectUuid: String
     
     init(objectUuid: String) {
         self.objectUuid = objectUuid
     }
     
-    func executeCommand() {
-        FacadeModele.instance.creerNoeuds(type: "", nomType: "")
+    func executeCommand() {}
+    
+    func toJSON() -> Dictionary<String, AnyObject> {
+        return Dictionary<String, AnyObject>()
     }
     
 }

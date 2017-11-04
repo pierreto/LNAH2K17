@@ -562,6 +562,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Édition" id="07a-Zg-bjU">
+                        <barButtonItem key="backBarButtonItem" title="Sélection de cartes" id="nAs-I5-8GR"/>
                         <rightBarButtonItems>
                             <barButtonItem title="       Sauvegarder" id="L6a-CY-qge" userLabel="SauvegarderButton">
                                 <connections>
@@ -1411,7 +1412,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="LKe-KA-ZAB"/>
-        <segue reference="ekN-4s-to3"/>
+        <segue reference="M9v-27-zeQ"/>
+        <segue reference="GGZ-Yu-kfi"/>
     </inferredMetricsTieBreakers>
 </document>
