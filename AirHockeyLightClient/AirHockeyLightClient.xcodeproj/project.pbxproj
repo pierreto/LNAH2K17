@@ -285,12 +285,10 @@
 		1D019A311F911EDC004D79B2 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				25FDE4391FA80C620089D9FE /* Sélection des cartes */,
-				1D019A1D1F911DE2004D79B2 /* LoginViewController.swift */,
-				1DFE2E4B1F91A8FD0048892D /* SignupViewController.swift */,
-				1D3D77B61F981BCA0012EF12 /* MainViewController.swift */,
-				1D90AAFA1F98205A003E0764 /* ConnectServerViewController.swift */,
-				1D863DB01F9848E70025B89D /* OfflineMenuViewController.swift */,
+				8F0FFED71F6EB8C500366D8E /* Chat */,
+				8FB6A9931F81B9AA00FAFFCF /* Editor */,
+				25FDE4391FA80C620089D9FE /* Map */,
+				8F0FFED91F6EB96900366D8E /* Menus */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -329,11 +327,11 @@
 		1D019A381F911F1E004D79B2 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				1D019A201F911DF6004D79B2 /* Signup.swift */,
-				1D019A1F1F911DF6004D79B2 /* Login.swift */,
 				1D90AB011F9824BE003E0764 /* ConnectServer.swift */,
 				34B965CF1FA2976600BD17CC /* GeneralProperties.swift */,
+				1D019A1F1F911DF6004D79B2 /* Login.swift */,
 				25628BA01FA79CFF0010B58D /* Maps.swift */,
+				1D019A201F911DF6004D79B2 /* Signup.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -374,14 +372,14 @@
 			name = Map;
 			sourceTree = "<group>";
 		};
-		25FDE4391FA80C620089D9FE /* Sélection des cartes */ = {
+		25FDE4391FA80C620089D9FE /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				25F809241FA6AB680008F048 /* CreateMapViewController.swift */,
 				25F8091E1FA673050008F048 /* MapTableViewController.swift */,
 				25F809221FA6A2680008F048 /* MapDisplayViewController.swift */,
-				25F809241FA6AB680008F048 /* CreateMapViewController.swift */,
 			);
-			name = "Sélection des cartes";
+			name = Map;
 			sourceTree = "<group>";
 		};
 		3085577F2BC9CDF3683F45B9 /* Pods */ = {
@@ -391,6 +389,7 @@
 				4BC65514BAA095CA955FDC5C /* Pods-AirHockeyLightClient.release.xcconfig */,
 			);
 			name = Pods;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		3415E6C51F85646B00DB1CAD /* Usines */ = {
@@ -455,6 +454,7 @@
 				7585740DC43877CD99CDDF6A /* Pods_AirHockeyLightClient.framework */,
 			);
 			name = Frameworks;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		8F0B94AA1F8D3ECA007F0E82 /* Visiteurs */ = {
@@ -507,14 +507,10 @@
 				8F64C0121F7754FD00F14AC7 /* LaunchScreen.storyboard */,
 				8F64C0141F77550800F14AC7 /* Main.storyboard */,
 				8FB6A9C31F81DCA000FAFFCF /* Assets */,
-				8FE1EB031F75A90D00A01514 /* Communication */,
-				1D019A331F911EEF004D79B2 /* ViewModel */,
-				1D019A311F911EDC004D79B2 /* View */,
-				3475C2441F90142600E8BF86 /* Gestures */,
-				8FB6A9931F81B9AA00FAFFCF /* Editor */,
 				253E088A1F818544009F301B /* Effects */,
-				8F0FFED91F6EB96900366D8E /* Menus */,
-				8F0FFED71F6EB8C500366D8E /* Chat */,
+				3475C2441F90142600E8BF86 /* Gestures */,
+				1D019A311F911EDC004D79B2 /* View */,
+				1D019A331F911EEF004D79B2 /* ViewModel */,
 			);
 			name = InterfaceGraphique;
 			sourceTree = "<group>";
@@ -524,6 +520,8 @@
 			children = (
 				8F0B94AF1F8D4B9D007F0E82 /* Application */,
 				8FB6A9C71F81E35D00FAFFCF /* Arbre */,
+				8FE1EB031F75A90D00A01514 /* Communication */,
+				8F65B2801FAE1B0700D8EE20 /* Editor */,
 				8F8706B71F789266000E6824 /* Entities */,
 				253E088F1F818DE1009F301B /* Helper */,
 				1D019A381F911F1E004D79B2 /* Model */,
@@ -534,6 +532,8 @@
 		8F0FFED61F6EB8B800366D8E /* Utilitaire */ = {
 			isa = PBXGroup;
 			children = (
+				3085577F2BC9CDF3683F45B9 /* Pods */,
+				63B9F5E76BF43EF82631DFF3 /* Frameworks */,
 				253E088B1F81858E009F301B /* UIViewShake.swift */,
 				1D019A2F1F911E78004D79B2 /* Http.swift */,
 			);
@@ -554,8 +554,21 @@
 			isa = PBXGroup;
 			children = (
 				8F64C0161F775B2500F14AC7 /* AuthentificationViewController.swift */,
+				1D019A1D1F911DE2004D79B2 /* LoginViewController.swift */,
+				1DFE2E4B1F91A8FD0048892D /* SignupViewController.swift */,
+				1D3D77B61F981BCA0012EF12 /* MainViewController.swift */,
+				1D90AAFA1F98205A003E0764 /* ConnectServerViewController.swift */,
+				1D863DB01F9848E70025B89D /* OfflineMenuViewController.swift */,
 			);
 			name = Menus;
+			sourceTree = "<group>";
+		};
+		8F65B2801FAE1B0700D8EE20 /* Editor */ = {
+			isa = PBXGroup;
+			children = (
+				0EE1745C1FA92CF70090C45A /* Commands */,
+			);
+			name = Editor;
 			sourceTree = "<group>";
 		};
 		8F6AE2AF1F6592EB00A29E8B = {
@@ -563,8 +576,6 @@
 			children = (
 				8F6AE2BA1F6592EB00A29E8B /* AirHockeyLightClient */,
 				8F6AE2B91F6592EB00A29E8B /* Products */,
-				3085577F2BC9CDF3683F45B9 /* Pods */,
-				63B9F5E76BF43EF82631DFF3 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -583,8 +594,8 @@
 				8F0FFED51F6EB8B100366D8E /* Noyau */,
 				8F0FFED41F6EB8A600366D8E /* InterfaceGraphique */,
 				8F6AE2BB1F6592EB00A29E8B /* AppDelegate.swift */,
-				8F6AE2BD1F6592EB00A29E8B /* GameScene.sks */,
 				8F6AE2BF1F6592EB00A29E8B /* Actions.sks */,
+				8F6AE2BD1F6592EB00A29E8B /* GameScene.sks */,
 				8F6AE2C11F6592EB00A29E8B /* GameScene.swift */,
 				8F6AE2C81F6592EB00A29E8B /* Assets.xcassets */,
 				8F6AE2CD1F6592EB00A29E8B /* Info.plist */,
@@ -598,8 +609,8 @@
 				8F8706B81F7892BB000E6824 /* Entity.swift */,
 				8F8706BA1F7892F2000E6824 /* ChatMessageEntity.swift */,
 				253E08901F81913A009F301B /* ChannelEntity.swift */,
-				256539A81F9D643A00D81E2C /* MapEntity.swift */,
 				253741AB1FA61B0C00E7DBE1 /* DBManager.swift */,
+				256539A81F9D643A00D81E2C /* MapEntity.swift */,
 			);
 			name = Entities;
 			sourceTree = "<group>";
@@ -607,7 +618,6 @@
 		8FB6A9931F81B9AA00FAFFCF /* Editor */ = {
 			isa = PBXGroup;
 			children = (
-				0EE1745C1FA92CF70090C45A /* Commands */,
 				8FB6A9941F81B9C800FAFFCF /* EditorViewController.swift */,
 				3475C2271F8FAF8D00E8BF86 /* EditorHUDScene.sks */,
 				3475C2281F8FAF8D00E8BF86 /* EditorHUDScene.swift */,
@@ -643,10 +653,10 @@
 		8FB6A9C71F81E35D00FAFFCF /* Arbre */ = {
 			isa = PBXGroup;
 			children = (
-				8F0B94AA1F8D3ECA007F0E82 /* Visiteurs */,
-				3415E6C51F85646B00DB1CAD /* Usines */,
-				8FB6A9C81F81E36300FAFFCF /* Noeuds */,
 				3415E6C31F8547CE00DB1CAD /* ArbreRendu.swift */,
+				8FB6A9C81F81E36300FAFFCF /* Noeuds */,
+				3415E6C51F85646B00DB1CAD /* Usines */,
+				8F0B94AA1F8D3ECA007F0E82 /* Visiteurs */,
 			);
 			name = Arbre;
 			sourceTree = "<group>";

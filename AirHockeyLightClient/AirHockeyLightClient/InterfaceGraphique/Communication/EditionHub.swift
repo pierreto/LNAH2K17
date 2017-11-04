@@ -10,6 +10,13 @@
 
 import SwiftR
 
+///////////////////////////////////////////////////////////////////////////
+/// @class EditionHub
+/// @brief Classe pour gérer les appels au serveur pour l'édition en ligne
+///
+/// @author Pierre To
+/// @date 2017-11-04
+///////////////////////////////////////////////////////////////////////////
 class EditionHub: BaseHub {
     private var map: MapEntity?
     
