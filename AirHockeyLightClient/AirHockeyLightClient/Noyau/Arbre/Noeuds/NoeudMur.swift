@@ -22,14 +22,14 @@ class NoeudMur : NoeudCommun {
     private var collider: SCNNodeHelper.BoiteEnglobante?
     
     /// Constructeur
-    required init(type: String, geometry: SCNGeometry) {
-        super.init(type: type, geometry: geometry)
+    required init(type: String, geometry: SCNGeometry, uuid: String) {
+        super.init(type: type, geometry: geometry, uuid: uuid)
         self.collider = SCNNodeHelper.BoiteEnglobante(coinMin: GLKVector3.init(v: (0, 0, 0)),
                                                       coinMax: GLKVector3.init(v: (0, 0, 0)));
     }
     
     /// Le point de contrôle a un modèle obj
-    required init(type: String) {
+    required init(type: String, uuid: String) {
         fatalError("init(type:geometry:) has not been implemented")
     }
     

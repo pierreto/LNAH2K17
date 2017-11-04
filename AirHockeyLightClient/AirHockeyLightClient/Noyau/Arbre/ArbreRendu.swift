@@ -70,9 +70,9 @@ class ArbreRendu: SCNNode {
     }
     
     /// Permet de créer un nouveau noeud, sans l'ajouter directement à l'arbre de rendu
-    func creerNoeud(typeNouveauNoeud: String) -> SCNNode {
+    func creerNoeud(typeNouveauNoeud: String, uuid: String) -> SCNNode {
         assert(usines.keys.contains(typeNouveauNoeud), "Incapable de trouver l'usine")
-        return (usines[typeNouveauNoeud]?.creerNoeud())!
+        return (usines[typeNouveauNoeud]?.creerNoeud(uuid: uuid))!
     }
     
     /// Cette fonction crée la structure de base de l'arbre de rendu, c'est-à-dire
@@ -82,7 +82,7 @@ class ArbreRendu: SCNNode {
         // On vide l'arbre
         self.vider()
         // On ajoute les noeud de base
-        self.addChildNode(self.creerNoeud(typeNouveauNoeud: ArbreRendu.instance.NOM_TABLE))
+        self.addChildNode(self.creerNoeud(typeNouveauNoeud: ArbreRendu.instance.NOM_TABLE, uuid: ""))
     }
     
     /// Cette fonction vide le noeud de tous ses enfants.  Elle effectue une

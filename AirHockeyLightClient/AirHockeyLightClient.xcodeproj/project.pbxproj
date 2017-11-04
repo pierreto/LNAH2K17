@@ -101,6 +101,9 @@
 		8F64C0131F7754FD00F14AC7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F64C0121F7754FD00F14AC7 /* LaunchScreen.storyboard */; };
 		8F64C0151F77550800F14AC7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F64C0141F77550800F14AC7 /* Main.storyboard */; };
 		8F64C0171F775B2500F14AC7 /* AuthentificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F64C0161F775B2500F14AC7 /* AuthentificationViewController.swift */; };
+		8F65B2851FAE264100D8EE20 /* OnlineUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F65B2841FAE264100D8EE20 /* OnlineUser.swift */; };
+		8F65B2871FAE265F00D8EE20 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F65B2861FAE265F00D8EE20 /* UserManager.swift */; };
+		8F65B2891FAE321C00D8EE20 /* VisiteurByUUID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F65B2881FAE321C00D8EE20 /* VisiteurByUUID.swift */; };
 		8F690D601F9D5244003F051A /* VisiteurObtenirSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F690D5F1F9D5244003F051A /* VisiteurObtenirSelection.swift */; };
 		8F690D621F9D5E7F003F051A /* ModeleEtatRotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F690D611F9D5E7F003F051A /* ModeleEtatRotation.swift */; };
 		8F69F4BF1F8AF871004D5129 /* MathHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F69F4BE1F8AF871004D5129 /* MathHelper.swift */; };
@@ -236,6 +239,9 @@
 		8F64C0121F7754FD00F14AC7 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = InterfaceGraphique/Menus/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8F64C0141F77550800F14AC7 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = InterfaceGraphique/Main.storyboard; sourceTree = "<group>"; };
 		8F64C0161F775B2500F14AC7 /* AuthentificationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthentificationViewController.swift; path = InterfaceGraphique/Menus/AuthentificationViewController.swift; sourceTree = "<group>"; };
+		8F65B2841FAE264100D8EE20 /* OnlineUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OnlineUser.swift; path = User/OnlineUser.swift; sourceTree = "<group>"; };
+		8F65B2861FAE265F00D8EE20 /* UserManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserManager.swift; path = User/UserManager.swift; sourceTree = "<group>"; };
+		8F65B2881FAE321C00D8EE20 /* VisiteurByUUID.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VisiteurByUUID.swift; path = Noyau/Arbre/Visiteurs/VisiteurByUUID.swift; sourceTree = "<group>"; };
 		8F690D5F1F9D5244003F051A /* VisiteurObtenirSelection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VisiteurObtenirSelection.swift; path = Noyau/Arbre/Visiteurs/VisiteurObtenirSelection.swift; sourceTree = "<group>"; };
 		8F690D611F9D5E7F003F051A /* ModeleEtatRotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ModeleEtatRotation.swift; path = Noyau/Application/States/ModeleEtatRotation.swift; sourceTree = "<group>"; };
 		8F69F4BE1F8AF871004D5129 /* MathHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MathHelper.swift; path = Noyau/Helper/MathHelper.swift; sourceTree = "<group>"; };
@@ -348,6 +354,7 @@
 		253E088A1F818544009F301B /* Effects */ = {
 			isa = PBXGroup;
 			children = (
+				253E088B1F81858E009F301B /* UIViewShake.swift */,
 			);
 			name = Effects;
 			sourceTree = "<group>";
@@ -461,6 +468,7 @@
 			isa = PBXGroup;
 			children = (
 				8F0B94AB1F8D3EEE007F0E82 /* VisiteurAbstrait.swift */,
+				8F65B2881FAE321C00D8EE20 /* VisiteurByUUID.swift */,
 				8F0B94BB1F8D8EA6007F0E82 /* VisiteurDeplacement.swift */,
 				3497C3261F9FF3C300C58700 /* VisiteurDuplication.swift */,
 				8F1B4BD61FA65C3C005321AF /* VisiteurInformation.swift */,
@@ -525,6 +533,7 @@
 				8F8706B71F789266000E6824 /* Entities */,
 				253E088F1F818DE1009F301B /* Helper */,
 				1D019A381F911F1E004D79B2 /* Model */,
+				8F65B2831FAE260500D8EE20 /* User */,
 			);
 			name = Noyau;
 			sourceTree = "<group>";
@@ -534,8 +543,6 @@
 			children = (
 				3085577F2BC9CDF3683F45B9 /* Pods */,
 				63B9F5E76BF43EF82631DFF3 /* Frameworks */,
-				253E088B1F81858E009F301B /* UIViewShake.swift */,
-				1D019A2F1F911E78004D79B2 /* Http.swift */,
 			);
 			name = Utilitaire;
 			sourceTree = "<group>";
@@ -569,6 +576,15 @@
 				0EE1745C1FA92CF70090C45A /* Commands */,
 			);
 			name = Editor;
+			sourceTree = "<group>";
+		};
+		8F65B2831FAE260500D8EE20 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				8F65B2861FAE265F00D8EE20 /* UserManager.swift */,
+				8F65B2841FAE264100D8EE20 /* OnlineUser.swift */,
+			);
+			name = User;
 			sourceTree = "<group>";
 		};
 		8F6AE2AF1F6592EB00A29E8B = {
@@ -680,6 +696,7 @@
 		8FE1EB031F75A90D00A01514 /* Communication */ = {
 			isa = PBXGroup;
 			children = (
+				1D019A2F1F911E78004D79B2 /* Http.swift */,
 				25FDE43A1FA80D4D0089D9FE /* HubManager.swift */,
 				25FDE43C1FA80DA60089D9FE /* BaseHub.swift */,
 				252EC9151FA80FAD008D119C /* EditionHub.swift */,
@@ -880,6 +897,7 @@
 				25F8091F1FA673050008F048 /* MapTableViewController.swift in Sources */,
 				8F8706BB1F7892F2000E6824 /* ChatMessageEntity.swift in Sources */,
 				253741AC1FA61B0C00E7DBE1 /* DBManager.swift in Sources */,
+				8F65B2871FAE265F00D8EE20 /* UserManager.swift in Sources */,
 				344A6E241F99112000CFFBEB /* NoeudAccelerateur.swift in Sources */,
 				3415E6C71F85649D00DB1CAD /* UsineAbstraite.swift in Sources */,
 				25F66FB51FA13071006CB47F /* VisiteurSauvegarde.swift in Sources */,
@@ -938,6 +956,7 @@
 				3497C3251F9FECA600C58700 /* ModeleEtatDuplication.swift in Sources */,
 				253E08911F81913A009F301B /* ChannelEntity.swift in Sources */,
 				8F69F4BF1F8AF871004D5129 /* MathHelper.swift in Sources */,
+				8F65B2891FAE321C00D8EE20 /* VisiteurByUUID.swift in Sources */,
 				25FDE43B1FA80D4D0089D9FE /* HubManager.swift in Sources */,
 				1D019A2E1F911E49004D79B2 /* ISignupViewModel.swift in Sources */,
 				1D019A2D1F911E49004D79B2 /* SignupViewModel.swift in Sources */,
@@ -948,6 +967,7 @@
 				1D90AB001F982332003E0764 /* ConnectServerViewModel.swift in Sources */,
 				8F1D52A81F9D972400135A53 /* ModeleEtatScale.swift in Sources */,
 				34B66FD91F8428EA00A9CCB9 /* NoeudTable.swift in Sources */,
+				8F65B2851FAE264100D8EE20 /* OnlineUser.swift in Sources */,
 				1DFE2E4C1F91A8FD0048892D /* SignupViewController.swift in Sources */,
 				8F6AE2BC1F6592EB00A29E8B /* AppDelegate.swift in Sources */,
 			);

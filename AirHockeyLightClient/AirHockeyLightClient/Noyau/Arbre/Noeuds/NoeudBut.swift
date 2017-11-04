@@ -32,13 +32,13 @@ class NoeudBut : NoeudCommun {
     private var pointControl : NoeudPointControl?
     
     /// Le but n'a pas un modèle obj
-    required init(type : String, geometry: SCNGeometry) {
+    required init(type : String, geometry: SCNGeometry, uuid: String) {
         fatalError("init(type:) has not been implemented")
     }
     
     /// Constructeur
-    required init(type: String) {
-        super.init(type: type)
+    required init(type: String, uuid: String) {
+        super.init(type: type, uuid: uuid)
         self.sommets = [SCNVector3].init(repeating: SCNVector3(0.0, 0.0, 0.0), count: 12)
         
         // Les buts ne sont pas sélectionnable

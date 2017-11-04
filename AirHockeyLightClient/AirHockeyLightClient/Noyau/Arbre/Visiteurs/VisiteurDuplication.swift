@@ -47,7 +47,7 @@ class VisiteurDuplication: VisiteurAbstrait {
             let arbre = FacadeModele.instance.obtenirArbreRendu()
             
             // Création du noeud
-            let noeudDouble = arbre.creerNoeud(typeNouveauNoeud: arbre.NOM_ACCELERATEUR) as! NoeudAccelerateur
+            let noeudDouble = arbre.creerNoeud(typeNouveauNoeud: arbre.NOM_ACCELERATEUR, uuid: "") as! NoeudAccelerateur
             
             // Assigner les mêmes propriétés
             self.copyProperties(node: noeud, nodeCopy: noeudDouble)
@@ -77,7 +77,7 @@ class VisiteurDuplication: VisiteurAbstrait {
             let arbre = FacadeModele.instance.obtenirArbreRendu()
             
             // Création du noeud
-            let noeudDouble = arbre.creerNoeud(typeNouveauNoeud: arbre.NOM_MUR) as! NoeudMur
+            let noeudDouble = arbre.creerNoeud(typeNouveauNoeud: arbre.NOM_MUR, uuid: "") as! NoeudMur
             
             // Assigner les mêmes propriétés
             self.copyProperties(node: noeud, nodeCopy: noeudDouble)
@@ -94,7 +94,7 @@ class VisiteurDuplication: VisiteurAbstrait {
             let arbre = FacadeModele.instance.obtenirArbreRendu()
             
             // Création du noeud
-            let noeudDouble = arbre.creerNoeud(typeNouveauNoeud: arbre.NOM_PORTAIL) as! NoeudPortail
+            let noeudDouble = arbre.creerNoeud(typeNouveauNoeud: arbre.NOM_PORTAIL, uuid: "") as! NoeudPortail
             
             // État de l'opération
             if (self.premierNoeud == nil) {

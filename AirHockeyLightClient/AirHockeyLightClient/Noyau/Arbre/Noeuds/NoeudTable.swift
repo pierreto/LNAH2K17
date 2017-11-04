@@ -36,13 +36,13 @@ class NoeudTable : NoeudCommun {
     public  var sommets = [SCNVector3]()
     
     /// La table n'a pas un modèle obj
-    required init(type: String, geometry: SCNGeometry) {
+    required init(type: String, geometry: SCNGeometry, uuid: String) {
         fatalError("init(type:geometry:) has not been implemented")
     }
     
     /// Constructeur
-    required init(type: String) {
-        super.init(type: type)
+    required init(type: String, uuid: String) {
+        super.init(type: type, uuid: uuid)
         
         self.initialiserTable()
         self.creerPointsDeControle()
@@ -141,7 +141,7 @@ class NoeudTable : NoeudCommun {
         let max = self.sommets.count - 1
     
         while (i < max) {
-            let noeudPointControl = arbre.creerNoeud(typeNouveauNoeud: arbre.NOM_POINT_CONTROL) as! NoeudPointControl
+            let noeudPointControl = arbre.creerNoeud(typeNouveauNoeud: arbre.NOM_POINT_CONTROL, uuid: "") as! NoeudPointControl
             
             // Ajouter le NoeudPointControl aux enfants du NoeudTable
             self.addChildNode(noeudPointControl)
@@ -227,8 +227,8 @@ class NoeudTable : NoeudCommun {
     func creerButs(pointGauche: NoeudPointControl, pointDroite: NoeudPointControl) {
         // Obtention de l'arbre
         let arbre = ArbreRendu.instance
-        let butGauche = arbre.creerNoeud(typeNouveauNoeud: arbre.NOM_BUT) as! NoeudBut
-        let butDroite = arbre.creerNoeud(typeNouveauNoeud: arbre.NOM_BUT) as! NoeudBut
+        let butGauche = arbre.creerNoeud(typeNouveauNoeud: arbre.NOM_BUT, uuid: "") as! NoeudBut
+        let butDroite = arbre.creerNoeud(typeNouveauNoeud: arbre.NOM_BUT, uuid: "") as! NoeudBut
     
         // Deplacer les buts
         //let offset: Float = 10.0
@@ -259,7 +259,7 @@ class NoeudTable : NoeudCommun {
         
         // Géométrie de la ligne
         let ligne = SCNPlane(width: 2.5, height: CGFloat(GLKVector3Length(vecteurSommets)) + 5.0)
-        self.ligneCentreNoeud = NoeudCommun(type: ArbreRendu.instance.NOM_LIGNE_CENTRE, geometry: ligne)
+        self.ligneCentreNoeud = NoeudCommun(type: ArbreRendu.instance.NOM_LIGNE_CENTRE, geometry: ligne, uuid: "")
         
         let xAngle = SCNMatrix4MakeRotation(Float(Double.pi / 2.0), 0, 1, 0)
         let yAngle = SCNMatrix4MakeRotation(Float(Double.pi / 2.0), 0, 0, 1)

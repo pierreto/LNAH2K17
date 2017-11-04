@@ -278,10 +278,13 @@ class FacadeModele {
             for i in 0...self.docJSON![type].count - 1 {
                 let noeud: NoeudCommun
                 if nomType == ArbreRendu.instance.NOM_ACCELERATEUR {
-                    noeud = self.arbre?.creerNoeud(typeNouveauNoeud: nomType) as! NoeudAccelerateur
+                    noeud = self.arbre?.creerNoeud(typeNouveauNoeud: nomType, uuid: "") as! NoeudAccelerateur
                 } else {
-                    noeud = self.arbre?.creerNoeud(typeNouveauNoeud: nomType) as! NoeudMur
+                    noeud = self.arbre?.creerNoeud(typeNouveauNoeud: nomType, uuid: "") as! NoeudMur
                 }
+                
+                // TODO : CHARGER ET SAUVEGARDER UUID DU NOEUD
+                // noeud.assignerUUID(uuid: "ABCD")
                 
                 // Appliquer rotation
                 let angle = self.docJSON![type][i][6].float!
@@ -313,8 +316,11 @@ class FacadeModele {
                 var linkedPortals = Set<NoeudPortail>()
                 
                 for j in 0...1 {
-                    let portal = self.arbre?.creerNoeud(typeNouveauNoeud: nomType) as! NoeudPortail
+                    let portal = self.arbre?.creerNoeud(typeNouveauNoeud: nomType, uuid: "") as! NoeudPortail
                     linkedPortals.insert(portal)
+                    
+                    // TODO : CHARGER ET SAUVEGARDER UUID DU NOEUD
+                    // noeud.assignerUUID(uuid: "ABCD")
                     
                     // Appliquer rotation
                     let angle = self.docJSON![type][i + j][6].float!

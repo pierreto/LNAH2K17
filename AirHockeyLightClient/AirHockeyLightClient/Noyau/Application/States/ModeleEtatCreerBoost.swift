@@ -44,7 +44,7 @@ class ModeleEtatCreerBoost: ModeleEtat {
         
         // Création du noeud
         let arbre = FacadeModele.instance.obtenirArbreRendu()
-        let noeud = arbre.creerNoeud(typeNouveauNoeud: ArbreRendu.instance.NOM_ACCELERATEUR) as! NoeudAccelerateur
+        let noeud = arbre.creerNoeud(typeNouveauNoeud: ArbreRendu.instance.NOM_ACCELERATEUR, uuid: "") as! NoeudAccelerateur
         
         // Déplacement du noeud
         // Transformation du point dans l'espace virtuelle
