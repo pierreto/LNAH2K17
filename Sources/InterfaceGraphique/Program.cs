@@ -106,6 +106,7 @@ namespace InterfaceGraphique
             Application.ApplicationExit += AppExit;
             // Unhandled exceptions for our Application Domain
             AppDomain.CurrentDomain.UnhandledException += new System.UnhandledExceptionEventHandler(AppExit);
+
             // Unhandled exceptions for the executing UI thread
             Application.ThreadException += new System.Threading.ThreadExceptionEventHandler(AppExit);
 

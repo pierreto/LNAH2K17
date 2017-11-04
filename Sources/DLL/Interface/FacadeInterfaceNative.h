@@ -112,6 +112,10 @@ extern "C" {
 	__declspec(dllexport) void addNewUser(char* username, char* hexColor);
 	__declspec(dllexport) void removeUser(char* username);
 	__declspec(dllexport) void clearUsers();
+
+	__declspec(dllexport) void setCurrentPlayerSelectionColor(char* userHexColor);
+	__declspec(dllexport) void setCurrentPlayerSelectionColorToDefault();
+
 } 
 
 #endif // __FACADE_INTERFACE_NATIVE_H__

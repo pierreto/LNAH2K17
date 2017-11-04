@@ -94,9 +94,16 @@ namespace InterfaceGraphique.Editor.EditorState
             FonctionsNatives.setMoveEventCallback(this.moveEventCallback);
             FonctionsNatives.setSelectionEventCallback(this.selectionEventCallback);
             List<OnlineUser> usersInTheGame = await this.editionHub.JoinPublicRoom(mapEntity);
-            foreach (OnlineUser users in usersInTheGame)
+            foreach (OnlineUser user in usersInTheGame)
             {
-                FonctionsNatives.addNewUser(users.Username,users.HexColor);
+                if (user.Username.Equals(User.Instance.UserEntity.Username))
+                {
+                    FonctionsNatives.setCurrentPlayerSelectionColor(user.HexColor);
+                }
+                else
+                {
+                    FonctionsNatives.addNewUser(user.Username,user.HexColor);
+                }
             }
         }
         public override async Task LeaveEdition()

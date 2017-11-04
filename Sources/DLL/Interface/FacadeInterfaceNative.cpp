@@ -1082,3 +1082,13 @@ void clearUsers()
 
 }
 
+void setCurrentPlayerSelectionColor(char* userHexColor)
+{
+	glm::vec4 color = OnlineUser::hexadecimalToRGB(userHexColor);
+	NoeudAbstrait::selectionColor_ = color;
+}
+
+void setCurrentPlayerSelectionColorToDefault()
+{
+	NoeudAbstrait::selectionColor_ = glm::vec4(0, 0, 1, 0.25f);
+}

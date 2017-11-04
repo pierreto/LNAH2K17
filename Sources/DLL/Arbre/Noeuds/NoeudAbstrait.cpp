@@ -466,7 +466,7 @@ void NoeudAbstrait::animer(float dt)
 {
 }
 
-
+glm::vec4 NoeudAbstrait::selectionColor_ = glm::vec4(0, 0, 1, 0.25f);
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn const modele::Modele3D* NoeudAbstrait::obtenirModele3D() const
@@ -495,6 +495,7 @@ modele::Modele3D const* NoeudAbstrait::obtenirModele3D() {
 void NoeudAbstrait::effetFantome(const bool & activer)
 {
 	options_.effetFantome_ = activer;
+	options_.localSelectionColor_ = selectionColor_;
 }
 
 

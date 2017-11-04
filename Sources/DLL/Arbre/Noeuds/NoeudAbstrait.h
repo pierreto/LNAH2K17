@@ -196,6 +196,8 @@ public:
 
 	void setSelectedByAnotherUser(bool isSelectedByAnotherUser) { selectedByAnotherUser_ = isSelectedByAnotherUser; }
 
+	static glm::vec4 selectionColor_;
+
 protected:
 	void generateUUID();
 
@@ -253,9 +255,8 @@ protected:
 	char* uuid_;
 
 	bool selectedByAnotherUser_;
+
 };
-
-
 
 
 ////////////////////////////////////////////////////////////////////////
