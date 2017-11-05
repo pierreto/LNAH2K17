@@ -7,15 +7,13 @@ using System.Web;
 namespace AirHockeyServer.Pocos
 {
     [Table(Name = "test_users")]
-    public class UserPoco : Poco
+    public class UserPoco
     {
         [Column(IsPrimaryKey = true, Name = "id_user")]
-        public override int? Id { get; set; }
+        public int Id { get; set; }
 
         [Column(Name = "username")]
         public string Username { get; set; }
 
     }
 }
-
-

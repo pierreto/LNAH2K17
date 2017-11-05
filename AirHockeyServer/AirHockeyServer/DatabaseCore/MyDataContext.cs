@@ -18,4 +18,14 @@ public class MyDataContext : DataContext
     {
         get { return this.GetTable<PasswordPoco>(); }
     }
+
+    public Table<UserPoco> UsersTable
+    {
+        get { return this.GetTable<UserPoco>(); }
+    }
+
+    public Table<FriendPoco> FriendsTable
+    {
+        get { return this.GetTable<FriendPoco>(); }
+    }
 }

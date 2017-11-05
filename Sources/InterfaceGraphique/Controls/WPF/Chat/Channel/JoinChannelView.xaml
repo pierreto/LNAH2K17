@@ -24,12 +24,8 @@
                     </Setter.Value>
                 </Setter>
             </Style>
-            <ResourceDictionary.MergedDictionaries >
-                <ResourceDictionary Source="../../Styles/Colors.xaml" />
-                <ResourceDictionary Source="/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
-                <ResourceDictionary Source="/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
-                <ResourceDictionary Source="/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Blue.xaml" />
-                <ResourceDictionary Source="/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Green.xaml" />
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/InterfaceGraphique;component/Resource/appresources.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -44,7 +40,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <StackPanel Background="{StaticResource UltraDarkGrayBrush}" Grid.Row="0" Panel.ZIndex="1">
-                    <TextBlock Text="Joindre Canal" HorizontalAlignment="Center" FontSize="18" FontWeight="Bold" Foreground="{StaticResource TextColorBrush}" Margin="0,10,0,10"></TextBlock>
+                    <TextBlock Text="Canaux" HorizontalAlignment="Center" FontSize="18" FontWeight="Bold" Foreground="{StaticResource TextColorBrush}" Margin="0,6,0,6"></TextBlock>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <Border Grid.Row="0"  Grid.Column="1" Padding="5" CornerRadius="5" BorderThickness="1" BorderBrush="LightGray" SnapsToDevicePixels="True" Background="{StaticResource TextColorBrush}" Width="150" VerticalAlignment="Center">
                             <TextBox x:Name="ChannelName" Text="{Binding ChannelName, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding InputsEnabled}" Background="Transparent" BorderThickness="0" MaxLength="16" FontSize="14" FontWeight="Bold"/>
@@ -53,7 +49,7 @@
                             <Button fa:Awesome.Content="Search" Style="{StaticResource NoHover}" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
                         </Border>
                     </StackPanel>
-                    <Button fa:Awesome.Content="Check" Background="{StaticResource AddBrush}" BorderThickness="0" Margin="0,5,0,0" HorizontalAlignment="Center" Command="{Binding JoinChannelCommand}"/>
+                    <Button Content="Joindre" Background="{StaticResource AddBrush}" BorderThickness="0" Margin="0,5,0,0" HorizontalAlignment="Center" Command="{Binding JoinChannelCommand}"/>
                 </StackPanel>
                 <channel:JoinChannelListView Grid.Row="1">
                     <channel:JoinChannelListView.DataContext>

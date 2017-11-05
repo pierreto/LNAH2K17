@@ -41,6 +41,7 @@ public:
 	virtual void escape();
 
 	void setSelectionEventCallback(SelectionEventCallback callback) { selectionCallback_ = callback; }
+	SelectionEventCallback getSelectionEventCallback() { return selectionCallback_; }
 
 private:
 	/// Booléen pour savoir si le rectangle est visible

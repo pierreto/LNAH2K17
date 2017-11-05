@@ -135,6 +135,10 @@ class EditorViewController: UIViewController {
         FacadeModele.instance.sauvegarderCarte(map: currentMap!)
     }
     
+    @IBAction func quitterEdition(_ sender: Any) {
+        FacadeModele.instance.obtenirEtatEdition().leaveEdition()
+    }
+    
     override var shouldAutorotate: Bool {
         return true
     }

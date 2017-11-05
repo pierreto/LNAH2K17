@@ -75,7 +75,7 @@ NoeudAbstrait* OnlineUser::getNodeFromRenderTree(std::string uuid)
 }
 
 
-glm::vec4 OnlineUser::hexadecimalToRGB(std::string hex) const
+glm::vec4 OnlineUser::hexadecimalToRGB(std::string hex)
 {
 	if (hex[0] == '#')
 		hex = hex.erase(0, 1);
@@ -87,7 +87,8 @@ glm::vec4 OnlineUser::hexadecimalToRGB(std::string hex) const
 	return glm::vec4(r, g, b, 0.5);
 }
 
-int OnlineUser::hexadecimalToDecimal(std::string hex) const
+
+int OnlineUser::hexadecimalToDecimal(std::string hex)
 {
 	int hexLength = hex.length();
 	double dec = 0;

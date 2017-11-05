@@ -79,7 +79,6 @@
                 <ColumnDefinition Width="50*"></ColumnDefinition>
                 <ColumnDefinition Width="50*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Controls:ChatView Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="300"/>
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"></RowDefinition>

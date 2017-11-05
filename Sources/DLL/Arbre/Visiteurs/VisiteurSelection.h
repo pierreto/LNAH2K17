@@ -24,9 +24,9 @@
 class VisiteurSelection : public VisiteurAbstrait {
 public:
 	/// Constructeur pour sélection avec clic
-	VisiteurSelection(glm::dvec3 rayStart, glm::dvec3 rayEnd, bool ctrl, SelectionEventCallback callback = nullptr);
+	VisiteurSelection(glm::dvec3 rayStart, glm::dvec3 rayEnd, bool ctrl);
 	/// Constructeur avec sélection par rectangle élastique
-	VisiteurSelection(glm::dvec3 pointAncrage, glm::dvec3 pointFinal, bool multiSelection, bool ctrl , SelectionEventCallback callback = nullptr);
+	VisiteurSelection(glm::dvec3 pointAncrage, glm::dvec3 pointFinal, bool multiSelection, bool ctrl);
 	/// Destructeur
 	virtual ~VisiteurSelection() {};
 
@@ -70,7 +70,6 @@ private:
 	/// Vecteur trois dimensions pour la position finale de la souris lors d'une sélection
 	glm::dvec3 pointFin_;
 
-	SelectionEventCallback selectionEventCallback_;
 };
 
 

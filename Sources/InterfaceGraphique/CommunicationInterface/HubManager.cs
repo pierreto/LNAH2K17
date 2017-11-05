@@ -14,7 +14,6 @@ namespace InterfaceGraphique.CommunicationInterface
     //CLASSE TRES TEMPORAIRE
     public class HubManager
     {
-
         private static HubManager instance;
         public string IpAddress { get; set; }
         private HubConnection connection;
@@ -58,8 +57,8 @@ namespace InterfaceGraphique.CommunicationInterface
                 Program.unityContainer.Resolve<TournamentWaitingRoomHub>(),
                 Program.unityContainer.Resolve<GameWaitingRoomHub>(),
                 Program.unityContainer.Resolve<GameHub>(),
-                Program.unityContainer.Resolve<EditionHub>()
-
+                Program.unityContainer.Resolve<EditionHub>(),
+                Program.unityContainer.Resolve<FriendsHub>()
             };
         }
 
@@ -73,11 +72,15 @@ namespace InterfaceGraphique.CommunicationInterface
 
         public void Logout()
         {
-            foreach (IBaseHub hub in this.hubs)
+            if (this.hubs != null)
             {
-                hub.Logout();
+                foreach (IBaseHub hub in this.hubs)
+                {
+                    hub.Logout();
+                }
+                this.connection.Stop();
             }
-            this.connection.Stop();
+    
         }
     }
 }

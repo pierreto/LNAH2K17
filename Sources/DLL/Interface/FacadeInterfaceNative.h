@@ -105,13 +105,17 @@ extern "C" {
 	__declspec(dllexport) void setSelectionEventCallback(SelectionEventCallback callback);
 	__declspec(dllexport) void setElementSelection(const char* username, const char* uuid, const bool isSelected, const bool deselectAll);
 
-	typedef void(__stdcall * MoveEventCallback)(const char* uuid, const float* newPosition);
-	__declspec(dllexport) void setMoveEventCallback(MoveEventCallback callback);
-	__declspec(dllexport) void moveByUUID(const char* username,const char* uuid,const float* position);
+	typedef void(__stdcall * TransformEventCallback)(const char* uuid, const float* transformMatrix);
+	__declspec(dllexport) void setTransformEventCallback(TransformEventCallback callback);
+	__declspec(dllexport) void setTransformByUUID(const char* username,const char* uuid,const float* transformMatrix);
 
 	__declspec(dllexport) void addNewUser(char* username, char* hexColor);
 	__declspec(dllexport) void removeUser(char* username);
 	__declspec(dllexport) void clearUsers();
+
+	__declspec(dllexport) void setCurrentPlayerSelectionColor(char* userHexColor);
+	__declspec(dllexport) void setCurrentPlayerSelectionColorToDefault();
+
 } 
 
 #endif // __FACADE_INTERFACE_NATIVE_H__

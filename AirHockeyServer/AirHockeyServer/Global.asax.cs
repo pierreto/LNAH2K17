@@ -61,6 +61,7 @@ namespace AirHockeyServer
             UnityContainer.RegisterType<IPlayerStatsRepository, PlayerStatsRepository>(new HierarchicalLifetimeManager());
             UnityContainer.RegisterType<IUserRepository, UserRepository>(new HierarchicalLifetimeManager());
             UnityContainer.RegisterType<ITournamentRepository, TournamentRepository>(new HierarchicalLifetimeManager());
+            UnityContainer.RegisterType<IFriendRequestRepository, FriendRequestRepository>(new HierarchicalLifetimeManager());
 
             // Services
             UnityContainer.RegisterType<IChatService, ChatService>(new HierarchicalLifetimeManager());
@@ -76,6 +77,7 @@ namespace AirHockeyServer
             UnityContainer.RegisterType<ITournamentService, TournamentService>(new ContainerControlledLifetimeManager());
             UnityContainer.RegisterType<ILoginService, LoginService>(new ContainerControlledLifetimeManager());
             UnityContainer.RegisterType<IUserService, UserService>(new ContainerControlledLifetimeManager());
+            UnityContainer.RegisterType<IFriendService, FriendService>(new ContainerControlledLifetimeManager());
             
             // Core
             UnityContainer.RegisterType<IConnector, Connector>(new ContainerControlledLifetimeManager());
@@ -94,24 +96,5 @@ namespace AirHockeyServer
             TournamentWaitingRoomEventManager tournamentWaitingRoomEventManager = UnityContainer.Resolve<TournamentWaitingRoomEventManager>();
 
         }
-
-        /*
-         * TODO(Michael): removing that?
-         * ---
-         */
-        private bool IsWebApiRequest()
-        {
-            return HttpContext.Current.Request.AppRelativeCurrentExecutionFilePath.StartsWith("~/api");
-        }
-
-        protected void Application_PostAuthorizeRequest()
-        {
-
-            if (IsWebApiRequest())
-            {
-                HttpContext.Current.SetSessionStateBehavior(SessionStateBehavior.Required);
-            }
-        }
-        /* --- */
     }
 }

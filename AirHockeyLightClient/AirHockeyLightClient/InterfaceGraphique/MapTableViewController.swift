@@ -122,7 +122,7 @@ class MapTableViewController: UITableViewController {
                         self.navigationController?.pushViewController(editor, animated: true)
                         
                         // Rejoindre la salle d'édition
-                        self.clientConnection.getEditionHub().joinPublicRoom(username: "username111", mapEntity: editor.currentMap!)
+                        FacadeModele.instance.obtenirEtatEdition().joinEdition(mapEntity: editor.currentMap!)
                     } else {
                         print("Failed to fetch map with id from server")
                     }

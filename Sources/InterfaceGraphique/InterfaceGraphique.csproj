@@ -136,6 +136,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommunicationInterface\ChatHub.cs" />
+    <Compile Include="CommunicationInterface\FriendsHub.cs" />
     <Compile Include="CommunicationInterface\EditionHub.cs" />
     <Compile Include="CommunicationInterface\GameHub.cs" />
     <Compile Include="CommunicationInterface\IBaseHub.cs" />
@@ -146,6 +147,12 @@
     <Compile Include="CommunicationInterface\WaitingRooms\GameWaitingRoomHub.cs" />
     <Compile Include="CommunicationInterface\User.cs" />
     <Compile Include="CommunicationInterface\HubManager.cs" />
+    <Compile Include="Controls\FriendListHost.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\FriendListHost.Designer.cs">
+      <DependentUpon>FriendListHost.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\LobbyHost.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -202,6 +209,10 @@
       <DependentUpon>ChatView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\WPF\Chat\ChatViewModel.cs" />
+    <Compile Include="Controls\WPF\Friends\FriendList.xaml.cs">
+      <DependentUpon>FriendList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WPF\Friends\FriendListViewModel.cs" />
     <Compile Include="Controls\WPF\ConnectServer\ConnectServerView.xaml.cs">
       <DependentUpon>ConnectServerView.xaml</DependentUpon>
     </Compile>
@@ -266,9 +277,10 @@
     </Compile>
     <Compile Include="Entities\ChannelEntity.cs" />
     <Compile Include="Entities\ChatMessage.cs" />
+    <Compile Include="Entities\FriendRequestEntity.cs" />
     <Compile Include="Entities\Editor\EditonCommand\AbstractEditionCommand.cs" />
     <Compile Include="Entities\Editor\EditonCommand\BoostCommand.cs" />
-    <Compile Include="Entities\Editor\EditonCommand\MoveCommand.cs" />
+    <Compile Include="Entities\Editor\EditonCommand\TransformCommand.cs" />
     <Compile Include="Entities\Editor\EditonCommand\PortalCommand.cs" />
     <Compile Include="Entities\Editor\EditonCommand\SelectionCommand.cs" />
     <Compile Include="Entities\Editor\EditonCommand\WallCommand.cs" />
@@ -304,10 +316,6 @@
     </Compile>
     <Compile Include="Menus\HomeMenu.Designer.cs">
       <DependentUpon>HomeMenu.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Menus\Login.cs" />
-    <Compile Include="Menus\Login.Designer.cs">
-      <DependentUpon>Login.cs</DependentUpon>
     </Compile>
     <Compile Include="Menus\CreditsMenu.cs">
       <SubType>Form</SubType>
@@ -405,6 +413,12 @@
     </Compile>
     <Compile Include="Services\MapService.cs" />
     <Compile Include="WPFApplication.cs" />
+    <EmbeddedResource Include="Controls\FriendListHost.resx">
+      <DependentUpon>FriendListHost.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\OnlineTournament.resx">
+      <DependentUpon>OnlineTournament.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Editor\OpenPrivateMapForm.resx">
       <DependentUpon>OpenPrivateMapForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -425,9 +439,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Menus\HomeMenu.resx">
       <DependentUpon>HomeMenu.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Menus\Login.resx">
-      <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Menus\CheatCodesMenu.resx">
       <DependentUpon>CheatCodesMenu.cs</DependentUpon>
@@ -570,6 +581,10 @@
     <Page Include="Controls\WPF\Chat\ChatView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\WPF\Friends\FriendList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\WPF\Chat\TestChatView.xaml">
       <SubType>Designer</SubType>

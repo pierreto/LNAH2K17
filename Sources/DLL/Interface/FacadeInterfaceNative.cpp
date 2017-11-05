@@ -1044,26 +1044,29 @@ void setElementSelection(const char* username, const char* uuid, const bool isSe
 }
 
 
-void moveByUUID(const char* username, const char* uuid, const float* newPosition)
+void setTransformByUUID(const char* username, const char* uuid, const float* transformMatrix)
 {
 
 	NoeudAbstrait* node =  FacadeModele::obtenirInstance()->getUserManager().getUser(std::string(username))->findNode(std::string(uuid));
 	if(node)
 	{
-		node->assignerPositionRelative(glm::make_vec3(newPosition));
+		node->setMatriceTransformation(glm::make_mat4(transformMatrix));
 	}
 	else //if it isnt in the selected list of the other player anymore, we find it in the entire tree 
 	{
-		FacadeModele::obtenirInstance()->moveByUUID(uuid, glm::make_vec3(newPosition));
-
+		NoeudAbstrait* nodeInTree = FacadeModele::obtenirInstance()->findNodeInTree(uuid);
+		if(nodeInTree)
+		{
+			nodeInTree->setMatriceTransformation(glm::make_mat4(transformMatrix));
+		}
 	}
 
 
 }
 
-void setMoveEventCallback(MoveEventCallback callback)
+void setTransformEventCallback(TransformEventCallback callback)
 {
-	ModeleEtatDeplacement::obtenirInstance()->setMoveEventCallback(callback);
+	ModeleEtatJeu::obtenirInstance()->setTransformEventCallback(callback);
 }
 
 
@@ -1082,3 +1085,13 @@ void clearUsers()
 
 }
 
+void setCurrentPlayerSelectionColor(char* userHexColor)
+{
+	glm::vec4 color = OnlineUser::hexadecimalToRGB(userHexColor);
+	NoeudAbstrait::selectionColor_ = color;
+}
+
+void setCurrentPlayerSelectionColorToDefault()
+{
+	NoeudAbstrait::selectionColor_ = glm::vec4(0, 0, 1, 0.25f);
+}

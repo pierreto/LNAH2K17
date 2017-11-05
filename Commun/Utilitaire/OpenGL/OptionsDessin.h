@@ -14,6 +14,8 @@
 struct OptionsDessin
 {
 	bool effetFantome_;
+	glm::vec4 localSelectionColor_;
+
 	bool useOtherColor_;
 	bool invisible_;
 	glm::vec4 color_;
@@ -22,6 +24,7 @@ struct OptionsDessin
 	OptionsDessin(const bool& effetFantome = false, const bool& useOtherColor = false, const bool& invisible = false, const glm::vec4& color = glm::vec4(1))
 		: effetFantome_(effetFantome), useOtherColor_(useOtherColor), invisible_(invisible), color_(color)
 	{
+		localSelectionColor_ = glm::vec4(0, 0, 1,0.25f);
 	}
 };
 

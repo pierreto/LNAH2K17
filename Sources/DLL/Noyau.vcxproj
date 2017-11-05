@@ -182,7 +182,6 @@
     <ClCompile Include="Lighting\Light.cpp" />
     <ClCompile Include="Lighting\LightAnimation.cpp" />
     <ClCompile Include="Lighting\LightManager.cpp" />
-    <ClCompile Include="ModeleEtatJeuOnline.cpp" />
     <ClCompile Include="NodeCreator.cpp" />
     <ClCompile Include="OnlineUser.cpp" />
     <ClCompile Include="Tests\ArbreRenduTest.cpp" />

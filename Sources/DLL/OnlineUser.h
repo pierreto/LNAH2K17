@@ -12,6 +12,7 @@ public:
 	void deselect(std::string uuid);
 	NoeudAbstrait* findNode(std::string uuid);
 	void deselectAll();
+	glm::vec4 static hexadecimalToRGB(std::string hex);
 
 private:
 	glm::vec4 color_;
@@ -19,7 +20,6 @@ private:
 	std::vector<NoeudAbstrait*> nodesSelected_;
 
 	NoeudAbstrait* getNodeFromRenderTree(std::string uuid);
-	glm::vec4 hexadecimalToRGB(std::string hex) const;
-	int hexadecimalToDecimal(std::string hex) const;
+	int static hexadecimalToDecimal(std::string hex);
 };
 

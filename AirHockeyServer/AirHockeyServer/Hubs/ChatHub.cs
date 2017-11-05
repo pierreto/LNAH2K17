@@ -81,22 +81,26 @@ namespace AirHockeyServer.Services.ChatServiceServer
             return channelJoined;
         }
 
-        public Task LeaveRoom(string roomName)
+        public Task LeaveRoom(string roomName, int userId)
         {
             if (--roomPpl[roomName] == 0)
             {
                 Clients.Others.ChannelDeleted(roomName);
+            } else
+            {
+                Clients.Client(ConnectionsMapping[userId]).NewJoinableChannel(roomName);
             }
+
             return Groups.Remove(Context.ConnectionId, roomName);
         }
 
         public void Disconnect(ObservableCollection<string> roomNames, int userId)
         {
-            ConnectionsMapping.Remove(userId);
             foreach(var roomName in roomNames)
             {
-                LeaveRoom(roomName);
+                LeaveRoom(roomName, userId);
             }
+            ConnectionsMapping.Remove(userId);
         }
     }
 }

@@ -41,7 +41,6 @@ public:
 	/// Évènement appelé lorsque la touche escape est enfoncée
 	virtual void escape();
 
-	void setMoveEventCallback(MoveEventCallback callback) { moveEventCallback_ = callback; }
 
 private:
 
@@ -60,8 +59,6 @@ private:
 
 	/// Déplacement total appliqué
 	glm::vec3 deplacementTotal_;
-
-	MoveEventCallback moveEventCallback_;
 };
 
 

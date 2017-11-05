@@ -30,6 +30,12 @@ enum MODELE_ETAT : Int {
     case CAMERA_CONTROLE = 11
 }
 
+/// Les différents états du mode d'édition
+enum EDITION_ETAT : Int {
+    case OFFLINE_EDITION = 0
+    case ONLINE_EDITION = 1
+}
+
 extension JSON {
     mutating func appendArray(json:JSON){
         if var arr = self.array{
@@ -88,12 +94,19 @@ class FacadeModele {
     /// Etat du modèle
     private var etat: ModeleEtat?
     
+    /// Etat du mode d'édition
+    private var etatEdition: EditorState?
+    
+    private var userManager: UserManager?
+    
     /// Initialise la vue, l'arbre et l'état
     func initialiser() {
         self.arbre = ArbreRendu.instance
         self.viewController = EditorViewController.instance
         self.etat = ModeleEtatCameraControl.instance
+        self.etatEdition = OfflineEditorState.instance
         self.generalProperties = GeneralProperties()
+        self.userManager = UserManager()
         
         self.tapGestureRecognizer = UITapGestureRecognizer(target: self, action:  #selector (self.tapGesture (_:)))
         self.panGestureRecognizer = ImmediatePanGestureRecognizer(target: self, action: #selector (self.panGesture(_:)))
@@ -119,9 +132,19 @@ class FacadeModele {
         return self.etat!
     }
     
+    /// Retourne l'état du mode d'édition
+    func obtenirEtatEdition() -> EditorState {
+        return self.etatEdition!
+    }
+    
     /// Retourne l'état courant
     func obtenirGeneralProperties() -> GeneralProperties {
         return self.generalProperties!
+    }
+    
+    /// Retourne le gestionnaire d'utilisateurs
+    func obtenirUserManager() -> UserManager? {
+        return self.userManager
     }
     
     func initVue() {
@@ -195,6 +218,18 @@ class FacadeModele {
         
         // Initialisation de l'etat
         self.etat?.initialiser()
+    }
+    
+    /// Modifie le modèle état du mode d'édition
+    func changerEditorState(etat: EDITION_ETAT) {
+        switch (etat) {
+            case .OFFLINE_EDITION:
+                self.etatEdition = OfflineEditorState.instance
+                break
+            case .ONLINE_EDITION:
+                self.etatEdition = OnlineEditorState.instance
+                break
+        }
     }
 
     /// Cette fonction retourne l'information sur un noeud sélectionné.
@@ -278,10 +313,13 @@ class FacadeModele {
             for i in 0...self.docJSON![type].count - 1 {
                 let noeud: NoeudCommun
                 if nomType == ArbreRendu.instance.NOM_ACCELERATEUR {
-                    noeud = self.arbre?.creerNoeud(typeNouveauNoeud: nomType) as! NoeudAccelerateur
+                    noeud = self.arbre?.creerNoeud(typeNouveauNoeud: nomType, uuid: "") as! NoeudAccelerateur
                 } else {
-                    noeud = self.arbre?.creerNoeud(typeNouveauNoeud: nomType) as! NoeudMur
+                    noeud = self.arbre?.creerNoeud(typeNouveauNoeud: nomType, uuid: "") as! NoeudMur
                 }
+                
+                // TODO : CHARGER ET SAUVEGARDER UUID DU NOEUD
+                // noeud.assignerUUID(uuid: "ABCD")
                 
                 // Appliquer rotation
                 let angle = self.docJSON![type][i][6].float!
@@ -313,8 +351,11 @@ class FacadeModele {
                 var linkedPortals = Set<NoeudPortail>()
                 
                 for j in 0...1 {
-                    let portal = self.arbre?.creerNoeud(typeNouveauNoeud: nomType) as! NoeudPortail
+                    let portal = self.arbre?.creerNoeud(typeNouveauNoeud: nomType, uuid: "") as! NoeudPortail
                     linkedPortals.insert(portal)
+                    
+                    // TODO : CHARGER ET SAUVEGARDER UUID DU NOEUD
+                    // noeud.assignerUUID(uuid: "ABCD")
                     
                     // Appliquer rotation
                     let angle = self.docJSON![type][i + j][6].float!

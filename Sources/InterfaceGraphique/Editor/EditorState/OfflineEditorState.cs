@@ -42,12 +42,13 @@ namespace InterfaceGraphique.Editor.EditorState
         {
             //Online is not working in offline mode so we do nothing
             FonctionsNatives.setOnlineClientType((int)OnlineClientType.OFFLINE_EDITION);
+            FonctionsNatives.setCurrentPlayerSelectionColorToDefault();
         }
 
         public override Task LeaveEdition()
         {
             //Nothing
-            return null;
+            return Task.FromResult(0);
         }
     }
 }

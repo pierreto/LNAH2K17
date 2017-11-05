@@ -101,6 +101,31 @@ class MathHelper {
         return false;
     }
     
+    /// Convertit une chaîne hexadécimale en couleur RGB
+    static func hexToUIColor(hex: String) -> UIColor {
+        var str = hex
+        
+        if hex[hex.startIndex] == "#" {
+            str.remove(at: str.startIndex)
+        }
+        
+        var startIndex = str.index(str.startIndex, offsetBy: 0)
+        var endIndex = str.index(str.startIndex, offsetBy: 1)
+        let red = CGFloat.init(UInt8(str[startIndex...endIndex], radix: 16)!)
+        
+        startIndex = str.index(str.startIndex, offsetBy: 2)
+        endIndex = str.index(str.startIndex, offsetBy: 3)
+        let green = CGFloat.init(UInt8(str[startIndex...endIndex], radix: 16)!)
+        
+        startIndex = str.index(str.startIndex, offsetBy: 4)
+        endIndex = str.index(str.startIndex, offsetBy: 5)
+        let blue = CGFloat.init(UInt8(str[startIndex...endIndex], radix: 16)!)
+        
+        let color = UIColor.init(red: red/255.0, green: green/255.0, blue: blue/255.0, alpha: 1.0)
+        
+        return color
+    }
+    
 }
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -71,7 +71,7 @@ class ModeleEtatCreerMuret: ModeleEtat {
                 
                 // Création du noeud
                 let arbre = FacadeModele.instance.obtenirArbreRendu()
-                self.noeud = arbre.creerNoeud(typeNouveauNoeud: arbre.NOM_MUR) as! NoeudMur
+                self.noeud = arbre.creerNoeud(typeNouveauNoeud: arbre.NOM_MUR, uuid: "") as! NoeudMur
                 
                 // Déplacement du noeud (avec transformation du point dans l'espace virtuelle)
                 let point = MathHelper.GetHitTestSceneViewCoordinates(point: self.position)

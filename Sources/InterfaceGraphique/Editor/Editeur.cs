@@ -96,6 +96,9 @@ namespace InterfaceGraphique {
             FonctionsNatives.setLights(0, true);
             FonctionsNatives.setLights(1, true);
             FonctionsNatives.setLights(2, true);
+
+            this.CurrentState = this.offlineState;
+            this.CurrentState.JoinEdition(null);
         }
 
         
@@ -170,11 +173,13 @@ namespace InterfaceGraphique {
             { 
                 await ResetDefaultTable();
                 await CurrentState.LeaveEdition();
+                this.CurrentState = this.offlineState;
+                this.CurrentState.JoinEdition(null);
             };
             this.Fichier_MenuPrincipal.Click += async (sender, e) =>
             {
                 await ResetDefaultTable();
-                CurrentState.LeaveEdition();
+                await CurrentState.LeaveEdition();
                 Program.FormManager.CurrentForm = Program.MainMenu;
             };
             this.Fichier_ModeTest.Click += (sender, e) => Program.FormManager.CurrentForm = Program.TestMode;

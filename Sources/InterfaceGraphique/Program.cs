@@ -8,6 +8,7 @@ using InterfaceGraphique.Controls;
 using InterfaceGraphique.Controls.WPF;
 using InterfaceGraphique.Controls.WPF.Chat;
 using InterfaceGraphique.Controls.WPF.Editor;
+using InterfaceGraphique.Controls.WPF.Friends;
 using InterfaceGraphique.Entities;
 using InterfaceGraphique.Menus;
 using Microsoft.Practices.Unity;
@@ -35,7 +36,6 @@ namespace InterfaceGraphique
         public static FormManager FormManager { get { return formManager; } }
         public static MainMenu MainMenu { get { return mainMenu; } }
         public static HomeMenu HomeMenu { get { return homeMenu; } }
-        //public static Login Login {  get { return login; } }
         public static Editeur Editeur { get { return editeur; } }
         public static ConfigurationMenu ConfigurationMenu { get { return configurationMenu; } }
         public static QuickPlay QuickPlay { get { return quickPlay; } }
@@ -50,6 +50,7 @@ namespace InterfaceGraphique
         public static LobbyHost LobbyHost { get { return lobbyHost; } set { lobbyHost = value; } }
         public static OnlineTournament OnlineTournament { get { return onlineTournament;  } set { onlineTournament = value; } }
         public static EditorHost EditorHost { get { return editorHost; } set { editorHost = value; } }
+        public static FriendListHost FriendListHost {  get { return friendListHost; } set { friendListHost = value; } }
 
         private static TestChatMenu testChatMenu;
         private static FormManager formManager;
@@ -67,6 +68,7 @@ namespace InterfaceGraphique
         private static LobbyHost lobbyHost;
         private static EditorHost editorHost;
         private static OnlineTournament onlineTournament;
+        private static FriendListHost friendListHost;
 
         private static Panel openGLPanel;
         //private static Login login;
@@ -99,6 +101,16 @@ namespace InterfaceGraphique
             Application.Idle += ExecuterQuandInactif;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            // When the app exits
+            Application.ApplicationExit += AppExit;
+            // Unhandled exceptions for our Application Domain
+            AppDomain.CurrentDomain.UnhandledException += new System.UnhandledExceptionEventHandler(AppExit);
+
+            // Unhandled exceptions for the executing UI thread
+            Application.ThreadException += new System.Threading.ThreadExceptionEventHandler(AppExit);
+
+
             WPFApplication.Start();
 
             InitializeUnityDependencyInjection();
@@ -117,6 +129,7 @@ namespace InterfaceGraphique
             lobbyHost = new LobbyHost();
             onlineTournament = new OnlineTournament();
             editorHost = new EditorHost();
+            friendListHost = new FriendListHost();
 
             FonctionsNatives.loadSounds();
 
@@ -124,7 +137,16 @@ namespace InterfaceGraphique
             Application.Run(formManager);
 
         }
-        
+
+        private static void AppExit(object sender, EventArgs e)
+        {
+            HubManager.Instance.Logout();
+            if (client.BaseAddress != null)
+            {
+             client.PostAsJsonAsync(client.BaseAddress + "api/logout", User.Instance.UserEntity);
+            }
+        }
+
 
         public static void InitAfterConnection()
         {
@@ -144,6 +166,7 @@ namespace InterfaceGraphique
             unityContainer.RegisterType<IBaseHub,GameWaitingRoomHub>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<IBaseHub, TournamentWaitingRoomHub>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<IBaseHub,GameHub>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<IBaseHub,FriendsHub>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<IBaseHub, EditionHub>(new ContainerControlledLifetimeManager());
 
 
@@ -161,6 +184,7 @@ namespace InterfaceGraphique
             unityContainer.RegisterType<SignupViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<HomeViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<EditorViewModel>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<FriendListViewModel>(new ContainerControlledLifetimeManager());
 
             //Rest services instantiations
             unityContainer.RegisterType<MapService>();

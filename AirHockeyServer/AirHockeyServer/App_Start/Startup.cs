@@ -25,6 +25,10 @@ namespace AirHockeyServer.App_Start
                  () => new ChatHub(WebApiApplication.UnityContainer.Resolve<ChannelService>()));
 
             GlobalHost.DependencyResolver.Register(
+                typeof(FriendsHub),
+                () => new FriendsHub(WebApiApplication.UnityContainer.Resolve<FriendService>()));
+
+            GlobalHost.DependencyResolver.Register(
                  typeof(GameWaitingRoomHub),
                  () => new GameWaitingRoomHub(WebApiApplication.UnityContainer.Resolve<GameService>()));
 

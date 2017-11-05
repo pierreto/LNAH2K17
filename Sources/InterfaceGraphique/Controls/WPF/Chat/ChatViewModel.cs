@@ -212,10 +212,11 @@ namespace InterfaceGraphique.Controls.WPF.Chat
             }
             MessageTextBox = "";
         }
+
         private void UnDock()
         {
             Docked = false;
-            Program.MainMenu.HideChat();
+            Program.FormManager.CurrentForm?.HideChat();
             UndockedChat = new Window
             {
                 Title = "UnDocked",
@@ -231,17 +232,20 @@ namespace InterfaceGraphique.Controls.WPF.Chat
             ChatTabHeight = 0;
             UndockedChat.Show();
         }
+
         public void Minimize()
         {
             if (Collapsed == System.Windows.Visibility.Visible)
             {
                 TabIcon = "Comment";
                 Collapsed = System.Windows.Visibility.Collapsed;
+                Program.FormManager.CurrentForm?.MinimizeChat();
             }
             else
             {
                 TabIcon = "AngleDown";
                 Collapsed = System.Windows.Visibility.Visible;
+                Program.FormManager.CurrentForm?.MaximizeChat();
             }
         }
         #endregion
@@ -249,14 +253,25 @@ namespace InterfaceGraphique.Controls.WPF.Chat
         #region Private Methods
         private void OnUnDockedWindowClosing(object sender, CancelEventArgs e)
         {
-            Program.MainMenu.ShowChat();
+            Program.FormManager.CurrentForm?.ShowChat();
             Docked = true;
             ChatTabHeight = CHAT_TAB_HEIGHT;
         }
+
         private bool CanSendMessage()
         {
-            return !string.IsNullOrEmpty(MessageTextBox);
+            bool canSend = true;
+            if (string.IsNullOrEmpty(MessageTextBox))
+            {
+                canSend = false;
+            }
+            if (string.IsNullOrWhiteSpace(MessageTextBox))
+            {
+                canSend = false;
+            }
+            return canSend;
         }
+
         private void NewMessage(ChatMessage message)
         {
             ctxTaskFactory.StartNew(() =>
