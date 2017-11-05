@@ -7,19 +7,20 @@ using InterfaceGraphique.Entities.EditorCommand;
 
 namespace InterfaceGraphique.Entities.EditonCommand
 {
-    class MoveCommand : AbstractEditionCommand
+    class TransformCommand : AbstractEditionCommand
     {
         public string Username { get; set; }
-        public float[] Position { get; set; }
+        public float[] TransformMatrix { get; set; }
 
-        public MoveCommand(string uuid ) : base(uuid)
+
+
+        public TransformCommand(string uuid ) : base(uuid)
         {
         }
 
         public override void ExecuteCommand()
         {
-            FonctionsNatives.moveByUUID(Username, objectUuid, Position);
-            
+            FonctionsNatives.setTransformByUUID(Username, objectUuid, TransformMatrix);
         }
     }
 }

@@ -82,12 +82,12 @@ void VisiteurDeplacement::visiterPointControl(NoeudPointControl * noeud)
 		noeud->obtenirNoeudOppose()->deplacer(pos * glm::dvec3(noeud->obtenirSymmetrie()));
 		if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
 		{
-			MoveEventCallback callback = ModeleEtatDeplacement::obtenirInstance()->getMoveEventCallback();
+			TransformEventCallback callback = ModeleEtatJeu::obtenirInstance()->getTransformEventCallback();
 			if(callback)
 			{
-				callback(noeud->getUUID(), glm::value_ptr(noeud->obtenirPositionRelative()));
+				callback(noeud->getUUID(), glm::value_ptr(noeud->obtenirMatriceTransformation()));
 
-				callback(noeud->obtenirNoeudOppose()->getUUID(), glm::value_ptr(noeud->obtenirNoeudOppose()->obtenirPositionRelative()));
+				callback(noeud->obtenirNoeudOppose()->getUUID(), glm::value_ptr(noeud->obtenirNoeudOppose()->obtenirMatriceTransformation()));
 			}
 
 		}
@@ -135,11 +135,11 @@ void VisiteurDeplacement::defaultVisit(NoeudAbstrait* noeud)
 		noeud->deplacer(noeud->obtenirPositionRelative() + delta_);
 		if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
 		{
-			MoveEventCallback callback = ModeleEtatDeplacement::obtenirInstance()->getMoveEventCallback();
+			TransformEventCallback callback = ModeleEtatJeu::obtenirInstance()->getTransformEventCallback();
 
 			if (callback)
 			{
-				callback(noeud->getUUID(), glm::value_ptr(noeud->obtenirPositionRelative()));
+				callback(noeud->getUUID(), glm::value_ptr(noeud->obtenirMatriceTransformation()));
 			}
 		}
 	}

@@ -159,7 +159,7 @@ public:
    bool modeOrbite_;
 
 
-   void moveByUUID(const char* uuid, const glm::vec3 newPos);
+	NoeudAbstrait* findNodeInTree(const char* uuid);
 
    UserManager& getUserManager() { return userManager_; }
 

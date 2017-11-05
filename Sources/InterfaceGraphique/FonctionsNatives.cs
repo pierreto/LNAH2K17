@@ -231,8 +231,6 @@ namespace InterfaceGraphique {
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void createBoost(string uuid, float[] position);
 
-
-
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
         public delegate void SelectionEventCallback([Out, MarshalAs(UnmanagedType.LPStr)] string uuid, bool isSelected, bool deselectAll);
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
@@ -241,13 +239,13 @@ namespace InterfaceGraphique {
         public static extern void setElementSelection(string username, string uuid, bool isSelected, bool deselectAll);
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        public delegate void MoveEventCallback([Out, MarshalAs(UnmanagedType.LPStr)] string uuidSelected, [Out] IntPtr newPos);
+        public delegate void TransformEventCallback([Out, MarshalAs(UnmanagedType.LPStr)] string uuidSelected, [Out] IntPtr transformMatrix);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void setMoveEventCallback(MoveEventCallback callback);
+        public static extern void setTransformEventCallback(TransformEventCallback callback);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void moveByUUID(string username,string uuid, float[] newPos);
+        public static extern void setTransformByUUID(string username,string uuid, float[] transformMatrix);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void addNewUser(string username, string userHexColor);

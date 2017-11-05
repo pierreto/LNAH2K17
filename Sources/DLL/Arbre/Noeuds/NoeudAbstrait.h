@@ -83,6 +83,7 @@ public:
     
 	/// Obtient la position relative du noeud.
     inline glm::mat4 obtenirMatriceTransformation();
+	void setMatriceTransformation(glm::mat4 transformMatrix) { transformationRelative_ = transformMatrix; }
 
 	inline glm::mat4 obtenirMatriceRotationTranslation();
 
@@ -98,6 +99,7 @@ public:
 	
 	/// Change la roation du noeud (overwrite l'ancienne)
 	inline void rotate(const float& angle, const glm::vec3& axes);
+
 	/// Applique une rotation sur la matrice de transformation
 	inline void appliquerRotation(const float& angle, const glm::vec3& axes);
 
@@ -570,7 +572,6 @@ inline void NoeudAbstrait::rotate(const float& angle, const glm::vec3& axes)
 	assignerPositionRelative(obtenirPositionRelative());
 	transformationRelative_ *= rotation_ * scale_;
 }
-
 
 ////////////////////////////////////////////////////////////////////////
 ///

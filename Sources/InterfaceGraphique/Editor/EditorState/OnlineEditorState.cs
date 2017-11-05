@@ -19,7 +19,7 @@ namespace InterfaceGraphique.Editor.EditorState
         private FonctionsNatives.PortalCreationCallback portalCreationCallback;
         private FonctionsNatives.WallCreationCallback wallCreationCallback;
         private FonctionsNatives.BoostCreationCallback boostCreationCallback;
-        private FonctionsNatives.MoveEventCallback moveEventCallback;
+        private FonctionsNatives.TransformEventCallback _transformEventCallback;
         private FonctionsNatives.SelectionEventCallback selectionEventCallback;
 
 
@@ -36,7 +36,7 @@ namespace InterfaceGraphique.Editor.EditorState
             this.portalCreationCallback = CurrentUserCreatedPortal;
             this.wallCreationCallback = CurrentUserCreatedWall;
             this.boostCreationCallback = CurrentUserCreatedBoost;
-            this.moveEventCallback = CurrentUserMovedObject;
+            this._transformEventCallback = CurrentUserObjectTransformChanged;
             this.selectionEventCallback = CurrentUserSelectedObject;
 
         }
@@ -91,7 +91,7 @@ namespace InterfaceGraphique.Editor.EditorState
             FonctionsNatives.setPortalCreationCallback(this.portalCreationCallback);
             FonctionsNatives.setWallCreationCallback(this.wallCreationCallback);
             FonctionsNatives.setBoostCreationCallback(this.boostCreationCallback);
-            FonctionsNatives.setMoveEventCallback(this.moveEventCallback);
+            FonctionsNatives.setTransformEventCallback(this._transformEventCallback);
             FonctionsNatives.setSelectionEventCallback(this.selectionEventCallback);
             List<OnlineUser> usersInTheGame = await this.editionHub.JoinPublicRoom(mapEntity);
             foreach (OnlineUser user in usersInTheGame)
@@ -156,14 +156,14 @@ namespace InterfaceGraphique.Editor.EditorState
 
             this.editionHub.SendEditorCommand(boostCommand);
         }
-        private void CurrentUserMovedObject(string uuid, IntPtr pos)
+        private void CurrentUserObjectTransformChanged(string uuid, IntPtr pos)
         {
-            float[] vec = getVec3FromIntptr(pos);
-         
-            this.editionHub.SendEditorCommand(new MoveCommand(uuid)
+            float[] matrix = getTransformMatrixFromIntptr(pos);
+
+            this.editionHub.SendEditorCommand(new TransformCommand(uuid)
             {
                 Username = User.Instance.UserEntity.Username,
-                Position = vec
+                TransformMatrix = matrix
             });
 
         }
@@ -183,7 +183,14 @@ namespace InterfaceGraphique.Editor.EditorState
             return vec3;
         }
 
+        private float[] getTransformMatrixFromIntptr(IntPtr ptr)
+        {
+            float[] vec3 = new float[16];
+            Marshal.Copy(ptr, vec3, 0, 16);
+            return vec3;
+        }
 
-    
+
+
     }
 }

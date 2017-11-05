@@ -280,7 +280,7 @@
     <Compile Include="Entities\FriendRequestEntity.cs" />
     <Compile Include="Entities\Editor\EditonCommand\AbstractEditionCommand.cs" />
     <Compile Include="Entities\Editor\EditonCommand\BoostCommand.cs" />
-    <Compile Include="Entities\Editor\EditonCommand\MoveCommand.cs" />
+    <Compile Include="Entities\Editor\EditonCommand\TransformCommand.cs" />
     <Compile Include="Entities\Editor\EditonCommand\PortalCommand.cs" />
     <Compile Include="Entities\Editor\EditonCommand\SelectionCommand.cs" />
     <Compile Include="Entities\Editor\EditonCommand\WallCommand.cs" />
@@ -584,7 +584,7 @@
     </Page>
     <Page Include="Controls\WPF\Friends\FriendList.xaml">
       <Generator>MSBuild:Compile</Generator>
-	  <SubType>Designer</SubType>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\WPF\Chat\TestChatView.xaml">
       <SubType>Designer</SubType>
