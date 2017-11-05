@@ -69,7 +69,7 @@ class ModeleEtatCreerPortail: ModeleEtat {
         
         // Création du noeud
         let arbre = FacadeModele.instance.obtenirArbreRendu()
-        let noeud = arbre.creerNoeud(typeNouveauNoeud: ArbreRendu.instance.NOM_PORTAIL) as! NoeudPortail
+        let noeud = arbre.creerNoeud(typeNouveauNoeud: ArbreRendu.instance.NOM_PORTAIL, uuid: "") as! NoeudPortail
             
         // Déplacement du noeud
         // Transformation du point dans l'espace virtuelle

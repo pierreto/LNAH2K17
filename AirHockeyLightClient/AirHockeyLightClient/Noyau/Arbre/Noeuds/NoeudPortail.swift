@@ -29,12 +29,12 @@ class NoeudPortail : NoeudCommun {
     private var desactiver: Bool = false
     
     /// Constructeur
-    required init(type: String, geometry: SCNGeometry) {
-        super.init(type: type, geometry: geometry)
+    required init(type: String, geometry: SCNGeometry, uuid: String) {
+        super.init(type: type, geometry: geometry, uuid: uuid)
     }
     
     /// Le point de contrôle a un modèle obj
-    required init(type: String) {
+    required init(type: String, uuid: String) {
         fatalError("init(type:geometry:) has not been implemented")
     }
     

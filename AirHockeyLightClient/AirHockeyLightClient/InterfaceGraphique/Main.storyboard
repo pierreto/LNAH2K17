@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="5ax-Bq-PLF">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="5ax-Bq-PLF">
     <device id="ipad9_7" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
@@ -11,10 +11,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Menu Hors Ligne-->
+        <!--Offline Menu View Controller-->
         <scene sceneID="jp3-0g-vaJ">
             <objects>
-                <viewController storyboardIdentifier="OfflineMenuViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="7fD-F7-59z" customClass="OfflineMenuViewController" customModule="AirHockeyLightClient" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="OfflineMenuViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="7fD-F7-59z" userLabel="Offline Menu View Controller" customClass="OfflineMenuViewController" customModule="AirHockeyLightClient" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="oSh-vq-xBq"/>
                         <viewControllerLayoutGuide type="bottom" id="Vdo-Hc-I43"/>
@@ -562,6 +562,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Édition" id="07a-Zg-bjU">
+                        <barButtonItem key="backBarButtonItem" title="Sélection de cartes" id="nAs-I5-8GR"/>
                         <rightBarButtonItems>
                             <barButtonItem title="       Sauvegarder" id="L6a-CY-qge" userLabel="SauvegarderButton">
                                 <connections>
@@ -930,10 +931,10 @@
             </objects>
             <point key="canvasLocation" x="1030.46875" y="38.671875"/>
         </scene>
-        <!--Se Connecter-->
+        <!--Connect Server View Controller-->
         <scene sceneID="OYl-dm-l4u">
             <objects>
-                <viewController storyboardIdentifier="ConnectServerViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Fz3-e3-z6O" customClass="ConnectServerViewController" customModule="AirHockeyLightClient" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ConnectServerViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Fz3-e3-z6O" userLabel="Connect Server View Controller" customClass="ConnectServerViewController" customModule="AirHockeyLightClient" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="wSU-Qa-gOB"/>
                         <viewControllerLayoutGuide type="bottom" id="wty-2d-rIv"/>
@@ -1075,10 +1076,10 @@
             </objects>
             <point key="canvasLocation" x="-2408" y="-744"/>
         </scene>
-        <!--Authentification-->
+        <!--Login View Controller-->
         <scene sceneID="L6f-aj-dbA">
             <objects>
-                <viewController storyboardIdentifier="LoginViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="9iZ-5D-aWx" customClass="LoginViewController" customModule="AirHockeyLightClient" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="9iZ-5D-aWx" userLabel="Login View Controller" customClass="LoginViewController" customModule="AirHockeyLightClient" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="pWi-LZ-Zqk"/>
                         <viewControllerLayoutGuide type="bottom" id="DVb-g6-wk8"/>
@@ -1193,10 +1194,10 @@
             </objects>
             <point key="canvasLocation" x="-747" y="-1134"/>
         </scene>
-        <!--Créer Compte-->
+        <!--Signup View Controller-->
         <scene sceneID="v3W-6k-pgH">
             <objects>
-                <viewController storyboardIdentifier="SignupViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="v1r-pC-DK7" customClass="SignupViewController" customModule="AirHockeyLightClient" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SignupViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="v1r-pC-DK7" userLabel="Signup View Controller" customClass="SignupViewController" customModule="AirHockeyLightClient" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="sjU-LQ-ABg"/>
                         <viewControllerLayoutGuide type="bottom" id="pZe-c2-Ie5"/>
@@ -1411,7 +1412,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="M9v-27-zeQ"/>
         <segue reference="GGZ-Yu-kfi"/>
-        <segue reference="LKe-KA-ZAB"/>
     </inferredMetricsTieBreakers>
 </document>

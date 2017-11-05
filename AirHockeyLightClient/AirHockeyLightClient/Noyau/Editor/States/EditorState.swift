@@ -1,25 +1,29 @@
 ///////////////////////////////////////////////////////////////////////////////
-/// @file UsineAbstraite.swift
-/// @author Mikael Ferland et Pierre To
-/// @date 2017-10-04
+/// @file AbstractEditorState.swift
+/// @author Pierre To
+/// @date 2017-11-04
 /// @version 1
 ///
 /// @addtogroup log3900 LOG3990
 /// @{
 ///////////////////////////////////////////////////////////////////////////////
 
-import SceneKit
+import UIKit
+import GLKit
 
 ///////////////////////////////////////////////////////////////////////////
-/// @class UsineAbstraite
-/// @brief Classe de base abstraite des usines qui seront utilisés pour 
-///        créer les différents noeuds de l'arbre de rendu.
+/// @class AbstractEditorState
+/// @brief Cette classe comprend l'interface de base que doivent
+///        implanter tous les états possibles du mode d'édition
 ///
-/// @author Mikael Ferland et Pierre To
-/// @date 2017-10-04
+/// @author Pierre To
+/// @date 2017-11-04
 ///////////////////////////////////////////////////////////////////////////
-protocol UsineAbstraite {
-    func creerNoeud(uuid: String) -> SCNNode
+class EditorState {
+    
+    func joinEdition(mapEntity: MapEntity) {}
+    func leaveEdition() {}
+    
 }
 
 ///////////////////////////////////////////////////////////////////////////////

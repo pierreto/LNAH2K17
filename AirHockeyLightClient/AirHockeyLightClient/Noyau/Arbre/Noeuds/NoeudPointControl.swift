@@ -42,8 +42,8 @@ class NoeudPointControl : NoeudCommun {
     private var rayonModele3D = -1.0
     
     /// Constructeur
-    required init(type: String, geometry: SCNGeometry) {
-        super.init(type: type, geometry: geometry)
+    required init(type: String, geometry: SCNGeometry, uuid: String) {
+        super.init(type: type, geometry: geometry, uuid: uuid)
         self.symetrie = GLKVector3(v: (1.0, 1.0, 1.0))
         
         // Un point de contrôle n'est pas sélectionnable par défaut
@@ -58,7 +58,7 @@ class NoeudPointControl : NoeudCommun {
     }
     
     /// Le point de contrôle a un modèle obj
-    required init(type: String) {
+    required init(type: String, uuid: String) {
         fatalError("init(type:geometry:) has not been implemented")
     }
     

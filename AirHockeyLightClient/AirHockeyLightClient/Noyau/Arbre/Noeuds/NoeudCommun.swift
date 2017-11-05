@@ -21,6 +21,9 @@ import SceneKit
 ///////////////////////////////////////////////////////////////////////////
 class NoeudCommun : SCNNode {
     
+    /// Identifiant du noeud
+    private var uuid: String = ""
+    
     /// Vecteur spécifiant les axes bloqués pour le déplacement
     private var axisLock: GLKVector3 = GLKVector3(v: (1.0, 0.0, 1.0))
     
@@ -29,6 +32,9 @@ class NoeudCommun : SCNNode {
     
     /// Vrai si le noeud est sélectionnable
     private var selectionnable: Bool = true
+    
+    /// Sélection par un utilisateur
+    private var selectionneByAnotherUser: Bool = false
     
     // Attributs de sauvegarde
     private var savedScale = SCNVector3()
@@ -41,16 +47,18 @@ class NoeudCommun : SCNNode {
     private var selectionneColor: UIColor = FacadeModele.instance.getUserColor()
     
     /// Constructeur avec géométrie
-    required init(type: String, geometry: SCNGeometry) {
+    required init(type: String, geometry: SCNGeometry, uuid: String) {
         super.init()
         self.geometry = geometry
         self.name = type
+        self.uuid = uuid.isEmpty ? self.genererUUID() : uuid
     }
     
     /// Constructeur sans géométrie
-    required init(type: String) {
+    required init(type: String, uuid: String) {
         super.init()
         self.name = type
+        self.uuid = uuid.isEmpty ? self.genererUUID() : uuid
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -65,6 +73,18 @@ class NoeudCommun : SCNNode {
                 noeud.accepterVisiteur(visiteur: visiteur)
             }
         }
+    }
+    
+    func obtenirUUID() -> String {
+        return self.uuid
+    }
+    
+    func assignerUUID(uuid: String) {
+        self.uuid = uuid
+    }
+    
+    func genererUUID() -> String {
+        return UUID().uuidString
     }
     
     /// Obtient le type du noeud
@@ -133,6 +153,16 @@ class NoeudCommun : SCNNode {
     /// Vérifie si le noeud est sélectionnable.
     func estSelectionnable() -> Bool {
         return self.selectionnable
+    }
+    
+    /// Écrit si le noeud est sélectionné par un autre utilisateur
+    func assignerSelectionneByAnotherUser(estSelectionneByAnotherUser: Bool) {
+        self.selectionneByAnotherUser = estSelectionneByAnotherUser
+    }
+    
+    /// Vérifie si le noeud est sélectionnable.
+    func estSelectionneByAnotherUser() -> Bool {
+        return self.selectionneByAnotherUser
     }
     
     /// Cette fonction sauve la position courante du noeud
