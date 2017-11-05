@@ -155,7 +155,7 @@ void ModeleEtatRotation::playerMouseMove(int x, int y) {
 				TransformEventCallback callback = ModeleEtatJeu::obtenirInstance()->getTransformEventCallback();
 				if (callback)
 				{
-					callback(noeud->getUUID(), glm::value_ptr(noeud->obtenirMatriceTransformation()));
+					callback(noeud->getUUID(), glm::value_ptr(noeud->obtenirPositionRelative()), noeud->obtenirRotation().y, glm::value_ptr(noeud->obtenirScale()));
 				}
 			}
 			
@@ -215,7 +215,7 @@ void ModeleEtatRotation::escape()
 			TransformEventCallback callback = ModeleEtatJeu::obtenirInstance()->getTransformEventCallback();
 			if (callback)
 			{
-				callback(noeud->getUUID(), glm::value_ptr(noeud->obtenirMatriceTransformation()));
+				callback(noeud->getUUID(), glm::value_ptr(noeud->obtenirPositionRelative()), noeud->obtenirRotation().y, glm::value_ptr(noeud->obtenirScale()));
 			}
 		}
 	}

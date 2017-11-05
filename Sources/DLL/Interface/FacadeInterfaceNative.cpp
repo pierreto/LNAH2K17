@@ -1091,20 +1091,25 @@ void setElementSelection(const char* username, const char* uuid, const bool isSe
 }
 
 
-void setTransformByUUID(const char* username, const char* uuid, const float* transformMatrix)
+void setTransformByUUID(const char* username, const char* uuid, const float* position, const float rotation, const float* scale)
 {
 	NoeudAbstrait* node = FacadeModele::obtenirInstance()->getUserManager().getUser(std::string(username))->findNode(
 		std::string(uuid));
 	if (node)
 	{
-		node->setMatriceTransformation(glm::make_mat4(transformMatrix));
+		node->deplacer(glm::make_vec3(position));
+		node->rotate(rotation, glm::vec3(0,1,0));
+		node->deplacer(glm::make_vec3(position));
+
 	}
 	else //if it isnt in the selected list of the other player anymore, we find it in the entire tree 
 	{
 		NoeudAbstrait* nodeInTree = FacadeModele::obtenirInstance()->findNodeInTree(uuid);
 		if (nodeInTree)
 		{
-			nodeInTree->setMatriceTransformation(glm::make_mat4(transformMatrix));
+			nodeInTree->deplacer(glm::make_vec3(position));
+			nodeInTree->rotate(rotation, glm::vec3(0, 1, 0));
+			nodeInTree->deplacer(glm::make_vec3(position));
 		}
 	}
 }
@@ -1163,9 +1168,9 @@ void setControlPointPosition(const char* username, const char* uuid, const float
 		NoeudAbstrait* nodeInTree = FacadeModele::obtenirInstance()->findNodeInTree(uuid);
 		if (nodeInTree)
 		{
-			if (dynamic_cast<NoeudPointControl*>(node))
+			if (dynamic_cast<NoeudPointControl*>(nodeInTree))
 			{
-				node->assignerPositionRelative(glm::make_vec3(position));
+				nodeInTree->assignerPositionRelative(glm::make_vec3(position));
 			}
 		}
 	}

@@ -250,13 +250,13 @@ namespace InterfaceGraphique
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
         public delegate void TransformEventCallback([Out, MarshalAs(UnmanagedType.LPStr)] string uuidSelected,
-            [Out] IntPtr transformMatrix);
+            [Out] IntPtr position, [Out] float rotation, [Out] IntPtr scale);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void setTransformEventCallback(TransformEventCallback callback);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void setTransformByUUID(string username, string uuid, float[] transformMatrix);
+        public static extern void setTransformByUUID(string username, string uuid, float[] position, float rotation, float[] scale);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void addNewUser(string username, string userHexColor);

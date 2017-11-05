@@ -164,14 +164,19 @@ namespace InterfaceGraphique.Editor.EditorState
 
             this.editionHub.SendEditorCommand(boostCommand);
         }
-        private void CurrentUserObjectTransformChanged(string uuid, IntPtr pos)
+        private void CurrentUserObjectTransformChanged(string uuid, IntPtr pos, float rotation, IntPtr scale)
         {
-            float[] matrix = getTransformMatrixFromIntptr(pos);
+            float[] posVec = getVec3FromIntptr(pos);
+
+            float[] scaleVec = getVec3FromIntptr(scale);
+
 
             this.editionHub.SendEditorCommand(new TransformCommand(uuid)
             {
                 Username = User.Instance.UserEntity.Username,
-                TransformMatrix = matrix
+                Position = posVec,
+                Rotation = rotation,
+                Scale = scaleVec
             });
 
         }
@@ -181,7 +186,7 @@ namespace InterfaceGraphique.Editor.EditorState
             {
                 Username = User.Instance.UserEntity.Username,
                 IsSelected = isSelected,
-                DeselectAll = deselectAll
+                DeselectAll = deselectAll 
             });
         }
 

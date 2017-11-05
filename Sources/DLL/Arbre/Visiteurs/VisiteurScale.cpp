@@ -175,7 +175,7 @@ void VisiteurScale::sendTransform(NoeudAbstrait* node)
 		TransformEventCallback callback = ModeleEtatJeu::obtenirInstance()->getTransformEventCallback();
 		if (callback)
 		{
-			callback(node->getUUID(), glm::value_ptr(node->obtenirMatriceTransformation()));
+			callback(node->getUUID(), glm::value_ptr(node->obtenirPositionRelative()),node->obtenirRotation().y, glm::value_ptr(node->obtenirScale()));
 		}
 	}
 }

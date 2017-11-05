@@ -84,7 +84,6 @@ public:
     
 	/// Obtient la position relative du noeud.
     inline glm::mat4 obtenirMatriceTransformation();
-	void setMatriceTransformation(glm::mat4 transformMatrix) { transformationRelative_ = transformMatrix; }
 
 	inline glm::mat4 obtenirMatriceRotationTranslation();
 
