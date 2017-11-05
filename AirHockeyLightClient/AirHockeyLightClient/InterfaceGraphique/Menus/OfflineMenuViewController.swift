@@ -13,5 +13,6 @@ class OfflineMenuViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.setNavigationBarHidden(false, animated: true)
+        FacadeModele.instance.changerEditorState(etat: .OFFLINE_EDITION)
     }
 }
