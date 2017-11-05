@@ -27,12 +27,12 @@ class OnlineEditorState: EditorState {
     
     override func joinEdition(mapEntity: MapEntity) {
         FacadeModele.instance.obtenirUserManager()?.clearUsers()
-        //FacadeModele.instance.changerEditorState(etat: .ONLINE_EDITION)
-        self.clientConnection.getEditionHub().joinPublicRoom(username: "username111", mapEntity: mapEntity)
+        self.clientConnection.getEditionHub().joinPublicRoom(username: self.clientConnection.getUsername()!,
+                                                             mapEntity: mapEntity)
     }
     
     override func leaveEdition() {
-        
+        self.clientConnection.getEditionHub().leaveRoom()
     }
     
 }

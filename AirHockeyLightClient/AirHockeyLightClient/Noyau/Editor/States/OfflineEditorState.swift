@@ -24,11 +24,9 @@ class OfflineEditorState: EditorState {
     static let instance = OfflineEditorState()
     
     override func joinEdition(mapEntity: MapEntity) {
-        //FacadeModele.instance.changerEditorState(etat: .OFFLINE_EDITION)
     }
     
     override func leaveEdition() {
-        // Do nothing
     }
     
 }

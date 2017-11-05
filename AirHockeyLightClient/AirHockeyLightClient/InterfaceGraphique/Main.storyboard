@@ -49,7 +49,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Menu Hors Ligne" id="vcy-XG-teo">
-                        <barButtonItem key="backBarButtonItem" title="Menu Hors Ligne" id="nIE-TJ-Jps"/>
+                        <barButtonItem key="backBarButtonItem" title="Menu principal" id="nIE-TJ-Jps"/>
                     </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Srh-GY-j1B" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -107,7 +107,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Menu En Ligne" id="1wR-p8-feV">
-                        <barButtonItem key="backBarButtonItem" title="Authentification" id="mC8-Zu-i8n"/>
+                        <barButtonItem key="backBarButtonItem" title="Menu principal" id="mC8-Zu-i8n"/>
                     </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sZF-Co-9Gv" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -620,7 +620,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Édition" id="07a-Zg-bjU">
-                        <barButtonItem key="backBarButtonItem" title="Sélection de cartes" id="nAs-I5-8GR"/>
+                        <barButtonItem key="backBarButtonItem" title="Édition" id="nAs-I5-8GR"/>
                         <rightBarButtonItems>
                             <barButtonItem title="       Sauvegarder" id="L6a-CY-qge" userLabel="SauvegarderButton">
                                 <connections>
@@ -872,14 +872,14 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="768" height="80"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Sender" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k6H-gK-XMi" userLabel="Sender">
-                                                            <rect key="frame" x="8" y="2" width="752" height="15"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sender" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k6H-gK-XMi" userLabel="Sender">
+                                                            <rect key="frame" x="8" y="2" width="752" height="25.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                             <color key="textColor" red="0.50682244060000003" green="0.50682244060000003" blue="0.50682244060000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="MessageValue" textAlignment="justified" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Nn-p9-97g" userLabel="MessageValue" customClass="PaddingLabel" customModule="AirHockeyLightClient" customModuleProvider="target">
-                                                            <rect key="frame" x="6" y="19" width="756" height="24"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="MessageValue" textAlignment="justified" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Nn-p9-97g" userLabel="MessageValue" customClass="PaddingLabel" customModule="AirHockeyLightClient" customModuleProvider="target">
+                                                            <rect key="frame" x="6" y="29.5" width="756" height="24"/>
                                                             <color key="backgroundColor" red="0.33280430900000002" green="0.58637048089999999" blue="0.84018950670000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -891,8 +891,8 @@
                                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                                             </userDefinedRuntimeAttributes>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Timestamp" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RA3-us-Xjf" userLabel="Timestamp">
-                                                            <rect key="frame" x="16" y="45" width="742" height="14.5"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="253" text="Timestamp" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RA3-us-Xjf" userLabel="Timestamp">
+                                                            <rect key="frame" x="16" y="55.5" width="742" height="14.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                             <color key="textColor" red="0.50682244060000003" green="0.50682244060000003" blue="0.50682244060000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -1408,7 +1408,9 @@
                             <constraint firstAttribute="trailingMargin" secondItem="bMu-Mx-hmt" secondAttribute="trailing" id="pjq-gT-DuE"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="Cyt-ZN-GS6"/>
+                    <navigationItem key="navigationItem" title="Sélection de cartes" id="Cyt-ZN-GS6">
+                        <barButtonItem key="backBarButtonItem" title="Sélection de cartes" id="pQC-M4-VZn"/>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d2z-FI-Hxt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1459,8 +1461,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="M9v-27-zeQ"/>
         <segue reference="D9p-zm-qef"/>
-        <segue reference="6DQ-jn-lmH"/>
-        <segue reference="goM-hA-OYs"/>
+        <segue reference="92U-Ps-lda"/>
     </inferredMetricsTieBreakers>
 </document>

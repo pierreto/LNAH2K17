@@ -104,7 +104,6 @@ class FacadeModele {
         self.arbre = ArbreRendu.instance
         self.viewController = EditorViewController.instance
         self.etat = ModeleEtatCameraControl.instance
-        self.etatEdition = OfflineEditorState.instance
         self.generalProperties = GeneralProperties()
         self.userManager = UserManager()
         

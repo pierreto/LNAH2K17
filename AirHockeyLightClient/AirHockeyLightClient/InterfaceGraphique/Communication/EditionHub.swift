@@ -30,14 +30,22 @@ class EditionHub: BaseHub {
             self.receiveCommand(command: args?[0] as! Dictionary<String, String>)
         }
         
-        /// Reception de l'évènement de rejoindre une salle d'édition
+        /// Reception de l'évènement quand un utilisateur rejoint une salle d'édition
         self.hubProxy?.on("NewUser") { args in
             let newUser = args?[0] as! Dictionary<String, String>
             let username = newUser["Username"]
             let hexColor = newUser["HexColor"]
-            print("New user: \(String(describing: username! + " (" + hexColor! + ")"))\n")
+            print("Joining user: \(String(describing: username! + " (" + hexColor! + ")"))\n")
             
             FacadeModele.instance.obtenirUserManager()?.addUser(username: username!, hexColor: hexColor!)
+        }
+        
+        /// Réception de l'évènement quand un utilisateur quitte la salle d'édition
+        self.hubProxy?.on("UserLeaved") { args in
+            let username = args?[0] as! String
+            print("Leaving user: \(String(describing: username))\n")
+            
+            FacadeModele.instance.obtenirUserManager()?.removeUser(username: username)
         }
     }
     
@@ -77,7 +85,7 @@ class EditionHub: BaseHub {
                     
                     for user in usersInRoom {
                         FacadeModele.instance.obtenirUserManager()?.addUser(username: user["Username"]!,
-                                                                           hexColor: user["HexColor"]!)
+                                                                            hexColor: user["HexColor"]!)
                     }
                 }
             }
@@ -102,16 +110,16 @@ class EditionHub: BaseHub {
         let jsonCommand = command.toJSON()
         
         do {
-            try self.hubProxy?.invoke("SendEditionCommand", arguments: [self.map?.id.value, jsonCommand])
+            try self.hubProxy?.invoke("SendEditionCommand", arguments: [self.map?.id.value as Any, jsonCommand])
         }
         catch {
             print("Error SendEditionCommand")
         }
     }
     
-    func leaveRoom(mapId: Int) {
+    func leaveRoom() {
         do {
-            try self.hubProxy?.invoke("LeaveRoom", arguments: [mapId])
+            try self.hubProxy?.invoke("LeaveRoom", arguments: [self.map?.id.value as Any])
         }
         catch {
             print("Error LeaveRoom")

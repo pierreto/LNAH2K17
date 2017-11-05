@@ -75,6 +75,14 @@ class EditorViewController: UIViewController {
         self.objectPropertiesView.hideObjectPropertiesButtons()
     }
     
+    override func viewWillDisappear(_ animated : Bool) {
+        super.viewWillDisappear(animated)
+        
+        if self.isMovingFromParentViewController {
+            FacadeModele.instance.obtenirEtatEdition().leaveEdition()
+        }
+    }
+    
     func initView() {
         self.editorView.allowsCameraControl = true
         self.editorView.autoenablesDefaultLighting = true
@@ -133,10 +141,6 @@ class EditorViewController: UIViewController {
     
     @IBAction func sauvegarderCarte(_ sender: Any) {
         FacadeModele.instance.sauvegarderCarte(map: currentMap!)
-    }
-    
-    @IBAction func quitterEdition(_ sender: Any) {
-        FacadeModele.instance.obtenirEtatEdition().leaveEdition()
     }
     
     override var shouldAutorotate: Bool {
