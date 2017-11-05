@@ -139,7 +139,7 @@ void ModeleEtatSelection::mouseUpL() {
 
 			Raycast ray(mousePosX_, mousePosY_);
 
-			VisiteurSelection visiteur(ray.getRayStart(), ray.getRayEnd(), ctrlDown_,selectionCallback_);
+			VisiteurSelection visiteur(ray.getRayStart(), ray.getRayEnd(), ctrlDown_);
 			arbre->accepterVisiteur(&visiteur);		
 		}
 		else if (dimensionsSuffisantes()) {
