@@ -8,8 +8,7 @@
 /// @{
 ///////////////////////////////////////////////////////////////////////////////
 
-import UIKit
-import GLKit
+import SceneKit
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class OfflineEditorState
@@ -27,6 +26,10 @@ class OfflineEditorState: EditorState {
     }
     
     override func leaveEdition() {
+    }
+    
+    override func currentUserCreatedPortal(startUuid: String, startPos: SCNVector3,
+                                           endUuid: String, endPos: SCNVector3) {
     }
     
 }

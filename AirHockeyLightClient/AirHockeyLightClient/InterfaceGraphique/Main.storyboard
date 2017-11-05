@@ -1147,7 +1147,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="riN-hG-6w2">
-                                <rect key="frame" x="362" y="249.5" width="300" height="269"/>
+                                <rect key="frame" x="362" y="228" width="300" height="312"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Nom d'usager" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Tue-6k-iTD" userLabel="usernameInput">
                                         <rect key="frame" x="0.0" y="0.0" width="300" height="45"/>
@@ -1205,8 +1205,18 @@
                                             <segue destination="v1r-pC-DK7" kind="show" id="CGT-bE-ucb"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AIE-go-x3y" userLabel="testEditionEnLigne">
+                                        <rect key="frame" x="0.0" y="249" width="183" height="35"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <state key="normal" title="Test Édition en ligne"/>
+                                        <connections>
+                                            <segue destination="8q1-PD-X5V" kind="show" id="nja-Df-3RZ"/>
+                                        </connections>
+                                    </button>
                                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="hyr-YX-cKZ" userLabel="loadingSpinner">
-                                        <rect key="frame" x="0.0" y="249" width="300" height="20"/>
+                                        <rect key="frame" x="0.0" y="292" width="300" height="20"/>
                                     </activityIndicatorView>
                                 </subviews>
                                 <constraints>
@@ -1461,8 +1471,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="M9v-27-zeQ"/>
-        <segue reference="D9p-zm-qef"/>
-        <segue reference="92U-Ps-lda"/>
+        <segue reference="siQ-V2-je8"/>
+        <segue reference="nja-Df-3RZ"/>
+        <segue reference="goM-hA-OYs"/>
     </inferredMetricsTieBreakers>
 </document>
