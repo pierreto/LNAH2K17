@@ -71,7 +71,13 @@ NoeudAbstrait* OnlineUser::getNodeFromRenderTree(std::string uuid)
 {
 	VisitorByUUID visitorWrapper = VisitorByUUID(uuid.c_str());
 	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(&visitorWrapper);
-	return  visitorWrapper.getNode();
+	if(visitorWrapper.hasFound)
+	{
+		return  visitorWrapper.getNode();
+	}else
+	{
+		return nullptr;
+	}
 }
 
 

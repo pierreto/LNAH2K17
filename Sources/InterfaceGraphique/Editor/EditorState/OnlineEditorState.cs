@@ -9,6 +9,7 @@ using InterfaceGraphique.CommunicationInterface;
 using InterfaceGraphique.Entities;
 using InterfaceGraphique.Entities.EditonCommand;
 using InterfaceGraphique.Entities.Editor;
+using InterfaceGraphique.Entities.Editor.EditonCommand;
 using InterfaceGraphique.Entities.EditorCommand;
 
 namespace InterfaceGraphique.Editor.EditorState
@@ -21,6 +22,8 @@ namespace InterfaceGraphique.Editor.EditorState
         private FonctionsNatives.BoostCreationCallback boostCreationCallback;
         private FonctionsNatives.TransformEventCallback _transformEventCallback;
         private FonctionsNatives.SelectionEventCallback selectionEventCallback;
+        private FonctionsNatives.ControlPointEventCallback controlPoinEventCallback;
+
 
 
         public OnlineEditorState(EditionHub editionHub)
@@ -38,8 +41,11 @@ namespace InterfaceGraphique.Editor.EditorState
             this.boostCreationCallback = CurrentUserCreatedBoost;
             this._transformEventCallback = CurrentUserObjectTransformChanged;
             this.selectionEventCallback = CurrentUserSelectedObject;
+            this.controlPoinEventCallback = CurrentUserChangedControlPoint;
 
         }
+
+
 
 
         private void OnUserLeft(string username)
@@ -93,6 +99,8 @@ namespace InterfaceGraphique.Editor.EditorState
             FonctionsNatives.setBoostCreationCallback(this.boostCreationCallback);
             FonctionsNatives.setTransformEventCallback(this._transformEventCallback);
             FonctionsNatives.setSelectionEventCallback(this.selectionEventCallback);
+            FonctionsNatives.setControlPointEventCallback(this.controlPoinEventCallback);
+
             List<OnlineUser> usersInTheGame = await this.editionHub.JoinPublicRoom(mapEntity);
             foreach (OnlineUser user in usersInTheGame)
             {
@@ -174,6 +182,16 @@ namespace InterfaceGraphique.Editor.EditorState
                 Username = User.Instance.UserEntity.Username,
                 IsSelected = isSelected,
                 DeselectAll = deselectAll
+            });
+        }
+
+        private void CurrentUserChangedControlPoint(string uuid, IntPtr position)
+        {
+            float[] positionVec = getVec3FromIntptr(position);
+            this.editionHub.SendEditorCommand(new ControlPointCommand(uuid)
+            {
+                Username = User.Instance.UserEntity.Username,
+                Position = positionVec
             });
         }
         private float[] getVec3FromIntptr(IntPtr ptr)

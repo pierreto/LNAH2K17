@@ -116,6 +116,11 @@ extern "C" {
 	__declspec(dllexport) void setCurrentPlayerSelectionColor(char* userHexColor);
 	__declspec(dllexport) void setCurrentPlayerSelectionColorToDefault();
 
+	typedef void(__stdcall * ControlPointEventCallback)(const char* uuid, const float* position);
+	__declspec(dllexport) void setControlPointEventCallback(ControlPointEventCallback callback);
+	__declspec(dllexport) void setControlPointPosition(const char*username, const char* uuid, const float* position);
+
+
 } 
 
 #endif // __FACADE_INTERFACE_NATIVE_H__

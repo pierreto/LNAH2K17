@@ -15,6 +15,7 @@
 #include "FacadeModele.h"
 #include "ArbreRenduINF2990.h"
 #include "Vue.h"
+#include "ModeleEtatJeu.h"
 
 /// Pointeur vers l'instance unique de la classe.
 ModeleEtatScale* ModeleEtatScale::instance_{ nullptr };
@@ -210,6 +211,14 @@ void ModeleEtatScale::revertScale()
 
 	for (auto noeud : noeuds) {
 		noeud->revertScale();
+		if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
+		{
+			TransformEventCallback callback = ModeleEtatJeu::obtenirInstance()->getTransformEventCallback();
+			if (callback)
+			{
+				callback(noeud->getUUID(), glm::value_ptr(noeud->obtenirMatriceTransformation()));
+			}
+		}
 	}
 }
 

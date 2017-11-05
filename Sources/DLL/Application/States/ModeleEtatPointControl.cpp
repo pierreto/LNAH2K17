@@ -282,8 +282,13 @@ void ModeleEtatPointControl::revertPosition()
 	for (auto noeud : noeuds) {
 		noeud->revertPosition();
 		static_cast<NoeudPointControl*>(noeud)->obtenirNoeudOppose()->revertPosition();
-		 ModeleEtatJeu::obtenirInstance()->getTransformEventCallback()(noeud->getUUID(), glm::value_ptr(noeud->obtenirMatriceTransformation()));
-
+		if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
+		{
+			if (controlPointEventCallback_)
+			{
+				controlPointEventCallback_(noeud->getUUID(), glm::value_ptr(noeud->obtenirPositionRelative()));
+			}
+		}
 
 	}
 }

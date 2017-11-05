@@ -20,6 +20,7 @@
 
 #include "RigidBody.h"
 #include "utilitaire.h"
+#include <rapidjson/document.h>
 
 /// Déclarations avancées pour contenir un pointeur vers un modèle3D et son storage
 namespace modele{
@@ -185,7 +186,8 @@ public:
 	// Modificateur des  de dessin
 	void effetFantome(const bool& activer);
 	void useOtherColor(const bool& activer, glm::vec4 color = glm::vec4(1));
-	void invisible(const bool& activer) { options_.invisible_ = activer; };
+	void invisible(const bool& activer) { options_.invisible_ = activer; }
+	void setUUID(char* uuid) { uuid_ = uuid; };
 
 	// Collision
 	bool enCollision() const;

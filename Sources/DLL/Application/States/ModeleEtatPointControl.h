@@ -42,6 +42,8 @@ public:
 	virtual void escape();
 	/// Évènement appelé pour nettoyer l'état
 	virtual void nettoyerEtat();
+	void setControlPointEventCallback(ControlPointEventCallback callback) { controlPointEventCallback_ = callback; }
+	ControlPointEventCallback getControlPointEventCallback() { return controlPointEventCallback_; }
 
 private:
 
@@ -61,6 +63,8 @@ private:
 	void savePosition();
 	/// Fonction qui réinitialise la postion des points avec la position sauvée
 	void revertPosition();
+
+	ControlPointEventCallback controlPointEventCallback_;
 };
 
 

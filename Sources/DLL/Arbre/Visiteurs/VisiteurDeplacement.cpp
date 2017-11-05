@@ -11,6 +11,7 @@
 #include "VisiteurDeplacement.h"
 #include "ModeleEtatJeu.h"
 #include "ModeleEtatDeplacement.h"
+#include "ModeleEtatPointControl.h"
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -82,14 +83,13 @@ void VisiteurDeplacement::visiterPointControl(NoeudPointControl * noeud)
 		noeud->obtenirNoeudOppose()->deplacer(pos * glm::dvec3(noeud->obtenirSymmetrie()));
 		if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
 		{
-			TransformEventCallback callback = ModeleEtatJeu::obtenirInstance()->getTransformEventCallback();
+			ControlPointEventCallback callback = ModeleEtatPointControl::obtenirInstance()->getControlPointEventCallback();
 			if(callback)
 			{
-				callback(noeud->getUUID(), glm::value_ptr(noeud->obtenirMatriceTransformation()));
+				callback(noeud->getUUID(), glm::value_ptr(noeud->obtenirPositionRelative()));
 
-				callback(noeud->obtenirNoeudOppose()->getUUID(), glm::value_ptr(noeud->obtenirNoeudOppose()->obtenirMatriceTransformation()));
+				callback(noeud->obtenirNoeudOppose()->getUUID(), glm::value_ptr(noeud->obtenirNoeudOppose()->obtenirPositionRelative()));
 			}
-
 		}
 	}
 }
