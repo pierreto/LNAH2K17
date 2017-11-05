@@ -10,7 +10,7 @@ namespace AirHockeyServer.Pocos
     public class GamePoco
     {
         [Column(IsPrimaryKey = true, Name = "id")]
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         [Column(Name = "winner")]
         public int Winner { get; set; }

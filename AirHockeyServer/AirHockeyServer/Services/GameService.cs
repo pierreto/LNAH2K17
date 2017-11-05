@@ -47,7 +47,7 @@ namespace AirHockeyServer.Services
         ////////////////////////////////////////////////////////////////////////
         public async Task<GameEntity> CreateGame(GameEntity gameEntity)
         {
-            gameEntity.GameId = new Random().Next();
+            gameEntity.GameId = Guid.NewGuid();
             this.games.Add(gameEntity);
 
             return gameEntity;
@@ -81,7 +81,7 @@ namespace AirHockeyServer.Services
             return gameEntity;
         }
 
-        public GameEntity GetGameEntityById(int id)
+        public GameEntity GetGameEntityById(Guid id)
         {
             return this.games.First(a => a.GameId.Equals(id));
         }
@@ -91,19 +91,19 @@ namespace AirHockeyServer.Services
             GameMatchMakerService.Instance().RemoveUser(user.Id);
         }
 
-        public void GoalScored(int gameId, int playerId)
+        public void GoalScored(Guid gameId, int playerId)
         {
             GameManager.GoalScored(gameId, playerId);
         }
 
-        public void GameOver(int gameId)
+        public async Task GameOver(Guid gameId)
         {
-            GameManager.GameEnded(gameId);
+            await GameManager.GameEnded(gameId);
         }
 
         public async Task SaveGame(GameEntity game)
         {
-            //await GameRepository.CreateGame(game);
+            await GameRepository.CreateGame(game);
         }
 }
 }

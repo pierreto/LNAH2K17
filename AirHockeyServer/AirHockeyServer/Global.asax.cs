@@ -60,6 +60,7 @@ namespace AirHockeyServer
             UnityContainer.RegisterType<IPasswordRepository, PasswordRepository>(new HierarchicalLifetimeManager());
             UnityContainer.RegisterType<IPlayerStatsRepository, PlayerStatsRepository>(new HierarchicalLifetimeManager());
             UnityContainer.RegisterType<IUserRepository, UserRepository>(new HierarchicalLifetimeManager());
+            UnityContainer.RegisterType<ITournamentRepository, TournamentRepository>(new HierarchicalLifetimeManager());
 
             // Services
             UnityContainer.RegisterType<IChatService, ChatService>(new HierarchicalLifetimeManager());

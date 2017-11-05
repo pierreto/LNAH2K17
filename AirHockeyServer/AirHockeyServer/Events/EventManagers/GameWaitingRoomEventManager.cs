@@ -29,7 +29,7 @@ namespace AirHockeyServer.Events.EventManagers
 
         protected const int WAITING_TIMEOUT = 2000;
 
-        protected ConcurrentDictionary<int, int> RemainingTime { get; set; }
+        protected ConcurrentDictionary<Guid, int> RemainingTime { get; set; }
 
         protected IHubContext HubContext { get; set; }
 
@@ -39,7 +39,7 @@ namespace AirHockeyServer.Events.EventManagers
 
         public GameWaitingRoomEventManager(IGameManager gameManager, IGameService gameService)
         {
-            this.RemainingTime = new ConcurrentDictionary<int, int>();
+            this.RemainingTime = new ConcurrentDictionary<Guid, int>();
             GameMatchMakerService.Instance().MatchFoundEvent += OnMatchFound;
             HubContext = GlobalHost.ConnectionManager.GetHubContext<GameWaitingRoomHub>();
             GameService = gameService;
@@ -72,7 +72,14 @@ namespace AirHockeyServer.Events.EventManagers
             foreach(var player in gameCreated.Players)
             {
                 var connection = ConnectionMapper.GetConnection(player.Id);
-                await HubContext.Groups.Add(connection, stringGameId);
+                try
+                {
+                    HubContext.Groups.Add(connection, stringGameId);
+                }
+                catch(Exception e)
+                {
+
+                }
             }
             
             HubContext.Clients.Group(stringGameId).OpponentFoundEvent(gameCreated);

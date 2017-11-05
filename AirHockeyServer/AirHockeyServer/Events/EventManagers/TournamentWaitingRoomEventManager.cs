@@ -83,7 +83,7 @@ namespace AirHockeyServer.Events.EventManagers
         {
             GameEntity game = new GameEntity()
             {
-                GameId = new Random().Next(),
+                GameId = Guid.NewGuid(),
                 CreationDate = DateTime.Now,
                 Players = new UserEntity[2] { player1, player2 },
                 Master = player1,

@@ -8,12 +8,12 @@ namespace AirHockeyServer.Core
 {
     public class Cache
     {
-        public static Dictionary<int, GameEntity> Games;
+        public static Dictionary<Guid, GameEntity> Games;
         public static Dictionary<int, TournamentEntity> Tournaments;
 
         public Cache()
         {
-            Games = new Dictionary<int, GameEntity>();
+            Games = new Dictionary<Guid, GameEntity>();
             Tournaments = new Dictionary<int, TournamentEntity>();
         }
 }
