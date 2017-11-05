@@ -13,7 +13,7 @@ namespace InterfaceGraphique.Editor.EditorState
         public abstract void MouseUp(object sender, MouseEventArgs e);
         public abstract void MouseDown(object sender, MouseEventArgs e);
 
-        public abstract void JoinEdition(MapEntity mapEntity);
+        public abstract void JoinEdition(MapEntity mapEntity=null);
         public abstract Task LeaveEdition();
     }
 }

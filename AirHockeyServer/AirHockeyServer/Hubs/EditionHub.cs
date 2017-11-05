@@ -58,9 +58,9 @@ namespace AirHockeyServer.Hubs
 
         public void SendEditionCommand(int mapId, string editionCommand)
         {
-            //Clients.Group(ObtainEditionGroupIdentifier(mapId), Context.ConnectionId).NewCommand(editionCommand);
+            Clients.Group(ObtainEditionGroupIdentifier(mapId), Context.ConnectionId).NewCommand(editionCommand);
 
-            Clients.Group(ObtainEditionGroupIdentifier(mapId)).NewCommand(editionCommand);
+            //Clients.Group(ObtainEditionGroupIdentifier(mapId)).NewCommand(editionCommand);
         }
 
         public async Task LeaveRoom(int gameId)

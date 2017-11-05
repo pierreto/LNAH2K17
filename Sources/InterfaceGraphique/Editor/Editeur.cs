@@ -37,7 +37,6 @@ namespace InterfaceGraphique {
         public MODELE_ETAT OutilCourrant
         {
             get => outilCourrant;
-            set => outilCourrant = value;
         }
 
         public AbstractEditorState CurrentState { get; set; }
@@ -86,7 +85,7 @@ namespace InterfaceGraphique {
             this.Panel_PropertiesBack.Location = new Point(Program.OpenGLPanel.Width - this.Panel_PropertiesBack.Width, Program.OpenGLPanel.Height - this.Panel_PropertiesBack.Height);
             this.MenuBar.Renderer = new Renderer_MenuBar();
 
-            ToggleOrbit(false);
+            await ToggleOrbit(false);
             this.Cursor = Cursors.Default;
 
             FonctionsNatives.resetCameraPosition();
@@ -99,7 +98,7 @@ namespace InterfaceGraphique {
             FonctionsNatives.setLights(2, true);
 
             this.CurrentState = this.offlineState;
-            this.CurrentState.JoinEdition(null);
+            this.CurrentState.JoinEdition();
 
         }
 
@@ -385,8 +384,6 @@ namespace InterfaceGraphique {
 
         public async Task JoinEdition(MapEntity map)
         {
-            await ResetDefaultTable();
-
             this.CurrentState = this.onlineState;
             await this.CurrentState.LeaveEdition();
             this.CurrentState.JoinEdition(map);
