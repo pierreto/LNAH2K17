@@ -9,6 +9,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 import GLKit
+import SwiftyJSON
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class PortalCommand
@@ -27,6 +28,13 @@ class PortalCommand: EditionCommand {
         super.init(objectUuid: objectUuid)
     }
     
+    init(objectUuid: String, endUuid: String, startPos: [Float], endPos: [Float]) {
+        super.init(objectUuid: objectUuid)
+        self.endUuid = endUuid
+        self.startPosition = startPos
+        self.endPosition = endPos
+    }
+    
     override func executeCommand() {
         let portail1Pos = GLKVector3.init(v: (self.startPosition[0], self.startPosition[1], self.startPosition[2]))
         let portail2Pos = GLKVector3.init(v: (self.endPosition[0], self.endPosition[1], self.endPosition[2]))
@@ -36,13 +44,18 @@ class PortalCommand: EditionCommand {
                                           portal2Pos: portail2Pos)
     }
     
-    override func toJSON() -> Dictionary<String, AnyObject> {
-        return [
-            "objectUuid": self.objectUuid as AnyObject,
-            "EndUuid": self.endUuid as AnyObject,
-            "StartPosition": self.startPosition as AnyObject,
-            "EndPosition": self.endPosition as AnyObject
-        ]
+    override func toJSON() -> JSON? {        
+        return JSON(["$type": EDITION_COMMAND.PORTAL_COMMAND.rawValue,
+                     "ObjectUuid": self.objectUuid,
+                     "EndUuid": self.endUuid,
+                     "StartPosition": self.startPosition,
+                     "EndPosition": self.endPosition])
+    }
+    
+    override func fromJSON(json: JSON) {
+        self.endUuid = json["EndUuid"].string!
+        self.startPosition = json["StartPosition"].arrayObject as! [Float]
+        self.endPosition = json["EndPosition"].arrayObject as! [Float]
     }
     
 }

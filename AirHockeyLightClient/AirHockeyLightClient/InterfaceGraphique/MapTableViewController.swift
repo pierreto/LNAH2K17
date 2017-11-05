@@ -122,6 +122,11 @@ class MapTableViewController: UITableViewController {
                         self.navigationController?.pushViewController(editor, animated: true)
                         
                         // Rejoindre la salle d'édition
+                        
+                        // TODO : A enlever quand toutes les commandes du mode en ligne seront faites
+                        FacadeModele.instance.changerEditorState(etat: .ONLINE_EDITION)
+                        
+                        
                         FacadeModele.instance.obtenirEtatEdition().joinEdition(mapEntity: editor.currentMap!)
                     } else {
                         print("Failed to fetch map with id from server")

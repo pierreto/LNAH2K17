@@ -9,6 +9,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 import SwiftR
+import SwiftyJSON
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class EditionHub
@@ -26,8 +27,10 @@ class EditionHub: BaseHub {
         
         /// Reception de l'évènement d'une commande
         self.hubProxy?.on("NewCommand") { args in
-            print("NEW COMMAND")
-            self.receiveCommand(command: args?[0] as! Dictionary<String, String>)
+            let strArgs = args?[0] as! String
+            let dataFromString = strArgs.data(using: .utf8, allowLossyConversion: false)
+            let command = JSON(data: dataFromString!)
+            self.receiveCommand(command: command)
         }
         
         /// Reception de l'évènement quand un utilisateur rejoint une salle d'édition
@@ -49,8 +52,17 @@ class EditionHub: BaseHub {
         }
     }
     
-    func receiveCommand(command: Dictionary<String, String>) {
-        print(command.description)
+    func receiveCommand(command: JSON) {
+        let type = EDITION_COMMAND(rawValue: command["$type"].string!)!
+
+        switch (type) {
+            case .PORTAL_COMMAND :
+                print ("Portal command")
+                let portalCommand = PortalCommand(objectUuid: command["ObjectUuid"].string!)
+                portalCommand.fromJSON(json: command)
+                portalCommand.executeCommand()
+                break
+        }
     }
     
     func convertMapEntity(mapEntity: MapEntity) -> Any {
@@ -107,10 +119,11 @@ class EditionHub: BaseHub {
     }
     
     func sendEditionCommand(command: EditionCommand) {
-        let jsonCommand = command.toJSON()
+        let jsonCommand = command.toJSON()?.rawString(options: [])
+        //print(jsonCommand!)
         
         do {
-            try self.hubProxy?.invoke("SendEditionCommand", arguments: [self.map?.id.value as Any, jsonCommand])
+            try self.hubProxy?.invoke("SendEditionCommand", arguments: [self.map?.id.value as Any, jsonCommand!])
         }
         catch {
             print("Error SendEditionCommand")
