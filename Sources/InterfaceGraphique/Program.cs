@@ -187,6 +187,7 @@ namespace InterfaceGraphique
 
             //Rest services instantiations
             unityContainer.RegisterType<MapService>();
+            unityContainer.RegisterType<UserService>();
 
             //Other services
             unityContainer.RegisterType<MapManager>();
