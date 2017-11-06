@@ -140,11 +140,7 @@ void ModeleEtatCreerMuret::mouseUpL() {
 
 				if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
 				{
-					glm::dvec3 point;
-					obtenirVue()->convertirClotureAVirtuelle(mousePosX_, mousePosY_, point);
-
-					float pointFloat[3] = { point.x, point.y, point.z };
-					wallCreationCallback_( noeud_->getUUID(),glm::value_ptr(pointInitial_), pointFloat);
+					wallCreationCallback_(noeud_->getUUID(), glm::value_ptr(noeud_->obtenirPositionRelative()), noeud_->obtenirRotation().y, glm::value_ptr(noeud_->obtenirScale()));
 				}
 
 				noeud_ = nullptr;

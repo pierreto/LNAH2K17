@@ -1039,11 +1039,9 @@ void setPortalCreationCallback(PortalCreationCallback callback)
 	ModeleEtatCreerPortail::obtenirInstance()->setPortalCreationCallback(callback);
 }
 
-void createWall(const char* uuid, const float* startPosition, const float* endPosition)
+void createWall(const char* uuid, const float* position, const float angle, const float* scale)
 {
-	glm::vec3 startPosVec = glm::make_vec3(startPosition);
-	glm::vec3 endPosVec = glm::make_vec3(endPosition);
-	return NodeCreator::obtenirInstance()->createWall(uuid, startPosVec, endPosVec);
+	return NodeCreator::obtenirInstance()->createWall(uuid, glm::make_vec3(position), angle, glm::make_vec3(scale));
 }
 
 void setWallCreationCallback(WallCreationCallback callback)

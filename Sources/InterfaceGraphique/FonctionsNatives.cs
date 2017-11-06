@@ -220,13 +220,13 @@ namespace InterfaceGraphique
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
         public delegate void WallCreationCallback([Out, MarshalAs(UnmanagedType.LPStr)] string uuid,
-            [Out] IntPtr startPos, [Out] IntPtr endPos);
+            [Out] IntPtr position, [Out] float rotation, [Out] IntPtr scale);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void setWallCreationCallback(WallCreationCallback callback);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void createWall(string uuid, float[] startPosition, float[] endPosition);
+        public static extern void createWall(string uuid, float[] position, float rotation, float[] scale);
 
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]

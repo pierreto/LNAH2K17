@@ -140,15 +140,16 @@ namespace InterfaceGraphique.Editor.EditorState
         }
 
      
-        private void CurrentUserCreatedWall(string uuid,IntPtr startPos, IntPtr endPos)
+        private void CurrentUserCreatedWall(string uuid,IntPtr pos, float rotation, IntPtr scale)
         {
-            float[] startVec = getVec3FromIntptr(startPos);
-            float[] endVec = getVec3FromIntptr(endPos);
+            float[] posVec = getVec3FromIntptr(pos);
+            float[] scaleVec = getVec3FromIntptr(scale);
 
             WallCommand wallCommand = new WallCommand(uuid)
             {
-                StartPosition = startVec,
-                EndPosition = endVec
+                Position = posVec,
+                Rotation = rotation,
+                Scale = scaleVec
             };
 
             this.editionHub.SendEditorCommand(wallCommand);

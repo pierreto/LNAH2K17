@@ -93,8 +93,8 @@ extern "C" {
 	typedef void(__stdcall * PortalCreationCallback)(const char* startUuid, const float* startPos, const char* endUuid, const float* endPosd);
 	__declspec(dllexport) void setPortalCreationCallback(PortalCreationCallback callback);
 
-	__declspec(dllexport) void createWall(const char* uuid, const float* startPosition, const float* endPosition);
-	typedef void(__stdcall * WallCreationCallback)(const char* uuid, const float* startPos, const float* endPos);
+	__declspec(dllexport) void createWall(const char* uuid, const float* position, const float angle, const float* scale);
+	typedef void(__stdcall * WallCreationCallback)(const char* uuid, const float* position, const float angle, const float* scale);
 	__declspec(dllexport) void setWallCreationCallback(WallCreationCallback callback);
 
 	__declspec(dllexport) void createBoost(const char* uuid, const float* position);

@@ -52,29 +52,14 @@ void NodeCreator::createPortal(const char* startUuid, const glm::vec3 portal1Pos
 
 }
 
-void NodeCreator::createWall(const char* uuid, glm::vec3 startPos, glm::vec3 endPos)
+void NodeCreator::createWall(const char* uuid, glm::vec3 position, float angle,  glm::vec3 scale)
 {
 
 	// Création du noeud
 	NoeudMur* noeud = (NoeudMur*)FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->creerNoeud(ArbreRenduINF2990::NOM_MUR, uuid);
-
-	// Déplacement du noeud
-	// Transformation du point dans l'esapce virtuelle
-	noeud->assignerAxisLock(glm::ivec3(1, 1, 1));
-	noeud->assignerPositionRelative(glm::vec3(startPos.x, startPos.y + 0.01f, startPos.z));
-	noeud->assignerAxisLock(glm::ivec3(1, 0, 1));
-	
-	double distance = glm::distance(glm::vec3(endPos), startPos);
-	noeud->scale(glm::vec3(1, 1, distance));
-	glm::vec3 node2mouse = glm::vec3(endPos) - startPos;
-	float angle = glm::orientedAngle(glm::vec3(0, 0, 1), glm::normalize(node2mouse), glm::vec3(0, 1, 0));
+	noeud->assignerPositionRelative(position);
 	noeud->rotate(angle, glm::vec3(0, 1, 0));
-
-
-	glm::vec3 position = startPos;
-	position.z += float(glm::cos(angle) * distance / 2);
-	position.x += float(glm::sin(angle) * distance / 2);
-	noeud->deplacer(position);
+	noeud->scale(scale);
 	
 	// Ajout du noeud à l'arbre de rendu
 	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->ajouter(noeud);

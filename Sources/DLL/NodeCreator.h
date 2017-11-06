@@ -11,7 +11,7 @@ public:
 
 
 	virtual void createPortal(const char* startUuid, const glm::vec3 portal1Pos, const char* endUuid, const glm::vec3 portal2Pos);
-	void createWall(const char* uuid, glm::vec3 startPos, glm::vec3 endPos);
+	void createWall(const char* uuid, glm::vec3 position, float angle, glm::vec3 scale);
 	void createBoost(const char* uuid, glm::vec3 pos);
 
 private:

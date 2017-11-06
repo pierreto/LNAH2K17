@@ -10,6 +10,9 @@
 
 #include "VisiteurDuplication.h"
 #include "FacadeModele.h"
+#include "ModeleEtatJeu.h"
+#include "ModeleEtatCreerBoost.h"
+#include "ModeleEtatCreerMuret.h"
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -66,6 +69,11 @@ void VisiteurDuplication::visiterAccelerateur(NoeudAccelerateur* noeud) {
 		// Ajout du noeud à l'arbre de rendu
 		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->ajouter(noeudDouble);
 
+		if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
+		{
+			ModeleEtatCreerBoost::obtenirInstance()->getBoostCreationCallback()(noeudDouble->getUUID(), glm::value_ptr(noeudDouble->obtenirPositionRelative()));
+		}
+
 	}
 }
 
@@ -91,6 +99,11 @@ void VisiteurDuplication::visiterMur(NoeudMur* noeud) {
 
 		// Ajout du noeud à l'arbre de rendu
 		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->ajouter(noeudDouble);
+
+		if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
+		{
+			ModeleEtatCreerMuret::obtenirInstance()->getWallCreationCallback()(noeudDouble->getUUID(), glm::value_ptr(noeudDouble->obtenirPositionRelative()), noeudDouble->obtenirRotation().y, glm::value_ptr(noeudDouble->obtenirScale()));
+		}
 	}
 }
 
