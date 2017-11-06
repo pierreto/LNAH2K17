@@ -68,6 +68,11 @@ class ModeleEtatCreerBoost: ModeleEtat {
             // Annulation de la commande
             noeud.removeFromParentNode()
         }
+        else {
+            // Envoyer la commande
+            FacadeModele.instance.obtenirEtatEdition().currentUserCreatedBoost(uuid: noeud.obtenirUUID(),
+                                                                               pos: noeud.position, rotation: noeud.rotation.w, scale: noeud.scale)
+        }
     }
     
 }

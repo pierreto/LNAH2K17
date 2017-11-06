@@ -208,11 +208,11 @@ namespace InterfaceGraphique
         public static extern void masterGoal();
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void createPortal(string startUuid, float[] startPos, string endUuid, float[] endPos);
+        public static extern void createPortal(string startUuid, float[] startPosition, float startRotation, float[] startScale, string endUuid, float[] endPosition, float endRotation, float[] endScale);
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
         public delegate void PortalCreationCallback([Out, MarshalAs(UnmanagedType.LPStr)] string startUuid,
-            [Out] IntPtr startPos, [Out, MarshalAs(UnmanagedType.LPStr)] string endUuid, [Out] IntPtr endPos);
+            [Out] IntPtr startPosition, [Out] float startRotation, [Out] IntPtr startScale, [Out, MarshalAs(UnmanagedType.LPStr)] string endUuid, [Out] IntPtr endPosition, [Out] float endRotation, [Out] IntPtr endScale);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void setPortalCreationCallback(PortalCreationCallback callback);
@@ -220,23 +220,23 @@ namespace InterfaceGraphique
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
         public delegate void WallCreationCallback([Out, MarshalAs(UnmanagedType.LPStr)] string uuid,
-            [Out] IntPtr startPos, [Out] IntPtr endPos);
+            [Out] IntPtr position, [Out] float rotation, [Out] IntPtr scale);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void setWallCreationCallback(WallCreationCallback callback);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void createWall(string uuid, float[] startPosition, float[] endPosition);
+        public static extern void createWall(string uuid, float[] position, float rotation, float[] scale);
 
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        public delegate void BoostCreationCallback([Out, MarshalAs(UnmanagedType.LPStr)] string uuid, [Out] IntPtr pos);
+        public delegate void BoostCreationCallback([Out, MarshalAs(UnmanagedType.LPStr)] string uuid, [Out] IntPtr position, [Out] float rotation, [Out] IntPtr scale);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void setBoostCreationCallback(BoostCreationCallback callback);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void createBoost(string uuid, float[] position);
+        public static extern void createBoost(string uuid, float[] position, float rotation, float[] scale);
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
         public delegate void SelectionEventCallback([Out, MarshalAs(UnmanagedType.LPStr)] string uuid, bool isSelected,

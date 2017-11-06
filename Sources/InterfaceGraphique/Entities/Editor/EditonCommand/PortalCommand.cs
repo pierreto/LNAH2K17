@@ -12,7 +12,14 @@ namespace InterfaceGraphique.Entities.EditonCommand
         public string EndUuid { get; set; }
 
         public float[] StartPosition { get; set; }
+        public float StartRotation { get; set; }
+        public float[] StartScale { get; set; }
+
+
         public float[] EndPosition { get; set; }
+        public float EndRotation { get; set; }
+        public float[] EndScale { get; set; }
+
 
         public PortalCommand(string objectUuid) : base(objectUuid)
         {
@@ -20,7 +27,7 @@ namespace InterfaceGraphique.Entities.EditonCommand
 
         public override void ExecuteCommand()
         {
-            FonctionsNatives.createPortal( objectUuid, StartPosition, EndUuid, EndPosition);  
+            FonctionsNatives.createPortal( objectUuid, StartPosition, StartRotation,StartScale, EndUuid, EndPosition, EndRotation, EndScale);  
         }
     }
 }

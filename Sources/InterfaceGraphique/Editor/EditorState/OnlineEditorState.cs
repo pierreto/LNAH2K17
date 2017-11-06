@@ -124,42 +124,48 @@ namespace InterfaceGraphique.Editor.EditorState
             editionCommand.ExecuteCommand();
         }
 
-        private void CurrentUserCreatedPortal(string startUuid, IntPtr startPos, string endUuid, IntPtr endPos)
+        private void CurrentUserCreatedPortal(string startUuid, IntPtr startPos, float startRotation, IntPtr startScale, string endUuid, IntPtr endPosition, float endRotation, IntPtr endScale)
         {
-            float[] startVec= getVec3FromIntptr(startPos);
-
-            float[] endVec = getVec3FromIntptr(endPos);
 
             PortalCommand portalCommand = new PortalCommand(startUuid)
             {
                 EndUuid = endUuid,
-                StartPosition = startVec,
-                EndPosition = endVec
+
+                StartPosition = getVec3FromIntptr(startPos),
+                StartRotation = startRotation,
+                StartScale = getVec3FromIntptr(startScale),
+
+                EndPosition = getVec3FromIntptr(endPosition),
+                EndRotation = endRotation,
+                EndScale = getVec3FromIntptr(endScale)
             };
             this.editionHub.SendEditorCommand(portalCommand);
         }
 
      
-        private void CurrentUserCreatedWall(string uuid,IntPtr startPos, IntPtr endPos)
+        private void CurrentUserCreatedWall(string uuid,IntPtr pos, float rotation, IntPtr scale)
         {
-            float[] startVec = getVec3FromIntptr(startPos);
-            float[] endVec = getVec3FromIntptr(endPos);
+            float[] posVec = getVec3FromIntptr(pos);
+            float[] scaleVec = getVec3FromIntptr(scale);
 
             WallCommand wallCommand = new WallCommand(uuid)
             {
-                StartPosition = startVec,
-                EndPosition = endVec
+                Position = posVec,
+                Rotation = rotation,
+                Scale = scaleVec
             };
 
             this.editionHub.SendEditorCommand(wallCommand);
         }
-        private void CurrentUserCreatedBoost(string uuid, IntPtr startpos)
+        private void CurrentUserCreatedBoost(string uuid, IntPtr startpos, float rotation, IntPtr scale)
         {
-            float[] vec = getVec3FromIntptr(startpos);
 
             BoostCommand boostCommand = new BoostCommand(uuid)
             {
-                Position = vec,
+                Position = getVec3FromIntptr(startpos),
+                Rotation = rotation,
+                Scale = getVec3FromIntptr(scale)
+
             };
 
             this.editionHub.SendEditorCommand(boostCommand);

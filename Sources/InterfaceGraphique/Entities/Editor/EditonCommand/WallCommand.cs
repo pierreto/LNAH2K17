@@ -9,29 +9,20 @@ namespace InterfaceGraphique.Entities.EditonCommand
 {
     class WallCommand : AbstractEditionCommand
     {
-        private float[] startPosition;
-        private float[] endPosition;
+        private float[] startPosition; //DEPRECATED TO REMOVE
+        private float[] endPosition; //DEPRECATED TO REMOVE
+
+        public float[] Position { get; set; }
+        public float Rotation { get; set; }
+        public float[] Scale { get; set; }
 
         public WallCommand(string objectUuid) : base(objectUuid)
         {
         }
 
-        public float[] StartPosition
-        {
-            get => startPosition;
-            set => startPosition = value;
-        }
-
-        public float[] EndPosition
-        {
-            get => endPosition;
-            set => endPosition = value;
-        }
-
-
         public override void ExecuteCommand()
         {
-            FonctionsNatives.createWall( objectUuid, StartPosition, EndPosition);
+            FonctionsNatives.createWall( objectUuid, Position, Rotation, Scale);
         }
     }
 }

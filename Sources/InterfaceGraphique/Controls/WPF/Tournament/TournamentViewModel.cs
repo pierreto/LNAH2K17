@@ -7,6 +7,7 @@ using System.Windows.Input;
 using System.Threading.Tasks;
 using InterfaceGraphique.CommunicationInterface;
 using InterfaceGraphique.CommunicationInterface.RestInterface;
+using InterfaceGraphique.Services;
 
 namespace InterfaceGraphique.Controls.WPF.Tournament
 {
@@ -16,9 +17,12 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
 
         private TournamentWaitingRoomHub waitingRoomHub;
 
-        public TournamentViewModel(TournamentWaitingRoomHub waitingRoomHub)
+        protected MapService MapService { get; set; }
+
+        public TournamentViewModel(TournamentWaitingRoomHub waitingRoomHub, MapService mapService)
         {
             this.waitingRoomHub = waitingRoomHub;
+            MapService = mapService;
             this.Players = new List<UserEntity>();
         }
 
@@ -29,28 +33,36 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
             InitializeData();
         }
 
-        private void InitializeData()
+        private async void InitializeData()
         {
             var mapsRepo = new MapsRepository();
 
-            //MapsAvailable = new ObservableCollection<MapEntity>(Task.Run(() => mapsRepo.GetMaps()).Result);
-            MapsAvailable = new ObservableCollection<MapEntity>
-            {
-                new MapEntity
-                {
-                    MapName = "foret enchantee"
-                },
-                new MapEntity
-                {
-                    MapName = "loup garou"
-                },
-                new MapEntity
-                {
-                    MapName = "New york"
-                }
-            };
+            //if online
 
+            List<MapEntity> maps = await MapService.GetMaps();
+
+            MapsAvailable = new ObservableCollection<MapEntity>(maps);
             SelectedMap = mapsAvailable[1];
+
+            //MapsAvailable = new ObservableCollection<MapEntity>
+            //{
+            //    new MapEntity
+            //    {
+            //        MapName = "foret enchantee",
+            //        Id = 1
+            //    },
+            //    new MapEntity
+            //    {
+            //        MapName = "loup garou",
+            //        Id = 2
+            //    },
+            //    new MapEntity
+            //    {
+            //        MapName = "New york",
+            //        Id = 3
+            //    }
+            //};
+
         }
 
         private void InitializeEvents()
@@ -64,6 +76,26 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
             this.waitingRoomHub.WinnerResultEvent += (e, args) => { Winner = args.Username; };
 
             this.waitingRoomHub.SemiFinalResultEvent += (e, args) => OnSemiFinalResult(e, args);
+
+            this.waitingRoomHub.MapUpdatedEvent += (e, args) => OnMapUpdated(e, args);
+        }
+
+        private void OnMapUpdated(object e, MapEntity args)
+        {
+            if (args != null)
+            {
+                if (args != null && (selectedMap == null || selectedMap.Id != args.Id))
+                {
+                    foreach (MapEntity map in mapsAvailable)
+                    {
+                        if (map.Id == args.Id)
+                        {
+                            selectedMap = map;
+                        }
+                    }
+                }
+                OnPropertyChanged("SelectedMap");
+            }
         }
 
         private void OnSemiFinalResult(object e, List<UserEntity> users)
@@ -164,12 +196,11 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
             get => selectedMap;
             set
             {
-                if (selectedMap == null || !string.Equals(selectedMap.MapName, value.MapName))
+                if (value != null && (selectedMap == null || selectedMap.Id != value.Id))
                 {
                     foreach (MapEntity map in mapsAvailable)
                     {
-
-                        if (string.Equals(map.MapName, value.MapName))
+                        if (map.Id == value.Id)
                         {
                             selectedMap = map;
                         }
@@ -208,5 +239,6 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
         {
             get => Players.Count == 4;
         }
-}
+        
+    }
 }

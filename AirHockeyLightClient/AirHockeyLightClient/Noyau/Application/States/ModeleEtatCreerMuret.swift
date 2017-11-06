@@ -101,6 +101,13 @@ class ModeleEtatCreerMuret: ModeleEtat {
                 if (self.noeudsSurLaTable()) {
                     // Desactiver effet sélection
                     self.noeud?.appliquerMaterielSelection(activer: false)
+
+                    // Envoyer la commande
+                    FacadeModele.instance.obtenirEtatEdition().currentUserCreatedWall(uuid: (noeud?.obtenirUUID())!,
+                                                                                      pos: (noeud?.position)!,
+                                                                                      rotation: (noeud?.rotation.w)!,
+                                                                                      scale: (noeud?.scale)!)
+                    
                     self.noeud = nil
                 }
                 else {

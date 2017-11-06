@@ -2,25 +2,16 @@
 {
     public class WallCommand : AbstractEditionCommand
     {
-        private int[] startPosition;
-        private int[] endPosition;
+        private float[] startPosition; //DEPRECATED TO REMOVE
+        private float[] endPosition; //DEPRECATED TO REMOVE
 
-        public WallCommand(string objectUuid, int[] startPosition, int[] endPosition) : base(objectUuid)
+        public float[] Position { get; set; }
+        public float Rotation { get; set; }
+        public float[] Scale { get; set; }
+
+        public WallCommand(string objectUuid) : base(objectUuid)
         {
-            this.startPosition = startPosition;
-            this.endPosition = endPosition;
         }
 
-        public int[] StartPosition
-        {
-            get => startPosition;
-            set => startPosition = value;
-        }
-
-        public int[] EndPosition
-        {
-            get => endPosition;
-            set => endPosition = value;
-        }
     }
 }

@@ -45,6 +45,11 @@ public:
 		portalCreationCallback_ = callback;
 	}
 
+	PortalCreationCallback getPortalCreationCallback()
+	{
+		return portalCreationCallback_;
+	}
+
 private:
 
 	/// Constructeur.

@@ -26,23 +26,43 @@ class OnlineEditorState: EditorState {
     
     override func joinEdition(mapEntity: MapEntity) {
         FacadeModele.instance.obtenirUserManager()?.clearUsers()
-        
-        // TODO : changer username: "test.." pour username: clientConnection.getUsername() quand online mode done
-        self.clientConnection.getEditionHub().joinPublicRoom(username: "testOnlineUser",
-                                                             mapEntity: mapEntity)
+        self.clientConnection.getEditionHub().joinPublicRoom(username: clientConnection.getUsername()!, mapEntity: mapEntity)
     }
     
     override func leaveEdition() {
         self.clientConnection.getEditionHub().leaveRoom()
     }
     
-    override func currentUserCreatedPortal(startUuid: String, startPos: SCNVector3,
-                                           endUuid: String, endPos: SCNVector3) {
+    override func currentUserCreatedBoost(uuid: String, pos: SCNVector3, rotation: Float, scale: SCNVector3) {
+        let position = [pos.x, pos.y, pos.z]
+        let scale = [scale.x, scale.y, scale.z]
+        let command = BoostCommand(objectUuid: uuid, pos: position, rotation: rotation, scale: scale)
+        self.clientConnection.getEditionHub().sendEditionCommand(command: command)
+    }
+    
+    override func currentUserCreatedWall(uuid: String, pos: SCNVector3, rotation: Float, scale: SCNVector3) {
+        let position = [pos.x, pos.y, pos.z]
+        let scale = [scale.x, scale.y, scale.z]
+        let command = WallCommand(objectUuid: uuid, pos: position, rotation: rotation, scale: scale)
+        self.clientConnection.getEditionHub().sendEditionCommand(command: command)
+    }
+    
+    override func currentUserCreatedPortal(startUuid: String, startPos: SCNVector3, startRotation: Float, startScale: SCNVector3,
+                                           endUuid: String, endPos: SCNVector3, endRotation: Float, endScale: SCNVector3) {
         let startPosition = [startPos.x, startPos.y, startPos.z]
+        let startScale = [startScale.x, startScale.y, startScale.z]
         let endPosition = [endPos.x, endPos.y, endPos.z]
-        let portalCommand = PortalCommand(objectUuid: startUuid, endUuid: endUuid,
-                                          startPos: startPosition, endPos: endPosition)
-        self.clientConnection.getEditionHub().sendEditionCommand(command: portalCommand)
+        let endScale = [endScale.x, endScale.y, endScale.z]
+        let command = PortalCommand(objectUuid: startUuid, endUuid: endUuid,
+                                    startPos: startPosition, startRotation: startRotation, startScale: startScale,
+                                    endPos: endPosition, endRotation: endRotation, endScale: endScale)
+        self.clientConnection.getEditionHub().sendEditionCommand(command: command)
+    }
+    
+    override func currentUserSelectedObject(uuidSelected: String, isSelected: Bool, deselectAll: Bool) {
+        let command = SelectionCommand(objectUuid: uuidSelected, username: HubManager.sharedConnection.getUsername()!,
+                                       isSelected: isSelected, deselectAll: deselectAll)
+        self.clientConnection.getEditionHub().sendEditionCommand(command: command)
     }
     
 }

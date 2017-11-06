@@ -54,15 +54,29 @@ class EditionHub: BaseHub {
     
     func receiveCommand(command: JSON) {
         let type = EDITION_COMMAND(rawValue: command["$type"].string!)!
+        let editionCommand: EditionCommand
 
         switch (type) {
+            case .BOOST_COMMAND :
+                print ("Boost command")
+                editionCommand = BoostCommand(objectUuid: command["ObjectUuid"].string!)
+                break
+            case .WALL_COMMAND :
+                print ("Wall command")
+                editionCommand = WallCommand(objectUuid: command["ObjectUuid"].string!)
+                break
             case .PORTAL_COMMAND :
                 print ("Portal command")
-                let portalCommand = PortalCommand(objectUuid: command["ObjectUuid"].string!)
-                portalCommand.fromJSON(json: command)
-                portalCommand.executeCommand()
+                editionCommand = PortalCommand(objectUuid: command["ObjectUuid"].string!)
+                break
+            case .SELECTION_COMMAND :
+                print ("Selection command")
+                editionCommand = SelectionCommand(objectUuid: command["ObjectUuid"].string!)
                 break
         }
+        
+        editionCommand.fromJSON(json: command)
+        editionCommand.executeCommand()
     }
     
     func convertMapEntity(mapEntity: MapEntity) -> Any {
@@ -96,6 +110,10 @@ class EditionHub: BaseHub {
                     print("Users in room: " + usersInRoom.description)
                     
                     for user in usersInRoom {
+                        if user["Username"] == HubManager.sharedConnection.getUsername() {
+                            FacadeModele.instance.setCurrentUserColor(userHexColor: user["HexColor"]!)
+                        }
+                        
                         FacadeModele.instance.obtenirUserManager()?.addUser(username: user["Username"]!,
                                                                             hexColor: user["HexColor"]!)
                     }

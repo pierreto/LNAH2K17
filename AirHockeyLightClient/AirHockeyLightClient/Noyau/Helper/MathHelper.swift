@@ -121,7 +121,7 @@ class MathHelper {
         endIndex = str.index(str.startIndex, offsetBy: 5)
         let blue = CGFloat.init(UInt8(str[startIndex...endIndex], radix: 16)!)
         
-        let color = UIColor.init(red: red/255.0, green: green/255.0, blue: blue/255.0, alpha: 1.0)
+        let color = UIColor.init(red: red/255.0, green: green/255.0, blue: blue/255.0, alpha: 0.50)
         
         return color
     }
