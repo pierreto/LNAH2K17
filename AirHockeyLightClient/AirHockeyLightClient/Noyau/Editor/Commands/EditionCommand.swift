@@ -12,6 +12,8 @@ import SwiftyJSON
 
 /// Les différentes commandes du mode d'édition
 enum EDITION_COMMAND : String {
+    case BOOST_COMMAND = "InterfaceGraphique.Entities.EditonCommand.BoostCommand, InterfaceGraphique"
+    case WALL_COMMAND = "InterfaceGraphique.Entities.EditonCommand.WallCommand, InterfaceGraphique"
     case PORTAL_COMMAND = "InterfaceGraphique.Entities.EditonCommand.PortalCommand, InterfaceGraphique"
 }
 

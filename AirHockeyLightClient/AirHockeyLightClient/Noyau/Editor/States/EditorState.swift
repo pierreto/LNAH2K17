@@ -9,6 +9,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 import SceneKit
+import GLKit
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class AbstractEditorState
@@ -22,6 +23,8 @@ class EditorState {
     
     func joinEdition(mapEntity: MapEntity) {}
     func leaveEdition() {}
+    func currentUserCreatedBoost(uuid: String, pos: SCNVector3) {}
+    func currentUserCreatedWall(uuid: String, startPos: GLKVector3, endPos: GLKVector3) {}
     func currentUserCreatedPortal(startUuid: String, startPos: SCNVector3, endUuid: String, endPos: SCNVector3) {}
 }
 

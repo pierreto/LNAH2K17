@@ -10,13 +10,11 @@ namespace AirHockeyServer.Repositories.Interfaces
     public interface IMapRepository
     {
 
-        Task UpdateMap(MapEntity updatedMap);
+        Task<bool> UpdateMap(MapEntity updatedMap);
 
         Task<IEnumerable<MapEntity>> GetMaps();
 
-        Task CreateNewMap(MapEntity map);
-
-        Task<int?> GetMapID(MapEntity savedMap);
+        Task<int?> CreateNewMap(MapEntity map);
 
         Task<MapEntity> GetMap(int idMap);
 

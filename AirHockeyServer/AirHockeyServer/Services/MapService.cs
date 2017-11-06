@@ -49,27 +49,30 @@ namespace AirHockeyServer.Services
         ///
         /// @fn Task SaveMap(MapEntity map)
         ///
-        /// Cette fonction asynchrone enregistre une carte dans la DB (en créant une entrée
-        /// si elle n'existe pas déjà ou en la mettant à jour, dans le cas contraire).
+        /// Cette fonction asynchrone met à jour une carte dans la DB.
+        /// Retourn true en cas de succès, false sinon.
         /// 
-        /// @return Task
+        /// @return Task<bool>
         ///
         ////////////////////////////////////////////////////////////////////////
-        public async Task SaveMap(MapEntity map)
+        public async Task<bool> SaveMap(MapEntity map)
         {
-            if (map.Id == null)
-            {
-                await MapRepository.CreateNewMap(map);
-            }
-            else
-            {
-                await MapRepository.UpdateMap(map);
-            }
+            return await MapRepository.UpdateMap(map);
         }
 
-        public async Task<int?> GetMapID(MapEntity map)
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn Task SaveMap(MapEntity map)
+        ///
+        /// Cette fonction asynchrone crée une nouvelle entrée dans la db pour map.
+        /// Retourne la MapEntity qui contient l'ID auto-généré par la db.
+        /// 
+        /// @return Task<MapEntity>
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        public async Task<int?> SaveNewMap(MapEntity map)
         {
-            return await MapRepository.GetMapID(map);
+            return await MapRepository.CreateNewMap(map);
         }
 
         ////////////////////////////////////////////////////////////////////////

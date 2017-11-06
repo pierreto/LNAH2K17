@@ -1,4 +1,5 @@
-﻿using InterfaceGraphique.Entities;
+﻿using InterfaceGraphique.CommunicationInterface;
+using InterfaceGraphique.Entities;
 using InterfaceGraphique.Services;
 using System;
 using System.Collections.Generic;
@@ -42,7 +43,7 @@ namespace InterfaceGraphique.Editor
         {
             this.currentMapInfo = new MapMetaData
             {
-                Creator = Program.user?.Username
+                Creator = User.Instance.UserEntity.Username
             };
         }
 
@@ -65,7 +66,7 @@ namespace InterfaceGraphique.Editor
                 this.currentMapInfo = new MapMetaData
                 {
                     savedOnce = true,
-                    Creator = Program.user?.Username,
+                    Creator = User.Instance.UserEntity.Username,
                     Name = ofd.FileName
                 };
             }
@@ -137,16 +138,20 @@ namespace InterfaceGraphique.Editor
                 Password = this.currentMapInfo.Password
             };
 
-            bool saved = await this.mapService.SaveMap(map);
+            bool saved = false;
 
-            // As Linq doesn't manage db-generated entries with MySQL, we have to
-            // manually query the id of a newly-saved map:
-            if (!this.currentMapInfo.savedOnce)
+            if (this.currentMapInfo.savedOnce)
             {
-                int? id = await this.mapService.GetMapID(map);
-
-                Debug.Assert(id != null);
-                this.currentMapInfo.Id = id;
+                saved = await this.mapService.SaveMap(map);
+            }
+            else
+            {
+                int? savedMapId = await this.mapService.SaveNewMap(map);
+                if (savedMapId != null)
+                {
+                    this.currentMapInfo.Id = savedMapId;
+                    saved = true;
+                }
             }
 
             if (!saved)
@@ -189,7 +194,7 @@ namespace InterfaceGraphique.Editor
             {
                 this.currentMapInfo = new MapMetaData
                 {
-                    Creator = Program.user.Username,
+                    Creator = User.Instance.UserEntity.Username,
                     Name = form.Text_MapName.Text
                 };
 

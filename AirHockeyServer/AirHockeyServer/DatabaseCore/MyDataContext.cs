@@ -28,4 +28,9 @@ public class MyDataContext : DataContext
     {
         get { return this.GetTable<FriendPoco>(); }
     }
+
+    public Table<MapPoco> MapsTable
+    {
+        get { return this.GetTable<MapPoco>(); }
+    }
 }
