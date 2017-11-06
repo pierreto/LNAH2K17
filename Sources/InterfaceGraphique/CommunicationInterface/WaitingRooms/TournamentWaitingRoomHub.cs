@@ -14,9 +14,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 {
     public class TournamentWaitingRoomHub : IBaseHub
     {
-        private bool test = false;
-
-        protected TournamentEntity CurrentTournament { get; set; }
+        protected int CurrentTournamentId { get; set; }
 
         public event EventHandler<List<UserEntity>> OpponentFoundEvent;
 
@@ -62,11 +60,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
         public async void UpdateSelectedMap(MapEntity map)
         {
-            if (CurrentTournament != null)
-            {
-                CurrentTournament.SelectedMap = map;
-                CurrentTournament = await WaitingRoomProxy.Invoke<TournamentEntity>("UpdateMap", CurrentTournament);
-            }
+            await WaitingRoomProxy.Invoke<TournamentEntity>("UpdateMap", CurrentTournamentId, map);
         }
 
         public void LeaveTournament()
@@ -85,7 +79,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
             WaitingRoomProxy.On<TournamentEntity>("TournamentAllOpponentsFound", (tournament) =>
             {
                 this.TournamentAllOpponentsFound.Invoke(this, tournament);
-                CurrentTournament = tournament;
+                CurrentTournamentId = tournament.Id;
             });
 
             WaitingRoomProxy.On<int>("WaitingRoomRemainingTime", remainingTime =>
