@@ -10,9 +10,9 @@ public:
 	static void libererInstance();
 
 
-	virtual void createPortal(const char* startUuid, const glm::vec3 portal1Pos, const char* endUuid, const glm::vec3 portal2Pos);
+	virtual void createPortal(const char* startUuid, glm::vec3 startPos, const float  startRotation, glm::vec3 startScale, const char* endUuid, glm::vec3 endPos, const  float endRotation, glm::vec3 endScale);
 	void createWall(const char* uuid, glm::vec3 position, float angle, glm::vec3 scale);
-	void createBoost(const char* uuid, glm::vec3 pos);
+	void createBoost(const char* uuid, glm::vec3 pos, const float angle, glm::vec3 scale);
 
 private:
 	NodeCreator();

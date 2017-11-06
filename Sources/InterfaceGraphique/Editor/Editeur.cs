@@ -384,10 +384,11 @@ namespace InterfaceGraphique {
 
         public async Task JoinEdition(MapEntity map)
         {
+            await mapManager.OpenOnlineMap(map);
+
             this.CurrentState = this.onlineState;
             await this.CurrentState.LeaveEdition();
             this.CurrentState.JoinEdition(map);
-            await mapManager.OpenOnlineMap(map);
         }
 
         private void OpenOnlineMap()

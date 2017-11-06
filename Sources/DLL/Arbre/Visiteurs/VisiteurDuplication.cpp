@@ -13,6 +13,7 @@
 #include "ModeleEtatJeu.h"
 #include "ModeleEtatCreerBoost.h"
 #include "ModeleEtatCreerMuret.h"
+#include "ModeleEtatCreerPortail.h"
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -71,7 +72,7 @@ void VisiteurDuplication::visiterAccelerateur(NoeudAccelerateur* noeud) {
 
 		if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
 		{
-			ModeleEtatCreerBoost::obtenirInstance()->getBoostCreationCallback()(noeudDouble->getUUID(), glm::value_ptr(noeudDouble->obtenirPositionRelative()));
+			ModeleEtatCreerBoost::obtenirInstance()->getBoostCreationCallback()(noeudDouble->getUUID(), glm::value_ptr(noeudDouble->obtenirPositionRelative()), noeudDouble->obtenirRotation().y, glm::value_ptr(noeudDouble->obtenirScale()));
 		}
 
 	}
@@ -137,7 +138,13 @@ void VisiteurDuplication::visiterPortail(NoeudPortail* noeud) {
 			// Relier les deux portails
 			noeudDouble->assignerOppose(premierNoeud_);
 			premierNoeud_->assignerOppose(noeudDouble);
+			if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
+			{
+				ModeleEtatCreerPortail::obtenirInstance()->getPortalCreationCallback()(premierNoeud_->getUUID(), glm::value_ptr(premierNoeud_->obtenirPositionRelative()), (premierNoeud_->obtenirRotation().y), glm::value_ptr(premierNoeud_->obtenirScale()),
+					noeudDouble->getUUID(), glm::value_ptr(noeudDouble->obtenirPositionRelative()), noeudDouble->obtenirRotation().y, glm::value_ptr(noeudDouble->obtenirScale()));
+			}
 			premierNoeud_ = nullptr;
+
 		}
 
 		// Ajout du noeud à l'arbre de rendu

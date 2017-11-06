@@ -1026,12 +1026,10 @@ void masterGoal()
 }
 
 
-__declspec(dllexport) void createPortal(char* startUuid, float* startPos, char* endUuid, float* endPos)
+__declspec(dllexport) void createPortal(const char* startUuid, const float* startPos, const float startRotation, const float* startScale, char* endUuid, const float* endPos, const float endRotation, const float* endScale)
 {
-	glm::vec3 startPosVec = glm::make_vec3(startPos);
-	glm::vec3 endPosVec = glm::make_vec3(endPos);
 
-	return NodeCreator::obtenirInstance()->createPortal(startUuid, startPosVec, endUuid, endPosVec);
+	return NodeCreator::obtenirInstance()->createPortal(startUuid, glm::make_vec3(startPos), startRotation, glm::make_vec3(startScale), endUuid, glm::make_vec3(endPos), endRotation, glm::make_vec3(endScale));
 }
 
 void setPortalCreationCallback(PortalCreationCallback callback)
@@ -1049,10 +1047,9 @@ void setWallCreationCallback(WallCreationCallback callback)
 	ModeleEtatCreerMuret::obtenirInstance()->setWallCreationCallback(callback);
 }
 
-void createBoost(const char* uuid, const float* position)
+void createBoost(const char* uuid, const float* position, const float angle, const float* scale)
 {
-	glm::vec3 posVec = glm::make_vec3(position);
-	return NodeCreator::obtenirInstance()->createBoost(uuid, posVec);
+	return NodeCreator::obtenirInstance()->createBoost(uuid, glm::make_vec3(position), angle, glm::make_vec3(scale));
 }
 
 void setBoostCreationCallback(BoostCreationCallback callback)

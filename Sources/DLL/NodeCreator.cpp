@@ -4,6 +4,10 @@
 #include "FacadeModele.h"
 #include "NoeudMur.h"
 #include <glm/gtx/vector_angle.inl>
+#include <glm/detail/type_mat.hpp>
+#include <glm/detail/type_mat.hpp>
+#include <glm/detail/type_mat.hpp>
+#include <glm/detail/type_mat.hpp>
 
 /// Pointeur vers l'instance unique de la classe.
 NodeCreator* NodeCreator::instance_{ nullptr };
@@ -33,19 +37,25 @@ NodeCreator::~NodeCreator()
 		libererInstance();
 	}
 }
-void NodeCreator::createPortal(const char* startUuid, const glm::vec3 portal1Pos, const char* endUuid, const glm::vec3 portal2Pos)
+void NodeCreator::createPortal(const char* startUuid, glm::vec3 startPos, const float  startRotation, glm::vec3 startScale, const char* endUuid, glm::vec3 endPos, const  float endRotation, glm::vec3 endScale)
 {
 
 	NoeudPortail* noeud1 = (NoeudPortail*)FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->creerNoeud(ArbreRenduINF2990::NOM_PORTAIL,startUuid);
 
-	noeud1->assignerPositionRelative(portal1Pos);
+	noeud1->assignerPositionRelative(startPos);
+	noeud1->rotate(startRotation, glm::vec3(0, 1, 0));
+	noeud1->scale(endScale);
 
 	NoeudPortail* noeud2 = (NoeudPortail*)FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->creerNoeud(ArbreRenduINF2990::NOM_PORTAIL, endUuid);
 
-	noeud2->assignerPositionRelative(portal2Pos);
+	noeud2->assignerPositionRelative(endPos);
+	noeud2->rotate(endRotation, glm::vec3(0, 1, 0));
+	noeud2->scale(startScale);
+
 
 	noeud1->assignerOppose(noeud2);
 	noeud2->assignerOppose(noeud1);
+
 
 	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->ajouter(noeud1);
 	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->ajouter(noeud2);
@@ -66,11 +76,13 @@ void NodeCreator::createWall(const char* uuid, glm::vec3 position, float angle, 
 
 }
 
-void NodeCreator::createBoost(const char* uuid, glm::vec3 pos)
+void NodeCreator::createBoost(const char* uuid, glm::vec3 pos, const float angle, glm::vec3 scale)
 {
 	NoeudAbstrait* noeud = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->creerNoeud(ArbreRenduINF2990::NOM_ACCELERATEUR, uuid);
 
 	noeud->assignerPositionRelative(pos);
+	noeud->rotate(angle, glm::vec3(0, 1, 0));
+	noeud->scale(scale);
 
 	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->ajouter(noeud);
 }
