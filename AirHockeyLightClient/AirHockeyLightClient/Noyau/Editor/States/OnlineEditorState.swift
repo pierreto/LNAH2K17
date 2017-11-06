@@ -33,25 +33,29 @@ class OnlineEditorState: EditorState {
         self.clientConnection.getEditionHub().leaveRoom()
     }
     
-    override func currentUserCreatedBoost(uuid: String, pos: SCNVector3) {
+    override func currentUserCreatedBoost(uuid: String, pos: SCNVector3, rotation: Float, scale: SCNVector3) {
         let position = [pos.x, pos.y, pos.z]
-        let command = BoostCommand(objectUuid: uuid, pos: position)
+        let scale = [scale.x, scale.y, scale.z]
+        let command = BoostCommand(objectUuid: uuid, pos: position, rotation: rotation, scale: scale)
         self.clientConnection.getEditionHub().sendEditionCommand(command: command)
     }
     
-    override func currentUserCreatedWall(uuid: String, startPos: GLKVector3, endPos: GLKVector3) {
-        let startPosition = [startPos.x, startPos.y, startPos.z]
-        let endPosition = [endPos.x, endPos.y, endPos.z]
-        let command = WallCommand(objectUuid: uuid, startPos: startPosition, endPos: endPosition)
+    override func currentUserCreatedWall(uuid: String, pos: SCNVector3, rotation: Float, scale: SCNVector3) {
+        let position = [pos.x, pos.y, pos.z]
+        let scale = [scale.x, scale.y, scale.z]
+        let command = WallCommand(objectUuid: uuid, pos: position, rotation: rotation, scale: scale)
         self.clientConnection.getEditionHub().sendEditionCommand(command: command)
     }
     
-    override func currentUserCreatedPortal(startUuid: String, startPos: SCNVector3,
-                                           endUuid: String, endPos: SCNVector3) {
+    override func currentUserCreatedPortal(startUuid: String, startPos: SCNVector3, startRotation: Float, startScale: SCNVector3,
+                                           endUuid: String, endPos: SCNVector3, endRotation: Float, endScale: SCNVector3) {
         let startPosition = [startPos.x, startPos.y, startPos.z]
+        let startScale = [startScale.x, startScale.y, startScale.z]
         let endPosition = [endPos.x, endPos.y, endPos.z]
+        let endScale = [endScale.x, endScale.y, endScale.z]
         let command = PortalCommand(objectUuid: startUuid, endUuid: endUuid,
-                                          startPos: startPosition, endPos: endPosition)
+                                    startPos: startPosition, startRotation: startRotation, startScale: startScale,
+                                    endPos: endPosition, endRotation: endRotation, endScale: endScale)
         self.clientConnection.getEditionHub().sendEditionCommand(command: command)
     }
     

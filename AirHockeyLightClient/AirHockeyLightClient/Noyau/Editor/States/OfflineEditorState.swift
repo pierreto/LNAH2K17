@@ -27,10 +27,10 @@ class OfflineEditorState: EditorState {
     }
     
     override func leaveEdition() {}
-    override func currentUserCreatedBoost(uuid: String, pos: SCNVector3) {}
-    override func currentUserCreatedWall(uuid: String, startPos: GLKVector3, endPos: GLKVector3) {}
-    override func currentUserCreatedPortal(startUuid: String, startPos: SCNVector3,
-                                           endUuid: String, endPos: SCNVector3) {}
+    override func currentUserCreatedBoost(uuid: String, pos: SCNVector3, rotation: Float, scale: SCNVector3) {}
+    override func currentUserCreatedWall(uuid: String, pos: SCNVector3, rotation: Float, scale: SCNVector3) {}
+    override func currentUserCreatedPortal(startUuid: String, startPos: SCNVector3, startRotation: Float, startScale: SCNVector3,
+                                           endUuid: String, endPos: SCNVector3, endRotation: Float, endScale: SCNVector3) {}
     override func currentUserSelectedObject(uuidSelected: String, isSelected: Bool, deselectAll: Bool) {}
     
 }

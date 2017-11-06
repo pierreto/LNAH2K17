@@ -101,9 +101,9 @@ class ModeleEtatCreerPortail: ModeleEtat {
                     // Envoyer la commande
                     FacadeModele.instance.obtenirEtatEdition().currentUserCreatedPortal(
                         startUuid: (self.premierNoeud?.obtenirUUID())!,
-                        startPos: (self.premierNoeud?.position)!,
+                        startPos: (self.premierNoeud?.position)!, startRotation: (self.premierNoeud?.rotation.w)!, startScale: (self.premierNoeud?.scale)!,
                         endUuid: noeud.obtenirUUID(),
-                        endPos: noeud.position)
+                        endPos: noeud.position, endRotation: noeud.rotation.w, endScale: noeud.scale)
                     
                     self.premierNoeud = nil;
                     FacadeModele.instance.obtenirVue().editorHUDScene?.showCancelButton(activer: false)

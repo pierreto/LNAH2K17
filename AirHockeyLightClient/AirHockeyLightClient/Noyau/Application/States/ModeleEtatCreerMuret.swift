@@ -101,14 +101,12 @@ class ModeleEtatCreerMuret: ModeleEtat {
                 if (self.noeudsSurLaTable()) {
                     // Desactiver effet sélection
                     self.noeud?.appliquerMaterielSelection(activer: false)
-                    
-                    // Transformation du point dans l'espace virtuelle
-                    let point = MathHelper.GetHitTestSceneViewCoordinates(point: self.position)
-                    let pointFinal = GLKVector3.init(v: ((point?.x)!, (point?.y)!, (point?.z)!))
+
                     // Envoyer la commande
                     FacadeModele.instance.obtenirEtatEdition().currentUserCreatedWall(uuid: (noeud?.obtenirUUID())!,
-                                                                                      startPos: self.pointInitial,
-                                                                                      endPos: pointFinal)
+                                                                                      pos: (noeud?.position)!,
+                                                                                      rotation: (noeud?.rotation.w)!,
+                                                                                      scale: (noeud?.scale)!)
                     
                     self.noeud = nil
                 }

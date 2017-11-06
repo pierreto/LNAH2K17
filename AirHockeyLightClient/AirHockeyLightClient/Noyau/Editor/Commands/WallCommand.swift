@@ -20,30 +20,33 @@ import SwiftyJSON
 ///////////////////////////////////////////////////////////////////////////
 class WallCommand: EditionCommand {
     
-    var startPosition: [Float] = [Float]()
-    var endPosition: [Float] = [Float]()
+    var position: [Float] = [Float]()
+    var rotation: Float = 0.0
+    var scale: [Float] = [Float]()
     
     override init(objectUuid: String) {
         super.init(objectUuid: objectUuid)
     }
     
-    init(objectUuid: String, startPos: [Float], endPos: [Float]) {
+    init(objectUuid: String, pos: [Float], rotation: Float, scale: [Float]) {
         super.init(objectUuid: objectUuid)
-        self.startPosition = startPos
-        self.endPosition = endPos
+        self.position = pos
+        self.rotation = rotation
+        self.scale = scale
     }
     
     override func executeCommand() {
-        let startPos = GLKVector3.init(v: (self.startPosition[0], self.startPosition[1], self.startPosition[2]))
-        let endPos = GLKVector3.init(v: (self.endPosition[0], self.endPosition[1], self.endPosition[2]))
-        NodeCreator.instance.createWall(uuid: self.objectUuid, startPos: startPos, endPos: endPos)
+        let pos = GLKVector3.init(v: (self.position[0], self.position[1], self.position[2]))
+        let scale = GLKVector3.init(v: (self.scale[0], self.scale[1], self.scale[2]))
+        NodeCreator.instance.createWall(uuid: self.objectUuid, position: pos, angle: self.rotation, scale: scale)
     }
     
     override func toJSON() -> JSON? {
         let type = JSON(["$type": EDITION_COMMAND.WALL_COMMAND.rawValue]).rawString()
         let data = JSON(["ObjectUuid": self.objectUuid,
-                         "StartPosition": self.startPosition,
-                         "EndPosition": self.endPosition]).rawString()
+                         "Position": self.position,
+                         "Rotation": self.rotation,
+                         "Scale": self.scale]).rawString()
         
         // L'ordre est important "$type" puis données
         return JSON(JsonHelper.removeLastChar(jsonString: type!) + "," +
@@ -51,8 +54,9 @@ class WallCommand: EditionCommand {
     }
     
     override func fromJSON(json: JSON) {
-        self.startPosition = json["StartPosition"].arrayObject as! [Float]
-        self.endPosition = json["EndPosition"].arrayObject as! [Float]
+        self.position = json["Position"].arrayObject as! [Float]
+        self.rotation = json["Rotation"].float!
+        self.scale = json["Scale"].arrayObject as! [Float]
     }
     
 }

@@ -28,8 +28,8 @@ class VisiteurByUUID: VisiteurAbstrait {
     }
     
     /// Retourne le noeud à trouver par wantedUUID
-    public func getNode() -> NoeudCommun {
-        return self.wantedNode!
+    public func getNode() -> NoeudCommun? {
+        return self.wantedNode
     }
     
     /// Visiter un accélérateur pour le rendre sélectionnable

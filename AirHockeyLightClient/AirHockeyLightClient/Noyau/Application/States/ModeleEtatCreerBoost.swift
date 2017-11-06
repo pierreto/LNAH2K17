@@ -71,7 +71,7 @@ class ModeleEtatCreerBoost: ModeleEtat {
         else {
             // Envoyer la commande
             FacadeModele.instance.obtenirEtatEdition().currentUserCreatedBoost(uuid: noeud.obtenirUUID(),
-                                                                               pos: noeud.position)
+                                                                               pos: noeud.position, rotation: noeud.rotation.w, scale: noeud.scale)
         }
     }
     

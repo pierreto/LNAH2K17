@@ -21,25 +21,32 @@ import SwiftyJSON
 class BoostCommand: EditionCommand {
     
     var position: [Float] = [Float]()
+    var rotation: Float = 0.0
+    var scale: [Float] = [Float]()
     
     override init(objectUuid: String) {
         super.init(objectUuid: objectUuid)
     }
     
-    init(objectUuid: String, pos: [Float]) {
+    init(objectUuid: String, pos: [Float], rotation: Float, scale: [Float]) {
         super.init(objectUuid: objectUuid)
         self.position = pos
+        self.rotation = rotation
+        self.scale = scale
     }
     
     override func executeCommand() {
         let position = GLKVector3.init(v: (self.position[0], self.position[1], self.position[2]))
-        NodeCreator.instance.createBoost(uuid: self.objectUuid, pos: position)
+        let scale = GLKVector3.init(v: (self.scale[0], self.scale[1], self.scale[2]))
+        NodeCreator.instance.createBoost(uuid: self.objectUuid, pos: position, angle: self.rotation, scale: scale)
     }
     
     override func toJSON() -> JSON? {
         let type = JSON(["$type": EDITION_COMMAND.BOOST_COMMAND.rawValue]).rawString()
         let data = JSON(["ObjectUuid": self.objectUuid,
-                         "Position": self.position]).rawString()
+                         "Position": self.position,
+                         "Rotation": self.rotation,
+                         "Scale": self.scale]).rawString()
         
         // L'ordre est important "$type" puis données
         return JSON(JsonHelper.removeLastChar(jsonString: type!) + "," +
@@ -48,6 +55,8 @@ class BoostCommand: EditionCommand {
     
     override func fromJSON(json: JSON) {
         self.position = json["Position"].arrayObject as! [Float]
+        self.rotation = json["Rotation"].float!
+        self.scale = json["Scale"].arrayObject as! [Float]
     }
     
 }
