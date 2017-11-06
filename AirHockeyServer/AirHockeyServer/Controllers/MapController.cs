@@ -61,31 +61,16 @@ namespace AirHockeyServer.Controllers
         [Route("api/maps/save")]
         public async Task<HttpResponseMessage> SaveMap([FromBody]MapEntity map)
         {
-            try
+            if (map.Id == null)
             {
-                await MapService.SaveMap(map);
-                return Request.CreateResponse(HttpStatusCode.OK);
+                int? mapId = await MapService.SaveNewMap(map);
+                return HttpResponseGenerator.CreateSuccesResponseMessage(HttpStatusCode.OK, mapId);
             }
-            catch
+            else
             {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError);
-            }
-        }
-
-        // Hack for returning the db-generated id of a new map.
-        // Should only be used ONCE after saving a new map for the first time:
-        [HttpPost]
-        [Route("api/maps/get_id_new_map")]
-        public async Task<HttpResponseMessage> GetMapID([FromBody]MapEntity map)
-        {
-            try
-            {
-                int? id = await MapService.GetMapID(map);
-                return HttpResponseGenerator.CreateSuccesResponseMessage(HttpStatusCode.OK, id);
-            }
-            catch
-            {
-                return Request.CreateResponse(HttpStatusCode.InternalServerError);
+                bool saved = await MapService.SaveMap(map);
+                return saved ? Request.CreateResponse(HttpStatusCode.OK) : 
+                    Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }
 

@@ -46,7 +46,6 @@ namespace InterfaceGraphique
         public static TournementTree TournementTree { get { return tournementTree; } }
         public static CreditsMenu CreditsMenu { get { return creditsMenu; } }
         public static Panel OpenGLPanel { get { return openGLPanel; } set { openGLPanel = value; } }
-        public static UserEntity user;
         public static LobbyHost LobbyHost { get { return lobbyHost; } set { lobbyHost = value; } }
         public static OnlineTournament OnlineTournament { get { return onlineTournament;  } set { onlineTournament = value; } }
         public static EditorHost EditorHost { get { return editorHost; } set { editorHost = value; } }

@@ -24,16 +24,16 @@ namespace InterfaceGraphique.Services
             return await HttpResponseParser.ParseResponse<MapEntity>(response);
         }
 
+        public async Task<int?> SaveNewMap(MapEntity map)
+        {
+            HttpResponseMessage response = await Program.client.PostAsJsonAsync("api/maps/save", map);
+            return await HttpResponseParser.ParseResponse<int?>(response);
+        }
+
         public async Task<bool> SaveMap(MapEntity map)
         {
             HttpResponseMessage response = await Program.client.PostAsJsonAsync("api/maps/save", map);
             return response.IsSuccessStatusCode;
-        }
-
-        public async Task<int?> GetMapID(MapEntity savedMap)
-        {
-            HttpResponseMessage response = await Program.client.PostAsJsonAsync("api/maps/get_id_new_map", savedMap);
-            return await HttpResponseParser.ParseResponse<int?>(response);
         }
     }
 }

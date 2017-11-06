@@ -11,7 +11,7 @@ namespace AirHockeyServer.Services.Interfaces
     {
         Task<IEnumerable<MapEntity>> GetMaps();
         Task<MapEntity> GetMap(int id);
-        Task SaveMap(MapEntity map);
-        Task<int?> GetMapID(MapEntity map);
+        Task<int?> SaveNewMap(MapEntity map);
+        Task<bool> SaveMap(MapEntity map);
     }
 }

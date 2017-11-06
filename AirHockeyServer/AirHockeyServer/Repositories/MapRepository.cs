@@ -13,28 +13,31 @@ using AirHockeyServer.Repositories.Interfaces;
 
 namespace AirHockeyServer.Repositories
 {
-    public class MapRepository : Repository, IMapRepository
+    public class MapRepository : IMapRepository
     {
-        private Table<MapPoco> Maps;
+
+        MapperManager MapperManager { get; set; }
 
         public MapRepository(DataProvider dataProvider, MapperManager mapperManager)
-            : base(dataProvider, mapperManager)
         {
-            Maps = DataProvider.DC.GetTable<MapPoco>();
+            MapperManager = mapperManager;
         }
 
         public async Task<MapEntity> GetMap(int idMap)
         {
             try
             {
-                IQueryable<MapPoco> queryable =
-                    from map in this.Maps where map.Id == idMap select map;
+                using (MyDataContext DC = new MyDataContext())
+                {
+                    var query =
+                        from map in DC.MapsTable where map.Id == idMap select map;
 
-                var results = await Task<IEnumerable<MapPoco>>.Run(
-                    () => queryable.ToArray());
+                    var results = await Task<IEnumerable<MapPoco>>.Run(
+                        () => query.ToArray());
 
-                MapPoco result = results.Length > 0 ? results.First() : null;
-                return MapperManager.Map<MapPoco, MapEntity>(result);
+                    MapPoco result = results.Length > 0 ? results.First() : null;
+                    return MapperManager.Map<MapPoco, MapEntity>(result);
+                }
             }
             catch (Exception e)
             {
@@ -47,17 +50,20 @@ namespace AirHockeyServer.Repositories
         {
             try
             {
-                IQueryable<MapPoco> queryable = from map in this.Maps select map;
-                List<MapPoco> maps = await Task<List<MapPoco>>.Run(
-                    () => queryable.ToList());
-
-                List<MapEntity> mapEntities = MapperManager.Map<List<MapPoco>, List<MapEntity>>(maps);
-                for (int i = 0; i < mapEntities.Count(); i++)
+                using (MyDataContext DC = new MyDataContext())
                 {
-                    mapEntities[i].Json = null;
-                }
+                    var query = from map in DC.MapsTable select map;
+                    var maps = await Task<List<MapPoco>>.Run(
+                        () => query.ToList());
 
-                return mapEntities;
+                    List<MapEntity> mapEntities = MapperManager.Map<List<MapPoco>, List<MapEntity>>(maps);
+                    for (int i = 0; i < mapEntities.Count(); i++)
+                    {
+                        mapEntities[i].Json = null;
+                    }
+
+                    return mapEntities;
+                }
             }
             catch (Exception e)
             {
@@ -66,65 +72,66 @@ namespace AirHockeyServer.Repositories
             }
         }
 
-        public async Task CreateNewMap(MapEntity map)
+        public async Task<int?> CreateNewMap(MapEntity map)
         {
             try
             {
-                MapPoco newMap = MapperManager.Map<MapEntity, MapPoco>(map);
-                this.Maps.InsertOnSubmit(newMap);
-                await Task.Run(() => this.DataProvider.DC.SubmitChanges());
+                using (MyDataContext DC = new MyDataContext())
+                {
+                    MapPoco newMap = MapperManager.Map<MapEntity, MapPoco>(map);
+                    DC.MapsTable.InsertOnSubmit(newMap);
+                    await Task.Run(() => DC.SubmitChanges());
 
-                var query =
-                    from _map in this.Maps
-                    where _map.Creator == map.Creator && _map.Name == map.MapName && _map.CreationDate == map.LastBackup
-                    select _map;
-                var results = await Task<MapPoco>.Run(
-                    () => query.ToArray());
+                    // To fetch the db auto-generated Id of the new created map, we have to compare
+                    // creation dates without considering milliseconds (or it will fail):
+                    map.LastBackup = new DateTime(
+                        map.LastBackup.Year,
+                        map.LastBackup.Month,
+                        map.LastBackup.Day,
+                        map.LastBackup.Hour,
+                        map.LastBackup.Minute,
+                        map.LastBackup.Second,
+                        map.LastBackup.Kind);
 
-                MapPoco result = results.Length > 0 ? results.First() : null;
+                    // We have to fetch the db auto-generated Id of the new created map:
+                    var query =
+                        from _map in DC.MapsTable
+                        where _map.Creator == map.Creator && _map.CreationDate == map.LastBackup
+                        select _map.Id;
+
+                    var results = await Task<List<int?>>.Run(
+                        () => query.ToList<int?>());
+
+                    return results.First();
+                }
             }
             catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine("[MapRepository.CreateNewMap] " + e.ToString());
-            }
-        }
-
-        public async Task<int?> GetMapID(MapEntity savedMap)
-        {
-            try
-            {
-                var query =
-                    from map in this.Maps
-                    where map.Creator == savedMap.Creator && map.Name == savedMap.MapName
-                    select map;
-                var results = await Task<MapPoco>.Run(
-                    () => query.ToArray());
-
-                MapPoco result = results.Length > 0 ? results.First() : null;
-                return result?.Id;
-            }
-            catch (Exception e)
-            {
-                System.Diagnostics.Debug.WriteLine("[MapRepository.GetMapID] " + e.ToString());
                 return null;
             }
         }
 
-        public async Task UpdateMap(MapEntity updatedMap)
+        public async Task<bool> UpdateMap(MapEntity updatedMap)
         {
             try
             {
-                MapPoco _updatedMap = MapperManager.Map<MapEntity, MapPoco>(updatedMap);
-                var query =
-                    from map in this.Maps where map.Id == updatedMap.Id select map;
-                var results = query.ToArray();
-                var existingMap = results.First();
-                existingMap.Json = updatedMap.Json;
-                await Task.Run(() => this.DataProvider.DC.SubmitChanges());
+                using (MyDataContext DC = new MyDataContext())
+                {
+                    MapPoco _updatedMap = MapperManager.Map<MapEntity, MapPoco>(updatedMap);
+                    var query = from map in DC.MapsTable where map.Id == updatedMap.Id select map;
+                    var results = query.ToArray();
+                    var existingMap = results.First();
+                    existingMap.Json = updatedMap.Json;
+                    await Task.Run(() => DC.SubmitChanges());
+                    return true;
+                }
             }
             catch (Exception e)
             {
+
                 System.Diagnostics.Debug.WriteLine("[MapRepository.UpdateMap] " + e.ToString());
+                return false;
             }
         }
     }
