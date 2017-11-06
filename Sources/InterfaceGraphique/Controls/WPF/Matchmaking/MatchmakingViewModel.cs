@@ -155,14 +155,13 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
             get => selectedMap;
             set
             {
-                if (selectedMap==null || !string.Equals(selectedMap.MapName, value.MapName))
+                if (value != null && (selectedMap == null || selectedMap.Id != value.Id))
                 {
-                    foreach(MapEntity map in mapsAvailable)
+                    foreach (MapEntity map in mapsAvailable)
                     {
-
-                        if(string.Equals(map.MapName, value.MapName))
+                        if (map.Id == value.Id)
                         {
-                            selectedMap = map ;
+                            selectedMap = map;
                         }
                     }
                     this.OnPropertyChanged();
@@ -246,7 +245,7 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
             get => enabledMap;
             set
             {
-                value = enabledMap;
+                enabledMap = value;
                 OnPropertyChanged();
             }
         }

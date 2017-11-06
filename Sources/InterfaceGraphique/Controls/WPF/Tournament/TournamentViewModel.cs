@@ -38,15 +38,18 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
             {
                 new MapEntity
                 {
-                    MapName = "foret enchantee"
+                    MapName = "foret enchantee",
+                    Id = 1
                 },
                 new MapEntity
                 {
-                    MapName = "loup garou"
+                    MapName = "loup garou",
+                    Id = 2
                 },
                 new MapEntity
                 {
-                    MapName = "New york"
+                    MapName = "New york",
+                    Id = 3
                 }
             };
 
@@ -64,6 +67,16 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
             this.waitingRoomHub.WinnerResultEvent += (e, args) => { Winner = args.Username; };
 
             this.waitingRoomHub.SemiFinalResultEvent += (e, args) => OnSemiFinalResult(e, args);
+
+            this.waitingRoomHub.MapUpdatedEvent += (e, args) => OnMapUpdated(e, args);
+        }
+
+        private void OnMapUpdated(object e, MapEntity args)
+        {
+            if (args != null)
+            {
+                SelectedMap = args;
+            }
         }
 
         private void OnSemiFinalResult(object e, List<UserEntity> users)
@@ -164,12 +177,11 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
             get => selectedMap;
             set
             {
-                if (selectedMap == null || !string.Equals(selectedMap.MapName, value.MapName))
+                if (value != null && (selectedMap == null || selectedMap.Id != value.Id))
                 {
                     foreach (MapEntity map in mapsAvailable)
                     {
-
-                        if (string.Equals(map.MapName, value.MapName))
+                        if (map.Id == value.Id)
                         {
                             selectedMap = map;
                         }
