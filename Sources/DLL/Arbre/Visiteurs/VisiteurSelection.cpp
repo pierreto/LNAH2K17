@@ -90,8 +90,25 @@ void VisiteurSelection::visiterAccelerateur(NoeudAccelerateur* noeud) {
 void VisiteurSelection::visiterPointControl(NoeudPointControl* noeud) {
 	if (!multiSelection_ && noeud->estSelectionnable())
 	{
-		sphereCollisionTest(noeud);
-		//handleSelection(noeud->obtenirNoeudOppose());
+		utilitaire::SphereEnglobante sphereCollider = utilitaire::calculerSphereEnglobante(*noeud->obtenirModele3D());
+		aidecollision::DetailsCollision collisionDetails = aidecollision::calculerCollisionSegment(pointDebut_, pointFin_, noeud->obtenirPositionRelative(), sphereCollider.rayon, true);
+
+		if (collisionDetails.type != aidecollision::COLLISION_AUCUNE) {
+			if (!noeud->isSelectedByAnotherUser())
+			{
+				noeud->selectionnerTout();
+				if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
+				{
+					ModeleEtatSelection::obtenirInstance()->getSelectionEventCallback()(noeud->getUUID(), true, false);
+					ModeleEtatSelection::obtenirInstance()->getSelectionEventCallback()(noeud->obtenirNoeudOppose()->getUUID(), true, false);
+				}
+				nbSelections_++;
+			}
+		}
+		
+		
+		
+		
 	}
 }
 

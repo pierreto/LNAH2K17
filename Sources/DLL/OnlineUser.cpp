@@ -41,6 +41,7 @@ void OnlineUser::deselect(std::string uuid)
 			nodesSelected_.erase(it);
 			break;
 		}
+		++it;
 	}
 }
 
