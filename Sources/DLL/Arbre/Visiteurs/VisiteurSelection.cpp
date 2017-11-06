@@ -89,7 +89,10 @@ void VisiteurSelection::visiterAccelerateur(NoeudAccelerateur* noeud) {
 ////////////////////////////////////////////////////////////////////////
 void VisiteurSelection::visiterPointControl(NoeudPointControl* noeud) {
 	if (!multiSelection_ && noeud->estSelectionnable())
+	{
 		sphereCollisionTest(noeud);
+		//handleSelection(noeud->obtenirNoeudOppose());
+	}
 }
 
 
@@ -150,7 +153,6 @@ void VisiteurSelection::sphereCollisionTest(NoeudAbstrait* noeud) {
 
 	if (collisionDetails.type != aidecollision::COLLISION_AUCUNE) {
 		handleSelection(noeud);
-
 	}
 }
 

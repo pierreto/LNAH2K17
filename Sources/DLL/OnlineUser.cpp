@@ -1,5 +1,6 @@
 #include "OnlineUser.h"
 #include "VisitorByUUID.h"
+#include "ModeleEtatPointControl.h"
 
 
 OnlineUser::OnlineUser(std::string name, std::string hexColor)
@@ -62,7 +63,21 @@ void OnlineUser::deselectAll()
 	for(NoeudAbstrait* node : nodesSelected_)
 	{
 		node->setSelectedByAnotherUser(false);
-		node->useOtherColor(false, color_);
+		if(dynamic_cast<NoeudPointControl*>(node))
+		{
+			if(dynamic_cast<ModeleEtatPointControl*>(FacadeModele::obtenirInstance()->getEtat()))
+			{
+				node->useOtherColor(true, glm::vec4(1, 85.0f / 255, 82.0f / 255, 1));
+			}
+			else
+			{
+				node->useOtherColor(false, color_);
+			}
+
+		}else
+		{
+			node->useOtherColor(false, color_);
+		}
 	}
 	nodesSelected_.clear();
 }

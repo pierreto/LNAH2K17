@@ -166,6 +166,8 @@ public:
    /// Document rapidJSON
    rapidjson::Document docJSON_;
 
+   ModeleEtat* getEtat() { return etat_; }
+
 private:
    /// Constructeur par défaut.
 	FacadeModele();
