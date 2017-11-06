@@ -15,6 +15,7 @@ enum EDITION_COMMAND : String {
     case BOOST_COMMAND = "InterfaceGraphique.Entities.EditonCommand.BoostCommand, InterfaceGraphique"
     case WALL_COMMAND = "InterfaceGraphique.Entities.EditonCommand.WallCommand, InterfaceGraphique"
     case PORTAL_COMMAND = "InterfaceGraphique.Entities.EditonCommand.PortalCommand, InterfaceGraphique"
+    case SELECTION_COMMAND = "InterfaceGraphique.Entities.EditonCommand.SelectionCommand, InterfaceGraphique"
 }
 
 class EditionCommand {

@@ -44,7 +44,7 @@ class NoeudCommun : SCNNode {
     // Attributs de couleur du noeud
     private var defaultColor: UIColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
     private var selectionnableColor: UIColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-    private var selectionneColor: UIColor = FacadeModele.instance.getUserColor()
+    private var selectionneColor: UIColor = FacadeModele.instance.getCurrentUserColor()
     
     /// Constructeur avec géométrie
     required init(type: String, geometry: SCNGeometry, uuid: String) {
@@ -130,12 +130,14 @@ class NoeudCommun : SCNNode {
     
     /// Désélectonne tous les noeuds qui sont sélectitonnés parmi les descendants de ce noeud, lui-même étant inclus
     func deselectionnerTout() {
-        self.assignerSelection(selectionne: false)
+        if !self.estSelectionneByAnotherUser() {
+            self.assignerSelection(selectionne: false)
         
-        for child in self.childNodes {
-            if child is NoeudCommun {
-                let noeud = child as! NoeudCommun
-                noeud.deselectionnerTout()
+            for child in self.childNodes {
+                if child is NoeudCommun {
+                    let noeud = child as! NoeudCommun
+                    noeud.deselectionnerTout()
+                }
             }
         }
     }
@@ -193,6 +195,11 @@ class NoeudCommun : SCNNode {
     /// Modifie la couleur lorsqu'un noeud est sélectionnable
     func assignerSelectionnableColor(color: UIColor) {
         self.selectionnableColor = color
+    }
+    
+    /// Modifie la couleur lorsqu'un noeud est sélectionné
+    func assignerSelectionColor(color: UIColor) {
+        self.selectionneColor = color
     }
     
     /// Cette fonction permet de changer la position relative en appliquant
@@ -303,8 +310,7 @@ class NoeudCommun : SCNNode {
         if material.diffuse.contents is UIColor && self.estSelectionnable() {
             self.geometry?.firstMaterial = material
             self.geometry?.firstMaterial?.locksAmbientWithDiffuse = true
-            // TODO : pour color utiliser selectionneColor à la place de getUserColor()
-            self.useOtherColor(activer: activer, color: FacadeModele.instance.getUserColor())
+            self.useOtherColor(activer: activer, color: self.selectionneColor)
         }
     }
     

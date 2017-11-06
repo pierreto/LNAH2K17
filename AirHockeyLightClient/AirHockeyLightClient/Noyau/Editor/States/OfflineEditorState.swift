@@ -22,12 +22,16 @@ class OfflineEditorState: EditorState {
     /// Instance singleton
     static let instance = OfflineEditorState()
     
-    override func joinEdition(mapEntity: MapEntity) {}
+    override func joinEdition(mapEntity: MapEntity) {
+        FacadeModele.instance.setCurrentUserDefaultColor()
+    }
+    
     override func leaveEdition() {}
     override func currentUserCreatedBoost(uuid: String, pos: SCNVector3) {}
     override func currentUserCreatedWall(uuid: String, startPos: GLKVector3, endPos: GLKVector3) {}
     override func currentUserCreatedPortal(startUuid: String, startPos: SCNVector3,
                                            endUuid: String, endPos: SCNVector3) {}
+    override func currentUserSelectedObject(uuidSelected: String, isSelected: Bool, deselectAll: Bool) {}
     
 }
 

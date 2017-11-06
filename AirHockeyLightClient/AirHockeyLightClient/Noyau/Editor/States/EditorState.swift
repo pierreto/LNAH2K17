@@ -26,6 +26,7 @@ class EditorState {
     func currentUserCreatedBoost(uuid: String, pos: SCNVector3) {}
     func currentUserCreatedWall(uuid: String, startPos: GLKVector3, endPos: GLKVector3) {}
     func currentUserCreatedPortal(startUuid: String, startPos: SCNVector3, endUuid: String, endPos: SCNVector3) {}
+    func currentUserSelectedObject(uuidSelected: String, isSelected: Bool, deselectAll: Bool) {}
 }
 
 ///////////////////////////////////////////////////////////////////////////////

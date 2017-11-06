@@ -58,17 +58,7 @@ class VisiteurSelection: VisiteurAbstrait {
                     
                     if hitResult.node is NoeudCommun {
                         let noeud = hitResult.node as! NoeudCommun
-                        
-                        if noeud.estSelectionnable() {
-                            // Selectioner le noeud
-                            if !noeud.estSelectionne() {
-                                noeud.assignerSelection(selectionne: true)
-                            }
-                            // Déselectionner le noeud sauf pour le point de contrôle
-                            else if (noeud.obtenirType() != FacadeModele.instance.obtenirArbreRendu().NOM_POINT_CONTROL) {
-                                noeud.assignerSelection(selectionne: false)
-                            }
-                        }
+                        self.handleSelection(noeud: noeud)
                     }
                 }
             }
@@ -88,6 +78,32 @@ class VisiteurSelection: VisiteurAbstrait {
     }
     
     //virtual void visiterRondelle(NoeudRondelle* noeud);
+    
+    private func handleSelection(noeud: NoeudCommun) {
+        if noeud.estSelectionnable() && !noeud.estSelectionneByAnotherUser() {
+            // Selectioner le noeud
+            if !noeud.estSelectionne() {
+                noeud.assignerSelection(selectionne: true)
+                
+                // Envoyer la commande
+                FacadeModele.instance.obtenirEtatEdition().currentUserSelectedObject(uuidSelected: noeud.obtenirUUID(),
+                                                                                     isSelected: noeud.estSelectionne(),
+                                                                                     deselectAll: false)
+                self.nbSelections += 1
+            }
+            // Déselectionner le noeud sauf pour le point de contrôle
+            else if (noeud.obtenirType() != FacadeModele.instance.obtenirArbreRendu().NOM_POINT_CONTROL) {
+                noeud.assignerSelection(selectionne: false)
+                
+                // Envoyer la commande
+                FacadeModele.instance.obtenirEtatEdition().currentUserSelectedObject(uuidSelected: noeud.obtenirUUID(),
+                                                                                     isSelected: noeud.estSelectionne(),
+                                                                                     deselectAll: false)
+                self.nbSelections -= 1
+            }
+        }
+
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////

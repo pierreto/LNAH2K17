@@ -119,15 +119,13 @@ class MapTableViewController: UITableViewController {
                         let maps = JSON(response.result.value!)
                         editor.currentMap = self.buildMapEntity(json: maps)
                         
-                        self.navigationController?.pushViewController(editor, animated: true)
-                        
                         // Rejoindre la salle d'édition
-                        
                         // TODO : A enlever quand toutes les commandes du mode en ligne seront faites
                         FacadeModele.instance.changerEditorState(etat: .ONLINE_EDITION)
                         
-                        
                         FacadeModele.instance.obtenirEtatEdition().joinEdition(mapEntity: editor.currentMap!)
+                        
+                        self.navigationController?.pushViewController(editor, animated: true)
                     } else {
                         print("Failed to fetch map with id from server")
                     }
@@ -135,6 +133,8 @@ class MapTableViewController: UITableViewController {
         }
         else {
             editor.currentMap = self.mapsData[indexPath.row]
+            FacadeModele.instance.obtenirEtatEdition().joinEdition(mapEntity: editor.currentMap!)
+            
             self.navigationController?.pushViewController(editor, animated: true)
         }
     }

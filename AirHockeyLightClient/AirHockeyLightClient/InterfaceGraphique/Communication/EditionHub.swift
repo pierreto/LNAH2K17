@@ -69,6 +69,10 @@ class EditionHub: BaseHub {
                 print ("Portal command")
                 editionCommand = PortalCommand(objectUuid: command["ObjectUuid"].string!)
                 break
+            case .SELECTION_COMMAND :
+                print ("Selection command")
+                editionCommand = SelectionCommand(objectUuid: command["ObjectUuid"].string!)
+                break
         }
         
         editionCommand.fromJSON(json: command)
@@ -106,6 +110,10 @@ class EditionHub: BaseHub {
                     print("Users in room: " + usersInRoom.description)
                     
                     for user in usersInRoom {
+                        if user["Username"] == HubManager.sharedConnection.getUsername() {
+                            FacadeModele.instance.setCurrentUserColor(userHexColor: user["HexColor"]!)
+                        }
+                        
                         FacadeModele.instance.obtenirUserManager()?.addUser(username: user["Username"]!,
                                                                             hexColor: user["HexColor"]!)
                     }

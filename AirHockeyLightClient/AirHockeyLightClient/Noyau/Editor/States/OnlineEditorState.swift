@@ -26,10 +26,7 @@ class OnlineEditorState: EditorState {
     
     override func joinEdition(mapEntity: MapEntity) {
         FacadeModele.instance.obtenirUserManager()?.clearUsers()
-        
-        // TODO : changer username: "test.." pour username: clientConnection.getUsername() quand online mode done
-        self.clientConnection.getEditionHub().joinPublicRoom(username: "testOnlineUser",
-                                                             mapEntity: mapEntity)
+        self.clientConnection.getEditionHub().joinPublicRoom(username: clientConnection.getUsername()!, mapEntity: mapEntity)
     }
     
     override func leaveEdition() {
@@ -55,6 +52,12 @@ class OnlineEditorState: EditorState {
         let endPosition = [endPos.x, endPos.y, endPos.z]
         let command = PortalCommand(objectUuid: startUuid, endUuid: endUuid,
                                           startPos: startPosition, endPos: endPosition)
+        self.clientConnection.getEditionHub().sendEditionCommand(command: command)
+    }
+    
+    override func currentUserSelectedObject(uuidSelected: String, isSelected: Bool, deselectAll: Bool) {
+        let command = SelectionCommand(objectUuid: uuidSelected, username: HubManager.sharedConnection.getUsername()!,
+                                       isSelected: isSelected, deselectAll: deselectAll)
         self.clientConnection.getEditionHub().sendEditionCommand(command: command)
     }
     

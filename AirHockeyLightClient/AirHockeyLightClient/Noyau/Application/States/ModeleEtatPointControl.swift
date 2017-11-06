@@ -36,6 +36,9 @@ class ModeleEtatPointControl : ModeleEtat {
         // Déselectionner tous les objets
         table.deselectionnerTout()
         
+        // Envoyer la commande
+        FacadeModele.instance.obtenirEtatEdition().currentUserSelectedObject(uuidSelected: "", isSelected: false, deselectAll: true)
+        
         // Rendre seulement les points de contrôle selectionnable
         arbre.accepterVisiteur(visiteur: VisiteurSelectionnable(type: arbre.NOM_MUR, selectionnable: false))
         arbre.accepterVisiteur(visiteur: VisiteurSelectionnable(type: arbre.NOM_ACCELERATEUR, selectionnable: false))
@@ -110,6 +113,9 @@ class ModeleEtatPointControl : ModeleEtat {
             }
             
             table.deselectionnerTout()
+            
+            // Envoyer la commande
+            FacadeModele.instance.obtenirEtatEdition().currentUserSelectedObject(uuidSelected: "", isSelected: false, deselectAll: true)
         }
         // Bouger le point de contrôle
         else {
