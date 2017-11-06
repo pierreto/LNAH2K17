@@ -23,6 +23,7 @@ namespace InterfaceGraphique.Game.GameState
         public override void InitializeGameState(GameEntity gameEntity)
         {
             FonctionsNatives.setOnlineClientType((int)OnlineClientType.SLAVE);
+            FonctionsNatives.setCurrentOpponentType((int)OpponentType.ONLINE_PLAYER);
 
             StringBuilder player1Name = new StringBuilder(gameEntity.Slave.Username.Length);
             StringBuilder player2Name = new StringBuilder(gameEntity.Master.Username.Length);
