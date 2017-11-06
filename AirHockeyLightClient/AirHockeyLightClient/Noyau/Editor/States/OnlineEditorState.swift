@@ -36,13 +36,19 @@ class OnlineEditorState: EditorState {
         self.clientConnection.getEditionHub().leaveRoom()
     }
     
+    override func currentUserCreatedBoost(uuid: String, pos: SCNVector3) {
+        let position = [pos.x, pos.y, pos.z]
+        let command = BoostCommand(objectUuid: uuid, pos: position)
+        self.clientConnection.getEditionHub().sendEditionCommand(command: command)
+    }
+    
     override func currentUserCreatedPortal(startUuid: String, startPos: SCNVector3,
                                            endUuid: String, endPos: SCNVector3) {
         let startPosition = [startPos.x, startPos.y, startPos.z]
         let endPosition = [endPos.x, endPos.y, endPos.z]
-        let portalCommand = PortalCommand(objectUuid: startUuid, endUuid: endUuid,
+        let command = PortalCommand(objectUuid: startUuid, endUuid: endUuid,
                                           startPos: startPosition, endPos: endPosition)
-        self.clientConnection.getEditionHub().sendEditionCommand(command: portalCommand)
+        self.clientConnection.getEditionHub().sendEditionCommand(command: command)
     }
     
 }

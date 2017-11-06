@@ -22,6 +22,7 @@ class EditorState {
     
     func joinEdition(mapEntity: MapEntity) {}
     func leaveEdition() {}
+    func currentUserCreatedBoost(uuid: String, pos: SCNVector3) {}
     func currentUserCreatedPortal(startUuid: String, startPos: SCNVector3, endUuid: String, endPos: SCNVector3) {}
 }
 

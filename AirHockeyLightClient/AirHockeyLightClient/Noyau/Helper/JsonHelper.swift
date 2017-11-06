@@ -27,6 +27,16 @@ class JsonHelper {
         return jsonString!
     }
     
+    static func removeLastChar(jsonString: String) -> String {
+        let endIndex = jsonString.index(before: jsonString.endIndex)
+        return jsonString.substring(to: endIndex)
+    }
+    
+    static func removeFirstChar(jsonString: String) -> String {
+        let startIndex = jsonString.index(after: jsonString.startIndex)
+        return jsonString.substring(from: startIndex)
+    }
+    
 }
 
 ///////////////////////////////////////////////////////////////////////////////

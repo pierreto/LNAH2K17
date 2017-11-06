@@ -44,12 +44,16 @@ class PortalCommand: EditionCommand {
                                           portal2Pos: portail2Pos)
     }
     
-    override func toJSON() -> JSON? {        
-        return JSON(["$type": EDITION_COMMAND.PORTAL_COMMAND.rawValue,
-                     "ObjectUuid": self.objectUuid,
-                     "EndUuid": self.endUuid,
-                     "StartPosition": self.startPosition,
-                     "EndPosition": self.endPosition])
+    override func toJSON() -> JSON? {
+        let type = JSON(["$type": EDITION_COMMAND.PORTAL_COMMAND.rawValue]).rawString()
+        let data = JSON(["ObjectUuid": self.objectUuid,
+                         "EndUuid": self.endUuid,
+                         "StartPosition": self.startPosition,
+                         "EndPosition": self.endPosition]).rawString()
+        
+        // L'ordre est important "$type" puis données
+        return JSON(JsonHelper.removeLastChar(jsonString: type!) + "," +
+                    JsonHelper.removeFirstChar(jsonString: data!))
     }
     
     override func fromJSON(json: JSON) {

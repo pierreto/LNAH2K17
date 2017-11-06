@@ -22,15 +22,11 @@ class OfflineEditorState: EditorState {
     /// Instance singleton
     static let instance = OfflineEditorState()
     
-    override func joinEdition(mapEntity: MapEntity) {
-    }
-    
-    override func leaveEdition() {
-    }
-    
+    override func joinEdition(mapEntity: MapEntity) {}
+    override func leaveEdition() {}
+    override func currentUserCreatedBoost(uuid: String, pos: SCNVector3) {}
     override func currentUserCreatedPortal(startUuid: String, startPos: SCNVector3,
-                                           endUuid: String, endPos: SCNVector3) {
-    }
+                                           endUuid: String, endPos: SCNVector3) {}
     
 }
 

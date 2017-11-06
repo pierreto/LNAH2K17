@@ -117,6 +117,7 @@
 		8F6AE2C01F6592EB00A29E8B /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8F6AE2BF1F6592EB00A29E8B /* Actions.sks */; };
 		8F6AE2C21F6592EB00A29E8B /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6AE2C11F6592EB00A29E8B /* GameScene.swift */; };
 		8F6AE2C91F6592EB00A29E8B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8F6AE2C81F6592EB00A29E8B /* Assets.xcassets */; };
+		8F764A4D1FAFBA7F00198FA4 /* BoostCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F764A4C1FAFBA7F00198FA4 /* BoostCommand.swift */; };
 		8F76FC0F1F9CF990001BBC99 /* SCNodeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F76FC0E1F9CF990001BBC99 /* SCNodeHelper.swift */; };
 		8F7F0BC81FA6CFDB00C4F022 /* ObjectPropertiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F0BC71FA6CFDA00C4F022 /* ObjectPropertiesView.swift */; };
 		8F8706B91F7892BB000E6824 /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8706B81F7892BB000E6824 /* Entity.swift */; };
@@ -262,6 +263,7 @@
 		8F6AE2C11F6592EB00A29E8B /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		8F6AE2C81F6592EB00A29E8B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8F6AE2CD1F6592EB00A29E8B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8F764A4C1FAFBA7F00198FA4 /* BoostCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BoostCommand.swift; path = Noyau/Editor/Commands/BoostCommand.swift; sourceTree = "<group>"; };
 		8F76FC0E1F9CF990001BBC99 /* SCNodeHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SCNodeHelper.swift; path = Noyau/Helper/SCNodeHelper.swift; sourceTree = "<group>"; };
 		8F7F0BC71FA6CFDA00C4F022 /* ObjectPropertiesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ObjectPropertiesView.swift; path = InterfaceGraphique/Editor/ObjectPropertiesView.swift; sourceTree = "<group>"; };
 		8F8706B81F7892BB000E6824 /* Entity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Entity.swift; path = Noyau/Entities/Entity.swift; sourceTree = "<group>"; };
@@ -294,6 +296,7 @@
 			children = (
 				8F65B28D1FAE600700D8EE20 /* EditionCommand.swift */,
 				8F65B28E1FAE600700D8EE20 /* PortalCommand.swift */,
+				8F764A4C1FAFBA7F00198FA4 /* BoostCommand.swift */,
 			);
 			name = Commands;
 			sourceTree = "<group>";
@@ -958,6 +961,7 @@
 				3415E6C41F8547CE00DB1CAD /* ArbreRendu.swift in Sources */,
 				0EED627D1F9825B500CD8C56 /* NoeudMur.swift in Sources */,
 				8F690D621F9D5E7F003F051A /* ModeleEtatRotation.swift in Sources */,
+				8F764A4D1FAFBA7F00198FA4 /* BoostCommand.swift in Sources */,
 				8F7F0BC81FA6CFDB00C4F022 /* ObjectPropertiesView.swift in Sources */,
 				8F65B2981FAF6F0200D8EE20 /* OnlineMenuViewController.swift in Sources */,
 				8FCDF61A1FA1BEDF00631551 /* EditorNotificationScene.swift in Sources */,

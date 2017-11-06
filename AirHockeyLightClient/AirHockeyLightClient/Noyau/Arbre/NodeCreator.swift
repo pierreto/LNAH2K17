@@ -22,6 +22,17 @@ class NodeCreator {
     // Singleton
     static let instance = NodeCreator()
     
+    func createBoost(uuid: String, pos: GLKVector3) {
+        let arbre = FacadeModele.instance.obtenirArbreRendu()
+        
+        let noeud = arbre.creerNoeud(typeNouveauNoeud: ArbreRendu.instance.NOM_ACCELERATEUR, uuid: uuid) as! NoeudAccelerateur
+        noeud.assignerPositionRelative(positionRelative: pos)
+        
+        // Ajout du noeud à l'arbre de rendu
+        let table = arbre.childNode(withName: arbre.NOM_TABLE, recursively: true) as! NoeudTable
+        table.addChildNode(noeud)
+    }
+    
     func createPortal(startUuid: String, portal1Pos: GLKVector3, endUuid: String, portal2Pos: GLKVector3) {
         let arbre = FacadeModele.instance.obtenirArbreRendu()
         

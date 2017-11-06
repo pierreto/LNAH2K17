@@ -54,15 +54,21 @@ class EditionHub: BaseHub {
     
     func receiveCommand(command: JSON) {
         let type = EDITION_COMMAND(rawValue: command["$type"].string!)!
+        let editionCommand: EditionCommand
 
         switch (type) {
+            case .BOOST_COMMAND :
+                print ("Boost command")
+                editionCommand = BoostCommand(objectUuid: command["ObjectUuid"].string!)
+                break
             case .PORTAL_COMMAND :
                 print ("Portal command")
-                let portalCommand = PortalCommand(objectUuid: command["ObjectUuid"].string!)
-                portalCommand.fromJSON(json: command)
-                portalCommand.executeCommand()
+                editionCommand = PortalCommand(objectUuid: command["ObjectUuid"].string!)
                 break
         }
+        
+        editionCommand.fromJSON(json: command)
+        editionCommand.executeCommand()
     }
     
     func convertMapEntity(mapEntity: MapEntity) -> Any {
