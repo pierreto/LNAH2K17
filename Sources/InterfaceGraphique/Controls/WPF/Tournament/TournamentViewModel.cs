@@ -75,7 +75,17 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
         {
             if (args != null)
             {
-                SelectedMap = args;
+                if (args != null && (selectedMap == null || selectedMap.Id != args.Id))
+                {
+                    foreach (MapEntity map in mapsAvailable)
+                    {
+                        if (map.Id == args.Id)
+                        {
+                            selectedMap = map;
+                        }
+                    }
+                }
+                OnPropertyChanged("SelectedMap");
             }
         }
 
