@@ -61,6 +61,10 @@ class EditionHub: BaseHub {
                 print ("Boost command")
                 editionCommand = BoostCommand(objectUuid: command["ObjectUuid"].string!)
                 break
+            case .WALL_COMMAND :
+                print ("Wall command")
+                editionCommand = WallCommand(objectUuid: command["ObjectUuid"].string!)
+                break
             case .PORTAL_COMMAND :
                 print ("Portal command")
                 editionCommand = PortalCommand(objectUuid: command["ObjectUuid"].string!)

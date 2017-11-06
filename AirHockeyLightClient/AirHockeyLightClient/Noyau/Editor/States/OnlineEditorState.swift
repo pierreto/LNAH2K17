@@ -42,6 +42,13 @@ class OnlineEditorState: EditorState {
         self.clientConnection.getEditionHub().sendEditionCommand(command: command)
     }
     
+    override func currentUserCreatedWall(uuid: String, startPos: GLKVector3, endPos: GLKVector3) {
+        let startPosition = [startPos.x, startPos.y, startPos.z]
+        let endPosition = [endPos.x, endPos.y, endPos.z]
+        let command = WallCommand(objectUuid: uuid, startPos: startPosition, endPos: endPosition)
+        self.clientConnection.getEditionHub().sendEditionCommand(command: command)
+    }
+    
     override func currentUserCreatedPortal(startUuid: String, startPos: SCNVector3,
                                            endUuid: String, endPos: SCNVector3) {
         let startPosition = [startPos.x, startPos.y, startPos.z]
