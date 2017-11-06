@@ -229,6 +229,11 @@ namespace InterfaceGraphique.Editor
             }
         }
 
+        public bool CurrentMapAlreadySaved()
+        {
+            return this.currentMapInfo.savedOnce;
+        }
+
         public async Task SaveMap() {
             if (this.currentMapInfo.savedOnce)
             {

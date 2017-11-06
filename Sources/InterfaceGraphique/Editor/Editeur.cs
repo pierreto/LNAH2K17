@@ -85,7 +85,7 @@ namespace InterfaceGraphique {
             this.Panel_PropertiesBack.Location = new Point(Program.OpenGLPanel.Width - this.Panel_PropertiesBack.Width, Program.OpenGLPanel.Height - this.Panel_PropertiesBack.Height);
             this.MenuBar.Renderer = new Renderer_MenuBar();
 
-            await ToggleOrbit(false);
+            ToggleOrbit(false);
             this.Cursor = Cursors.Default;
 
             FonctionsNatives.resetCameraPosition();
@@ -153,16 +153,16 @@ namespace InterfaceGraphique {
             Panel_PropertiesBack.MouseEnter += (sender, e) => this.Cursor = Cursors.Default;
 
             // Toolbar icons events
-            this.Toolbar_Select.Click += async (sender, e) => await changerEtatEdition(sender, e, MODELE_ETAT.SELECTION);
-            this.Toolbar_Move.Click += async (sender, e) => await changerEtatEdition(sender, e, MODELE_ETAT.DEPLACEMENT);
-            this.Toolbar_Rotate.Click += async (sender, e) => await changerEtatEdition(sender, e, MODELE_ETAT.ROTATION);
-            this.Toolbar_Scale.Click += async (sender, e) => await changerEtatEdition(sender, e, MODELE_ETAT.MISE_A_ECHELLE);
-            this.Toolbar_Duplicate.Click += async (sender, e) => await changerEtatEdition(sender, e, MODELE_ETAT.DUPLIQUER);
-            this.Toolbar_Zoom.Click += async (sender, e) => await changerEtatEdition(sender, e, MODELE_ETAT.ZOOM);
-            this.Toolbar_ControlPoint.Click += async (sender, e) => await changerEtatEdition(sender, e, MODELE_ETAT.POINTS_CONTROLE);
-            this.Toolbar_Booster.Click += async (sender, e) => await changerEtatEdition(sender, e, MODELE_ETAT.CREATION_ACCELERATEUR);
-            this.Toolbar_Portal.Click += async (sender, e) => await changerEtatEdition(sender, e, MODELE_ETAT.CREATION_PORTAIL);
-            this.Toolbar_Wall.Click += async (sender, e) => await changerEtatEdition(sender, e, MODELE_ETAT.CREATION_MURET);
+            this.Toolbar_Select.Click += (sender, e) => changerEtatEdition(sender, e, MODELE_ETAT.SELECTION);
+            this.Toolbar_Move.Click += (sender, e) => changerEtatEdition(sender, e, MODELE_ETAT.DEPLACEMENT);
+            this.Toolbar_Rotate.Click += (sender, e) => changerEtatEdition(sender, e, MODELE_ETAT.ROTATION);
+            this.Toolbar_Scale.Click += (sender, e) => changerEtatEdition(sender, e, MODELE_ETAT.MISE_A_ECHELLE);
+            this.Toolbar_Duplicate.Click += (sender, e) => changerEtatEdition(sender, e, MODELE_ETAT.DUPLIQUER);
+            this.Toolbar_Zoom.Click += (sender, e) => changerEtatEdition(sender, e, MODELE_ETAT.ZOOM);
+            this.Toolbar_ControlPoint.Click += (sender, e) => changerEtatEdition(sender, e, MODELE_ETAT.POINTS_CONTROLE);
+            this.Toolbar_Booster.Click += (sender, e) => changerEtatEdition(sender, e, MODELE_ETAT.CREATION_ACCELERATEUR);
+            this.Toolbar_Portal.Click += (sender, e) => changerEtatEdition(sender, e, MODELE_ETAT.CREATION_PORTAIL);
+            this.Toolbar_Wall.Click += (sender, e) => changerEtatEdition(sender, e, MODELE_ETAT.CREATION_MURET);
 
             // Menu dropdown options events
             this.Fichier_Enregistrer.Click += async (sender, e) => await mapManager.SaveMap();
@@ -172,35 +172,35 @@ namespace InterfaceGraphique {
             this.Fichier_OuvrirEnLigne.Click += (sender, e) => OpenOnlineMap();
             this.Fichier_Nouveau.Click += async (sender, e) =>
             { 
-                await ResetDefaultTable();
+                ResetDefaultTable();
                 await CurrentState.LeaveEdition();
                 this.CurrentState = this.offlineState;
                 this.CurrentState.JoinEdition(null);
             };
             this.Fichier_MenuPrincipal.Click += async (sender, e) =>
             {
-                await ResetDefaultTable();
+                ResetDefaultTable();
                 await CurrentState.LeaveEdition();
                 Program.FormManager.CurrentForm = Program.MainMenu;
             };
             this.Fichier_ModeTest.Click += (sender, e) => Program.FormManager.CurrentForm = Program.TestMode;
             this.Fichier_Propriete.Click += (sender, e) => Program.GeneralProperties.ShowDialog();
 
-            this.Edition_Supprimer.Click += async (sender, e) => { FonctionsNatives.deleteSelection(); await selectionSupprimee(); };
+            this.Edition_Supprimer.Click += (sender, e) => { FonctionsNatives.deleteSelection(); selectionSupprimee(); };
 
-            this.Outils_Selection.Click += async (sender, e) => await changerEtatEdition(Toolbar_Select, e, MODELE_ETAT.SELECTION);
-            this.Outils_Deplacement.Click += async (sender, e) => await changerEtatEdition(Toolbar_Move, e, MODELE_ETAT.DEPLACEMENT);
-            this.Outils_Rotation.Click += async (sender, e) => await changerEtatEdition(Toolbar_Rotate, e, MODELE_ETAT.ROTATION);
-            this.Outils_Echelle.Click += async (sender, e) => await changerEtatEdition(Toolbar_Scale, e, MODELE_ETAT.MISE_A_ECHELLE);
-            this.Outils_Duplication.Click += async (sender, e) => await changerEtatEdition(Toolbar_Duplicate, e, MODELE_ETAT.DUPLIQUER);
-            this.Outils_Zoom.Click += async (sender, e) => await changerEtatEdition(Toolbar_Zoom, e, MODELE_ETAT.ZOOM);
-            this.Outils_PointsControles.Click += async (sender, e) => await changerEtatEdition(Toolbar_ControlPoint, e, MODELE_ETAT.POINTS_CONTROLE);
-            this.Outils_Creation_Accelerateur.Click += async (sender, e) => await changerEtatEdition(Toolbar_Booster, e, MODELE_ETAT.CREATION_ACCELERATEUR);
-            this.Outils_Creation_Portail.Click += async (sender, e) => await changerEtatEdition(Toolbar_Portal, e, MODELE_ETAT.CREATION_PORTAIL);
-            this.Outils_Creation_Muret.Click += async (sender, e) => await changerEtatEdition(Toolbar_Wall, e, MODELE_ETAT.CREATION_MURET);
+            this.Outils_Selection.Click += (sender, e) => changerEtatEdition(Toolbar_Select, e, MODELE_ETAT.SELECTION);
+            this.Outils_Deplacement.Click += (sender, e) => changerEtatEdition(Toolbar_Move, e, MODELE_ETAT.DEPLACEMENT);
+            this.Outils_Rotation.Click += (sender, e) => changerEtatEdition(Toolbar_Rotate, e, MODELE_ETAT.ROTATION);
+            this.Outils_Echelle.Click += (sender, e) => changerEtatEdition(Toolbar_Scale, e, MODELE_ETAT.MISE_A_ECHELLE);
+            this.Outils_Duplication.Click += (sender, e) => changerEtatEdition(Toolbar_Duplicate, e, MODELE_ETAT.DUPLIQUER);
+            this.Outils_Zoom.Click += (sender, e) => changerEtatEdition(Toolbar_Zoom, e, MODELE_ETAT.ZOOM);
+            this.Outils_PointsControles.Click += (sender, e) => changerEtatEdition(Toolbar_ControlPoint, e, MODELE_ETAT.POINTS_CONTROLE);
+            this.Outils_Creation_Accelerateur.Click += (sender, e) => changerEtatEdition(Toolbar_Booster, e, MODELE_ETAT.CREATION_ACCELERATEUR);
+            this.Outils_Creation_Portail.Click += (sender, e) => changerEtatEdition(Toolbar_Portal, e, MODELE_ETAT.CREATION_PORTAIL);
+            this.Outils_Creation_Muret.Click += (sender, e) => changerEtatEdition(Toolbar_Wall, e, MODELE_ETAT.CREATION_MURET);
 
-            this.Vues_Orthographique.Click += async (sender, e) => await ToggleOrbit(false);
-            this.Vue_Orbite.Click += async (sender, e) => await ToggleOrbit(true);
+            this.Vues_Orthographique.Click += (sender, e) => ToggleOrbit(false);
+            this.Vue_Orbite.Click += (sender, e) => ToggleOrbit(true);
 
             this.Informations_Aide.Click += (sender, e) => { EditorHelp form = new EditorHelp(); form.ShowEditorHelpText();  form.ShowDialog(); };
 
@@ -255,6 +255,9 @@ namespace InterfaceGraphique {
         ////////////////////////////////////////////////////////////////////////
         private void mouseUp(object sender, MouseEventArgs e) {
             CurrentState.MouseUp(sender,e);
+
+            //if (mapManager.CurrentMapAlreadySaved())
+                //Task.Run(() => mapManager.SaveMap());
         }
 
 
@@ -406,13 +409,13 @@ namespace InterfaceGraphique {
         /// @return Void 
         ///
         ////////////////////////////////////////////////////////////////////////
-        public async Task ResetDefaultTable() {
+        public void ResetDefaultTable() {
             FonctionsNatives.resetNodeTree();
             FonctionsNatives.resetCameraPosition();
             FonctionsNatives.redimensionnerFenetre(this.Size.Width + Toolbar.Size.Width, this.Size.Height - MenuBar.Size.Height);
             Program.GeneralProperties.ResetProperties();
             mapManager.resetMapInfo();
-            await changerEtatEdition(this.Toolbar_Select, null, MODELE_ETAT.SELECTION);
+            changerEtatEdition(this.Toolbar_Select, null, MODELE_ETAT.SELECTION);
         }
 
 
@@ -424,7 +427,7 @@ namespace InterfaceGraphique {
         /// @return Void 
         ///
         ////////////////////////////////////////////////////////////////////////
-        private async Task selectionSupprimee() {
+        private void selectionSupprimee() {
             Edition_Supprimer.Enabled = false;
             this.Panel_PropertiesBack.Visible = false;
         }
@@ -442,7 +445,7 @@ namespace InterfaceGraphique {
         /// @return     Void 
         ///
         ////////////////////////////////////////////////////////////////////////
-        private async Task changerEtatEdition(object sender, EventArgs e, MODELE_ETAT etatEdition) {
+        private void changerEtatEdition(object sender, EventArgs e, MODELE_ETAT etatEdition) {
             resetToolbar();
             outilCourrant = etatEdition;
             resetProprietesPanel(sender, e);
@@ -485,9 +488,9 @@ namespace InterfaceGraphique {
         /// @return     Void 
         ///
         ////////////////////////////////////////////////////////////////////////
-        private async Task ToggleOrbit(bool isOrbit) {
+        private void ToggleOrbit(bool isOrbit) {
             FonctionsNatives.toggleOrbit(isOrbit);
-            await changerEtatEdition(this.Toolbar_Select, null, MODELE_ETAT.SELECTION);
+            changerEtatEdition(this.Toolbar_Select, null, MODELE_ETAT.SELECTION);
             this.Outils_Zoom.Enabled = !isOrbit;
             this.Toolbar_Zoom.Enabled = !isOrbit;
 
@@ -524,44 +527,44 @@ namespace InterfaceGraphique {
                     return true;
 
                 case Keys.D:
-                    Task.Run(async () => await changerEtatEdition(Toolbar_Move, null, MODELE_ETAT.DEPLACEMENT));
+                    changerEtatEdition(Toolbar_Move, null, MODELE_ETAT.DEPLACEMENT);
                     return true;
 
                 case Keys.S:
-                    Task.Run(async () => await changerEtatEdition(Toolbar_Select, null, MODELE_ETAT.SELECTION));
+                    changerEtatEdition(Toolbar_Select, null, MODELE_ETAT.SELECTION);
                     return true;
 
                 case Keys.R:
-                    Task.Run(async () => await changerEtatEdition(Toolbar_Rotate, null, MODELE_ETAT.ROTATION));
+                    changerEtatEdition(Toolbar_Rotate, null, MODELE_ETAT.ROTATION);
                     return true;
 
                 case Keys.E:
-                    Task.Run(async () => await changerEtatEdition(Toolbar_Scale, null, MODELE_ETAT.MISE_A_ECHELLE));
+                    changerEtatEdition(Toolbar_Scale, null, MODELE_ETAT.MISE_A_ECHELLE);
                     return true;
 
                 case Keys.C:
-                    Task.Run(async () => await changerEtatEdition(Toolbar_Duplicate, null, MODELE_ETAT.DUPLIQUER));
+                    changerEtatEdition(Toolbar_Duplicate, null, MODELE_ETAT.DUPLIQUER);
                     return true;
 
                 case Keys.Z:
                     if(Toolbar_Zoom.Enabled)
-                        Task.Run(async () => await changerEtatEdition(Toolbar_Zoom, null, MODELE_ETAT.ZOOM));
+                        changerEtatEdition(Toolbar_Zoom, null, MODELE_ETAT.ZOOM);
                     return true;
 
                 case Keys.G:
-                    Task.Run(async () => await changerEtatEdition(Toolbar_ControlPoint, null, MODELE_ETAT.POINTS_CONTROLE));
+                    changerEtatEdition(Toolbar_ControlPoint, null, MODELE_ETAT.POINTS_CONTROLE);
                     return true;
 
                 case Keys.M:
-                    Task.Run(async () => await changerEtatEdition(Toolbar_Wall, null, MODELE_ETAT.CREATION_MURET));
+                    changerEtatEdition(Toolbar_Wall, null, MODELE_ETAT.CREATION_MURET);
                     return true;
 
                 case Keys.P:
-                    Task.Run(async () => await changerEtatEdition(Toolbar_Portal, null, MODELE_ETAT.CREATION_PORTAIL));
+                    changerEtatEdition(Toolbar_Portal, null, MODELE_ETAT.CREATION_PORTAIL);
                     return true;
 
                 case Keys.B:
-                    Task.Run(async () => await changerEtatEdition(Toolbar_Booster, null, MODELE_ETAT.CREATION_ACCELERATEUR));
+                    changerEtatEdition(Toolbar_Booster, null, MODELE_ETAT.CREATION_ACCELERATEUR);
                     return true;
 
                 case Keys.T:
@@ -569,7 +572,7 @@ namespace InterfaceGraphique {
                     return true;
 
                 case (Keys.N | Keys.Control):
-                    Task.Run(async () => await ResetDefaultTable());
+                    ResetDefaultTable();
                     return true;
 
                 case (Keys.O | Keys.Control):
@@ -581,7 +584,7 @@ namespace InterfaceGraphique {
                     return true;
 
                 case (Keys.Q | Keys.Control):
-                    Task.Run(async () => await ResetDefaultTable());
+                    ResetDefaultTable();
                     Program.FormManager.CurrentForm = Program.MainMenu;
                     return true;
 
@@ -599,14 +602,16 @@ namespace InterfaceGraphique {
 
                 case Keys.Delete:
                     FonctionsNatives.deleteSelection();
+                    if (Editeur.mapManager.CurrentMapAlreadySaved())
+                        Task.Run(() => Editeur.mapManager.SaveMap());
                     return true;
                     
                 case Keys.D1:
-                    Task.Run(async () => await ToggleOrbit(false));
+                    ToggleOrbit(false);
                     return true;
 
                 case Keys.D2:
-                    Task.Run(async () => await ToggleOrbit(true));
+                    ToggleOrbit(true);
                     return true;
             }
 

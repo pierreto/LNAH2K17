@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using InterfaceGraphique.CommunicationInterface;
@@ -24,8 +22,6 @@ namespace InterfaceGraphique.Editor.EditorState
         private FonctionsNatives.SelectionEventCallback selectionEventCallback;
         private FonctionsNatives.ControlPointEventCallback controlPoinEventCallback;
 
-
-
         public OnlineEditorState(EditionHub editionHub)
         {
             this.editionHub = editionHub;
@@ -34,19 +30,13 @@ namespace InterfaceGraphique.Editor.EditorState
             this.editionHub.NewUser += OnNewUser;
             this.editionHub.UserLeft += OnUserLeft;
 
-
-
             this.portalCreationCallback = CurrentUserCreatedPortal;
             this.wallCreationCallback = CurrentUserCreatedWall;
             this.boostCreationCallback = CurrentUserCreatedBoost;
             this._transformEventCallback = CurrentUserObjectTransformChanged;
             this.selectionEventCallback = CurrentUserSelectedObject;
             this.controlPoinEventCallback = CurrentUserChangedControlPoint;
-
         }
-
-
-
 
         private void OnUserLeft(string username)
         {
@@ -58,8 +48,6 @@ namespace InterfaceGraphique.Editor.EditorState
         {
             FonctionsNatives.addNewUser(user.Username,user.HexColor);
         }
-
-
 
         public override void MouseUp(object sender, MouseEventArgs e)
         {
@@ -114,6 +102,7 @@ namespace InterfaceGraphique.Editor.EditorState
                 }
             }
         }
+
         public override async Task LeaveEdition()
         {
             await this.editionHub.LeaveRoom();
@@ -139,9 +128,10 @@ namespace InterfaceGraphique.Editor.EditorState
                 EndRotation = endRotation,
                 EndScale = getVec3FromIntptr(endScale)
             };
-            this.editionHub.SendEditorCommand(portalCommand);
-        }
 
+            this.editionHub.SendEditorCommand(portalCommand);
+            Task.Run(() => Editeur.mapManager.SaveMap());
+        }
      
         private void CurrentUserCreatedWall(string uuid,IntPtr pos, float rotation, IntPtr scale)
         {
@@ -156,7 +146,9 @@ namespace InterfaceGraphique.Editor.EditorState
             };
 
             this.editionHub.SendEditorCommand(wallCommand);
+            Task.Run(() => Editeur.mapManager.SaveMap());
         }
+
         private void CurrentUserCreatedBoost(string uuid, IntPtr startpos, float rotation, IntPtr scale)
         {
 
@@ -169,13 +161,13 @@ namespace InterfaceGraphique.Editor.EditorState
             };
 
             this.editionHub.SendEditorCommand(boostCommand);
+            Task.Run(() => Editeur.mapManager.SaveMap());
         }
+
         private void CurrentUserObjectTransformChanged(string uuid, IntPtr pos, float rotation, IntPtr scale)
         {
             float[] posVec = getVec3FromIntptr(pos);
-
             float[] scaleVec = getVec3FromIntptr(scale);
-
 
             this.editionHub.SendEditorCommand(new TransformCommand(uuid)
             {
@@ -184,8 +176,10 @@ namespace InterfaceGraphique.Editor.EditorState
                 Rotation = rotation,
                 Scale = scaleVec
             });
+            Task.Run(() => Editeur.mapManager.SaveMap());
 
         }
+
         private void CurrentUserSelectedObject(string uuidselected, bool isSelected, bool deselectAll)
         {
             this.editionHub.SendEditorCommand(new SelectionCommand(uuidselected)
@@ -199,12 +193,15 @@ namespace InterfaceGraphique.Editor.EditorState
         private void CurrentUserChangedControlPoint(string uuid, IntPtr position)
         {
             float[] positionVec = getVec3FromIntptr(position);
+
             this.editionHub.SendEditorCommand(new ControlPointCommand(uuid)
             {
                 Username = User.Instance.UserEntity.Username,
                 Position = positionVec
             });
+            Task.Run(() => Editeur.mapManager.SaveMap());
         }
+
         private float[] getVec3FromIntptr(IntPtr ptr)
         {
             float[] vec3 = new float[3];
@@ -218,8 +215,5 @@ namespace InterfaceGraphique.Editor.EditorState
             Marshal.Copy(ptr, vec3, 0, 16);
             return vec3;
         }
-
-
-
     }
 }
