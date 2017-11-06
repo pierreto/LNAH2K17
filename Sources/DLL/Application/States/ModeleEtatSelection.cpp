@@ -139,7 +139,7 @@ void ModeleEtatSelection::mouseUpL() {
 
 			Raycast ray(mousePosX_, mousePosY_);
 
-			VisiteurSelection visiteur(ray.getRayStart(), ray.getRayEnd(), ctrlDown_,selectionCallback_);
+			VisiteurSelection visiteur(ray.getRayStart(), ray.getRayEnd(), ctrlDown_);
 			arbre->accepterVisiteur(&visiteur);		
 		}
 		else if (dimensionsSuffisantes()) {
@@ -158,7 +158,7 @@ void ModeleEtatSelection::mouseUpL() {
 			FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(initMousePosX_, initMousePosY_, pointAncrage);
 			FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(mousePosX_, mousePosY_, pointFinal);
 
-			VisiteurSelection visiteur(pointAncrage, pointFinal, true, ctrlDown_, selectionCallback_);
+			VisiteurSelection visiteur(pointAncrage, pointFinal, true, ctrlDown_);
 			arbre->accepterVisiteur(&visiteur);
 		}
 	}

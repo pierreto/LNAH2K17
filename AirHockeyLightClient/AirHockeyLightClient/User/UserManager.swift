@@ -21,7 +21,7 @@ class UserManager {
     
     private var users: Dictionary<String, OnlineUser>
     
-    init(username: String, hexColor: UIColor) {
+    init() {
         self.users = Dictionary<String, OnlineUser>()
     }
     
@@ -32,6 +32,10 @@ class UserManager {
     
     public func getUsers() -> Dictionary<String, OnlineUser> {
         return self.users
+    }
+    
+    public func getUser(username: String) -> OnlineUser {
+        return self.users[username]!
     }
     
     public func addUser(username: String, hexColor: String) {

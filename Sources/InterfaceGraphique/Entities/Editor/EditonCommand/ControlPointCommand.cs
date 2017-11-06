@@ -5,21 +5,20 @@ using System.Text;
 using System.Threading.Tasks;
 using InterfaceGraphique.Entities.EditorCommand;
 
-namespace InterfaceGraphique.Entities.EditonCommand
+namespace InterfaceGraphique.Entities.Editor.EditonCommand
 {
-    class MoveCommand : AbstractEditionCommand
+    class ControlPointCommand : AbstractEditionCommand
     {
         public string Username { get; set; }
         public float[] Position { get; set; }
 
-        public MoveCommand(string uuid ) : base(uuid)
+        public ControlPointCommand(string objectUuid) : base(objectUuid)
         {
         }
 
         public override void ExecuteCommand()
         {
-            FonctionsNatives.moveByUUID(Username, objectUuid, Position);
-            
+            FonctionsNatives.setControlPointPosition(Username, objectUuid, Position);
         }
     }
 }

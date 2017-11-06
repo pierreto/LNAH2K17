@@ -49,12 +49,70 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Menu Hors Ligne" id="vcy-XG-teo">
-                        <barButtonItem key="backBarButtonItem" title="Menu Hors Ligne" id="nIE-TJ-Jps"/>
+                        <barButtonItem key="backBarButtonItem" title="Menu principal" id="nIE-TJ-Jps"/>
                     </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Srh-GY-j1B" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1445" y="-316"/>
+        </scene>
+        <!--Online Menu View Controller-->
+        <scene sceneID="KK4-eb-S70">
+            <objects>
+                <viewController storyboardIdentifier="OnlineMenuViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="H5p-E5-hIj" userLabel="Online Menu View Controller" customClass="OnlineMenuViewController" customModule="AirHockeyLightClient" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="CVe-fD-ylw"/>
+                        <viewControllerLayoutGuide type="bottom" id="cri-0S-wDT"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="nKC-i4-OYx">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Rzq-vQ-VcJ">
+                                <rect key="frame" x="412" y="349" width="200" height="70"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xRh-T5-nVZ" userLabel="Chat">
+                                        <rect key="frame" x="0.0" y="0.0" width="200" height="35"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="200" id="IMf-GG-3k1"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" title="Chat"/>
+                                        <connections>
+                                            <segue destination="xgG-d7-dxf" kind="show" id="goM-hA-OYs"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xba-A2-IsC">
+                                        <rect key="frame" x="0.0" y="35" width="200" height="35"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="200" id="BGM-EQ-rVw"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" title="Édition en ligne"/>
+                                        <connections>
+                                            <segue destination="8q1-PD-X5V" kind="show" id="6DQ-jn-lmH"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Rzq-vQ-VcJ" firstAttribute="centerY" secondItem="nKC-i4-OYx" secondAttribute="centerY" id="E5Z-9r-ox1"/>
+                            <constraint firstItem="Rzq-vQ-VcJ" firstAttribute="centerX" secondItem="nKC-i4-OYx" secondAttribute="centerX" id="gAA-od-oNY"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Menu En Ligne" id="1wR-p8-feV">
+                        <barButtonItem key="backBarButtonItem" title="Menu principal" id="mC8-Zu-i8n"/>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sZF-Co-9Gv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-747" y="-316"/>
         </scene>
         <!--Authentification View Controller-->
         <scene sceneID="fxS-7r-Dhb">
@@ -562,6 +620,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Édition" id="07a-Zg-bjU">
+                        <barButtonItem key="backBarButtonItem" title="Édition" id="nAs-I5-8GR"/>
                         <rightBarButtonItems>
                             <barButtonItem title="       Sauvegarder" id="L6a-CY-qge" userLabel="SauvegarderButton">
                                 <connections>
@@ -813,14 +872,14 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="768" height="80"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Sender" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k6H-gK-XMi" userLabel="Sender">
-                                                            <rect key="frame" x="8" y="2" width="752" height="15"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sender" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k6H-gK-XMi" userLabel="Sender">
+                                                            <rect key="frame" x="8" y="2" width="752" height="25.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                             <color key="textColor" red="0.50682244060000003" green="0.50682244060000003" blue="0.50682244060000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="MessageValue" textAlignment="justified" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Nn-p9-97g" userLabel="MessageValue" customClass="PaddingLabel" customModule="AirHockeyLightClient" customModuleProvider="target">
-                                                            <rect key="frame" x="6" y="19" width="756" height="24"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="MessageValue" textAlignment="justified" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Nn-p9-97g" userLabel="MessageValue" customClass="PaddingLabel" customModule="AirHockeyLightClient" customModuleProvider="target">
+                                                            <rect key="frame" x="6" y="29.5" width="756" height="24"/>
                                                             <color key="backgroundColor" red="0.33280430900000002" green="0.58637048089999999" blue="0.84018950670000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -832,8 +891,8 @@
                                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                                             </userDefinedRuntimeAttributes>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Timestamp" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RA3-us-Xjf" userLabel="Timestamp">
-                                                            <rect key="frame" x="16" y="45" width="742" height="14.5"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="253" text="Timestamp" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RA3-us-Xjf" userLabel="Timestamp">
+                                                            <rect key="frame" x="16" y="55.5" width="742" height="14.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                             <color key="textColor" red="0.50682244060000003" green="0.50682244060000003" blue="0.50682244060000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -1146,14 +1205,14 @@
                                             <segue destination="v1r-pC-DK7" kind="show" id="CGT-bE-ucb"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rd9-6b-NY7" userLabel="onlineEditorButton">
-                                        <rect key="frame" x="0.0" y="249" width="300" height="35"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AIE-go-x3y" userLabel="testEditionEnLigne">
+                                        <rect key="frame" x="0.0" y="249" width="183" height="35"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <state key="normal" title="Édition en ligne"/>
+                                        <state key="normal" title="Test Édition en ligne"/>
                                         <connections>
-                                            <segue destination="8q1-PD-X5V" kind="show" id="LKe-KA-ZAB"/>
+                                            <segue destination="8q1-PD-X5V" kind="show" id="nja-Df-3RZ"/>
                                         </connections>
                                     </button>
                                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="hyr-YX-cKZ" userLabel="loadingSpinner">
@@ -1161,7 +1220,6 @@
                                     </activityIndicatorView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="rd9-6b-NY7" firstAttribute="width" secondItem="riN-hG-6w2" secondAttribute="width" id="1x0-YO-B7a"/>
                                     <constraint firstItem="aPb-LQ-zVe" firstAttribute="centerX" secondItem="riN-hG-6w2" secondAttribute="centerX" id="LoW-h2-My4"/>
                                     <constraint firstAttribute="trailing" secondItem="Tue-6k-iTD" secondAttribute="trailing" id="MiA-ek-XZX"/>
                                     <constraint firstAttribute="trailing" secondItem="kZ7-IX-vjq" secondAttribute="trailing" id="Mtc-u0-nFw"/>
@@ -1186,7 +1244,7 @@
                         <outlet property="passwordInput" destination="kZ7-IX-vjq" id="dgq-CB-EKK"/>
                         <outlet property="usernameErrorLabel" destination="tLu-bb-zBI" id="iol-Ul-o9G"/>
                         <outlet property="usernameInput" destination="Tue-6k-iTD" id="0tU-b5-Ppq"/>
-                        <segue destination="xgG-d7-dxf" kind="show" identifier="loginSuccess" id="GGZ-Yu-kfi"/>
+                        <segue destination="H5p-E5-hIj" kind="show" identifier="loginSuccess" id="siQ-V2-je8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sQH-De-3Ek" sceneMemberID="firstResponder"/>
@@ -1308,7 +1366,7 @@
                         <outlet property="passwordInput" destination="vrI-FR-UF7" id="CiK-LE-zbO"/>
                         <outlet property="usernameErrorLabel" destination="1Z6-h2-oiz" id="qVB-rw-FIM"/>
                         <outlet property="usernameInput" destination="Kwn-mD-qor" id="D3O-qd-9xf"/>
-                        <segue destination="xgG-d7-dxf" kind="show" identifier="signupSuccess" id="ekN-4s-to3"/>
+                        <segue destination="H5p-E5-hIj" kind="show" identifier="signupSuccess" id="D9p-zm-qef"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fha-7M-fYb" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1360,7 +1418,9 @@
                             <constraint firstAttribute="trailingMargin" secondItem="bMu-Mx-hmt" secondAttribute="trailing" id="pjq-gT-DuE"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="Cyt-ZN-GS6"/>
+                    <navigationItem key="navigationItem" title="Sélection de cartes" id="Cyt-ZN-GS6">
+                        <barButtonItem key="backBarButtonItem" title="Sélection de cartes" id="pQC-M4-VZn"/>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d2z-FI-Hxt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1411,7 +1471,8 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="LKe-KA-ZAB"/>
-        <segue reference="ekN-4s-to3"/>
+        <segue reference="siQ-V2-je8"/>
+        <segue reference="nja-Df-3RZ"/>
+        <segue reference="goM-hA-OYs"/>
     </inferredMetricsTieBreakers>
 </document>

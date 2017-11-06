@@ -9,6 +9,7 @@ using InterfaceGraphique.CommunicationInterface;
 using InterfaceGraphique.Entities;
 using InterfaceGraphique.Entities.EditonCommand;
 using InterfaceGraphique.Entities.Editor;
+using InterfaceGraphique.Entities.Editor.EditonCommand;
 using InterfaceGraphique.Entities.EditorCommand;
 
 namespace InterfaceGraphique.Editor.EditorState
@@ -19,8 +20,10 @@ namespace InterfaceGraphique.Editor.EditorState
         private FonctionsNatives.PortalCreationCallback portalCreationCallback;
         private FonctionsNatives.WallCreationCallback wallCreationCallback;
         private FonctionsNatives.BoostCreationCallback boostCreationCallback;
-        private FonctionsNatives.MoveEventCallback moveEventCallback;
+        private FonctionsNatives.TransformEventCallback _transformEventCallback;
         private FonctionsNatives.SelectionEventCallback selectionEventCallback;
+        private FonctionsNatives.ControlPointEventCallback controlPoinEventCallback;
+
 
 
         public OnlineEditorState(EditionHub editionHub)
@@ -36,10 +39,13 @@ namespace InterfaceGraphique.Editor.EditorState
             this.portalCreationCallback = CurrentUserCreatedPortal;
             this.wallCreationCallback = CurrentUserCreatedWall;
             this.boostCreationCallback = CurrentUserCreatedBoost;
-            this.moveEventCallback = CurrentUserMovedObject;
+            this._transformEventCallback = CurrentUserObjectTransformChanged;
             this.selectionEventCallback = CurrentUserSelectedObject;
+            this.controlPoinEventCallback = CurrentUserChangedControlPoint;
 
         }
+
+
 
 
         private void OnUserLeft(string username)
@@ -91,12 +97,21 @@ namespace InterfaceGraphique.Editor.EditorState
             FonctionsNatives.setPortalCreationCallback(this.portalCreationCallback);
             FonctionsNatives.setWallCreationCallback(this.wallCreationCallback);
             FonctionsNatives.setBoostCreationCallback(this.boostCreationCallback);
-            FonctionsNatives.setMoveEventCallback(this.moveEventCallback);
+            FonctionsNatives.setTransformEventCallback(this._transformEventCallback);
             FonctionsNatives.setSelectionEventCallback(this.selectionEventCallback);
+            FonctionsNatives.setControlPointEventCallback(this.controlPoinEventCallback);
+
             List<OnlineUser> usersInTheGame = await this.editionHub.JoinPublicRoom(mapEntity);
-            foreach (OnlineUser users in usersInTheGame)
+            foreach (OnlineUser user in usersInTheGame)
             {
-                FonctionsNatives.addNewUser(users.Username,users.HexColor);
+                if (user.Username.Equals(User.Instance.UserEntity.Username))
+                {
+                    FonctionsNatives.setCurrentPlayerSelectionColor(user.HexColor);
+                }
+                else
+                {
+                    FonctionsNatives.addNewUser(user.Username,user.HexColor);
+                }
             }
         }
         public override async Task LeaveEdition()
@@ -149,14 +164,19 @@ namespace InterfaceGraphique.Editor.EditorState
 
             this.editionHub.SendEditorCommand(boostCommand);
         }
-        private void CurrentUserMovedObject(string uuid, IntPtr pos)
+        private void CurrentUserObjectTransformChanged(string uuid, IntPtr pos, float rotation, IntPtr scale)
         {
-            float[] vec = getVec3FromIntptr(pos);
-         
-            this.editionHub.SendEditorCommand(new MoveCommand(uuid)
+            float[] posVec = getVec3FromIntptr(pos);
+
+            float[] scaleVec = getVec3FromIntptr(scale);
+
+
+            this.editionHub.SendEditorCommand(new TransformCommand(uuid)
             {
                 Username = User.Instance.UserEntity.Username,
-                Position = vec
+                Position = posVec,
+                Rotation = rotation,
+                Scale = scaleVec
             });
 
         }
@@ -166,7 +186,17 @@ namespace InterfaceGraphique.Editor.EditorState
             {
                 Username = User.Instance.UserEntity.Username,
                 IsSelected = isSelected,
-                DeselectAll = deselectAll
+                DeselectAll = deselectAll 
+            });
+        }
+
+        private void CurrentUserChangedControlPoint(string uuid, IntPtr position)
+        {
+            float[] positionVec = getVec3FromIntptr(position);
+            this.editionHub.SendEditorCommand(new ControlPointCommand(uuid)
+            {
+                Username = User.Instance.UserEntity.Username,
+                Position = positionVec
             });
         }
         private float[] getVec3FromIntptr(IntPtr ptr)
@@ -176,7 +206,14 @@ namespace InterfaceGraphique.Editor.EditorState
             return vec3;
         }
 
+        private float[] getTransformMatrixFromIntptr(IntPtr ptr)
+        {
+            float[] vec3 = new float[16];
+            Marshal.Copy(ptr, vec3, 0, 16);
+            return vec3;
+        }
 
-    
+
+
     }
 }

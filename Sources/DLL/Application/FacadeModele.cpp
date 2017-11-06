@@ -821,11 +821,11 @@ void FacadeModele::chargerPntCtrl() {
 			temp.z = docJSON_["PointControle"][i][2].GetDouble();
 			glm::vec3 pos(temp);
 			(*it)->assignerPositionRelative(pos);
+			(*it)->setUUID(const_cast<char*>(docJSON_["PointControle"][i][7].GetString()));
 			i++;
 		}
 	}
 }
-
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -1011,15 +1011,16 @@ void FacadeModele::rotateCamera(float angle)
 }
 
 
-void FacadeModele::moveByUUID(const char* uuid, const glm::vec3 newPos)
+NoeudAbstrait* FacadeModele::findNodeInTree(const char* uuid)
 {
 	VisitorByUUID visitorWrapper = VisitorByUUID(uuid);
 	arbre_->accepterVisiteur(&visitorWrapper);
 	NoeudAbstrait* node = visitorWrapper.getNode();
 	if(visitorWrapper.hasFound)
 	{
-		node->deplacer(newPos);
+		return node;
 	}
+	return nullptr;
 }
 
 ////////////////////////////////////////////////////////////////////////

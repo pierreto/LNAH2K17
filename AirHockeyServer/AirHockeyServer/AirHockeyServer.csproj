@@ -18,8 +18,7 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress>
-    </Use64BitIISExpress>
+    <Use64BitIISExpress>true</Use64BitIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -237,10 +236,11 @@
     <Compile Include="Entities\ChannelEntity.cs" />
     <Compile Include="Entities\ChatMessageEntity.cs" />
     <Compile Include="Entities\ConfigurationEntity.cs" />
+    <Compile Include="Entities\Edition\EditionCommand\ControlPointCommand.cs" />
     <Compile Include="Entities\FriendRequestEntity.cs" />
     <Compile Include="Entities\Edition\EditionCommand\AbstractEditionCommand.cs" />
     <Compile Include="Entities\Edition\EditionCommand\BoostCommand.cs" />
-    <Compile Include="Entities\Edition\EditionCommand\MoveCommand.cs" />
+    <Compile Include="Entities\Edition\EditionCommand\TransformCommand.cs" />
     <Compile Include="Entities\Edition\EditionCommand\SelectionCommand.cs" />
     <Compile Include="Entities\Edition\OnlineUser.cs" />
     <Compile Include="Entities\Edition\EditionCommand\PortalCommand.cs" />

@@ -97,6 +97,14 @@ class ModeleEtatCreerPortail: ModeleEtat {
                     noeud.assignerOppose(portail: self.premierNoeud!);
                     self.premierNoeud?.assignerOppose(portail: noeud);
                     self.premierNoeud?.appliquerMaterielSelection(activer: false)
+                    
+                    // Envoyer la commande
+                    FacadeModele.instance.obtenirEtatEdition().currentUserCreatedPortal(
+                        startUuid: (self.premierNoeud?.obtenirUUID())!,
+                        startPos: (self.premierNoeud?.position)!,
+                        endUuid: noeud.obtenirUUID(),
+                        endPos: noeud.position)
+                    
                     self.premierNoeud = nil;
                     FacadeModele.instance.obtenirVue().editorHUDScene?.showCancelButton(activer: false)
                 }

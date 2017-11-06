@@ -196,8 +196,8 @@ namespace opengl{
 			// Utilisation d'une autre couleur
 			if (options.effetFantome_)
 			{
-				programme_.assignerUniforme("material.diffuse",glm::vec3(0, 0, 1));
-				programme_.assignerUniforme("material.transparence", 0.25f);
+				programme_.assignerUniforme("material.diffuse",glm::vec3(options.localSelectionColor_.x, options.localSelectionColor_.y, options.localSelectionColor_.z));
+				programme_.assignerUniforme("material.transparence", options.localSelectionColor_.a);
 				programme_.assignerUniforme("useDiffuseColor", 1);
 
 			}

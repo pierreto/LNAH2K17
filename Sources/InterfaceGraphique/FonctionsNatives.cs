@@ -5,7 +5,8 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InterfaceGraphique {
+namespace InterfaceGraphique
+{
 
     ///////////////////////////////////////////////////////////////////////////
     /// @class FonctionsNatives
@@ -13,7 +14,8 @@ namespace InterfaceGraphique {
     /// @author Julien Charbonneau
     /// @date 2016-09-13
     ///////////////////////////////////////////////////////////////////////////
-    static partial class FonctionsNatives {
+    static partial class FonctionsNatives
+    {
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void initialiserOpenGL(IntPtr handle);
@@ -111,7 +113,7 @@ namespace InterfaceGraphique {
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void gererRondelleMaillets(bool toggle);
 
-		[DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void toggleControlPointsVisibility(bool visible);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
@@ -136,7 +138,8 @@ namespace InterfaceGraphique {
         public static extern void resetGame();
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void getDebugStatus(bool enableCollision, bool enableSpeed, bool enableLight, bool enablePortal);
+        public static extern void getDebugStatus(bool enableCollision, bool enableSpeed, bool enableLight,
+            bool enablePortal);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void toggleLights(int lumType);
@@ -172,10 +175,12 @@ namespace InterfaceGraphique {
         public static extern void toggleOrbit(bool orbit);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void getGameElementPositions([Out] float[] slavePosition, [Out] float[] masterPosition, [Out] float[] puckPosition);
+        public static extern void getGameElementPositions([Out] float[] slavePosition, [Out] float[] masterPosition,
+            [Out] float[] puckPosition);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void setSlaveGameElementPositions(float[] slavePosition, float[] masterPosition, float[] puckPosition);
+        public static extern void setSlaveGameElementPositions(float[] slavePosition, float[] masterPosition,
+            float[] puckPosition);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void setMasterGameElementPositions(float[] slavePosition);
@@ -206,14 +211,16 @@ namespace InterfaceGraphique {
         public static extern void createPortal(string startUuid, float[] startPos, string endUuid, float[] endPos);
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        public delegate void PortalCreationCallback([Out,MarshalAs(UnmanagedType.LPStr)] string startUuid, [Out] IntPtr startPos, [Out, MarshalAs(UnmanagedType.LPStr)]string endUuid, [Out] IntPtr endPos);
+        public delegate void PortalCreationCallback([Out, MarshalAs(UnmanagedType.LPStr)] string startUuid,
+            [Out] IntPtr startPos, [Out, MarshalAs(UnmanagedType.LPStr)] string endUuid, [Out] IntPtr endPos);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void setPortalCreationCallback(PortalCreationCallback callback);
 
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        public delegate void WallCreationCallback([Out, MarshalAs(UnmanagedType.LPStr)] string uuid,[Out] IntPtr startPos, [Out] IntPtr endPos);
+        public delegate void WallCreationCallback([Out, MarshalAs(UnmanagedType.LPStr)] string uuid,
+            [Out] IntPtr startPos, [Out] IntPtr endPos);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void setWallCreationCallback(WallCreationCallback callback);
@@ -231,23 +238,25 @@ namespace InterfaceGraphique {
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void createBoost(string uuid, float[] position);
 
-
-
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        public delegate void SelectionEventCallback([Out, MarshalAs(UnmanagedType.LPStr)] string uuid, bool isSelected, bool deselectAll);
+        public delegate void SelectionEventCallback([Out, MarshalAs(UnmanagedType.LPStr)] string uuid, bool isSelected,
+            bool deselectAll);
+
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void setSelectionEventCallback(SelectionEventCallback callback);
+
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void setElementSelection(string username, string uuid, bool isSelected, bool deselectAll);
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        public delegate void MoveEventCallback([Out, MarshalAs(UnmanagedType.LPStr)] string uuidSelected, [Out] IntPtr newPos);
+        public delegate void TransformEventCallback([Out, MarshalAs(UnmanagedType.LPStr)] string uuidSelected,
+            [Out] IntPtr position, [Out] float rotation, [Out] IntPtr scale);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void setMoveEventCallback(MoveEventCallback callback);
+        public static extern void setTransformEventCallback(TransformEventCallback callback);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void moveByUUID(string username,string uuid, float[] newPos);
+        public static extern void setTransformByUUID(string username, string uuid, float[] position, float rotation, float[] scale);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void addNewUser(string username, string userHexColor);
@@ -260,6 +269,20 @@ namespace InterfaceGraphique {
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void deselectAll(string username);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void setCurrentPlayerSelectionColor(string userHexColor);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void setCurrentPlayerSelectionColorToDefault();
+
+
+        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+        public delegate void ControlPointEventCallback([Out, MarshalAs(UnmanagedType.LPStr)] string uuid,[Out] IntPtr position);
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void setControlPointEventCallback(ControlPointEventCallback callback);
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void setControlPointPosition(string username, string uuid, float[] position);
 
     }
 }

@@ -34,6 +34,7 @@
 #include "ModeleEtatCreerBoost.h"
 #include "ModeleEtatDeplacement.h"
 #include "ModeleEtatSelection.h"
+#include "ModeleEtatPointControl.h"
 
 extern "C"
 {
@@ -51,7 +52,8 @@ extern "C"
 	/// @return Aucune.
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void __cdecl initialiserOpenGL(int* handle) {
+	__declspec(dllexport) void __cdecl initialiserOpenGL(int* handle)
+	{
 		if (handle == nullptr)
 			return;
 
@@ -70,7 +72,8 @@ extern "C"
 	/// @return Aucune.
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void __cdecl libererOpenGL() {
+	__declspec(dllexport) void __cdecl libererOpenGL()
+	{
 		FacadeModele::obtenirInstance()->libererOpenGL();
 
 		// Désinitialisation de la façade.  Le fait de le faire après la
@@ -90,7 +93,8 @@ extern "C"
 	/// @return Aucune.
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void __cdecl dessinerOpenGL() {
+	__declspec(dllexport) void __cdecl dessinerOpenGL()
+	{
 		// Affiche la scène.
 		FacadeModele::obtenirInstance()->afficher();
 
@@ -113,7 +117,8 @@ extern "C"
 	/// @return Aucune.
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void __cdecl redimensionnerFenetre(int largeur, int hauteur) {
+	__declspec(dllexport) void __cdecl redimensionnerFenetre(int largeur, int hauteur)
+	{
 		FacadeModele::obtenirInstance()->obtenirVue()->redimensionnerFenetre(largeur, hauteur);
 	}
 
@@ -131,7 +136,8 @@ extern "C"
 	/// @return Aucune.
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void __cdecl animer(double temps) {
+	__declspec(dllexport) void __cdecl animer(double temps)
+	{
 		FacadeModele::obtenirInstance()->animer((float)temps);
 	}
 
@@ -145,7 +151,8 @@ extern "C"
 	/// @return Aucune.
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void __cdecl zoomIn() {
+	__declspec(dllexport) void __cdecl zoomIn()
+	{
 		FacadeModele::obtenirInstance()->obtenirVue()->zoomerIn();
 	}
 
@@ -159,7 +166,8 @@ extern "C"
 	/// @return Aucune.
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void __cdecl zoomOut() {
+	__declspec(dllexport) void __cdecl zoomOut()
+	{
 		FacadeModele::obtenirInstance()->obtenirVue()->zoomerOut();
 	}
 
@@ -173,7 +181,8 @@ extern "C"
 	/// @return Le nombre d'affichage par seconde.
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) int __cdecl obtenirAffichagesParSeconde() {
+	__declspec(dllexport) int __cdecl obtenirAffichagesParSeconde()
+	{
 		return utilitaire::CompteurAffichage::obtenirInstance()->obtenirAffichagesSeconde();
 	}
 
@@ -187,7 +196,8 @@ extern "C"
 	/// @return 0 si tous les tests ont réussi, 1 si au moins un test a échoué
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) bool __cdecl executerTests() {
+	__declspec(dllexport) bool __cdecl executerTests()
+	{
 		bool reussite = BancTests::obtenirInstance()->executer();
 		return reussite ? 0 : 1;
 	}
@@ -205,7 +215,8 @@ extern "C"
 	/// @return Aucune
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void __cdecl fleches(double x, double y) {
+	__declspec(dllexport) void __cdecl fleches(double x, double y)
+	{
 		FacadeModele::obtenirInstance()->fleches(x, y);
 	}
 
@@ -219,7 +230,8 @@ extern "C"
 	/// @return Aucune
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void __cdecl escape() {
+	__declspec(dllexport) void __cdecl escape()
+	{
 		FacadeModele::obtenirInstance()->escape();
 	}
 
@@ -233,7 +245,8 @@ extern "C"
 	/// @return Aucune
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void __cdecl space() {
+	__declspec(dllexport) void __cdecl space()
+	{
 		FacadeModele::obtenirInstance()->space();
 	}
 
@@ -249,7 +262,8 @@ extern "C"
 	/// @return Aucune
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void __cdecl changerModeleEtat(int etat) {
+	__declspec(dllexport) void __cdecl changerModeleEtat(int etat)
+	{
 		FacadeModele::obtenirInstance()->changerModeleEtat((MODELE_ETAT)etat);
 	}
 
@@ -263,7 +277,8 @@ extern "C"
 	/// @return Aucune
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void deleteSelection() {
+	__declspec(dllexport) void deleteSelection()
+	{
 		FacadeModele::obtenirInstance()->deleteSelection();
 	}
 
@@ -277,7 +292,8 @@ extern "C"
 	/// @return vrai un au moins un objet est sélectionné
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) bool verifierSelection() {
+	__declspec(dllexport) bool verifierSelection()
+	{
 		return FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->selectionExiste();
 	}
 
@@ -291,7 +307,8 @@ extern "C"
 	/// @return Aucune
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void mouseDownL() {
+	__declspec(dllexport) void mouseDownL()
+	{
 		FacadeModele::obtenirInstance()->mouseDownL();
 	}
 
@@ -305,7 +322,8 @@ extern "C"
 	/// @return Aucune
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void mouseDownR() {
+	__declspec(dllexport) void mouseDownR()
+	{
 		FacadeModele::obtenirInstance()->mouseDownR();
 	}
 
@@ -319,7 +337,8 @@ extern "C"
 	/// @return Aucune
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void mouseUpL() {
+	__declspec(dllexport) void mouseUpL()
+	{
 		FacadeModele::obtenirInstance()->mouseUpL();
 	}
 
@@ -333,7 +352,8 @@ extern "C"
 	/// @return Aucune
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void mouseUpR() {
+	__declspec(dllexport) void mouseUpR()
+	{
 		FacadeModele::obtenirInstance()->mouseUpR();
 	}
 
@@ -350,7 +370,8 @@ extern "C"
 	/// @return Aucune
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void playerMouseMove(int x, int y) {
+	__declspec(dllexport) void playerMouseMove(int x, int y)
+	{
 		FacadeModele::obtenirInstance()->playerMouseMove(x, y);
 	}
 
@@ -371,6 +392,7 @@ extern "C"
 		//TODO: IMPLEMENT
 		ModeleEtatJeu::obtenirInstance()->opponentMouseMove(x, y);
 	}
+
 	////////////////////////////////////////////////////////////////////////
 	///
 	/// @fn __declspec(dllexport) void modifierKeys(bool alt, bool ctrl)
@@ -383,7 +405,8 @@ extern "C"
 	/// @return Aucune
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void modifierKeys(bool alt, bool ctrl) {
+	__declspec(dllexport) void modifierKeys(bool alt, bool ctrl)
+	{
 		FacadeModele::obtenirInstance()->modifierKeys(alt, ctrl);
 	}
 
@@ -401,7 +424,8 @@ extern "C"
 	/// @return bool sur la réussite de l'opération (1 seul noeud trouvé)
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) bool selectedNodeInfos(float infos[]) {
+	__declspec(dllexport) bool selectedNodeInfos(float infos[])
+	{
 		return FacadeModele::obtenirInstance()->selectedNodeInfos(infos);
 	}
 
@@ -417,11 +441,13 @@ extern "C"
 	/// @return Aucune
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void applyNodeInfos(float infos[]) {
+	__declspec(dllexport) void applyNodeInfos(float infos[])
+	{
 		FacadeModele::obtenirInstance()->applyNodeInfos(infos);
 	}
 
-	__declspec(dllexport) void getMapJson(float coefficients[], char* map) {
+	__declspec(dllexport) void getMapJson(float coefficients[], char* map)
+	{
 		FacadeModele::obtenirInstance()->getMapJson(coefficients, map);
 	}
 
@@ -438,7 +464,8 @@ extern "C"
 	/// @return Aucune
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void enregistrerSous(char* filePath, float coefficients[]) {
+	__declspec(dllexport) void enregistrerSous(char* filePath, float coefficients[])
+	{
 		FacadeModele::obtenirInstance()->enregistrerSous(filePath, coefficients);
 	}
 
@@ -456,7 +483,8 @@ extern "C"
 	/// @return Aucune
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void ouvrir(char* filePath, float coefficients[]) {
+	__declspec(dllexport) void ouvrir(char* filePath, float coefficients[])
+	{
 		FacadeModele::obtenirInstance()->ouvrir(filePath, coefficients);
 	}
 
@@ -473,7 +501,8 @@ extern "C"
 	/// @return Aucune
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void chargerCarte(const char* json, float coefficients[]) {
+	__declspec(dllexport) void chargerCarte(const char* json, float coefficients[])
+	{
 		FacadeModele::obtenirInstance()->chargerCarte(json, coefficients);
 	}
 
@@ -486,7 +515,8 @@ extern "C"
 	/// @return Booléen sur le résultat
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) bool mouseOverTable() {
+	__declspec(dllexport) bool mouseOverTable()
+	{
 		return FacadeModele::obtenirInstance()->mouseOverTable();
 	}
 
@@ -501,7 +531,8 @@ extern "C"
 	/// @return Booléen sur le résultat
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) bool mouseOverControlPoint() {
+	__declspec(dllexport) bool mouseOverControlPoint()
+	{
 		return FacadeModele::obtenirInstance()->mouseOverControlPoint();
 	}
 
@@ -515,7 +546,8 @@ extern "C"
 	/// @return Aucune
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void resetNodeTree() {
+	__declspec(dllexport) void resetNodeTree()
+	{
 		FacadeModele::obtenirInstance()->reinitialiser();
 	}
 
@@ -531,7 +563,8 @@ extern "C"
 	/// @return Aucune
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void changeGridVisibility(bool visibility) {
+	__declspec(dllexport) void changeGridVisibility(bool visibility)
+	{
 		FacadeModele::obtenirInstance()->changeGridVisibility(visibility);
 	}
 
@@ -545,7 +578,8 @@ extern "C"
 	/// @return Aucune
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void resetCameraPosition() {
+	__declspec(dllexport) void resetCameraPosition()
+	{
 		FacadeModele::obtenirInstance()->resetCameraPosition();
 	}
 
@@ -561,7 +595,8 @@ extern "C"
 	/// @return Aucune.
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void gererRondelleMaillets(bool toggle) {
+	__declspec(dllexport) void gererRondelleMaillets(bool toggle)
+	{
 		FacadeModele::obtenirInstance()->gererRondelleMaillets(toggle);
 	}
 
@@ -577,7 +612,8 @@ extern "C"
 	/// @return Aucune
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void toggleControlPointsVisibility(bool visible) {
+	__declspec(dllexport) void toggleControlPointsVisibility(bool visible)
+	{
 		FacadeModele::obtenirInstance()->toggleControlPointsVisibility(visible);
 	}
 
@@ -591,7 +627,8 @@ extern "C"
 	/// @return Aucune
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void moveMaillet() {
+	__declspec(dllexport) void moveMaillet()
+	{
 		ModeleEtatJeu::obtenirInstance()->moveMaillet();
 	}
 
@@ -607,7 +644,8 @@ extern "C"
 	/// @return Aucune
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void setSpeedXMaillet(float speedX) {
+	__declspec(dllexport) void setSpeedXMaillet(float speedX)
+	{
 		ModeleEtatJeu::obtenirInstance()->setSpeedXMaillet(speedX);
 	}
 
@@ -623,7 +661,8 @@ extern "C"
 	/// @return Aucune
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void setSpeedYMaillet(float speedY) {
+	__declspec(dllexport) void setSpeedYMaillet(float speedY)
+	{
 		ModeleEtatJeu::obtenirInstance()->setSpeedYMaillet(speedY);
 	}
 
@@ -641,7 +680,8 @@ extern "C"
 	/// @return Aucune
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void setCoefficients(float friction, float acceleration, float rebondissement) {
+	__declspec(dllexport) void setCoefficients(float friction, float acceleration, float rebondissement)
+	{
 		PhysProperties::obtenirInstance()->assignerFriction(friction);
 		PhysProperties::obtenirInstance()->assignerAcceleration(acceleration);
 		PhysProperties::obtenirInstance()->assignerRebondissement(rebondissement);
@@ -660,7 +700,8 @@ extern "C"
 	/// @return Vrai si la partie est terminée
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) int isGameOver(int neededGoals) {
+	__declspec(dllexport) int isGameOver(int neededGoals)
+	{
 		return ModeleEtatJeu::obtenirInstance()->isGameOver(neededGoals) ? 1 : 0;
 	}
 
@@ -676,7 +717,8 @@ extern "C"
 	/// @return Aucune
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void getGameScore(int score[]) {
+	__declspec(dllexport) void getGameScore(int score[])
+	{
 		ModeleEtatJeu::obtenirInstance()->getGameScore(score);
 	}
 
@@ -690,7 +732,8 @@ extern "C"
 	/// @return Aucune
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void resetGame() {
+	__declspec(dllexport) void resetGame()
+	{
 		ModeleEtatJeu::obtenirInstance()->resetGame();
 	}
 
@@ -709,7 +752,8 @@ extern "C"
 	/// @return Aucune
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void getDebugStatus(bool enableCollision, bool enableSpeed, bool enableLight, bool enablePortal) {
+	__declspec(dllexport) void getDebugStatus(bool enableCollision, bool enableSpeed, bool enableLight, bool enablePortal)
+	{
 		Logger::obtenirInstance()->setLogger(enableCollision, enableSpeed, enableLight, enablePortal);
 	}
 
@@ -726,7 +770,8 @@ extern "C"
 	/// @return Aucune
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void toggleLights(int lumType) {
+	__declspec(dllexport) void toggleLights(int lumType)
+	{
 		light::LightManager::obtenirInstance()->toggleLight(light::LightType(lumType));
 		Logger::obtenirInstance()->afficherLumiere(lumType);
 
@@ -748,7 +793,8 @@ extern "C"
 	/// @return Aucune
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void setLights(int lumType, bool ouverte) {
+	__declspec(dllexport) void setLights(int lumType, bool ouverte)
+	{
 		light::LightManager::obtenirInstance()->setLight(light::LightType(lumType), ouverte);
 		Logger::obtenirInstance()->afficherLumiere(lumType, ouverte);
 
@@ -768,7 +814,8 @@ extern "C"
 	/// @return Aucune
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void setCurrentOpponentType(int opponentType) {
+	__declspec(dllexport) void setCurrentOpponentType(int opponentType)
+	{
 		ModeleEtatJeu::obtenirInstance()->setCurrentOpponentType(static_cast<ModeleEtatJeu::OpponentType>(opponentType));
 	}
 
@@ -785,7 +832,8 @@ extern "C"
 	/// @return Aucune
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void aiActiveProfile(int speed, int passivity) {
+	__declspec(dllexport) void aiActiveProfile(int speed, int passivity)
+	{
 		ModeleEtatJeu::obtenirInstance()->aiActiveProfile(speed, passivity);
 	}
 
@@ -803,7 +851,8 @@ extern "C"
 	/// @return Aucune
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void setPlayerNames(char* player1, char* player2) {
+	__declspec(dllexport) void setPlayerNames(char* player1, char* player2)
+	{
 		ModeleEtatJeu::obtenirInstance()->setPlayerNames(player1, player2);
 	}
 
@@ -821,8 +870,10 @@ extern "C"
 	/// @return Aucune
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void setPlayerColors(float player1[], float player2[]) {
-		ModeleEtatJeu::obtenirInstance()->setPlayerColors(glm::vec4(player1[0], player1[1], player1[2], player1[3]), glm::vec4(player2[0], player2[1], player2[2], player2[3]));
+	__declspec(dllexport) void setPlayerColors(float player1[], float player2[])
+	{
+		ModeleEtatJeu::obtenirInstance()->setPlayerColors(glm::vec4(player1[0], player1[1], player1[2], player1[3]),
+		                                                  glm::vec4(player2[0], player2[1], player2[2], player2[3]));
 	}
 
 
@@ -837,7 +888,8 @@ extern "C"
 	/// @return Aucune
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void toggleTestMode(bool isActive) {
+	__declspec(dllexport) void toggleTestMode(bool isActive)
+	{
 		ModeleEtatJeu::obtenirInstance()->toggleTestMode(isActive);
 	}
 
@@ -851,7 +903,8 @@ extern "C"
 	/// @return Vrai si la partie est commencée.
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) bool isGameStarted() {
+	__declspec(dllexport) bool isGameStarted()
+	{
 		return ModeleEtatJeu::obtenirInstance()->isGameStarted();
 	}
 
@@ -865,7 +918,8 @@ extern "C"
 	/// @return Aucune
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void loadSounds() {
+	__declspec(dllexport) void loadSounds()
+	{
 		return Audio::obtenirInstance()->loadSounds();
 	}
 
@@ -881,7 +935,8 @@ extern "C"
 	/// @return Aucune
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void playMusic(bool quickPlay) {
+	__declspec(dllexport) void playMusic(bool quickPlay)
+	{
 		return Audio::obtenirInstance()->playMusic(quickPlay);
 	}
 
@@ -897,7 +952,8 @@ extern "C"
 	/// @return Aucune
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void toggleOrbit(bool orbit) {
+	__declspec(dllexport) void toggleOrbit(bool orbit)
+	{
 		return FacadeModele::obtenirInstance()->toggleOrbit(orbit);
 	}
 }
@@ -908,43 +964,42 @@ extern "C"
 ///////////////////////////////////////////////////////////////////////////////
 __declspec(dllexport) void getGameElementPositions(float* slavePosition, float* masterPosition, float* puckPosition)
 {
-
 	glm::vec3 slaveVec = ModeleEtatJeu::obtenirInstance()->getOpponentPosition();
 	glm::vec3 masterVec = ModeleEtatJeu::obtenirInstance()->getPlayerPosition();
 	glm::vec3 puckVec = ModeleEtatJeu::obtenirInstance()->getPuckPosition();
 
 
-	for (int i = 0; i <3; i++)
+	for (int i = 0; i < 3; i++)
 	{
 		slavePosition[i] = slaveVec[i];
 		masterPosition[i] = masterVec[i];
 		puckPosition[i] = puckVec[i];
 	}
 }
-__declspec(dllexport) void setSlaveGameElementPositions(float* slavePosition, float* masterPosition, float* puckPosition)
-{
-	
-	// ModeleEtatJeu::obtenirInstance()->setOpponentPosition(slavePosition);
-	 ModeleEtatJeu::obtenirInstance()->setPlayerPosition(masterPosition);
-	 ModeleEtatJeu::obtenirInstance()->setPuckPosition(puckPosition);
 
+__declspec(dllexport) void setSlaveGameElementPositions(float* slavePosition, float* masterPosition,
+                                                        float* puckPosition)
+{
+	// ModeleEtatJeu::obtenirInstance()->setOpponentPosition(slavePosition);
+	ModeleEtatJeu::obtenirInstance()->setPlayerPosition(masterPosition);
+	ModeleEtatJeu::obtenirInstance()->setPuckPosition(puckPosition);
 }
+
 __declspec(dllexport) void setMasterGameElementPositions(float* slavePosition)
 {
-
 	ModeleEtatJeu::obtenirInstance()->setOpponentPosition(slavePosition);
 }
+
 __declspec(dllexport) void rotateCamera(float angle)
 {
 	return FacadeModele::obtenirInstance()->rotateCamera(angle);
-
 }
 
 
 void getSlavePosition(float* position)
 {
-	glm::vec3 pos =ModeleEtatJeu::obtenirInstance()->getOpponentPosition();
-	for(int i = 0 ; i<3; i++)
+	glm::vec3 pos = ModeleEtatJeu::obtenirInstance()->getOpponentPosition();
+	for (int i = 0; i < 3; i++)
 	{
 		position[i] = pos[i];
 	}
@@ -963,13 +1018,11 @@ void setOnGoalCallback(GoalCallback goalCallback)
 void slaveGoal()
 {
 	ModeleEtatJeu::obtenirInstance()->player2Goal();
-
 }
 
 void masterGoal()
 {
 	ModeleEtatJeu::obtenirInstance()->player1Goal();
-
 }
 
 
@@ -978,13 +1031,11 @@ __declspec(dllexport) void createPortal(char* startUuid, float* startPos, char* 
 	glm::vec3 startPosVec = glm::make_vec3(startPos);
 	glm::vec3 endPosVec = glm::make_vec3(endPos);
 
-	return NodeCreator::obtenirInstance()->createPortal(startUuid,startPosVec, endUuid,endPosVec);
-
+	return NodeCreator::obtenirInstance()->createPortal(startUuid, startPosVec, endUuid, endPosVec);
 }
 
 void setPortalCreationCallback(PortalCreationCallback callback)
 {
-
 	ModeleEtatCreerPortail::obtenirInstance()->setPortalCreationCallback(callback);
 }
 
@@ -992,8 +1043,7 @@ void createWall(const char* uuid, const float* startPosition, const float* endPo
 {
 	glm::vec3 startPosVec = glm::make_vec3(startPosition);
 	glm::vec3 endPosVec = glm::make_vec3(endPosition);
-	return NodeCreator::obtenirInstance()->createWall(uuid, startPosVec,endPosVec);
-
+	return NodeCreator::obtenirInstance()->createWall(uuid, startPosVec, endPosVec);
 }
 
 void setWallCreationCallback(WallCreationCallback callback)
@@ -1020,57 +1070,61 @@ void setSelectionEventCallback(SelectionEventCallback callback)
 
 void setElementSelection(const char* username, const char* uuid, const bool isSelected, const bool deselectAll)
 {
-	
-	if(FacadeModele::obtenirInstance()->getUserManager().userExist(std::string(username)))
+	if (FacadeModele::obtenirInstance()->getUserManager().userExist(std::string(username)))
 	{
-		if(deselectAll)
+		if (deselectAll)
 		{
 			FacadeModele::obtenirInstance()->getUserManager().getUser(std::string(username))->deselectAll();
-
-		}else
+		}
+		else
 		{
-			if(isSelected)
+			if (isSelected)
 			{
 				FacadeModele::obtenirInstance()->getUserManager().getUser(std::string(username))->select(std::string(uuid, 36));
-
-			}else
+			}
+			else
 			{
 				FacadeModele::obtenirInstance()->getUserManager().getUser(std::string(username))->deselect(std::string(uuid, 36));
-
 			}
 		}
 	}
-
 }
 
 
-void moveByUUID(const char* username, const char* uuid, const float* newPosition)
+void setTransformByUUID(const char* username, const char* uuid, const float* position, const float rotation, const float* scale)
 {
-
-	NoeudAbstrait* node =  FacadeModele::obtenirInstance()->getUserManager().getUser(std::string(username))->findNode(std::string(uuid));
-	if(node)
+	NoeudAbstrait* node = FacadeModele::obtenirInstance()->getUserManager().getUser(std::string(username))->findNode(
+		std::string(uuid));
+	if (node)
 	{
-		node->deplacer(glm::make_vec3(newPosition));
+		node->deplacer(glm::make_vec3(position));
+		node->rotate(rotation, glm::vec3(0,1,0));
+		node->deplacer(glm::make_vec3(position));
+
 	}
 	else //if it isnt in the selected list of the other player anymore, we find it in the entire tree 
 	{
-		FacadeModele::obtenirInstance()->moveByUUID(uuid, glm::make_vec3(newPosition));
-
+		NoeudAbstrait* nodeInTree = FacadeModele::obtenirInstance()->findNodeInTree(uuid);
+		if (nodeInTree)
+		{
+			nodeInTree->deplacer(glm::make_vec3(position));
+			nodeInTree->rotate(rotation, glm::vec3(0, 1, 0));
+			nodeInTree->deplacer(glm::make_vec3(position));
+		}
 	}
-
-
 }
 
-void setMoveEventCallback(MoveEventCallback callback)
+void setTransformEventCallback(TransformEventCallback callback)
 {
-	ModeleEtatDeplacement::obtenirInstance()->setMoveEventCallback(callback);
+	ModeleEtatJeu::obtenirInstance()->setTransformEventCallback(callback);
 }
 
 
-void addNewUser(char* username,char* hexColor)
+void addNewUser(char* username, char* hexColor)
 {
 	FacadeModele::obtenirInstance()->getUserManager().addNewUser(username, hexColor);
 }
+
 void removeUser(char* username)
 {
 	FacadeModele::obtenirInstance()->getUserManager().removeUser(username);
@@ -1079,6 +1133,45 @@ void removeUser(char* username)
 void clearUsers()
 {
 	FacadeModele::obtenirInstance()->getUserManager().clearUsers();
-
 }
 
+void setCurrentPlayerSelectionColor(char* userHexColor)
+{
+	glm::vec4 color = OnlineUser::hexadecimalToRGB(userHexColor);
+	NoeudAbstrait::selectionColor_ = color;
+}
+
+void setCurrentPlayerSelectionColorToDefault()
+{
+	NoeudAbstrait::selectionColor_ = glm::vec4(0, 0, 1, 0.25f);
+}
+
+
+void setControlPointEventCallback(ControlPointEventCallback callback)
+{
+	ModeleEtatPointControl::obtenirInstance()->setControlPointEventCallback(callback);
+}
+
+void setControlPointPosition(const char* username, const char* uuid, const float* position)
+{
+	NoeudAbstrait* node = FacadeModele::obtenirInstance()->getUserManager().getUser(std::string(username))->findNode(
+		std::string(uuid));
+	if (node)
+	{
+		if (dynamic_cast<NoeudPointControl*>(node))
+		{
+			node->assignerPositionRelative(glm::make_vec3(position));
+		}
+	}
+	else //if it isnt in the selected list of the other player anymore, we find it in the entire tree 
+	{
+		NoeudAbstrait* nodeInTree = FacadeModele::obtenirInstance()->findNodeInTree(uuid);
+		if (nodeInTree)
+		{
+			if (dynamic_cast<NoeudPointControl*>(nodeInTree))
+			{
+				nodeInTree->assignerPositionRelative(glm::make_vec3(position));
+			}
+		}
+	}
+}

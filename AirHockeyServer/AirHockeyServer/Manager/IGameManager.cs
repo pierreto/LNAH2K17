@@ -11,8 +11,8 @@ namespace AirHockeyServer.Manager
     {
         void AddGame(GameEntity game);
 
-        void GoalScored(int gameId, int playerId);
+        void GoalScored(Guid gameId, int playerId);
 
-        void GameEnded(int gameId);
+        Task GameEnded(Guid gameId);
     }
 }

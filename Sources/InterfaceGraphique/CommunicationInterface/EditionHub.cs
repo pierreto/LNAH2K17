@@ -44,7 +44,7 @@ namespace InterfaceGraphique.CommunicationInterface
                     command,
                     new JsonSerializerSettings
                     {
-                        TypeNameHandling = TypeNameHandling.All
+                        TypeNameHandling = TypeNameHandling.Objects
                     });
                 NewCommand?.Invoke(rcmd);
             });
@@ -71,7 +71,7 @@ namespace InterfaceGraphique.CommunicationInterface
 
         public void SendEditorCommand(AbstractEditionCommand command)
         {
-            var serializer = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
+            var serializer = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Objects };
             var str = JsonConvert.SerializeObject(command, serializer);
             hubProxy.Invoke("SendEditionCommand", this.map.Id, str);
         }

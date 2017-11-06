@@ -52,7 +52,8 @@ public:
 	// Fonctions gérant les entrées de l'utilisateur
 	/// Évènement appelé lorsque la souris bouge
 	virtual void playerMouseMove(int x, int y);
-	void opponentMouseMove(int i, int y);;
+	void opponentMouseMove(int i, int y);
+
 
 	virtual void escape();
 	virtual void afficher();
@@ -89,6 +90,11 @@ public:
 	OnlineClientType currentOnlineClientType() const;
 	void setCurrentOnlineClientType(const OnlineClientType currentOnlineClientType_);
 	void setOnGoalCallback(GoalCallback goalCallback) { goalCallback_ = goalCallback; };
+
+
+
+	void setTransformEventCallback(TransformEventCallback callback){ transformEventCallback_ = callback; }
+	TransformEventCallback getTransformEventCallback() { return transformEventCallback_; }
 
 private:
 	/// Constructeur.
@@ -152,6 +158,8 @@ private:
 	OpponentType currentOpponentType_;
 	OnlineClientType onlineClientType_;
 	GoalCallback goalCallback_;
+
+	TransformEventCallback transformEventCallback_;
 };
 
 

@@ -20,6 +20,7 @@
 
 #include "RigidBody.h"
 #include "utilitaire.h"
+#include <rapidjson/document.h>
 
 /// Déclarations avancées pour contenir un pointeur vers un modèle3D et son storage
 namespace modele{
@@ -98,6 +99,7 @@ public:
 	
 	/// Change la roation du noeud (overwrite l'ancienne)
 	inline void rotate(const float& angle, const glm::vec3& axes);
+
 	/// Applique une rotation sur la matrice de transformation
 	inline void appliquerRotation(const float& angle, const glm::vec3& axes);
 
@@ -183,7 +185,8 @@ public:
 	// Modificateur des  de dessin
 	void effetFantome(const bool& activer);
 	void useOtherColor(const bool& activer, glm::vec4 color = glm::vec4(1));
-	void invisible(const bool& activer) { options_.invisible_ = activer; };
+	void invisible(const bool& activer) { options_.invisible_ = activer; }
+	void setUUID(char* uuid) { uuid_ = uuid; };
 
 	// Collision
 	bool enCollision() const;
@@ -195,6 +198,8 @@ public:
 	bool isSelectedByAnotherUser() { return selectedByAnotherUser_; }
 
 	void setSelectedByAnotherUser(bool isSelectedByAnotherUser) { selectedByAnotherUser_ = isSelectedByAnotherUser; }
+
+	static glm::vec4 selectionColor_;
 
 protected:
 	void generateUUID();
@@ -253,9 +258,8 @@ protected:
 	char* uuid_;
 
 	bool selectedByAnotherUser_;
+
 };
-
-
 
 
 ////////////////////////////////////////////////////////////////////////
@@ -569,7 +573,6 @@ inline void NoeudAbstrait::rotate(const float& angle, const glm::vec3& axes)
 	assignerPositionRelative(obtenirPositionRelative());
 	transformationRelative_ *= rotation_ * scale_;
 }
-
 
 ////////////////////////////////////////////////////////////////////////
 ///

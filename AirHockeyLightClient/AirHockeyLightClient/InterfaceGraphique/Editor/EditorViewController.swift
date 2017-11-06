@@ -75,6 +75,14 @@ class EditorViewController: UIViewController {
         self.objectPropertiesView.hideObjectPropertiesButtons()
     }
     
+    override func viewWillDisappear(_ animated : Bool) {
+        super.viewWillDisappear(animated)
+        
+        if self.isMovingFromParentViewController {
+            FacadeModele.instance.obtenirEtatEdition().leaveEdition()
+        }
+    }
+    
     func initView() {
         self.editorView.allowsCameraControl = true
         self.editorView.autoenablesDefaultLighting = true

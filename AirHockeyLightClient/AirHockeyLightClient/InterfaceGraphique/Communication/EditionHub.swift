@@ -9,6 +9,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 import SwiftR
+import SwiftyJSON
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class EditionHub
@@ -24,9 +25,43 @@ class EditionHub: BaseHub {
         super.init()
         self.hubProxy = connection?.createHubProxy("EditionHub")
         
-        /// Reception de l'évènement de rejoindre une salle d'édition
+        /// Reception de l'évènement d'une commande
+        self.hubProxy?.on("NewCommand") { args in
+            let strArgs = args?[0] as! String
+            let dataFromString = strArgs.data(using: .utf8, allowLossyConversion: false)
+            let command = JSON(data: dataFromString!)
+            self.receiveCommand(command: command)
+        }
+        
+        /// Reception de l'évènement quand un utilisateur rejoint une salle d'édition
         self.hubProxy?.on("NewUser") { args in
-            print("NEW USER")
+            let newUser = args?[0] as! Dictionary<String, String>
+            let username = newUser["Username"]
+            let hexColor = newUser["HexColor"]
+            print("Joining user: \(String(describing: username! + " (" + hexColor! + ")"))\n")
+            
+            FacadeModele.instance.obtenirUserManager()?.addUser(username: username!, hexColor: hexColor!)
+        }
+        
+        /// Réception de l'évènement quand un utilisateur quitte la salle d'édition
+        self.hubProxy?.on("UserLeaved") { args in
+            let username = args?[0] as! String
+            print("Leaving user: \(String(describing: username))\n")
+            
+            FacadeModele.instance.obtenirUserManager()?.removeUser(username: username)
+        }
+    }
+    
+    func receiveCommand(command: JSON) {
+        let type = EDITION_COMMAND(rawValue: command["$type"].string!)!
+
+        switch (type) {
+            case .PORTAL_COMMAND :
+                print ("Portal command")
+                let portalCommand = PortalCommand(objectUuid: command["ObjectUuid"].string!)
+                portalCommand.fromJSON(json: command)
+                portalCommand.executeCommand()
+                break
         }
     }
     
@@ -46,16 +81,29 @@ class EditionHub: BaseHub {
     
     func joinPublicRoom(username: String, mapEntity: MapEntity) {
         self.map = mapEntity
+        var usersInRoom = [Dictionary<String, String>]()
         
         do {
-            try self.hubProxy?.invoke("JoinPublicRoom", arguments: [username, convertMapEntity(mapEntity: mapEntity)])
+            try self.hubProxy?.invoke("JoinPublicRoom",
+                                      arguments: [username, convertMapEntity(mapEntity: mapEntity)])
+            { (result, error) in
+                if let e = error {
+                    print("Error JoinPublicRoom: \(e)")
+                }
+                else {
+                    print("Success JoinPublicRoom")
+                    usersInRoom = result as! [Dictionary<String, String>]
+                    print("Users in room: " + usersInRoom.description)
+                    
+                    for user in usersInRoom {
+                        FacadeModele.instance.obtenirUserManager()?.addUser(username: user["Username"]!,
+                                                                            hexColor: user["HexColor"]!)
+                    }
+                }
+            }
         }
         catch {
             print("Error JoinPublicRoom")
-        }
-        
-        self.hubProxy?.on("NewCommand") { args in
-            print("new command received")
         }
     }
     
@@ -70,19 +118,21 @@ class EditionHub: BaseHub {
         }
     }
     
-    func sendEditionCommand(mapId: Int, command: AnyObject) {
-        // TODO : convertir command en json
+    func sendEditionCommand(command: EditionCommand) {
+        let jsonCommand = command.toJSON()?.rawString(options: [])
+        //print(jsonCommand!)
+        
         do {
-            try self.hubProxy?.invoke("SendEditionCommand", arguments: [mapId, command])
+            try self.hubProxy?.invoke("SendEditionCommand", arguments: [self.map?.id.value as Any, jsonCommand!])
         }
         catch {
             print("Error SendEditionCommand")
         }
     }
     
-    func leaveRoom(mapId: Int) {
+    func leaveRoom() {
         do {
-            try self.hubProxy?.invoke("LeaveRoom", arguments: [mapId])
+            try self.hubProxy?.invoke("LeaveRoom", arguments: [self.map?.id.value as Any])
         }
         catch {
             print("Error LeaveRoom")

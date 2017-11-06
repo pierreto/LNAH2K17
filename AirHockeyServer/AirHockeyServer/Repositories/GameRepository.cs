@@ -42,12 +42,12 @@ namespace AirHockeyServer.Repositories
             }
         }
 
-        public async Task<GameEntity> GetGame(int gameId)
+        public async Task<GameEntity> GetGame(Guid gameId)
         {
             try
             {
                 IQueryable<GamePoco> queryable =
-                    from games in this.GameTable where games.Id == gameId select games;
+                    from games in this.GameTable where games.Id == gameId.ToString() select games;
 
                 var results = await Task<IEnumerable<GamePoco>>.Run(
                     () => queryable.ToArray());
@@ -65,7 +65,7 @@ namespace AirHockeyServer.Repositories
                     Id = gamePoco.Winner
                 };
                 
-                result.GameId = gamePoco.Id;
+                result.GameId = new Guid(gamePoco.Id);
 
                 return result;
             }
