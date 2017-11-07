@@ -68,7 +68,7 @@ public:
 	void aiActiveProfile(int speed, int passivity);
 
 	void toggleTestMode(bool isActive) { testMode_ = isActive; }
-	void setSpeedXMaillet(float speedZ) { speedMailletZ_ = speedZ; };
+	void setSpeedXMaillet(float speedZ) { speedMailletZ_ = speedZ; }
 	void setSpeedYMaillet(float speedX) { speedMailletX_ = speedX; };
 	void player1Goal();
 	void player2Goal();
@@ -95,6 +95,9 @@ public:
 
 	void setTransformEventCallback(TransformEventCallback callback){ transformEventCallback_ = callback; }
 	TransformEventCallback getTransformEventCallback() { return transformEventCallback_; }
+
+	void setDeleteEventCallback(DeleteEventCallback callback) { deleteEventCallback_=callback; }
+	DeleteEventCallback getDeleteEventCallback() { return deleteEventCallback_; }
 
 private:
 	/// Constructeur.
@@ -160,6 +163,8 @@ private:
 	GoalCallback goalCallback_;
 
 	TransformEventCallback transformEventCallback_;
+	DeleteEventCallback deleteEventCallback_;
+
 };
 
 

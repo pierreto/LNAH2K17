@@ -18,10 +18,11 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress>true</Use64BitIISExpress>
+    <Use64BitIISExpress>
+    </Use64BitIISExpress>
     <IISExpressSSLPort />
-    <IISExpressAnonymousAuthentication />
-    <IISExpressWindowsAuthentication />
+    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
@@ -237,6 +238,7 @@
     <Compile Include="Entities\ChatMessageEntity.cs" />
     <Compile Include="Entities\ConfigurationEntity.cs" />
     <Compile Include="Entities\Edition\EditionCommand\ControlPointCommand.cs" />
+    <Compile Include="Entities\Edition\EditionCommand\DeleteCommand.cs" />
     <Compile Include="Entities\FriendRequestEntity.cs" />
     <Compile Include="Entities\Edition\EditionCommand\AbstractEditionCommand.cs" />
     <Compile Include="Entities\Edition\EditionCommand\BoostCommand.cs" />

@@ -21,6 +21,8 @@ namespace InterfaceGraphique.Editor.EditorState
         private FonctionsNatives.TransformEventCallback _transformEventCallback;
         private FonctionsNatives.SelectionEventCallback selectionEventCallback;
         private FonctionsNatives.ControlPointEventCallback controlPoinEventCallback;
+        private FonctionsNatives.DeleteEventCallback deleteEventCallback;
+
 
         public OnlineEditorState(EditionHub editionHub)
         {
@@ -36,6 +38,7 @@ namespace InterfaceGraphique.Editor.EditorState
             this._transformEventCallback = CurrentUserObjectTransformChanged;
             this.selectionEventCallback = CurrentUserSelectedObject;
             this.controlPoinEventCallback = CurrentUserChangedControlPoint;
+            this.deleteEventCallback = CurrentUserDeletedNode;
         }
 
         private void OnUserLeft(string username)
@@ -88,6 +91,7 @@ namespace InterfaceGraphique.Editor.EditorState
             FonctionsNatives.setTransformEventCallback(this._transformEventCallback);
             FonctionsNatives.setSelectionEventCallback(this.selectionEventCallback);
             FonctionsNatives.setControlPointEventCallback(this.controlPoinEventCallback);
+            FonctionsNatives.setDeleteEventCallback(this.deleteEventCallback);
 
             List<OnlineUser> usersInTheGame = await this.editionHub.JoinPublicRoom(mapEntity);
             foreach (OnlineUser user in usersInTheGame)
@@ -209,11 +213,14 @@ namespace InterfaceGraphique.Editor.EditorState
             return vec3;
         }
 
-        private float[] getTransformMatrixFromIntptr(IntPtr ptr)
+        private void CurrentUserDeletedNode(string uuid)
         {
-            float[] vec3 = new float[16];
-            Marshal.Copy(ptr, vec3, 0, 16);
-            return vec3;
+            this.editionHub.SendEditorCommand(new DeleteCommand(uuid)
+            {
+                Username = User.Instance.UserEntity.Username,
+            });
+            Task.Run(() => Editeur.mapManager.SaveMap());
         }
+
     }
 }

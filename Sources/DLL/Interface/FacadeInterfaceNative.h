@@ -120,7 +120,9 @@ extern "C" {
 	__declspec(dllexport) void setControlPointEventCallback(ControlPointEventCallback callback);
 	__declspec(dllexport) void setControlPointPosition(const char*username, const char* uuid, const float* position);
 
-
+	typedef void(__stdcall * DeleteEventCallback)(const char* uuid);
+	__declspec(dllexport) void setDeleteEventCallback(DeleteEventCallback callback);
+	__declspec(dllexport) void deleteNode(const char* username,  const char* uuid);
 } 
 
 #endif // __FACADE_INTERFACE_NATIVE_H__

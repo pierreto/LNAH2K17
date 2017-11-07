@@ -284,6 +284,14 @@ namespace InterfaceGraphique
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void setControlPointPosition(string username, string uuid, float[] position);
 
+        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+        public delegate void DeleteEventCallback([Out, MarshalAs(UnmanagedType.LPStr)] string uuid);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void setDeleteEventCallback(DeleteEventCallback callback);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void deleteNode(string username, string uuid);
     }
 }
 

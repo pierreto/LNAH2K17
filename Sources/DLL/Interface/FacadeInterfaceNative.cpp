@@ -1170,3 +1170,27 @@ void setControlPointPosition(const char* username, const char* uuid, const float
 		}
 	}
 }
+
+void deleteNode(const char* username,const char* uuid)
+{
+	ArbreRenduINF2990* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
+	NoeudAbstrait* node = FacadeModele::obtenirInstance()->getUserManager().getUser(std::string(username))->findNode(
+		std::string(uuid));
+	if (node)
+	{
+		arbre->effacer(node);
+	}
+	else //if it isnt in the selected list of the other player anymore, we find it in the entire tree 
+	{
+		NoeudAbstrait* nodeInTree = FacadeModele::obtenirInstance()->findNodeInTree(uuid);
+		if (nodeInTree)
+		{
+			arbre->effacer(nodeInTree);
+		}
+	}
+}
+
+void setDeleteEventCallback(DeleteEventCallback callback)
+{
+	ModeleEtatJeu::obtenirInstance()->setDeleteEventCallback(callback);
+}
