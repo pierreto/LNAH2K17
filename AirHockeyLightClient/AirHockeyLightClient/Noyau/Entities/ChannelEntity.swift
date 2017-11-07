@@ -19,8 +19,8 @@ import Foundation
 ///////////////////////////////////////////////////////////////////////////
 class ChannelEntity : Entity {
     
-    private var name : String
-    
+    public var name : String
+    public var messages = [ChatMessageEntity]()
     init(name: String) {
         self.name = name;
     }

@@ -19,11 +19,15 @@
 		1D019A2E1F911E49004D79B2 /* ISignupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D019A2C1F911E49004D79B2 /* ISignupViewModel.swift */; };
 		1D019A301F911E78004D79B2 /* Http.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D019A2F1F911E78004D79B2 /* Http.swift */; };
 		1D3D77B71F981BCA0012EF12 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3D77B61F981BCA0012EF12 /* MainViewController.swift */; };
+		1D4F014F1FB130BE00F4A302 /* ChatSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4F014E1FB130BE00F4A302 /* ChatSplitViewController.swift */; };
+		1D4F01511FB13B2B00F4A302 /* VerticalSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4F01501FB13B2B00F4A302 /* VerticalSplitViewController.swift */; };
 		1D863DB11F9848E70025B89D /* OfflineMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D863DB01F9848E70025B89D /* OfflineMenuViewController.swift */; };
 		1D90AAFB1F98205A003E0764 /* ConnectServerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D90AAFA1F98205A003E0764 /* ConnectServerViewController.swift */; };
 		1D90AAFE1F98228E003E0764 /* IConnectServerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D90AAFD1F98228E003E0764 /* IConnectServerViewModel.swift */; };
 		1D90AB001F982332003E0764 /* ConnectServerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D90AAFF1F982332003E0764 /* ConnectServerViewModel.swift */; };
 		1D90AB021F9824BE003E0764 /* ConnectServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D90AB011F9824BE003E0764 /* ConnectServer.swift */; };
+		1DD1CFC01FAFC2F4008853DD /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD1CFBF1FAFC2F4008853DD /* MasterViewController.swift */; };
+		1DD1CFC21FAFC59D008853DD /* ChatAreaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD1CFC11FAFC59D008853DD /* ChatAreaViewController.swift */; };
 		1DFE2E4C1F91A8FD0048892D /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFE2E4B1F91A8FD0048892D /* SignupViewController.swift */; };
 		25163A891F9CE62600142418 /* ILoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25163A881F9CE62500142418 /* ILoginViewModel.swift */; };
 		252EC9161FA80FAD008D119C /* EditionHub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252EC9151FA80FAD008D119C /* EditionHub.swift */; };
@@ -159,11 +163,15 @@
 		1D019A2C1F911E49004D79B2 /* ISignupViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ISignupViewModel.swift; sourceTree = "<group>"; };
 		1D019A2F1F911E78004D79B2 /* Http.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Http.swift; sourceTree = "<group>"; };
 		1D3D77B61F981BCA0012EF12 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainViewController.swift; path = InterfaceGraphique/Menus/MainViewController.swift; sourceTree = "<group>"; };
+		1D4F014E1FB130BE00F4A302 /* ChatSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChatSplitViewController.swift; path = InterfaceGraphique/Chat/ChatSplitViewController.swift; sourceTree = "<group>"; };
+		1D4F01501FB13B2B00F4A302 /* VerticalSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VerticalSplitViewController.swift; path = InterfaceGraphique/VerticalSplitViewController.swift; sourceTree = "<group>"; };
 		1D863DB01F9848E70025B89D /* OfflineMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OfflineMenuViewController.swift; path = InterfaceGraphique/Menus/OfflineMenuViewController.swift; sourceTree = "<group>"; };
 		1D90AAFA1F98205A003E0764 /* ConnectServerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ConnectServerViewController.swift; path = InterfaceGraphique/Menus/ConnectServerViewController.swift; sourceTree = "<group>"; };
 		1D90AAFD1F98228E003E0764 /* IConnectServerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IConnectServerViewModel.swift; sourceTree = "<group>"; };
 		1D90AAFF1F982332003E0764 /* ConnectServerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectServerViewModel.swift; sourceTree = "<group>"; };
 		1D90AB011F9824BE003E0764 /* ConnectServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectServer.swift; sourceTree = "<group>"; };
+		1DD1CFBF1FAFC2F4008853DD /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MasterViewController.swift; path = InterfaceGraphique/Chat/MasterViewController.swift; sourceTree = "<group>"; };
+		1DD1CFC11FAFC59D008853DD /* ChatAreaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChatAreaViewController.swift; path = InterfaceGraphique/Chat/ChatAreaViewController.swift; sourceTree = "<group>"; };
 		1DFE2E4B1F91A8FD0048892D /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SignupViewController.swift; path = InterfaceGraphique/Menus/SignupViewController.swift; sourceTree = "<group>"; };
 		25163A881F9CE62500142418 /* ILoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ILoginViewModel.swift; sourceTree = "<group>"; };
 		252EC9151FA80FAD008D119C /* EditionHub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditionHub.swift; path = InterfaceGraphique/Communication/EditionHub.swift; sourceTree = "<group>"; };
@@ -301,6 +309,7 @@
 		1D019A311F911EDC004D79B2 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				1D4F01501FB13B2B00F4A302 /* VerticalSplitViewController.swift */,
 				8F0FFED71F6EB8C500366D8E /* Chat */,
 				8FB6A9931F81B9AA00FAFFCF /* Editor */,
 				25FDE4391FA80C620089D9FE /* Map */,
@@ -563,6 +572,9 @@
 				8FFC5B4B1F7CAC0A0031474F /* UI */,
 				8F64C0101F7754EF00F14AC7 /* ChatViewController.swift */,
 				8F8706BC1F78A67F000E6824 /* ChannelViewController.swift */,
+				1DD1CFC11FAFC59D008853DD /* ChatAreaViewController.swift */,
+				1DD1CFBF1FAFC2F4008853DD /* MasterViewController.swift */,
+				1D4F014E1FB130BE00F4A302 /* ChatSplitViewController.swift */,
 			);
 			name = Chat;
 			sourceTree = "<group>";
@@ -938,12 +950,14 @@
 				1D019A211F911DF6004D79B2 /* Login.swift in Sources */,
 				25F809251FA6AB680008F048 /* CreateMapViewController.swift in Sources */,
 				3497C3271F9FF3C300C58700 /* VisiteurDuplication.swift in Sources */,
+				1DD1CFC01FAFC2F4008853DD /* MasterViewController.swift in Sources */,
 				8FB6A9CA1F81E38300FAFFCF /* Table.swift in Sources */,
 				8F76FC0F1F9CF990001BBC99 /* SCNodeHelper.swift in Sources */,
 				3415E6C21F8545B300DB1CAD /* NoeudCommun.swift in Sources */,
 				8F8706B91F7892BB000E6824 /* Entity.swift in Sources */,
 				252EC9161FA80FAD008D119C /* EditionHub.swift in Sources */,
 				25628BA11FA79CFF0010B58D /* Maps.swift in Sources */,
+				1D4F01511FB13B2B00F4A302 /* VerticalSplitViewController.swift in Sources */,
 				34B66FE21F84599100A9CCB9 /* But.swift in Sources */,
 				1D019A2A1F911E33004D79B2 /* LoginViewModel.swift in Sources */,
 				8F97A3861FA2C8BD00421FDC /* IGeneralPropertiesViewModel.swift in Sources */,
@@ -966,6 +980,7 @@
 				8F0B94B61F8D5C25007F0E82 /* FacadeModele.swift in Sources */,
 				8F64C0171F775B2500F14AC7 /* AuthentificationViewController.swift in Sources */,
 				342E7C541F9859770062017A /* NoeudPortail.swift in Sources */,
+				1DD1CFC21FAFC59D008853DD /* ChatAreaViewController.swift in Sources */,
 				1D019A1E1F911DE2004D79B2 /* LoginViewController.swift in Sources */,
 				1D019A301F911E78004D79B2 /* Http.swift in Sources */,
 				3475C22A1F8FAF8D00E8BF86 /* EditorHUDScene.swift in Sources */,
@@ -998,6 +1013,7 @@
 				8F65B2851FAE264100D8EE20 /* OnlineUser.swift in Sources */,
 				1DFE2E4C1F91A8FD0048892D /* SignupViewController.swift in Sources */,
 				8F6AE2BC1F6592EB00A29E8B /* AppDelegate.swift in Sources */,
+				1D4F014F1FB130BE00F4A302 /* ChatSplitViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
