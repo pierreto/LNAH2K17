@@ -9,6 +9,8 @@ using InterfaceGraphique.CommunicationInterface.WaitingRooms;
 using InterfaceGraphique.Entities;
 using InterfaceGraphique.CommunicationInterface.RestInterface;
 using System.Collections.ObjectModel;
+using InterfaceGraphique.Services;
+using InterfaceGraphique.CommunicationInterface;
 
 namespace InterfaceGraphique.Controls.WPF.Matchmaking
 {
@@ -17,12 +19,15 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
         private GameWaitingRoomHub waitingRoomHub;
         private bool isStarted;
 
+        protected MapService MapService { get; }
+
         protected MapsRepository MapsRepository { get; set; }
 
-        public MatchmakingViewModel(GameWaitingRoomHub matchmakingHub)
+        public MatchmakingViewModel(GameWaitingRoomHub matchmakingHub, MapService mapService)
         {
 
             this.waitingRoomHub = matchmakingHub;
+            MapService = mapService;
             this.isStarted = false;
             this.MapsRepository = new MapsRepository();
         }
@@ -69,22 +74,32 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
 
         private async void LoadData()
         {
-            GameEntity gg = new GameEntity();
-            //MapsAvailable = await MapsRepository.GetMaps();
-            MapsAvailable = new ObservableCollection<MapEntity>
+            if (User.Instance.IsConnected)
             {
-                new MapEntity
+                var maps = await MapService.GetMaps();
+                MapsAvailable = new ObservableCollection<MapEntity>(maps);
+            }
+            else
+            {
+                MapsAvailable = new ObservableCollection<MapEntity>
                 {
-                    MapName = "map1"
-                },
-                new MapEntity
-                {
-                    MapName = "map2"
-                }
-            };
+                    new MapEntity
+                    {
+                        MapName = "foret enchantee"
+                    },
+                    new MapEntity
+                    {
+                        MapName = "loup garou"
+                    },
+                    new MapEntity
+                    {
+                        MapName = "New york"
+                    }
+                };
 
+            }
             SelectedMap = mapsAvailable[1];
-            
+
         }
 
         private ICommand mainMenuCommand;

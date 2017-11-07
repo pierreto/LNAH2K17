@@ -254,6 +254,10 @@
       <DependentUpon>SignupView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\WPF\Signup\SignupViewModel.cs" />
+    <Compile Include="Controls\WPF\UserProfile\UserProfileView.xaml.cs">
+      <DependentUpon>UserProfileView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WPF\UserProfile\UserProfileViewModel.cs" />
     <Compile Include="Controls\WPF\ViewModelBase.cs" />
     <Compile Include="Controls\WPF\ViewModelLocator.cs" />
     <Compile Include="Editor\EditorState\AbstractEditorState.cs" />
@@ -278,6 +282,7 @@
     <Compile Include="Editor\SaveMapOnlineForm.Designer.cs">
       <DependentUpon>SaveMapOnlineForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Entities\Achivement.cs" />
     <Compile Include="Entities\ChannelEntity.cs" />
     <Compile Include="Entities\ChatMessage.cs" />
     <Compile Include="Entities\Editor\EditonCommand\ControlPointCommand.cs" />
@@ -400,6 +405,12 @@
     </Compile>
     <Compile Include="Menus\TournementMenu.Designer.cs">
       <DependentUpon>TournementMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Menus\UserProfileMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Menus\UserProfileMenu.Designer.cs">
+      <DependentUpon>UserProfileMenu.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -632,6 +643,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\WPF\Signup\SignupView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\WPF\UserProfile\UserProfileView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
