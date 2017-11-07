@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:wpf="clr-namespace:InterfaceGraphique.Controls.WPF"
              xmlns:entities="clr-namespace:InterfaceGraphique.Entities"
+             xmlns:behaviors="clr-namespace:WPFTextBoxAutoComplete;assembly=WPFTextBoxAutoComplete"
              mc:Ignorable="d" d:DesignWidth="717.783" Height="536.985">
 
     <UserControl.Resources>
@@ -36,8 +37,10 @@
 
             <Label Content="Ajouter un ami :" HorizontalAlignment="Left" Margin="33,76,0,0" VerticalAlignment="Top" Width="98" Foreground="#FF2288F7"/>
             <TextBox x:Name="FriendUsername"
-                 Text="{Binding FriendUsername, UpdateSourceTrigger=PropertyChanged}" IsEnabled="True"
-                HorizontalAlignment="Left" Height="26" Margin="131,76,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="193" Foreground="Black"/>
+                 Text="{Binding FriendUsername, UpdateSourceTrigger=PropertyChanged}"
+                 behaviors:AutoCompleteBehavior.AutoCompleteItemsSource="{Binding Usernames, UpdateSourceTrigger=PropertyChanged}"
+                 behaviors:AutoCompleteBehavior.AutoCompleteStringComparison="InvariantCultureIgnoreCase"
+                 HorizontalAlignment="Left" Height="26" Margin="131,76,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="193" Foreground="Black"/>
             <Button Command="{Binding SendFriendRequestCommand}"
                     Content="Envoyer la demande" HorizontalAlignment="Left" Height="25" Margin="361,77,0,0" VerticalAlignment="Top" Width="188"/>
 

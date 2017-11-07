@@ -8,15 +8,19 @@ using InterfaceGraphique.CommunicationInterface;
 using InterfaceGraphique.Entities;
 using InterfaceGraphique.CommunicationInterface.RestInterface;
 using System.Net.Http;
+using InterfaceGraphique.Services;
+using System.Collections.ObjectModel;
 
 namespace InterfaceGraphique.Controls.WPF.Friends
 {
     public class FriendListViewModel : ViewModelBase
     {
         private FriendsHub friendsHub;
+        private UserService userService;
         private List<UserEntity> friendList;
         private List<FriendRequestEntity> friendRequestList;
         private string friendUsername;
+        private ObservableCollection<string> usernames;
 
         private ICommand sendFriendRequestCommand;
         private ICommand acceptFriendRequestCommand;
@@ -26,9 +30,10 @@ namespace InterfaceGraphique.Controls.WPF.Friends
         public UserEntity SelectedFriend { get; set; }
         public FriendRequestEntity SelectedFriendRequest { get; set; }
 
-        public FriendListViewModel(FriendsHub friendsHub)
+        public FriendListViewModel(FriendsHub friendsHub, UserService userService)
         {
             this.friendsHub = friendsHub;
+            this.userService = userService;
         }
 
         public List<UserEntity> FriendList
@@ -57,6 +62,9 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             FriendList = await this.friendsHub.GetAllFriends();
             FriendRequestList = await this.friendsHub.GetAllPendingRequests();
 
+            List<UserEntity> userEntities = await userService.GetAllUsers();
+            Usernames = new ObservableCollection<string>(userEntities.Select(user => user.Username));
+
             this.friendsHub.NewFriendEvent += NewFriendEvent;
             this.friendsHub.FriendRequestEvent += FriendRequestEvent;
             this.friendsHub.RemovedFriendEvent += RemovedFriendEvent;
@@ -69,6 +77,16 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             set
             {
                 friendUsername = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        public ObservableCollection<string> Usernames
+        {
+            get => usernames;
+            set
+            {
+                usernames = value;
                 this.OnPropertyChanged();
             }
         }

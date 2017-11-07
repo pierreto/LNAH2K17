@@ -23,6 +23,7 @@ using InterfaceGraphique.Controls.WPF.Signup;
 using InterfaceGraphique.Services;
 using InterfaceGraphique.Controls.WPF.Chat.Channel;
 using InterfaceGraphique.Editor;
+using InterfaceGraphique.Controls.WPF.UserProfile;
 
 namespace InterfaceGraphique
 {
@@ -50,6 +51,8 @@ namespace InterfaceGraphique
         public static OnlineTournament OnlineTournament { get { return onlineTournament;  } set { onlineTournament = value; } }
         public static EditorHost EditorHost { get { return editorHost; } set { editorHost = value; } }
         public static FriendListHost FriendListHost {  get { return friendListHost; } set { friendListHost = value; } }
+        public static UserProfileMenu UserProfileMenu { get { return userProfileMenu; } set { userProfileMenu = value; } }
+        
 
         private static TestChatMenu testChatMenu;
         private static FormManager formManager;
@@ -68,6 +71,7 @@ namespace InterfaceGraphique
         private static EditorHost editorHost;
         private static OnlineTournament onlineTournament;
         private static FriendListHost friendListHost;
+        private static UserProfileMenu userProfileMenu;
 
         private static Panel openGLPanel;
         //private static Login login;
@@ -129,6 +133,7 @@ namespace InterfaceGraphique
             onlineTournament = new OnlineTournament();
             editorHost = new EditorHost();
             friendListHost = new FriendListHost();
+            userProfileMenu = new UserProfileMenu();
 
             FonctionsNatives.loadSounds();
 
@@ -184,9 +189,11 @@ namespace InterfaceGraphique
             unityContainer.RegisterType<HomeViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<EditorViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<FriendListViewModel>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<UserProfileViewModel>(new ContainerControlledLifetimeManager());
 
             //Rest services instantiations
             unityContainer.RegisterType<MapService>();
+            unityContainer.RegisterType<UserService>();
 
             //Other services
             unityContainer.RegisterType<MapManager>();

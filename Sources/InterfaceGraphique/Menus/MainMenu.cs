@@ -65,9 +65,9 @@ namespace InterfaceGraphique
             //this.boutonPartieRapide.Click += (sender, e) => Program.FormManager.CurrentForm = Program.LobbyHost;
             this.boutonTournoi.Click += (sender, e) => Program.FormManager.CurrentForm = Program.TournementMenu;
             this.buttonConfiguration.Click += (sender, e) => Program.ConfigurationMenu.ShowDialog();
-            this.buttonEditeur.Click += async (sender, e) =>
+            this.buttonEditeur.Click += (sender, e) =>
             {
-                await Program.Editeur.ResetDefaultTable();
+                Program.Editeur.ResetDefaultTable();
                 Program.FormManager.CurrentForm = Program.Editeur;
             };
             this.Button_Credits.Click += (sender, e) => Program.FormManager.CurrentForm = Program.CreditsMenu;
@@ -78,6 +78,15 @@ namespace InterfaceGraphique
                 Program.FormManager.FormClosing += async (sender, e) => await Logout();
                 Program.FormManager.FormClosing += (sender, e) => Program.unityContainer.Resolve<ChatViewModel>().UndockedChat?.Close();
             }
+            if(User.Instance.IsConnected)
+            {
+                this.profileButton.Click += (sender, e) => OnProfileButtonClicked(sender, e);
+            }
+        }
+
+        private void OnProfileButtonClicked(object sender, EventArgs e)
+        {
+            Program.FormManager.CurrentForm = Program.UserProfileMenu;
         }
 
         public async Task Logout()

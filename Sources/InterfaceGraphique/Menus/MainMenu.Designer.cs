@@ -34,6 +34,7 @@
             this.buttonLogout = new System.Windows.Forms.Button();
             this.elementHost1 = new System.Windows.Forms.Integration.ElementHost();
             this.testChatView1 = new InterfaceGraphique.Controls.WPF.Chat.TestChatView();
+            this.profileButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // boutonPartieRapide
@@ -96,6 +97,10 @@
             this.buttonEditeur.TabStop = false;
             this.buttonEditeur.Text = "Éditeur";
             this.buttonEditeur.UseVisualStyleBackColor = true;
+            ///
+            /// buttonProfile
+            ///
+            this.profileButton.Text = "Profile";
             // 
             // buttonQuitter
             // 
@@ -179,6 +184,7 @@
         private System.Windows.Forms.Button buttonEditeur;
         private System.Windows.Forms.Button buttonQuitter;
         private System.Windows.Forms.Button Button_Credits;
+        private System.Windows.Forms.Button profileButton;
         private System.Windows.Forms.Button buttonLogout;
         private System.Windows.Forms.Integration.ElementHost elementHost1;
         private Controls.WPF.Chat.TestChatView testChatView1;

@@ -116,7 +116,7 @@ std::string Logger::afficherTemps() {
 		time.wSecond,
 		time.wMilliseconds);
 	time_ = std::string(buffer);
-	std::cout << time_ << " - ";
+	//std::cout << time_ << " - ";
 
 	return time_;
 }
