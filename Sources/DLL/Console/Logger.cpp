@@ -137,7 +137,7 @@ void Logger::afficherCollision(std::string objet) {
 	if (enableCollision_ && activer_) {
 		afficherTemps();
 		std::transform(objet.begin(), objet.end(), objet.begin(), ::toupper);
-		std::cout << "Collision : " << objet << std::endl;
+		//std::cout << "Collision : " << objet << std::endl;
 	}
 }
 
@@ -156,7 +156,7 @@ void Logger::afficherCollision(std::string objet) {
 void Logger::afficherVitesse(float vitesse) {
 	if (enableSpeed_  && activer_) {
 		afficherTemps();
-		std::cout << "Vitesse : " << vitesse << std::endl;
+		//std::cout << "Vitesse : " << vitesse << std::endl;
 	}
 }
 
@@ -178,15 +178,15 @@ void Logger::afficherLumiere(int lumType) {
 
 		if (lumType == 0) {
 			toggleLightsA_ = !toggleLightsA_;
-			std::cout << "Lumiere ambiante " << ((toggleLightsA_) ? "ouverte" : "fermee") << std::endl;
+			//std::cout << "Lumiere ambiante " << ((toggleLightsA_) ? "ouverte" : "fermee") << std::endl;
 		}
 		else if (lumType == 1) {
 			toggleLightsB_ = !toggleLightsB_;
-			std::cout << "Lumiere directionnelle " << ((toggleLightsB_) ? "ouverte" : "fermee") << std::endl;
+			//std::cout << "Lumiere directionnelle " << ((toggleLightsB_) ? "ouverte" : "fermee") << std::endl;
 		}
 		else if (lumType == 2) {
 			toggleLightsC_ = !toggleLightsC_;
-			std::cout << "Lumieres spots " << ((toggleLightsC_) ? "ouverte" : "fermee") << std::endl;
+			//std::cout << "Lumieres spots " << ((toggleLightsC_) ? "ouverte" : "fermee") << std::endl;
 		}	
 	}
 }
@@ -210,15 +210,15 @@ void Logger::afficherLumiere(int lumType, bool ouverte) {
 
 		if (lumType == 0) {
 			toggleLightsA_ = ouverte;
-			std::cout << "Lumiere ambiante " << ((toggleLightsA_) ? "ouverte" : "fermee") << std::endl;
+			//std::cout << "Lumiere ambiante " << ((toggleLightsA_) ? "ouverte" : "fermee") << std::endl;
 		}
 		else if (lumType == 1) {
 			toggleLightsB_ = ouverte;
-			std::cout << "Lumiere directionnelle " << ((toggleLightsB_) ? "ouverte" : "fermee") << std::endl;
+			//std::cout << "Lumiere directionnelle " << ((toggleLightsB_) ? "ouverte" : "fermee") << std::endl;
 		}
 		else if (lumType == 2) {
 			toggleLightsC_ = ouverte;
-			std::cout << "Lumieres spots " << ((toggleLightsC_) ? "ouverte" : "fermee") << std::endl;
+			//std::cout << "Lumieres spots " << ((toggleLightsC_) ? "ouverte" : "fermee") << std::endl;
 		}
 	}
 }
