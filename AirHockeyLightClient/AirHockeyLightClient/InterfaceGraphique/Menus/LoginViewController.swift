@@ -31,6 +31,7 @@ class LoginViewController: UIViewController {
                         self.loadingDone()
                         OperationQueue.main.addOperation {
                             self.performSegue(withIdentifier: "loginSuccess", sender: self)
+                            NotificationCenter.default.post(name: Notification.Name(rawValue: ConnectionNotification.Connection), object: nil)
                         }
                     } else {
                         self.connectionError()

@@ -33,6 +33,9 @@ class LoginViewModel: NSObject, ILoginViewModel {
         unsubscribeFromNotifications()
     }
     
+    public func getLogin() -> Login {
+        return loginModel
+    }
     fileprivate func subscribeToNotifications() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(loginPressed(_:)),

@@ -18,6 +18,10 @@ import SwiftR
 /// @author Mikael Ferland et Pierre To
 /// @date 2017-09-22
 ///////////////////////////////////////////////////////////////////////////
+enum ConnectionNotification {
+    static let Connection = "Connection"
+}
+
 class HubManager {
     
     /// Instance singleton de l'objet HubManager
@@ -30,7 +34,7 @@ class HubManager {
     private var ipAddress: String?
     private var username: String?
     
-    private var _connected: Bool?
+    private var _connected: Bool? = false
     
     var connected: Bool? {
         get {
