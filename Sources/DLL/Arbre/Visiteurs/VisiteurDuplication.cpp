@@ -73,6 +73,7 @@ void VisiteurDuplication::visiterAccelerateur(NoeudAccelerateur* noeud) {
 		if (sendToServer_)
 		{
 			ModeleEtatCreerBoost::obtenirInstance()->getBoostCreationCallback()(noeudDouble->getUUID(), glm::value_ptr(noeudDouble->obtenirPositionRelative()), noeudDouble->obtenirRotation().y, glm::value_ptr(noeudDouble->obtenirScale()));
+			noeud->assignerSelection(true);
 		}
 
 	}
@@ -146,6 +147,8 @@ void VisiteurDuplication::visiterPortail(NoeudPortail* noeud) {
 			{
 				ModeleEtatCreerPortail::obtenirInstance()->getPortalCreationCallback()(premierNoeud_->getUUID(), glm::value_ptr(premierNoeud_->obtenirPositionRelative()), (premierNoeud_->obtenirRotation().y), glm::value_ptr(premierNoeud_->obtenirScale()),
 					noeudDouble->getUUID(), glm::value_ptr(noeudDouble->obtenirPositionRelative()), noeudDouble->obtenirRotation().y, glm::value_ptr(noeudDouble->obtenirScale()));
+				noeud->assignerSelection(true);
+
 			}
 			premierNoeud_ = nullptr;
 
