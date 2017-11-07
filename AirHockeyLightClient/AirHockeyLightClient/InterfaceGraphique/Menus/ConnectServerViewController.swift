@@ -27,6 +27,7 @@ class ConnectServerViewController: UIViewController {
                 self.clientConnection.connected = true
                 OperationQueue.main.addOperation {
                     self.performSegue(withIdentifier: "connectionSuccess", sender: self)
+                    self.enableInputs()
                 }
             } else {
                 //ERROR
@@ -107,5 +108,11 @@ class ConnectServerViewController: UIViewController {
     private func loadingDone() {
         self.loadingSpinner.stopAnimating()
         self.view.alpha = 1.0
+    }
+    
+    override func viewWillAppear(_ animated: Bool){
+        ipAddressInput.text = "";
+        HubManager.sharedConnection.setIpAddress(ipAddress: ipAddressInput.text!)
+        HubManager.sharedConnection.connected = false;
     }
 }
