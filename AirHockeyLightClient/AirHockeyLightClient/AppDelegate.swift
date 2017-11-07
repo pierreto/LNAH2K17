@@ -24,7 +24,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        let mainStoryboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         // Override point for customization after application launch.
+        let splitViewController = mainStoryboard.instantiateViewController(withIdentifier: "SplitViewController") as! UISplitViewController
+        
+        let leftNavController = splitViewController.viewControllers.first as! UINavigationController
+        let masterViewController = leftNavController.topViewController as! MasterViewController
+        let chatAreaViewController = splitViewController.viewControllers.last as! ChatAreaViewController
+        
+        let firstChannel = masterViewController.channels.first
+        chatAreaViewController.channel = firstChannel
+        
+        masterViewController.delegate = chatAreaViewController
         return true
     }
 

@@ -15,7 +15,7 @@ namespace AirHockeyServer.Events.EventManagers
 {
     public class TournamentWaitingRoomEventManager
     {
-        protected const int WAITING_TIMEOUT = 2000;
+        protected const int WAITING_TIMEOUT = 20000000;
 
         protected ConcurrentDictionary<int, int> RemainingTime { get; set; }
 

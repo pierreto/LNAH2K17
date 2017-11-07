@@ -21,9 +21,9 @@ namespace AirHockeyServer.Services
             TournamentMatchMakerService.Instance().RemoveUser(user.Id);
         }
 
-        public TournamentEntity UpdateTournament(TournamentEntity tournamentEntity)
+        public void UpdateTournament(int tournamentId, MapEntity map)
         {
-            return tournamentEntity;
+            //return tournamentEntity;
         }
     }
 }

@@ -11,6 +11,7 @@ import Foundation
 
 enum LoginNotification {
     static let SubmitNotification = "SubmitNotification"
+    static let LogoutNotification = "LogoutNotification"
 }
 class Login: NSObject {
     

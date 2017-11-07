@@ -78,6 +78,15 @@ namespace InterfaceGraphique
                 Program.FormManager.FormClosing += async (sender, e) => await Logout();
                 Program.FormManager.FormClosing += (sender, e) => Program.unityContainer.Resolve<ChatViewModel>().UndockedChat?.Close();
             }
+            if(User.Instance.IsConnected)
+            {
+                this.profileButton.Click += (sender, e) => OnProfileButtonClicked(sender, e);
+            }
+        }
+
+        private void OnProfileButtonClicked(object sender, EventArgs e)
+        {
+            Program.FormManager.CurrentForm = Program.UserProfileMenu;
         }
 
         public async Task Logout()

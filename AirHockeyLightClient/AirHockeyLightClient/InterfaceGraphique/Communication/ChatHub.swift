@@ -10,16 +10,14 @@
 
 import SwiftR
 
-class ChatHub: BaseHub {
-    private var map: MapEntity?
-    
+class ChatHub: BaseHub {    
     init(connection: SignalR?) {
         super.init()
         self.hubProxy = connection?.createHubProxy("ChatHub")
         
         /// Transmettre un message reçu du serveur au ChatViewController
         self.hubProxy?.on("ChatMessageReceived") { args in
-            ChatViewController.sharedChatViewController.receiveMessage(message: args?[0] as! Dictionary<String, String>)
+            ChatAreaViewController.sharedChatAreaViewController.receiveMessage(message: args?[0] as! Dictionary<String, String>)
         }
     }
     

@@ -35,33 +35,32 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
 
         private async void InitializeData()
         {
-            var mapsRepo = new MapsRepository();
+            if (User.Instance.IsConnected)
+            {
+                var maps = await MapService.GetMaps();
+                MapsAvailable = new ObservableCollection<MapEntity>(maps);
+            }
+            else
+            {
+                MapsAvailable = new ObservableCollection<MapEntity>
+                {
+                    new MapEntity
+                    {
+                        MapName = "foret enchantee"
+                    },
+                    new MapEntity
+                    {
+                        MapName = "loup garou"
+                    },
+                    new MapEntity
+                    {
+                        MapName = "New york"
+                    }
+                };
 
-            //if online
-
-            List<MapEntity> maps = await MapService.GetMaps();
-
-            MapsAvailable = new ObservableCollection<MapEntity>(maps);
+            }
             SelectedMap = mapsAvailable[1];
-
-            //MapsAvailable = new ObservableCollection<MapEntity>
-            //{
-            //    new MapEntity
-            //    {
-            //        MapName = "foret enchantee",
-            //        Id = 1
-            //    },
-            //    new MapEntity
-            //    {
-            //        MapName = "loup garou",
-            //        Id = 2
-            //    },
-            //    new MapEntity
-            //    {
-            //        MapName = "New york",
-            //        Id = 3
-            //    }
-            //};
+            
 
         }
 
@@ -125,7 +124,7 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
         }
 
         private List<UserEntity> Players { get; set; }
-        
+
         public string Player1
         {
             get => Players.Count > 0 ? Players[0].Username : DEFAULT_PLAYER_NAME;
@@ -232,13 +231,12 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
 
         public override void InitializeViewModel()
         {
-          //  throw new NotImplementedException();
+            //  throw new NotImplementedException();
         }
 
         public bool EnabledMaps
         {
             get => Players.Count == 4;
         }
-        
     }
 }
