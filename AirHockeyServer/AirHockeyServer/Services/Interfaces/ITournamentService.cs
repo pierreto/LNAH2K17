@@ -11,7 +11,7 @@ namespace AirHockeyServer.Services.Interfaces
     {
         void JoinTournament(UserEntity user);
 
-        TournamentEntity UpdateTournament(TournamentEntity tournamentEntity);
+        void UpdateTournament(int tournamentId, MapEntity selectedMap);
 
         void LeaveTournamentWaitingRoom(UserEntity user);
     }

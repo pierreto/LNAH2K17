@@ -35,10 +35,10 @@ namespace AirHockeyServer.Hubs
         /// @return la partie mise à jour
         ///
         ////////////////////////////////////////////////////////////////////////
-        public void UpdateMap(TournamentEntity tournamentEntity)
+        public void UpdateMap(int tournamentId, MapEntity selectedMap)
         {
-            Clients.Group(tournamentEntity.Id.ToString()).TournamentMapUpdatedEvent(tournamentEntity.SelectedMap);
-            TournamentService.UpdateTournament(tournamentEntity);
+            Clients.Group(tournamentId.ToString()).TournamentMapUpdatedEvent(selectedMap);
+            TournamentService.UpdateTournament(tournamentId, selectedMap);
         }
 
         public async Task LeaveGame(UserEntity user)

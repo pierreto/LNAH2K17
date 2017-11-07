@@ -33,23 +33,29 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
         {
             var mapsRepo = new MapsRepository();
 
-            //MapsAvailable = new ObservableCollection<MapEntity>(Task.Run(() => mapsRepo.GetMaps()).Result);
-            MapsAvailable = new ObservableCollection<MapEntity>
+            if (User.Instance.IsConnected)
             {
-                new MapEntity
+                MapsAvailable = new ObservableCollection<MapEntity>(Task.Run(() => mapsRepo.GetMaps()).Result);
+            }
+            else
+            {
+                MapsAvailable = new ObservableCollection<MapEntity>
                 {
-                    MapName = "foret enchantee"
-                },
-                new MapEntity
-                {
-                    MapName = "loup garou"
-                },
-                new MapEntity
-                {
-                    MapName = "New york"
-                }
-            };
+                    new MapEntity
+                    {
+                        MapName = "foret enchantee"
+                    },
+                    new MapEntity
+                    {
+                        MapName = "loup garou"
+                    },
+                    new MapEntity
+                    {
+                        MapName = "New york"
+                    }
+                };
 
+            }
             SelectedMap = mapsAvailable[1];
         }
 
@@ -93,7 +99,7 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
         }
 
         private List<UserEntity> Players { get; set; }
-        
+
         public string Player1
         {
             get => Players.Count > 0 ? Players[0].Username : DEFAULT_PLAYER_NAME;
@@ -201,12 +207,12 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
 
         public override void InitializeViewModel()
         {
-          //  throw new NotImplementedException();
+            //  throw new NotImplementedException();
         }
 
         public bool EnabledMaps
         {
             get => Players.Count == 4;
         }
-}
+    }
 }
