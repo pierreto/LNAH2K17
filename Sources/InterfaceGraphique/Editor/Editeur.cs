@@ -118,8 +118,8 @@ namespace InterfaceGraphique {
                     FonctionsNatives.dessinerOpenGL();
                 });
             }
-            catch (Exception){
-
+            catch (Exception e ){
+                System.Diagnostics.Debug.WriteLine(e);
             }
         }
 
