@@ -24,7 +24,7 @@ class VisiteurDuplication : public VisiteurAbstrait
 {
 public:
 	/// Constructeur
-	VisiteurDuplication();
+	VisiteurDuplication(bool sendToServer=false);
 	/// Destructeur
 	virtual ~VisiteurDuplication();
 
@@ -56,6 +56,8 @@ private:
 	glm::vec3 centreDuplication_;
 	/// Premier noeud sélectionné pour la duplication
 	NoeudPortail* premierNoeud_{ nullptr };
+
+	bool sendToServer_;
 };
 
 

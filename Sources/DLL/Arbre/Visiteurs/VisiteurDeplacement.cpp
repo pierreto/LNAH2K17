@@ -12,6 +12,7 @@
 #include "ModeleEtatJeu.h"
 #include "ModeleEtatDeplacement.h"
 #include "ModeleEtatPointControl.h"
+#include "ModeleEtatDuplication.h"
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -24,8 +25,9 @@
 /// @return Aucune
 ///
 ////////////////////////////////////////////////////////////////////////
-VisiteurDeplacement::VisiteurDeplacement(glm::vec3 delta) {
+VisiteurDeplacement::VisiteurDeplacement(glm::vec3 delta, bool sendToServer ) {
 	delta_ = delta;
+	sendToServer_ = sendToServer;
 }
 
 
@@ -133,7 +135,8 @@ void VisiteurDeplacement::defaultVisit(NoeudAbstrait* noeud)
 		if (noeud->estSelectionne())
 	{
 		noeud->deplacer(noeud->obtenirPositionRelative() + delta_);
-		if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
+		if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION
+			&& sendToServer_)
 		{
 			TransformEventCallback callback = ModeleEtatJeu::obtenirInstance()->getTransformEventCallback();
 
