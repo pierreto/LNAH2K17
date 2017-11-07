@@ -51,13 +51,19 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
             self.chatTableView.reloadData()
         })
     }
+
+    
     //Mark: Actions
     @IBAction func sendButton(_ sender: Any) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm:ss"
+        let dateString = dateFormatter.string(from: Date())
+        
         if messageField.text != "" {
             let message = [
                 "Sender": clientConnection.getUsername()!,
                 "MessageValue": self.messageField.text!,
-                "TimeStamp": Date().description
+                "TimeStamp": dateString
                 ] as [String : Any]
             let chatHub = clientConnection.getChatHub()
             chatHub.SendBroadcast(message : message)
@@ -78,7 +84,7 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
         let sender = cell.viewWithTag(1) as! UILabel
         sender.text = channel.messages[indexPath.row].getSender()
         
-        let messageValue = cell.viewWithTag(2) as! PaddingLabel
+        let messageValue = cell.viewWithTag(2) as! UILabel
         messageValue.text = channel.messages[indexPath.row].getMessageValue()
         
         let timestamp = cell.viewWithTag(3) as! UILabel
@@ -103,5 +109,9 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
 extension ChatAreaViewController: ChannelSelectionDelegate {
     func channelSelected(newChannel: ChannelEntity) {
         channel = newChannel
+        DispatchQueue.main.async(execute: { () -> Void in
+            // Reload tableView
+            self.chatTableView.reloadData()
+        })
     }
 }
