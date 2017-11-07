@@ -22,7 +22,7 @@ namespace AirHockeyServer.Entities
             Score = new int[2];
         }
 
-        public int GameId { get; set; }
+        public Guid GameId { get; set; }
 
         public UserEntity Creator { get; set; }
 

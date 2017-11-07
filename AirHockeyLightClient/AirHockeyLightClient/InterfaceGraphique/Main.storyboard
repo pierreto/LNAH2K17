@@ -49,7 +49,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Menu Hors Ligne" id="vcy-XG-teo">
-                        <barButtonItem key="backBarButtonItem" title="Menu Hors Ligne" id="nIE-TJ-Jps"/>
+                        <barButtonItem key="backBarButtonItem" title="Menu principal" id="nIE-TJ-Jps"/>
                     </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Srh-GY-j1B" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -94,7 +94,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Menu En Ligne" id="1wR-p8-feV">
-                        <barButtonItem key="backBarButtonItem" title="Authentification" id="mC8-Zu-i8n"/>
+                        <barButtonItem key="backBarButtonItem" title="Menu principal" id="mC8-Zu-i8n"/>
                     </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sZF-Co-9Gv" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -680,7 +680,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Édition" id="07a-Zg-bjU">
-                        <barButtonItem key="backBarButtonItem" title="Sélection de cartes" id="nAs-I5-8GR"/>
+                        <barButtonItem key="backBarButtonItem" title="Édition" id="nAs-I5-8GR"/>
                         <rightBarButtonItems>
                             <barButtonItem title="       Sauvegarder" id="L6a-CY-qge" userLabel="SauvegarderButton">
                                 <connections>
@@ -930,7 +930,7 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sender" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k6H-gK-XMi" userLabel="Sender">
-                                                            <rect key="frame" x="8" y="2" width="1008" height="15"/>
+                                                            <rect key="frame" x="8" y="2" width="1008" height="25.5"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                             <color key="textColor" red="0.50682244060000003" green="0.50682244060000003" blue="0.50682244060000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -1425,7 +1425,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="riN-hG-6w2">
-                                <rect key="frame" x="362" y="249.5" width="300" height="269"/>
+                                <rect key="frame" x="362" y="228" width="300" height="312"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Nom d'usager" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Tue-6k-iTD" userLabel="usernameInput">
                                         <rect key="frame" x="0.0" y="0.0" width="300" height="45"/>
@@ -1483,8 +1483,18 @@
                                             <segue destination="v1r-pC-DK7" kind="show" id="CGT-bE-ucb"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AIE-go-x3y" userLabel="testEditionEnLigne">
+                                        <rect key="frame" x="0.0" y="249" width="183" height="35"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <state key="normal" title="Test Édition en ligne"/>
+                                        <connections>
+                                            <segue destination="8q1-PD-X5V" kind="show" id="nja-Df-3RZ"/>
+                                        </connections>
+                                    </button>
                                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="hyr-YX-cKZ" userLabel="loadingSpinner">
-                                        <rect key="frame" x="0.0" y="249" width="300" height="20"/>
+                                        <rect key="frame" x="0.0" y="292" width="300" height="20"/>
                                     </activityIndicatorView>
                                 </subviews>
                                 <constraints>
@@ -1686,7 +1696,9 @@
                             <constraint firstAttribute="trailingMargin" secondItem="bMu-Mx-hmt" secondAttribute="trailing" id="pjq-gT-DuE"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="Cyt-ZN-GS6"/>
+                    <navigationItem key="navigationItem" title="Sélection de cartes" id="Cyt-ZN-GS6">
+                        <barButtonItem key="backBarButtonItem" title="Sélection de cartes" id="pQC-M4-VZn"/>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d2z-FI-Hxt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

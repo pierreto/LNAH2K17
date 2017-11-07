@@ -10,14 +10,15 @@ namespace InterfaceGraphique.Entities.EditonCommand
     class BoostCommand : AbstractEditionCommand
     {
         public float[] Position { get; set; }
-
+        public float Rotation { get; set; }
+        public float[] Scale { get; set; }
         public BoostCommand(string objectUuid) : base(objectUuid)
         {
         }
 
         public override void ExecuteCommand()
         {
-            FonctionsNatives.createBoost(objectUuid, Position);
+            FonctionsNatives.createBoost(objectUuid, Position, Rotation, Scale);
         }
     }
 }

@@ -9,6 +9,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 import SwiftR
+import SwiftyJSON
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class EditionHub
@@ -26,23 +27,56 @@ class EditionHub: BaseHub {
         
         /// Reception de l'évènement d'une commande
         self.hubProxy?.on("NewCommand") { args in
-            print("NEW COMMAND")
-            self.receiveCommand(command: args?[0] as! Dictionary<String, String>)
+            let strArgs = args?[0] as! String
+            let dataFromString = strArgs.data(using: .utf8, allowLossyConversion: false)
+            let command = JSON(data: dataFromString!)
+            self.receiveCommand(command: command)
         }
         
-        /// Reception de l'évènement de rejoindre une salle d'édition
+        /// Reception de l'évènement quand un utilisateur rejoint une salle d'édition
         self.hubProxy?.on("NewUser") { args in
             let newUser = args?[0] as! Dictionary<String, String>
             let username = newUser["Username"]
             let hexColor = newUser["HexColor"]
-            print("New user: \(String(describing: username! + " (" + hexColor! + ")"))\n")
+            print("Joining user: \(String(describing: username! + " (" + hexColor! + ")"))\n")
             
             FacadeModele.instance.obtenirUserManager()?.addUser(username: username!, hexColor: hexColor!)
         }
+        
+        /// Réception de l'évènement quand un utilisateur quitte la salle d'édition
+        self.hubProxy?.on("UserLeaved") { args in
+            let username = args?[0] as! String
+            print("Leaving user: \(String(describing: username))\n")
+            
+            FacadeModele.instance.obtenirUserManager()?.removeUser(username: username)
+        }
     }
     
-    func receiveCommand(command: Dictionary<String, String>) {
-        print(command.description)
+    func receiveCommand(command: JSON) {
+        let type = EDITION_COMMAND(rawValue: command["$type"].string!)!
+        let editionCommand: EditionCommand
+
+        switch (type) {
+            case .BOOST_COMMAND :
+                print ("Boost command")
+                editionCommand = BoostCommand(objectUuid: command["ObjectUuid"].string!)
+                break
+            case .WALL_COMMAND :
+                print ("Wall command")
+                editionCommand = WallCommand(objectUuid: command["ObjectUuid"].string!)
+                break
+            case .PORTAL_COMMAND :
+                print ("Portal command")
+                editionCommand = PortalCommand(objectUuid: command["ObjectUuid"].string!)
+                break
+            case .SELECTION_COMMAND :
+                print ("Selection command")
+                editionCommand = SelectionCommand(objectUuid: command["ObjectUuid"].string!)
+                break
+        }
+        
+        editionCommand.fromJSON(json: command)
+        editionCommand.executeCommand()
     }
     
     func convertMapEntity(mapEntity: MapEntity) -> Any {
@@ -76,8 +110,12 @@ class EditionHub: BaseHub {
                     print("Users in room: " + usersInRoom.description)
                     
                     for user in usersInRoom {
+                        if user["Username"] == HubManager.sharedConnection.getUsername() {
+                            FacadeModele.instance.setCurrentUserColor(userHexColor: user["HexColor"]!)
+                        }
+                        
                         FacadeModele.instance.obtenirUserManager()?.addUser(username: user["Username"]!,
-                                                                           hexColor: user["HexColor"]!)
+                                                                            hexColor: user["HexColor"]!)
                     }
                 }
             }
@@ -99,19 +137,20 @@ class EditionHub: BaseHub {
     }
     
     func sendEditionCommand(command: EditionCommand) {
-        let jsonCommand = command.toJSON()
+        let jsonCommand = command.toJSON()?.rawString(options: [])
+        //print(jsonCommand!)
         
         do {
-            try self.hubProxy?.invoke("SendEditionCommand", arguments: [self.map?.id.value, jsonCommand])
+            try self.hubProxy?.invoke("SendEditionCommand", arguments: [self.map?.id.value as Any, jsonCommand!])
         }
         catch {
             print("Error SendEditionCommand")
         }
     }
     
-    func leaveRoom(mapId: Int) {
+    func leaveRoom() {
         do {
-            try self.hubProxy?.invoke("LeaveRoom", arguments: [mapId])
+            try self.hubProxy?.invoke("LeaveRoom", arguments: [self.map?.id.value as Any])
         }
         catch {
             print("Error LeaveRoom")

@@ -20,6 +20,7 @@
 #include "ArbreRenduINF2990.h"
 #include "ModeleEtatDeplacement.h"
 #include "ModeleEtatJeu.h"
+#include "ModeleEtatSelection.h"
 
 /// Pointeur vers l'instance unique de la classe.
 ModeleEtatPointControl* ModeleEtatPointControl::instance_{ nullptr };
@@ -188,6 +189,8 @@ void ModeleEtatPointControl::mouseUpL() {
 
 	// Reinitialiser l'etat
 	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->deselectionnerTout();
+	ModeleEtatSelection::obtenirInstance()->getSelectionEventCallback()("", false, true);
+
 	initialiser();
 }
 
@@ -209,6 +212,7 @@ void ModeleEtatPointControl::escape()
 
 	// Reinitialiser l'etat
 	initialiser();
+
 
 	// Relacher la souris
 	ModeleEtat::mouseUpL();
@@ -282,8 +286,14 @@ void ModeleEtatPointControl::revertPosition()
 	for (auto noeud : noeuds) {
 		noeud->revertPosition();
 		static_cast<NoeudPointControl*>(noeud)->obtenirNoeudOppose()->revertPosition();
-		 ModeleEtatJeu::obtenirInstance()->getTransformEventCallback()(noeud->getUUID(), glm::value_ptr(noeud->obtenirMatriceTransformation()));
-
+		if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
+		{
+			if (controlPointEventCallback_)
+			{
+				controlPointEventCallback_(noeud->getUUID(), glm::value_ptr(noeud->obtenirPositionRelative()));
+				ModeleEtatSelection::obtenirInstance()->getSelectionEventCallback()(noeud->getUUID(), false, false);
+			}
+		}
 
 	}
 }

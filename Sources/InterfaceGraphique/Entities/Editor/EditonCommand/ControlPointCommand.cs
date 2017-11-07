@@ -5,25 +5,20 @@ using System.Text;
 using System.Threading.Tasks;
 using InterfaceGraphique.Entities.EditorCommand;
 
-namespace InterfaceGraphique.Entities.EditonCommand
+namespace InterfaceGraphique.Entities.Editor.EditonCommand
 {
-    class TransformCommand : AbstractEditionCommand
+    class ControlPointCommand : AbstractEditionCommand
     {
         public string Username { get; set; }
         public float[] Position { get; set; }
-        public float Rotation { get; set; }
-        public float[] Scale { get; set; }
 
-
-
-
-        public TransformCommand(string uuid ) : base(uuid)
+        public ControlPointCommand(string objectUuid) : base(objectUuid)
         {
         }
 
         public override void ExecuteCommand()
         {
-            FonctionsNatives.setTransformByUUID(Username, objectUuid, Position,Rotation,Scale);
+            FonctionsNatives.setControlPointPosition(Username, objectUuid, Position);
         }
     }
 }

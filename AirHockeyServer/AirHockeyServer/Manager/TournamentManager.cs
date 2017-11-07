@@ -72,7 +72,7 @@ namespace AirHockeyServer.Manager
                         {
                             Players = new UserEntity[] { tournament.SemiFinals[0].Winner, tournament.SemiFinals[1].Winner },
                             GameState = GameState.InProgress,
-                            GameId = new Random().Next(),
+                            GameId = Guid.NewGuid(),
                             CreationDate = DateTime.Now,
                             TournamentId = tournament.Id
                         };
@@ -119,7 +119,7 @@ namespace AirHockeyServer.Manager
             {
                 Players = new UserEntity[] { tournament.SemiFinals[0].Winner, tournament.SemiFinals[1].Players[0] },
                 GameState = GameState.InProgress,
-                GameId = new Random().Next(),
+                GameId = Guid.NewGuid(),
                 CreationDate = DateTime.Now,
                 TournamentId = tournament.Id
             };

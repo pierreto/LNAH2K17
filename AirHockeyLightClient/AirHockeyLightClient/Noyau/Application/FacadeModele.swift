@@ -72,7 +72,7 @@ class FacadeModele {
     
     /// Les différentes couleurs pour chaque utilisateur en édition
     // TODO : Mettre ceci dans les infos de l'utilisateur lors de l'édition en ligne
-    private let COLOR_USERS : [UIColor] =
+    /*private let COLOR_USERS : [UIColor] =
         [
             UIColor(red: 0.0,       green: 123.0/255.0, blue: 194.0/255.0, alpha: 1.0), // USER 1
             UIColor(red: 194.0/255, green: 0.0,         blue: 158.0/255.0, alpha: 1.0), // USER 2
@@ -84,7 +84,10 @@ class FacadeModele {
         let color = COLOR_USERS[(colorPicker % COLOR_USERS.count)]
         colorPicker += 1
         return color
-    }
+    }*/
+    
+    /// La couleur de l'utilisateur courant (ex. lors de la sélection)
+    private var currentUserColor: UIColor = MathHelper.hexToUIColor(hex: "007BC2")
     
     /// Gesture recognizer
     var tapGestureRecognizer: UITapGestureRecognizer?
@@ -104,7 +107,6 @@ class FacadeModele {
         self.arbre = ArbreRendu.instance
         self.viewController = EditorViewController.instance
         self.etat = ModeleEtatCameraControl.instance
-        self.etatEdition = OfflineEditorState.instance
         self.generalProperties = GeneralProperties()
         self.userManager = UserManager()
         
@@ -145,6 +147,18 @@ class FacadeModele {
     /// Retourne le gestionnaire d'utilisateurs
     func obtenirUserManager() -> UserManager? {
         return self.userManager
+    }
+
+    public func setCurrentUserColor(userHexColor: String) {
+        self.currentUserColor = MathHelper.hexToUIColor(hex: userHexColor)
+    }
+    
+    public func setCurrentUserDefaultColor() {
+        self.currentUserColor = MathHelper.hexToUIColor(hex: "007BC2")
+    }
+    
+    public func getCurrentUserColor() -> UIColor {
+        return self.currentUserColor
     }
     
     func initVue() {
@@ -237,6 +251,23 @@ class FacadeModele {
         let information = VisiteurInformation();
         self.arbre?.accepterVisiteur(visiteur: information);
         return information.lireInformations(infos: &infos);
+    }
+    
+    /// Cette fonction effectue la sélection d'un noeud en mode en ligne
+    func selectNode(username: String, uuid: String, isSelected: Bool, deselectAll: Bool) {
+        if (self.userManager?.userExist(username: username))! {
+            if deselectAll {
+                self.userManager?.getUser(username: username).deselectAll()
+            }
+            else {
+                if isSelected {
+                    self.userManager?.getUser(username: username).select(uuid: uuid)
+                }
+                else {
+                    self.userManager?.getUser(username: username).deselect(uuid: uuid)
+                }
+            }
+        }
     }
     
     /// Cette fonction applique l'information sur un noeud sélectionné.

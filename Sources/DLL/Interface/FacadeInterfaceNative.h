@@ -89,25 +89,25 @@ extern "C" {
 	
 	__declspec(dllexport) void masterGoal();
 
-	__declspec(dllexport) void createPortal(char* startUuid, float* startPos, char* endUuid, float* endPos);
-	typedef void(__stdcall * PortalCreationCallback)(const char* startUuid, const float* startPos, const char* endUuid, const float* endPosd);
+	__declspec(dllexport) void createPortal(const char* startUuid, const float* startPos, const float startRotation, const float* startScale,  char* endUuid, const float* endPos, const float endRotation, const float* endScale);
+	typedef void(__stdcall * PortalCreationCallback)(const char* startUuid, const float* startPos, const float startRotation, const float* startScale, const char* endUuid, const float* endPos, const float endRotation, const float* endScale);
 	__declspec(dllexport) void setPortalCreationCallback(PortalCreationCallback callback);
 
-	__declspec(dllexport) void createWall(const char* uuid, const float* startPosition, const float* endPosition);
-	typedef void(__stdcall * WallCreationCallback)(const char* uuid, const float* startPos, const float* endPos);
+	__declspec(dllexport) void createWall(const char* uuid, const float* position, const float angle, const float* scale);
+	typedef void(__stdcall * WallCreationCallback)(const char* uuid, const float* position, const float angle, const float* scale);
 	__declspec(dllexport) void setWallCreationCallback(WallCreationCallback callback);
 
-	__declspec(dllexport) void createBoost(const char* uuid, const float* position);
-	typedef void(__stdcall * BoostCreationCallback)(const char* uuid, const float* pos);
+	__declspec(dllexport) void createBoost(const char* uuid, const float* position, const float angle, const float* scale);
+	typedef void(__stdcall * BoostCreationCallback)(const char* uuid, const float* position, const float angle, const float* scale);
 	__declspec(dllexport) void setBoostCreationCallback(BoostCreationCallback callback);
 
 	typedef void(__stdcall * SelectionEventCallback)(const char* uuid, const bool isSelected, const bool deselectAll);
 	__declspec(dllexport) void setSelectionEventCallback(SelectionEventCallback callback);
 	__declspec(dllexport) void setElementSelection(const char* username, const char* uuid, const bool isSelected, const bool deselectAll);
 
-	typedef void(__stdcall * TransformEventCallback)(const char* uuid, const float* transformMatrix);
+	typedef void(__stdcall * TransformEventCallback)(const char* uuid, const float* position, const float rotation, const float* scale);
 	__declspec(dllexport) void setTransformEventCallback(TransformEventCallback callback);
-	__declspec(dllexport) void setTransformByUUID(const char* username,const char* uuid,const float* transformMatrix);
+	__declspec(dllexport) void setTransformByUUID(const char* username,const char* uuid, const float* position, const float rotation, const float* scale);
 
 	__declspec(dllexport) void addNewUser(char* username, char* hexColor);
 	__declspec(dllexport) void removeUser(char* username);
@@ -115,6 +115,11 @@ extern "C" {
 
 	__declspec(dllexport) void setCurrentPlayerSelectionColor(char* userHexColor);
 	__declspec(dllexport) void setCurrentPlayerSelectionColorToDefault();
+
+	typedef void(__stdcall * ControlPointEventCallback)(const char* uuid, const float* position);
+	__declspec(dllexport) void setControlPointEventCallback(ControlPointEventCallback callback);
+	__declspec(dllexport) void setControlPointPosition(const char*username, const char* uuid, const float* position);
+
 
 } 
 

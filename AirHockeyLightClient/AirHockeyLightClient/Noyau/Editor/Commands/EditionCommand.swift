@@ -8,6 +8,16 @@
 /// @{
 ///////////////////////////////////////////////////////////////////////////////
 
+import SwiftyJSON
+
+/// Les différentes commandes du mode d'édition
+enum EDITION_COMMAND : String {
+    case BOOST_COMMAND = "InterfaceGraphique.Entities.EditonCommand.BoostCommand, InterfaceGraphique"
+    case WALL_COMMAND = "InterfaceGraphique.Entities.EditonCommand.WallCommand, InterfaceGraphique"
+    case PORTAL_COMMAND = "InterfaceGraphique.Entities.EditonCommand.PortalCommand, InterfaceGraphique"
+    case SELECTION_COMMAND = "InterfaceGraphique.Entities.EditonCommand.SelectionCommand, InterfaceGraphique"
+}
+
 class EditionCommand {
     
     var objectUuid: String
@@ -18,9 +28,11 @@ class EditionCommand {
     
     func executeCommand() {}
     
-    func toJSON() -> Dictionary<String, AnyObject> {
-        return Dictionary<String, AnyObject>()
+    func toJSON() -> JSON? {
+        return nil
     }
+    
+    func fromJSON(json: JSON) {}
     
 }
 

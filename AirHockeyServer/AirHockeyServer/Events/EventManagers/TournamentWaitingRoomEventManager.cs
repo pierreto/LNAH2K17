@@ -52,7 +52,7 @@ namespace AirHockeyServer.Events.EventManagers
 
             var connection = ConnectionMapper.GetConnection(user.Id);
             string tournamentIdString = Tournament.Id.ToString();
-            await HubContext.Groups.Add(connection, tournamentIdString);
+            HubContext.Groups.Add(connection, tournamentIdString);
 
             Tournament.Players.Add(user);
 
@@ -83,7 +83,7 @@ namespace AirHockeyServer.Events.EventManagers
         {
             GameEntity game = new GameEntity()
             {
-                GameId = new Random().Next(),
+                GameId = Guid.NewGuid(),
                 CreationDate = DateTime.Now,
                 Players = new UserEntity[2] { player1, player2 },
                 Master = player1,
@@ -98,7 +98,7 @@ namespace AirHockeyServer.Events.EventManagers
             foreach (var player in game.Players)
             {
                 var connection = ConnectionMapper.GetConnection(player.Id);
-                await GlobalHost.ConnectionManager.GetHubContext<GameWaitingRoomHub>().Groups.Add(connection, stringGameId);
+                GlobalHost.ConnectionManager.GetHubContext<GameWaitingRoomHub>().Groups.Add(connection, stringGameId);
             }
 
             return game;

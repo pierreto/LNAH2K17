@@ -821,11 +821,11 @@ void FacadeModele::chargerPntCtrl() {
 			temp.z = docJSON_["PointControle"][i][2].GetDouble();
 			glm::vec3 pos(temp);
 			(*it)->assignerPositionRelative(pos);
+			(*it)->setUUID(const_cast<char*>(docJSON_["PointControle"][i][7].GetString()));
 			i++;
 		}
 	}
 }
-
 
 ////////////////////////////////////////////////////////////////////////
 ///
