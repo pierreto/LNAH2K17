@@ -54,7 +54,7 @@ class ChannelViewController: UIViewController, UITableViewDelegate, UITableViewD
         let cell = channels.dequeueReusableCell(withIdentifier: "Channel", for: indexPath);
         
         let button = cell.viewWithTag(1) as! UIButton;
-        button.setTitle(channelsData[indexPath.row].getName(), for: UIControlState.normal)
+        button.setTitle(channelsData[indexPath.row].name, for: UIControlState.normal)
         button.titleEdgeInsets.left = 20;
         
         return cell;
