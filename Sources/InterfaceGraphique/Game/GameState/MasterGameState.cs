@@ -65,7 +65,6 @@ namespace InterfaceGraphique.Game.GameState
             FonctionsNatives.moveMaillet();
             FonctionsNatives.animer(tempsInterAffichage);
             FonctionsNatives.dessinerOpenGL();
-            ELapsedTime++;
 
             //if (ELapsedTime >= SERVER_INTERVAL)
             //{
@@ -146,6 +145,7 @@ namespace InterfaceGraphique.Game.GameState
                 }));
             }
         }
+
         private void OnNewGamePositions(GameDataMessage gameData)
         {
             if (!gameHasEnded && gameData.SlavePosition != null)
