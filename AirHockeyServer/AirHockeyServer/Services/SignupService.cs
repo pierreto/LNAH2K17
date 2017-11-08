@@ -11,11 +11,13 @@ namespace AirHockeyServer.Services
     {
         private IUserService UserService { get; set; }
         private IPasswordService PasswordService { get; set; }
+        public IPlayerStatsService PlayerStatsService { get; set; }
 
-        public SignupService(IUserService userService, IPasswordService passwordService)
+        public SignupService(IUserService userService, IPasswordService passwordService, IPlayerStatsService playerStatsService)
         {
             UserService = userService;
             PasswordService = passwordService;
+            PlayerStatsService = playerStatsService;
         }
 
         public async Task<int> Signup(SignupEntity signupEntity)
@@ -32,6 +34,9 @@ namespace AirHockeyServer.Services
                     UserEntity uE2 = await UserService.GetUserByUsername(uE.Username);
                     PasswordEntity pE = new PasswordEntity { UserId = uE2.Id, Password = signupEntity.Password };
                     PasswordService.PostPassword(pE);
+
+                    await PlayerStatsService.SetPlayerAchievements(uE2.Id);
+
                     return uE2.Id;
                 }
                 else
