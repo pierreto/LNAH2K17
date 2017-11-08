@@ -13,10 +13,18 @@ namespace AirHockeyServer.Services
     public class PlayerStatsService : IPlayerStatsService
     {
         protected IPlayerStatsRepository PlayerStatsRepository { get; set; }
-
+        
         public PlayerStatsService(IPlayerStatsRepository playerStatsRepository)
         {
             PlayerStatsRepository = playerStatsRepository;
+        }
+        
+        public async Task SetPlayerAchievements(int userId)
+        {
+            foreach (AchivementType achievement in Enum.GetValues(typeof(AchivementType)))
+            {
+                await PlayerStatsRepository.CreateAchievement(userId, achievement);
+            }
         }
 
         public async Task AddPoints(int userId, int pointsNb)
@@ -71,6 +79,11 @@ namespace AirHockeyServer.Services
             };
 
             return await PlayerStatsRepository.CreatePlayerStats(entity);
+        }
+
+        public async Task<List<AchievementEntity>> GetAchievements(int userId)
+        {
+            return await PlayerStatsRepository.GetAchievements(userId);
         }
     }
 }

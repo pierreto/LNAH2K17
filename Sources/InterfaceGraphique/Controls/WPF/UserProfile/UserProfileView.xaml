@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:wpf="clr-namespace:InterfaceGraphique.Controls.WPF"
              xmlns:local="clr-namespace:InterfaceGraphique.Controls.WPF.UserProfile"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
@@ -16,46 +17,88 @@
         <Grid.DataContext>
             <Binding Path="UserProfileViewModel" Source="{StaticResource VMLocator}"/>
         </Grid.DataContext>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="40*"></RowDefinition>
-            <RowDefinition Height="60*"></RowDefinition>
-        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="80*"></ColumnDefinition>
+            <ColumnDefinition Width="20*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
         <Grid Grid.Row="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="40*"></ColumnDefinition>
-                <ColumnDefinition Width="60*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Image Grid.Column="0">
-                
-            </Image>
-            <StackPanel Grid.Column="1">
-                <TextBlock Text="UserName"></TextBlock>
-                <TextBlock Text="{Binding UserName}"></TextBlock>
-            </StackPanel>
-        </Grid>
-        <Grid Grid.Row="1">
             <Grid.RowDefinitions>
+                <RowDefinition Height="40*"></RowDefinition>
                 <RowDefinition Height="10*"></RowDefinition>
-                <RowDefinition Height="90*"></RowDefinition>
+                <RowDefinition Height="50*"></RowDefinition>
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" Text="Succès:"></TextBlock>
-            <ListView Grid.Row="1"
-                      ItemsSource="{Binding Achievments}">
-                <ListView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Orientation="Horizontal"></StackPanel>
-                    </ItemsPanelTemplate>
-                </ListView.ItemsPanel>
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <WrapPanel>
-                            <Image></Image>
-                            <TextBlock Text="{Binding Name}"></TextBlock>
-                        </WrapPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-                
-            </ListView>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="40*"></ColumnDefinition>
+                    <ColumnDefinition Width="60*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <Button Command="{Binding MainMenuCommand}" Grid.Row="0" HorizontalAlignment="Left">
+                        <Button.Content>
+                            <fa:FontAwesome Icon="ArrowLeft"></fa:FontAwesome>
+                        </Button.Content>
+                    </Button>
+                    <Image Source="{Binding ProfilePictureUrl}"></Image>
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+                    <TextBlock Text="Pseudonyme" FontSize="16" Foreground="White" FontWeight="Bold"></TextBlock>
+                    <TextBlock Text="{Binding UserName}" FontSize="12" Foreground="SkyBlue" Margin="0,5,0,0"></TextBlock>
+
+                    <TextBlock Text="Nom" FontSize="16" Foreground="White" FontWeight="Bold" Margin="0,30,0,0"></TextBlock>
+                    <TextBlock Text="{Binding Name}" FontSize="12" Foreground="SkyBlue" Margin="0,5,0,0"></TextBlock>
+
+                    <TextBlock Text="Adresse Courriel" FontSize="16" Foreground="White" FontWeight="Bold" Margin="0,30,0,0"></TextBlock>
+                    <TextBlock Text="{Binding Email}" FontSize="12" Foreground="SkyBlue" Margin="0,5,0,0"></TextBlock>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="1" Margin="0,20,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" HorizontalAlignment="Center">
+                    <TextBlock Text="Points"  FontSize="16" Foreground="White" FontWeight="Bold"></TextBlock>
+                    <TextBlock Text="{Binding PointsNb}" FontSize="16" Foreground="SkyBlue" FontWeight="Bold" Margin="0,5,0,0"></TextBlock>
+                </StackPanel>
+                <StackPanel Grid.Column="1" HorizontalAlignment="Center">
+                    <TextBlock Text="Parties Gagnées"  FontSize="16" Foreground="White" FontWeight="Bold"></TextBlock>
+                    <TextBlock Text="{Binding GameWon}" FontSize="16" Foreground="SkyBlue" FontWeight="Bold" Margin="0,5,0,0"></TextBlock>
+                </StackPanel>
+                <StackPanel Grid.Column="2" HorizontalAlignment="Center">
+                    <TextBlock Text="Tournois gagnés" FontSize="16" Foreground="White" FontWeight="Bold"></TextBlock>
+                    <TextBlock Text="{Binding TournamentWon}" FontSize="16" Foreground="SkyBlue" FontWeight="Bold" Margin="0,5,0,0"></TextBlock>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10*"></RowDefinition>
+                    <RowDefinition Height="90*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="Succès:" FontSize="16" Foreground="White" FontWeight="Bold"></TextBlock>
+                <ListView Grid.Row="1"
+                      ItemsSource="{Binding Achievements}">
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"></StackPanel>
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="Height" Value="100" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <WrapPanel Orientation="Vertical" Margin="0">
+                                <Image Source="{Binding ImageUrl}" Margin="0"></Image>
+                                <TextBlock Text="{Binding Name}" Margin="0" FontSize="14" Foreground="White" FontWeight="Bold"></TextBlock>
+                            </WrapPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+
+                </ListView>
+            </Grid>
         </Grid>
     </Grid>
 </UserControl>

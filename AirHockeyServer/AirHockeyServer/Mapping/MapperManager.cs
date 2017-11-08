@@ -2,6 +2,7 @@
 using AirHockeyServer.Entities;
 using AirHockeyServer.Pocos;
 using AirHockeyServer.Repositories;
+using AirHockeyServer.Services.Interfaces;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace AirHockeyServer.Mapping
             var config = new MapperConfiguration(cfg =>
             {
                 // À faire pour chaque pair poco/entity:
-				//Not necessary if same attribute names from poco to entity
+                //Not necessary if same attribute names from poco to entity
                 //cfg.CreateMap<UserPoco, UserEntity>()
                 //.ForMember(
                 //    dest => dest.Id,
@@ -100,6 +101,7 @@ namespace AirHockeyServer.Mapping
 
             //config.AssertConfigurationIsValid();
             Mapper = config.CreateMapper();
+            
         }
 
         public TDest Map<TSource, TDest>(TSource source)
