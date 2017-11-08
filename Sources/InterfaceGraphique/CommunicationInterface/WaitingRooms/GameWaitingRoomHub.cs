@@ -100,6 +100,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
         {
             await WaitingRoomProxy.Invoke("UpdateMap", CurrentGameId, map);
         }
+
         public async Task Logout()
         {
             //TODO: IMPLEMENT THE LOGOUT MECANISM

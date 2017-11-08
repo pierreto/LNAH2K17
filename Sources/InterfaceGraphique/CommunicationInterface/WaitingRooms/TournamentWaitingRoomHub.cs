@@ -60,12 +60,15 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
         public async void UpdateSelectedMap(MapEntity map)
         {
-            await WaitingRoomProxy.Invoke<TournamentEntity>("UpdateMap", CurrentTournamentId, map);
+            if(CurrentTournamentId > 0)
+            {
+                await WaitingRoomProxy.Invoke<TournamentEntity>("UpdateMap", CurrentTournamentId, map);
+            }
         }
 
-        public void LeaveTournament()
+        public async Task LeaveTournament()
         {
-            WaitingRoomProxy.Invoke("LeaveTournament", User.Instance.UserEntity);
+            await WaitingRoomProxy.Invoke("LeaveTournament", User.Instance.UserEntity, CurrentTournamentId);
         }
 
         private void InitializeWaitingRoomEvents()
