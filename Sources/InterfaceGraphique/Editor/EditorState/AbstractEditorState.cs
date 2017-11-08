@@ -15,5 +15,8 @@ namespace InterfaceGraphique.Editor.EditorState
 
         public abstract void JoinEdition(MapEntity mapEntity=null);
         public abstract Task LeaveEdition();
+
+        public abstract void HandleCoefficientChanges(float coefficientFriction, float coefficientAcceleration,
+            float coefficientRebond);
     }
 }

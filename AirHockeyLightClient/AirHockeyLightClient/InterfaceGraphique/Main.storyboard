@@ -1233,9 +1233,15 @@
                                 <rect key="frame" x="258" y="7" width="46" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="+"/>
+                                <connections>
+                                    <action selector="addChannel:" destination="Ddf-9a-mzz" eventType="touchUpInside" id="wqr-31-YPe"/>
+                                </connections>
                             </button>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="channelTableView" destination="aX1-Iw-hcH" id="hr3-86-hEG"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3vw-Zd-HGi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

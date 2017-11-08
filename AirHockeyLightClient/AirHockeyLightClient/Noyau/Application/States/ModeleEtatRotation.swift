@@ -98,6 +98,10 @@ class ModeleEtatRotation: ModeleEtat {
             
             // Remettre le point central à sa position initiale
             noeud.appliquerDeplacement(deplacement: self.centreRotation)
+            
+            // Envoyer la commande
+            FacadeModele.instance.obtenirEtatEdition().currentUserObjectTransformChanged(uuid: noeud.obtenirUUID(),
+                                                                                         pos: noeud.position, rotation: noeud.rotation.w, scale: noeud.scale)
         }
     }
     
@@ -113,6 +117,10 @@ class ModeleEtatRotation: ModeleEtat {
             
             // Remettre le point central à sa position initiale
             noeud.appliquerDeplacement(deplacement: self.centreRotation)
+            
+            // Envoyer la commande
+            FacadeModele.instance.obtenirEtatEdition().currentUserObjectTransformChanged(uuid: noeud.obtenirUUID(),
+                                                                                         pos: noeud.position, rotation: noeud.rotation.w, scale: noeud.scale)
         }
     }
 

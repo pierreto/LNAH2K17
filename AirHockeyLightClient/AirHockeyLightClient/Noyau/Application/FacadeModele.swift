@@ -270,6 +270,40 @@ class FacadeModele {
         }
     }
     
+    /// Cette fonction effectue la transformation d'un noeud en mode en ligne
+    func setTransformByUUID(uuid: String, username: String, position: GLKVector3, rotation: Float, scale: GLKVector3) {
+        let node = self.userManager?.getUser(username: username).findNode(uuid: uuid)
+        
+        if node != nil {
+            node?.assignerPositionRelative(positionRelative: position)
+            node?.rotation = SCNVector4(0.0, 1.0, 0.0, rotation)
+            node?.scale = SCNVector3FromGLKVector3(scale)
+        }
+        // Find in the entire tree if it's not in the player's selected nodes
+        else {
+            let nodeInTree = self.findNodeInTree(uuid: uuid)
+            
+            if nodeInTree != nil {
+                nodeInTree?.assignerPositionRelative(positionRelative: position)
+                nodeInTree?.rotation = SCNVector4(0.0, 1.0, 0.0, rotation)
+                nodeInTree?.scale = SCNVector3FromGLKVector3(scale)
+            }
+        }
+    }
+    
+    /// Cette fonction trouve un noeud dans l'arbre
+    func findNodeInTree(uuid: String) -> NoeudCommun? {
+        let visiteur = VisiteurByUUID(wantedUUID: uuid)
+        self.arbre?.accepterVisiteur(visiteur: visiteur)
+        let node = visiteur.getNode()
+        
+        if visiteur.getHasFound() {
+            return node
+        }
+        
+        return nil
+    }
+    
     /// Cette fonction applique l'information sur un noeud sélectionné.
     func applyNodeInfos(infos: [Float]) {
         let selection = VisiteurObtenirSelection();

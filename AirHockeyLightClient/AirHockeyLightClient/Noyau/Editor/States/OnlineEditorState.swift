@@ -65,6 +65,14 @@ class OnlineEditorState: EditorState {
         self.clientConnection.getEditionHub().sendEditionCommand(command: command)
     }
     
+    override func currentUserObjectTransformChanged(uuid: String, pos: SCNVector3, rotation: Float, scale: SCNVector3) {
+        let position = [pos.x, pos.y, pos.z]
+        let scale = [scale.x, scale.y, scale.z]
+        let command = TransformCommand(objectUuid: uuid, username: HubManager.sharedConnection.getUsername()!,
+                                       pos: position, rotation: rotation, scale: scale)
+        self.clientConnection.getEditionHub().sendEditionCommand(command: command)
+    }
+    
 }
 
 ///////////////////////////////////////////////////////////////////////////////

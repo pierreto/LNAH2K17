@@ -50,6 +50,10 @@ class VisiteurScale: VisiteurAbstrait {
             }
             
             noeud.scale = SCNVector3FromGLKVector3(scale)
+            
+            // Envoyer la commande
+            FacadeModele.instance.obtenirEtatEdition().currentUserObjectTransformChanged(uuid: noeud.obtenirUUID(),
+                                                                                         pos: noeud.position, rotation: noeud.rotation.w, scale: noeud.scale)
         }
     }
     
@@ -76,6 +80,10 @@ class VisiteurScale: VisiteurAbstrait {
             }
             
             noeud.scale = SCNVector3.init(x: 1.0, y: 1.0, z: scale.z)
+            
+            // Envoyer la commande
+            FacadeModele.instance.obtenirEtatEdition().currentUserObjectTransformChanged(uuid: noeud.obtenirUUID(),
+                                                                                         pos: noeud.position, rotation: noeud.rotation.w, scale: noeud.scale)
         }
     }
     
@@ -91,6 +99,10 @@ class VisiteurScale: VisiteurAbstrait {
             }
             
             noeud.scale = SCNVector3FromGLKVector3(scale)
+            
+            // Envoyer la commande
+            FacadeModele.instance.obtenirEtatEdition().currentUserObjectTransformChanged(uuid: noeud.obtenirUUID(),
+                                                                                         pos: noeud.position, rotation: noeud.rotation.w, scale: noeud.scale)
         }
     }
     

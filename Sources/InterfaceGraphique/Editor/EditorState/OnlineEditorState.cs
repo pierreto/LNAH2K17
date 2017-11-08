@@ -112,6 +112,16 @@ namespace InterfaceGraphique.Editor.EditorState
             await this.editionHub.LeaveRoom();
         }
 
+        public override void HandleCoefficientChanges(float coefficientFriction, float coefficientAcceleration, float coefficientRebond)
+        {
+            this.editionHub.SendEditorCommand(new CoefficientCommand()
+            {
+                accCoeff = coefficientAcceleration,
+                frictionCoeff = coefficientFriction,
+                reboundCoeff = coefficientRebond
+            });
+        }
+
         private void OnNewCommand(AbstractEditionCommand editionCommand)
         {
             editionCommand.ExecuteCommand();
