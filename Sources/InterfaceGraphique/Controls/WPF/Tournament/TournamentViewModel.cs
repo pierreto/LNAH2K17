@@ -15,22 +15,40 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
     {
         private const string DEFAULT_PLAYER_NAME = "En attente";
 
-        private TournamentWaitingRoomHub waitingRoomHub;
+        public TournamentWaitingRoomHub WaitingRoomHub { get; set; }
 
         protected MapService MapService { get; set; }
 
         public TournamentViewModel(TournamentWaitingRoomHub waitingRoomHub, MapService mapService)
         {
-            this.waitingRoomHub = waitingRoomHub;
+            this.WaitingRoomHub = waitingRoomHub;
             MapService = mapService;
             this.Players = new List<UserEntity>();
         }
 
         public void Initialize()
         {
-            waitingRoomHub.Join();
+            SetDefaultValues();
+            WaitingRoomHub.Join();
             InitializeEvents();
             InitializeData();
+        }
+
+        public void SetDefaultValues()
+        {
+            MapsAvailable = new ObservableCollection<MapEntity>();
+            RemainingTime = 30;
+            Players = new List<UserEntity>();
+            Winner = string.Empty;
+            SemiFinal1 = string.Empty;
+            SemiFinal2 = string.Empty;
+
+            OnPropertyChanged("OpponentsFound");
+            OnPropertyChanged("EnabledMaps");
+            OnPropertyChanged("Player1");
+            OnPropertyChanged("Player2");
+            OnPropertyChanged("Player3");
+            OnPropertyChanged("Player4");
         }
 
         private async void InitializeData()
@@ -66,17 +84,17 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
 
         private void InitializeEvents()
         {
-            this.waitingRoomHub.OpponentFoundEvent += (e, args) => OnOpponentFount(e, args);
+            this.WaitingRoomHub.OpponentFoundEvent += (e, args) => OnOpponentFount(e, args);
 
-            this.waitingRoomHub.TournamentAllOpponentsFound += (e, args) => { OnPropertyChanged("OpponentsFound"); OnPropertyChanged("EnabledMaps"); };
+            this.WaitingRoomHub.TournamentAllOpponentsFound += (e, args) => { OnPropertyChanged("OpponentsFound"); OnPropertyChanged("EnabledMaps"); };
 
-            this.waitingRoomHub.RemainingTimeEvent += (e, args) => { RemainingTime = args; };
+            this.WaitingRoomHub.RemainingTimeEvent += (e, args) => { RemainingTime = args; };
 
-            this.waitingRoomHub.WinnerResultEvent += (e, args) => { Winner = args.Username; };
+            this.WaitingRoomHub.WinnerResultEvent += (e, args) => { Winner = args.Username; };
 
-            this.waitingRoomHub.SemiFinalResultEvent += (e, args) => OnSemiFinalResult(e, args);
+            this.WaitingRoomHub.SemiFinalResultEvent += (e, args) => OnSemiFinalResult(e, args);
 
-            this.waitingRoomHub.MapUpdatedEvent += (e, args) => OnMapUpdated(e, args);
+            this.WaitingRoomHub.MapUpdatedEvent += (e, args) => OnMapUpdated(e, args);
         }
 
         private void OnMapUpdated(object e, MapEntity args)
@@ -205,7 +223,7 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
                         }
                     }
                     this.OnPropertyChanged();
-                    waitingRoomHub.UpdateSelectedMap(value);
+                    WaitingRoomHub.UpdateSelectedMap(value);
                 }
             }
         }
@@ -220,13 +238,15 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
         {
             get
             {
-                return cancel ?? (cancel = new RelayCommandAsync(Join, (o) => true));
+                return cancel ?? (cancel = new RelayCommandAsync(Leave, (o) => true));
             }
         }
 
-        private async Task Join()
+        private async Task Leave()
         {
-            this.waitingRoomHub.Join();
+            await this.WaitingRoomHub.LeaveTournament();
+            SetDefaultValues();
+            Program.FormManager.CurrentForm = Program.MainMenu;
         }
 
         public override void InitializeViewModel()

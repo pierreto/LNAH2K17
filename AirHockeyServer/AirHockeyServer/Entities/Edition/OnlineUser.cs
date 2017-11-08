@@ -11,5 +11,11 @@ namespace AirHockeyServer.Entities.EditionCommand
         public string Username { get; set; }
         public string HexColor { get; set; }
 
+        public List<string> UuidsSelected { get; set; }
+
+        public OnlineUser()
+        {
+            UuidsSelected=new List<string>();
+        }
     }
 }

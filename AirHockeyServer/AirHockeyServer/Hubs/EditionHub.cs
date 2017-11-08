@@ -1,28 +1,41 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AirHockeyServer.Entities;
+using AirHockeyServer.Entities.Edition.EditionCommand;
 using AirHockeyServer.Entities.EditionCommand;
 using AirHockeyServer.Entities.Messages;
 using AirHockeyServer.Entities.Messages.Edition;
 using Microsoft.AspNet.SignalR;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace AirHockeyServer.Hubs
 {
     public class EditionHub : Hub
     {
         private EditionService editionService;
+        private JsonSerializerSettings serializer;
+
         public EditionHub(EditionService editionService)
         {
             this.editionService = editionService;
+            this.serializer = new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.Objects             };
+
         }
 
         public async Task<List<OnlineUser>> JoinPublicRoom(string username, MapEntity map)
         {
+            return await DefaultJoin(username, map);
+        }
 
-            string mapGroupId = ObtainEditionGroupIdentifier((int) map.Id);
+        private async Task<List<OnlineUser>> DefaultJoin(string username, MapEntity map)
+        {
+            string mapGroupId = ObtainEditionGroupIdentifier((int)map.Id);
 
-   
+
             if (!editionService.UsersPerGame.ContainsKey(mapGroupId))
             {
                 List<OnlineUser> newEditionGroup = new List<OnlineUser>();
@@ -44,16 +57,14 @@ namespace AirHockeyServer.Hubs
 
             //Broadcast to others users of the group that a new user arrived 
             Clients.Group(mapGroupId, Context.ConnectionId).NewUser(newUser);
-            //Clients.Group(mapGroupId).NewUser(newUser);
 
-            return editionService.UsersPerGame[ObtainEditionGroupIdentifier((int) map.Id)];
+            return editionService.UsersPerGame[ObtainEditionGroupIdentifier((int)map.Id)];
+
         }
-        public void JoinPrivateRoom(string username, MapEntity map, string password)
+        public async Task<List<OnlineUser>> JoinPrivateRoom(string username, MapEntity map, string password)
         {
             //Password validation
-
-
-            Groups.Add(Context.ConnectionId, ObtainEditionGroupIdentifier((int)map.Id));
+            return await DefaultJoin(username, map);
         }
 
         public void SendEditionCommand(int mapId, string editionCommand)
@@ -61,6 +72,38 @@ namespace AirHockeyServer.Hubs
             Clients.Group(ObtainEditionGroupIdentifier(mapId), Context.ConnectionId).NewCommand(editionCommand);
 
             //Clients.Group(ObtainEditionGroupIdentifier(mapId)).NewCommand(editionCommand);
+        }
+
+        public void SendSelectionCommand(int mapId, SelectionCommand selection)
+        {
+            //We update the current selection node list selected by the user
+            OnlineUser user = ConnectionMapper.GetUserFromConnectionId(Context.ConnectionId);
+
+
+
+            if (selection.DeselectAll)
+            {
+                user.UuidsSelected.Clear();
+            }
+            else
+            {
+                
+                if (selection.IsSelected)
+                {
+                    user.UuidsSelected.Add(selection.ObjectUuid);
+                }
+                else
+                {
+                    user.UuidsSelected.Remove(selection.ObjectUuid);
+                }
+                
+            }
+            string str = JsonConvert.SerializeObject(selection, serializer);
+
+            JObject jsonObject = JObject.Parse(str);
+            jsonObject["$type"] = "InterfaceGraphique.Entities.EditonCommand.SelectionCommand, InterfaceGraphique";
+            Clients.Group(ObtainEditionGroupIdentifier(mapId), Context.ConnectionId).NewCommand(jsonObject.ToString(Formatting.None, null));
+
         }
 
         public async Task LeaveRoom(int gameId)

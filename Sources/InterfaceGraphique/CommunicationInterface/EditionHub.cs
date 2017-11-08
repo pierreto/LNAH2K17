@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using InterfaceGraphique.Entities;
+using InterfaceGraphique.Entities.EditonCommand;
 using InterfaceGraphique.Entities.Editor;
 using InterfaceGraphique.Entities.EditorCommand;
 using Microsoft.AspNet.SignalR.Client;
@@ -20,8 +21,14 @@ namespace InterfaceGraphique.CommunicationInterface
 
         protected string username;
         private IHubProxy hubProxy;
+        private JsonSerializerSettings serializer;
 
         private MapEntity map;
+
+        public EditionHub()
+        {
+            serializer = new JsonSerializerSettings {TypeNameHandling = TypeNameHandling.Objects};
+        }
 
         public void InitializeHub(HubConnection connection)
         {
@@ -40,13 +47,14 @@ namespace InterfaceGraphique.CommunicationInterface
         {
             hubProxy.On<string>("NewCommand", command =>
             {
-                var rcmd = JsonConvert.DeserializeObject<AbstractEditionCommand>(
+                AbstractEditionCommand rcmd = JsonConvert.DeserializeObject<AbstractEditionCommand>(
                     command,
                     new JsonSerializerSettings
                     {
                         TypeNameHandling = TypeNameHandling.Objects
                     });
-                NewCommand?.Invoke(rcmd);
+                rcmd.ExecuteCommand();
+                //NewCommand?.Invoke(rcmd);
             });
 
             hubProxy.On<OnlineUser>("NewUser", user =>
@@ -71,9 +79,13 @@ namespace InterfaceGraphique.CommunicationInterface
 
         public void SendEditorCommand(AbstractEditionCommand command)
         {
-            var serializer = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Objects };
             var str = JsonConvert.SerializeObject(command, serializer);
             hubProxy.Invoke("SendEditionCommand", this.map.Id, str);
+        }
+
+        public void SendSelectionCommand(SelectionCommand command)
+        {
+            hubProxy.Invoke("SendSelectionCommand", this.map.Id, command);
         }
 
 

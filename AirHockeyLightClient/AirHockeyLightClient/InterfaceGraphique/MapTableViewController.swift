@@ -76,7 +76,7 @@ class MapTableViewController: UITableViewController {
     // TODO : bouger ceci dans un service
     func buildMapEntity(json: JSON) -> MapEntity {
         let mapEntity = MapEntity()
-        mapEntity.id.value = json["Id"].int
+        mapEntity.id = json["Id"].string
         mapEntity.creator = json["Creator"].string
         mapEntity.mapName = json["MapName"].string
         // TODO : Fuseau horaire différent
@@ -110,7 +110,7 @@ class MapTableViewController: UITableViewController {
         // Fetch map json
         // TODO : bug création de map mode hors-ligne puis aller dans mode en ligne, sélectionner map
         if self.clientConnection.getConnection() != nil && self.clientConnection.connected! {
-            let mapId = self.mapsData[indexPath.row].id.value
+            let mapId = self.mapsData[indexPath.row].id
             
             Alamofire.request("http://" + self.clientConnection.getIpAddress()! + ":63056/api/maps/get/" + (mapId?.description)!, method: .get, parameters: nil, encoding: JSONEncoding.default)
                 .responseJSON { response in

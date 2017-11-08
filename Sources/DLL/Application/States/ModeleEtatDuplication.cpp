@@ -187,12 +187,12 @@ void ModeleEtatDuplication::playerMouseMove(int x, int y) {
 			arbre->accepterVisiteur(&duplication);
 			glm::dvec3 centreDuplication = duplication.obtenirCentreDuplication();
 
-			VisiteurDeplacement deplacementInit = VisiteurDeplacement(mousePos - centreDuplication, sendToServer);
+			VisiteurDeplacement deplacementInit = VisiteurDeplacement(mousePos - centreDuplication, false);
 			arbre->accepterVisiteur(&deplacementInit);
 			estCopie_ = true;
 		}
 		else {
-			VisiteurDeplacement deplacement = VisiteurDeplacement(mousePos - lastMousePos, sendToServer);
+			VisiteurDeplacement deplacement = VisiteurDeplacement(mousePos - lastMousePos, false);
 			arbre->accepterVisiteur(&deplacement);
 		}
 	}
