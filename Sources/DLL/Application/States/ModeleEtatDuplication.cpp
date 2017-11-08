@@ -106,16 +106,16 @@ void ModeleEtatDuplication::mouseUpL() {
 		// Dupliquer seulement si les objets sont dans la zone de jeu
 		if (noeudsSurLaTable()) {
 
-			bool sendToServer;
+			VisiteurDuplication duplication;
 			if(ModeleEtatJeu::obtenirInstance()->currentOnlineClientType()==ModeleEtatJeu::ONLINE_EDITION)
 			{
-				sendToServer = true;
+				duplication = VisiteurDuplication(true, wallCreationCallback_, boostCreationCallback_, portalCreationCallback_);
+
 			}else
 			{
-				sendToServer = false;
+				duplication = VisiteurDuplication(false);
 			}
 
-			VisiteurDuplication duplication = VisiteurDuplication(sendToServer, wallCreationCallback_);
 			FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(&duplication);
 		}
 	}

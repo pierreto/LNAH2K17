@@ -103,13 +103,12 @@ void VisiteurSuppression::visiterRondelle(NoeudRondelle * noeud)
 ////////////////////////////////////////////////////////////////////////
 void VisiteurSuppression::deleteAllSelectedNode() {
 	ArbreRenduINF2990* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
-	for each (NoeudAbstrait* node in nodeToDelete_) {
-		std::string uuid = std::string(node->getUUID());
-		if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
+	for(NoeudAbstrait* node : nodeToDelete_) {
+		if(node)
 		{
-			ModeleEtatJeu::obtenirInstance()->getDeleteEventCallback()(uuid.c_str());
+			arbre->effacer(node, ModeleEtatJeu::obtenirInstance()->getDeleteEventCallback(), ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION);
 		}
-		arbre->effacer(node);
+	
 	}
 }
 
