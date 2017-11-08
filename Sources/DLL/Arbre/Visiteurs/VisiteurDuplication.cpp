@@ -26,9 +26,12 @@
 /// @return Aucune
 ///
 ////////////////////////////////////////////////////////////////////////
-VisiteurDuplication::VisiteurDuplication(bool sendToServer)
+VisiteurDuplication::VisiteurDuplication(bool sendToServer, WallCreationCallback wallCallback,BoostCreationCallback boostCallback, PortalCreationCallback portalCallback)
 	: nbItems_(0), centreDuplication_(glm::vec3(0,0,0)),sendToServer_(sendToServer)
 {
+	wallCreationCallback_ = wallCallback;
+	portalCreationCallback_ = portalCallback;
+	boostCreationCallback_ = boostCallback;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -72,8 +75,7 @@ void VisiteurDuplication::visiterAccelerateur(NoeudAccelerateur* noeud) {
 
 		if (sendToServer_)
 		{
-			ModeleEtatCreerBoost::obtenirInstance()->getBoostCreationCallback()(noeudDouble->getUUID(), glm::value_ptr(noeudDouble->obtenirPositionRelative()), noeudDouble->obtenirRotation().y, glm::value_ptr(noeudDouble->obtenirScale()));
-			noeud->assignerSelection(true);
+			boostCreationCallback_(noeudDouble->getUUID(), glm::value_ptr(noeudDouble->obtenirPositionRelative()), noeudDouble->obtenirRotation().y, glm::value_ptr(noeudDouble->obtenirScale()));
 		}
 
 	}
@@ -103,9 +105,7 @@ void VisiteurDuplication::visiterMur(NoeudMur* noeud) {
 
 		if (sendToServer_)
 		{
-			ModeleEtatCreerMuret::obtenirInstance()->getWallCreationCallback()(noeudDouble->getUUID(), glm::value_ptr(noeudDouble->obtenirPositionRelative()), noeudDouble->obtenirRotation().y, glm::value_ptr(noeudDouble->obtenirScale()));
-			noeud->assignerSelection(true);
-
+			wallCreationCallback_(noeudDouble->getUUID(), glm::value_ptr(noeudDouble->obtenirPositionRelative()), noeudDouble->obtenirRotation().y, glm::value_ptr(noeudDouble->obtenirScale()));
 		}
 
 		// Ajout du noeud à l'arbre de rendu
@@ -145,10 +145,8 @@ void VisiteurDuplication::visiterPortail(NoeudPortail* noeud) {
 			premierNoeud_->assignerOppose(noeudDouble);
 			if (sendToServer_)
 			{
-				ModeleEtatCreerPortail::obtenirInstance()->getPortalCreationCallback()(premierNoeud_->getUUID(), glm::value_ptr(premierNoeud_->obtenirPositionRelative()), (premierNoeud_->obtenirRotation().y), glm::value_ptr(premierNoeud_->obtenirScale()),
+				portalCreationCallback_(premierNoeud_->getUUID(), glm::value_ptr(premierNoeud_->obtenirPositionRelative()), (premierNoeud_->obtenirRotation().y), glm::value_ptr(premierNoeud_->obtenirScale()),
 					noeudDouble->getUUID(), glm::value_ptr(noeudDouble->obtenirPositionRelative()), noeudDouble->obtenirRotation().y, glm::value_ptr(noeudDouble->obtenirScale()));
-				noeud->assignerSelection(true);
-
 			}
 			premierNoeud_ = nullptr;
 

@@ -35,6 +35,7 @@
 #include "ModeleEtatDeplacement.h"
 #include "ModeleEtatSelection.h"
 #include "ModeleEtatPointControl.h"
+#include "ModeleEtatDuplication.h"
 
 extern "C"
 {
@@ -1035,6 +1036,8 @@ __declspec(dllexport) void createPortal(const char* startUuid, const float* star
 void setPortalCreationCallback(PortalCreationCallback callback)
 {
 	ModeleEtatCreerPortail::obtenirInstance()->setPortalCreationCallback(callback);
+	ModeleEtatDuplication::obtenirInstance()->setPortalCreationCallback(callback);
+
 }
 
 void createWall(const char* uuid, const float* position, const float angle, const float* scale)
@@ -1045,6 +1048,8 @@ void createWall(const char* uuid, const float* position, const float angle, cons
 void setWallCreationCallback(WallCreationCallback callback)
 {
 	ModeleEtatCreerMuret::obtenirInstance()->setWallCreationCallback(callback);
+	ModeleEtatDuplication::obtenirInstance()->setWallCreationCallback(callback);
+
 }
 
 void createBoost(const char* uuid, const float* position, const float angle, const float* scale)
@@ -1055,12 +1060,16 @@ void createBoost(const char* uuid, const float* position, const float angle, con
 void setBoostCreationCallback(BoostCreationCallback callback)
 {
 	ModeleEtatCreerBoost::obtenirInstance()->setBoostCreationCallback(callback);
+	ModeleEtatDuplication::obtenirInstance()->setBoostCreationCallback(callback);
+
 }
 
 
 void setSelectionEventCallback(SelectionEventCallback callback)
 {
 	ModeleEtatSelection::obtenirInstance()->setSelectionEventCallback(callback);
+	ModeleEtatPointControl::obtenirInstance()->setSelectionEventCallback(callback);
+
 }
 
 void setElementSelection(const char* username, const char* uuid, const bool isSelected, const bool deselectAll)

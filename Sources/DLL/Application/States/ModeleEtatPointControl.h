@@ -45,6 +45,9 @@ public:
 	void setControlPointEventCallback(ControlPointEventCallback callback) { controlPointEventCallback_ = callback; }
 	ControlPointEventCallback getControlPointEventCallback() { return controlPointEventCallback_; }
 
+	void setSelectionEventCallback(SelectionEventCallback callback) { selectionCallback_ = callback; }
+
+
 private:
 
 	/// Constructeur.
@@ -65,6 +68,9 @@ private:
 	void revertPosition();
 
 	ControlPointEventCallback controlPointEventCallback_;
+
+	SelectionEventCallback selectionCallback_;
+
 };
 
 

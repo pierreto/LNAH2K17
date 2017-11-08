@@ -19,6 +19,7 @@
 #include "VisiteurDuplication.h"
 #include "VisiteurObtenirSelection.h"
 #include "ModeleEtatJeu.h"
+#include "ModeleEtatCreerMuret.h"
 
 /// Pointeur vers l'instance unique de la classe.
 ModeleEtatDuplication* ModeleEtatDuplication::instance_{ nullptr };
@@ -114,7 +115,7 @@ void ModeleEtatDuplication::mouseUpL() {
 				sendToServer = false;
 			}
 
-			VisiteurDuplication duplication = VisiteurDuplication(sendToServer);
+			VisiteurDuplication duplication = VisiteurDuplication(sendToServer, wallCreationCallback_);
 			FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(&duplication);
 		}
 	}
