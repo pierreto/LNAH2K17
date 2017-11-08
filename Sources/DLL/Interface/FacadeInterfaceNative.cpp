@@ -1103,7 +1103,7 @@ void setTransformByUUID(const char* username, const char* uuid, const float* pos
 	{
 		node->deplacer(glm::make_vec3(position));
 		node->rotate(rotation, glm::vec3(0,1,0));
-		node->deplacer(glm::make_vec3(position));
+		node->scale(glm::make_vec3(scale));
 
 	}
 	else //if it isnt in the selected list of the other player anymore, we find it in the entire tree 
@@ -1113,7 +1113,7 @@ void setTransformByUUID(const char* username, const char* uuid, const float* pos
 		{
 			nodeInTree->deplacer(glm::make_vec3(position));
 			nodeInTree->rotate(rotation, glm::vec3(0, 1, 0));
-			nodeInTree->deplacer(glm::make_vec3(position));
+			nodeInTree->scale(glm::make_vec3(scale));
 		}
 	}
 }

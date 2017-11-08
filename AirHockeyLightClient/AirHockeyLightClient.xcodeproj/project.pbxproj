@@ -17,7 +17,6 @@
 		1D019A2A1F911E33004D79B2 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D019A281F911E33004D79B2 /* LoginViewModel.swift */; };
 		1D019A2D1F911E49004D79B2 /* SignupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D019A2B1F911E49004D79B2 /* SignupViewModel.swift */; };
 		1D019A2E1F911E49004D79B2 /* ISignupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D019A2C1F911E49004D79B2 /* ISignupViewModel.swift */; };
-		1D019A301F911E78004D79B2 /* Http.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D019A2F1F911E78004D79B2 /* Http.swift */; };
 		1D3D77B71F981BCA0012EF12 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3D77B61F981BCA0012EF12 /* MainViewController.swift */; };
 		1D4F014F1FB130BE00F4A302 /* ChatSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4F014E1FB130BE00F4A302 /* ChatSplitViewController.swift */; };
 		1D4F01511FB13B2B00F4A302 /* VerticalSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4F01501FB13B2B00F4A302 /* VerticalSplitViewController.swift */; };
@@ -164,7 +163,6 @@
 		1D019A281F911E33004D79B2 /* LoginViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		1D019A2B1F911E49004D79B2 /* SignupViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupViewModel.swift; sourceTree = "<group>"; };
 		1D019A2C1F911E49004D79B2 /* ISignupViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ISignupViewModel.swift; sourceTree = "<group>"; };
-		1D019A2F1F911E78004D79B2 /* Http.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Http.swift; sourceTree = "<group>"; };
 		1D3D77B61F981BCA0012EF12 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainViewController.swift; path = InterfaceGraphique/Menus/MainViewController.swift; sourceTree = "<group>"; };
 		1D4F014E1FB130BE00F4A302 /* ChatSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChatSplitViewController.swift; path = InterfaceGraphique/Chat/ChatSplitViewController.swift; sourceTree = "<group>"; };
 		1D4F01501FB13B2B00F4A302 /* VerticalSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VerticalSplitViewController.swift; path = InterfaceGraphique/VerticalSplitViewController.swift; sourceTree = "<group>"; };
@@ -740,7 +738,6 @@
 		8FE1EB031F75A90D00A01514 /* Communication */ = {
 			isa = PBXGroup;
 			children = (
-				1D019A2F1F911E78004D79B2 /* Http.swift */,
 				25FDE43A1FA80D4D0089D9FE /* HubManager.swift */,
 				25FDE43C1FA80DA60089D9FE /* BaseHub.swift */,
 				252EC9151FA80FAD008D119C /* EditionHub.swift */,
@@ -993,7 +990,6 @@
 				342E7C541F9859770062017A /* NoeudPortail.swift in Sources */,
 				1DD1CFC21FAFC59D008853DD /* ChatAreaViewController.swift in Sources */,
 				1D019A1E1F911DE2004D79B2 /* LoginViewController.swift in Sources */,
-				1D019A301F911E78004D79B2 /* Http.swift in Sources */,
 				3475C22A1F8FAF8D00E8BF86 /* EditorHUDScene.swift in Sources */,
 				34B965CE1FA26EDE00BD17CC /* GeneralPropertiesViewController.swift in Sources */,
 				253E088E1F818DD2009F301B /* JsonHelper.swift in Sources */,

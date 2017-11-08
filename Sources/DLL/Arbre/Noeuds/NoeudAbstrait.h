@@ -21,6 +21,7 @@
 #include "RigidBody.h"
 #include "utilitaire.h"
 #include <rapidjson/document.h>
+#include "FacadeInterfaceNative.h"
 
 /// Déclarations avancées pour contenir un pointeur vers un modèle3D et son storage
 namespace modele{
@@ -139,7 +140,7 @@ public:
 	/// Vide le noeud de ses enfants.
 	virtual void vider();
 	/// Efface le noeud passé en paramètre.
-	virtual void effacer(const NoeudAbstrait* noeud);
+	virtual void effacer(const NoeudAbstrait* noeud, DeleteEventCallback deleteEventCallback = nullptr, bool onlineMode =false );
 
 	/// Cherche un noeud par le type (sur un noeud constant).
 	virtual const NoeudAbstrait* chercher(const std::string& typeNoeud) const;

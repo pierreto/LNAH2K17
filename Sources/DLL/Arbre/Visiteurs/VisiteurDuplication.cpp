@@ -134,7 +134,7 @@ void VisiteurDuplication::visiterPortail(NoeudPortail* noeud) {
 		copyProperties(noeud, noeudDouble);
 
 		// État de l'opération	
-		if (premierNoeud_ == nullptr) {
+		if (premierNoeud_== nullptr) {
 			premierNoeud_ = noeudDouble;
 			noeudDouble->assignerOppose(nullptr);
 		}
@@ -149,7 +149,6 @@ void VisiteurDuplication::visiterPortail(NoeudPortail* noeud) {
 					noeudDouble->getUUID(), glm::value_ptr(noeudDouble->obtenirPositionRelative()), noeudDouble->obtenirRotation().y, glm::value_ptr(noeudDouble->obtenirScale()));
 			}
 			premierNoeud_ = nullptr;
-
 		}
 
 		// Ajout du noeud à l'arbre de rendu

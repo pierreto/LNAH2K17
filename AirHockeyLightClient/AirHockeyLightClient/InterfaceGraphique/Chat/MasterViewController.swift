@@ -13,17 +13,26 @@ protocol ChannelSelectionDelegate: class {
 }
 
 class MasterViewController: UITableViewController {
-
+    let clientConnection = HubManager.sharedConnection
     var channels = [ChannelEntity]()
     weak var delegate: ChannelSelectionDelegate?
+    @IBOutlet var channelTableView: UITableView!
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
-        
         self.channels.append(ChannelEntity(name: "Principal"))
-        self.channels.append(ChannelEntity(name: "Secondaire"))
     }
 
+    @IBAction func addChannel(_ sender: Any) {
+        let chatHub = clientConnection.getChatHub()
+        let channelName = "kdsko"
+        var x = chatHub.CreateChannel(channelName: channelName)
+        if x == "" {
+            self.channels.append(ChannelEntity(name: channelName))
+            self.channelTableView.reloadData()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         ChatAreaViewController.sharedChatAreaViewController.channel = channels.first

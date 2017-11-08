@@ -51,6 +51,20 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
             self.chatTableView.reloadData()
         })
     }
+    
+    func receiveMessageChannel(message: Dictionary<String, String>, channelEntity: ChannelEntity) {
+        let sender = message["Sender"]
+        let messageValue = message["MessageValue"]
+        let timestamp = message["TimeStamp"]
+        print("Message: \(String(describing: sender! + " (" + timestamp! + ") : " + messageValue!))\n")
+        
+        self.channel.messages.insert(ChatMessageEntity(sender:sender!, messageValue: messageValue!, timestamp: (timestamp?.description)!), at: 0)
+        
+        DispatchQueue.main.async(execute: { () -> Void in
+            // Reload tableView
+            self.chatTableView.reloadData()
+        })
+    }
 
     
     //Mark: Actions
@@ -66,7 +80,12 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
                 "TimeStamp": dateString
                 ] as [String : Any]
             let chatHub = clientConnection.getChatHub()
-            chatHub.SendBroadcast(message : message)
+            if (channel.name == "Principal") {
+                chatHub.SendBroadcast(message : message)
+            } else {
+                chatHub.SendChannel(channelName: channel.name, message : message)
+            }
+            
             
             // Clear chat box
             self.messageField.text = ""

@@ -17,5 +17,11 @@ namespace AirHockeyServer.Pocos
 
         [Column(Name = "map_played")]
         public int PlayedMap { get; set; }
+
+        [Column(Name = "player_1")]
+        public int Player1 { get; set; }
+
+        [Column(Name = "player_2")]
+        public int Player2 { get; set; }
     }
 }

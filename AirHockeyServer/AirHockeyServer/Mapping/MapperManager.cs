@@ -2,6 +2,7 @@
 using AirHockeyServer.Entities;
 using AirHockeyServer.Pocos;
 using AirHockeyServer.Repositories;
+using AirHockeyServer.Services.Interfaces;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace AirHockeyServer.Mapping
             var config = new MapperConfiguration(cfg =>
             {
                 // À faire pour chaque pair poco/entity:
-				//Not necessary if same attribute names from poco to entity
+                //Not necessary if same attribute names from poco to entity
                 //cfg.CreateMap<UserPoco, UserEntity>()
                 //.ForMember(
                 //    dest => dest.Id,
@@ -49,7 +50,7 @@ namespace AirHockeyServer.Mapping
                 .ForMember(
                     dest => dest.Name,
                     opt => opt.MapFrom(src => src.MapName));
-                
+
                 cfg.CreateMap<FriendPoco, FriendRequestEntity>()
                 .ForMember(
                     dest => dest.Requestor,
@@ -71,7 +72,7 @@ namespace AirHockeyServer.Mapping
                 .ForMember(
                     dest => dest.Friend,
                     opt => opt.MapFrom(src => new UserPoco { Id = src.Friend.Id, Username = src.Friend.Username }));
-                
+
                 cfg.CreateMap<StatsEntity, StatsPoco>();
                 cfg.CreateMap<StatsPoco, StatsEntity>();
 
@@ -84,7 +85,13 @@ namespace AirHockeyServer.Mapping
                         opt => opt.MapFrom(src => src.SelectedMap.Id))
                     .ForMember(
                         dest => dest.Winner,
-                        opt => opt.MapFrom(src => src.Winner.Id));
+                        opt => opt.MapFrom(src => src.Winner.Id))
+                    .ForMember(
+                        dest => dest.Player1,
+                        opt => opt.MapFrom(src => src.Players[0]))
+                    .ForMember(
+                        dest => dest.Player2,
+                        opt => opt.MapFrom(src => src.Players[1]));
 
                 cfg.CreateMap<TournamentEntity, TournamentPoco>()
                     .ForMember(
@@ -95,11 +102,24 @@ namespace AirHockeyServer.Mapping
                     opt => opt.MapFrom(src => src.SelectedMap))
                     .ForMember(
                     dest => dest.Winner,
-                    opt => opt.MapFrom(src => src.Winner.Id));
+                    opt => opt.MapFrom(src => src.Winner.Id))
+                    .ForMember(
+                    dest => dest.Player1,
+                    opt => opt.MapFrom(src => src.Players[0]))
+                    .ForMember(
+                    dest => dest.Player2,
+                    opt => opt.MapFrom(src => src.Players[1]))
+                    .ForMember(
+                    dest => dest.Player3,
+                    opt => opt.MapFrom(src => src.Players[2]))
+                    .ForMember(
+                    dest => dest.Player4,
+                    opt => opt.MapFrom(src => src.Players[3]));
             });
 
             //config.AssertConfigurationIsValid();
             Mapper = config.CreateMapper();
+
         }
 
         public TDest Map<TSource, TDest>(TSource source)

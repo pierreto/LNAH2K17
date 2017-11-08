@@ -100,7 +100,19 @@
             ///
             /// buttonProfile
             ///
-            this.profileButton.Text = "Profile";
+            this.profileButton.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.profileButton.AutoEllipsis = true;
+            this.profileButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.profileButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.profileButton.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.profileButton.ForeColor = System.Drawing.Color.White;
+            this.profileButton.Location = new System.Drawing.Point(517, 50);
+            this.profileButton.Name = "profileButton";
+            this.profileButton.Size = new System.Drawing.Size(150, 50);
+            this.profileButton.TabIndex = 4;
+            this.profileButton.TabStop = false;
+            this.profileButton.Text = "Profil";
+            this.profileButton.UseVisualStyleBackColor = true;
             // 
             // buttonQuitter
             // 
@@ -171,6 +183,7 @@
             this.Controls.Add(this.buttonConfiguration);
             this.Controls.Add(this.boutonTournoi);
             this.Controls.Add(this.boutonPartieRapide);
+            this.Controls.Add(this.profileButton);
             this.Name = "MainMenu";
             this.Text = "MainMenu";
             this.ResumeLayout(false);

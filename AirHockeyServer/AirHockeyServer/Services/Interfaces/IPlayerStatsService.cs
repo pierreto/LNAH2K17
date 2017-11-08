@@ -16,5 +16,11 @@ namespace AirHockeyServer.Services.Interfaces
         Task IncrementTournamentsWon(int userId);
 
         Task<StatsEntity> GetPlayerStats(int userId);
+
+        Task<List<AchievementEntity>> GetAchievements(int userId);
+
+        Task SetPlayerAchievements(int userId);
+
+        Task UpdateAchievements(int userId);
     }
 }
