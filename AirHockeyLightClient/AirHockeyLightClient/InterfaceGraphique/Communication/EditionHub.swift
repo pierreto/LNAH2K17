@@ -35,12 +35,13 @@ class EditionHub: BaseHub {
         
         /// Reception de l'évènement quand un utilisateur rejoint une salle d'édition
         self.hubProxy?.on("NewUser") { args in
-            let newUser = args?[0] as! Dictionary<String, String>
+            let newUser = args?[0] as! Dictionary<String, Any>
             let username = newUser["Username"]
             let hexColor = newUser["HexColor"]
-            print("Joining user: \(String(describing: username! + " (" + hexColor! + ")"))\n")
             
-            FacadeModele.instance.obtenirUserManager()?.addUser(username: username!, hexColor: hexColor!)
+            print("Joining user: \(String(describing: (username as! String) + " (" + (hexColor as! String) + ")"))\n")
+            
+            FacadeModele.instance.obtenirUserManager()?.addUser(username: username as! String, hexColor: hexColor as! String)
         }
         
         /// Réception de l'évènement quand un utilisateur quitte la salle d'édition
@@ -99,7 +100,7 @@ class EditionHub: BaseHub {
     
     func joinPublicRoom(username: String, mapEntity: MapEntity) {
         self.map = mapEntity
-        var usersInRoom = [Dictionary<String, String>]()
+        var usersInRoom = [Dictionary<String, Any>]()
         
         do {
             try self.hubProxy?.invoke("JoinPublicRoom",
@@ -110,16 +111,16 @@ class EditionHub: BaseHub {
                 }
                 else {
                     print("Success JoinPublicRoom")
-                    usersInRoom = result as! [Dictionary<String, String>]
+                    usersInRoom = result as! [Dictionary<String, Any>]
                     print("Users in room: " + usersInRoom.description)
                     
                     for user in usersInRoom {
-                        if user["Username"] == HubManager.sharedConnection.getUsername() {
-                            FacadeModele.instance.setCurrentUserColor(userHexColor: user["HexColor"]!)
+                        if user["Username"] as? String == HubManager.sharedConnection.getUsername() {
+                            FacadeModele.instance.setCurrentUserColor(userHexColor: user["HexColor"] as! String)
                         }
                         
-                        FacadeModele.instance.obtenirUserManager()?.addUser(username: user["Username"]!,
-                                                                            hexColor: user["HexColor"]!)
+                        FacadeModele.instance.obtenirUserManager()?.addUser(username: user["Username"] as! String,
+                                                                            hexColor: user["HexColor"] as! String)
                     }
                 }
             }

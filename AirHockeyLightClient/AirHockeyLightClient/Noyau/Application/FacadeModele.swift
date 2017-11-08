@@ -276,6 +276,10 @@ class FacadeModele {
         
         if node != nil {
             node?.assignerPositionRelative(positionRelative: position)
+            
+            //print("rotation appliquée")
+            //print(rotation)
+            
             node?.rotation = SCNVector4(0.0, 1.0, 0.0, rotation)
             node?.scale = SCNVector3FromGLKVector3(scale)
         }
