@@ -10,5 +10,7 @@ namespace AirHockeyServer.Repositories.Interfaces
     public interface IGameRepository
     {
         Task<GameEntity> CreateGame(GameEntity game);
+
+        Task<int> GetUserGamesNb(int userId);
     }
 }

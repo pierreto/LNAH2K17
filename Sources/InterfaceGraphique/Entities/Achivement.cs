@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,15 +11,15 @@ namespace InterfaceGraphique.Entities
     {
         public string Name { get; set; }
 
-        private string DisabledImageUrl { get; set; }
+        public string DisabledImageUrl { get; set; }
 
-        private string EnabledImageUrl { get; set; }
+        public string EnabledImageUrl { get; set; }
 
         public string ImageUrl
         {
             get
             {
-                return IsEnabled ? EnabledImageUrl : DisabledImageUrl;
+                return IsEnabled ? Directory.GetCurrentDirectory() + EnabledImageUrl : Directory.GetCurrentDirectory() + DisabledImageUrl;
             }
         }
 

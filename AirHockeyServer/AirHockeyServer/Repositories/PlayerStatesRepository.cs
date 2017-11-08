@@ -24,6 +24,7 @@ namespace AirHockeyServer.Repositories
             :base(dataProvider, mapperManager)
         {
             this.StatsTable = DataProvider.DC.GetTable<StatsPoco>();
+            this.AchievementsTable = DataProvider.DC.GetTable<AchievementPoco>();
             AchievementInfoService = achievementInfoService;
         }
 

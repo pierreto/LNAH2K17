@@ -23,17 +23,17 @@ namespace AirHockeyServer.Controllers
 
         [HttpGet]
         [Route("api/stats/{id}")]
-        public async Task<HttpResponseMessage> GetStats(int userId)
+        public async Task<HttpResponseMessage> GetStats(int id)
         {
-            var result = await StatsService.GetPlayerStats(userId);
+            var result = await StatsService.GetPlayerStats(id);
             return CreateHttpResponse(result);
         }
 
         [HttpGet]
         [Route("api/achivements/{id}")]
-        public async Task<HttpResponseMessage> GetAchievements(int userId)
+        public async Task<HttpResponseMessage> GetAchievements(int id)
         {
-            var result = await StatsService.GetAchievements(userId);
+            var result = await StatsService.GetAchievements(id);
             return CreateHttpResponse(result);
         }
 

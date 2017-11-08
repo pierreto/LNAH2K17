@@ -33,34 +33,29 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
             GameWon = 0;
             TournamentWon = 0;
             ProfilePictureUrl = Directory.GetCurrentDirectory() + "\\media\\image\\default_profile_picture.png";
-
-            //Achievements = new ObservableCollection<Achievement>()
-            //{
-            //    new Achievement(Directory.GetCurrentDirectory() + "\\media\\image\\coins.png", Directory.GetCurrentDirectory() + "\\media\\image\\piggy-bank.png")
-            //    {
-            //        Name = "Test point"
-            //    },
-            //    new Achievement
-            //    {
-            //        Name = "Test rere"
-            //    }
-            //};
         }
 
-        public async void Initialize()
+        public async void Initialize(int userId = 0)
         {
-            UserName = User.Instance.UserEntity.Username;
-            
-            if(User.Instance.IsConnected)
-            {
-                var achievements = await PlayerStatsService.GetPlayerAchivements(User.Instance.UserEntity.Id);
-                Achievements = new ObservableCollection<Achievement>(achievements);
+            bool isFriendProfile = userId != 0;
+            int profileId = isFriendProfile ? userId : User.Instance.UserEntity.Id;
 
-                var playerStats = await PlayerStatsService.GetPlayerStats(User.Instance.UserEntity.Id);
-                PointsNb = playerStats.Points;
-                TournamentWon = playerStats.TournamentsWon;
-                GameWon = playerStats.GamesWon;
+            if (!isFriendProfile)
+            {
+                UserName = User.Instance.UserEntity.Username;
             }
+            else
+            {
+                // get friend's info
+            }
+
+            var achievements = await PlayerStatsService.GetPlayerAchivements(profileId);
+            Achievements = new ObservableCollection<Achievement>(achievements);
+
+            var playerStats = await PlayerStatsService.GetPlayerStats(profileId);
+            PointsNb = playerStats.Points;
+            TournamentWon = playerStats.TournamentsWon;
+            GameWon = playerStats.GamesWon;
         }
 
         private ObservableCollection<Achievement> achievements;
