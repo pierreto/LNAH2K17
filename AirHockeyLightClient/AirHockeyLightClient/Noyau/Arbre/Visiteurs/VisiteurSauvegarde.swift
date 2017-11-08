@@ -56,8 +56,9 @@ class VisiteurSauvegarde: VisiteurAbstrait {
         let scale = noeud.scale
         let angle = noeud.rotation.w
         let angleY = angle * noeud.rotation.y
+        let uuid = noeud.obtenirUUID()
         
-        let entry = JSON([pos.x, pos.y, pos.z, scale.x, scale.y, scale.z, angleY])
+        let entry = JSON([pos.x, pos.y, pos.z, scale.x, scale.y, scale.z, angleY, uuid])
         FacadeModele.instance.docJSON?[nom].appendArray(json: entry)
     }
     

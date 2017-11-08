@@ -41,9 +41,11 @@ namespace AirHockeyServer.Hubs
             TournamentService.UpdateTournament(tournamentId, selectedMap);
         }
 
-        public async Task LeaveGame(UserEntity user)
+        public void LeaveTournament(UserEntity user, int tournamentId)
         {
-            TournamentService.LeaveTournamentWaitingRoom(user);
+            Groups.Remove(ConnectionMapper.GetConnection(user.Id), tournamentId.ToString());
+            TournamentService.LeaveTournamentWaitingRoom(user, tournamentId);
+            ConnectionMapper.DeleteConnection(user.Id);
         }
 
         public void Disconnect(string username)

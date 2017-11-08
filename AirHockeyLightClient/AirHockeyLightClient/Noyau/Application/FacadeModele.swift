@@ -276,6 +276,10 @@ class FacadeModele {
         
         if node != nil {
             node?.assignerPositionRelative(positionRelative: position)
+            
+            //print("rotation appliquée")
+            //print(rotation)
+            
             node?.rotation = SCNVector4(0.0, 1.0, 0.0, rotation)
             node?.scale = SCNVector3FromGLKVector3(scale)
         }
@@ -359,6 +363,10 @@ class FacadeModele {
                 let pos = GLKVector3.init(v: (x, y, z))
                 let noeud = child as! NoeudCommun
                 noeud.assignerPositionRelative(positionRelative: pos)
+                
+                let uuid = self.docJSON!["PointControle"][count][7].string!
+                noeud.assignerUUID(uuid: uuid)
+        
                 count += 1
             }
         }
@@ -377,15 +385,12 @@ class FacadeModele {
             
             for i in 0...self.docJSON![type].count - 1 {
                 let noeud: NoeudCommun
+                let uuid = self.docJSON![type][i][7].string!
                 if nomType == ArbreRendu.instance.NOM_ACCELERATEUR {
-                    noeud = self.arbre?.creerNoeud(typeNouveauNoeud: nomType, uuid: "") as! NoeudAccelerateur
+                    noeud = self.arbre?.creerNoeud(typeNouveauNoeud: nomType, uuid: uuid) as! NoeudAccelerateur
                 } else {
-                    noeud = self.arbre?.creerNoeud(typeNouveauNoeud: nomType, uuid: "") as! NoeudMur
+                    noeud = self.arbre?.creerNoeud(typeNouveauNoeud: nomType, uuid: uuid) as! NoeudMur
                 }
-                
-                // TODO : CHARGER ET SAUVEGARDER UUID DU NOEUD
-                // noeud.assignerUUID(uuid: "ABCD")
-                
                 // Appliquer rotation
                 let angle = self.docJSON![type][i][6].float!
                 noeud.appliquerRotation(angle: angle, axes: GLKVector3.init(v: (0, 1, 0)))
@@ -416,11 +421,9 @@ class FacadeModele {
                 var linkedPortals = Set<NoeudPortail>()
                 
                 for j in 0...1 {
-                    let portal = self.arbre?.creerNoeud(typeNouveauNoeud: nomType, uuid: "") as! NoeudPortail
+                    let uuid = self.docJSON![type][i + j][7].string!
+                    let portal = self.arbre?.creerNoeud(typeNouveauNoeud: nomType, uuid: uuid) as! NoeudPortail
                     linkedPortals.insert(portal)
-                    
-                    // TODO : CHARGER ET SAUVEGARDER UUID DU NOEUD
-                    // noeud.assignerUUID(uuid: "ABCD")
                     
                     // Appliquer rotation
                     let angle = self.docJSON![type][i + j][6].float!

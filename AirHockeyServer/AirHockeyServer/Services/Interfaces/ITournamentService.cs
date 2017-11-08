@@ -13,6 +13,6 @@ namespace AirHockeyServer.Services.Interfaces
 
         void UpdateTournament(int tournamentId, MapEntity selectedMap);
 
-        void LeaveTournamentWaitingRoom(UserEntity user);
+        void LeaveTournamentWaitingRoom(UserEntity user, int tournamentId);
     }
 }

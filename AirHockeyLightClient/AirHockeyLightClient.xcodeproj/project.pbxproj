@@ -37,7 +37,7 @@
 		253E08911F81913A009F301B /* ChannelEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253E08901F81913A009F301B /* ChannelEntity.swift */; };
 		25628B9D1FA79B940010B58D /* IMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25628B9C1FA79B940010B58D /* IMapViewModel.swift */; };
 		25628B9F1FA79C070010B58D /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25628B9E1FA79C070010B58D /* MapViewModel.swift */; };
-		25628BA11FA79CFF0010B58D /* Maps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25628BA01FA79CFF0010B58D /* Maps.swift */; };
+		25628BA11FA79CFF0010B58D /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25628BA01FA79CFF0010B58D /* Map.swift */; };
 		256539A91F9D643A00D81E2C /* MapEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256539A81F9D643A00D81E2C /* MapEntity.swift */; };
 		25F66FB51FA13071006CB47F /* VisiteurSauvegarde.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F66FB41FA13071006CB47F /* VisiteurSauvegarde.swift */; };
 		25F8091F1FA673050008F048 /* MapTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F8091E1FA673050008F048 /* MapTableViewController.swift */; };
@@ -185,7 +185,7 @@
 		253E08901F81913A009F301B /* ChannelEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChannelEntity.swift; path = Noyau/Entities/ChannelEntity.swift; sourceTree = "<group>"; };
 		25628B9C1FA79B940010B58D /* IMapViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMapViewModel.swift; sourceTree = "<group>"; };
 		25628B9E1FA79C070010B58D /* MapViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
-		25628BA01FA79CFF0010B58D /* Maps.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Maps.swift; sourceTree = "<group>"; };
+		25628BA01FA79CFF0010B58D /* Map.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
 		256539A81F9D643A00D81E2C /* MapEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapEntity.swift; sourceTree = "<group>"; };
 		25F66FB41FA13071006CB47F /* VisiteurSauvegarde.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VisiteurSauvegarde.swift; path = Noyau/Arbre/Visiteurs/VisiteurSauvegarde.swift; sourceTree = "<group>"; };
 		25F8091E1FA673050008F048 /* MapTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapTableViewController.swift; path = InterfaceGraphique/MapTableViewController.swift; sourceTree = "<group>"; };
@@ -367,7 +367,7 @@
 				1D90AB011F9824BE003E0764 /* ConnectServer.swift */,
 				34B965CF1FA2976600BD17CC /* GeneralProperties.swift */,
 				1D019A1F1F911DF6004D79B2 /* Login.swift */,
-				25628BA01FA79CFF0010B58D /* Maps.swift */,
+				25628BA01FA79CFF0010B58D /* Map.swift */,
 				1D019A201F911DF6004D79B2 /* Signup.swift */,
 			);
 			name = Model;
@@ -970,7 +970,7 @@
 				8F8706B91F7892BB000E6824 /* Entity.swift in Sources */,
 				8FB0E29E1FB00DC700672057 /* SelectionCommand.swift in Sources */,
 				252EC9161FA80FAD008D119C /* EditionHub.swift in Sources */,
-				25628BA11FA79CFF0010B58D /* Maps.swift in Sources */,
+				25628BA11FA79CFF0010B58D /* Map.swift in Sources */,
 				1D4F01511FB13B2B00F4A302 /* VerticalSplitViewController.swift in Sources */,
 				34B66FE21F84599100A9CCB9 /* But.swift in Sources */,
 				1D019A2A1F911E33004D79B2 /* LoginViewModel.swift in Sources */,

@@ -16,7 +16,7 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
 {
     public class MatchmakingViewModel : ViewModelBase
     {
-        private GameWaitingRoomHub waitingRoomHub;
+        public GameWaitingRoomHub WaitingRoomHub { get; set; }
         private bool isStarted;
 
         protected MapService MapService { get; }
@@ -25,38 +25,41 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
 
         public MatchmakingViewModel(GameWaitingRoomHub matchmakingHub, MapService mapService)
         {
-
-            this.waitingRoomHub = matchmakingHub;
+            this.WaitingRoomHub = matchmakingHub;
             MapService = mapService;
             this.isStarted = false;
             this.MapsRepository = new MapsRepository();
         }
         public override void InitializeViewModel()
         {
+            SetDefaultValues();
             LoadData();
             InitializeEvents();
-            this.waitingRoomHub.Join();
-            SetDefaultValues();
+            this.WaitingRoomHub.Join();
         }
 
-        private void SetDefaultValues()
+        public void SetDefaultValues()
         {
             RemainingTime = 30;
+            SetVisibility(true);
+            MapsAvailable = new ObservableCollection<MapEntity>();
+            OpponentName = string.Empty;
+            playerName = string.Empty;
         }
 
 
         private void InitializeEvents()
         {
-            waitingRoomHub.RemainingTimeEvent += (sender, args) => { OnRemainingTimeEvent(args);  };
+            WaitingRoomHub.RemainingTimeEvent += (sender, args) => { OnRemainingTimeEvent(args);  };
 
-            waitingRoomHub.OpponentFoundEvent += (sender, args) =>
+            WaitingRoomHub.OpponentFoundEvent += (sender, args) =>
             {
                 OpponentName = args.Players[0].Username;
                 PlayerName = args.Players[1].Username;
                 SetVisibility(false);
             };
 
-            waitingRoomHub.MapUpdatedEvent += (sender, args) => OnMapUpdated(sender, args);
+            WaitingRoomHub.MapUpdatedEvent += (sender, args) => OnMapUpdated(sender, args);
 
         }
 
@@ -134,9 +137,9 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
             }
         }
 
-        private async Task LeaveGame()
+        public async Task LeaveGame()
         {
-            await this.waitingRoomHub.LeaveGame();
+            await this.WaitingRoomHub.LeaveGame();
             SetDefaultValues();
             Program.FormManager.CurrentForm = Program.MainMenu;
         }
@@ -193,7 +196,7 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
                         }
                     }
                     this.OnPropertyChanged();
-                    waitingRoomHub.UpdateSelectedMap(value);
+                    WaitingRoomHub.UpdateSelectedMap(value);
                 }
             }
         }
@@ -267,7 +270,6 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
         }
 
         public bool enabledMap = false;
-
         public bool EnabledMap
         {
             get => enabledMap;

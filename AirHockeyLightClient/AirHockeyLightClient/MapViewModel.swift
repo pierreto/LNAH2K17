@@ -12,13 +12,17 @@ import Foundation
 
 class MapViewModel: NSObject, IMapViewModel {
     
-    private var maps: Maps
+    private var map: Map
     
     var mapNameError: Dynamic<String>
+    var passwordError: Dynamic<String>
+    var passwordConfirmationError: Dynamic<String>
     
-    init(maps: Maps) {
-        self.maps = maps
-        self.mapNameError = Dynamic(maps.mapNameError)
+    init(map: Map) {
+        self.map = map
+        self.mapNameError = Dynamic(map.mapNameError)
+        self.passwordError = Dynamic(map.passwordError)
+        self.passwordConfirmationError = Dynamic(map.passwordConfirmationError)
         
         super.init()
         
@@ -29,11 +33,11 @@ class MapViewModel: NSObject, IMapViewModel {
         unsubscribeFromNotifications()
     }
     
-    func save(mapName: String, isLocalMap: Bool, isPrivateMap: Bool) -> Bool {
-        let valid = self.maps.validateMap(mapName: mapName)
+    func save(name: String, isLocal: Bool, isPrivate: Bool, password: String, passwordConfirmation: String) -> Bool {
+        let valid = self.map.validate(name: name, isPrivate: isPrivate, password: password, passwordConfirmation: passwordConfirmation)
         
         if valid {
-            self.maps.saveMap(mapName: mapName, isLocalMap: isLocalMap, isPrivateMap: isPrivateMap)
+            self.map.save(name: name, isLocal: isLocal, isPrivate: isPrivate)
         }
         
         return valid
@@ -43,7 +47,7 @@ class MapViewModel: NSObject, IMapViewModel {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(savePressed(_:)),
                                                name: NSNotification.Name(rawValue: MapNotification.SaveMapNotification),
-                                               object: self.maps)
+                                               object: self.map)
     }
     
     fileprivate func unsubscribeFromNotifications() {
@@ -51,7 +55,9 @@ class MapViewModel: NSObject, IMapViewModel {
     }
     
     @objc fileprivate func savePressed(_ notification: NSNotification) {
-        self.mapNameError.value = self.maps.mapNameError
+        self.mapNameError.value = self.map.mapNameError
+        self.passwordError.value = self.map.passwordError
+        self.passwordConfirmationError.value = self.map.passwordConfirmationError
     }
     
 }
