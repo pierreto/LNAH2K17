@@ -53,5 +53,9 @@ namespace InterfaceGraphique.Editor.EditorState
             //Nothing
             return Task.FromResult(0);
         }
+
+        public override void HandleCoefficientChanges(float coefficientFriction, float coefficientAcceleration, float coefficientRebond)
+        {
+        }
     }
 }
