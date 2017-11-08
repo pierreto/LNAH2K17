@@ -27,6 +27,11 @@ class VisiteurByUUID: VisiteurAbstrait {
         self.wantedUUID = wantedUUID
     }
     
+    /// Retourne si le noeud a été trouvé
+    public func getHasFound() -> Bool {
+        return self.hasFound
+    }
+    
     /// Retourne le noeud à trouver par wantedUUID
     public func getNode() -> NoeudCommun? {
         return self.wantedNode

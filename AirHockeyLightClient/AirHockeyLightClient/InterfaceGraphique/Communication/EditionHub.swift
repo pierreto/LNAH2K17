@@ -73,6 +73,10 @@ class EditionHub: BaseHub {
                 print ("Selection command")
                 editionCommand = SelectionCommand(objectUuid: command["ObjectUuid"].string!)
                 break
+            case .TRANSFORM_COMMAND :
+                print ("Transform command")
+                editionCommand = TransformCommand(objectUuid: command["ObjectUuid"].string!)
+                break
         }
         
         editionCommand.fromJSON(json: command)

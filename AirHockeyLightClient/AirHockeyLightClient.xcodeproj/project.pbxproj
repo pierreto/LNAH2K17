@@ -132,6 +132,7 @@
 		8FB0E29E1FB00DC700672057 /* SelectionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB0E29D1FB00DC700672057 /* SelectionCommand.swift */; };
 		8FB6A9951F81B9C800FAFFCF /* EditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB6A9941F81B9C800FAFFCF /* EditorViewController.swift */; };
 		8FB6A9CA1F81E38300FAFFCF /* Table.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB6A9C91F81E38300FAFFCF /* Table.swift */; };
+		8FC88F421FB2B34D00268D81 /* TranformCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FC88F411FB2B34D00268D81 /* TranformCommand.swift */; };
 		8FCDF6191FA1BEDF00631551 /* EditorNotificationScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8FCDF6171FA1BEDF00631551 /* EditorNotificationScene.sks */; };
 		8FCDF61A1FA1BEDF00631551 /* EditorNotificationScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCDF6181FA1BEDF00631551 /* EditorNotificationScene.swift */; };
 		8FFC5B481F7C90340031474F /* MessageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFC5B471F7C90340031474F /* MessageViewCell.swift */; };
@@ -283,6 +284,7 @@
 		8FB0E29D1FB00DC700672057 /* SelectionCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelectionCommand.swift; path = Noyau/Editor/Commands/SelectionCommand.swift; sourceTree = "<group>"; };
 		8FB6A9941F81B9C800FAFFCF /* EditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditorViewController.swift; path = InterfaceGraphique/Editor/EditorViewController.swift; sourceTree = "<group>"; };
 		8FB6A9C91F81E38300FAFFCF /* Table.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Table.swift; path = Noyau/Arbre/Noeuds/Table.swift; sourceTree = "<group>"; };
+		8FC88F411FB2B34D00268D81 /* TranformCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TranformCommand.swift; path = Noyau/Editor/Commands/TranformCommand.swift; sourceTree = "<group>"; };
 		8FCDF6171FA1BEDF00631551 /* EditorNotificationScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = EditorNotificationScene.sks; path = InterfaceGraphique/Editor/EditorNotificationScene.sks; sourceTree = "<group>"; };
 		8FCDF6181FA1BEDF00631551 /* EditorNotificationScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditorNotificationScene.swift; path = InterfaceGraphique/Editor/EditorNotificationScene.swift; sourceTree = "<group>"; };
 		8FFC5B471F7C90340031474F /* MessageViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageViewCell.swift; path = InterfaceGraphique/Chat/MessageViewCell.swift; sourceTree = "<group>"; };
@@ -309,6 +311,7 @@
 				8F65B28E1FAE600700D8EE20 /* PortalCommand.swift */,
 				8FB0E29B1FAFF2B100672057 /* WallCommand.swift */,
 				8FB0E29D1FB00DC700672057 /* SelectionCommand.swift */,
+				8FC88F411FB2B34D00268D81 /* TranformCommand.swift */,
 			);
 			name = Commands;
 			sourceTree = "<group>";
@@ -999,6 +1002,7 @@
 				8F65B28B1FAE55C200D8EE20 /* NodeCreator.swift in Sources */,
 				1D90AAFE1F98228E003E0764 /* IConnectServerViewModel.swift in Sources */,
 				3415E6C91F85659900DB1CAD /* UsineNoeud.swift in Sources */,
+				8FC88F421FB2B34D00268D81 /* TranformCommand.swift in Sources */,
 				34C16BC21FAA783700908983 /* ChatHub.swift in Sources */,
 				8F690D601F9D5244003F051A /* VisiteurObtenirSelection.swift in Sources */,
 				3497C3251F9FECA600C58700 /* ModeleEtatDuplication.swift in Sources */,
