@@ -69,7 +69,7 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
                     selectedMap = map;
                 }
             }
-            OnPropertyChanged("SelectedMap")
+            OnPropertyChanged("SelectedMap");
         }
 
         private void SetVisibility(bool isWaitingForOpponentValue)
