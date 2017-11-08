@@ -56,8 +56,20 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
                 SetVisibility(false);
             };
 
-            waitingRoomHub.MapUpdatedEvent += (sender, args) => { selectedMap = args; OnPropertyChanged("SelectedMap"); };
+            waitingRoomHub.MapUpdatedEvent += (sender, args) => OnMapUpdated(sender, args);
 
+        }
+
+        private void OnMapUpdated(object sender, MapEntity args)
+        {
+            foreach (MapEntity map in mapsAvailable)
+            {
+                if (map.Id == args.Id)
+                {
+                    selectedMap = map;
+                }
+            }
+            OnPropertyChanged("SelectedMap")
         }
 
         private void SetVisibility(bool isWaitingForOpponentValue)

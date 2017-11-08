@@ -63,7 +63,7 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             FriendRequestList = await this.friendsHub.GetAllPendingRequests();
 
             List<UserEntity> userEntities = await userService.GetAllUsers();
-            Usernames = new ObservableCollection<string>(userEntities.Select(user => user.Username));
+            //Usernames = new ObservableCollection<string>(userEntities.Select(user => user.Username));
 
             this.friendsHub.NewFriendEvent += NewFriendEvent;
             this.friendsHub.FriendRequestEvent += FriendRequestEvent;
