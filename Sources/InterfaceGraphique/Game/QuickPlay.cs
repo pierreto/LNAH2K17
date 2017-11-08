@@ -97,14 +97,20 @@ namespace InterfaceGraphique {
         ///
         ////////////////////////////////////////////////////////////////////////
         private void InitializeEvents() {
-            this.MenuItem_MainMenu.Click += (sender, e) => { ResetDefaultTable(); Program.FormManager.CurrentForm = Program.MainMenu; };
+            this.MenuItem_MainMenu.Click += (sender, e) => OnMainMenuClicked(sender, e);
             this.MenuItem_Help.Click += (sender, e) => { EditorHelp form = new EditorHelp(); form.ShowQuickPlayHelpText(); form.ShowDialog(); };
             this.MenuItem_OrbitView.Click += (sender, e) => ToggleOrbit(true);
             this.MenuItem_OrthoView.Click += (sender, e) => ToggleOrbit(false);
-            this.Button_MainMenu.Click += (sender, e) => { ResetDefaultTable(); Program.FormManager.CurrentForm = Program.MainMenu; };
-            this.Button_PlayAgain.Click += (sender, e) => Program.FormManager.CurrentForm = Program.QuickPlay;
+            this.Button_MainMenu.Click += (sender, e) => OnMainMenuClicked(sender, e) ;
+            this.Button_PlayAgain.Click += (sender, e) => { ResetDefaultTable(); Program.FormManager.CurrentForm = Program.QuickPlay; };
             this.KeyDown += new KeyEventHandler(currentGameState.KeyDownEvent);
             this.KeyUp += new KeyEventHandler(currentGameState.KeyUpEvent);
+        }
+
+        private async Task OnMainMenuClicked(object sender, EventArgs e)
+        {
+            Program.FormManager.CurrentForm = Program.MainMenu;
+            await Program.unityContainer.Resolve<MatchmakingViewModel>().WaitingRoomHub.LeaveGame();
         }
 
 
@@ -189,6 +195,8 @@ namespace InterfaceGraphique {
             FonctionsNatives.resetCameraPosition();
             FonctionsNatives.redimensionnerFenetre(this.Size.Width, this.Size.Height);
             FonctionsNatives.playMusic(false);
+
+            Program.unityContainer.Resolve<MatchmakingViewModel>().SetDefaultValues();
         }
 
 
