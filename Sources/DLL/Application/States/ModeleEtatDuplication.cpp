@@ -175,16 +175,16 @@ void ModeleEtatDuplication::playerMouseMove(int x, int y) {
 		FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(lastMousePosX_, lastMousePosY_, lastMousePos);
 
 		if (!estCopie_) {
-			VisiteurDuplication duplication = VisiteurDuplication(false);
+			VisiteurDuplication duplication = VisiteurDuplication(true, wallCreationCallback_, boostCreationCallback_, portalCreationCallback_);
 			arbre->accepterVisiteur(&duplication);
 			glm::dvec3 centreDuplication = duplication.obtenirCentreDuplication();
 
-			VisiteurDeplacement deplacementInit = VisiteurDeplacement(mousePos - centreDuplication,false);
+			VisiteurDeplacement deplacementInit = VisiteurDeplacement(mousePos - centreDuplication, true);
 			arbre->accepterVisiteur(&deplacementInit);
 			estCopie_ = true;
 		}
 		else {
-			VisiteurDeplacement deplacement = VisiteurDeplacement(mousePos - lastMousePos, false);
+			VisiteurDeplacement deplacement = VisiteurDeplacement(mousePos - lastMousePos, true);
 			arbre->accepterVisiteur(&deplacement);
 		}
 	}
@@ -203,7 +203,7 @@ void ModeleEtatDuplication::playerMouseMove(int x, int y) {
 void ModeleEtatDuplication::nettoyerEtat() {
 	VisiteurSuppression suppression = VisiteurSuppression();
 	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(&suppression);
-	suppression.deleteAllSelectedNode();
+	suppression.deleteAllSelectedNode(true);
 	estCopie_ = false;
 }
 

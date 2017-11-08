@@ -1187,6 +1187,7 @@ void deleteNode(const char* username,const char* uuid)
 		std::string(uuid));
 	if (node)
 	{
+		FacadeModele::obtenirInstance()->getUserManager().getUser(username)->deselectAll();
 		arbre->effacer(node);
 	}
 	else //if it isnt in the selected list of the other player anymore, we find it in the entire tree 
@@ -1194,6 +1195,8 @@ void deleteNode(const char* username,const char* uuid)
 		NoeudAbstrait* nodeInTree = FacadeModele::obtenirInstance()->findNodeInTree(uuid);
 		if (nodeInTree)
 		{
+			FacadeModele::obtenirInstance()->getUserManager().getUser(username)->deselectAll();
+
 			arbre->effacer(nodeInTree);
 		}
 	}
