@@ -23,6 +23,12 @@ class CreateMapViewController: UIViewController {
     @IBOutlet weak var mapNameError: UILabel!
     @IBOutlet weak var isLocalMap: UISwitch!
     @IBOutlet weak var isPrivateMap: UISwitch!
+    @IBOutlet weak var passwordLabel: UILabel!
+    @IBOutlet weak var password: UITextField!
+    @IBOutlet weak var passwordError: UILabel!
+    @IBOutlet weak var passwordConfirmationLabel: UILabel!
+    @IBOutlet weak var passwordConfirmation: UITextField!
+    @IBOutlet weak var passwordConfirmationError: UILabel!
     
     /// Instance singleton
     static var instance = CreateMapViewController()
@@ -41,9 +47,11 @@ class CreateMapViewController: UIViewController {
         self.view.backgroundColor = UIColor.black.withAlphaComponent(0.8)
         self.showAnimate()
         
-        self.viewModel = MapViewModel(maps: Maps())
+        self.viewModel = MapViewModel(map: Map())
         self.linkErrorMessagesToViewModel()
         self.resetUI()
+        
+        self.isPrivateMap.isOn = false
     }
     
     @IBAction func closeView(_ sender: Any) {
@@ -59,7 +67,7 @@ class CreateMapViewController: UIViewController {
             animations: {
                 self.view.alpha = 1.0
                 self.view.transform = CGAffineTransform(scaleX: 1.0, y: 1)
-        }
+            }
         )
     }
     
@@ -70,13 +78,13 @@ class CreateMapViewController: UIViewController {
             animations: {
                 self.view.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
                 self.view.alpha = 0.0
-        },
+            },
             completion: {
                 (finished: Bool) in
                 if finished {
                     self.view.removeFromSuperview()
                 }
-        }
+            }
         )
         
         // Réactiver la barre de navigation
@@ -86,7 +94,13 @@ class CreateMapViewController: UIViewController {
     @IBAction func createMap(_ sender: Any) {
         self.deactivateInputs()
         
-        if (self.viewModel?.save(mapName: self.mapName.text!, isLocalMap: self.isLocalMap.isOn, isPrivateMap: self.isPrivateMap.isOn))! {
+        if (self.viewModel?.save(
+            name: self.mapName.text!,
+            isLocal: self.isLocalMap.isOn,
+            isPrivate: self.isPrivateMap.isOn,
+            password: self.password.text!,
+            passwordConfirmation: self.passwordConfirmation.text!)  )! {
+            
             MapTableViewController.instance.updateEntries()
             /// Fermer la fenêtre
             self.removeAnimate()
@@ -99,10 +113,25 @@ class CreateMapViewController: UIViewController {
                 if (self.mapNameError.text != "") {
                     self.notifyError(textField: self.mapName)
                 }
+                if (self.passwordError.text != "") {
+                    self.notifyError(textField: self.password)
+                }
+                if (self.passwordConfirmationError.text != "") {
+                    self.notifyError(textField: self.passwordConfirmation)
+                }
             }
             
             self.activateInputs()
         }
+    }
+    
+    @IBAction func changeMapPrivacy(_ sender: Any) {
+        self.passwordLabel.isHidden = !self.isPrivateMap.isOn
+        self.password.isHidden = !self.isPrivateMap.isOn
+        self.passwordError.isHidden = !self.isPrivateMap.isOn
+        self.passwordConfirmationLabel.isHidden = !self.isPrivateMap.isOn
+        self.passwordConfirmation.isHidden = !self.isPrivateMap.isOn
+        self.passwordConfirmationError.isHidden = !self.isPrivateMap.isOn
     }
     
     private func linkErrorMessagesToViewModel() {
@@ -115,32 +144,40 @@ class CreateMapViewController: UIViewController {
         }
         
         viewModel.mapNameError.bindAndFire { [unowned self] in self.mapNameError.text = $0 }
+        viewModel.passwordError.bindAndFire { [unowned self] in self.passwordError.text = $0 }
+        viewModel.passwordConfirmationError.bindAndFire { [unowned self] in self.passwordConfirmationError.text = $0 }
     }
     
     private func resetUI() {
         self.activateInputs()
         self.resetStyle(textField: self.mapName)
-        self.resetErrorMessage()
+        self.resetErrorMessages()
     }
     
     private func resetStyle(textField: UITextField) {
         textField.layer.borderWidth = 0.0
     }
     
-    private func resetErrorMessage() {
+    private func resetErrorMessages() {
         self.mapNameError.text = ""
+        self.passwordError.text = ""
+        self.passwordConfirmationError.text = ""
     }
     
     private func activateInputs() {
         self.mapName.isEnabled = true
         self.isLocalMap.isEnabled = true
         self.isPrivateMap.isEnabled = true
+        self.password.isEnabled = true
+        self.passwordConfirmation.isEnabled = true
     }
     
     private func deactivateInputs() {
         self.mapName.isEnabled = false
         self.isLocalMap.isEnabled = false
         self.isPrivateMap.isEnabled = false
+        self.password.isEnabled = false
+        self.passwordConfirmation.isEnabled = false
     }
     
     /// Modifier l'apparence du input en cas d'erreur
