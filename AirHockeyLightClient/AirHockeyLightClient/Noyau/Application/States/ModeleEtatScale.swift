@@ -101,6 +101,10 @@ class ModeleEtatScale: ModeleEtat {
     
         for noeud in noeuds {
             noeud.revertScale()
+            
+            // Envoyer la commande
+            FacadeModele.instance.obtenirEtatEdition().currentUserObjectTransformChanged(uuid: noeud.obtenirUUID(),
+                                                                                         pos: noeud.position, rotation: noeud.rotation.w, scale: noeud.scale)
         }
     }
 

@@ -46,7 +46,6 @@ class NodeCreator {
         noeud.rotation = SCNVector4(0.0, 1.0, 0.0, angle)
         noeud.scale = SCNVector3FromGLKVector3(scale)
         
-        
         // Ajout du noeud à l'arbre de rendu
         let table = arbre.childNode(withName: arbre.NOM_TABLE, recursively: true) as! NoeudTable
         table.addChildNode(noeud)

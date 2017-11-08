@@ -91,6 +91,10 @@ class VisiteurDeplacement: VisiteurAbstrait {
         var pos = noeud.obtenirPositionRelative()
         pos = GLKVector3Add(pos, self.delta!)
         noeud.deplacer(position: pos)
+        
+        // Envoyer la commande
+        FacadeModele.instance.obtenirEtatEdition().currentUserObjectTransformChanged(uuid: noeud.obtenirUUID(),
+                                                                                     pos: noeud.position, rotation: noeud.rotation.w, scale: noeud.scale)
     }
     
 }
