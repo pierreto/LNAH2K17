@@ -62,6 +62,9 @@ class ModeleEtatDuplication: ModeleEtat {
         let table = arbre.childNode(withName: arbre.NOM_TABLE, recursively: true) as! NoeudTable
         table.deselectionnerTout()
         
+        // Envoyer la commande
+        FacadeModele.instance.obtenirEtatEdition().currentUserSelectedObject(uuidSelected: "", isSelected: false, deselectAll: true)
+        
         // Réactiver les boutons associés à la sélection
         FacadeModele.instance.obtenirVue().editorHUDScene?.enableSelectContextButtons()
     }

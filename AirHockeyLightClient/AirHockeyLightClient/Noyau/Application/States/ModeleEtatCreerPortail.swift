@@ -37,6 +37,9 @@ class ModeleEtatCreerPortail: ModeleEtat {
         let table = arbre.childNode(withName: arbre.NOM_TABLE, recursively: true) as! NoeudCommun
         table.deselectionnerTout()
         
+        // Envoyer la commande
+        FacadeModele.instance.obtenirEtatEdition().currentUserSelectedObject(uuidSelected: "", isSelected: false, deselectAll: true)
+        
         // Activer la reconnaissance de tap pour la création de portails
         FacadeModele.instance.obtenirVue().editorView.addGestureRecognizer(FacadeModele.instance.tapGestureRecognizer!)
     }
