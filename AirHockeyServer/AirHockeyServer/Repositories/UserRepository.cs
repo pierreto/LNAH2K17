@@ -101,7 +101,8 @@ namespace AirHockeyServer.Repositories
             try
             {
                 UserPoco uP = MapperManager.Mapper.Map<UserEntity, UserPoco>(userEntity);
-                DataProvider.Post(uP);
+                DataProvider.DC.GetTable<UserPoco>().InsertOnSubmit(uP);
+                DataProvider.DC.SubmitChanges();
             }
             catch (Exception e)
             {
