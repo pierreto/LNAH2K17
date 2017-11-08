@@ -50,7 +50,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
         
         public async Task LeaveGame()
         {
-            await WaitingRoomProxy.Invoke("LeaveGame", User.Instance.UserEntity);
+            await WaitingRoomProxy.Invoke("LeaveGame", User.Instance.UserEntity, CurrentGameId);
         }
 
         private void InitializeEvents()
@@ -98,8 +98,9 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
         public async void UpdateSelectedMap(MapEntity map)
         {
-            await WaitingRoomProxy.Invoke<GameEntity>("UpdateMap", CurrentGameId, map);
+            await WaitingRoomProxy.Invoke("UpdateMap", CurrentGameId, map);
         }
+
         public async Task Logout()
         {
             //TODO: IMPLEMENT THE LOGOUT MECANISM
