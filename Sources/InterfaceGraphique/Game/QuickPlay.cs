@@ -216,11 +216,7 @@ namespace InterfaceGraphique
             FonctionsNatives.redimensionnerFenetre(this.Size.Width, this.Size.Height);
             FonctionsNatives.playMusic(false);
 
-            if (currentGameState.IsOnlineTournementMode)
-            {
-                Program.unityContainer.Resolve<TournamentViewModel>().SetDefaultValues();
-            }
-            else
+            if (!currentGameState.IsOnlineTournementMode)
             {
                 Program.unityContainer.Resolve<MatchmakingViewModel>().SetDefaultValues();
             }

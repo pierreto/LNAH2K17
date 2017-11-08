@@ -122,6 +122,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
                             }
 
                             Program.FormManager.CurrentForm = Program.QuickPlay;
+                            Program.QuickPlay.CurrentGameState.IsTournementMode = false;
                         }
                         else
                         {
@@ -155,6 +156,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
                         }
 
                         Program.FormManager.CurrentForm = Program.QuickPlay;
+                        Program.QuickPlay.CurrentGameState.IsTournementMode = false;
 
                     }
                     else
