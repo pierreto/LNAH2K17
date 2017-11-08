@@ -56,7 +56,7 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
                 SetVisibility(false);
             };
 
-            waitingRoomHub.MapUpdatedEvent += (sender, args) => { SelectedMap = args; };
+            waitingRoomHub.MapUpdatedEvent += (sender, args) => { selectedMap = args; OnPropertyChanged("SelectedMap"); };
 
         }
 
@@ -98,7 +98,8 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
                 };
 
             }
-            SelectedMap = mapsAvailable[1];
+            selectedMap = mapsAvailable[1];
+            this.OnPropertyChanged("SelectedMap");
 
         }
 

@@ -17,7 +17,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
         private MasterGameState masterGameState;
 
-        protected GameEntity CurrentGame { get; set; }
+        protected Guid CurrentGameId { get; set; }
 
         public event EventHandler<GameEntity> OpponentFoundEvent;
 
@@ -57,7 +57,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
         {
             WaitingRoomProxy.On<GameEntity>("OpponentFoundEvent", newgame =>
             {
-                this.CurrentGame = newgame;
+                this.CurrentGameId = newgame.GameId;
                 this.OpponentFoundEvent.Invoke(this, newgame);
 
                 WaitingRoomProxy.On<GameEntity>("GameStartingEvent", officialGame =>
@@ -84,11 +84,9 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
                         }
                     }));
                 });
-                WaitingRoomProxy.On<GameEntity>("GameMapUpdatedEvent", mapUpdated =>
+                WaitingRoomProxy.On<MapEntity>("GameMapUpdatedEvent", mapUpdated =>
                 {
-                    this.CurrentGame = mapUpdated;
-                    this.MapUpdatedEvent.Invoke(this, mapUpdated.SelectedMap);
-                    
+                    this.MapUpdatedEvent.Invoke(this, mapUpdated);                    
                 });
 
                 WaitingRoomProxy.On<int>("WaitingRoomRemainingTime", remainingTime =>
@@ -100,11 +98,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
         public async void UpdateSelectedMap(MapEntity map)
         {
-            if (CurrentGame != null)
-            {
-                CurrentGame.SelectedMap = map;
-                CurrentGame = await WaitingRoomProxy.Invoke<GameEntity>("UpdateMap", CurrentGame);
-            }
+            await WaitingRoomProxy.Invoke<GameEntity>("UpdateMap", CurrentGameId, map);
         }
         public async Task Logout()
         {
