@@ -77,8 +77,9 @@ namespace AirHockeyServer.Manager
                     await PlayerStatsService.AddPoints(game.Winner.Id, points);
                     await PlayerStatsService.IncrementGamesWon(game.Winner.Id);
 
-                    await PlayerStatsService.SetPlayerAchievements(game.Players[0].Id);
-                    await PlayerStatsService.SetPlayerAchievements(game.Players[1].Id);
+                    await PlayerStatsService.UpdateAchievements(game.Players[0].Id);
+                    await PlayerStatsService.UpdateAchievements(game.Players[1].Id);
+                    
                 }
                 
                 Cache.Games.Remove(gameId);
@@ -117,10 +118,10 @@ namespace AirHockeyServer.Manager
                         await PlayerStatsService.AddPoints(tournament.Winner.Id, 80);
                         await TournamentRepository.CreateTournament(tournament);
 
-                        await PlayerStatsService.SetPlayerAchievements(tournament.Players[0].Id);
-                        await PlayerStatsService.SetPlayerAchievements(tournament.Players[1].Id);
-                        await PlayerStatsService.SetPlayerAchievements(tournament.Players[2].Id);
-                        await PlayerStatsService.SetPlayerAchievements(tournament.Players[3].Id);
+                        await PlayerStatsService.UpdateAchievements(tournament.Players[0].Id);
+                        await PlayerStatsService.UpdateAchievements(tournament.Players[1].Id);
+                        await PlayerStatsService.UpdateAchievements(tournament.Players[2].Id);
+                        await PlayerStatsService.UpdateAchievements(tournament.Players[3].Id);
 
                         Cache.Tournaments.Remove(tournamentId);
                     }

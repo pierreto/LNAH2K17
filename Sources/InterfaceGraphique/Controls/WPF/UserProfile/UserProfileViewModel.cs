@@ -50,12 +50,15 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
             }
 
             var achievements = await PlayerStatsService.GetPlayerAchivements(profileId);
-            Achievements = new ObservableCollection<Achievement>(achievements);
+            Achievements = new ObservableCollection<Achievement>(achievements.OrderBy(x => x.Category).ThenBy(x => x.Order));
 
             var playerStats = await PlayerStatsService.GetPlayerStats(profileId);
-            PointsNb = playerStats.Points;
-            TournamentWon = playerStats.TournamentsWon;
-            GameWon = playerStats.GamesWon;
+            if(playerStats != null)
+            {
+                PointsNb = playerStats.Points;
+                TournamentWon = playerStats.TournamentsWon;
+                GameWon = playerStats.GamesWon;
+            }
         }
 
         private ObservableCollection<Achievement> achievements;

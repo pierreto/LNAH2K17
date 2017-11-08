@@ -16,7 +16,11 @@ namespace AirHockeyServer.Entities
         public string EnabledImageUrl { get; set; }
 
         public bool IsEnabled { get; set; }
-        
+
+        public string Category { get; set; }
+
+        public int Order { get; set; }
+
     }
 
     public enum AchivementType

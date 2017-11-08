@@ -130,7 +130,9 @@ namespace AirHockeyServer.Repositories
                         EnabledImageUrl = AchievementInfoService.GetEnabledImage(achievementType),
                         DisabledImageUrl = AchievementInfoService.GetDisabledImage(achievementType),
                         IsEnabled = poco.IsEnabled,
-                        Name = AchievementInfoService.GetName(achievementType)
+                        Name = AchievementInfoService.GetName(achievementType),
+                        Category = AchievementInfoService.GetCategory(achievementType),
+                        Order = AchievementInfoService.GetOrder(achievementType)
                     });
                 }
 

@@ -16,6 +16,10 @@ namespace AirHockeyServer.Services
 
         public Dictionary<AchivementType, string> Name { get; set; }
 
+        public Dictionary<AchivementType, string> Categories { get; set; }
+
+        public Dictionary<AchivementType, int> Order { get; set; }
+
         public string GetEnabledImage(AchivementType achivementType)
         {
             if(EnabledImage.ContainsKey(achivementType))
@@ -46,11 +50,33 @@ namespace AirHockeyServer.Services
             return string.Empty;
         }
 
+        public string GetCategory(AchivementType achivementType)
+        {
+            if (Categories.ContainsKey(achivementType))
+            {
+                return Categories[achivementType];
+            }
+
+            return string.Empty;
+        }
+
+        public int GetOrder(AchivementType achivementType)
+        {
+            if (Order.ContainsKey(achivementType))
+            {
+                return Order[achivementType];
+            }
+
+            return 0;
+        }
+
         public AchievementInfoService()
         {
             EnabledImage = new Dictionary<AchivementType, string>();
             DisabledImage = new Dictionary<AchivementType, string>();
             Name = new Dictionary<AchivementType, string>();
+            Categories = new Dictionary<AchivementType, string>();
+            Order = new Dictionary<AchivementType, int>();
 
             EnabledImage.Add(AchivementType.FirstGamePlayed, "\\media\\image\\game_played_1_enabled.png");
             EnabledImage.Add(AchivementType.FiveGamesPlayed, "\\media\\image\\game_played_5_enabled.png");
@@ -109,6 +135,46 @@ namespace AirHockeyServer.Services
 
             Name.Add(AchivementType.FiveGameWon, "5 matchs gagnés");
             Name.Add(AchivementType.TenGameWon, "10 matchs gagnés");
+
+            // ***************************************************************************************** //
+
+            Categories.Add(AchivementType.FirstGamePlayed, "GamePlayed");
+            Categories.Add(AchivementType.FiveGamesPlayed, "GamePlayed");
+            Categories.Add(AchivementType.TenGamesPlayed, "GamePlayed");
+
+            Categories.Add(AchivementType.FirstTournamentPlayed, "TournamentPlayed");
+            Categories.Add(AchivementType.FiveTournamentsPlayed, "TournamentPlayed");
+            Categories.Add(AchivementType.TenTournamentPlayed, "TournamentPlayed");
+
+            Categories.Add(AchivementType.FivePoints, "Points");
+            Categories.Add(AchivementType.ThirtyPoints, "Points");
+            Categories.Add(AchivementType.EightyPoints, "Points");
+
+            Categories.Add(AchivementType.FiveTournamentWon, "TournamentWon");
+            Categories.Add(AchivementType.TenTournamentWon, "TournamentWon");
+
+            Categories.Add(AchivementType.FiveGameWon, "GameWon");
+            Categories.Add(AchivementType.TenGameWon, "GameWon");
+
+            // ********************************************************************************************* //
+
+            Order.Add(AchivementType.FirstGamePlayed, 1);
+            Order.Add(AchivementType.FiveGamesPlayed, 2);
+            Order.Add(AchivementType.TenGamesPlayed, 3);
+
+            Order.Add(AchivementType.FirstTournamentPlayed, 1);
+            Order.Add(AchivementType.FiveTournamentsPlayed, 2);
+            Order.Add(AchivementType.TenTournamentPlayed, 3);
+
+            Order.Add(AchivementType.FivePoints, 1);
+            Order.Add(AchivementType.ThirtyPoints, 2);
+            Order.Add(AchivementType.EightyPoints, 3);
+
+            Order.Add(AchivementType.FiveTournamentWon, 1);
+            Order.Add(AchivementType.TenTournamentWon, 2);
+
+            Order.Add(AchivementType.FiveGameWon, 1);
+            Order.Add(AchivementType.TenGameWon, 2);
         }
     }
 }
