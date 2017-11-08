@@ -95,6 +95,13 @@ namespace AirHockeyServer.Services
         public async Task UpdateAchievements(int userId)
         {
             List<AchievementEntity> achievements = await GetAchievements(userId);
+
+            if(achievements.Count == 0)
+            {
+                await SetPlayerAchievements(userId);
+                achievements = await GetAchievements(userId);
+            }
+
             var stats = await GetPlayerStats(userId);
             
             await UpdateAchievement(stats.Points, AchivementType.FivePoints, 5, userId, achievements);
