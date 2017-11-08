@@ -11,5 +11,7 @@ namespace AirHockeyServer.Entities.EditionCommand
         public string Username { get; set; }
         public string HexColor { get; set; }
 
+        public string[] UuidsSelected { get; set; }
+
     }
 }
