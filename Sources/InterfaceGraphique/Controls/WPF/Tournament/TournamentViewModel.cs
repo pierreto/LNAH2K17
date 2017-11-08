@@ -45,6 +45,10 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
 
             OnPropertyChanged("OpponentsFound");
             OnPropertyChanged("EnabledMaps");
+            OnPropertyChanged("Player1");
+            OnPropertyChanged("Player2");
+            OnPropertyChanged("Player3");
+            OnPropertyChanged("Player4");
         }
 
         private async void InitializeData()
