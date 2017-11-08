@@ -7,7 +7,7 @@ using AirHockeyServer.Entities.Messages.Edition;
 
 namespace AirHockeyServer.Entities.Edition.EditionCommand
 {
-    class SelectionCommand : AbstractEditionCommand
+    public class SelectionCommand : AbstractEditionCommand
     {
         public string Username { get; set; }
         public bool IsSelected { get; set; }
