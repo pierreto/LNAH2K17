@@ -35,6 +35,7 @@
 #include "ModeleEtatDeplacement.h"
 #include "ModeleEtatSelection.h"
 #include "ModeleEtatPointControl.h"
+#include "ModeleEtatDuplication.h"
 
 extern "C"
 {
@@ -1035,6 +1036,8 @@ __declspec(dllexport) void createPortal(const char* startUuid, const float* star
 void setPortalCreationCallback(PortalCreationCallback callback)
 {
 	ModeleEtatCreerPortail::obtenirInstance()->setPortalCreationCallback(callback);
+	ModeleEtatDuplication::obtenirInstance()->setPortalCreationCallback(callback);
+
 }
 
 void createWall(const char* uuid, const float* position, const float angle, const float* scale)
@@ -1045,6 +1048,8 @@ void createWall(const char* uuid, const float* position, const float angle, cons
 void setWallCreationCallback(WallCreationCallback callback)
 {
 	ModeleEtatCreerMuret::obtenirInstance()->setWallCreationCallback(callback);
+	ModeleEtatDuplication::obtenirInstance()->setWallCreationCallback(callback);
+
 }
 
 void createBoost(const char* uuid, const float* position, const float angle, const float* scale)
@@ -1055,12 +1060,16 @@ void createBoost(const char* uuid, const float* position, const float angle, con
 void setBoostCreationCallback(BoostCreationCallback callback)
 {
 	ModeleEtatCreerBoost::obtenirInstance()->setBoostCreationCallback(callback);
+	ModeleEtatDuplication::obtenirInstance()->setBoostCreationCallback(callback);
+
 }
 
 
 void setSelectionEventCallback(SelectionEventCallback callback)
 {
 	ModeleEtatSelection::obtenirInstance()->setSelectionEventCallback(callback);
+	ModeleEtatPointControl::obtenirInstance()->setSelectionEventCallback(callback);
+
 }
 
 void setElementSelection(const char* username, const char* uuid, const bool isSelected, const bool deselectAll)
@@ -1094,7 +1103,7 @@ void setTransformByUUID(const char* username, const char* uuid, const float* pos
 	{
 		node->deplacer(glm::make_vec3(position));
 		node->rotate(rotation, glm::vec3(0,1,0));
-		node->deplacer(glm::make_vec3(position));
+		node->scale(glm::make_vec3(scale));
 
 	}
 	else //if it isnt in the selected list of the other player anymore, we find it in the entire tree 
@@ -1104,7 +1113,7 @@ void setTransformByUUID(const char* username, const char* uuid, const float* pos
 		{
 			nodeInTree->deplacer(glm::make_vec3(position));
 			nodeInTree->rotate(rotation, glm::vec3(0, 1, 0));
-			nodeInTree->deplacer(glm::make_vec3(position));
+			nodeInTree->scale(glm::make_vec3(scale));
 		}
 	}
 }
@@ -1169,4 +1178,28 @@ void setControlPointPosition(const char* username, const char* uuid, const float
 			}
 		}
 	}
+}
+
+void deleteNode(const char* username,const char* uuid)
+{
+	ArbreRenduINF2990* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
+	NoeudAbstrait* node = FacadeModele::obtenirInstance()->getUserManager().getUser(std::string(username))->findNode(
+		std::string(uuid));
+	if (node)
+	{
+		arbre->effacer(node);
+	}
+	else //if it isnt in the selected list of the other player anymore, we find it in the entire tree 
+	{
+		NoeudAbstrait* nodeInTree = FacadeModele::obtenirInstance()->findNodeInTree(uuid);
+		if (nodeInTree)
+		{
+			arbre->effacer(nodeInTree);
+		}
+	}
+}
+
+void setDeleteEventCallback(DeleteEventCallback callback)
+{
+	ModeleEtatJeu::obtenirInstance()->setDeleteEventCallback(callback);
 }

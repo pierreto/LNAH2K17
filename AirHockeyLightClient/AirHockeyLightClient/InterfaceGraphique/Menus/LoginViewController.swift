@@ -23,7 +23,7 @@ class LoginViewController: UIViewController {
     // Mark: Actions
     @IBAction func login(_ sender: Any) {
         self.loading()
-        deactivateInputs()
+        disableInputs()
         viewModel?.login(username: usernameInput.text!, password: passwordInput.text!)
             .then {
                 data -> Void in
@@ -31,10 +31,12 @@ class LoginViewController: UIViewController {
                         self.loadingDone()
                         OperationQueue.main.addOperation {
                             self.performSegue(withIdentifier: "loginSuccess", sender: self)
-                            NotificationCenter.default.post(name: Notification.Name(rawValue: ConnectionNotification.Connection), object: nil)
+                            NotificationCenter.default.post(name: Notification.Name(rawValue: LoginNotification.SubmitNotification), object: nil)
+                            self.enableInputs()
                         }
                     } else {
                         self.connectionError()
+                        self.enableInputs()
                     }
             }.always {
                 //Laisse le temps au message d'erreur d'apparaitre avant le shake
@@ -103,15 +105,18 @@ class LoginViewController: UIViewController {
  
     private func connectionError() {
         self.loadingDone()
-        self.usernameInput.isEnabled = true
-        self.passwordInput.isEnabled = true
     }
     
-    private func deactivateInputs(){
+    private func disableInputs() {
         self.usernameInput.isEnabled = false
         self.passwordInput.isEnabled = false
     }
     
+    private func enableInputs() {
+        self.usernameInput.isEnabled = true
+        self.passwordInput.isEnabled = true
+    }
+
     private func resetStyle(textField: UITextField) {
         textField.layer.borderWidth = 0.0
     }
@@ -124,6 +129,22 @@ class LoginViewController: UIViewController {
     private func loadingDone() {
         self.loadingSpinner.stopAnimating()
         self.view.alpha = 1.0
+    }
+    
+    override func viewWillDisappear(_ animated : Bool) {
+        super.viewWillDisappear(animated)
+        // Quand on revient a cette vue
+        if self.isMovingFromParentViewController {
+
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool){
+        usernameInput.text = ""
+        passwordInput.text = ""
+        HubManager.sharedConnection.setUsername(username: "")
+        NotificationCenter.default.post(name: Notification.Name(rawValue: LoginNotification.LogoutNotification), object: nil)
+        
     }
 }
 

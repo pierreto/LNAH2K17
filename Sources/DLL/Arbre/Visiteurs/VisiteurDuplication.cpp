@@ -26,9 +26,12 @@
 /// @return Aucune
 ///
 ////////////////////////////////////////////////////////////////////////
-VisiteurDuplication::VisiteurDuplication()
-	: nbItems_(0), centreDuplication_(glm::vec3(0,0,0))
+VisiteurDuplication::VisiteurDuplication(bool sendToServer, WallCreationCallback wallCallback,BoostCreationCallback boostCallback, PortalCreationCallback portalCallback)
+	: nbItems_(0), centreDuplication_(glm::vec3(0,0,0)),sendToServer_(sendToServer)
 {
+	wallCreationCallback_ = wallCallback;
+	portalCreationCallback_ = portalCallback;
+	boostCreationCallback_ = boostCallback;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -70,9 +73,9 @@ void VisiteurDuplication::visiterAccelerateur(NoeudAccelerateur* noeud) {
 		// Ajout du noeud à l'arbre de rendu
 		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->ajouter(noeudDouble);
 
-		if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
+		if (sendToServer_)
 		{
-			ModeleEtatCreerBoost::obtenirInstance()->getBoostCreationCallback()(noeudDouble->getUUID(), glm::value_ptr(noeudDouble->obtenirPositionRelative()), noeudDouble->obtenirRotation().y, glm::value_ptr(noeudDouble->obtenirScale()));
+			boostCreationCallback_(noeudDouble->getUUID(), glm::value_ptr(noeudDouble->obtenirPositionRelative()), noeudDouble->obtenirRotation().y, glm::value_ptr(noeudDouble->obtenirScale()));
 		}
 
 	}
@@ -98,13 +101,15 @@ void VisiteurDuplication::visiterMur(NoeudMur* noeud) {
 		// Assigner les mêmes propriétés
 		copyProperties(noeud, noeudDouble);
 
+
+
+		if (sendToServer_)
+		{
+			wallCreationCallback_(noeudDouble->getUUID(), glm::value_ptr(noeudDouble->obtenirPositionRelative()), noeudDouble->obtenirRotation().y, glm::value_ptr(noeudDouble->obtenirScale()));
+		}
+
 		// Ajout du noeud à l'arbre de rendu
 		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->ajouter(noeudDouble);
-
-		if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
-		{
-			ModeleEtatCreerMuret::obtenirInstance()->getWallCreationCallback()(noeudDouble->getUUID(), glm::value_ptr(noeudDouble->obtenirPositionRelative()), noeudDouble->obtenirRotation().y, glm::value_ptr(noeudDouble->obtenirScale()));
-		}
 	}
 }
 
@@ -129,7 +134,7 @@ void VisiteurDuplication::visiterPortail(NoeudPortail* noeud) {
 		copyProperties(noeud, noeudDouble);
 
 		// État de l'opération	
-		if (premierNoeud_ == nullptr) {
+		if (premierNoeud_== nullptr) {
 			premierNoeud_ = noeudDouble;
 			noeudDouble->assignerOppose(nullptr);
 		}
@@ -138,13 +143,12 @@ void VisiteurDuplication::visiterPortail(NoeudPortail* noeud) {
 			// Relier les deux portails
 			noeudDouble->assignerOppose(premierNoeud_);
 			premierNoeud_->assignerOppose(noeudDouble);
-			if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
+			if (sendToServer_)
 			{
-				ModeleEtatCreerPortail::obtenirInstance()->getPortalCreationCallback()(premierNoeud_->getUUID(), glm::value_ptr(premierNoeud_->obtenirPositionRelative()), (premierNoeud_->obtenirRotation().y), glm::value_ptr(premierNoeud_->obtenirScale()),
+				portalCreationCallback_(premierNoeud_->getUUID(), glm::value_ptr(premierNoeud_->obtenirPositionRelative()), (premierNoeud_->obtenirRotation().y), glm::value_ptr(premierNoeud_->obtenirScale()),
 					noeudDouble->getUUID(), glm::value_ptr(noeudDouble->obtenirPositionRelative()), noeudDouble->obtenirRotation().y, glm::value_ptr(noeudDouble->obtenirScale()));
 			}
 			premierNoeud_ = nullptr;
-
 		}
 
 		// Ajout du noeud à l'arbre de rendu

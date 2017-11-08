@@ -61,12 +61,15 @@ class OnlineUser {
     
     public func deselect(uuid: String) {
         let index = self.nodesSelected.index(where: { $0.obtenirUUID() == uuid })
-        let node = self.nodesSelected[index!]
         
-        node.assignerSelectionneByAnotherUser(estSelectionneByAnotherUser: false)
-        node.useOtherColor(activer: false)
+        if (index != nil) {
+            let node = self.nodesSelected[index!]
         
-        self.nodesSelected.remove(at: index!)
+            node.assignerSelectionneByAnotherUser(estSelectionneByAnotherUser: false)
+            node.useOtherColor(activer: false)
+        
+            self.nodesSelected.remove(at: index!)
+        }
     }
     
     public func findNode(uuid: String) -> NoeudCommun? {

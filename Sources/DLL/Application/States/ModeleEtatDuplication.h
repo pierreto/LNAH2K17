@@ -41,6 +41,10 @@ public:
 	/// Évènement appelé pour nettoyer l'état
 	virtual void nettoyerEtat();
 
+	void setWallCreationCallback(WallCreationCallback callback) { wallCreationCallback_ = callback; }
+	void setPortalCreationCallback(PortalCreationCallback callback){ portalCreationCallback_ = callback; }
+	void setBoostCreationCallback(BoostCreationCallback callback) { boostCreationCallback_ = callback; }
+
 private:
 
 	/// Constructeur.
@@ -58,6 +62,11 @@ private:
 
 	/// Booléen pour savoir si on est en copie
 	bool estCopie_;
+
+	WallCreationCallback wallCreationCallback_;
+	PortalCreationCallback portalCreationCallback_;
+	BoostCreationCallback boostCreationCallback_;
+
 };
 
 #endif // __APPLICATION_STATES_MODELEETATDUPLICATION_H__

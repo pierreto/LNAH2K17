@@ -278,12 +278,14 @@ class NoeudCommun : SCNNode {
     
     /// Cette fonction applique une autre couleur sur le noeud
     func useOtherColor(activer: Bool, color: UIColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)) {
-        let material = self.geometry?.firstMaterial
+        /// Faire une copie du matériel pour ne pas affecter le matériel des autres noeuds du même type
+        let material = self.geometry?.firstMaterial?.copy() as! SCNMaterial
+        self.geometry?.firstMaterial = material
         
         if (activer) {
-            material?.diffuse.contents = color
+            material.diffuse.contents = color
         } else {
-            material?.diffuse.contents = self.defaultColor
+            material.diffuse.contents = self.defaultColor
         }
     }
     

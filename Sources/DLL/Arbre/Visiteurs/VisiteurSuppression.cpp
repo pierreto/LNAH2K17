@@ -10,6 +10,7 @@
 
 #include "VisiteurSuppression.h"
 #include "FacadeModele.h"
+#include "ModeleEtatJeu.h"
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -102,8 +103,12 @@ void VisiteurSuppression::visiterRondelle(NoeudRondelle * noeud)
 ////////////////////////////////////////////////////////////////////////
 void VisiteurSuppression::deleteAllSelectedNode() {
 	ArbreRenduINF2990* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
-	for each (NoeudAbstrait* node in nodeToDelete_) {
-		arbre->effacer(node);
+	for(NoeudAbstrait* node : nodeToDelete_) {
+		if(node)
+		{
+			arbre->effacer(node, ModeleEtatJeu::obtenirInstance()->getDeleteEventCallback(), ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION);
+		}
+	
 	}
 }
 

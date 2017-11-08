@@ -189,7 +189,11 @@ void ModeleEtatPointControl::mouseUpL() {
 
 	// Reinitialiser l'etat
 	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->deselectionnerTout();
-	ModeleEtatSelection::obtenirInstance()->getSelectionEventCallback()("", false, true);
+	if(ModeleEtatJeu::obtenirInstance()->currentOnlineClientType()==ModeleEtatJeu::ONLINE_EDITION)
+	{
+		selectionCallback_("", false, true);
+
+	}
 
 	initialiser();
 }
@@ -291,7 +295,7 @@ void ModeleEtatPointControl::revertPosition()
 			if (controlPointEventCallback_)
 			{
 				controlPointEventCallback_(noeud->getUUID(), glm::value_ptr(noeud->obtenirPositionRelative()));
-				ModeleEtatSelection::obtenirInstance()->getSelectionEventCallback()(noeud->getUUID(), false, false);
+				selectionCallback_(noeud->getUUID(), false, false);
 			}
 		}
 

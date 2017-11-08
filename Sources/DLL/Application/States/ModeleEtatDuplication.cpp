@@ -18,6 +18,8 @@
 
 #include "VisiteurDuplication.h"
 #include "VisiteurObtenirSelection.h"
+#include "ModeleEtatJeu.h"
+#include "ModeleEtatCreerMuret.h"
 
 /// Pointeur vers l'instance unique de la classe.
 ModeleEtatDuplication* ModeleEtatDuplication::instance_{ nullptr };
@@ -103,7 +105,17 @@ void ModeleEtatDuplication::mouseUpL() {
 	if (mouseDownL_ && isAClick()) {
 		// Dupliquer seulement si les objets sont dans la zone de jeu
 		if (noeudsSurLaTable()) {
-			VisiteurDuplication duplication = VisiteurDuplication();
+
+			VisiteurDuplication duplication;
+			if(ModeleEtatJeu::obtenirInstance()->currentOnlineClientType()==ModeleEtatJeu::ONLINE_EDITION)
+			{
+				duplication = VisiteurDuplication(true, wallCreationCallback_, boostCreationCallback_, portalCreationCallback_);
+
+			}else
+			{
+				duplication = VisiteurDuplication(false);
+			}
+
 			FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(&duplication);
 		}
 	}
@@ -163,16 +175,16 @@ void ModeleEtatDuplication::playerMouseMove(int x, int y) {
 		FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(lastMousePosX_, lastMousePosY_, lastMousePos);
 
 		if (!estCopie_) {
-			VisiteurDuplication duplication = VisiteurDuplication();
+			VisiteurDuplication duplication = VisiteurDuplication(false);
 			arbre->accepterVisiteur(&duplication);
 			glm::dvec3 centreDuplication = duplication.obtenirCentreDuplication();
 
-			VisiteurDeplacement deplacementInit = VisiteurDeplacement(mousePos - centreDuplication);
+			VisiteurDeplacement deplacementInit = VisiteurDeplacement(mousePos - centreDuplication,false);
 			arbre->accepterVisiteur(&deplacementInit);
 			estCopie_ = true;
 		}
 		else {
-			VisiteurDeplacement deplacement = VisiteurDeplacement(mousePos - lastMousePos);
+			VisiteurDeplacement deplacement = VisiteurDeplacement(mousePos - lastMousePos, false);
 			arbre->accepterVisiteur(&deplacement);
 		}
 	}

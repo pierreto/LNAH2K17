@@ -23,7 +23,7 @@ class SignupViewController: UIViewController {
     @IBOutlet weak var loadingSpinner: UIActivityIndicatorView!
     // Mark: Actions
     @IBAction func createAccount(_ sender: Any) {
-        deactivateInputs()
+        disableInputs()
         loading()
         viewModel?.signup(username: usernameInput.text!, password: passwordInput.text!, confirmPassword: confirmPasswordInput.text!)
             .then{
@@ -33,9 +33,11 @@ class SignupViewController: UIViewController {
                     OperationQueue.main.addOperation {
                         self.performSegue(withIdentifier: "signupSuccess", sender: self)
                         NotificationCenter.default.post(name: Notification.Name(rawValue: ConnectionNotification.Connection), object: nil)
+                        self.enableInputs()
                     }
                 } else {
                     self.connectionError()
+                    self.enableInputs()
                 }
             }.always {
                 //Laisse le temps au message d'erreur d'apparaitre avant le shake
@@ -116,17 +118,20 @@ class SignupViewController: UIViewController {
         textField.layer.borderWidth = 0.0
     }
     
-    private func deactivateInputs(){
+    private func disableInputs() {
         self.usernameInput.isEnabled = false
         self.passwordInput.isEnabled = false
         self.confirmPasswordInput.isEnabled = false
     }
     
-    private func connectionError() {
-        self.loadingDone()
+    private func enableInputs() {
         self.usernameInput.isEnabled = true
         self.passwordInput.isEnabled = true
         self.confirmPasswordInput.isEnabled = true
+    }
+    
+    private func connectionError() {
+        self.loadingDone()
     }
     
     private func loading() {

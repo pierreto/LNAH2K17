@@ -286,6 +286,7 @@
     <Compile Include="Entities\ChannelEntity.cs" />
     <Compile Include="Entities\ChatMessage.cs" />
     <Compile Include="Entities\Editor\EditonCommand\ControlPointCommand.cs" />
+    <Compile Include="Entities\Editor\EditonCommand\DeleteCommand.cs" />
     <Compile Include="Entities\FriendRequestEntity.cs" />
     <Compile Include="Entities\Editor\EditonCommand\AbstractEditionCommand.cs" />
     <Compile Include="Entities\Editor\EditonCommand\BoostCommand.cs" />

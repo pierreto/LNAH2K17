@@ -10,7 +10,6 @@
 #include "NoeudComposite.h"
 #include "Visiteurs\VisiteurAbstrait.h"
 #include "AideGL.h"
-
 #include <cassert>
 
 
@@ -117,7 +116,7 @@ void NoeudComposite::vider()
 /// @return Aucune
 ///
 ////////////////////////////////////////////////////////////////////////
-void NoeudComposite::effacer(const NoeudAbstrait* noeud)
+void NoeudComposite::effacer(const NoeudAbstrait* noeud, DeleteEventCallback deleteEventCallback,bool onlineMode)
 {
 	for (conteneur_enfants::iterator it{ enfants_.begin() };
 		it != enfants_.end();
@@ -126,6 +125,11 @@ void NoeudComposite::effacer(const NoeudAbstrait* noeud)
 			// On a trouvé le noeud à effacer
 			NoeudAbstrait* noeudAEffacer{ (*it) };
 			enfants_.erase(it);
+
+			if (onlineMode)
+			{
+				deleteEventCallback(noeudAEffacer->getUUID());
+			}
 			delete noeudAEffacer;
 			return;
 		}

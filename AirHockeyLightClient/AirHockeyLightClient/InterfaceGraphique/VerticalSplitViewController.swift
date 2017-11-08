@@ -11,12 +11,41 @@ import UIKit
 class VerticalSplitViewController: UIViewController {
     @IBOutlet weak var chatButtonBottomConstraint: NSLayoutConstraint!
     
+    @IBOutlet weak var topViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var chatView: UIView!
     @IBOutlet weak var chatButton: UIButton!
     var chatOpen = false;
     
     @IBAction func toggleChat(_ sender: Any) {
+        self.togChat()
+    }
+    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        toggleChatButtonVisibility()
+        subscribeToNotifications()
+        // TODO: Check if user is connected, if not hide the chat button
+        // Do any additional setup after loading the view.
+    }
+
+    fileprivate func subscribeToNotifications() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(togChatButtonVisibility(_:)),
+                                               name: NSNotification.Name(rawValue: LoginNotification.SubmitNotification),
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(togChatButtonVisibility(_:)),
+                                               name: NSNotification.Name(rawValue: LoginNotification.LogoutNotification),
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(togChatButtonVisibility(_:)),
+                                               name: NSNotification.Name(rawValue: SignupNotification.SubmitNotification),
+                                               object: nil)
+    }
+    
+    func togChat() {
         if(!chatOpen){
             bottomConstraint.constant = 0
             UIView.animate(withDuration: 0.5, animations: {self.view.layoutIfNeeded()})
@@ -27,30 +56,8 @@ class VerticalSplitViewController: UIViewController {
         chatOpen = !chatOpen
         
     }
-    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
-    @IBOutlet weak var topViewBottomConstraint: NSLayoutConstraint!
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        toggleChatVisibility()
-        subscribeToNotifications()
-        // TODO: Check if user is connected, if not hide the chat button
-        // Do any additional setup after loading the view.
-    }
-
-    fileprivate func subscribeToNotifications() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(togChatVisibility(_:)),
-                                               name: NSNotification.Name(rawValue: LoginNotification.SubmitNotification),
-                                               object: nil)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(togChatVisibility(_:)),
-                                               name: NSNotification.Name(rawValue: LoginNotification.SubmitNotification),
-                                               object: nil)
-    }
-    
-    func toggleChatVisibility() {
-        if(HubManager.sharedConnection.connected!){
+    func toggleChatButtonVisibility() {
+        if(HubManager.sharedConnection.getUsername() != "" && HubManager.sharedConnection.getUsername() != nil){
             chatButtonBottomConstraint.constant = 0
             chatButton.layer.shadowOpacity = 0.5
             chatButton.layer.shadowRadius = 5
@@ -60,8 +67,11 @@ class VerticalSplitViewController: UIViewController {
         }
     }
     
-    func togChatVisibility(_ notification: NSNotification) {
-        if(HubManager.sharedConnection.connected!){
+    func togChatButtonVisibility(_ notification: NSNotification) {
+        chatOpen = true
+        self.togChat()
+        if(HubManager.sharedConnection.getUsername() != "" &&
+            HubManager.sharedConnection.getUsername() != nil){
             chatButtonBottomConstraint.constant = 0
             chatButton.layer.shadowOpacity = 0.5
             chatButton.layer.shadowRadius = 5
