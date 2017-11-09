@@ -42,6 +42,7 @@ public class KeyboardLayoutConstraint: NSLayoutConstraint {
     // MARK: Notification
     
     @objc func keyboardWillShowNotification(_ notification: Notification) {
+        if(!VerticalSplitViewController.sharedVerticalSplitViewController.chatOpen){
         if let userInfo = notification.userInfo {
             if let frameValue = userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue {
                 let frame = frameValue.cgRectValue
@@ -69,10 +70,11 @@ public class KeyboardLayoutConstraint: NSLayoutConstraint {
             }
             
         }
-        
+        }
     }
     
     @objc func keyboardWillHideNotification(_ notification: NSNotification) {
+        if(!VerticalSplitViewController.sharedVerticalSplitViewController.chatOpen){
         keyboardVisibleHeight = 0
         self.updateConstant()
         
@@ -95,6 +97,7 @@ public class KeyboardLayoutConstraint: NSLayoutConstraint {
             default:
                 break
             }
+        }
         }
     }
     
