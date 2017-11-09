@@ -38,8 +38,9 @@ namespace AirHockeyServer.Events.EventManagers
 
         public IGameManager GameManager { get; private set; }
         public MapService MapService { get; set; }
+        public ConnectionMapper ConnectionMapper { get; set; }
 
-        public GameWaitingRoomEventManager(IGameManager gameManager, MapService mapService)
+        public GameWaitingRoomEventManager(IGameManager gameManager, MapService mapService, ConnectionMapper connectionMapper)
         {
             this.RemainingTime = new ConcurrentDictionary<Guid, int>();
 
@@ -47,6 +48,7 @@ namespace AirHockeyServer.Events.EventManagers
 
             GameManager = gameManager;
             MapService = mapService;
+            ConnectionMapper = connectionMapper;
             Games = new ConcurrentDictionary<Guid, GameEntity>();
         }
 

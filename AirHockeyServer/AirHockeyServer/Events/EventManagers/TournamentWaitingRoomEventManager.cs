@@ -30,8 +30,10 @@ namespace AirHockeyServer.Events.EventManagers
         public ITournamentManager TournamentManager { get; }
 
         public IMapService MapService { get; set; }
+        public ConnectionMapper ConnectionMapper { get; set; }
 
-        public TournamentWaitingRoomEventManager(IGameService gameService, ITournamentManager tournamentManager, IMapService mapService)
+        public TournamentWaitingRoomEventManager(IGameService gameService, ITournamentManager tournamentManager, 
+            IMapService mapService, ConnectionMapper connectionMapper)
         {
             this.RemainingTime = new ConcurrentDictionary<int, int>();
             TournamentMatchMakerService.Instance().OpponentFound += OnOpponentFound;
@@ -39,6 +41,7 @@ namespace AirHockeyServer.Events.EventManagers
             GameService = gameService;
             TournamentManager = tournamentManager;
             MapService = mapService;
+            ConnectionMapper = connectionMapper;
             Tournaments = new ConcurrentDictionary<int, TournamentEntity>();
         }
 

@@ -17,9 +17,12 @@ namespace AirHockeyServer.Hubs
         private EditionService editionService;
         private JsonSerializerSettings serializer;
 
-        public EditionHub(EditionService editionService)
+        public ConnectionMapper ConnectionMapper { get; set; }
+
+        public EditionHub(EditionService editionService, ConnectionMapper connectionMapper)
         {
             this.editionService = editionService;
+            ConnectionMapper = connectionMapper;
             this.serializer = new JsonSerializerSettings
             {
                 TypeNameHandling = TypeNameHandling.Objects             };

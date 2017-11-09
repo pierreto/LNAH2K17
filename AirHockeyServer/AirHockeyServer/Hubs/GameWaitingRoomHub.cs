@@ -25,6 +25,8 @@ namespace AirHockeyServer.Hubs
     {
         protected IGameService GameService { get; }
 
+        public ConnectionMapper ConnectionMapper { get; set; }
+
         ////////////////////////////////////////////////////////////////////////
         ///
         /// @fn GameWaitingRoomHub(IGameService gameService)
@@ -34,9 +36,10 @@ namespace AirHockeyServer.Hubs
         /// @return Aucune (Constructeur).
         ///
         ////////////////////////////////////////////////////////////////////////
-        public GameWaitingRoomHub(IGameService gameService)
+        public GameWaitingRoomHub(IGameService gameService, ConnectionMapper connectionMapper)
         {
             GameService = gameService;
+            ConnectionMapper = connectionMapper;
         }
         
         /// @fn void JoinGame(UserEntity user)

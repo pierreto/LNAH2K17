@@ -21,6 +21,7 @@ using AirHockeyServer.Manager;
 using AirHockeyServer.DatabaseCore;
 using AirHockeyServer.Mapping;
 using AirHockeyServer.Services.Interfaces;
+using AirHockeyServer.Hubs;
 
 namespace AirHockeyServer
 {
@@ -91,6 +92,7 @@ namespace AirHockeyServer
 
             // Mapping
             UnityContainer.RegisterType<MapperManager>(new ContainerControlledLifetimeManager());
+            UnityContainer.RegisterType<Hubs.ConnectionMapper>(new ContainerControlledLifetimeManager());
 
             // Managers
             UnityContainer.RegisterType<IGameManager, GameManager>(new ContainerControlledLifetimeManager());

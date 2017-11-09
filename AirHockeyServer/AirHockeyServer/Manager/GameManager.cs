@@ -19,19 +19,21 @@ namespace AirHockeyServer.Manager
         public IGameRepository GameRepository { get; }
 
         public ITournamentRepository TournamentRepository { get; }
-
+        public ConnectionMapper ConnectionMapper { get; }
         public EventHandler<GameEntity> TournamentUpdateNeeded { get; set; }
 
         private const int FINAL_DELAI = 10000;
 
         protected Dictionary<int, int> ElapsedTime { get; set; }
 
-        public GameManager(IPlayerStatsService playerStatsService, IGameRepository gameRepository, ITournamentRepository tournamentRepository)
+        public GameManager(IPlayerStatsService playerStatsService, IGameRepository gameRepository, 
+            ITournamentRepository tournamentRepository, ConnectionMapper connectionMapper)
         {
             ElapsedTime = new Dictionary<int, int>();
             PlayerStatsService = playerStatsService;
             GameRepository = gameRepository;
             TournamentRepository = tournamentRepository;
+            ConnectionMapper = connectionMapper;
         }
 
         public void AddGame(GameEntity game)
