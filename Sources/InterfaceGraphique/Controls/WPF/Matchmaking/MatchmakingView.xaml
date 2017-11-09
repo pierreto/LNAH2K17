@@ -78,8 +78,10 @@
                     <fa:FontAwesome Icon="ArrowLeft"></fa:FontAwesome>
                 </Button.Content>
             </Button>
-            <TextBlock  Margin="50, 75, 50, 0" Grid.Row="1" HorizontalAlignment="Center" Text="Temps avant la partie :" FontSize="18" Foreground="White"></TextBlock>
-            <TextBlock Grid.Row="2" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding RemainingTime}" FontSize="100" Foreground="White" FontWeight="Bold" />
+            <StackPanel VerticalAlignment="Center" Grid.Row="2">
+                <TextBlock  Margin="50, 75, 50, 0" Grid.Row="1" HorizontalAlignment="Center" Text="Temps avant la partie :" FontSize="18" Foreground="White"></TextBlock>
+                <TextBlock  HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding RemainingTime}" FontSize="100" Foreground="White" FontWeight="Bold" />
+            </StackPanel>
         </Grid>
 
         <Grid Grid.Row="0" Grid.Column="1" Margin="10, 20, 0, 0">
@@ -87,16 +89,11 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="33*"/>
-                    <ColumnDefinition Width="33*"/>
-                    <ColumnDefinition Width="33*"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding OpponentName}" FontSize="20" Foreground="White" FontWeight="Bold" />
-                <TextBlock Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="VS" Foreground="White" FontSize="30" FontWeight="Bold" />
-                <TextBlock Grid.Column="2" HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding PlayerName}" FontSize="20" Foreground="White" FontWeight="Bold" />
-            </Grid>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding OpponentName}" FontSize="20" Foreground="White" FontWeight="Bold" />
+                <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="VS" Foreground="White" FontSize="30" FontWeight="Bold" />
+                <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding PlayerName}" FontSize="20" Foreground="White" FontWeight="Bold" />
+            </StackPanel>
             <Grid Grid.Row="1" Grid.Column="1" Margin="0, 20, 0, 0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>

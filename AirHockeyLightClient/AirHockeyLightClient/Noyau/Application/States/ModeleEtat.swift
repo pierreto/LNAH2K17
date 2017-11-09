@@ -96,9 +96,15 @@ class ModeleEtat {
             if noeud.obtenirType() == arbre.NOM_PORTAIL {
                 let portail = noeud as! NoeudPortail
                 portail.obtenirOppose().removeFromParentNode()
+                
+                // Envoyer la commande
+                FacadeModele.instance.obtenirEtatEdition().currentUserDeletedNode(uuid: portail.obtenirOppose().obtenirUUID())
             }
             
             noeud.removeFromParentNode()
+            
+            // Envoyer la commande
+            FacadeModele.instance.obtenirEtatEdition().currentUserDeletedNode(uuid: noeud.obtenirUUID())
         }
         
         let table = arbre.childNode(withName: arbre.NOM_TABLE, recursively: true) as! NoeudTable

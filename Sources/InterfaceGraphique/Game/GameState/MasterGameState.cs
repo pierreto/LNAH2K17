@@ -13,7 +13,7 @@ namespace InterfaceGraphique.Game.GameState
     public class MasterGameState : AbstractGameState
     {
 
-        private GameHub gameHub;
+        //private GameHub gameHub;
         private bool gameHasEnded = false;
         private FonctionsNatives.GoalCallback callback;
         private int ELapsedTime = 0;
@@ -50,8 +50,7 @@ namespace InterfaceGraphique.Game.GameState
             player2Name.Append(gameEntity.Slave.Username);
             FonctionsNatives.setPlayerNames(player1Name, player2Name);
 
-            var map = await MapService.GetMap(gameEntity.SelectedMap.Id.Value);
-            base.LoadOnlineMap(map);
+            base.LoadOnlineMap(gameEntity.SelectedMap);
         }
 
         public override void MettreAJour(double tempsInterAffichage, int neededGoalsToWin)
