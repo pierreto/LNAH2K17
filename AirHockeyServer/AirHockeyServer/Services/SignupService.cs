@@ -1,5 +1,4 @@
-﻿using AirHockeyServer.DatabaseCore;
-using AirHockeyServer.Entities;
+﻿using AirHockeyServer.Entities;
 using AirHockeyServer.Repositories;
 using AirHockeyServer.Services.Interfaces;
 using System;

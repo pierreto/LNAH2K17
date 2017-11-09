@@ -234,7 +234,6 @@
     <Compile Include="Core\IConnector.cs" />
     <Compile Include="Core\IRequestsManager.cs" />
     <Compile Include="Core\RequestsManager.cs" />
-    <Compile Include="DatabaseCore\DataProvider.cs" />
     <Compile Include="DatabaseCore\MyDataContext.cs" />
     <Compile Include="Entities\AchievementEntity.cs" />
     <Compile Include="Entities\ChannelEntity.cs" />

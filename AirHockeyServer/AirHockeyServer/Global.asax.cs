@@ -18,7 +18,6 @@ using AirHockeyServer.Events.EventManagers;
 using Microsoft.AspNet.SignalR;
 using AirHockeyServer.Repositories.Interfaces;
 using AirHockeyServer.Manager;
-using AirHockeyServer.DatabaseCore;
 using AirHockeyServer.Mapping;
 using AirHockeyServer.Services.Interfaces;
 
@@ -87,7 +86,6 @@ namespace AirHockeyServer
             // Core
             UnityContainer.RegisterType<IConnector, Connector>(new ContainerControlledLifetimeManager());
             UnityContainer.RegisterType<IRequestsManager, RequestsManager>(new ContainerControlledLifetimeManager());
-            UnityContainer.RegisterType<DataProvider>(new ContainerControlledLifetimeManager());
 
             // Mapping
             UnityContainer.RegisterType<MapperManager>(new ContainerControlledLifetimeManager());

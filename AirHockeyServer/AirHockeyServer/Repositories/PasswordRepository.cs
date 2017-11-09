@@ -1,5 +1,4 @@
-﻿using AirHockeyServer.DatabaseCore;
-using AirHockeyServer.Entities;
+﻿using AirHockeyServer.Entities;
 using AirHockeyServer.Mapping;
 using AirHockeyServer.Pocos;
 using System;
@@ -15,8 +14,8 @@ namespace AirHockeyServer.Repositories
     {
         IUserRepository UserRepository;
 
-        public PasswordRepository(DataProvider dataProvider, MapperManager mapperManager, IUserRepository userRepository)
-            : base(dataProvider, mapperManager)
+        public PasswordRepository(MapperManager mapperManager, IUserRepository userRepository)
+            : base(mapperManager)
         {
             UserRepository = userRepository;
         }
