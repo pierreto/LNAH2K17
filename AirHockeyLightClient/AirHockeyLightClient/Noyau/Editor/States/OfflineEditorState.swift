@@ -35,6 +35,7 @@ class OfflineEditorState: EditorState {
     override func currentUserObjectTransformChanged(uuid: String, pos: SCNVector3, rotation: Float, scale: SCNVector3) {}
     override func currentUserControlPointChanged(uuid: String, pos: SCNVector3) {}
     override func currentUserDeletedNode(uuid: String) {}
+    override func currentUserChangedCoefficient(coefficientFriction: Float, coefficientRebond: Float, coefficientAcceleration: Float) {}
 }
 
 ///////////////////////////////////////////////////////////////////////////////

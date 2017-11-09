@@ -52,6 +52,9 @@ namespace vue {
 		/// Obtention de la matrice de projection.
 		virtual glm::mat4 obtenirMatrice() const;
 
+
+		virtual glm::ivec2 getLargeurFenetre() const { return glm::ivec2(largeurFenetre_, hauteurFenetre_); }
+
 		/// Obtenir les coordonnées de la fenêtre virtuelle.
 		inline glm::dvec2 obtenirDimensionFenetreVirtuelle() const;
 

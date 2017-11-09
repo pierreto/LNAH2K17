@@ -44,6 +44,8 @@ public:
 	void setWallCreationCallback(WallCreationCallback callback) { wallCreationCallback_ = callback; }
 	void setPortalCreationCallback(PortalCreationCallback callback){ portalCreationCallback_ = callback; }
 	void setBoostCreationCallback(BoostCreationCallback callback) { boostCreationCallback_ = callback; }
+	void setSelectionEventCallback(SelectionEventCallback callback) { selectionCallback_ = callback; }
+
 
 private:
 
@@ -66,6 +68,10 @@ private:
 	WallCreationCallback wallCreationCallback_;
 	PortalCreationCallback portalCreationCallback_;
 	BoostCreationCallback boostCreationCallback_;
+	SelectionEventCallback selectionCallback_;
+
+
+	VisiteurDuplication visitorDup_;
 
 };
 

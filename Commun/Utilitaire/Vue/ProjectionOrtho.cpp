@@ -163,7 +163,12 @@ namespace vue {
 
 		ajusterRapportAspect();
 	}
-
+	void ProjectionOrtho::setLargeurFenetre(int largeur, int hauteur)
+	{
+		largeurFenetre_ = largeur;
+		hauteurFenetre_ = hauteur;
+		
+	}
 
 	////////////////////////////////////////////////////////////////////////
 	///
