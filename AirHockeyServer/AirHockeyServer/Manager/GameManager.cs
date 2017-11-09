@@ -106,7 +106,6 @@ namespace AirHockeyServer.Manager
             if (Cache.Tournaments.ContainsKey(tournamentId))
             {
                 var tournament = Cache.Tournaments[tournamentId];
-                var hub = GlobalHost.ConnectionManager.GetHubContext<TournamentWaitingRoomHub>();
 
                 if (tournament.SemiFinals.All(game => game.GameState == GameState.Ended))
                 {
@@ -116,7 +115,8 @@ namespace AirHockeyServer.Manager
                         tournament.State = TournamentState.Done;
                         tournament.Winner = tournament.Final.Winner;
 
-                        hub.Clients.Group(tournament.Id.ToString()).TournamentFinalResult(tournament);
+                        GlobalHost.ConnectionManager.GetHubContext<TournamentWaitingRoomHub>()
+                            .Clients.Group(tournament.Id.ToString()).TournamentFinalResult(tournament);
                         
                         await PlayerStatsService.IncrementTournamentsWon(tournament.Winner.Id);
                         await PlayerStatsService.AddPoints(tournament.Winner.Id, 80);
@@ -152,6 +152,9 @@ namespace AirHockeyServer.Manager
 
                         tournament.State = TournamentState.Final;
                         tournament.Final = finalGame;
+
+                        GlobalHost.ConnectionManager.GetHubContext<TournamentWaitingRoomHub>()
+                            .Clients.Group(tournament.Id.ToString()).TournamentSemiFinalResults(tournament);
                         
                         AddGame(finalGame);
                         Cache.Tournaments[tournament.Id] = tournament;
@@ -160,7 +163,6 @@ namespace AirHockeyServer.Manager
                         await gameHub.Groups.Add(ConnectionMapper.GetConnection(finalGame.Players[0].Id), finalGame.GameId.ToString());
                         await gameHub.Groups.Add(ConnectionMapper.GetConnection(finalGame.Players[1].Id), finalGame.GameId.ToString());
 
-                        hub.Clients.Group(tournament.Id.ToString()).TournamentSemiFinalResults(tournament);
 
                         Timer timer = new Timer();
                         timer.Interval = 1000;
@@ -173,7 +175,8 @@ namespace AirHockeyServer.Manager
                 }
                 else
                 {
-                    hub.Clients.Group(tournament.Id.ToString()).TournamentSemiFinalResults(tournament);
+                    GlobalHost.ConnectionManager.GetHubContext<TournamentWaitingRoomHub>()
+                        .Clients.Group(tournament.Id.ToString()).TournamentSemiFinalResults(tournament);
                 }
 
                 Cache.Tournaments[tournament.Id] = tournament;
