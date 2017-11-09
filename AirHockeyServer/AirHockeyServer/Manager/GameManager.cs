@@ -4,12 +4,12 @@ using AirHockeyServer.Hubs;
 using AirHockeyServer.Repositories.Interfaces;
 using AirHockeyServer.Services.Interfaces;
 using Microsoft.AspNet.SignalR;
+using Microsoft.AspNet.SignalR.Hubs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Timers;
-using System.Web;
 
 namespace AirHockeyServer.Manager
 {
@@ -82,8 +82,8 @@ namespace AirHockeyServer.Manager
                     await PlayerStatsService.UpdateAchievements(game.Players[0].Id);
                     await PlayerStatsService.UpdateAchievements(game.Players[1].Id);
                     
-                    await RemoveConnection(game.Players[0].Id, game.GameId.ToString());
-                    await RemoveConnection(game.Players[1].Id, game.GameId.ToString());
+                    await RemoveConnection<GameWaitingRoomHub>(game.Players[0].Id, game.GameId.ToString());
+                    await RemoveConnection< GameWaitingRoomHub>(game.Players[1].Id, game.GameId.ToString());
                 }
                 
                 Cache.Games.Remove(gameId);
@@ -91,10 +91,12 @@ namespace AirHockeyServer.Manager
             }
         }
 
-        private async Task RemoveConnection(int userId, string group)
+        private async Task RemoveConnection<T>(int userId, string group) where T : IHub
         {
             var connection = ConnectionMapper.GetConnection(userId);
-            await GlobalHost.ConnectionManager.GetHubContext<GameWaitingRoomHub>().Groups.Remove(connection, group);
+            await GlobalHost.ConnectionManager.GetHubContext<T>().Groups.Remove(connection, group);
+
+            ConnectionMapper.DeleteConnection(userId);
         }
 
         private int CaculateGamePoints(GameEntity gameEntity)
@@ -131,10 +133,11 @@ namespace AirHockeyServer.Manager
 
                         Cache.Tournaments.Remove(tournamentId);
 
-                        await RemoveConnection(tournament.Players[0].Id, tournament.Id.ToString());
-                        await RemoveConnection(tournament.Players[1].Id, tournament.Id.ToString());
-                        await RemoveConnection(tournament.Players[2].Id, tournament.Id.ToString());
-                        await RemoveConnection(tournament.Players[3].Id, tournament.Id.ToString());
+                        await RemoveConnection<TournamentWaitingRoomHub>(tournament.Players[0].Id, tournament.Id.ToString());
+                        await RemoveConnection<TournamentWaitingRoomHub>(tournament.Players[1].Id, tournament.Id.ToString());
+                        await RemoveConnection<TournamentWaitingRoomHub>(tournament.Players[2].Id, tournament.Id.ToString());
+                        await RemoveConnection<TournamentWaitingRoomHub>(tournament.Players[3].Id, tournament.Id.ToString());
+                    
                     }
                     else
                     {
