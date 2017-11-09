@@ -13,7 +13,7 @@ namespace InterfaceGraphique.Game.GameState
     public class MasterGameState : AbstractGameState
     {
 
-        private GameHub gameHub;
+        //private GameHub gameHub;
         private bool gameHasEnded = false;
         private FonctionsNatives.GoalCallback callback;
         private int ELapsedTime = 0;

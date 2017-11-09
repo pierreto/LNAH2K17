@@ -1613,7 +1613,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="riN-hG-6w2">
-                                <rect key="frame" x="362" y="228" width="300" height="312"/>
+                                <rect key="frame" x="362" y="249.5" width="300" height="269"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Nom d'usager" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Tue-6k-iTD" userLabel="usernameInput">
                                         <rect key="frame" x="0.0" y="0.0" width="300" height="45"/>
@@ -1673,6 +1673,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AIE-go-x3y" userLabel="testEditionEnLigne">
                                         <rect key="frame" x="0.0" y="249" width="183" height="35"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1682,7 +1683,7 @@
                                         </connections>
                                     </button>
                                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="hyr-YX-cKZ" userLabel="loadingSpinner">
-                                        <rect key="frame" x="0.0" y="292" width="300" height="20"/>
+                                        <rect key="frame" x="0.0" y="249" width="300" height="20"/>
                                     </activityIndicatorView>
                                 </subviews>
                                 <constraints>
@@ -1693,6 +1694,11 @@
                                     <constraint firstItem="dS2-vz-kID" firstAttribute="centerX" secondItem="riN-hG-6w2" secondAttribute="centerX" id="hyj-TI-sqg"/>
                                     <constraint firstAttribute="width" constant="300" id="sIV-Em-69R"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="subviews">
+                                        <exclude reference="AIE-go-x3y"/>
+                                    </mask>
+                                </variation>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

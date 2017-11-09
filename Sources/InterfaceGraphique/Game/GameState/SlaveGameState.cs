@@ -13,7 +13,7 @@ namespace InterfaceGraphique.Game.GameState
     public class SlaveGameState : AbstractGameState
     {
 
-        private GameHub gameHub;
+        //private GameHub gameHub;
         private bool gameHasEnded = false;
 
         public MapService MapService { get; set; }

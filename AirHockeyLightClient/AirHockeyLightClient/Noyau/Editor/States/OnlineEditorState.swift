@@ -79,6 +79,20 @@ class OnlineEditorState: EditorState {
         self.clientConnection.getEditionHub().sendEditionCommand(command: command)
     }
     
+    override func currentUserDeletedNode(uuid: String) {
+        let command = DeleteCommand(objectUuid: uuid, username: HubManager.sharedConnection.getUsername()!)
+        self.clientConnection.getEditionHub().sendEditionCommand(command: command)
+        
+        // TODO: Sauvegarder la map en ligne
+    }
+    
+    override func currentUserChangedCoefficient(coefficientFriction: Float, coefficientRebond: Float, coefficientAcceleration: Float) {
+        let command = CoefficientCommand(coefficientFriction: coefficientFriction,
+                                         coefficientRebond: coefficientRebond,
+                                         coefficientAcceleration: coefficientAcceleration)
+        self.clientConnection.getEditionHub().sendEditionCommand(command: command)
+    }
+    
 }
 
 ///////////////////////////////////////////////////////////////////////////////

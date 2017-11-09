@@ -5,11 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using InterfaceGraphique.Entities;
+using InterfaceGraphique.CommunicationInterface;
 
 namespace InterfaceGraphique.Game.GameState
 {
     public abstract class AbstractGameState
     {
+        public GameHub gameHub;
 
         protected bool moveUpKeyDown = false;
         protected bool moveDownKeyDown = false;

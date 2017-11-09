@@ -323,6 +323,19 @@ namespace InterfaceGraphique
             this.MenuItem_OrthoView.Enabled = isOrbit;
         }
 
+        public void ApplyEsc()
+        {
+            if (!this.Panel_EndBack.Visible && FonctionsNatives.isGameStarted()) {
+                this.MenuStrip_MenuBar.Visible = !this.MenuStrip_MenuBar.Visible;
+                FonctionsNatives.escape();
+            }
+        }
+
+        public void ReplacePlayerByAI()
+        {
+            ApplyEsc();
+            FonctionsNatives.setCurrentOpponentType((int)OpponentType.VIRTUAL_PLAYER);
+        }
 
         ////////////////////////////////////////////////////////////////////////
         ///
@@ -351,11 +364,8 @@ namespace InterfaceGraphique
                     return true;
 
                 case Keys.Escape:
-                    if (!this.Panel_EndBack.Visible && FonctionsNatives.isGameStarted())
-                    {
-                        this.MenuStrip_MenuBar.Visible = !this.MenuStrip_MenuBar.Visible;
-                        FonctionsNatives.escape();
-                    }
+                    ApplyEsc();
+                    currentGameState.gameHub?.SendGamePauseOrResume();
                     return true;
 
                 case Keys.Space:

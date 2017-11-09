@@ -118,6 +118,7 @@ public:
 
 	/// Écrit l'état de la sélection du noeud.
 	inline void assignerSelection(bool selectionne);
+	void setSelectedWithoutGhostEffect(bool selectionne);
 	/// Vérifie si le noeud est sélectionné.
 	inline bool estSelectionne() const;
 	/// Écrit si le noeud peut être sélectionné ou non.
@@ -684,7 +685,11 @@ inline void NoeudAbstrait::assignerSelection(bool selectionne)
 	else
 		this->effetFantome(false);	
 }
-
+inline void NoeudAbstrait::setSelectedWithoutGhostEffect(bool selectionne)
+{
+	// Un objet non sélectionnable n'est jamais sélectionné.
+	selectionne_ = selectionne;
+}
 
 ////////////////////////////////////////////////////////////////////////
 ///

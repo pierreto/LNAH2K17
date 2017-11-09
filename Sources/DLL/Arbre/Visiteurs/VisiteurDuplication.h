@@ -50,6 +50,8 @@ public:
 	/// Copie les propriétés des noeuds à dupliquer
 	void copyProperties(NoeudAbstrait* node, NoeudAbstrait* nodeCopy);
 
+	std::vector<NoeudAbstrait*> getStamp() { return stamp_; }
+
 
 
 private:
@@ -58,13 +60,17 @@ private:
 	/// Vecteur trois dimensions du point centre pour la duplication
 	glm::vec3 centreDuplication_;
 	/// Premier noeud sélectionné pour la duplication
+	bool premierNoeudPortailTrouve_;
 	NoeudPortail* premierNoeud_{ nullptr };
+	NoeudPortail* premierNoeudAEnvoye_;
 
 	bool sendToServer_;
 
 	WallCreationCallback wallCreationCallback_;
 	PortalCreationCallback portalCreationCallback_;
 	BoostCreationCallback boostCreationCallback_;
+
+	std::vector<NoeudAbstrait*> stamp_;
 };
 
 

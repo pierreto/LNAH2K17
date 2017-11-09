@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using InterfaceGraphique.CommunicationInterface;
 using InterfaceGraphique.CommunicationInterface.RestInterface;
 using InterfaceGraphique.Services;
+using System.IO;
 
 namespace InterfaceGraphique.Controls.WPF.Tournament
 {
@@ -257,6 +258,17 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
         public bool EnabledMaps
         {
             get => Players.Count == 4;
+        }
+
+        private string imageSrc = "";
+        public string ImageSrc
+        {
+            get => Directory.GetCurrentDirectory() + "\\media\\image\\No_image_available.png";
+            set
+            {
+                imageSrc = value;
+                OnPropertyChanged();
+            }
         }
     }
 }

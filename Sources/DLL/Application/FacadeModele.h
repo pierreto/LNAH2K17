@@ -209,8 +209,9 @@ private:
 
    /// Retourne la representation Json d'une carte
    std::string _getMapJson(float coefficients[]);
+	void createMapIcon();
 
-   utilitaire::BoiteEnvironnement* skybox_;
+	utilitaire::BoiteEnvironnement* skybox_;
 
    UserManager userManager_;
 };

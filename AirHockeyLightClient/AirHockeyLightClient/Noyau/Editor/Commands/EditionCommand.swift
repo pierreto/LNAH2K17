@@ -18,6 +18,8 @@ enum EDITION_COMMAND : String {
     case SELECTION_COMMAND = "InterfaceGraphique.Entities.EditonCommand.SelectionCommand, InterfaceGraphique"
     case TRANSFORM_COMMAND = "InterfaceGraphique.Entities.EditonCommand.TransformCommand, InterfaceGraphique"
     case CONTROLPOINT_COMMAND = "InterfaceGraphique.Entities.Editor.EditonCommand.ControlPointCommand, InterfaceGraphique"
+    case DELETE_COMMAND = "InterfaceGraphique.Entities.Editor.EditonCommand.DeleteCommand, InterfaceGraphique"
+    case COEFFICIENT_COMMAND = "InterfaceGraphique.Entities.Editor.EditonCommand.CoefficientCommand, InterfaceGraphique"
 }
 
 class EditionCommand {
