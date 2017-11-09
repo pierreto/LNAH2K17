@@ -146,8 +146,8 @@ class NoeudCommun : SCNNode {
     func assignerEstSelectionnable(selectionnable: Bool) {
         self.selectionnable = selectionnable
         
-        // Colorer le noeud devenu sélectionnable
-        if self.defaultColor != self.selectionnableColor {
+        // Colorer le noeud devenu sélectionnable sauf s'il est déjà sélectionné par un autre utilisateur
+        if self.defaultColor != self.selectionnableColor && !self.estSelectionneByAnotherUser() {
             self.useOtherColor(activer: selectionnable, color: self.selectionnableColor)
         }
     }
@@ -187,9 +187,19 @@ class NoeudCommun : SCNNode {
         self.scale = self.savedScale
     }
     
+    /// Cette fonction retourne la couleur par défaut
+    func obtenirDefaultColor() -> UIColor {
+        return self.defaultColor
+    }
+    
     /// Modifie la couleur par défaut
     func assignerDefaultColor(color: UIColor) {
         self.defaultColor = color
+    }
+    
+    /// Cette fonction retourne la couleur d'un noeud sélectionnable
+    func obtenirSelectionnableColor() -> UIColor {
+        return self.selectionnableColor
     }
     
     /// Modifie la couleur lorsqu'un noeud est sélectionnable

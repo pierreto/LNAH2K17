@@ -41,9 +41,8 @@ namespace InterfaceGraphique.Game.GameState
             this.gameHub.NewPositions += OnNewGamePositions;
             this.gameHub.NewGoal += OnNewGoal;
             this.gameHub.NewGameOver += EndGame;
-
-            var map = await MapService.GetMap(gameEntity.SelectedMap.Id.Value);
-            base.LoadOnlineMap(map);
+            
+            base.LoadOnlineMap(gameEntity.SelectedMap);
         }
 
         private void OnNewGoal(GoalMessage goalMessage)

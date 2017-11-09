@@ -75,8 +75,12 @@ class EditionHub: BaseHub {
                 editionCommand = SelectionCommand(objectUuid: command["ObjectUuid"].string!)
                 break
             case .TRANSFORM_COMMAND :
-                print ("Transform command")
+                // print ("Transform command")
                 editionCommand = TransformCommand(objectUuid: command["ObjectUuid"].string!)
+                break
+            case .CONTROLPOINT_COMMAND :
+                // print ("Control point command")
+                editionCommand = ControlPointCommand(objectUuid: command["ObjectUuid"].string!)
                 break
         }
         
@@ -86,7 +90,7 @@ class EditionHub: BaseHub {
     
     func convertMapEntity(mapEntity: MapEntity) -> Any {
         let map = [
-            "Id": mapEntity.id!,
+            "Id": mapEntity.id.value!.description,
             "Creator": mapEntity.creator!,
             "MapName": mapEntity.mapName!,
             "LastBackup": mapEntity.lastBackup!.description,
@@ -119,8 +123,16 @@ class EditionHub: BaseHub {
                             FacadeModele.instance.setCurrentUserColor(userHexColor: user["HexColor"] as! String)
                         }
                         
-                        FacadeModele.instance.obtenirUserManager()?.addUser(username: user["Username"] as! String,
+                        let username = user["Username"] as! String
+                        FacadeModele.instance.obtenirUserManager()?.addUser(username: username,
                                                                             hexColor: user["HexColor"] as! String)
+                        
+                        if (user["UuidsSelected"] != nil) {
+                            // Un utilisateur dans la salle a déjà des noeuds sélectionnés
+                            for uuid in user["UuidsSelected"] as! [String] {
+                                FacadeModele.instance.selectNode(username: username, uuid: uuid, isSelected: true, deselectAll: false)
+                            }
+                        }
                     }
                 }
             }
@@ -146,16 +158,27 @@ class EditionHub: BaseHub {
         //print(jsonCommand!)
         
         do {
-            try self.hubProxy?.invoke("SendEditionCommand", arguments: [self.map?.id as Any, jsonCommand!])
+            try self.hubProxy?.invoke("SendEditionCommand", arguments: [self.map?.id.value as Any, jsonCommand!])
         }
         catch {
             print("Error SendEditionCommand")
         }
     }
     
+    func sendSelectionCommand(command: SelectionCommand) {
+        let convertedCommand = command.toDictionary()
+        
+        do {
+            try self.hubProxy?.invoke("SendSelectionCommand", arguments: [self.map?.id.value as Any, convertedCommand])
+        }
+        catch {
+            print("Error SendSelectionCommand")
+        }
+    }
+    
     func leaveRoom() {
         do {
-            try self.hubProxy?.invoke("LeaveRoom", arguments: [self.map?.id as Any])
+            try self.hubProxy?.invoke("LeaveRoom", arguments: [self.map?.id.value as Any])
         }
         catch {
             print("Error LeaveRoom")

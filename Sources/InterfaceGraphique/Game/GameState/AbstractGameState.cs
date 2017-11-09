@@ -75,8 +75,8 @@ namespace InterfaceGraphique.Game.GameState
         internal void LoadOnlineMap(MapEntity selectedMap)
         {
             float[] coefficients = new float[3];
-            //FonctionsNatives.chargerCarte(new StringBuilder(selectedMap.Json), coefficients);
-            //Program.GeneralProperties.SetCoefficientValues(coefficients);
+            FonctionsNatives.chargerCarte(new StringBuilder(selectedMap.Json), coefficients);
+            Program.GeneralProperties.SetCoefficientValues(coefficients);
         }
 
         public Keys KeyLeft

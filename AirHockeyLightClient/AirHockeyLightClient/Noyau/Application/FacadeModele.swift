@@ -308,6 +308,31 @@ class FacadeModele {
         return nil
     }
     
+    /// Cette fonction modifie la position du point de contrôle en mode en ligne
+    func setControlPointPosition(uuid: String, username: String, pos: GLKVector3) {
+        let node = self.userManager?.getUser(username: username).findNode(uuid: uuid)
+        
+        if node != nil {
+            node?.assignerPositionRelative(positionRelative: pos)
+            
+            // Changer la géométrie de la table
+            let table = self.arbre?.childNode(withName: (self.arbre?.NOM_TABLE)!, recursively: true) as! NoeudTable
+            table.updateGeometry()
+        }
+        // Find in the entire tree if it's not in the player's selected nodes
+        else {
+            let nodeInTree = self.findNodeInTree(uuid: uuid)
+            
+            if nodeInTree != nil {
+                nodeInTree?.assignerPositionRelative(positionRelative: pos)
+                
+                // Changer la géométrie de la table
+                let table = self.arbre?.childNode(withName: (self.arbre?.NOM_TABLE)!, recursively: true) as! NoeudTable
+                table.updateGeometry()
+            }
+        }
+    }
+    
     /// Cette fonction applique l'information sur un noeud sélectionné.
     func applyNodeInfos(infos: [Float]) {
         let selection = VisiteurObtenirSelection();
