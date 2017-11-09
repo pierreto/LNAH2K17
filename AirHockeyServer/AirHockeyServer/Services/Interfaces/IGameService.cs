@@ -13,7 +13,7 @@ namespace AirHockeyServer.Services.Interfaces
 
         void JoinGame(UserEntity userEntity);
 
-        Task<GameEntity> UpdateGame(GameEntity gameEntity);
+        void UpdateGame(Guid gameId, MapEntity map);
 
         GameEntity GetGameEntityById(Guid id);
 

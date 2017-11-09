@@ -80,15 +80,19 @@ namespace AirHockeyServer.Manager
                     await PlayerStatsService.UpdateAchievements(game.Players[0].Id);
                     await PlayerStatsService.UpdateAchievements(game.Players[1].Id);
                     
+                    await RemoveConnection(game.Players[0].Id, game.GameId.ToString());
+                    await RemoveConnection(game.Players[1].Id, game.GameId.ToString());
                 }
                 
                 Cache.Games.Remove(gameId);
 
-                var connectionP1 = ConnectionMapper.GetConnection(game.Players[0].Id);
-                var connectionP2 = ConnectionMapper.GetConnection(game.Players[1].Id);
-                await GlobalHost.ConnectionManager.GetHubContext<GameWaitingRoomHub>().Groups.Remove(connectionP1, game.GameId.ToString());
-                await GlobalHost.ConnectionManager.GetHubContext<GameWaitingRoomHub>().Groups.Remove(connectionP2, game.GameId.ToString());
             }
+        }
+
+        private async Task RemoveConnection(int userId, string group)
+        {
+            var connection = ConnectionMapper.GetConnection(userId);
+            await GlobalHost.ConnectionManager.GetHubContext<GameWaitingRoomHub>().Groups.Remove(connection, group);
         }
 
         private int CaculateGamePoints(GameEntity gameEntity)
@@ -124,6 +128,11 @@ namespace AirHockeyServer.Manager
                         await PlayerStatsService.UpdateAchievements(tournament.Players[3].Id);
 
                         Cache.Tournaments.Remove(tournamentId);
+
+                        await RemoveConnection(tournament.Players[0].Id, tournament.Id.ToString());
+                        await RemoveConnection(tournament.Players[1].Id, tournament.Id.ToString());
+                        await RemoveConnection(tournament.Players[2].Id, tournament.Id.ToString());
+                        await RemoveConnection(tournament.Players[3].Id, tournament.Id.ToString());
                     }
                     else
                     {
@@ -134,7 +143,8 @@ namespace AirHockeyServer.Manager
                             GameState = GameState.InProgress,
                             GameId = Guid.NewGuid(),
                             CreationDate = DateTime.Now,
-                            TournamentId = tournament.Id
+                            TournamentId = tournament.Id,
+                            SelectedMap = tournament.SelectedMap
                         };
 
                         finalGame.Master = finalGame.Players[0];

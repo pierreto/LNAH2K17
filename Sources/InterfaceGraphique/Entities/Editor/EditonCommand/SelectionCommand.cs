@@ -7,7 +7,7 @@ using InterfaceGraphique.Entities.EditorCommand;
 
 namespace InterfaceGraphique.Entities.EditonCommand
 {
-    class SelectionCommand : AbstractEditionCommand
+    public class SelectionCommand : AbstractEditionCommand
     {
         public string Username { get; set; }
         public bool IsSelected { get; set; }

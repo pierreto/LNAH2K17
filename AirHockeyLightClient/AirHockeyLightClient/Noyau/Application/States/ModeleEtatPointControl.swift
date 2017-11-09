@@ -58,15 +58,6 @@ class ModeleEtatPointControl : ModeleEtat {
         arbre.accepterVisiteur(visiteur: VisiteurSelectionnable(type: arbre.NOM_PORTAIL, selectionnable: true))
         arbre.accepterVisiteur(visiteur: VisiteurSelectionnable(type: arbre.NOM_POINT_CONTROL, selectionnable: false))
         
-        // Annuler la couleur rose saumon
-        let table = arbre.childNode(withName: arbre.NOM_TABLE, recursively: true)
-        for child in (table?.childNodes)! {
-            if (child.name == arbre.NOM_POINT_CONTROL) {
-                let pointControl = child as! NoeudPointControl
-                pointControl.useOtherColor(activer: false)
-            }
-        }
-        
         FacadeModele.instance.obtenirVue().editorView.removeGestureRecognizer(FacadeModele.instance.panGestureRecognizer!)
         
         // Réactiver les boutons associés à la sélection
@@ -147,6 +138,12 @@ class ModeleEtatPointControl : ModeleEtat {
         for noeud in noeuds {
             noeud.revertPosition()
             (noeud as! NoeudPointControl).obtenirNoeudOppose().revertPosition()
+            
+            // Envoyer la commande
+            FacadeModele.instance.obtenirEtatEdition().currentUserControlPointChanged(uuid: noeud.obtenirUUID(), pos: noeud.position)
+            FacadeModele.instance.obtenirEtatEdition().currentUserControlPointChanged(
+                uuid: (noeud as! NoeudPointControl).obtenirNoeudOppose().obtenirUUID(),
+                pos: (noeud as! NoeudPointControl).obtenirNoeudOppose().position)
         }
     }
 

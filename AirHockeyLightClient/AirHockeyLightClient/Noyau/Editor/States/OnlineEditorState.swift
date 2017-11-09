@@ -73,6 +73,12 @@ class OnlineEditorState: EditorState {
         self.clientConnection.getEditionHub().sendEditionCommand(command: command)
     }
     
+    override func currentUserControlPointChanged(uuid: String, pos: SCNVector3) {
+        let position = [pos.x, pos.y, pos.z]
+        let command = ControlPointCommand(objectUuid: uuid, username: HubManager.sharedConnection.getUsername()!, pos: position)
+        self.clientConnection.getEditionHub().sendEditionCommand(command: command)
+    }
+    
 }
 
 ///////////////////////////////////////////////////////////////////////////////

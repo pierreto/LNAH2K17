@@ -149,6 +149,7 @@ namespace InterfaceGraphique
             {
              client.PostAsJsonAsync(client.BaseAddress + "api/logout", User.Instance.UserEntity);
             }
+            Application.Exit();
         }
 
 

@@ -36,7 +36,7 @@
 		253E08911F81913A009F301B /* ChannelEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253E08901F81913A009F301B /* ChannelEntity.swift */; };
 		25628B9D1FA79B940010B58D /* IMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25628B9C1FA79B940010B58D /* IMapViewModel.swift */; };
 		25628B9F1FA79C070010B58D /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25628B9E1FA79C070010B58D /* MapViewModel.swift */; };
-		25628BA11FA79CFF0010B58D /* Maps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25628BA01FA79CFF0010B58D /* Maps.swift */; };
+		25628BA11FA79CFF0010B58D /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25628BA01FA79CFF0010B58D /* Map.swift */; };
 		256539A91F9D643A00D81E2C /* MapEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256539A81F9D643A00D81E2C /* MapEntity.swift */; };
 		25F66FB51FA13071006CB47F /* VisiteurSauvegarde.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F66FB41FA13071006CB47F /* VisiteurSauvegarde.swift */; };
 		25F8091F1FA673050008F048 /* MapTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F8091E1FA673050008F048 /* MapTableViewController.swift */; };
@@ -135,6 +135,7 @@
 		8FC88F421FB2B34D00268D81 /* TranformCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FC88F411FB2B34D00268D81 /* TranformCommand.swift */; };
 		8FCDF6191FA1BEDF00631551 /* EditorNotificationScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8FCDF6171FA1BEDF00631551 /* EditorNotificationScene.sks */; };
 		8FCDF61A1FA1BEDF00631551 /* EditorNotificationScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCDF6181FA1BEDF00631551 /* EditorNotificationScene.swift */; };
+		8FDD1E1F1FB3B87000F5E61F /* ControlPointCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FDD1E1E1FB3B87000F5E61F /* ControlPointCommand.swift */; };
 		8FFC5B481F7C90340031474F /* MessageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFC5B471F7C90340031474F /* MessageViewCell.swift */; };
 		8FFC5B4A1F7CA7170031474F /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFC5B491F7CA7170031474F /* PaddingLabel.swift */; };
 		E7B7E3DDFEF5DC14C25C5EF5 /* Pods_AirHockeyLightClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7585740DC43877CD99CDDF6A /* Pods_AirHockeyLightClient.framework */; };
@@ -183,7 +184,7 @@
 		253E08901F81913A009F301B /* ChannelEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChannelEntity.swift; path = Noyau/Entities/ChannelEntity.swift; sourceTree = "<group>"; };
 		25628B9C1FA79B940010B58D /* IMapViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMapViewModel.swift; sourceTree = "<group>"; };
 		25628B9E1FA79C070010B58D /* MapViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
-		25628BA01FA79CFF0010B58D /* Maps.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Maps.swift; sourceTree = "<group>"; };
+		25628BA01FA79CFF0010B58D /* Map.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
 		256539A81F9D643A00D81E2C /* MapEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapEntity.swift; sourceTree = "<group>"; };
 		25F66FB41FA13071006CB47F /* VisiteurSauvegarde.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VisiteurSauvegarde.swift; path = Noyau/Arbre/Visiteurs/VisiteurSauvegarde.swift; sourceTree = "<group>"; };
 		25F8091E1FA673050008F048 /* MapTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapTableViewController.swift; path = InterfaceGraphique/MapTableViewController.swift; sourceTree = "<group>"; };
@@ -287,6 +288,7 @@
 		8FC88F411FB2B34D00268D81 /* TranformCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TranformCommand.swift; path = Noyau/Editor/Commands/TranformCommand.swift; sourceTree = "<group>"; };
 		8FCDF6171FA1BEDF00631551 /* EditorNotificationScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = EditorNotificationScene.sks; path = InterfaceGraphique/Editor/EditorNotificationScene.sks; sourceTree = "<group>"; };
 		8FCDF6181FA1BEDF00631551 /* EditorNotificationScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditorNotificationScene.swift; path = InterfaceGraphique/Editor/EditorNotificationScene.swift; sourceTree = "<group>"; };
+		8FDD1E1E1FB3B87000F5E61F /* ControlPointCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ControlPointCommand.swift; path = Noyau/Editor/Commands/ControlPointCommand.swift; sourceTree = "<group>"; };
 		8FFC5B471F7C90340031474F /* MessageViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageViewCell.swift; path = InterfaceGraphique/Chat/MessageViewCell.swift; sourceTree = "<group>"; };
 		8FFC5B491F7CA7170031474F /* PaddingLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PaddingLabel.swift; path = InterfaceGraphique/Chat/PaddingLabel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -312,6 +314,7 @@
 				8FB0E29B1FAFF2B100672057 /* WallCommand.swift */,
 				8FB0E29D1FB00DC700672057 /* SelectionCommand.swift */,
 				8FC88F411FB2B34D00268D81 /* TranformCommand.swift */,
+				8FDD1E1E1FB3B87000F5E61F /* ControlPointCommand.swift */,
 			);
 			name = Commands;
 			sourceTree = "<group>";
@@ -365,7 +368,7 @@
 				1D90AB011F9824BE003E0764 /* ConnectServer.swift */,
 				34B965CF1FA2976600BD17CC /* GeneralProperties.swift */,
 				1D019A1F1F911DF6004D79B2 /* Login.swift */,
-				25628BA01FA79CFF0010B58D /* Maps.swift */,
+				25628BA01FA79CFF0010B58D /* Map.swift */,
 				1D019A201F911DF6004D79B2 /* Signup.swift */,
 			);
 			name = Model;
@@ -953,6 +956,7 @@
 				8F6AE2C21F6592EB00A29E8B /* GameScene.swift in Sources */,
 				25163A891F9CE62600142418 /* ILoginViewModel.swift in Sources */,
 				34B66FE41F84636900A9CCB9 /* NoeudBut.swift in Sources */,
+				8FDD1E1F1FB3B87000F5E61F /* ControlPointCommand.swift in Sources */,
 				1D90AB021F9824BE003E0764 /* ConnectServer.swift in Sources */,
 				3475C2461F90144300E8BF86 /* ImmediatePanGestureRecognizer.swift in Sources */,
 				253E088C1F81858E009F301B /* UIViewShake.swift in Sources */,
@@ -966,7 +970,7 @@
 				8F8706B91F7892BB000E6824 /* Entity.swift in Sources */,
 				8FB0E29E1FB00DC700672057 /* SelectionCommand.swift in Sources */,
 				252EC9161FA80FAD008D119C /* EditionHub.swift in Sources */,
-				25628BA11FA79CFF0010B58D /* Maps.swift in Sources */,
+				25628BA11FA79CFF0010B58D /* Map.swift in Sources */,
 				1D4F01511FB13B2B00F4A302 /* VerticalSplitViewController.swift in Sources */,
 				34B66FE21F84599100A9CCB9 /* But.swift in Sources */,
 				1D019A2A1F911E33004D79B2 /* LoginViewModel.swift in Sources */,

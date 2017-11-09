@@ -55,6 +55,11 @@ class VisiteurDeplacement: VisiteurAbstrait {
             let posNoeudOppose = GLKVector3Multiply(pos, noeud.obtenirSymmetrie())
             noeud.obtenirNoeudOppose().deplacer(position: posNoeudOppose)
             
+            // Envoyer la commande
+            FacadeModele.instance.obtenirEtatEdition().currentUserControlPointChanged(uuid: noeud.obtenirUUID(), pos: noeud.position)
+            FacadeModele.instance.obtenirEtatEdition().currentUserControlPointChanged(uuid: noeud.obtenirNoeudOppose().obtenirUUID(),
+                                                                                      pos: noeud.obtenirNoeudOppose().position)
+            
             // TODO : À vérifier si on change la géométrie de la table ici ou non
             let table = noeud.parent as! NoeudTable
             table.updateGeometry()

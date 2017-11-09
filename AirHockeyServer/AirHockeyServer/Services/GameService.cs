@@ -8,6 +8,7 @@ using AirHockeyServer.Services.MatchMaking;
 using AirHockeyServer.Manager;
 using AirHockeyServer.Services.Interfaces;
 using AirHockeyServer.Repositories.Interfaces;
+using AirHockeyServer.Events.EventManagers;
 
 namespace AirHockeyServer.Services
 {
@@ -25,13 +26,18 @@ namespace AirHockeyServer.Services
 
         private IGameRepository GameRepository { get; set; }
 
+        public GameWaitingRoomEventManager GameWaitingRoomEventManager { get; set; }
+
         public IGameManager GameManager { get; }
 
-        public GameService(IGameManager gameManager, IGameRepository gameRepository)
+        public GameService(IGameManager gameManager, IGameRepository gameRepository
+            , GameWaitingRoomEventManager gameWaitingRoomEventManager
+            )
         {
             this.games = new List<GameEntity>();
             GameManager = gameManager;
             GameRepository = gameRepository;
+            GameWaitingRoomEventManager = gameWaitingRoomEventManager;
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -75,10 +81,9 @@ namespace AirHockeyServer.Services
         /// @return la partie mise à jour
         ///
         ////////////////////////////////////////////////////////////////////////
-        public async Task<GameEntity> UpdateGame(GameEntity gameEntity)
+        public void UpdateGame(Guid gameId, MapEntity map)
         {
-            // update game bd
-            return gameEntity;
+            GameWaitingRoomEventManager.SetMap(gameId, map);
         }
 
         public GameEntity GetGameEntityById(Guid id)

@@ -11,8 +11,10 @@
 protocol IMapViewModel {
     
     var mapNameError: Dynamic<String> { get }
+    var passwordError: Dynamic<String> { get }
+    var passwordConfirmationError: Dynamic<String> { get }
     
-    func save(mapName: String, isLocalMap: Bool, isPrivateMap: Bool) -> Bool
+    func save(name: String, isLocal: Bool, isPrivate: Bool, password: String, passwordConfirmation: String) -> Bool
     
 }
 

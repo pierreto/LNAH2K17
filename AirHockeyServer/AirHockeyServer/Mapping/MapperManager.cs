@@ -88,10 +88,10 @@ namespace AirHockeyServer.Mapping
                         opt => opt.MapFrom(src => src.Winner.Id))
                     .ForMember(
                         dest => dest.Player1,
-                        opt => opt.MapFrom(src => src.Players[0]))
+                        opt => opt.MapFrom(src => src.Players[0].Id))
                     .ForMember(
                         dest => dest.Player2,
-                        opt => opt.MapFrom(src => src.Players[1]));
+                        opt => opt.MapFrom(src => src.Players[1].Id));
 
                 cfg.CreateMap<TournamentEntity, TournamentPoco>()
                     .ForMember(
@@ -105,16 +105,16 @@ namespace AirHockeyServer.Mapping
                     opt => opt.MapFrom(src => src.Winner.Id))
                     .ForMember(
                     dest => dest.Player1,
-                    opt => opt.MapFrom(src => src.Players[0]))
+                    opt => opt.MapFrom(src => src.Players[0].Id))
                     .ForMember(
                     dest => dest.Player2,
-                    opt => opt.MapFrom(src => src.Players[1]))
+                    opt => opt.MapFrom(src => src.Players[1].Id))
                     .ForMember(
                     dest => dest.Player3,
-                    opt => opt.MapFrom(src => src.Players[2]))
+                    opt => opt.MapFrom(src => src.Players[2].Id))
                     .ForMember(
                     dest => dest.Player4,
-                    opt => opt.MapFrom(src => src.Players[3]));
+                    opt => opt.MapFrom(src => src.Players[3].Id));
             });
 
             //config.AssertConfigurationIsValid();

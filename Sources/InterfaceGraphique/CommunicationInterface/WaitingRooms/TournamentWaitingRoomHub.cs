@@ -60,12 +60,15 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
         public async void UpdateSelectedMap(MapEntity map)
         {
-            await WaitingRoomProxy.Invoke<TournamentEntity>("UpdateMap", CurrentTournamentId, map);
+            if(CurrentTournamentId > 0)
+            {
+                await WaitingRoomProxy.Invoke<TournamentEntity>("UpdateMap", CurrentTournamentId, map);
+            }
         }
 
-        public void LeaveTournament()
+        public async Task LeaveTournament()
         {
-            WaitingRoomProxy.Invoke("LeaveTournament", User.Instance.UserEntity);
+            await WaitingRoomProxy.Invoke("LeaveTournament", User.Instance.UserEntity, CurrentTournamentId);
         }
 
         private void InitializeWaitingRoomEvents()
@@ -115,9 +118,11 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
                                 Program.QuickPlay.CurrentGameState = this.SlaveGameState;
 
                                 FonctionsNatives.rotateCamera(180);
+
                             }
 
                             Program.FormManager.CurrentForm = Program.QuickPlay;
+                            Program.QuickPlay.CurrentGameState.IsTournementMode = false;
                         }
                         else
                         {
@@ -147,9 +152,11 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
                             Program.QuickPlay.CurrentGameState = this.SlaveGameState;
 
                             FonctionsNatives.rotateCamera(180);
+
                         }
 
                         Program.FormManager.CurrentForm = Program.QuickPlay;
+                        Program.QuickPlay.CurrentGameState.IsTournementMode = false;
 
                     }
                     else

@@ -21,6 +21,7 @@ class OnlineUser {
     
     private var username : String
     private var hexColor : UIColor
+    private var uuidsSelected = [String]() // TODO : Agir avec les uuids deja sélectionné (lorsqu'on join une room)
     private var nodesSelected: [NoeudCommun]
     
     init(username: String, hexColor: String) {
@@ -43,6 +44,10 @@ class OnlineUser {
     
     public func setHexColor(hexColor: UIColor) {
         self.hexColor = hexColor
+    }
+    
+    public func getUuidsSelected() -> [String] {
+        return self.uuidsSelected
     }
     
     public func getNodesSelected() -> [NoeudCommun] {
@@ -68,6 +73,12 @@ class OnlineUser {
             node.assignerSelectionneByAnotherUser(estSelectionneByAnotherUser: false)
             node.useOtherColor(activer: false)
         
+            // Colorer le noeud s'il est sélectionnable
+            let selectionnable = node.estSelectionnable()
+            if selectionnable && node.obtenirDefaultColor() != node.obtenirSelectionnableColor() {
+                node.useOtherColor(activer: selectionnable, color: node.obtenirSelectionnableColor())
+            }
+            
             self.nodesSelected.remove(at: index!)
         }
     }
@@ -87,6 +98,12 @@ class OnlineUser {
         for node in self.nodesSelected {
             node.assignerSelectionneByAnotherUser(estSelectionneByAnotherUser: false)
             node.useOtherColor(activer: false)
+            
+            // Colorer le noeud s'il est sélectionnable
+            let selectionnable = node.estSelectionnable()
+            if selectionnable && node.obtenirDefaultColor() != node.obtenirSelectionnableColor() {
+                node.useOtherColor(activer: selectionnable, color: node.obtenirSelectionnableColor())
+            }
         }
         self.nodesSelected.removeAll()
     }
