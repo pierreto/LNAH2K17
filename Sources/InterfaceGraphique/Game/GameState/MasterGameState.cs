@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using InterfaceGraphique.CommunicationInterface;
 using InterfaceGraphique.Entities;
+using InterfaceGraphique.Services;
 
 namespace InterfaceGraphique.Game.GameState
 {
@@ -17,9 +18,13 @@ namespace InterfaceGraphique.Game.GameState
         private FonctionsNatives.GoalCallback callback;
         private int ELapsedTime = 0;
         private const int SERVER_INTERVAL = 5;
-        public MasterGameState(GameHub gameHub)
+
+        public MapService MapService { get; set; }
+
+        public MasterGameState(GameHub gameHub, MapService mapService)
         {
             this.gameHub = gameHub;
+            MapService = mapService;
             this.callback =
                 (player) =>
                 {
@@ -28,7 +33,7 @@ namespace InterfaceGraphique.Game.GameState
                 };
         }
 
-        public override void InitializeGameState(GameEntity gameEntity)
+        public override async void InitializeGameState(GameEntity gameEntity)
         {
             FonctionsNatives.setOnlineClientType((int) OnlineClientType.MASTER);
             FonctionsNatives.setCurrentOpponentType((int)OpponentType.ONLINE_PLAYER);
@@ -44,6 +49,8 @@ namespace InterfaceGraphique.Game.GameState
             player1Name.Append(gameEntity.Master.Username);
             player2Name.Append(gameEntity.Slave.Username);
             FonctionsNatives.setPlayerNames(player1Name, player2Name);
+
+            base.LoadOnlineMap(gameEntity.SelectedMap);
         }
 
         public override void MettreAJour(double tempsInterAffichage, int neededGoalsToWin)
@@ -57,7 +64,6 @@ namespace InterfaceGraphique.Game.GameState
             FonctionsNatives.moveMaillet();
             FonctionsNatives.animer(tempsInterAffichage);
             FonctionsNatives.dessinerOpenGL();
-            ELapsedTime++;
 
             //if (ELapsedTime >= SERVER_INTERVAL)
             //{
@@ -138,9 +144,10 @@ namespace InterfaceGraphique.Game.GameState
                 }));
             }
         }
+
         private void OnNewGamePositions(GameDataMessage gameData)
         {
-            if (!gameHasEnded)
+            if (!gameHasEnded && gameData.SlavePosition != null)
             {
                 FonctionsNatives.setMasterGameElementPositions(gameData.SlavePosition);
             }

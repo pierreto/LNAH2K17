@@ -125,5 +125,14 @@ namespace AirHockeyServer.Hubs
             return UsersConnectionMapping[connectionId];
         }
 
+        public static void DeleteConnection(int userId)
+        {
+            if (ConnectionsMapping.ContainsKey(userId))
+            {
+                string connectionRemoved = "";
+                ConnectionsMapping.TryRemove(userId, out connectionRemoved);
+            }
+            
+        }
     }
 }

@@ -626,6 +626,10 @@ namespace InterfaceGraphique {
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+        public void HandleCoefficientChanges(float coefficientFriction, float coefficientAcceleration, float coefficientRebond)
+        {
+            this.CurrentState.HandleCoefficientChanges(coefficientFriction, coefficientAcceleration, coefficientRebond);
+        }
     }
 }
  

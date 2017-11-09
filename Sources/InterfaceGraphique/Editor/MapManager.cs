@@ -119,7 +119,7 @@ namespace InterfaceGraphique.Editor
         }
 
         private async Task SaveOnlineMap()
-        {
+        {/*
             // First, we fetch the JSON of the map:
             StringBuilder sb = new StringBuilder(2000);
             FonctionsNatives.getMapJson(Program.GeneralProperties.GetCoefficientValues(), sb);
@@ -164,7 +164,7 @@ namespace InterfaceGraphique.Editor
                 // we have to update the properties of the current map:
                 this.currentMapInfo.savedOnce = true;
                 this.currentMapInfo.savedOnline = true;
-            }
+            }*/
         }
 
         public void ManageSavingLocalMap()

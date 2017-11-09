@@ -20,10 +20,18 @@ class ChatHub: BaseHub {
             ChatAreaViewController.sharedChatAreaViewController.receiveMessage(message: args?[0] as! Dictionary<String, String>)
         }
         
-        self.hubProxy?.on("ChatMessageReceivedChannel") { response in
-            var x = response
-//            ChatAreaViewController.sharedChatAreaViewController.receiveMessageChannel(message: message?[0] as! Dictionary<String, String>, channelEntity: cE? as! ChannelEntity)
+        self.hubProxy?.on("ChatMessageReceivedChannel") { args in
+            ChatAreaViewController.sharedChatAreaViewController.receiveMessageChannel(message: args?[0] as! Dictionary<String, String>, channelName: args?[1] as! String)
         }
+        
+        self.hubProxy?.on("NewJoinableChannel") { args in
+           // ChatAreaViewController.sharedChatAreaViewController.newJoinableChannel(channelName: args?[0] as! String)
+        }
+        
+        self.hubProxy?.on("ChannelDeleted") { args in
+           // ChatAreaViewController.sharedChatAreaViewController.channelDeleted(channelName: args?[0] as! String)
+        }
+
     }
     
     ////////////////////////////////////////////////////////////////////////
@@ -110,8 +118,8 @@ class ChatHub: BaseHub {
         }
     }
 
-    public func CreateChannel(channelName: String) -> String {
-        var msg = String()
+    public func CreateChannel(channelName: String, res: @escaping (_ message: String?) -> Void) {
+        var msg: String?
         do {
              try hubProxy!.invoke("CreateChannel", arguments: [channelName]) { (result, error) in
                 if let e = error {
@@ -123,13 +131,13 @@ class ChatHub: BaseHub {
                     } else {
                         msg = "Canal déjà créé"
                     }
+                    res(msg)
                 }
             }
         }
         catch{
             print("Error CreateChannel")
         }
-        return ""
     }
 }
 

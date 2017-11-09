@@ -9,6 +9,10 @@ namespace InterfaceGraphique.Entities
 {
     public class Achievement
     {
+        public string Category { get; set; }
+
+        public int Order { get; set; }
+
         public string Name { get; set; }
 
         public string DisabledImageUrl { get; set; }

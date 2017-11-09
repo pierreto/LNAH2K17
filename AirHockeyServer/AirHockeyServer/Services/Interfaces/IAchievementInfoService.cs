@@ -13,5 +13,10 @@ namespace AirHockeyServer.Services.Interfaces
         string GetDisabledImage(AchivementType achivementType);
 
         string GetName(AchivementType achivementType);
+
+        string GetCategory(AchivementType achivementType);
+
+        int GetOrder(AchivementType achivementType);
+
     }
 }

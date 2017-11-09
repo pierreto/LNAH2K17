@@ -544,6 +544,9 @@ void FacadeModele::applyNodeInfos(float infos[]) {
 		noeud->assignerPositionRelative(position);
 		noeud->scale(scale);
 		noeud->rotate(rotation, glm::vec3(0, 1, 0));
+	}else if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
+	{
+		ModeleEtatJeu::obtenirInstance()->getTransformEventCallback()(noeud->getUUID(), glm::value_ptr(noeud->obtenirPositionRelative()), noeud->obtenirRotation().y, glm::value_ptr(noeud->obtenirScale()));
 	}
 }
 
@@ -586,7 +589,7 @@ bool FacadeModele::mouseOverControlPoint() {
 void FacadeModele::deleteSelection() {
 	VisiteurSuppression suppression = VisiteurSuppression();
 	arbre_->accepterVisiteur(&suppression);
-	suppression.deleteAllSelectedNode();
+	suppression.deleteAllSelectedNode(ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION);
 }
 
 

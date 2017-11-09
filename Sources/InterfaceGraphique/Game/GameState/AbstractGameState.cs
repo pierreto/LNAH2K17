@@ -74,6 +74,13 @@ namespace InterfaceGraphique.Game.GameState
             set => keyDown = value;
         }
 
+        internal void LoadOnlineMap(MapEntity selectedMap)
+        {
+            float[] coefficients = new float[3];
+            FonctionsNatives.chargerCarte(new StringBuilder(selectedMap.Json), coefficients);
+            Program.GeneralProperties.SetCoefficientValues(coefficients);
+        }
+
         public Keys KeyLeft
         {
             get => keyLeft;

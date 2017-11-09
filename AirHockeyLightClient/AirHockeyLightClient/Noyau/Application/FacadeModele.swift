@@ -270,6 +270,69 @@ class FacadeModele {
         }
     }
     
+    /// Cette fonction effectue la transformation d'un noeud en mode en ligne
+    func setTransformByUUID(uuid: String, username: String, position: GLKVector3, rotation: Float, scale: GLKVector3) {
+        let node = self.userManager?.getUser(username: username).findNode(uuid: uuid)
+        
+        if node != nil {
+            node?.assignerPositionRelative(positionRelative: position)
+            
+            //print("rotation appliquée")
+            //print(rotation)
+            
+            node?.rotation = SCNVector4(0.0, 1.0, 0.0, rotation)
+            node?.scale = SCNVector3FromGLKVector3(scale)
+        }
+        // Find in the entire tree if it's not in the player's selected nodes
+        else {
+            let nodeInTree = self.findNodeInTree(uuid: uuid)
+            
+            if nodeInTree != nil {
+                nodeInTree?.assignerPositionRelative(positionRelative: position)
+                nodeInTree?.rotation = SCNVector4(0.0, 1.0, 0.0, rotation)
+                nodeInTree?.scale = SCNVector3FromGLKVector3(scale)
+            }
+        }
+    }
+    
+    /// Cette fonction trouve un noeud dans l'arbre
+    func findNodeInTree(uuid: String) -> NoeudCommun? {
+        let visiteur = VisiteurByUUID(wantedUUID: uuid)
+        self.arbre?.accepterVisiteur(visiteur: visiteur)
+        let node = visiteur.getNode()
+        
+        if visiteur.getHasFound() {
+            return node
+        }
+        
+        return nil
+    }
+    
+    /// Cette fonction modifie la position du point de contrôle en mode en ligne
+    func setControlPointPosition(uuid: String, username: String, pos: GLKVector3) {
+        let node = self.userManager?.getUser(username: username).findNode(uuid: uuid)
+        
+        if node != nil {
+            node?.assignerPositionRelative(positionRelative: pos)
+            
+            // Changer la géométrie de la table
+            let table = self.arbre?.childNode(withName: (self.arbre?.NOM_TABLE)!, recursively: true) as! NoeudTable
+            table.updateGeometry()
+        }
+        // Find in the entire tree if it's not in the player's selected nodes
+        else {
+            let nodeInTree = self.findNodeInTree(uuid: uuid)
+            
+            if nodeInTree != nil {
+                nodeInTree?.assignerPositionRelative(positionRelative: pos)
+                
+                // Changer la géométrie de la table
+                let table = self.arbre?.childNode(withName: (self.arbre?.NOM_TABLE)!, recursively: true) as! NoeudTable
+                table.updateGeometry()
+            }
+        }
+    }
+    
     /// Cette fonction applique l'information sur un noeud sélectionné.
     func applyNodeInfos(infos: [Float]) {
         let selection = VisiteurObtenirSelection();
@@ -325,6 +388,10 @@ class FacadeModele {
                 let pos = GLKVector3.init(v: (x, y, z))
                 let noeud = child as! NoeudCommun
                 noeud.assignerPositionRelative(positionRelative: pos)
+                
+                let uuid = self.docJSON!["PointControle"][count][7].string!
+                noeud.assignerUUID(uuid: uuid)
+        
                 count += 1
             }
         }
@@ -343,15 +410,12 @@ class FacadeModele {
             
             for i in 0...self.docJSON![type].count - 1 {
                 let noeud: NoeudCommun
+                let uuid = self.docJSON![type][i][7].string!
                 if nomType == ArbreRendu.instance.NOM_ACCELERATEUR {
-                    noeud = self.arbre?.creerNoeud(typeNouveauNoeud: nomType, uuid: "") as! NoeudAccelerateur
+                    noeud = self.arbre?.creerNoeud(typeNouveauNoeud: nomType, uuid: uuid) as! NoeudAccelerateur
                 } else {
-                    noeud = self.arbre?.creerNoeud(typeNouveauNoeud: nomType, uuid: "") as! NoeudMur
+                    noeud = self.arbre?.creerNoeud(typeNouveauNoeud: nomType, uuid: uuid) as! NoeudMur
                 }
-                
-                // TODO : CHARGER ET SAUVEGARDER UUID DU NOEUD
-                // noeud.assignerUUID(uuid: "ABCD")
-                
                 // Appliquer rotation
                 let angle = self.docJSON![type][i][6].float!
                 noeud.appliquerRotation(angle: angle, axes: GLKVector3.init(v: (0, 1, 0)))
@@ -382,11 +446,9 @@ class FacadeModele {
                 var linkedPortals = Set<NoeudPortail>()
                 
                 for j in 0...1 {
-                    let portal = self.arbre?.creerNoeud(typeNouveauNoeud: nomType, uuid: "") as! NoeudPortail
+                    let uuid = self.docJSON![type][i + j][7].string!
+                    let portal = self.arbre?.creerNoeud(typeNouveauNoeud: nomType, uuid: uuid) as! NoeudPortail
                     linkedPortals.insert(portal)
-                    
-                    // TODO : CHARGER ET SAUVEGARDER UUID DU NOEUD
-                    // noeud.assignerUUID(uuid: "ABCD")
                     
                     // Appliquer rotation
                     let angle = self.docJSON![type][i + j][6].float!

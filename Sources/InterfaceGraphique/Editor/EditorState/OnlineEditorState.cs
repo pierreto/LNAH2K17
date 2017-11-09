@@ -103,6 +103,14 @@ namespace InterfaceGraphique.Editor.EditorState
                 else
                 {
                     FonctionsNatives.addNewUser(user.Username,user.HexColor);
+                    if (user.UuidsSelected != null)
+                    {
+                        foreach (string uuidSelected in user.UuidsSelected)
+                        {
+                            FonctionsNatives.setElementSelection(user.Username, uuidSelected, true, false);
+                        }
+                    }
+                   
                 }
             }
         }
@@ -110,6 +118,16 @@ namespace InterfaceGraphique.Editor.EditorState
         public override async Task LeaveEdition()
         {
             await this.editionHub.LeaveRoom();
+        }
+
+        public override void HandleCoefficientChanges(float coefficientFriction, float coefficientAcceleration, float coefficientRebond)
+        {
+            this.editionHub.SendEditorCommand(new CoefficientCommand()
+            {
+                accCoeff = coefficientAcceleration,
+                frictionCoeff = coefficientFriction,
+                reboundCoeff = coefficientRebond
+            });
         }
 
         private void OnNewCommand(AbstractEditionCommand editionCommand)
@@ -186,7 +204,7 @@ namespace InterfaceGraphique.Editor.EditorState
 
         private void CurrentUserSelectedObject(string uuidselected, bool isSelected, bool deselectAll)
         {
-            this.editionHub.SendEditorCommand(new SelectionCommand(uuidselected)
+            this.editionHub.SendSelectionCommand(new SelectionCommand(uuidselected)
             {
                 Username = User.Instance.UserEntity.Username,
                 IsSelected = isSelected,
