@@ -24,8 +24,8 @@ namespace InterfaceGraphique.Editor.EditorState
                 FonctionsNatives.mouseUpR();
             }
 
-            if (Editeur.mapManager.CurrentMapAlreadySaved())
-                Task.Run(() => Editeur.mapManager.SaveMap());
+            /*if (Editeur.mapManager.CurrentMapAlreadySaved())
+                Task.Run(() => Editeur.mapManager.SaveMap());*/
         }
 
         public override void MouseDown(object sender, MouseEventArgs e)

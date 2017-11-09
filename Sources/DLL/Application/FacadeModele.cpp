@@ -596,6 +596,9 @@ void FacadeModele::deleteSelection() {
 std::string FacadeModele::_getMapJson(float coefficients[]) {
 	char json[] = " {} ";
 	char buffer[sizeof(json)];
+
+
+
 	memcpy(buffer, json, sizeof(json));
 	docJSON_.ParseInsitu(buffer);
 
@@ -627,14 +630,67 @@ std::string FacadeModele::_getMapJson(float coefficients[]) {
 		docJSON_.AddMember("Coefficients", coefArray, docJSON_.GetAllocator());
 	}
 
+	if (!docJSON_.HasMember("Icon")) {
+		rapidjson::Value iconBytes(rapidjson::kArrayType);
+
+
+		//docJSON_.AddMember("Icon", iconBytes, docJSON_.GetAllocator());
+
+	}
+
 	VisiteurSauvegarde visiteur = VisiteurSauvegarde();
 	arbre_->accepterVisiteur(&visiteur);
+
 
 	rapidjson::StringBuffer buffer2;
 	rapidjson::Writer<rapidjson::StringBuffer>writer(buffer2);
 	docJSON_.Accept(writer);
 	std::string data(buffer2.GetString(), buffer2.GetSize());
 	return data;
+}
+
+
+void FacadeModele::createMapIcon() {
+	glm::ivec2 oldDim = vue_->obtenirProjection().getLargeurFenetre();
+
+	glm::ivec2 newLargeur = glm::ivec2(1184,600);
+
+
+	//vue::VueOrtho*  vueOrtho = dynamic_cast<vue::ProjectionOrtho*>(vue_);
+
+	vue_->setLargeurFenetre(newLargeur.x, newLargeur.y);
+
+
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+
+	// Afficher la scène
+	afficherBase();
+
+	// Afficher texte
+	etat_->afficher();
+
+
+	glm::ivec2 newDim = vue_->obtenirProjection().obtenirDimensionCloture();
+
+
+	int sizex = 775;
+	GLubyte* outPixels = new GLubyte[3 * sizex * newDim.y];
+
+	glPixelStorei(GL_PACK_ALIGNMENT, 1);
+
+	glReadPixels(350, 0, sizex, newDim.y, GL_BGR, GL_UNSIGNED_BYTE, outPixels);
+
+	FIBITMAP* image = FreeImage_ConvertFromRawBits(outPixels, sizex, newDim.y, 3 * sizex, 24, 0x0000FF, 0xFF0000, 0x00FF00, false);
+
+	FreeImage_Save(FIF_BMP, image, "test.bmp", 0);
+
+	// Free resources
+	FreeImage_Unload(image);
+
+	vue_->setLargeurFenetre(oldDim.x, oldDim.y);
+
+
+
 }
 
 void FacadeModele::getMapJson(float coefficients[], char* map) {
@@ -657,6 +713,8 @@ void FacadeModele::getMapJson(float coefficients[], char* map) {
 ///
 ////////////////////////////////////////////////////////////////////////
 void FacadeModele::enregistrerSous(std::string filePath, float coefficients[]) {
+	createMapIcon();
+
 	std::string json = _getMapJson(coefficients);
 	std::ofstream(filePath) << json.c_str();
 }
