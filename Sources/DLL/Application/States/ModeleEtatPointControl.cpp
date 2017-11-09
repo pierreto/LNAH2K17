@@ -85,7 +85,12 @@ void ModeleEtatPointControl::initialiser()
 	for (auto it = table->obtenirIterateurBegin(); it != table->obtenirIterateurEnd(); ++it)
 	{
 		if ((*it)->obtenirType() == ArbreRenduINF2990::NOM_POINT_CONTROL)
-			(*it)->useOtherColor(true, glm::vec4(1, 85.0f/255, 82.0f/255, 1));
+		{
+			if (!(*it)->isSelectedByAnotherUser())
+			{
+				(*it)->useOtherColor(true, glm::vec4(1, 85.0f / 255, 82.0f / 255, 1));
+			}
+		}
 	}
 }
 
@@ -295,6 +300,8 @@ void ModeleEtatPointControl::revertPosition()
 			if (controlPointEventCallback_)
 			{
 				controlPointEventCallback_(noeud->getUUID(), glm::value_ptr(noeud->obtenirPositionRelative()));
+				controlPointEventCallback_(static_cast<NoeudPointControl*>(noeud)->obtenirNoeudOppose()->getUUID(), glm::value_ptr(static_cast<NoeudPointControl*>(noeud)->obtenirNoeudOppose()->obtenirPositionRelative()));
+
 				selectionCallback_(noeud->getUUID(), false, false);
 			}
 		}
