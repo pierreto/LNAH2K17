@@ -150,18 +150,8 @@ class CreateMapViewController: UIViewController {
     
     private func resetUI() {
         self.activateInputs()
-        self.resetStyle(textField: self.mapName)
+        self.resetStyles()
         self.resetErrorMessages()
-    }
-    
-    private func resetStyle(textField: UITextField) {
-        textField.layer.borderWidth = 0.0
-    }
-    
-    private func resetErrorMessages() {
-        self.mapNameError.text = ""
-        self.passwordError.text = ""
-        self.passwordConfirmationError.text = ""
     }
     
     private func activateInputs() {
@@ -178,6 +168,18 @@ class CreateMapViewController: UIViewController {
         self.isPrivateMap.isEnabled = false
         self.password.isEnabled = false
         self.passwordConfirmation.isEnabled = false
+    }
+    
+    private func resetStyles() {
+        self.mapName.layer.borderWidth = 0.0
+        self.password.layer.borderWidth = 0.0
+        self.passwordConfirmation.layer.borderWidth = 0.0
+    }
+    
+    private func resetErrorMessages() {
+        self.mapNameError.text = ""
+        self.passwordError.text = ""
+        self.passwordConfirmationError.text = ""
     }
     
     /// Modifier l'apparence du input en cas d'erreur

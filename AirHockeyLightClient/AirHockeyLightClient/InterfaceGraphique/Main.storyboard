@@ -1908,16 +1908,48 @@
                                     <rect key="frame" x="0.0" y="0.0" width="984" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nom de la carte" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qvg-sL-ds4">
-                                            <rect key="frame" x="431" y="12" width="122" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="4" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="créateur" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vzs-66-Fok">
+                                            <rect key="frame" x="610" y="11" width="64" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="id" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P6K-GD-urg">
+                                            <rect key="frame" x="735" y="11.5" width="14" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="isPublic" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tYG-sL-4NB">
+                                            <rect key="frame" x="212" y="11.5" width="60" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="nombre de joueurs" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5lf-BJ-9K6">
+                                            <rect key="frame" x="420" y="12" width="144" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="nom de la carte" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qvg-sL-ds4">
+                                            <rect key="frame" x="282.5" y="12" width="119" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="qvg-sL-ds4" firstAttribute="centerY" secondItem="vTT-fA-W0L" secondAttribute="centerY" id="HnA-hg-3Py"/>
-                                        <constraint firstItem="qvg-sL-ds4" firstAttribute="centerX" secondItem="vTT-fA-W0L" secondAttribute="centerX" id="Jvc-CU-nTg"/>
+                                        <constraint firstItem="tYG-sL-4NB" firstAttribute="centerY" secondItem="vTT-fA-W0L" secondAttribute="centerY" id="8St-EC-xNJ"/>
+                                        <constraint firstItem="tYG-sL-4NB" firstAttribute="centerX" secondItem="vTT-fA-W0L" secondAttribute="centerX" constant="-250" id="96b-pJ-26k"/>
+                                        <constraint firstItem="P6K-GD-urg" firstAttribute="centerX" secondItem="vTT-fA-W0L" secondAttribute="centerX" constant="250" id="GH7-Ir-zOB"/>
+                                        <constraint firstItem="qvg-sL-ds4" firstAttribute="centerX" secondItem="vTT-fA-W0L" secondAttribute="centerX" constant="-150" id="HUV-TI-Tu3"/>
+                                        <constraint firstItem="P6K-GD-urg" firstAttribute="centerY" secondItem="vTT-fA-W0L" secondAttribute="centerY" id="KJl-Ok-gQz"/>
+                                        <constraint firstItem="5lf-BJ-9K6" firstAttribute="centerX" secondItem="vTT-fA-W0L" secondAttribute="centerX" id="Rz7-Hz-0i1"/>
+                                        <constraint firstItem="vzs-66-Fok" firstAttribute="centerY" secondItem="vTT-fA-W0L" secondAttribute="centerY" id="b73-4F-Y1q"/>
+                                        <constraint firstItem="5lf-BJ-9K6" firstAttribute="centerY" secondItem="vTT-fA-W0L" secondAttribute="centerY" id="bHd-m0-4hH"/>
+                                        <constraint firstItem="qvg-sL-ds4" firstAttribute="centerY" secondItem="vTT-fA-W0L" secondAttribute="centerY" id="ePX-n3-102"/>
+                                        <constraint firstItem="vzs-66-Fok" firstAttribute="centerX" secondItem="vTT-fA-W0L" secondAttribute="centerX" constant="150" id="nrR-2o-HPQ"/>
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -1934,6 +1966,83 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lcZ-rA-WKR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1446" y="418"/>
+        </scene>
+        <!--Unlock Map View Controller-->
+        <scene sceneID="JsM-Qg-Cwt">
+            <objects>
+                <viewController storyboardIdentifier="UnlockMapViewController" id="qo9-qD-nCY" customClass="UnlockMapViewController" customModule="AirHockeyLightClient" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="v6I-4L-OCt"/>
+                        <viewControllerLayoutGuide type="bottom" id="8JT-Y4-pAY"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="nbB-hw-hry">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bqj-wl-Elh" userLabel="Unlock Map View">
+                                <rect key="frame" x="249" y="314" width="527" height="141"/>
+                                <subviews>
+                                    <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8lS-L1-2YG">
+                                        <rect key="frame" x="0.0" y="0.0" width="527" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                        <items>
+                                            <navigationItem title="Déverrouiller carte" id="T20-rO-T4C">
+                                                <barButtonItem key="leftBarButtonItem" title="Annuler" id="Mkn-S6-fSG">
+                                                    <connections>
+                                                        <action selector="closeView:" destination="qo9-qD-nCY" id="HW4-j6-Y9a"/>
+                                                    </connections>
+                                                </barButtonItem>
+                                                <barButtonItem key="rightBarButtonItem" title="Procéder" id="Hoo-1W-OkJ" userLabel="Proceder">
+                                                    <connections>
+                                                        <action selector="unlockMap:" destination="qo9-qD-nCY" id="37W-bT-xgO"/>
+                                                    </connections>
+                                                </barButtonItem>
+                                            </navigationItem>
+                                        </items>
+                                    </navigationBar>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Entrer mot de passe :" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G31-ha-iHI" userLabel="UnlockPasswordLabel">
+                                        <rect key="frame" x="28" y="72" width="163" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4PH-K6-tYb" userLabel="unlockPassword">
+                                        <rect key="frame" x="214" y="67" width="284" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                    </textField>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Error" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dhg-yT-xPu" userLabel="UnlockPasswordErrorLabel">
+                                        <rect key="frame" x="214" y="98" width="284" height="23"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <color key="textColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="141" id="4hC-PK-Jj9"/>
+                                    <constraint firstAttribute="width" constant="527" id="zX1-Zb-4mD"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Bqj-wl-Elh" firstAttribute="centerX" secondItem="nbB-hw-hry" secondAttribute="centerX" id="g1h-qC-c41"/>
+                            <constraint firstItem="Bqj-wl-Elh" firstAttribute="centerY" secondItem="nbB-hw-hry" secondAttribute="centerY" id="gFX-A3-VTJ"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="unlockPassword" destination="4PH-K6-tYb" id="fKg-VU-tpW"/>
+                        <outlet property="unlockPasswordError" destination="dhg-yT-xPu" id="NEq-JC-xEB"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="f2q-Xl-s50" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-260.15625" y="2500"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
