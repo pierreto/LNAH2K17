@@ -15,6 +15,6 @@ namespace AirHockeyServer.Services.Interfaces
 
         Task<List<UserEntity>> GetAllUsers();
 
-        void PostUser(UserEntity userEntity);
+        Task PostUser(UserEntity userEntity);
     }
 }
