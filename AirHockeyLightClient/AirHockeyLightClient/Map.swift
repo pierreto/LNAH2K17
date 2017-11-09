@@ -21,21 +21,18 @@ class Map: NSObject {
     private var mapName : String?
     
     /// Message d'erreur
-    var mapNameError: String
-    var passwordError: String
-    var passwordConfirmationError: String
-    var unlockPasswordError: String
+    var mapNameError: String = ""
+    var passwordError: String = ""
+    var passwordConfirmationError: String = ""
+    var unlockPasswordError: String = ""
     
     override init() {
-        self.mapNameError = ""
-        self.passwordError = ""
-        self.passwordConfirmationError = ""
-        self.unlockPasswordError = ""
         super.init()
+        self.resetErrorMessages()
     }
     
     func validate(name: String, isPrivate: Bool, password: String, passwordConfirmation: String) -> Bool {
-        NotificationCenter.default.post(name: Notification.Name(rawValue: MapNotification.SaveMapNotification), object: self)
+        self.resetErrorMessages()
         var validated = true
         
         if name.isEmpty {
@@ -59,18 +56,23 @@ class Map: NSObject {
             }
         }
         
+        NotificationCenter.default.post(name: Notification.Name(rawValue: MapNotification.SaveMapNotification), object: self)
+        
         return validated
     }
     
     func unlock(map: MapEntity, password: String) -> Bool {
-        NotificationCenter.default.post(name: Notification.Name(rawValue: MapNotification.UnlockMapNotification), object: self)
+        self.resetErrorMessages()
+        var unlocked = true;
         
         if map.password != password {
             self.unlockPasswordError = "Le mot de passe entré est invalide!"
-            return false
+            unlocked = false
         }
         
-        return true
+        NotificationCenter.default.post(name: Notification.Name(rawValue: MapNotification.UnlockMapNotification), object: self)
+        
+        return unlocked
     }
 
     func save(name: String, isLocal: Bool, isPrivate: Bool, password: String) {
@@ -83,6 +85,13 @@ class Map: NSObject {
         map.currentNumberOfPlayer.value = 0
         
         DBManager.instance.sauvegarderCarte(map: map, json: nil)
+    }
+    
+    private func resetErrorMessages() {
+        self.mapNameError = ""
+        self.passwordError = ""
+        self.passwordConfirmationError = ""
+        self.unlockPasswordError = ""
     }
     
 }

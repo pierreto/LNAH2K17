@@ -92,6 +92,7 @@ class CreateMapViewController: UIViewController {
     }
     
     @IBAction func createMap(_ sender: Any) {
+        self.resetUI()
         self.deactivateInputs()
         
         if (self.viewModel?.save(
@@ -149,7 +150,6 @@ class CreateMapViewController: UIViewController {
     }
     
     private func resetUI() {
-        self.activateInputs()
         self.resetStyles()
         self.resetErrorMessages()
     }

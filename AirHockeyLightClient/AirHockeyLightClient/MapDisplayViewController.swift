@@ -66,7 +66,7 @@ class MapDisplayViewController: UIViewController {
             // Désactiver la barre de navigation
             self.enableNavigationBar(activer: false)
         } else {
-            print("okok")
+            openEditor()
         }
     }
     

@@ -25,6 +25,8 @@ class UnlockMapViewController: UIViewController {
     @IBOutlet weak var unlockPassword: UITextField!
     @IBOutlet weak var unlockPasswordError: UILabel!
     
+    var isUnlocked = false
+    
     var viewModel: IMapViewModel? {
         didSet {
             self.linkErrorMessagesToViewModel()
@@ -42,10 +44,6 @@ class UnlockMapViewController: UIViewController {
         self.viewModel = MapViewModel(map: Map())
         self.linkErrorMessagesToViewModel()
         self.resetUI()
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        print("yoooo")
     }
     
     @IBAction func closeView(_ sender: Any) {
@@ -87,8 +85,9 @@ class UnlockMapViewController: UIViewController {
     
     @IBAction func unlockMap(_ sender: Any) {
         self.deactivateInput()
+        isUnlocked = (self.viewModel?.unlock(map: MapDisplayViewController.instance.currentMap!, unlockPassword: self.unlockPassword.text!))!
         
-        if (self.viewModel?.unlock(map: MapDisplayViewController.instance.currentMap!, unlockPassword: self.unlockPassword.text!))! {
+        if isUnlocked {
             /// Fermer la fenêtre
             self.removeAnimate()
             
