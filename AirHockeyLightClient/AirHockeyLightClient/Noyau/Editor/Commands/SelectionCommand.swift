@@ -51,6 +51,14 @@ class SelectionCommand: EditionCommand {
             JsonHelper.removeFirstChar(jsonString: data!))
     }
     
+    func toDictionary() -> [String: Any] {
+        let command = ["ObjectUuid": self.objectUuid,
+                       "Username": self.username,
+                       "IsSelected": self.isSelected,
+                       "DeselectAll": self.deselectAll] as [String : Any]
+        return command
+    }
+    
     override func fromJSON(json: JSON) {
         self.username = json["Username"].string!
         self.isSelected = json["IsSelected"].bool!
