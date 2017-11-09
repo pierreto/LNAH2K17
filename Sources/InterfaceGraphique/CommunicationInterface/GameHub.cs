@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using InterfaceGraphique.Entities;
 using Microsoft.AspNet.SignalR.Client;
 using InterfaceGraphique.CommunicationInterface.WaitingRooms;
+using System.Windows.Forms;
 
 namespace InterfaceGraphique.CommunicationInterface
 {
@@ -24,23 +25,32 @@ namespace InterfaceGraphique.CommunicationInterface
             gameHubProxy = GameWaitingRoomHub.WaitingRoomProxy;
         }
 
+        private void ManagePlayerDisconnection()
+        {
+            Program.QuickPlay.Invoke(new MethodInvoker(() =>
+            {
+                Program.QuickPlay.ReplacePlayerByAI();
+            }));
+
+            MessageBox.Show(
+                @"Votre adversaire n'est plus en ligne et vient d'être remplacé par un joueur virtuel. Vous pouvez reprendre la partie en appuyant sur Esc.",
+                @"Information",
+                MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
         //For the slave
-        public  void InitializeSlaveGameHub(Guid gameGuid)
+        public void InitializeSlaveGameHub(Guid gameGuid)
         {
             this.gameGuid = gameGuid;
 
-            // Étape necessaire pour que le serveur sache que la connexion est reliée au bon userId:
-            // await gameHubProxy.Invoke("JoinRoom", gameGuid);
-            try
-            {
-                gameHubProxy.On<GameDataMessage>("ReceivedGameData", message =>
-                {
-                    NewPositions?.Invoke(message);
-                });
-            }catch(Exception e)
-            {
+            // We need to give a mapping master<->gameId to the server hub so we can handle
+            // disconnections properly:
+            Task.Run(() => gameHubProxy.Invoke("RegisterPlayer", gameGuid));
 
-            }
+            gameHubProxy.On<GameDataMessage>("ReceivedGameData", message =>
+            {
+                NewPositions?.Invoke(message);
+            });
 
             gameHubProxy.On<GoalMessage>("ReceivedGoal", message =>
             {
@@ -50,6 +60,19 @@ namespace InterfaceGraphique.CommunicationInterface
             gameHubProxy.On("ReceivedGameOver", () =>
             {
                 NewGameOver?.Invoke();
+            });
+
+            gameHubProxy.On("ReceivedGamePauseOrResume", () =>
+            {
+                Program.QuickPlay.Invoke(new MethodInvoker(() =>
+                {
+                    Program.QuickPlay.ApplyEsc();
+                }));
+            });
+
+            gameHubProxy.On("DisconnectedOpponent", () =>
+            {
+                ManagePlayerDisconnection();
             });
         }
 
@@ -65,12 +88,27 @@ namespace InterfaceGraphique.CommunicationInterface
         public void InitializeMasterGameHub(Guid gameId)
         {
             this.gameGuid = gameId;
-            // Étape necessaire pour que le serveur sache que la connexion est reliée au bon userId:
-            //await gameHubProxy.Invoke("JoinRoom", gameGuid);
+
+            // We need to give a mapping master<->gameId to the server hub so we can handle
+            // disconnections properly:
+            Task.Run(() => gameHubProxy.Invoke("RegisterPlayer", gameGuid));
 
             gameHubProxy.On<GameDataMessage>("ReceivedGameData", message =>
             {
                 NewPositions?.Invoke(message);
+            });
+
+            gameHubProxy.On("ReceivedGamePauseOrResume", () =>
+            {
+                Program.QuickPlay.Invoke(new MethodInvoker(() =>
+                {
+                    Program.QuickPlay.ApplyEsc();
+                }));
+            });
+
+            gameHubProxy.On("DisconnectedOpponent", () =>
+            {
+                ManagePlayerDisconnection();
             });
         }
 
@@ -93,6 +131,10 @@ namespace InterfaceGraphique.CommunicationInterface
 
         }
 
+        public async Task SendGamePauseOrResume()
+        {
+            await gameHubProxy.Invoke("GamePauseOrResume", gameGuid);
+        }
 
         public async Task Logout()
         {

@@ -51,7 +51,7 @@ namespace AirHockeyServer.Events.EventManagers
             Tournament.Players.Remove(user);
         }
 
-        protected async void OnOpponentFound(object sender, UserEntity user)
+        protected  void OnOpponentFound(object sender, UserEntity user)
         {
 
             if (Tournament == null)
@@ -67,7 +67,7 @@ namespace AirHockeyServer.Events.EventManagers
 
             var connection = ConnectionMapper.GetConnection(user.Id);
             string tournamentIdString = Tournament.Id.ToString();
-            HubContext.Groups.Add(connection, tournamentIdString);
+            HubContext.Groups.Add(connection, tournamentIdString).Wait();
 
             Tournament.Players.Add(user);
 
@@ -75,8 +75,8 @@ namespace AirHockeyServer.Events.EventManagers
 
             if (Tournament.Players.Count == 4)
             {
-                GameEntity game1 = await CreateGame(Tournament.Players[0], Tournament.Players[1]);
-                GameEntity game2 = await CreateGame(Tournament.Players[2], Tournament.Players[3]);
+                GameEntity game1 = CreateGame(Tournament.Players[0], Tournament.Players[1]);
+                GameEntity game2 = CreateGame(Tournament.Players[2], Tournament.Players[3]);
 
                 Tournament.SemiFinals.Add(game1);
                 Tournament.SemiFinals.Add(game2);
@@ -95,7 +95,7 @@ namespace AirHockeyServer.Events.EventManagers
 
         }
 
-        private async Task<GameEntity> CreateGame(UserEntity player1, UserEntity player2)
+        private GameEntity CreateGame(UserEntity player1, UserEntity player2)
         {
             GameEntity game = new GameEntity()
             {
@@ -114,7 +114,7 @@ namespace AirHockeyServer.Events.EventManagers
             foreach (var player in game.Players)
             {
                 var connection = ConnectionMapper.GetConnection(player.Id);
-                GlobalHost.ConnectionManager.GetHubContext<GameWaitingRoomHub>().Groups.Add(connection, stringGameId);
+                GlobalHost.ConnectionManager.GetHubContext<GameWaitingRoomHub>().Groups.Add(connection, stringGameId).Wait();
             }
 
             return game;
@@ -145,7 +145,7 @@ namespace AirHockeyServer.Events.EventManagers
                 if (Tournaments[tournamentId].SelectedMap == null)
                 {
                     IEnumerable<MapEntity> maps = await MapService.GetMaps();
-                    Tournaments[tournamentId].SelectedMap = maps.First();
+                    Tournaments[tournamentId].SelectedMap = await MapService.GetMap(maps.First().Id.Value);
                 }
 
                 Tournaments[tournamentId].SemiFinals[0].SelectedMap = Tournaments[tournamentId].SelectedMap;

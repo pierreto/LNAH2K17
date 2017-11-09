@@ -62,7 +62,7 @@ class OnlineEditorState: EditorState {
     override func currentUserSelectedObject(uuidSelected: String, isSelected: Bool, deselectAll: Bool) {
         let command = SelectionCommand(objectUuid: uuidSelected, username: HubManager.sharedConnection.getUsername()!,
                                        isSelected: isSelected, deselectAll: deselectAll)
-        self.clientConnection.getEditionHub().sendEditionCommand(command: command)
+        self.clientConnection.getEditionHub().sendSelectionCommand(command: command)
     }
     
     override func currentUserObjectTransformChanged(uuid: String, pos: SCNVector3, rotation: Float, scale: SCNVector3) {
@@ -77,6 +77,13 @@ class OnlineEditorState: EditorState {
         let position = [pos.x, pos.y, pos.z]
         let command = ControlPointCommand(objectUuid: uuid, username: HubManager.sharedConnection.getUsername()!, pos: position)
         self.clientConnection.getEditionHub().sendEditionCommand(command: command)
+    }
+    
+    override func currentUserDeletedNode(uuid: String) {
+        let command = DeleteCommand(objectUuid: uuid, username: HubManager.sharedConnection.getUsername()!)
+        self.clientConnection.getEditionHub().sendEditionCommand(command: command)
+        
+        // TODO: Sauvegarder la map en ligne
     }
     
 }

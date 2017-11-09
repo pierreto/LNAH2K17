@@ -21,7 +21,7 @@ class OnlineUser {
     
     private var username : String
     private var hexColor : UIColor
-    private var uuidsSelected = [String]() // TODO : Agir avec les uuids deja sélectionné (lorsqu'on join une room)
+    private var uuidsSelected = [String]()
     private var nodesSelected: [NoeudCommun]
     
     init(username: String, hexColor: String) {

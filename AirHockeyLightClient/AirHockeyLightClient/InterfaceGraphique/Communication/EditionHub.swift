@@ -82,6 +82,10 @@ class EditionHub: BaseHub {
                 // print ("Control point command")
                 editionCommand = ControlPointCommand(objectUuid: command["ObjectUuid"].string!)
                 break
+            case .DELETE_COMMAND :
+                print ("Delete command")
+                editionCommand = DeleteCommand(objectUuid: command["ObjectUuid"].string!)
+                break
         }
         
         editionCommand.fromJSON(json: command)
@@ -123,8 +127,16 @@ class EditionHub: BaseHub {
                             FacadeModele.instance.setCurrentUserColor(userHexColor: user["HexColor"] as! String)
                         }
                         
-                        FacadeModele.instance.obtenirUserManager()?.addUser(username: user["Username"] as! String,
+                        let username = user["Username"] as! String
+                        FacadeModele.instance.obtenirUserManager()?.addUser(username: username,
                                                                             hexColor: user["HexColor"] as! String)
+                        
+                        if (user["UuidsSelected"] != nil) {
+                            // Un utilisateur dans la salle a déjà des noeuds sélectionnés
+                            for uuid in user["UuidsSelected"] as! [String] {
+                                FacadeModele.instance.selectNode(username: username, uuid: uuid, isSelected: true, deselectAll: false)
+                            }
+                        }
                     }
                 }
             }
@@ -154,6 +166,17 @@ class EditionHub: BaseHub {
         }
         catch {
             print("Error SendEditionCommand")
+        }
+    }
+    
+    func sendSelectionCommand(command: SelectionCommand) {
+        let convertedCommand = command.toDictionary()
+        
+        do {
+            try self.hubProxy?.invoke("SendSelectionCommand", arguments: [self.map?.id.value as Any, convertedCommand])
+        }
+        catch {
+            print("Error SendSelectionCommand")
         }
     }
     

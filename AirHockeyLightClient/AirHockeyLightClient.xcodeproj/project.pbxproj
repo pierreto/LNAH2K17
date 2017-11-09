@@ -98,6 +98,7 @@
 		8F1D52A81F9D972400135A53 /* ModeleEtatScale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1D52A71F9D972400135A53 /* ModeleEtatScale.swift */; };
 		8F1D52AA1F9D99C700135A53 /* VisiteurScale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1D52A91F9D99C700135A53 /* VisiteurScale.swift */; };
 		8F27E8111FA1803400A8856D /* Tap.png in Resources */ = {isa = PBXBuildFile; fileRef = 8F27E8101FA1803400A8856D /* Tap.png */; };
+		8F4C1DC41FB412D100B570C8 /* DeleteCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F4C1DC31FB412D100B570C8 /* DeleteCommand.swift */; };
 		8F4D5E3C1FA060150002D5C5 /* Delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 8F4D5E3B1FA060140002D5C5 /* Delete.png */; };
 		8F64C0111F7754EF00F14AC7 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F64C0101F7754EF00F14AC7 /* ChatViewController.swift */; };
 		8F64C0131F7754FD00F14AC7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F64C0121F7754FD00F14AC7 /* LaunchScreen.storyboard */; };
@@ -250,6 +251,7 @@
 		8F1D52A71F9D972400135A53 /* ModeleEtatScale.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ModeleEtatScale.swift; path = Noyau/Application/States/ModeleEtatScale.swift; sourceTree = "<group>"; };
 		8F1D52A91F9D99C700135A53 /* VisiteurScale.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VisiteurScale.swift; path = Noyau/Arbre/Visiteurs/VisiteurScale.swift; sourceTree = "<group>"; };
 		8F27E8101FA1803400A8856D /* Tap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Tap.png; path = ../../Sources/Icons/Tap.png; sourceTree = "<group>"; };
+		8F4C1DC31FB412D100B570C8 /* DeleteCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DeleteCommand.swift; path = Noyau/Editor/Commands/DeleteCommand.swift; sourceTree = "<group>"; };
 		8F4D5E3B1FA060140002D5C5 /* Delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Delete.png; path = ../../Sources/Icons/Delete.png; sourceTree = "<group>"; };
 		8F64C0101F7754EF00F14AC7 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatViewController.swift; path = InterfaceGraphique/Chat/ChatViewController.swift; sourceTree = "<group>"; };
 		8F64C0121F7754FD00F14AC7 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = InterfaceGraphique/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -317,6 +319,7 @@
 				8FB0E29D1FB00DC700672057 /* SelectionCommand.swift */,
 				8FC88F411FB2B34D00268D81 /* TranformCommand.swift */,
 				8FDD1E1E1FB3B87000F5E61F /* ControlPointCommand.swift */,
+				8F4C1DC31FB412D100B570C8 /* DeleteCommand.swift */,
 			);
 			name = Commands;
 			sourceTree = "<group>";
@@ -981,6 +984,7 @@
 				8F97A3861FA2C8BD00421FDC /* IGeneralPropertiesViewModel.swift in Sources */,
 				3415E6DB1F85C1F300DB1CAD /* NoeudPointControl.swift in Sources */,
 				8F97A3851FA2C8BD00421FDC /* GeneralPropertiesViewModel.swift in Sources */,
+				8F4C1DC41FB412D100B570C8 /* DeleteCommand.swift in Sources */,
 				34B965D01FA2976600BD17CC /* GeneralProperties.swift in Sources */,
 				342E7C521F9859620062017A /* ModeleEtatCreerPortail.swift in Sources */,
 				344A6E221F99101700CFFBEB /* ModeleEtatCreerBoost.swift in Sources */,

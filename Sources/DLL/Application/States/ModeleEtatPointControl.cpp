@@ -249,8 +249,10 @@ void ModeleEtatPointControl::nettoyerEtat()
 	NoeudComposite* table = (NoeudComposite*)arbre->chercher(ArbreRenduINF2990::NOM_TABLE);
 	for (auto it = table->obtenirIterateurBegin(); it != table->obtenirIterateurEnd(); ++it)
 	{
-		if( (*it)->obtenirType() == ArbreRenduINF2990::NOM_POINT_CONTROL )
+		if( (*it)->obtenirType() == ArbreRenduINF2990::NOM_POINT_CONTROL && !(*it)->isSelectedByAnotherUser() )
+		{
 			(*it)->useOtherColor(false);
+		}
 	}
 }
 

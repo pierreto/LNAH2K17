@@ -109,9 +109,22 @@ namespace AirHockeyServer.Hubs
             await GameService.GameOver(gameId);
         }
 
-        public void Disconnect(string username)
+        public void GamePauseOrResume(Guid gameId)
         {
-            //
+            Clients.Group(gameId.ToString(), Context.ConnectionId).ReceivedGamePauseOrResume();
+        }
+
+        public void RegisterPlayer(Guid gameId)
+        {
+            ConnectionMapper.AddGameID(Context.ConnectionId, gameId);
+        }
+
+        public override Task OnDisconnected(bool stopCalled)
+        {
+            string gameID = ConnectionMapper.GetGameId(Context.ConnectionId).ToString();
+            Clients.Group(gameID, Context.ConnectionId).DisconnectedOpponent();
+
+            return base.OnDisconnected(stopCalled);
         }
     }
 }
