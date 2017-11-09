@@ -75,8 +75,12 @@ class EditionHub: BaseHub {
                 editionCommand = SelectionCommand(objectUuid: command["ObjectUuid"].string!)
                 break
             case .TRANSFORM_COMMAND :
-                print ("Transform command")
+                // print ("Transform command")
                 editionCommand = TransformCommand(objectUuid: command["ObjectUuid"].string!)
+                break
+            case .CONTROLPOINT_COMMAND :
+                // print ("Control point command")
+                editionCommand = ControlPointCommand(objectUuid: command["ObjectUuid"].string!)
                 break
         }
         
@@ -86,7 +90,7 @@ class EditionHub: BaseHub {
     
     func convertMapEntity(mapEntity: MapEntity) -> Any {
         let map = [
-            "Id": mapEntity.id!,
+            "Id": mapEntity.id.value!.description,
             "Creator": mapEntity.creator!,
             "MapName": mapEntity.mapName!,
             "LastBackup": mapEntity.lastBackup!.description,
@@ -146,7 +150,7 @@ class EditionHub: BaseHub {
         //print(jsonCommand!)
         
         do {
-            try self.hubProxy?.invoke("SendEditionCommand", arguments: [self.map?.id as Any, jsonCommand!])
+            try self.hubProxy?.invoke("SendEditionCommand", arguments: [self.map?.id.value as Any, jsonCommand!])
         }
         catch {
             print("Error SendEditionCommand")
@@ -155,7 +159,7 @@ class EditionHub: BaseHub {
     
     func leaveRoom() {
         do {
-            try self.hubProxy?.invoke("LeaveRoom", arguments: [self.map?.id as Any])
+            try self.hubProxy?.invoke("LeaveRoom", arguments: [self.map?.id.value as Any])
         }
         catch {
             print("Error LeaveRoom")

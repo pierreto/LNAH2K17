@@ -136,6 +136,7 @@
 		8FC88F421FB2B34D00268D81 /* TranformCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FC88F411FB2B34D00268D81 /* TranformCommand.swift */; };
 		8FCDF6191FA1BEDF00631551 /* EditorNotificationScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8FCDF6171FA1BEDF00631551 /* EditorNotificationScene.sks */; };
 		8FCDF61A1FA1BEDF00631551 /* EditorNotificationScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCDF6181FA1BEDF00631551 /* EditorNotificationScene.swift */; };
+		8FDD1E1F1FB3B87000F5E61F /* ControlPointCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FDD1E1E1FB3B87000F5E61F /* ControlPointCommand.swift */; };
 		8FFC5B481F7C90340031474F /* MessageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFC5B471F7C90340031474F /* MessageViewCell.swift */; };
 		8FFC5B4A1F7CA7170031474F /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFC5B491F7CA7170031474F /* PaddingLabel.swift */; };
 		E7B7E3DDFEF5DC14C25C5EF5 /* Pods_AirHockeyLightClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7585740DC43877CD99CDDF6A /* Pods_AirHockeyLightClient.framework */; };
@@ -289,6 +290,7 @@
 		8FC88F411FB2B34D00268D81 /* TranformCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TranformCommand.swift; path = Noyau/Editor/Commands/TranformCommand.swift; sourceTree = "<group>"; };
 		8FCDF6171FA1BEDF00631551 /* EditorNotificationScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = EditorNotificationScene.sks; path = InterfaceGraphique/Editor/EditorNotificationScene.sks; sourceTree = "<group>"; };
 		8FCDF6181FA1BEDF00631551 /* EditorNotificationScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditorNotificationScene.swift; path = InterfaceGraphique/Editor/EditorNotificationScene.swift; sourceTree = "<group>"; };
+		8FDD1E1E1FB3B87000F5E61F /* ControlPointCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ControlPointCommand.swift; path = Noyau/Editor/Commands/ControlPointCommand.swift; sourceTree = "<group>"; };
 		8FFC5B471F7C90340031474F /* MessageViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageViewCell.swift; path = InterfaceGraphique/Chat/MessageViewCell.swift; sourceTree = "<group>"; };
 		8FFC5B491F7CA7170031474F /* PaddingLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PaddingLabel.swift; path = InterfaceGraphique/Chat/PaddingLabel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -314,6 +316,7 @@
 				8FB0E29B1FAFF2B100672057 /* WallCommand.swift */,
 				8FB0E29D1FB00DC700672057 /* SelectionCommand.swift */,
 				8FC88F411FB2B34D00268D81 /* TranformCommand.swift */,
+				8FDD1E1E1FB3B87000F5E61F /* ControlPointCommand.swift */,
 			);
 			name = Commands;
 			sourceTree = "<group>";
@@ -957,6 +960,7 @@
 				8F6AE2C21F6592EB00A29E8B /* GameScene.swift in Sources */,
 				25163A891F9CE62600142418 /* ILoginViewModel.swift in Sources */,
 				34B66FE41F84636900A9CCB9 /* NoeudBut.swift in Sources */,
+				8FDD1E1F1FB3B87000F5E61F /* ControlPointCommand.swift in Sources */,
 				1D90AB021F9824BE003E0764 /* ConnectServer.swift in Sources */,
 				3475C2461F90144300E8BF86 /* ImmediatePanGestureRecognizer.swift in Sources */,
 				253E088C1F81858E009F301B /* UIViewShake.swift in Sources */,

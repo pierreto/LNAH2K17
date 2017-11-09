@@ -33,6 +33,7 @@ class OfflineEditorState: EditorState {
                                            endUuid: String, endPos: SCNVector3, endRotation: Float, endScale: SCNVector3) {}
     override func currentUserSelectedObject(uuidSelected: String, isSelected: Bool, deselectAll: Bool) {}
     override func currentUserObjectTransformChanged(uuid: String, pos: SCNVector3, rotation: Float, scale: SCNVector3) {}
+    override func currentUserControlPointChanged(uuid: String, pos: SCNVector3) {}
 }
 
 ///////////////////////////////////////////////////////////////////////////////
