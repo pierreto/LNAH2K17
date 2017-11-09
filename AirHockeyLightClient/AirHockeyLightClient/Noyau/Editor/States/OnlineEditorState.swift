@@ -62,7 +62,7 @@ class OnlineEditorState: EditorState {
     override func currentUserSelectedObject(uuidSelected: String, isSelected: Bool, deselectAll: Bool) {
         let command = SelectionCommand(objectUuid: uuidSelected, username: HubManager.sharedConnection.getUsername()!,
                                        isSelected: isSelected, deselectAll: deselectAll)
-        self.clientConnection.getEditionHub().sendEditionCommand(command: command)
+        self.clientConnection.getEditionHub().sendSelectionCommand(command: command)
     }
     
     override func currentUserObjectTransformChanged(uuid: String, pos: SCNVector3, rotation: Float, scale: SCNVector3) {
