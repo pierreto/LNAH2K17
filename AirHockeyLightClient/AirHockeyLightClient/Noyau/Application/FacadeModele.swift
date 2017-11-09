@@ -333,6 +333,25 @@ class FacadeModele {
         }
     }
     
+    /// Cette fonction supprime un noeud
+    func deleteNode(uuid: String, username: String) {
+        let node = self.userManager?.getUser(username: username).findNode(uuid: uuid)
+        
+        if node != nil {
+            self.userManager?.getUser(username: username).deselectAll()
+            node?.removeFromParentNode()
+        }
+        // Find in the entire tree if it's not in the player's selected nodes
+        else {
+            let nodeInTree = self.findNodeInTree(uuid: uuid)
+            
+            if nodeInTree != nil {
+                self.userManager?.getUser(username: username).deselectAll()
+                nodeInTree?.removeFromParentNode()
+            }
+        }
+    }
+    
     /// Cette fonction applique l'information sur un noeud sélectionné.
     func applyNodeInfos(infos: [Float]) {
         let selection = VisiteurObtenirSelection();

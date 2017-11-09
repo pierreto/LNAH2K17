@@ -30,6 +30,7 @@ class EditorState {
     func currentUserSelectedObject(uuidSelected: String, isSelected: Bool, deselectAll: Bool) {}
     func currentUserObjectTransformChanged(uuid: String, pos: SCNVector3, rotation: Float, scale: SCNVector3) {}
     func currentUserControlPointChanged(uuid: String, pos: SCNVector3) {}
+    func currentUserDeletedNode(uuid: String) {}
 }
 
 ///////////////////////////////////////////////////////////////////////////////

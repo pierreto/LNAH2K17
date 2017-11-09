@@ -79,6 +79,13 @@ class OnlineEditorState: EditorState {
         self.clientConnection.getEditionHub().sendEditionCommand(command: command)
     }
     
+    override func currentUserDeletedNode(uuid: String) {
+        let command = DeleteCommand(objectUuid: uuid, username: HubManager.sharedConnection.getUsername()!)
+        self.clientConnection.getEditionHub().sendEditionCommand(command: command)
+        
+        // TODO: Sauvegarder la map en ligne
+    }
+    
 }
 
 ///////////////////////////////////////////////////////////////////////////////

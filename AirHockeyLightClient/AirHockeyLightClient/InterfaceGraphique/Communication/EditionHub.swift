@@ -82,6 +82,10 @@ class EditionHub: BaseHub {
                 // print ("Control point command")
                 editionCommand = ControlPointCommand(objectUuid: command["ObjectUuid"].string!)
                 break
+            case .DELETE_COMMAND :
+                print ("Delete command")
+                editionCommand = DeleteCommand(objectUuid: command["ObjectUuid"].string!)
+                break
         }
         
         editionCommand.fromJSON(json: command)
