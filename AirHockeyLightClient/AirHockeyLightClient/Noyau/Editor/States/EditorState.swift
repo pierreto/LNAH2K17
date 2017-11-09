@@ -31,6 +31,7 @@ class EditorState {
     func currentUserObjectTransformChanged(uuid: String, pos: SCNVector3, rotation: Float, scale: SCNVector3) {}
     func currentUserControlPointChanged(uuid: String, pos: SCNVector3) {}
     func currentUserDeletedNode(uuid: String) {}
+    func currentUserChangedCoefficient(coefficientFriction: Float, coefficientRebond: Float, coefficientAcceleration: Float) {}
 }
 
 ///////////////////////////////////////////////////////////////////////////////

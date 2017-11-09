@@ -131,6 +131,7 @@
 		8F97A3861FA2C8BD00421FDC /* IGeneralPropertiesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F97A3841FA2C8BD00421FDC /* IGeneralPropertiesViewModel.swift */; };
 		8FB0E29C1FAFF2B100672057 /* WallCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB0E29B1FAFF2B100672057 /* WallCommand.swift */; };
 		8FB0E29E1FB00DC700672057 /* SelectionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB0E29D1FB00DC700672057 /* SelectionCommand.swift */; };
+		8FB2F7761FB41CD80047FB53 /* CoefficientCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB2F7751FB41CD80047FB53 /* CoefficientCommand.swift */; };
 		8FB6A9951F81B9C800FAFFCF /* EditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB6A9941F81B9C800FAFFCF /* EditorViewController.swift */; };
 		8FB6A9CA1F81E38300FAFFCF /* Table.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB6A9C91F81E38300FAFFCF /* Table.swift */; };
 		8FC88F421FB2B34D00268D81 /* TranformCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FC88F411FB2B34D00268D81 /* TranformCommand.swift */; };
@@ -285,6 +286,7 @@
 		8F97A3841FA2C8BD00421FDC /* IGeneralPropertiesViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IGeneralPropertiesViewModel.swift; path = InterfaceGraphique/ViewModel/GeneralProperties/IGeneralPropertiesViewModel.swift; sourceTree = "<group>"; };
 		8FB0E29B1FAFF2B100672057 /* WallCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WallCommand.swift; path = Noyau/Editor/Commands/WallCommand.swift; sourceTree = "<group>"; };
 		8FB0E29D1FB00DC700672057 /* SelectionCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelectionCommand.swift; path = Noyau/Editor/Commands/SelectionCommand.swift; sourceTree = "<group>"; };
+		8FB2F7751FB41CD80047FB53 /* CoefficientCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoefficientCommand.swift; path = Noyau/Editor/Commands/CoefficientCommand.swift; sourceTree = "<group>"; };
 		8FB6A9941F81B9C800FAFFCF /* EditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditorViewController.swift; path = InterfaceGraphique/Editor/EditorViewController.swift; sourceTree = "<group>"; };
 		8FB6A9C91F81E38300FAFFCF /* Table.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Table.swift; path = Noyau/Arbre/Noeuds/Table.swift; sourceTree = "<group>"; };
 		8FC88F411FB2B34D00268D81 /* TranformCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TranformCommand.swift; path = Noyau/Editor/Commands/TranformCommand.swift; sourceTree = "<group>"; };
@@ -318,6 +320,7 @@
 				8FC88F411FB2B34D00268D81 /* TranformCommand.swift */,
 				8FDD1E1E1FB3B87000F5E61F /* ControlPointCommand.swift */,
 				8F4C1DC31FB412D100B570C8 /* DeleteCommand.swift */,
+				8FB2F7751FB41CD80047FB53 /* CoefficientCommand.swift */,
 			);
 			name = Commands;
 			sourceTree = "<group>";
@@ -994,6 +997,7 @@
 				8F7F0BC81FA6CFDB00C4F022 /* ObjectPropertiesView.swift in Sources */,
 				8F65B2981FAF6F0200D8EE20 /* OnlineMenuViewController.swift in Sources */,
 				8FCDF61A1FA1BEDF00631551 /* EditorNotificationScene.swift in Sources */,
+				8FB2F7761FB41CD80047FB53 /* CoefficientCommand.swift in Sources */,
 				8F1D52AA1F9D99C700135A53 /* VisiteurScale.swift in Sources */,
 				8FFC5B4A1F7CA7170031474F /* PaddingLabel.swift in Sources */,
 				8F0B94B61F8D5C25007F0E82 /* FacadeModele.swift in Sources */,

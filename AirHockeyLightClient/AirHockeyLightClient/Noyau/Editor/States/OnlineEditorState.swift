@@ -86,6 +86,13 @@ class OnlineEditorState: EditorState {
         // TODO: Sauvegarder la map en ligne
     }
     
+    override func currentUserChangedCoefficient(coefficientFriction: Float, coefficientRebond: Float, coefficientAcceleration: Float) {
+        let command = CoefficientCommand(coefficientFriction: coefficientFriction,
+                                         coefficientRebond: coefficientRebond,
+                                         coefficientAcceleration: coefficientAcceleration)
+        self.clientConnection.getEditionHub().sendEditionCommand(command: command)
+    }
+    
 }
 
 ///////////////////////////////////////////////////////////////////////////////
