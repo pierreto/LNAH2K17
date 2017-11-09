@@ -60,7 +60,7 @@ namespace AirHockeyServer.Events.EventManagers
         /// avertir qu'un adversaire leur a été attribué.
         ///
         ////////////////////////////////////////////////////////////////////////
-        private async void OnMatchFound(object sender, MatchFoundArgs args)
+        private void OnMatchFound(object sender, MatchFoundArgs args)
         {
             GameEntity gameCreated = new GameEntity()
             {
@@ -78,7 +78,7 @@ namespace AirHockeyServer.Events.EventManagers
                 var connection = ConnectionMapper.GetConnection(player.Id);
                 try
                 {
-                    HubContext.Groups.Add(connection, stringGameId);
+                    HubContext.Groups.Add(connection, stringGameId).Wait();
                 }
                 catch(Exception e)
                 {
@@ -121,7 +121,7 @@ namespace AirHockeyServer.Events.EventManagers
                 if(Games[gameId].SelectedMap == null)
                 {
                     var maps = await MapService.GetMaps();
-                    Games[gameId].SelectedMap = maps.First();
+                    Games[gameId].SelectedMap = await MapService.GetMap(maps.First().Id.Value);
                 }
 
                 GameManager.AddGame(Games[gameId]);
