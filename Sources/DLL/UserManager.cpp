@@ -24,7 +24,9 @@ void UserManager::addNewUser(std::string name, std::string hexColor)
 
 void UserManager::removeUser(std::string name)
 {
-	delete usersMap_.at(name);
+	OnlineUser* user = usersMap_.at(name);
+	user->deselectAll();
+	delete user;
 	usersMap_.erase(name);
 }
 

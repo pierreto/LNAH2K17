@@ -18,11 +18,12 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress>
-    </Use64BitIISExpress>
+    <Use64BitIISExpress>true</Use64BitIISExpress>
     <IISExpressSSLPort />
-    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
-    <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
+    <IISExpressAnonymousAuthentication>
+    </IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>
+    </IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
@@ -226,6 +227,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MapController.cs" />
     <Compile Include="Controllers\SignupController.cs" />
+    <Compile Include="Controllers\StatsController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Core\Connector.cs" />
     <Compile Include="Core\Cache.cs" />
@@ -234,9 +236,11 @@
     <Compile Include="Core\RequestsManager.cs" />
     <Compile Include="DatabaseCore\DataProvider.cs" />
     <Compile Include="DatabaseCore\MyDataContext.cs" />
+    <Compile Include="Entities\AchievementEntity.cs" />
     <Compile Include="Entities\ChannelEntity.cs" />
     <Compile Include="Entities\ChatMessageEntity.cs" />
     <Compile Include="Entities\ConfigurationEntity.cs" />
+    <Compile Include="Entities\Edition\EditionCommand\CoefficientCommand.cs" />
     <Compile Include="Entities\Edition\EditionCommand\ControlPointCommand.cs" />
     <Compile Include="Entities\Edition\EditionCommand\DeleteCommand.cs" />
     <Compile Include="Entities\FriendRequestEntity.cs" />
@@ -278,6 +282,7 @@
     <Compile Include="Manager\ITournamentManager.cs" />
     <Compile Include="Manager\TournamentManager.cs" />
     <Compile Include="Mapping\MapperManager.cs" />
+    <Compile Include="Pocos\AchievementPoco.cs" />
     <Compile Include="Pocos\FriendPoco.cs" />
     <Compile Include="Pocos\GamePoco.cs" />
     <Compile Include="Pocos\LoginPoco.cs" />
@@ -308,10 +313,12 @@
     <Compile Include="Repositories\TournamentRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Repositories\PasswordRepository.cs" />
+    <Compile Include="Services\AchievementInfoService.cs" />
     <Compile Include="Services\ChannelService.cs" />
     <Compile Include="Services\ChatService.cs" />
     <Compile Include="Hubs\ChatHub.cs" />
     <Compile Include="Services\FriendService.cs" />
+    <Compile Include="Services\Interfaces\IAchievementInfoService.cs" />
     <Compile Include="Services\Interfaces\IFriendService.cs" />
     <Compile Include="Services\EditionService.cs" />
     <Compile Include="Services\GameService.cs" />

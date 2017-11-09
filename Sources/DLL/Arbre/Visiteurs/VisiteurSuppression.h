@@ -45,7 +45,7 @@ public:
 	/// Retourne le nombre de suppressions
 	int obtenirNbSupression() const { return nbSuppression_; };
 	/// Supprime tous les noeuds sélectionnés
-	void deleteAllSelectedNode();
+	void deleteAllSelectedNode(bool sendToServer = true);
 
 private:
 	/// Nombre de suppressions

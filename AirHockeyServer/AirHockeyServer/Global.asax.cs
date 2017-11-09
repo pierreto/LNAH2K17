@@ -47,9 +47,13 @@ namespace AirHockeyServer
             Cache cache = new Cache();
         }
 
-        public static void Register(HttpConfiguration config)
+        public static async void Register(HttpConfiguration config)
         {
             UnityContainer = new UnityContainer();
+
+            // EventManager
+            UnityContainer.RegisterType<GameWaitingRoomEventManager>(new HierarchicalLifetimeManager());
+            UnityContainer.RegisterType<TournamentWaitingRoomEventManager>(new HierarchicalLifetimeManager());
 
             // Repositories
             UnityContainer.RegisterType<IChannelRepository, ChannelRepository>(new HierarchicalLifetimeManager());
@@ -78,6 +82,7 @@ namespace AirHockeyServer
             UnityContainer.RegisterType<ILoginService, LoginService>(new ContainerControlledLifetimeManager());
             UnityContainer.RegisterType<IUserService, UserService>(new ContainerControlledLifetimeManager());
             UnityContainer.RegisterType<IFriendService, FriendService>(new ContainerControlledLifetimeManager());
+            UnityContainer.RegisterType<IAchievementInfoService, AchievementInfoService>(new ContainerControlledLifetimeManager());
             
             // Core
             UnityContainer.RegisterType<IConnector, Connector>(new ContainerControlledLifetimeManager());
@@ -94,7 +99,6 @@ namespace AirHockeyServer
             config.DependencyResolver = new UnityResolver(UnityContainer);
             GameWaitingRoomEventManager gameWaitingRoomEventManager = UnityContainer.Resolve<GameWaitingRoomEventManager>();
             TournamentWaitingRoomEventManager tournamentWaitingRoomEventManager = UnityContainer.Resolve<TournamentWaitingRoomEventManager>();
-
         }
     }
 }

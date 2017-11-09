@@ -285,6 +285,7 @@
     <Compile Include="Entities\Achivement.cs" />
     <Compile Include="Entities\ChannelEntity.cs" />
     <Compile Include="Entities\ChatMessage.cs" />
+    <Compile Include="Entities\Editor\EditonCommand\CoefficientCommand.cs" />
     <Compile Include="Entities\Editor\EditonCommand\ControlPointCommand.cs" />
     <Compile Include="Entities\Editor\EditonCommand\DeleteCommand.cs" />
     <Compile Include="Entities\FriendRequestEntity.cs" />
@@ -303,6 +304,7 @@
     <Compile Include="Entities\MapEntity.cs" />
     <Compile Include="Entities\MemberEntity.cs" />
     <Compile Include="CommunicationInterface\LoginClient.cs" />
+    <Compile Include="Entities\PlayerStatsEntity.cs" />
     <Compile Include="Entities\TournamentEntity.cs" />
     <Compile Include="Entities\MockObject\MapEntityMock.cs" />
     <Compile Include="Entities\TournamentOpponentMessage.cs" />
@@ -428,6 +430,7 @@
       <DependentUpon>TestMode.cs</DependentUpon>
     </Compile>
     <Compile Include="Services\MapService.cs" />
+    <Compile Include="Services\PlayerStatsService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="WPFApplication.cs" />
     <EmbeddedResource Include="Controls\FriendListHost.resx">

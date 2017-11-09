@@ -146,8 +146,8 @@ class NoeudCommun : SCNNode {
     func assignerEstSelectionnable(selectionnable: Bool) {
         self.selectionnable = selectionnable
         
-        // Colorer le noeud devenu sélectionnable
-        if self.defaultColor != self.selectionnableColor {
+        // Colorer le noeud devenu sélectionnable sauf s'il est déjà sélectionné par un autre utilisateur
+        if self.defaultColor != self.selectionnableColor && !self.estSelectionneByAnotherUser() {
             self.useOtherColor(activer: selectionnable, color: self.selectionnableColor)
         }
     }
@@ -187,9 +187,19 @@ class NoeudCommun : SCNNode {
         self.scale = self.savedScale
     }
     
+    /// Cette fonction retourne la couleur par défaut
+    func obtenirDefaultColor() -> UIColor {
+        return self.defaultColor
+    }
+    
     /// Modifie la couleur par défaut
     func assignerDefaultColor(color: UIColor) {
         self.defaultColor = color
+    }
+    
+    /// Cette fonction retourne la couleur d'un noeud sélectionnable
+    func obtenirSelectionnableColor() -> UIColor {
+        return self.selectionnableColor
     }
     
     /// Modifie la couleur lorsqu'un noeud est sélectionnable
@@ -278,12 +288,14 @@ class NoeudCommun : SCNNode {
     
     /// Cette fonction applique une autre couleur sur le noeud
     func useOtherColor(activer: Bool, color: UIColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)) {
-        let material = self.geometry?.firstMaterial
+        /// Faire une copie du matériel pour ne pas affecter le matériel des autres noeuds du même type
+        let material = self.geometry?.firstMaterial?.copy() as! SCNMaterial
+        self.geometry?.firstMaterial = material
         
         if (activer) {
-            material?.diffuse.contents = color
+            material.diffuse.contents = color
         } else {
-            material?.diffuse.contents = self.defaultColor
+            material.diffuse.contents = self.defaultColor
         }
     }
     

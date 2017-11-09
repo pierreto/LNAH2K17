@@ -101,14 +101,14 @@ void VisiteurSuppression::visiterRondelle(NoeudRondelle * noeud)
 /// @return Aucune
 ///
 ////////////////////////////////////////////////////////////////////////
-void VisiteurSuppression::deleteAllSelectedNode() {
+void VisiteurSuppression::deleteAllSelectedNode(bool sendToServer) {
 	ArbreRenduINF2990* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
-	for each (NoeudAbstrait* node in nodeToDelete_) {
-		if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
+	for(NoeudAbstrait* node : nodeToDelete_) {
+		if(node)
 		{
-			ModeleEtatJeu::obtenirInstance()->getDeleteEventCallback()(node->getUUID());
+			arbre->effacer(node, ModeleEtatJeu::obtenirInstance()->getDeleteEventCallback(), sendToServer);
 		}
-		arbre->effacer(node);
+	
 	}
 }
 

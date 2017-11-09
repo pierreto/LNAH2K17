@@ -35,12 +35,13 @@ class EditionHub: BaseHub {
         
         /// Reception de l'évènement quand un utilisateur rejoint une salle d'édition
         self.hubProxy?.on("NewUser") { args in
-            let newUser = args?[0] as! Dictionary<String, String>
+            let newUser = args?[0] as! Dictionary<String, Any>
             let username = newUser["Username"]
             let hexColor = newUser["HexColor"]
-            print("Joining user: \(String(describing: username! + " (" + hexColor! + ")"))\n")
             
-            FacadeModele.instance.obtenirUserManager()?.addUser(username: username!, hexColor: hexColor!)
+            print("Joining user: \(String(describing: (username as! String) + " (" + (hexColor as! String) + ")"))\n")
+            
+            FacadeModele.instance.obtenirUserManager()?.addUser(username: username as! String, hexColor: hexColor as! String)
         }
         
         /// Réception de l'évènement quand un utilisateur quitte la salle d'édition
@@ -73,6 +74,18 @@ class EditionHub: BaseHub {
                 print ("Selection command")
                 editionCommand = SelectionCommand(objectUuid: command["ObjectUuid"].string!)
                 break
+            case .TRANSFORM_COMMAND :
+                // print ("Transform command")
+                editionCommand = TransformCommand(objectUuid: command["ObjectUuid"].string!)
+                break
+            case .CONTROLPOINT_COMMAND :
+                // print ("Control point command")
+                editionCommand = ControlPointCommand(objectUuid: command["ObjectUuid"].string!)
+                break
+            case .DELETE_COMMAND :
+                print ("Delete command")
+                editionCommand = DeleteCommand(objectUuid: command["ObjectUuid"].string!)
+                break
         }
         
         editionCommand.fromJSON(json: command)
@@ -95,7 +108,7 @@ class EditionHub: BaseHub {
     
     func joinPublicRoom(username: String, mapEntity: MapEntity) {
         self.map = mapEntity
-        var usersInRoom = [Dictionary<String, String>]()
+        var usersInRoom = [Dictionary<String, Any>]()
         
         do {
             try self.hubProxy?.invoke("JoinPublicRoom",
@@ -106,16 +119,24 @@ class EditionHub: BaseHub {
                 }
                 else {
                     print("Success JoinPublicRoom")
-                    usersInRoom = result as! [Dictionary<String, String>]
+                    usersInRoom = result as! [Dictionary<String, Any>]
                     print("Users in room: " + usersInRoom.description)
                     
                     for user in usersInRoom {
-                        if user["Username"] == HubManager.sharedConnection.getUsername() {
-                            FacadeModele.instance.setCurrentUserColor(userHexColor: user["HexColor"]!)
+                        if user["Username"] as? String == HubManager.sharedConnection.getUsername() {
+                            FacadeModele.instance.setCurrentUserColor(userHexColor: user["HexColor"] as! String)
                         }
                         
-                        FacadeModele.instance.obtenirUserManager()?.addUser(username: user["Username"]!,
-                                                                            hexColor: user["HexColor"]!)
+                        let username = user["Username"] as! String
+                        FacadeModele.instance.obtenirUserManager()?.addUser(username: username,
+                                                                            hexColor: user["HexColor"] as! String)
+                        
+                        if (user["UuidsSelected"] != nil) {
+                            // Un utilisateur dans la salle a déjà des noeuds sélectionnés
+                            for uuid in user["UuidsSelected"] as! [String] {
+                                FacadeModele.instance.selectNode(username: username, uuid: uuid, isSelected: true, deselectAll: false)
+                            }
+                        }
                     }
                 }
             }
@@ -145,6 +166,17 @@ class EditionHub: BaseHub {
         }
         catch {
             print("Error SendEditionCommand")
+        }
+    }
+    
+    func sendSelectionCommand(command: SelectionCommand) {
+        let convertedCommand = command.toDictionary()
+        
+        do {
+            try self.hubProxy?.invoke("SendSelectionCommand", arguments: [self.map?.id.value as Any, convertedCommand])
+        }
+        catch {
+            print("Error SendSelectionCommand")
         }
     }
     

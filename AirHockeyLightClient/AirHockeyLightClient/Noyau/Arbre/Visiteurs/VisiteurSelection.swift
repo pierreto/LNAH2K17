@@ -89,6 +89,17 @@ class VisiteurSelection: VisiteurAbstrait {
                 FacadeModele.instance.obtenirEtatEdition().currentUserSelectedObject(uuidSelected: noeud.obtenirUUID(),
                                                                                      isSelected: noeud.estSelectionne(),
                                                                                      deselectAll: false)
+                // Si le noeud sélectionné est un point de contrôle, on sélectionne l'opposé en mode en ligne
+                if noeud.obtenirType() == FacadeModele.instance.obtenirArbreRendu().NOM_POINT_CONTROL {
+                    FacadeModele.instance.obtenirEtatEdition().currentUserSelectedObject(uuidSelected: noeud.obtenirUUID(),
+                                                                                         isSelected: true,
+                                                                                         deselectAll: false)
+                    let noeudOppose = (noeud as! NoeudPointControl).obtenirNoeudOppose()
+                    FacadeModele.instance.obtenirEtatEdition().currentUserSelectedObject(uuidSelected: noeudOppose.obtenirUUID(),
+                                                                                         isSelected: true,
+                                                                                         deselectAll: false)
+                }
+                
                 self.nbSelections += 1
             }
             // Déselectionner le noeud sauf pour le point de contrôle
@@ -102,7 +113,6 @@ class VisiteurSelection: VisiteurAbstrait {
                 self.nbSelections -= 1
             }
         }
-
     }
 }
 

@@ -85,7 +85,12 @@ void ModeleEtatPointControl::initialiser()
 	for (auto it = table->obtenirIterateurBegin(); it != table->obtenirIterateurEnd(); ++it)
 	{
 		if ((*it)->obtenirType() == ArbreRenduINF2990::NOM_POINT_CONTROL)
-			(*it)->useOtherColor(true, glm::vec4(1, 85.0f/255, 82.0f/255, 1));
+		{
+			if (!(*it)->isSelectedByAnotherUser())
+			{
+				(*it)->useOtherColor(true, glm::vec4(1, 85.0f / 255, 82.0f / 255, 1));
+			}
+		}
 	}
 }
 
@@ -189,7 +194,11 @@ void ModeleEtatPointControl::mouseUpL() {
 
 	// Reinitialiser l'etat
 	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->deselectionnerTout();
-	ModeleEtatSelection::obtenirInstance()->getSelectionEventCallback()("", false, true);
+	if(ModeleEtatJeu::obtenirInstance()->currentOnlineClientType()==ModeleEtatJeu::ONLINE_EDITION)
+	{
+		selectionCallback_("", false, true);
+
+	}
 
 	initialiser();
 }
@@ -240,8 +249,10 @@ void ModeleEtatPointControl::nettoyerEtat()
 	NoeudComposite* table = (NoeudComposite*)arbre->chercher(ArbreRenduINF2990::NOM_TABLE);
 	for (auto it = table->obtenirIterateurBegin(); it != table->obtenirIterateurEnd(); ++it)
 	{
-		if( (*it)->obtenirType() == ArbreRenduINF2990::NOM_POINT_CONTROL )
+		if( (*it)->obtenirType() == ArbreRenduINF2990::NOM_POINT_CONTROL && !(*it)->isSelectedByAnotherUser() )
+		{
 			(*it)->useOtherColor(false);
+		}
 	}
 }
 
@@ -291,7 +302,9 @@ void ModeleEtatPointControl::revertPosition()
 			if (controlPointEventCallback_)
 			{
 				controlPointEventCallback_(noeud->getUUID(), glm::value_ptr(noeud->obtenirPositionRelative()));
-				ModeleEtatSelection::obtenirInstance()->getSelectionEventCallback()(noeud->getUUID(), false, false);
+				controlPointEventCallback_(static_cast<NoeudPointControl*>(noeud)->obtenirNoeudOppose()->getUUID(), glm::value_ptr(static_cast<NoeudPointControl*>(noeud)->obtenirNoeudOppose()->obtenirPositionRelative()));
+
+				selectionCallback_(noeud->getUUID(), false, false);
 			}
 		}
 

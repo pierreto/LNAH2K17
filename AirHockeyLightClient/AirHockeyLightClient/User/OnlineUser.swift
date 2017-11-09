@@ -21,6 +21,7 @@ class OnlineUser {
     
     private var username : String
     private var hexColor : UIColor
+    private var uuidsSelected = [String]()
     private var nodesSelected: [NoeudCommun]
     
     init(username: String, hexColor: String) {
@@ -45,6 +46,10 @@ class OnlineUser {
         self.hexColor = hexColor
     }
     
+    public func getUuidsSelected() -> [String] {
+        return self.uuidsSelected
+    }
+    
     public func getNodesSelected() -> [NoeudCommun] {
         return self.nodesSelected
     }
@@ -61,12 +66,21 @@ class OnlineUser {
     
     public func deselect(uuid: String) {
         let index = self.nodesSelected.index(where: { $0.obtenirUUID() == uuid })
-        let node = self.nodesSelected[index!]
         
-        node.assignerSelectionneByAnotherUser(estSelectionneByAnotherUser: false)
-        node.useOtherColor(activer: false)
+        if (index != nil) {
+            let node = self.nodesSelected[index!]
         
-        self.nodesSelected.remove(at: index!)
+            node.assignerSelectionneByAnotherUser(estSelectionneByAnotherUser: false)
+            node.useOtherColor(activer: false)
+        
+            // Colorer le noeud s'il est sélectionnable
+            let selectionnable = node.estSelectionnable()
+            if selectionnable && node.obtenirDefaultColor() != node.obtenirSelectionnableColor() {
+                node.useOtherColor(activer: selectionnable, color: node.obtenirSelectionnableColor())
+            }
+            
+            self.nodesSelected.remove(at: index!)
+        }
     }
     
     public func findNode(uuid: String) -> NoeudCommun? {
@@ -84,6 +98,12 @@ class OnlineUser {
         for node in self.nodesSelected {
             node.assignerSelectionneByAnotherUser(estSelectionneByAnotherUser: false)
             node.useOtherColor(activer: false)
+            
+            // Colorer le noeud s'il est sélectionnable
+            let selectionnable = node.estSelectionnable()
+            if selectionnable && node.obtenirDefaultColor() != node.obtenirSelectionnableColor() {
+                node.useOtherColor(activer: selectionnable, color: node.obtenirSelectionnableColor())
+            }
         }
         self.nodesSelected.removeAll()
     }

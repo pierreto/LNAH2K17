@@ -63,10 +63,10 @@ namespace AirHockeyServer.Hubs
         /// @return la partie mise à jour
         ///
         ////////////////////////////////////////////////////////////////////////
-        public async Task<GameEntity> UpdateMap(GameEntity gameEntity)
+        public void UpdateMap(Guid gameId, MapEntity map)
         {
-            Clients.Group(gameEntity.GameId.ToString()).GameMapUpdatedEvent(gameEntity);
-            return await GameService.UpdateGame(gameEntity);
+            Clients.Group(gameId.ToString()).GameMapUpdatedEvent(map);
+            GameService.UpdateGame(gameId, map);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -85,9 +85,11 @@ namespace AirHockeyServer.Hubs
             GameService.JoinGame(user);
         }
 
-        public void LeaveGame(UserEntity user)
+        public void LeaveGame(UserEntity user, Guid gameId)
         {
+            Groups.Remove(ConnectionMapper.GetConnection(user.Id), gameId.ToString());
             GameService.LeaveGame(user);
+            ConnectionMapper.DeleteConnection(user.Id);
         }
 
         public void SendGameData(Guid gameId, GameDataMessage gameData)
@@ -107,9 +109,22 @@ namespace AirHockeyServer.Hubs
             await GameService.GameOver(gameId);
         }
 
-        public void Disconnect(string username)
+        public void GamePauseOrResume(Guid gameId)
         {
-            //
+            Clients.Group(gameId.ToString(), Context.ConnectionId).ReceivedGamePauseOrResume();
+        }
+
+        public void RegisterPlayer(Guid gameId)
+        {
+            ConnectionMapper.AddGameID(Context.ConnectionId, gameId);
+        }
+
+        public override Task OnDisconnected(bool stopCalled)
+        {
+            string gameID = ConnectionMapper.GetGameId(Context.ConnectionId).ToString();
+            Clients.Group(gameID, Context.ConnectionId).DisconnectedOpponent();
+
+            return base.OnDisconnected(stopCalled);
         }
     }
 }

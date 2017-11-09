@@ -119,7 +119,7 @@ void NoeudAbstrait::vider()
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void NoeudAbstrait::effacer(const NoeudAbstrait* noeud)
+void NoeudAbstrait::effacer(const NoeudAbstrait* noeud, DeleteEventCallback deleteEventCallback , bool onlineMode )
 {
 }
 

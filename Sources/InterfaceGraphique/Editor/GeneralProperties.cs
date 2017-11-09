@@ -61,6 +61,11 @@ namespace InterfaceGraphique {
             coefficientRebond = (float)this.Input_CoefRebound.Value;
             coefficientAcceleration = (float)this.Input_CoefAcceleration.Value;
 
+            if (Program.FormManager.CurrentForm.GetType() == typeof(Editeur))
+            {
+                Program.Editeur.HandleCoefficientChanges(coefficientFriction, coefficientAcceleration, coefficientRebond);
+            }
+
             LoadGeneralProperties();
         }
 
@@ -79,6 +84,7 @@ namespace InterfaceGraphique {
             this.Input_CoefAcceleration.Text = coefficientAcceleration.ToString();
 
             FonctionsNatives.setCoefficients(coefficientFriction, coefficientAcceleration, coefficientRebond);
+     
         }
 
 

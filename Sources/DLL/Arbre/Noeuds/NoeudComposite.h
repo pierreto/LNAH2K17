@@ -14,6 +14,7 @@
 #include "NoeudAbstrait.h"
 
 #include <vector>
+#include "FacadeInterfaceNative.h"
 
 
 ///////////////////////////////////////////////////////////////////////////
@@ -54,7 +55,7 @@ public:
    /// Vide le noeud de ses enfants.
    virtual void vider();
    /// Efface le noeud passé en paramètre.
-   virtual void effacer( const NoeudAbstrait* noeud );
+   virtual void effacer( const NoeudAbstrait* noeud, DeleteEventCallback deleteEventCallback=nullptr, bool onlineMode=false);
 
    /// Cherche un noeud par le type (sur un noeud constant).
    virtual const NoeudAbstrait* chercher( const std::string& typeNoeud ) const;

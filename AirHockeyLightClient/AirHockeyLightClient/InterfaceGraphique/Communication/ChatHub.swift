@@ -19,6 +19,19 @@ class ChatHub: BaseHub {
         self.hubProxy?.on("ChatMessageReceived") { args in
             ChatAreaViewController.sharedChatAreaViewController.receiveMessage(message: args?[0] as! Dictionary<String, String>)
         }
+        
+        self.hubProxy?.on("ChatMessageReceivedChannel") { args in
+            ChatAreaViewController.sharedChatAreaViewController.receiveMessageChannel(message: args?[0] as! Dictionary<String, String>, channelName: args?[1] as! String)
+        }
+        
+        self.hubProxy?.on("NewJoinableChannel") { args in
+           // ChatAreaViewController.sharedChatAreaViewController.newJoinableChannel(channelName: args?[0] as! String)
+        }
+        
+        self.hubProxy?.on("ChannelDeleted") { args in
+           // ChatAreaViewController.sharedChatAreaViewController.channelDeleted(channelName: args?[0] as! String)
+        }
+
     }
     
     ////////////////////////////////////////////////////////////////////////
@@ -75,7 +88,7 @@ class ChatHub: BaseHub {
     /// @return Aucune
     ///
     ////////////////////////////////////////////////////////////////////////
-    public func SendChannel(channelName: String, message: Any) {
+    public func SendChannel(channelName: String, message: [String : Any]) {
         do {
             try hubProxy!.invoke("SendChannel", arguments: [channelName, message])
         }
@@ -105,7 +118,27 @@ class ChatHub: BaseHub {
         }
     }
 
-    
+    public func CreateChannel(channelName: String, res: @escaping (_ message: String?) -> Void) {
+        var msg: String?
+        do {
+             try hubProxy!.invoke("CreateChannel", arguments: [channelName]) { (result, error) in
+                if let e = error {
+                    print("Error CreateChannel: \(e)")
+                }
+                else {
+                    if(result as! Bool){
+                        msg = ""
+                    } else {
+                        msg = "Canal déjà créé"
+                    }
+                    res(msg)
+                }
+            }
+        }
+        catch{
+            print("Error CreateChannel")
+        }
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////

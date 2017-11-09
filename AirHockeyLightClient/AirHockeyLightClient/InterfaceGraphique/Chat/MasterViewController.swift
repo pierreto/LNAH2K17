@@ -9,23 +9,43 @@
 import UIKit
 
 protocol ChannelSelectionDelegate: class {
+    var sChannelNameErrMsg: String {get set}
+    var sChannelName: String { get set}
+    var cJoinChannelConstraint: Float { get set}
     func channelSelected(newChannel: ChannelEntity)
+    func toggleAddChannelView()
 }
 
+var channels = [ChannelEntity]()
+
 class MasterViewController: UITableViewController {
-
-    var channels = [ChannelEntity]()
-    weak var delegate: ChannelSelectionDelegate?
+    let clientConnection = HubManager.sharedConnection
+    static var sharedMasterViewController = MasterViewController()
     
-    required init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)!
-        
-        self.channels.append(ChannelEntity(name: "Principal"))
-        self.channels.append(ChannelEntity(name: "Secondaire"))
+    weak var delegate: ChannelSelectionDelegate?
+    @IBOutlet var channelTableView: UITableView!
+    @IBAction func toggleJoinChannelMenu(_ sender: Any) {
+        if delegate?.cJoinChannelConstraint == 1 {
+            delegate?.cJoinChannelConstraint = -241
+        } else {
+            delegate?.cJoinChannelConstraint = 1
+        }
     }
+    
+//    required init(coder aDecoder: NSCoder) {
+//        super.init(coder: aDecoder)!
+//        MasterViewController.sharedMasterViewController = self
+//        self.channels.append(ChannelEntity(name: "Principal"))
+//    }
 
+    @IBAction func addChannel(_ sender: Any) {
+        self.delegate?.toggleAddChannelView()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        channels.append(ChannelEntity(name: "Principal"))
+        MasterViewController.sharedMasterViewController = self
         ChatAreaViewController.sharedChatAreaViewController.channel = channels.first
         delegate = ChatAreaViewController.sharedChatAreaViewController
         // Uncomment the following line to preserve selection between presentations
@@ -56,13 +76,13 @@ class MasterViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
 
         // Configure the cell...
-        let channel = self.channels[indexPath.row]
+        let channel = channels[indexPath.row]
         cell.textLabel?.text = channel.name
         return cell
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedChannel = self.channels[indexPath.row]
+        let selectedChannel = channels[indexPath.row]
         self.delegate?.channelSelected(newChannel: selectedChannel)
     }
     
@@ -111,4 +131,26 @@ class MasterViewController: UITableViewController {
     }
     */
 
+}
+
+extension MasterViewController: AddChannelDelegate {
+    func addChannel(channelName: String) {
+        let chatHub = clientConnection.getChatHub()
+        chatHub.CreateChannel(channelName: channelName) { res in
+            if res == "" {
+                channels.append(ChannelEntity(name: channelName))
+                self.delegate?.sChannelNameErrMsg = ""
+                self.delegate?.sChannelName = ""
+                self.delegate?.toggleAddChannelView()
+                self.channelTableView.reloadData()
+            } else {
+                self.delegate?.sChannelNameErrMsg = "Canal déjà créé"
+                print("Canal existe deja")
+            }
+        }
+        DispatchQueue.main.async(execute: { () -> Void in
+            // Reload tableView
+            self.channelTableView.reloadData()
+        })
+    }
 }

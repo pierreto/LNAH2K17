@@ -32,10 +32,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let masterViewController = leftNavController.topViewController as! MasterViewController
         let chatAreaViewController = splitViewController.viewControllers.last as! ChatAreaViewController
         
-        let firstChannel = masterViewController.channels.first
+        let firstChannel = channels.first
         chatAreaViewController.channel = firstChannel
         
         masterViewController.delegate = chatAreaViewController
+        chatAreaViewController.delegate = masterViewController
         return true
     }
 

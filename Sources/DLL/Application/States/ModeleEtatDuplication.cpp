@@ -19,6 +19,7 @@
 #include "VisiteurDuplication.h"
 #include "VisiteurObtenirSelection.h"
 #include "ModeleEtatJeu.h"
+#include "ModeleEtatCreerMuret.h"
 
 /// Pointeur vers l'instance unique de la classe.
 ModeleEtatDuplication* ModeleEtatDuplication::instance_{ nullptr };
@@ -105,16 +106,16 @@ void ModeleEtatDuplication::mouseUpL() {
 		// Dupliquer seulement si les objets sont dans la zone de jeu
 		if (noeudsSurLaTable()) {
 
-			bool sendToServer;
+			VisiteurDuplication duplication;
 			if(ModeleEtatJeu::obtenirInstance()->currentOnlineClientType()==ModeleEtatJeu::ONLINE_EDITION)
 			{
-				sendToServer = true;
+				duplication = VisiteurDuplication(true, wallCreationCallback_, boostCreationCallback_, portalCreationCallback_);
+
 			}else
 			{
-				sendToServer = false;
+				duplication = VisiteurDuplication(false);
 			}
 
-			VisiteurDuplication duplication = VisiteurDuplication(sendToServer);
 			FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(&duplication);
 		}
 	}
@@ -172,13 +173,21 @@ void ModeleEtatDuplication::playerMouseMove(int x, int y) {
 		glm::dvec3 mousePos, lastMousePos;
 		FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(mousePosX_, mousePosY_, mousePos);
 		FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(lastMousePosX_, lastMousePosY_, lastMousePos);
+		VisiteurDuplication duplication;
+
+		bool sendToServer = false;
+		if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
+		{
+			sendToServer = true;
+		}
+
 
 		if (!estCopie_) {
-			VisiteurDuplication duplication = VisiteurDuplication(false);
+			VisiteurDuplication duplication = VisiteurDuplication(sendToServer, wallCreationCallback_, boostCreationCallback_, portalCreationCallback_);
 			arbre->accepterVisiteur(&duplication);
 			glm::dvec3 centreDuplication = duplication.obtenirCentreDuplication();
 
-			VisiteurDeplacement deplacementInit = VisiteurDeplacement(mousePos - centreDuplication,false);
+			VisiteurDeplacement deplacementInit = VisiteurDeplacement(mousePos - centreDuplication, false);
 			arbre->accepterVisiteur(&deplacementInit);
 			estCopie_ = true;
 		}
@@ -202,7 +211,7 @@ void ModeleEtatDuplication::playerMouseMove(int x, int y) {
 void ModeleEtatDuplication::nettoyerEtat() {
 	VisiteurSuppression suppression = VisiteurSuppression();
 	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(&suppression);
-	suppression.deleteAllSelectedNode();
+	suppression.deleteAllSelectedNode(ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION);
 	estCopie_ = false;
 }
 

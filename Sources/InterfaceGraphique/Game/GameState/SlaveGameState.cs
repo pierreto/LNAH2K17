@@ -6,21 +6,25 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using InterfaceGraphique.CommunicationInterface;
 using InterfaceGraphique.Entities;
+using InterfaceGraphique.Services;
 
 namespace InterfaceGraphique.Game.GameState
 {
     public class SlaveGameState : AbstractGameState
     {
 
-        private GameHub gameHub;
+        //private GameHub gameHub;
         private bool gameHasEnded = false;
 
-        public SlaveGameState(GameHub gameHub)
+        public MapService MapService { get; set; }
+
+        public SlaveGameState(GameHub gameHub, MapService mapService)
         {
             this.gameHub = gameHub;
+            MapService = mapService;
         }
 
-        public override void InitializeGameState(GameEntity gameEntity)
+        public override async void InitializeGameState(GameEntity gameEntity)
         {
             FonctionsNatives.setOnlineClientType((int)OnlineClientType.SLAVE);
             FonctionsNatives.setCurrentOpponentType((int)OpponentType.ONLINE_PLAYER);
@@ -37,6 +41,8 @@ namespace InterfaceGraphique.Game.GameState
             this.gameHub.NewPositions += OnNewGamePositions;
             this.gameHub.NewGoal += OnNewGoal;
             this.gameHub.NewGameOver += EndGame;
+            
+            base.LoadOnlineMap(gameEntity.SelectedMap);
         }
 
         private void OnNewGoal(GoalMessage goalMessage)

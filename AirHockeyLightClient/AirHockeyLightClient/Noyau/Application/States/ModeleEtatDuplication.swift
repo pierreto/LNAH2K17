@@ -62,6 +62,9 @@ class ModeleEtatDuplication: ModeleEtat {
         let table = arbre.childNode(withName: arbre.NOM_TABLE, recursively: true) as! NoeudTable
         table.deselectionnerTout()
         
+        // Envoyer la commande
+        FacadeModele.instance.obtenirEtatEdition().currentUserSelectedObject(uuidSelected: "", isSelected: false, deselectAll: true)
+        
         // Réactiver les boutons associés à la sélection
         FacadeModele.instance.obtenirVue().editorHUDScene?.enableSelectContextButtons()
     }
@@ -76,6 +79,9 @@ class ModeleEtatDuplication: ModeleEtat {
             if !copieEnCours {
                 // Faire apparaitre le tampon
                 self.dupliquerNoeud()
+                
+                // Désélectionner les noeuds pour les autres utilisateurs
+                FacadeModele.instance.obtenirEtatEdition().currentUserSelectedObject(uuidSelected: "", isSelected: false, deselectAll: true)
             }
             else {
                 // Déplacer les noeuds dupliqués où l'utilisateur touche l'écran
@@ -108,6 +114,9 @@ class ModeleEtatDuplication: ModeleEtat {
                 // Ceux-ci restent sélectionnés pour des duplications successives
                 for noeud in noeuds {
                     noeud.appliquerMaterielSelection(activer: false)
+                    
+                    // Envoyer la commande
+                    self.dupliquerEnLigne(noeud: noeud)
                 }
                 
                 self.copieEnCours = false
@@ -145,6 +154,36 @@ class ModeleEtatDuplication: ModeleEtat {
     private func deplacerNoeud(deplacement: GLKVector3) {
         let visiteur = VisiteurDeplacement(delta: deplacement)
         FacadeModele.instance.obtenirArbreRendu().accepterVisiteur(visiteur: visiteur)
+    }
+    
+    /// Cette fonction envoit les requêtes pour la duplication en édition en ligne
+    private func dupliquerEnLigne(noeud: NoeudCommun) {
+        let type = noeud.name!
+        let arbre = FacadeModele.instance.obtenirArbreRendu()
+        
+        // Envoyer la commande
+        switch (type) {
+            case arbre.NOM_ACCELERATEUR :
+                FacadeModele.instance.obtenirEtatEdition().currentUserCreatedBoost(uuid: noeud.obtenirUUID(),
+                                                                                   pos: noeud.position, rotation: noeud.rotation.w, scale: noeud.scale)
+                break
+            case arbre.NOM_MUR :
+                FacadeModele.instance.obtenirEtatEdition().currentUserCreatedWall(uuid: noeud.obtenirUUID(),
+                                                                                  pos: noeud.position,
+                                                                                  rotation: noeud.rotation.w,
+                                                                                  scale: noeud.scale)
+                break
+            case arbre.NOM_PORTAIL :
+                let noeudOppose = (noeud as! NoeudPortail).obtenirOppose()
+                FacadeModele.instance.obtenirEtatEdition().currentUserCreatedPortal(
+                    startUuid: noeud.obtenirUUID(),
+                    startPos: noeud.position, startRotation: noeud.rotation.w, startScale: noeud.scale,
+                    endUuid: noeudOppose.obtenirUUID(),
+                    endPos: noeudOppose.position, endRotation: noeudOppose.rotation.w, endScale: noeudOppose.scale)
+                break
+            default :
+                break
+        }
     }
 
 }

@@ -5,11 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using InterfaceGraphique.Entities;
+using InterfaceGraphique.CommunicationInterface;
 
 namespace InterfaceGraphique.Game.GameState
 {
     public abstract class AbstractGameState
     {
+        public GameHub gameHub;
 
         protected bool moveUpKeyDown = false;
         protected bool moveDownKeyDown = false;
@@ -70,6 +72,13 @@ namespace InterfaceGraphique.Game.GameState
         {
             get => keyDown;
             set => keyDown = value;
+        }
+
+        internal void LoadOnlineMap(MapEntity selectedMap)
+        {
+            float[] coefficients = new float[3];
+            FonctionsNatives.chargerCarte(new StringBuilder(selectedMap.Json), coefficients);
+            Program.GeneralProperties.SetCoefficientValues(coefficients);
         }
 
         public Keys KeyLeft

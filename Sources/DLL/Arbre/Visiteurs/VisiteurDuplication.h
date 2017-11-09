@@ -11,6 +11,7 @@
 #define __APPLICATION_VISITEURS_VISITEURDUPLICATION_H__
 
 #include "Visiteurs/VisiteurAbstrait.h"
+#include "VisiteurSelection.h"
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class VisiteurDuplication
@@ -24,7 +25,7 @@ class VisiteurDuplication : public VisiteurAbstrait
 {
 public:
 	/// Constructeur
-	VisiteurDuplication(bool sendToServer=false);
+	VisiteurDuplication(bool sendToServer=false, WallCreationCallback callback=nullptr, BoostCreationCallback boostCallback = nullptr, PortalCreationCallback portalCallback = nullptr);
 	/// Destructeur
 	virtual ~VisiteurDuplication();
 
@@ -49,6 +50,8 @@ public:
 	/// Copie les propriétés des noeuds à dupliquer
 	void copyProperties(NoeudAbstrait* node, NoeudAbstrait* nodeCopy);
 
+
+
 private:
 	/// Nombre d'items à dupliquer
 	int nbItems_;
@@ -58,6 +61,10 @@ private:
 	NoeudPortail* premierNoeud_{ nullptr };
 
 	bool sendToServer_;
+
+	WallCreationCallback wallCreationCallback_;
+	PortalCreationCallback portalCreationCallback_;
+	BoostCreationCallback boostCreationCallback_;
 };
 
 

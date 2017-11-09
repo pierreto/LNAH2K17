@@ -13,7 +13,8 @@ using InterfaceGraphique.Game.GameState;
 using Microsoft.Practices.Unity;
 using InterfaceGraphique.Controls.WPF.Tournament;
 
-namespace InterfaceGraphique {
+namespace InterfaceGraphique
+{
 
     ///////////////////////////////////////////////////////////////////////////
     /// @class QuickPlay
@@ -30,7 +31,8 @@ namespace InterfaceGraphique {
         /// Constructeur de la classe QuickPlay
         ///
         ////////////////////////////////////////////////////////////////////////
-        public QuickPlay() {
+        public QuickPlay()
+        {
             InitializeComponent();
 
             currentGameState = new OfflineGameState();
@@ -48,7 +50,8 @@ namespace InterfaceGraphique {
         /// @return Void
         ///
         ////////////////////////////////////////////////////////////////////////
-        public void InitializeOpenGlPanel() {
+        public void InitializeOpenGlPanel()
+        {
             Program.OpenGLPanel.Controls.Clear();
             Program.OpenGLPanel.Controls.Add(this.Panel_EndBack);
             Program.OpenGLPanel.Controls.Add(this.MenuStrip_MenuBar);
@@ -96,15 +99,30 @@ namespace InterfaceGraphique {
         /// @return Void 
         ///
         ////////////////////////////////////////////////////////////////////////
-        private void InitializeEvents() {
-            this.MenuItem_MainMenu.Click += (sender, e) => { ResetDefaultTable(); Program.FormManager.CurrentForm = Program.MainMenu; };
+        private void InitializeEvents()
+        {
+            this.MenuItem_MainMenu.Click += (sender, e) => OnMainMenuClicked(sender, e);
             this.MenuItem_Help.Click += (sender, e) => { EditorHelp form = new EditorHelp(); form.ShowQuickPlayHelpText(); form.ShowDialog(); };
             this.MenuItem_OrbitView.Click += (sender, e) => ToggleOrbit(true);
             this.MenuItem_OrthoView.Click += (sender, e) => ToggleOrbit(false);
-            this.Button_MainMenu.Click += (sender, e) => { ResetDefaultTable(); Program.FormManager.CurrentForm = Program.MainMenu; };
-            this.Button_PlayAgain.Click += (sender, e) => Program.FormManager.CurrentForm = Program.QuickPlay;
+            this.Button_MainMenu.Click += (sender, e) => OnMainMenuClicked(sender, e);
+            this.Button_PlayAgain.Click += (sender, e) => { ResetDefaultTable(); Program.FormManager.CurrentForm = Program.QuickPlay; };
             this.KeyDown += new KeyEventHandler(currentGameState.KeyDownEvent);
             this.KeyUp += new KeyEventHandler(currentGameState.KeyUpEvent);
+        }
+
+        private async Task OnMainMenuClicked(object sender, EventArgs e)
+        {
+            Program.FormManager.CurrentForm = Program.MainMenu;
+            if (currentGameState.IsOnlineTournementMode)
+            {
+                await Program.unityContainer.Resolve<TournamentViewModel>().WaitingRoomHub.LeaveTournament();
+            }
+            else
+            {
+                await Program.unityContainer.Resolve<MatchmakingViewModel>().WaitingRoomHub.LeaveGame();
+            }
+
         }
 
 
@@ -116,7 +134,8 @@ namespace InterfaceGraphique {
         /// @return Void 
         ///
         ////////////////////////////////////////////////////////////////////////
-        public void UnsuscribeEventHandlers() {
+        public void UnsuscribeEventHandlers()
+        {
             Program.FormManager.SizeChanged -= new EventHandler(WindowSizeChanged);
             Program.FormManager.LocationChanged -= new EventHandler(DessinerOpenGL);
             Program.OpenGLPanel.MouseMove -= new MouseEventHandler(currentGameState.MouseMoved);
@@ -132,13 +151,17 @@ namespace InterfaceGraphique {
         /// @return     Aucune 
         ///
         ////////////////////////////////////////////////////////////////////////
-        public void MettreAJour(double tempsInterAffichage) {
-            try {
-                this.Invoke((MethodInvoker)delegate {
-                    currentGameState.MettreAJour(tempsInterAffichage,currentGameState.NeededGoalsToWin);
+        public void MettreAJour(double tempsInterAffichage)
+        {
+            try
+            {
+                this.Invoke((MethodInvoker)delegate
+                {
+                    currentGameState.MettreAJour(tempsInterAffichage, currentGameState.NeededGoalsToWin);
                 });
             }
-            catch (Exception) {
+            catch (Exception)
+            {
 
             }
         }
@@ -154,7 +177,8 @@ namespace InterfaceGraphique {
         /// @return     Void 
         ///
         ////////////////////////////////////////////////////////////////////////
-        private void WindowSizeChanged(object sender, EventArgs e) {
+        private void WindowSizeChanged(object sender, EventArgs e)
+        {
             this.Size = new Size(Program.FormManager.ClientSize.Width, Program.FormManager.ClientSize.Height);
             FonctionsNatives.redimensionnerFenetre(this.Size.Width, this.Size.Height);
             FonctionsNatives.dessinerOpenGL();
@@ -170,7 +194,8 @@ namespace InterfaceGraphique {
         /// @return     Void 
         ///
         ////////////////////////////////////////////////////////////////////////
-        private void DessinerOpenGL(object sender, EventArgs e) {
+        private void DessinerOpenGL(object sender, EventArgs e)
+        {
             FonctionsNatives.dessinerOpenGL();
         }
 
@@ -183,12 +208,18 @@ namespace InterfaceGraphique {
         /// @return Void 
         ///
         ///////////////////////////////////////////////////////////////////////
-        private void ResetDefaultTable() {
+        private void ResetDefaultTable()
+        {
             Program.GeneralProperties.ResetProperties();
             FonctionsNatives.resetNodeTree();
             FonctionsNatives.resetCameraPosition();
             FonctionsNatives.redimensionnerFenetre(this.Size.Width, this.Size.Height);
             FonctionsNatives.playMusic(false);
+
+            if (!currentGameState.IsOnlineTournementMode)
+            {
+                Program.unityContainer.Resolve<MatchmakingViewModel>().SetDefaultValues();
+            }
         }
 
 
@@ -199,11 +230,13 @@ namespace InterfaceGraphique {
         /// @return Void 
         ///
         ///////////////////////////////////////////////////////////////////////
-        private void LoadMap() {
+        private void LoadMap()
+        {
             ResetDefaultTable();
             FonctionsNatives.playMusic(true);
 
-            if (currentGameState.MapFilePath != null) {
+            if (currentGameState.MapFilePath != null)
+            {
                 StringBuilder filePath = new StringBuilder(currentGameState.MapFilePath.Length);
                 filePath.Append(currentGameState.MapFilePath);
                 float[] coefficients = new float[3];
@@ -215,7 +248,7 @@ namespace InterfaceGraphique {
 
 
 
-    
+
 
 
         ////////////////////////////////////////////////////////////////////////
@@ -228,15 +261,20 @@ namespace InterfaceGraphique {
         /// @return     Aucune 
         ///
         ////////////////////////////////////////////////////////////////////////
-        private void MouseWheelScrolled(object sender, MouseEventArgs e) {
-            if (e.Delta > 0) {
-                for (int i = 0; i < 3; i++) {
+        private void MouseWheelScrolled(object sender, MouseEventArgs e)
+        {
+            if (e.Delta > 0)
+            {
+                for (int i = 0; i < 3; i++)
+                {
                     FonctionsNatives.zoomIn();
                 }
             }
 
-            if (e.Delta < 0) {
-                for (int i = 0; i < 3; i++) {
+            if (e.Delta < 0)
+            {
+                for (int i = 0; i < 3; i++)
+                {
                     FonctionsNatives.zoomOut();
                 }
             }
@@ -278,12 +316,26 @@ namespace InterfaceGraphique {
         /// @return     Void 
         ///
         ////////////////////////////////////////////////////////////////////////
-        private void ToggleOrbit(bool isOrbit) {
+        private void ToggleOrbit(bool isOrbit)
+        {
             FonctionsNatives.toggleOrbit(isOrbit);
             this.MenuItem_OrbitView.Enabled = !isOrbit;
             this.MenuItem_OrthoView.Enabled = isOrbit;
         }
 
+        public void ApplyEsc()
+        {
+            if (!this.Panel_EndBack.Visible && FonctionsNatives.isGameStarted()) {
+                this.MenuStrip_MenuBar.Visible = !this.MenuStrip_MenuBar.Visible;
+                FonctionsNatives.escape();
+            }
+        }
+
+        public void ReplacePlayerByAI()
+        {
+            ApplyEsc();
+            FonctionsNatives.setCurrentOpponentType((int)OpponentType.VIRTUAL_PLAYER);
+        }
 
         ////////////////////////////////////////////////////////////////////////
         ///
@@ -295,8 +347,10 @@ namespace InterfaceGraphique {
         /// @return     Vrai si la touche est gérée 
         ///
         ////////////////////////////////////////////////////////////////////////
-        protected override bool ProcessCmdKey(ref Message msg, Keys keyData) {
-            switch(keyData) {
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            switch (keyData)
+            {
                 case Keys.J:
                     FonctionsNatives.toggleLights(0);
                     return true;
@@ -310,10 +364,8 @@ namespace InterfaceGraphique {
                     return true;
 
                 case Keys.Escape:
-                    if (!this.Panel_EndBack.Visible && FonctionsNatives.isGameStarted()) {
-                        this.MenuStrip_MenuBar.Visible = !this.MenuStrip_MenuBar.Visible;
-                        FonctionsNatives.escape();
-                    }
+                    ApplyEsc();
+                    currentGameState.gameHub?.SendGamePauseOrResume();
                     return true;
 
                 case Keys.Space:
@@ -368,6 +420,6 @@ namespace InterfaceGraphique {
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-  
+
     }
 }

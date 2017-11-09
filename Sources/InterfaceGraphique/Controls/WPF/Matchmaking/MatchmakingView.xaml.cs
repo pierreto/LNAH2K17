@@ -23,6 +23,9 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
         public MatchmakingView()
         {
             InitializeComponent();
+            //var test = (TextBlock)this.FindName("test");
+            //test.Foreground = (SolidColorBrush)(new BrushConverter().ConvertFrom("#99CCFF"));
+            ////(Brush)ColorConverter.ConvertFromString("#99CCFF");
         }
     }
 }

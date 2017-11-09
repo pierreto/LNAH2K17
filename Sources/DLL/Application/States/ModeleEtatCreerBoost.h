@@ -36,7 +36,6 @@ public:
 	/// Évènement appelé lorsque le bouton gauche de la souris est levé
 	virtual void mouseUpL();
 	void setBoostCreationCallback(BoostCreationCallback callback) { boostCreationCallback_ = callback; }
-	BoostCreationCallback getBoostCreationCallback() { return boostCreationCallback_; }
 
 private:
 

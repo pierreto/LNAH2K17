@@ -43,6 +43,10 @@ class UserManager {
     }
     
     public func removeUser(username: String) {
+        let user = self.users[username]
+        user?.deselectAll()
+        
+        // Remove user
         let index = self.users.index(forKey: username)
         self.users.remove(at: index!)
     }

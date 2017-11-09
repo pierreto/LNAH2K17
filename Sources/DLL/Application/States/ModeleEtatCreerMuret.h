@@ -42,7 +42,6 @@ public:
 	/// Fonction pour nettoyer l'état
 	virtual void nettoyerEtat();
 	void setWallCreationCallback(WallCreationCallback callback){ wallCreationCallback_ = callback; }
-	WallCreationCallback getWallCreationCallback() { return wallCreationCallback_; }
 
 private:
 

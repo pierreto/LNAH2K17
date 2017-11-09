@@ -8,6 +8,7 @@ using InterfaceGraphique.Controls.WPF.Home;
 using System.Net.Http;
 using InterfaceGraphique.Controls.WPF.Chat;
 using InterfaceGraphique.Controls.WPF.Chat.Channel;
+using InterfaceGraphique.Controls.WPF.UserProfile;
 
 namespace InterfaceGraphique
 {
@@ -87,6 +88,7 @@ namespace InterfaceGraphique
         private void OnProfileButtonClicked(object sender, EventArgs e)
         {
             Program.FormManager.CurrentForm = Program.UserProfileMenu;
+            Program.unityContainer.Resolve<UserProfileViewModel>().Initialize();
         }
 
         public async Task Logout()

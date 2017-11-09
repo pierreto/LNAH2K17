@@ -64,7 +64,23 @@ namespace AirHockeyServer.Repositories
                 {
                     Id = poco.Winner
                 };
-                
+                result.Players[0] = new UserEntity
+                {
+                    Id = poco.Player1
+                };
+                result.Players[1] = new UserEntity
+                {
+                    Id = poco.Player2
+                };
+                result.Players[2] = new UserEntity
+                {
+                    Id = poco.Player3
+                };
+                result.Players[3] = new UserEntity
+                {
+                    Id = poco.Player4
+                };
+
                 result.Id = poco.Id;
                 return result;
             }
@@ -72,6 +88,30 @@ namespace AirHockeyServer.Repositories
             {
                 System.Diagnostics.Debug.WriteLine("[GameRepository.GetGame] " + e.ToString());
                 return null;
+            }
+        }
+
+        public async Task<int> GetUserTournamentsNb(int userId)
+        {
+            try
+            {
+                IQueryable<TournamentPoco> queryable =
+                    from tournaments in this.TournamentTable where 
+                    tournaments.Player1 == userId || 
+                    tournaments.Player2 == userId ||
+                    tournaments.Player3 == userId || 
+                    tournaments.Player4 == userId select tournaments;
+
+                var results = await Task<IEnumerable<TournamentPoco>>.Run(
+                    () => queryable.ToArray());
+
+                return results.Length;
+                
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("[GameRepository.GetGame] " + e.ToString());
+                return 0;
             }
         }
     }

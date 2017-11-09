@@ -22,8 +22,6 @@ namespace AirHockeyServer.Hubs
     ///////////////////////////////////////////////////////////////////////////////
     public class ConnectionMapper
     {
-        private static Mutex ConnectionMutex = new Mutex();
-
         private static ConcurrentDictionary<int, string> _ConnectionsMapping;
         private static ConcurrentDictionary<int, string> ConnectionsMapping
         {
@@ -41,29 +39,16 @@ namespace AirHockeyServer.Hubs
             }
         }
 
-
-        private static ConcurrentDictionary<string, OnlineUser> usersConnectionMapping;
-
-        private static ConcurrentDictionary<string, OnlineUser> UsersConnectionMapping
+        private static ConcurrentDictionary<string, Guid> _GameID;
+        private static ConcurrentDictionary<string, Guid> GameID
         {
             get
             {
-                return usersConnectionMapping ??
-                       (usersConnectionMapping = new ConcurrentDictionary<string, OnlineUser>());
+                if (_GameID == null)
+                    _GameID = new ConcurrentDictionary<string, Guid>();
+                return _GameID;
             }
-            set => usersConnectionMapping = value;
-        }
-        public static void AddUserConnection( string connectionId, OnlineUser Users)
-        {
-            UsersConnectionMapping[connectionId] = Users;
-        }
-        public static void RemoveUserConnection(string connectionId)
-        {
-            ((IDictionary)UsersConnectionMapping).Remove(connectionId);
-        }
-        public static OnlineUser GetUserFromConnectionId(string connectionId)
-        {
-            return UsersConnectionMapping[connectionId];
+            set { _GameID = value; }
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -77,16 +62,11 @@ namespace AirHockeyServer.Hubs
         ////////////////////////////////////////////////////////////////////////
         public static bool AddConnection(int userId, string connection)
         {
-            //ConnectionMutex.WaitOne();
-
             if (!ConnectionsMapping.ContainsKey(userId))
             {
                 ConnectionsMapping[userId] = connection;
                 return true;
             }
-
-            //ConnectionMutex.ReleaseMutex();
-
             return false;
         }
 
@@ -102,16 +82,57 @@ namespace AirHockeyServer.Hubs
         ////////////////////////////////////////////////////////////////////////
         public static string GetConnection(int userId)
         {
-            //ConnectionMutex.WaitOne();
-
             if (ConnectionsMapping.ContainsKey(userId))
             {
                 return ConnectionsMapping[userId];
             }
-
-            //ConnectionMutex.ReleaseMutex();
-
             return string.Empty;
+        }
+
+        public static void AddGameID(string connection, Guid gameID)
+        {
+            GameID[connection] = gameID;
+        }
+
+        public static Guid GetGameId(string connection)
+        {
+            return GameID[connection];
+        }
+
+        private static ConcurrentDictionary<string, OnlineUser> usersConnectionMapping;
+        private static ConcurrentDictionary<string, OnlineUser> UsersConnectionMapping
+        {
+            get
+            {
+                return usersConnectionMapping ??
+                       (usersConnectionMapping = new ConcurrentDictionary<string, OnlineUser>());
+            }
+            set => usersConnectionMapping = value;
+        }
+
+        public static void AddUserConnection(string connectionId, OnlineUser User)
+        {
+            UsersConnectionMapping[connectionId] = User;
+        }
+
+        public static void RemoveUserConnection(string connectionId)
+        {
+            ((IDictionary)UsersConnectionMapping).Remove(connectionId);
+        }
+
+        public static OnlineUser GetUserFromConnectionId(string connectionId)
+        {
+            return UsersConnectionMapping[connectionId];
+        }
+
+        public static void DeleteConnection(int userId)
+        {
+            if (ConnectionsMapping.ContainsKey(userId))
+            {
+                string connectionRemoved = "";
+                ConnectionsMapping.TryRemove(userId, out connectionRemoved);
+            }
+            
         }
     }
 }
