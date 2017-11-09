@@ -75,8 +75,12 @@ class EditionHub: BaseHub {
                 editionCommand = SelectionCommand(objectUuid: command["ObjectUuid"].string!)
                 break
             case .TRANSFORM_COMMAND :
-                print ("Transform command")
+                // print ("Transform command")
                 editionCommand = TransformCommand(objectUuid: command["ObjectUuid"].string!)
+                break
+            case .CONTROLPOINT_COMMAND :
+                // print ("Control point command")
+                editionCommand = ControlPointCommand(objectUuid: command["ObjectUuid"].string!)
                 break
         }
         

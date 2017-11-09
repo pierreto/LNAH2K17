@@ -73,6 +73,12 @@ class OnlineUser {
             node.assignerSelectionneByAnotherUser(estSelectionneByAnotherUser: false)
             node.useOtherColor(activer: false)
         
+            // Colorer le noeud s'il est sélectionnable
+            let selectionnable = node.estSelectionnable()
+            if selectionnable && node.obtenirDefaultColor() != node.obtenirSelectionnableColor() {
+                node.useOtherColor(activer: selectionnable, color: node.obtenirSelectionnableColor())
+            }
+            
             self.nodesSelected.remove(at: index!)
         }
     }
@@ -92,6 +98,12 @@ class OnlineUser {
         for node in self.nodesSelected {
             node.assignerSelectionneByAnotherUser(estSelectionneByAnotherUser: false)
             node.useOtherColor(activer: false)
+            
+            // Colorer le noeud s'il est sélectionnable
+            let selectionnable = node.estSelectionnable()
+            if selectionnable && node.obtenirDefaultColor() != node.obtenirSelectionnableColor() {
+                node.useOtherColor(activer: selectionnable, color: node.obtenirSelectionnableColor())
+            }
         }
         self.nodesSelected.removeAll()
     }
