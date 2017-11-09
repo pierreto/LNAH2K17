@@ -33,6 +33,7 @@ class HubManager {
     /// Adresse IP du serveur
     private var ipAddress: String?
     private var username: String?
+    private var id: Int?
     
     private var _connected: Bool? = false
     
@@ -73,6 +74,14 @@ class HubManager {
         self.username = username
     }
     
+    public func getId() -> Int? {
+        return self.id
+    }
+    
+    public func setId(id: Int) {
+        self.id = id
+    }
+    
     ////////////////////////////////////////////////////////////////////////
     ///
     /// @fn EstablishConnection(ipAddress: String, hubName: String)
@@ -88,7 +97,6 @@ class HubManager {
     public func EstablishConnection(ipAddress: String) {
         self.connection = SignalR("http://" + ipAddress + ":63056")
         self.AddHubs()
-        
         self.connection!.starting = { print("started") }
         self.connection!.connected = { print("connected: \(String(describing: self.connection!.connectionID))") }
         self.connection!.connectionSlow = { print("connectionSlow") }
@@ -105,6 +113,7 @@ class HubManager {
         self.hubs.append(EditionHub(connection: self.connection))
     }
     
+
     /// Déconnecter tous les hubs et terminer la connexion
     public func Logout() {
         for hub in hubs {
@@ -117,3 +126,4 @@ class HubManager {
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////
+
