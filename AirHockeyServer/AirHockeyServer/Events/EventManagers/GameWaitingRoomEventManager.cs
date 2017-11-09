@@ -118,11 +118,18 @@ namespace AirHockeyServer.Events.EventManagers
             {
                 timer.Stop();
 
-                if(Games[gameId].SelectedMap == null)
+                int mapId = 0;
+                if (Games[gameId].SelectedMap == null)
                 {
                     var maps = await MapService.GetMaps();
-                    Games[gameId].SelectedMap = await MapService.GetMap(maps.First().Id.Value);
+                    mapId = maps.First().Id.Value;
                 }
+                else
+                {
+                    mapId = Games[gameId].SelectedMap.Id.Value;
+                }
+
+                Games[gameId].SelectedMap = await MapService.GetMap(mapId);
 
                 GameManager.AddGame(Games[gameId]);
                 HubContext.Clients.Group(gameId.ToString()).GameStartingEvent(Games[gameId]);
