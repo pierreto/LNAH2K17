@@ -1069,6 +1069,8 @@ void setSelectionEventCallback(SelectionEventCallback callback)
 {
 	ModeleEtatSelection::obtenirInstance()->setSelectionEventCallback(callback);
 	ModeleEtatPointControl::obtenirInstance()->setSelectionEventCallback(callback);
+	ModeleEtatDuplication::obtenirInstance()->setSelectionEventCallback(callback);
+
 
 }
 
