@@ -16,7 +16,7 @@ namespace AirHockeyServer.Services.ChatServiceServer
         // Should be thread-safe?
         private static Dictionary<string, int> roomPpl = new Dictionary<string, int>(); 
 
-        private static ObservableCollection<ChannelEntity> channels = new ObservableCollection<ChannelEntity>();
+        private static List<String> channels = new List<String>();
 
         public IChannelService ChannelService { get; }
 
@@ -25,15 +25,15 @@ namespace AirHockeyServer.Services.ChatServiceServer
             ChannelService = channelService;
         }
 
-        public ObservableCollection<string> Subscribe(int userId)
+        public List<string> Subscribe(int userId)
         {
             if(!ConnectionsMapping.ContainsKey(userId))
             {
                 ConnectionsMapping.Add(userId, Context.ConnectionId);
                 //Fetch all the channels 
-                return new ObservableCollection<string>(channels.Select(x => x.Name));
+                return channels;
             }
-            return new ObservableCollection<string>();
+            return new List<string>();
         }
 
         public void SendBroadcast(ChatMessageEntity chatMessage)
@@ -43,8 +43,7 @@ namespace AirHockeyServer.Services.ChatServiceServer
 
         public async Task SendChannel(string channelName, ChatMessageEntity message)
         {
-            ChannelEntity cE = channels.Where(s => s.Name == channelName).First();
-            await Clients.Group(channelName).ChatMessageReceivedChannel(message, cE);
+            await Clients.Group(channelName).ChatMessageReceivedChannel(message, channelName);
         }
 
         public void SendPrivateMessage(int userId, ChatMessageEntity message)
@@ -55,30 +54,28 @@ namespace AirHockeyServer.Services.ChatServiceServer
             }
         }
 
-        public async Task<ChannelEntity> CreateChannel(ChannelEntity channel)
+        public async Task<Boolean> CreateChannel(string channelName)
         {
-            if (roomPpl.ContainsKey(channel.Name) && roomPpl[channel.Name] > 0)
+            if (roomPpl.ContainsKey(channelName) && roomPpl[channelName] > 0)
             {
-                return null;
+                return false;
             }
             else
             {   
-                roomPpl[channel.Name] = 1;
-                ChannelEntity channelCreated = await this.ChannelService.CreateChannel(channel);
-                channels.Add(channelCreated);
-                await Groups.Add(Context.ConnectionId, channel.Name);
+                roomPpl[channelName] = 1;
+                //ChannelEntity channelCreated = await this.ChannelService.CreateChannel(channel);
+                channels.Add(channelName);
+                await Groups.Add(Context.ConnectionId, channelName);
                 //BroadCastChannelToAll
-                Clients.Others.NewJoinableChannel(channelCreated.Name);
-                return channel;
+                Clients.Others.NewJoinableChannel(channelName);
+                return true;
             }
         }
 
-        public async Task<ChannelEntity> JoinChannel(string channelName)
+        public async Task JoinChannel(string channelName)
         {
-            ChannelEntity channelJoined = channels.Where(s => s.Name == channelName).First();
             await Groups.Add(Context.ConnectionId, channelName);
             roomPpl[channelName]++;
-            return channelJoined;
         }
 
         public Task LeaveRoom(string roomName, int userId)
