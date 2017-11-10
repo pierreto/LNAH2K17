@@ -21,6 +21,8 @@ namespace InterfaceGraphique.Controls.WPF.Signup
         private HubManager hubManager;
         private ChatHub chatHub;
         private string usernameErrMsg;
+        private string nameErrMsg;
+        private string emailErrMsg;
         private string passwordErrMsg;
         private string confirmPasswordErrMsg;
         private bool inputsEnabled;
@@ -52,6 +54,64 @@ namespace InterfaceGraphique.Controls.WPF.Signup
             set
             {
                 usernameErrMsg = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        public string Name
+        {
+            get => signupEntity.Name;
+            set
+            {
+                if (signupEntity.Name != value && value != "")
+                {
+                    NameErrMsg = "";
+                    signupEntity.Name = value;
+                    this.OnPropertyChanged();
+                }
+                else if (value == "")
+                {
+                    signupEntity.Name = value;
+                    this.OnPropertyChanged();
+                }
+            }
+        }
+
+        public string NameErrMsg
+        {
+            get => nameErrMsg;
+            set
+            {
+                nameErrMsg = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        public string Email
+        {
+            get => signupEntity.Email;
+            set
+            {
+                if (signupEntity.Name != value && value != "")
+                {
+                    EmailErrMsg = "";
+                    signupEntity.Email = value;
+                    this.OnPropertyChanged();
+                }
+                else if (value == "")
+                {
+                    signupEntity.Email = value;
+                    this.OnPropertyChanged();
+                }
+            }
+        }
+
+        public string EmailErrMsg
+        {
+            get => emailErrMsg;
+            set
+            {
+                emailErrMsg = value;
                 this.OnPropertyChanged();
             }
         }
@@ -163,31 +223,37 @@ namespace InterfaceGraphique.Controls.WPF.Signup
             {
                 Loading();
                 ResetErrMsg();
-                ValidateFields();
-                var response = await client.PostAsJsonAsync(Program.client.BaseAddress + "api/signup", signupEntity);
-                if (response.IsSuccessStatusCode)
+                if (ValidateFields())
                 {
-                    int userId = response.Content.ReadAsAsync<int>().Result;
+                    var response = await client.PostAsJsonAsync(Program.client.BaseAddress + "api/signup", signupEntity);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        int userId = response.Content.ReadAsAsync<int>().Result;
 
-                    //On set l'instance statique du user.
-                    User.Instance.UserEntity = new UserEntity { Id = userId, Username = signupEntity.Username };
-                    User.Instance.IsConnected = true;
+                        //On set l'instance statique du user.
+                        User.Instance.UserEntity = new UserEntity { Id = userId, Username = signupEntity.Username, Name = signupEntity.Name, Email = signupEntity.Email};
+                        User.Instance.IsConnected = true;
 
-                    await chatHub.InitializeChat();
+                        await chatHub.InitializeChat();
 
-                    //On reset le nom d'usagermle mot de passe et la confirmation (Au cas ou il fait un retour a l'arriere ou deconnexion)
-                    Username = Password = ConfirmPassword = "";
+                        //On reset le nom d'usagermle mot de passe et la confirmation (Au cas ou il fait un retour a l'arriere ou deconnexion)
+                        Username = Password = ConfirmPassword = "";
 
-                    //On initie tous les formes qui on besoin de savoir si on est en mode en ligne
-                    Program.InitAfterConnection();
-                    Program.FormManager.CurrentForm = Program.MainMenu;
+                        //On initie tous les formes qui on besoin de savoir si on est en mode en ligne
+                        Program.InitAfterConnection();
+                        Program.FormManager.CurrentForm = Program.MainMenu;
+                    }
+                    else
+                    {
+                        var res = response.Content.ReadAsAsync<string>().Result;
+                        UsernameErrMsg = res;
+                    }
+                    return response.Headers.Location;
                 }
                 else
                 {
-                    var res = response.Content.ReadAsAsync<string>().Result;
-                    UsernameErrMsg = res;
+                    return null;
                 }
-                return response.Headers.Location;
             }
             catch(SignupException e)
             {
@@ -207,17 +273,18 @@ namespace InterfaceGraphique.Controls.WPF.Signup
         #endregion
 
         #region Private Methods
-        private void ValidateFields()
+        private bool ValidateUsername()
         {
+            bool valid = true;
             if (Username == "")
             {
                 UsernameErrMsg = "Nom d'usager requis";
-                throw new SignupException(UsernameErrMsg);
+                valid = false;
             }
             else if (Username.Length < 2)
             {
                 UsernameErrMsg = "Minimum 2 charactères requis";
-                throw new SignupException(UsernameErrMsg);
+                valid = false;
             }
             else
             {
@@ -225,18 +292,74 @@ namespace InterfaceGraphique.Controls.WPF.Signup
                 if (!rgx.IsMatch(Username))
                 {
                     UsernameErrMsg = "Seul les charactères alphanumériqus et les tirets sont acceptés";
-                    throw new SignupException(UsernameErrMsg);
+                    valid = false;
                 }
             }
+            return valid;
+        }
+
+        private bool ValidateName()
+        {
+            bool valid = true;
+            if (Name == "")
+            {
+                NameErrMsg = "Nom requis";
+                valid = false;
+            }
+            else if (Name.Length < 2)
+            {
+                NameErrMsg = "Minimum 2 charactères requis";
+                valid = false;
+            }
+            else
+            {
+                Regex rgx = new Regex(@"^[a-zA-Z0-9_.-]*$");
+                if (!rgx.IsMatch(Name))
+                {
+                    NameErrMsg = "Seul les charactères alphanumériqus et les tirets sont acceptés";
+                    valid = false;
+                }
+            }
+            return valid;
+        }
+
+        private bool ValidateEmail()
+        {
+            bool valid = true;
+            if (Email == "")
+            {
+                EmailErrMsg = "Courriel requis";
+                valid = false;
+            }
+            else if (Email.Length > 64)
+            {
+                EmailErrMsg = "Maximum 64 charactères permis";
+                valid = false;
+            }
+            else
+            {
+                Regex rgx = new Regex(@"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$");
+                if (!rgx.IsMatch(Email))
+                {
+                    EmailErrMsg = "Format de courriel invalide";
+                    valid = false;
+                }
+            }
+            return valid;
+        }
+
+        private bool ValidatePassword()
+        {
+            bool valid = true;
             if (Password == "")
             {
                 PasswordErrMsg = "Mot de passe requis";
-                throw new SignupException(PasswordErrMsg);
+                valid = false;
             }
             else if (Password.Length < 8)
             {
                 PasswordErrMsg = "Minimum 8 charactères requis";
-                throw new SignupException(PasswordErrMsg);
+                valid = false;
             }
             else
             {
@@ -244,19 +367,51 @@ namespace InterfaceGraphique.Controls.WPF.Signup
                 if (!rgx.IsMatch(Password))
                 {
                     PasswordErrMsg = "Minimum une lettre minuscule, une lettre majuscule et un chiffre";
-                    throw new SignupException(PasswordErrMsg);
+                    valid = false;
                 }
             }
+            return valid;
+        }
+        
+        private bool ValidateConfirmPassword()
+        {
+            bool valid = true;
             if (ConfirmPassword == "")
             {
                 ConfirmPasswordErrMsg = "Confirmation mot de passe requise";
-                throw new SignupException(ConfirmPasswordErrMsg);
+                valid = false;
             }
             if (Password != ConfirmPassword)
             {
                 ConfirmPasswordErrMsg = "Mots de passes pas identiques";
-                throw new SignupException(ConfirmPasswordErrMsg);
+                valid = false;
             }
+            return valid;
+        }
+        private bool ValidateFields()
+        {
+            bool valid = true;
+            if (!ValidateUsername())
+            {
+                valid = false;
+            }
+            if (!ValidateName())
+            {
+                valid = false;
+            }
+            if (!ValidateEmail())
+            {
+                valid = false;
+            }
+            if (!ValidatePassword())
+            {
+                valid = false;
+            }
+            if (!ValidateConfirmPassword())
+            {
+                valid = false;
+            }
+            return valid;
         }
 
         private void Loading()
@@ -273,6 +428,8 @@ namespace InterfaceGraphique.Controls.WPF.Signup
         private void ResetErrMsg()
         {
             UsernameErrMsg = "";
+            NameErrMsg = "";
+            EmailErrMsg = "";
             PasswordErrMsg = "";
         }
 
