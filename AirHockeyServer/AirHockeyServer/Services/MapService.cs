@@ -6,7 +6,6 @@ using AirHockeyServer.Entities;
 using AirHockeyServer.Core;
 using AirHockeyServer.Repositories;
 using System.Threading.Tasks;
-using AirHockeyServer.DatabaseCore;
 using AirHockeyServer.Repositories.Interfaces;
 using AirHockeyServer.Services.Interfaces;
 

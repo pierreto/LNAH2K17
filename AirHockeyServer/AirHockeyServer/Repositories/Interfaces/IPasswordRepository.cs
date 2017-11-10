@@ -13,6 +13,6 @@ namespace AirHockeyServer.Repositories.Interfaces
 
         Task<PasswordEntity> GetPasswordByUserId(int userId);
 
-        void PostPassword(PasswordEntity passwordEntity);
+        Task PostPassword(PasswordEntity passwordEntity);
     }
 }

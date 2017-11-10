@@ -52,11 +52,11 @@ namespace AirHockeyServer.Services
             }
         }
 
-        public void PostPassword(PasswordEntity passwordEntity)
+        public async Task PostPassword(PasswordEntity passwordEntity)
         {
             try
             {
-                PasswordRepository.PostPassword(passwordEntity);
+                await PasswordRepository.PostPassword(passwordEntity);
             }
             catch (PasswordException e)
             {

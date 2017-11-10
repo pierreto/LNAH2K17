@@ -1,5 +1,4 @@
-﻿using AirHockeyServer.DatabaseCore;
-using AirHockeyServer.Entities;
+﻿using AirHockeyServer.Entities;
 using AirHockeyServer.Repositories;
 using AirHockeyServer.Services.Interfaces;
 using System;
@@ -29,11 +28,11 @@ namespace AirHockeyServer.Services
                 {
                     //TODO: englober tout ceci dans une transaction au cas ou le postUser fonctionne, mais pas le postPassword
                     uE = new UserEntity { Username = signupEntity.Username };
-                    UserService.PostUser(uE);
+                    await UserService.PostUser(uE);
                     //TODO: essayer d'avoir le retour du id au moment du POST a la place
                     UserEntity uE2 = await UserService.GetUserByUsername(uE.Username);
                     PasswordEntity pE = new PasswordEntity { UserId = uE2.Id, Password = signupEntity.Password };
-                    PasswordService.PostPassword(pE);
+                    await PasswordService.PostPassword(pE);
 
                     await PlayerStatsService.SetPlayerAchievements(uE2.Id);
 
