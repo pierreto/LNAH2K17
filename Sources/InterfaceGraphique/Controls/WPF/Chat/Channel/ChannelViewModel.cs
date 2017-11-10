@@ -135,19 +135,6 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
             }
         }
 
-        private ICommand openOptionsPopupCommand;
-        public ICommand OpenOptionsPopupCommand
-        {
-            get
-            {
-                if (openOptionsPopupCommand == null)
-                {
-                    openOptionsPopupCommand = new RelayCommand(ToggleOptionsPopup);
-                }
-                return openOptionsPopupCommand;
-            }
-        }
-
         private ICommand createChannelCommand;
         public ICommand CreateChannelCommand
         {
@@ -187,19 +174,6 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
             }
         }
 
-        private ICommand closeOptionsCommand;
-        public ICommand CloseOptionsCommand
-        {
-            get
-            {
-                if (closeOptionsCommand == null)
-                {
-                    closeOptionsCommand = new RelayCommand(ToggleOptionsPopup);
-                }
-                return closeOptionsCommand;
-            }
-        }
-
         private ICommand openJoinChannelCommand;
         public ICommand OpenJoinChannelCommand
         {
@@ -227,18 +201,6 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
                 Name = "";
                 ChannelErrMsg = "";
                 IsOpenAdd = true;
-            }
-        }
-
-        private void ToggleOptionsPopup()
-        {
-            if (IsOpenOptions)
-            {
-                IsOpenOptions = false;
-            }
-            else
-            {
-                IsOpenOptions = true;
             }
         }
 
