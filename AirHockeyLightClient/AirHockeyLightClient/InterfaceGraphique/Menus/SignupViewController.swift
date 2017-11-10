@@ -9,14 +9,16 @@
 import UIKit
 
 class SignupViewController: UIViewController {
-    // Mark : Properties
-    @IBOutlet weak var titleLabel: UILabel!
-    
+    // Mark : Properties    
     @IBOutlet weak var usernameInput: UITextField!
+    @IBOutlet weak var nameInput: UITextField!
+    @IBOutlet weak var emailInput: UITextField!
     @IBOutlet weak var passwordInput: UITextField!
     @IBOutlet weak var confirmPasswordInput: UITextField!
     
     @IBOutlet weak var usernameErrorLabel: UILabel!
+    @IBOutlet weak var nameErrorLabel: UILabel!
+    @IBOutlet weak var emailErrorLabel: UILabel!
     @IBOutlet weak var passwordErrorLabel: UILabel!
     @IBOutlet weak var confirmPasswordErrorLabel: UILabel!
     
@@ -25,7 +27,7 @@ class SignupViewController: UIViewController {
     @IBAction func createAccount(_ sender: Any) {
         disableInputs()
         loading()
-        viewModel?.signup(username: usernameInput.text!, password: passwordInput.text!, confirmPassword: confirmPasswordInput.text!)
+        viewModel?.signup(username: usernameInput.text!, name: nameInput.text!, email: emailInput.text!, password: passwordInput.text!, confirmPassword: confirmPasswordInput.text!)
             .then{
                 data -> Void in
                 if(data) {
@@ -46,6 +48,12 @@ class SignupViewController: UIViewController {
                     if(self.usernameErrorLabel.text != ""){
                         self.notifyErrorInput(textField: self.usernameInput)
                     }
+                    if(self.nameErrorLabel.text != ""){
+                        self.notifyErrorInput(textField: self.nameInput)
+                    }
+                    if(self.emailErrorLabel.text != ""){
+                        self.notifyErrorInput(textField: self.emailInput)
+                    }
                     if(self.passwordErrorLabel.text != ""){
                         self.notifyErrorInput(textField: self.passwordInput)
                     }
@@ -59,6 +67,16 @@ class SignupViewController: UIViewController {
     @IBAction func editUsernameInput(_ sender: Any) {
         self.resetStyle(textField: self.usernameInput)
         self.usernameErrorLabel.text = ""
+    }
+    
+    @IBAction func editNameInput(_ sender: Any) {
+        self.resetStyle(textField: self.nameInput)
+        self.nameErrorLabel.text = ""
+    }
+    
+    @IBAction func editEmailInput(_ sender: Any) {
+        self.resetStyle(textField: self.emailInput)
+        self.emailErrorLabel.text = ""
     }
     
     @IBAction func editPasswordInput(_ sender: Any) {
@@ -100,6 +118,8 @@ class SignupViewController: UIViewController {
             return
         }
         viewModel.usernameError.bindAndFire { [unowned self] in self.usernameErrorLabel.text = $0 }
+        viewModel.nameError.bindAndFire { [unowned self] in self.nameErrorLabel.text = $0 }
+        viewModel.emailError.bindAndFire { [unowned self] in self.emailErrorLabel.text = $0 }
         viewModel.passwordError.bindAndFire { [unowned self] in self.passwordErrorLabel.text = $0 }
         viewModel.confirmPasswordError.bindAndFire { [unowned self] in self.confirmPasswordErrorLabel.text = $0 }
     }
@@ -120,12 +140,16 @@ class SignupViewController: UIViewController {
     
     private func disableInputs() {
         self.usernameInput.isEnabled = false
+        self.nameInput.isEnabled = false
+        self.emailInput.isEnabled = false
         self.passwordInput.isEnabled = false
         self.confirmPasswordInput.isEnabled = false
     }
     
     private func enableInputs() {
         self.usernameInput.isEnabled = true
+        self.nameInput.isEnabled = true
+        self.emailInput.isEnabled = true
         self.passwordInput.isEnabled = true
         self.confirmPasswordInput.isEnabled = true
     }

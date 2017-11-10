@@ -10,19 +10,24 @@ import PromiseKit
 import Foundation
 
 class SignupViewModel: NSObject, ISignupViewModel {
+    
     let signupModel : Signup
     
     let usernameError: Dynamic<String>
+    let nameError: Dynamic<String>
+    let emailError: Dynamic<String>
     let passwordError: Dynamic<String>
     let confirmPasswordError: Dynamic<String>
     
-    func signup(username: String, password: String, confirmPassword: String) -> Promise<Bool>{
-        return signupModel.validateFields(username: username, password: password, confirmPassword: confirmPassword)
+    func signup(username: String, name: String, email: String, password: String, confirmPassword: String) -> Promise<Bool> {
+        return signupModel.validateFields(username: username, name: name, email: email, password: password, confirmPassword: confirmPassword)
     }
     
     init(signupModel: Signup) {
         self.signupModel = signupModel
         self.usernameError = Dynamic(signupModel.usernameError)
+        self.nameError = Dynamic(signupModel.nameError)
+        self.emailError = Dynamic(signupModel.emailError)
         self.passwordError = Dynamic(signupModel.passwordError)
         self.confirmPasswordError = Dynamic(signupModel.confirmPasswordError)
         super.init()
