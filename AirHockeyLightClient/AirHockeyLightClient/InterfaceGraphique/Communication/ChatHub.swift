@@ -63,7 +63,7 @@ class ChatHub: BaseHub {
                 else {
                     channels.append(ChannelEntity(name: channelName))
                     MasterViewController.sharedMasterViewController.channelTableView.reloadData()
-                    let x = channels.count
+                    //Set joined channel as selected
                     let indexPath = IndexPath(row: channels.count - 1, section: 0);
                     MasterViewController.sharedMasterViewController.channelTableView.selectRow(at: indexPath, animated: true, scrollPosition: .bottom)
                     MasterViewController.sharedMasterViewController.channelTableView.delegate?.tableView!(MasterViewController.sharedMasterViewController.channelTableView, didSelectRowAt: indexPath)
