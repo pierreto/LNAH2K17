@@ -51,6 +51,8 @@ class SignupViewModel: NSObject, ISignupViewModel {
     
     @objc fileprivate func signupPressed(_ notification: NSNotification){
         self.usernameError.value = signupModel.usernameError
+        self.nameError.value = signupModel.nameError
+        self.emailError.value = signupModel.emailError
         self.passwordError.value = signupModel.passwordError
         self.confirmPasswordError.value = signupModel.confirmPasswordError
 

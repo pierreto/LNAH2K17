@@ -55,7 +55,7 @@ class Login: NSObject {
                             if let data = response.data {
                                 let responseJSON = JSON(data: data)
                                 
-                                if let message: String = responseJSON["Message"].stringValue {
+                                if let message: String = responseJSON.stringValue {
                                     if !message.isEmpty {
                                         self.usernameError = message
                                     }

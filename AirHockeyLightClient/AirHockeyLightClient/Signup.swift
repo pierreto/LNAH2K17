@@ -65,7 +65,7 @@ class Signup: NSObject {
                             if let data = response.data {
                                 let responseJSON = JSON(data: data)
                                 
-                                if let message: String = responseJSON["Message"].stringValue {
+                                if let message: String = responseJSON.stringValue {
                                     if !message.isEmpty {
                                         self.usernameError = message
                                     }
@@ -105,7 +105,7 @@ class Signup: NSObject {
     }
     
     private func validateName(name: String) -> Bool {
-        let validNameRegex = "^[a-zA-Z_]$"
+        let validNameRegex = "^[a-zA-Z0-9_]{1,32}$"
         let nameMatches = name.range(of: validNameRegex, options: .regularExpression)
         if(name.isEmpty) {
             self.nameError = "Nom requis"
@@ -127,13 +127,13 @@ class Signup: NSObject {
             self.emailError = "Courriel requis"
             return false
         } else if (email.characters.count > 64) {
-            self.nameError = "Maximum 64 charactères permis"
+            self.emailError = "Maximum 64 charactères permis"
             return false
         } else if (email.isEmail) {
-            self.nameError = ""
+            self.emailError = ""
             return true
         } else {
-            self.nameError = "Courriel invalide"
+            self.emailError = "Courriel invalide"
             return false
         }
     }
@@ -171,7 +171,7 @@ class Signup: NSObject {
 
 extension String {
     var isEmail: Bool {
-        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,20}"
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
         let emailTest  = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
         return emailTest.evaluate(with: self)
     }
