@@ -1,5 +1,4 @@
-﻿using AirHockeyServer.DatabaseCore;
-using AirHockeyServer.Entities;
+﻿using AirHockeyServer.Entities;
 using AirHockeyServer.Mapping;
 using AirHockeyServer.Pocos;
 using AirHockeyServer.Repositories.Interfaces;
@@ -17,10 +16,8 @@ namespace AirHockeyServer.Repositories
         private Table<GamePoco> GameTable;
         protected IMapRepository MapRepository { get; private set; }
 
-        public GameRepository(IMapRepository mapRepository,
-            DataProvider dataProvider, MapperManager mapperManager) : base(dataProvider, mapperManager)
+        public GameRepository(IMapRepository mapRepository, MapperManager mapperManager) : base(mapperManager)
         {
-            this.GameTable = DataProvider.DC.GetTable<GamePoco>();
             MapRepository = mapRepository;
         }
 
@@ -28,12 +25,15 @@ namespace AirHockeyServer.Repositories
         {
             try
             {
-                GamePoco gameToCreate = MapperManager.Map<GameEntity, GamePoco>(game);
-                this.GameTable.InsertOnSubmit(gameToCreate);
+                using (MyDataContext DC = new MyDataContext())
+                {
+                    GamePoco gameToCreate = MapperManager.Map<GameEntity, GamePoco>(game);
+                    DC.GetTable<GamePoco>().InsertOnSubmit(gameToCreate);
 
-                await Task.Run(() => this.DataProvider.DC.SubmitChanges());
+                    await Task.Run(() => DC.SubmitChanges());
 
-                return await GetGame(game.GameId);
+                    return await GetGame(game.GameId);
+                }
             }
             catch (Exception e)
             {
@@ -46,36 +46,39 @@ namespace AirHockeyServer.Repositories
         {
             try
             {
-                IQueryable<GamePoco> queryable =
-                    from games in this.GameTable where games.Id == gameId.ToString() select games;
-
-                var results = await Task<IEnumerable<GamePoco>>.Run(
-                    () => queryable.ToArray());
-                
-                GamePoco gamePoco = results.Length > 0 ? results.First() : null;
-                
-                GameEntity result = new GameEntity();
-
-                IEnumerable<MapEntity> maps = await MapRepository.GetMaps();
-                // TODO : UPDATE WHEN MAP DONE
-                result.SelectedMap = maps.First();
-                // TODO GET USER
-                result.Winner = new UserEntity
+                using (MyDataContext DC = new MyDataContext())
                 {
-                    Id = gamePoco.Winner
-                };
-                result.Players[0] = new UserEntity
-                {
-                    Id = gamePoco.Player1
-                };
-                result.Players[1] = new UserEntity
-                {
-                    Id = gamePoco.Player2
-                };
+                    IQueryable<GamePoco> queryable =
+                    from games in DC.GetTable<GamePoco>() where games.Id == gameId.ToString() select games;
 
-                result.GameId = new Guid(gamePoco.Id);
+                    var results = await Task.Run(
+                        () => queryable.ToArray());
 
-                return result;
+                    GamePoco gamePoco = results.Length > 0 ? results.First() : null;
+
+                    GameEntity result = new GameEntity();
+
+                    IEnumerable<MapEntity> maps = await MapRepository.GetMaps();
+                    // TODO : UPDATE WHEN MAP DONE
+                    result.SelectedMap = maps.First();
+                    // TODO GET USER
+                    result.Winner = new UserEntity
+                    {
+                        Id = gamePoco.Winner
+                    };
+                    result.Players[0] = new UserEntity
+                    {
+                        Id = gamePoco.Player1
+                    };
+                    result.Players[1] = new UserEntity
+                    {
+                        Id = gamePoco.Player2
+                    };
+
+                    result.GameId = new Guid(gamePoco.Id);
+
+                    return result;
+                }
             }
             catch (Exception e)
             {
@@ -88,13 +91,16 @@ namespace AirHockeyServer.Repositories
         {
             try
             {
-                IQueryable<GamePoco> queryable =
-                    from games in this.GameTable where games.Player1 == userId || games.Player2 == userId select games;
+                using (MyDataContext DC = new MyDataContext())
+                {
+                    IQueryable<GamePoco> queryable =
+                    from games in DC.GetTable<GamePoco>() where games.Player1 == userId || games.Player2 == userId select games;
 
-                var results = await Task<IEnumerable<GamePoco>>.Run(
-                    () => queryable.ToArray());
+                    var results = await Task.Run(
+                        () => queryable.ToArray());
 
-                return results.Length;
+                    return results.Length;
+                }
             }
             catch (Exception e)
             {

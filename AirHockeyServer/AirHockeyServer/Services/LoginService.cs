@@ -35,14 +35,14 @@ namespace AirHockeyServer.Services
                         }
                         else
                         {
-                            //if (!loginEntity.LoginFromWebApp)
-                            //{
-                            //    if (_usernames.Contains(loginEntity.Username))
-                            //    {
-                            //        throw new LoginException("Déjà connecté");
-                            //    }
-                            //    _usernames.Add(loginEntity.Username);
-                            //}
+                            if (!loginEntity.LoginFromWebApp)
+                            {
+                                if (_usernames.Contains(loginEntity.Username))
+                                {
+                                    throw new LoginException("Déjà connecté");
+                                }
+                                _usernames.Add(loginEntity.Username);
+                            }
                             return uE.Id;
                         }
                     }

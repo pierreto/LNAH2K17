@@ -46,6 +46,12 @@ class Signup: NSObject {
                 Alamofire.request("http://" + self.clientConnection.getIpAddress()! + ":63056/api/signup", method: .post, parameters: parameters, encoding: JSONEncoding.default)
                     .responseJSON { response in
                         if(response.response?.statusCode == 200) {
+                            self.clientConnection.setUsername(username: username)
+                            if let result = response.result.value {
+                                let id = result as! Int
+                                self.clientConnection.setId(id: id)
+                            }
+                            HubManager.sharedConnection.getChatHub().subscribe()
                             fullfil(true)
                         } else {
                             if let data = response.data {

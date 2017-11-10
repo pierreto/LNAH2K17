@@ -1,5 +1,4 @@
-﻿using AirHockeyServer.DatabaseCore;
-using AirHockeyServer.Entities;
+﻿using AirHockeyServer.Entities;
 using AirHockeyServer.Pocos;
 using AirHockeyServer.Repositories;
 using AirHockeyServer.Services.Interfaces;
@@ -16,7 +15,6 @@ namespace AirHockeyServer.Mapping
         public IMapper Mapper { get; set; }
 
         public UserRepository UserRepository;
-        public DataProvider DataProvider;
 
         public MapperManager()
         {

@@ -144,6 +144,13 @@ class FacadeModele {
         return self.generalProperties!
     }
     
+    /// Change la configuration de la zone de jeu
+    func assignerGeneralProperties(coefficientFriction: Float, coefficientRebond: Float, coefficientAcceleration: Float) {
+        self.generalProperties?.setCoefficientValuesFromFloat(coefficientFriction: coefficientFriction,
+                                                              coefficientRebond: coefficientRebond,
+                                                              coefficientAcceleration: coefficientAcceleration)
+    }
+    
     /// Retourne le gestionnaire d'utilisateurs
     func obtenirUserManager() -> UserManager? {
         return self.userManager

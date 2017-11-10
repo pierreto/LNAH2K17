@@ -115,8 +115,12 @@ void ModeleEtatDuplication::mouseUpL() {
 			{
 				duplication = VisiteurDuplication(false);
 			}
-
+	
 			FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(&duplication);
+			for (NoeudAbstrait*node : duplication.getStamp())
+			{
+				node->setSelectedWithoutGhostEffect(true);
+			}
 		}
 	}
 
@@ -182,10 +186,18 @@ void ModeleEtatDuplication::playerMouseMove(int x, int y) {
 		}
 
 
-		if (!estCopie_) {
-			VisiteurDuplication duplication = VisiteurDuplication(sendToServer, wallCreationCallback_, boostCreationCallback_, portalCreationCallback_);
+		if (! estCopie_) {
+			VisiteurDuplication duplication = VisiteurDuplication(false, wallCreationCallback_, boostCreationCallback_, portalCreationCallback_);
 			arbre->accepterVisiteur(&duplication);
 			glm::dvec3 centreDuplication = duplication.obtenirCentreDuplication();
+
+			for(NoeudAbstrait*node : duplication.getStamp())
+			{
+				node->setSelectedWithoutGhostEffect(true);
+			}
+
+
+			selectionCallback_("", false, true);
 
 			VisiteurDeplacement deplacementInit = VisiteurDeplacement(mousePos - centreDuplication, false);
 			arbre->accepterVisiteur(&deplacementInit);
