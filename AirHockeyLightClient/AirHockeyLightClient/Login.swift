@@ -51,8 +51,16 @@ class Login: NSObject {
                             HubManager.sharedConnection.getChatHub().subscribe()
                             fullfil(true)
                         } else {
-                            self.usernameError = "Veuillez entrer un nom d'usager valide"
-                            self.passwordError = "Veuillez entrer un mot de passe valide"
+                            //Getting error message from server
+                            if let data = response.data {
+                                let responseJSON = JSON(data: data)
+                                
+                                if let message: String = responseJSON["Message"].stringValue {
+                                    if !message.isEmpty {
+                                        self.usernameError = message
+                                    }
+                                }
+                            }
                             NotificationCenter.default.post(name: Notification.Name(rawValue: LoginNotification.SubmitNotification), object: self)
                             fullfil(false)
                         }
