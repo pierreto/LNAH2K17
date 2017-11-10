@@ -15,10 +15,11 @@
 
 .allTitle {
     text-align: center;
+    /*
     top: 15%;
-    transform: translateY(50%);
+    transform: translateY(50%); */
 }
 
 .all {
-    margin-top: 0px;
+    margin-top: 100px;
 }
