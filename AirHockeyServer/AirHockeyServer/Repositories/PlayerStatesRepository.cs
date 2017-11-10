@@ -95,20 +95,27 @@ namespace AirHockeyServer.Repositories
             }
         }
 
-        public async Task CreateAchievement(int userId, AchivementType achivementType)
+        public async Task CreateAchievement(int userId)
         {
             try
             {
                 using (MyDataContext DC = new MyDataContext())
                 {
-                    AchievementPoco achievementPoco = new AchievementPoco
+                    List<AchievementPoco> aPs = new List<AchievementPoco>();
+                    foreach (AchivementType achievement in Enum.GetValues(typeof(AchivementType)))
                     {
-                        AchievementType = achivementType.ToString(),
-                        IsEnabled = false,
-                        UserId = userId
-                    };
-
-                    DC.GetTable<AchievementPoco>().InsertOnSubmit(achievementPoco);
+                        AchievementPoco achievementPoco = new AchievementPoco
+                        {
+                            AchievementType = achievement.ToString(),
+                            IsEnabled = false,
+                            UserId = userId
+                        };
+                        aPs.Add(achievementPoco);
+                    }
+                    foreach(var aP in aPs)
+                    {
+                        DC.GetTable<AchievementPoco>().InsertOnSubmit(aP);
+                    }
 
                     await Task.Run(() => DC.SubmitChanges());
                 }
