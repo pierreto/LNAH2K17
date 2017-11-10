@@ -1,23 +1,37 @@
 <div class="container">
   <form [formGroup]="signupForm">
     <div class="field">
-      <label for="username">Nom d'usager </label>
-      <input class="control-form" type="text" id="username" formControlName="username" [(ngModel)]="user.username" [ngClass]="{'invalidField': formErrors.username}">
+      <label for="password">Nom d'usager </label>
+      <input class="control-form" placeholder="Nom d'usager" type="text" id="username" formControlName="username" [(ngModel)]="user.username" [ngClass]="{'invalidField': formErrors.username}">
       <div *ngIf="formErrors.username" class="errorMsg">
         {{ formErrors.username }}
+      </div>
+    </div>
+    <div class="field">
+      <label for="password">Nom </label>
+      <input class="control-form" placeholder="Nom" type="text" id="name" formControlName="name" [(ngModel)]="user.name" [ngClass]="{'invalidField': formErrors.name}">
+      <div *ngIf="formErrors.name" class="errorMsg">
+        {{ formErrors.name }}
+      </div>
+    </div>
+    <div class="field">
+      <label for="password">Courriel </label>
+      <input class="control-form" placeholder="Courriel" type="email" id="email" formControlName="email" [(ngModel)]="user.email" [ngClass]="{'invalidField': formErrors.email}">
+      <div *ngIf="formErrors.email" class="errorMsg">
+        {{ formErrors.email }}
       </div>
     </div>
     <div class="form-group" formGroupName="passwords">
       <div class="field">
         <label for="password">Mot de passe </label>
-        <input class="control-form" type="password" id="password" formControlName="password" [(ngModel)]="user.password" [ngClass]="{'invalidField': formErrors.passwords.password || (signupForm.get('passwords').touched && signupForm.get('passwords').hasError('noMatch'))}">
+        <input class="control-form" placeholder="Mot de passe" type="password" id="password" formControlName="password" [(ngModel)]="user.password" [ngClass]="{'invalidField': formErrors.passwords.password || (signupForm.get('passwords').touched && signupForm.get('passwords').hasError('noMatch'))}">
         <div *ngIf="formErrors.passwords.password" class="errorMsg">
           {{ formErrors.passwords.password }}
         </div>
       </div>
       <div class="field">
-        <label for="passwordConfirm">Confirmation mot de passe </label>
-        <input class="control-form" type="password" id="passwordConfirm" formControlName="passwordConfirm" [ngClass]="{'invalidField': formErrors.passwords.passwordConfirm || (signupForm.get('passwords').touched && signupForm.get('passwords').hasError('noMatch'))}">
+        <label for="password">Confirmation mot de passe </label>
+        <input class="control-form" placeholder="Mot de passe" type="password" id="passwordConfirm" formControlName="passwordConfirm" [ngClass]="{'invalidField': formErrors.passwords.passwordConfirm || (signupForm.get('passwords').touched && signupForm.get('passwords').hasError('noMatch'))}">
         <div *ngIf="formErrors.passwords.passwordConfirm" class="errorMsg">
           {{ formErrors.passwords.passwordConfirm }}
         </div>
