@@ -48,6 +48,13 @@ class MasterViewController: UITableViewController {
         MasterViewController.sharedMasterViewController = self
         ChatAreaViewController.sharedChatAreaViewController.channel = channels.first
         delegate = ChatAreaViewController.sharedChatAreaViewController
+        channelTableView.delegate = self
+        channelTableView.dataSource = self
+        channelTableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        
+        let indexPath = IndexPath(row: 0, section: 0);
+        self.channelTableView.selectRow(at: indexPath, animated: true, scrollPosition: .bottom)
+        self.channelTableView.delegate?.tableView!(self.channelTableView, didSelectRowAt: indexPath)
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -108,7 +115,12 @@ class MasterViewController: UITableViewController {
         }    
     }
 
-
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+//        if 0 == indexPath.row {
+//            print(indexPath)
+//            tableView.selectRow(at: indexPath, animated: false, scrollPosition: UITableViewScrollPosition.none)
+//        }
+    }
     /*
     // Override to support rearranging the table view.
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
@@ -146,6 +158,9 @@ extension MasterViewController: AddChannelDelegate {
                 self.delegate?.sChannelName = ""
                 self.delegate?.toggleAddChannelView()
                 self.channelTableView.reloadData()
+                let indexPath = IndexPath(row: channels.count - 1, section: 0);
+                self.channelTableView.selectRow(at: indexPath, animated: true, scrollPosition: .bottom)
+                self.channelTableView.delegate?.tableView!(self.channelTableView, didSelectRowAt: indexPath)
             } else {
                 self.delegate?.sChannelNameErrMsg = "Canal déjà créé"
                 print("Canal existe deja")

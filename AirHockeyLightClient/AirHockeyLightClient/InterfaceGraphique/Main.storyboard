@@ -1147,7 +1147,7 @@
                                 <rect key="frame" x="20" y="20" width="664" height="254"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Message" rowHeight="140" id="ikA-gx-hh9" customClass="MessageViewCell" customModule="AirHockeyLightClient" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Message" rowHeight="140" id="ikA-gx-hh9" customClass="MessageViewCell" customModule="AirHockeyLightClient" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="664" height="140"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ikA-gx-hh9" id="5KZ-A1-rO9">
