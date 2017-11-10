@@ -139,7 +139,7 @@ onValueChanged(data?: any) {
       },
       err => {
         this.signupOk = false;
-        this.errorMessage = err.json().Message;
+        this.formErrors.username = err.json();
         this.appService.loading = false;
       }
     );

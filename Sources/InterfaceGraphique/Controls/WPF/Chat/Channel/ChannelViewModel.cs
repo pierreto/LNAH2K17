@@ -251,7 +251,7 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
             ChannelEntity cE = new ChannelEntity() { Name = Name };
 
             //On cree le canal seulement s'il n'existe pas deja
-            ChannelErrMsg = await chatHub.CreateChannel(cE);
+            ChannelErrMsg = await chatHub.CreateChannel(cE.Name);
             if(ChannelErrMsg == null)
             {
                 ChatListItemViewModel clivm = new ChatListItemViewModel(cE);

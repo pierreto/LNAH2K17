@@ -219,7 +219,7 @@ namespace InterfaceGraphique.Controls.WPF.Chat
             Program.FormManager.CurrentForm?.HideChat();
             UndockedChat = new Window
             {
-                Title = "UnDocked",
+                Title = "Chat",
                 Content = new TestChatView()
                 {
                     Titre = "UnDocked",
@@ -287,10 +287,10 @@ namespace InterfaceGraphique.Controls.WPF.Chat
                 MainChannel.Messages.Add(message);
             }).Wait();
         }
-        private void NewMessageFromChannel(ChatMessage message, ChannelEntity channelEntity)
+        private void NewMessageFromChannel(ChatMessage message, string channelName)
         {
             var items = Program.unityContainer.Resolve<ChatListViewModel>().Items;
-            ChannelEntity cE = items.Where(s => s.ChannelEntity.Name == channelEntity.Name).First().ChannelEntity;
+            ChannelEntity cE = items.Where(s => s.ChannelEntity.Name == channelName).First().ChannelEntity;
             ctxTaskFactory.StartNew(() =>
             {
                 //If you are not currently on the channel where the message is being sent, you receive a notification

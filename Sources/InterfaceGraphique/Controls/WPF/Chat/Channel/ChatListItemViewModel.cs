@@ -82,7 +82,18 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
                 {
                     item.IsSelected = false;
                 }
-                ActiveChannel.Instance.JoinChannelEntity = ChannelEntity;
+                bool channelJoined = false;
+                foreach (var item in Program.unityContainer.Resolve<ChatListViewModel>().Items)
+                {
+                    if (item.ChannelEntity.Name == ChannelEntity.Name)
+                    {
+                        channelJoined = true;
+                    }
+                }
+                if (!channelJoined)
+                {
+                    ActiveChannel.Instance.JoinChannelEntity = ChannelEntity;
+                }
             }
             else
             {
