@@ -6,7 +6,7 @@
              xmlns:wpf="clr-namespace:InterfaceGraphique.Controls.WPF"
              xmlns:convert="clr-namespace:InterfaceGraphique.Controls.WPF.Converters"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="550">
+             d:DesignHeight="500" d:DesignWidth="550">
     <UserControl.Resources>
         <ResourceDictionary>
             <wpf:ViewModelLocator x:Key="VMLocator" d:IsDataSource="True" />
@@ -29,6 +29,28 @@
                     </Border>
                 </Grid>
                 <TextBlock HorizontalAlignment="Center" Margin="0,0,0,10" TextWrapping="Wrap" Text="{Binding UsernameErrMsg}" VerticalAlignment="Top" Foreground="Red" FontSize="18" Visibility="{Binding UsernameErrMsg, Converter={convert:StringToVisibilityConverter}, ConverterParameter=True}"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock VerticalAlignment="Center" TextAlignment="Right" Grid.Row="0" Grid.Column="0" TextWrapping="Wrap" Text="Name" Padding="0 0 10 0" FontSize="20" Margin="0,0,0,10" Foreground="White"/>
+                    <Border Grid.Row="0"  Grid.Column="1" Padding="5" CornerRadius="5" BorderThickness="1" BorderBrush="LightGray" SnapsToDevicePixels="True" Background="White" Margin="0,0,0,10" MaxWidth="300">
+                        <TextBox x:Name="Name" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding InputsEnabled}" Background="Transparent" BorderThickness="0" MaxLength="32"/>
+                    </Border>
+                </Grid>
+                <TextBlock HorizontalAlignment="Center" Margin="0,0,0,10" TextWrapping="Wrap" Text="{Binding NameErrMsg}" VerticalAlignment="Top" Foreground="Red" FontSize="18" Visibility="{Binding NameErrMsg, Converter={convert:StringToVisibilityConverter}, ConverterParameter=True}"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock VerticalAlignment="Center" TextAlignment="Right" Grid.Row="0" Grid.Column="0" TextWrapping="Wrap" Text="Email" Padding="0 0 10 0" FontSize="20" Margin="0,0,0,10" Foreground="White"/>
+                    <Border Grid.Row="0"  Grid.Column="1" Padding="5" CornerRadius="5" BorderThickness="1" BorderBrush="LightGray" SnapsToDevicePixels="True" Background="White" Margin="0,0,0,10" MaxWidth="300">
+                        <TextBox x:Name="Email" Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding InputsEnabled}" Background="Transparent" BorderThickness="0" MaxLength="64"/>
+                    </Border>
+                </Grid>
+                <TextBlock HorizontalAlignment="Center" Margin="0,0,0,10" TextWrapping="Wrap" Text="{Binding EmailErrMsg}" VerticalAlignment="Top" Foreground="Red" FontSize="18" Visibility="{Binding EmailErrMsg, Converter={convert:StringToVisibilityConverter}, ConverterParameter=True}"/>
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>

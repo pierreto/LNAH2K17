@@ -11,7 +11,7 @@ namespace AirHockeyServer.Services.Interfaces
     {
         Task<PasswordEntity> GetPasswordByUserId(int userId);
 
-        void PostPassword(PasswordEntity passwordEntity);
+        Task PostPassword(PasswordEntity passwordEntity);
 
         Task<PasswordEntity> GetPasswordById(int id);
     }

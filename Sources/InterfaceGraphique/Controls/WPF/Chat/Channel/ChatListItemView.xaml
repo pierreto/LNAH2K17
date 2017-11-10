@@ -23,6 +23,7 @@
                                 <!-- Click to open message -->
                                 <Border.InputBindings>
                                     <MouseBinding MouseAction="LeftClick" Command="{Binding OpenChannelCommand}" />
+                                    <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding JoinChannelCommand}"/>
                                 </Border.InputBindings>
 
                                 <Grid x:Name="container" Background="Transparent">

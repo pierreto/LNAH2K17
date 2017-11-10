@@ -1,9 +1,3 @@
-label {
-    display: inline-block;
-    text-align: right;
-    width: 245px;
-}
-
 input {
     border-radius: 3px;
     height: 20px;
@@ -33,8 +27,12 @@ input {
 
 .field {
     margin: 10px;
+    text-align: center;
 }
 
+.field-center {
+    text-align: center;
+}
 input.invalidField {
     border: 1px solid #ff5050;
 }
