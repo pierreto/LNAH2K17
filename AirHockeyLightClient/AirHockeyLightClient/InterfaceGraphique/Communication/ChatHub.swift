@@ -63,6 +63,10 @@ class ChatHub: BaseHub {
                 else {
                     channels.append(ChannelEntity(name: channelName))
                     MasterViewController.sharedMasterViewController.channelTableView.reloadData()
+                    let x = channels.count
+                    let indexPath = IndexPath(row: channels.count - 1, section: 0);
+                    MasterViewController.sharedMasterViewController.channelTableView.selectRow(at: indexPath, animated: true, scrollPosition: .bottom)
+                    MasterViewController.sharedMasterViewController.channelTableView.delegate?.tableView!(MasterViewController.sharedMasterViewController.channelTableView, didSelectRowAt: indexPath)
                     if let index = channelsToJoin.index(where: { $0.name == channelName }) {
                         channelsToJoin.remove(at: index)
                         ChatAreaViewController.sharedChatAreaViewController.joinChannelTableView.reloadData()
