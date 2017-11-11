@@ -39,6 +39,7 @@
 		25628B9F1FA79C070010B58D /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25628B9E1FA79C070010B58D /* MapViewModel.swift */; };
 		25628BA11FA79CFF0010B58D /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25628BA01FA79CFF0010B58D /* Map.swift */; };
 		256539A91F9D643A00D81E2C /* MapEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256539A81F9D643A00D81E2C /* MapEntity.swift */; };
+		25EFB2A01FB7505100FFD66F /* MapService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EFB29F1FB7505100FFD66F /* MapService.swift */; };
 		25F66FB51FA13071006CB47F /* VisiteurSauvegarde.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F66FB41FA13071006CB47F /* VisiteurSauvegarde.swift */; };
 		25F8091F1FA673050008F048 /* MapTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F8091E1FA673050008F048 /* MapTableViewController.swift */; };
 		25F809231FA6A2680008F048 /* MapDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F809221FA6A2680008F048 /* MapDisplayViewController.swift */; };
@@ -191,6 +192,7 @@
 		25628B9E1FA79C070010B58D /* MapViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		25628BA01FA79CFF0010B58D /* Map.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
 		256539A81F9D643A00D81E2C /* MapEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapEntity.swift; sourceTree = "<group>"; };
+		25EFB29F1FB7505100FFD66F /* MapService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapService.swift; path = Noyau/Services/MapService.swift; sourceTree = "<group>"; };
 		25F66FB41FA13071006CB47F /* VisiteurSauvegarde.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VisiteurSauvegarde.swift; path = Noyau/Arbre/Visiteurs/VisiteurSauvegarde.swift; sourceTree = "<group>"; };
 		25F8091E1FA673050008F048 /* MapTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapTableViewController.swift; path = InterfaceGraphique/MapTableViewController.swift; sourceTree = "<group>"; };
 		25F809221FA6A2680008F048 /* MapDisplayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapDisplayViewController.swift; sourceTree = "<group>"; };
@@ -433,6 +435,14 @@
 			name = Map;
 			sourceTree = "<group>";
 		};
+		25EFB29E1FB74FDD00FFD66F /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				25EFB29F1FB7505100FFD66F /* MapService.swift */,
+			);
+			name = Services;
+			sourceTree = "<group>";
+		};
 		25FDE4391FA80C620089D9FE /* Map */ = {
 			isa = PBXGroup;
 			children = (
@@ -588,6 +598,8 @@
 		8F0FFED51F6EB8B100366D8E /* Noyau */ = {
 			isa = PBXGroup;
 			children = (
+				25EFB29E1FB74FDD00FFD66F /* Services */,
+				8F65B2831FAE260500D8EE20 /* User */,
 				8F0B94AF1F8D4B9D007F0E82 /* Application */,
 				8FB6A9C71F81E35D00FAFFCF /* Arbre */,
 				8FE1EB031F75A90D00A01514 /* Communication */,
@@ -595,7 +607,6 @@
 				8F8706B71F789266000E6824 /* Entities */,
 				253E088F1F818DE1009F301B /* Helper */,
 				1D019A381F911F1E004D79B2 /* Model */,
-				8F65B2831FAE260500D8EE20 /* User */,
 			);
 			name = Noyau;
 			sourceTree = "<group>";
@@ -1059,6 +1070,7 @@
 				8F0B94BA1F8D8C95007F0E82 /* ModeleEtatDeplacement.swift in Sources */,
 				1D863DB11F9848E70025B89D /* OfflineMenuViewController.swift in Sources */,
 				8FB0E29C1FAFF2B100672057 /* WallCommand.swift in Sources */,
+				25EFB2A01FB7505100FFD66F /* MapService.swift in Sources */,
 				8F0B94B21F8D4BCE007F0E82 /* ModeleEtat.swift in Sources */,
 				3475C2431F8FE71800E8BF86 /* ModeleEtatCameraControl.swift in Sources */,
 				1D90AB001F982332003E0764 /* ConnectServerViewModel.swift in Sources */,
