@@ -6,62 +6,63 @@
 	<dict>
 		<key>Alamofire.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>3</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 		<key>Pods-AirHockeyLightClient.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>0</integer>
 		</dict>
 		<key>PromiseKit.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>4</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 		<key>Realm.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>5</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 		<key>RealmSwift.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>6</integer>
+			<key>isShown</key>
+			<false/>
 		</dict>
 		<key>SwiftR.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>1</integer>
 		</dict>
 		<key>SwiftyJSON.xcscheme</key>
 		<dict>
-			<key>orderHint</key>
-			<integer>7</integer>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>iCarousel.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>15298D3F97F9967B4FFE396152FA097D</key>
+		<key>01B6F6E299E388EA25B16A7FF17D0AC0</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>2FD3B4E6C0F9D9006FA6FBD4C0BE5AEA</key>
+		<key>113DB632A5A7BA43D5ACE74C28130244</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>3C53B226A5898A186DD4ABAE35B9CF54</key>
+		<key>1C832220A51B1EB776BE8B800B11D808</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>7A37305FB0F4118C8C5A7B9979A58C3D</key>
+		<key>7BDB8E5BF37528D69A727D645D5E1EA5</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -71,12 +72,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A23FE04BE95781D0842F860AE7D0BD28</key>
+		<key>A292D79D2EE7E8EBAA425CEDD1F31B07</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B04393ABEB3AEE5606CA1B73A8A61F04</key>
+		<key>B8D8C363B343A0778AE6633D70E11749</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E523C78D9C50B75D997B6739A178CA7A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
