@@ -76,17 +76,17 @@ class MapTableViewController: UITableViewController {
     // TODO : bouger ceci dans un service
     func buildMapEntity(json: JSON) -> MapEntity {
         let mapEntity = MapEntity()
-        mapEntity.id.value = json["Id"].int
-        mapEntity.creator = json["Creator"].string
-        mapEntity.mapName = json["MapName"].string
+        mapEntity.id = json["Id"].rawString()
+        mapEntity.creator = json["Creator"].rawString()
+        mapEntity.mapName = json["MapName"].rawString()
         // TODO : Fuseau horaire différent
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-        let date = dateFormatter.date(from: json["LastBackup"].string!)
+        let date = dateFormatter.date(from: json["LastBackup"].rawString()!)
         mapEntity.lastBackup = date
-        mapEntity.json = json["Json"].string
+        mapEntity.json = json["Json"].rawString()
         mapEntity.privacy.value = json["Private"].bool
-        mapEntity.password = json["Password"].string
+        mapEntity.password = json["Password"].rawString()
         mapEntity.currentNumberOfPlayer.value = json["CurrentNumberOfPlayer"].int
         return mapEntity
     }
@@ -110,9 +110,9 @@ class MapTableViewController: UITableViewController {
         // Fetch map json
         // TODO : bug création de map mode hors-ligne puis aller dans mode en ligne, sélectionner map
         if self.clientConnection.getConnection() != nil && self.clientConnection.connected! {
-            let mapId = self.mapsData[indexPath.row].id.value
+            let mapId = self.mapsData[indexPath.row].id
             
-            Alamofire.request("http://" + self.clientConnection.getIpAddress()! + ":63056/api/maps/get/" + (mapId?.description)!, method: .get, parameters: nil, encoding: JSONEncoding.default)
+            Alamofire.request("http://" + self.clientConnection.getIpAddress()! + ":63056/api/maps/get/" + mapId!, method: .get, parameters: nil, encoding: JSONEncoding.default)
                 .responseJSON { response in
                     if(response.response?.statusCode == 200) {
                         print("Succeed to fetch map with id from server")

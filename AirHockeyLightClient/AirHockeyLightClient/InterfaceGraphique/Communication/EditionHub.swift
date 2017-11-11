@@ -98,7 +98,7 @@ class EditionHub: BaseHub {
     
     func convertMapEntity(mapEntity: MapEntity) -> Any {
         let map = [
-            "Id": mapEntity.id.value!.description,
+            "Id": mapEntity.id!,
             "Creator": mapEntity.creator!,
             "MapName": mapEntity.mapName!,
             "LastBackup": mapEntity.lastBackup!.description,
@@ -166,7 +166,7 @@ class EditionHub: BaseHub {
         //print(jsonCommand!)
         
         do {
-            try self.hubProxy?.invoke("SendEditionCommand", arguments: [self.map?.id.value as Any, jsonCommand!])
+            try self.hubProxy?.invoke("SendEditionCommand", arguments: [self.map?.id as Any, jsonCommand!])
         }
         catch {
             print("Error SendEditionCommand")
@@ -177,7 +177,7 @@ class EditionHub: BaseHub {
         let convertedCommand = command.toDictionary()
         
         do {
-            try self.hubProxy?.invoke("SendSelectionCommand", arguments: [self.map?.id.value as Any, convertedCommand])
+            try self.hubProxy?.invoke("SendSelectionCommand", arguments: [self.map?.id as Any, convertedCommand])
         }
         catch {
             print("Error SendSelectionCommand")
@@ -186,7 +186,7 @@ class EditionHub: BaseHub {
     
     func leaveRoom() {
         do {
-            try self.hubProxy?.invoke("LeaveRoom", arguments: [self.map?.id.value as Any])
+            try self.hubProxy?.invoke("LeaveRoom", arguments: [self.map?.id as Any])
         }
         catch {
             print("Error LeaveRoom")
