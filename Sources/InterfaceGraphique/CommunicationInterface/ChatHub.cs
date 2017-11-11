@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Microsoft.Practices.Unity;
 using InterfaceGraphique.Controls.WPF.Chat.Channel;
+using System.Collections.Generic;
 
 namespace InterfaceGraphique.CommunicationInterface
 {
@@ -13,7 +14,7 @@ namespace InterfaceGraphique.CommunicationInterface
     {
 
         public event Action<ChatMessage> NewMessage;
-        public event Action<ChatMessage,ChannelEntity> NewMessageFromChannel;
+        public event Action<ChatMessage, String> NewMessageFromChannel;
         public event Action<string> NewJoinableChannel;
         public event Action<string> ChannelDeleted;
         private IHubProxy chatHubProxy;
@@ -25,7 +26,7 @@ namespace InterfaceGraphique.CommunicationInterface
 
         public async Task InitializeChat()
         {
-            var items = await chatHubProxy.Invoke<ObservableCollection<string>>("Subscribe", User.Instance.UserEntity.Id);
+            var items = await chatHubProxy.Invoke<List<string>>("Subscribe", User.Instance.UserEntity.Id);
             foreach (var item in items)
             {
                 Program.unityContainer.Resolve<JoinChannelListViewModel>().Items.Add(new ChatListItemViewModel(new ChannelEntity { Name = item }));
@@ -38,9 +39,9 @@ namespace InterfaceGraphique.CommunicationInterface
                 NewMessage?.Invoke(message);
             });
             //On distingue un message recu d'un canal
-            chatHubProxy.On<ChatMessage, ChannelEntity>("ChatMessageReceivedChannel", (message, cE) =>
+            chatHubProxy.On<ChatMessage, String>("ChatMessageReceivedChannel", (message, channelName) =>
             {
-                NewMessageFromChannel?.Invoke(message, cE);
+                NewMessageFromChannel?.Invoke(message, channelName);
             });
             //Reception de l'evenement de la creation d'un nouveau canal
             chatHubProxy.On<string>("NewJoinableChannel", (channelName) =>
@@ -61,18 +62,20 @@ namespace InterfaceGraphique.CommunicationInterface
             await chatHubProxy.Invoke("SendBroadcast", message);
         }
 
-        public async Task<string> CreateChannel(ChannelEntity channelEntity)
+        public async Task<string> CreateChannel(string channelName)
         {
-            ChannelEntity cE = await chatHubProxy.Invoke<ChannelEntity>("CreateChannel", channelEntity);
-            if(cE == null) { return "Canal déjà crée"; }
-            return null;
+            bool res = await chatHubProxy.Invoke<Boolean>("CreateChannel", channelName);
+            if(res) {
+                return null;
+            } else
+            {
+                return "Canal déjà crée";
+            }
         }
 
-        public async Task<ChannelEntity> JoinChannel(string channelName)
+        public async Task JoinChannel(string channelName)
         {
-            var cE = chatHubProxy.Invoke<ChannelEntity>("JoinChannel", channelName);
-            await cE;
-            return cE.Result;
+            await chatHubProxy.Invoke<String>("JoinChannel", channelName);
         }
 
         public async void SendChannel(ChatMessage message, string channelName)

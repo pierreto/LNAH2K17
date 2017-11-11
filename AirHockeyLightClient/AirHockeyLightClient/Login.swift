@@ -8,6 +8,7 @@
 import Alamofire
 import PromiseKit
 import Foundation
+import SwiftyJSON
 
 enum LoginNotification {
     static let SubmitNotification = "SubmitNotification"
@@ -43,10 +44,23 @@ class Login: NSObject {
                     .responseJSON { response in
                         if(response.response?.statusCode == 200) {
                             self.clientConnection.setUsername(username: username)
+                            if let result = response.result.value {
+                                let id = result as! Int
+                                self.clientConnection.setId(id: id)
+                            }
+                            HubManager.sharedConnection.getChatHub().subscribe()
                             fullfil(true)
                         } else {
-                            self.usernameError = "Veuillez entrer un nom d'usager valide"
-                            self.passwordError = "Veuillez entrer un mot de passe valide"
+                            //Getting error message from server
+                            if let data = response.data {
+                                let responseJSON = JSON(data: data)
+                                
+                                if let message: String = responseJSON.stringValue {
+                                    if !message.isEmpty {
+                                        self.usernameError = message
+                                    }
+                                }
+                            }
                             NotificationCenter.default.post(name: Notification.Name(rawValue: LoginNotification.SubmitNotification), object: self)
                             fullfil(false)
                         }

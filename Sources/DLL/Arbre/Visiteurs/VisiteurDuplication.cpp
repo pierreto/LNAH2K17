@@ -32,6 +32,9 @@ VisiteurDuplication::VisiteurDuplication(bool sendToServer, WallCreationCallback
 	wallCreationCallback_ = wallCallback;
 	portalCreationCallback_ = portalCallback;
 	boostCreationCallback_ = boostCallback;
+
+	stamp_ = std::vector<NoeudAbstrait*>();
+	premierNoeudPortailTrouve_ = false;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -69,13 +72,18 @@ void VisiteurDuplication::visiterAccelerateur(NoeudAccelerateur* noeud) {
 
 		// Assigner les mêmes propriétés
 		copyProperties(noeud, noeudDouble);
+		noeud->assignerSelection(false);
 
 		// Ajout du noeud à l'arbre de rendu
 		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->ajouter(noeudDouble);
 
+		stamp_.push_back(noeudDouble);
+
+
+		
 		if (sendToServer_)
 		{
-			boostCreationCallback_(noeudDouble->getUUID(), glm::value_ptr(noeudDouble->obtenirPositionRelative()), noeudDouble->obtenirRotation().y, glm::value_ptr(noeudDouble->obtenirScale()));
+			boostCreationCallback_(noeud->getUUID(), glm::value_ptr(noeud->obtenirPositionRelative()), noeud->obtenirRotation().y, glm::value_ptr(noeud->obtenirScale()));
 		}
 
 	}
@@ -101,11 +109,12 @@ void VisiteurDuplication::visiterMur(NoeudMur* noeud) {
 		// Assigner les mêmes propriétés
 		copyProperties(noeud, noeudDouble);
 
+		noeud->assignerSelection(false);
 
-
+		stamp_.push_back(noeudDouble);
 		if (sendToServer_)
 		{
-			wallCreationCallback_(noeudDouble->getUUID(), glm::value_ptr(noeudDouble->obtenirPositionRelative()), noeudDouble->obtenirRotation().y, glm::value_ptr(noeudDouble->obtenirScale()));
+			wallCreationCallback_(noeud->getUUID(), glm::value_ptr(noeud->obtenirPositionRelative()), noeud->obtenirRotation().y, glm::value_ptr(noeud->obtenirScale()));
 		}
 
 		// Ajout du noeud à l'arbre de rendu
@@ -133,22 +142,36 @@ void VisiteurDuplication::visiterPortail(NoeudPortail* noeud) {
 		// Assigner les mêmes propriétés
 		copyProperties(noeud, noeudDouble);
 
+		stamp_.push_back(noeudDouble);
+
+
 		// État de l'opération	
-		if (premierNoeud_== nullptr) {
+		if (!premierNoeudPortailTrouve_) {
 			premierNoeud_ = noeudDouble;
+
+			premierNoeudAEnvoye_ = noeud;
+
 			noeudDouble->assignerOppose(nullptr);
+			premierNoeudPortailTrouve_ = true;
+
 		}
 
 		else {
 			// Relier les deux portails
 			noeudDouble->assignerOppose(premierNoeud_);
 			premierNoeud_->assignerOppose(noeudDouble);
+
+
+			premierNoeudAEnvoye_->assignerSelection(false);
+			noeud->assignerSelection(false);
+
+
 			if (sendToServer_)
 			{
-				portalCreationCallback_(premierNoeud_->getUUID(), glm::value_ptr(premierNoeud_->obtenirPositionRelative()), (premierNoeud_->obtenirRotation().y), glm::value_ptr(premierNoeud_->obtenirScale()),
-					noeudDouble->getUUID(), glm::value_ptr(noeudDouble->obtenirPositionRelative()), noeudDouble->obtenirRotation().y, glm::value_ptr(noeudDouble->obtenirScale()));
+				portalCreationCallback_(premierNoeudAEnvoye_->getUUID(), glm::value_ptr(premierNoeudAEnvoye_->obtenirPositionRelative()), (premierNoeudAEnvoye_->obtenirRotation().y), glm::value_ptr(premierNoeudAEnvoye_->obtenirScale()),
+					noeud->getUUID(), glm::value_ptr(noeud->obtenirPositionRelative()), noeud->obtenirRotation().y, glm::value_ptr(noeud->obtenirScale()));
 			}
-			premierNoeud_ = nullptr;
+			premierNoeudPortailTrouve_ = false;
 		}
 
 		// Ajout du noeud à l'arbre de rendu

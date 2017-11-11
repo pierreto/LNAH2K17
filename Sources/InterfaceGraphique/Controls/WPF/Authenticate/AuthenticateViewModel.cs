@@ -146,39 +146,45 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
             try
             {
                 Loading();
-                ValidateLoginEntity();
-                var response = await client.PostAsJsonAsync(Program.client.BaseAddress + "api/login", loginEntity);
-                if (response.IsSuccessStatusCode)
+                if (ValidateLoginEntity())
                 {
-                    int userId = response.Content.ReadAsAsync<int>().Result;
+                    var response = await client.PostAsJsonAsync(Program.client.BaseAddress + "api/login", loginEntity);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        int userId = response.Content.ReadAsAsync<int>().Result;
                     
-                    //On set l'instance statique du user.
-                    User.Instance.UserEntity = new UserEntity { Id = userId, Username = loginEntity.Username };
-                    User.Instance.IsConnected = true;
+                        //On set l'instance statique du user.
+                        User.Instance.UserEntity = new UserEntity { Id = userId, Username = loginEntity.Username };
+                        User.Instance.IsConnected = true;
 
-                    await chatHub.InitializeChat();
+                        await chatHub.InitializeChat();
 
-                    //On reset le nom d'usager et le mot de passe (Au cas ou il fait un retour a l'arriere ou deconnexion)
-                    Username = Password = "";
+                        //On reset le nom d'usager et le mot de passe (Au cas ou il fait un retour a l'arriere ou deconnexion)
+                        Username = Password = "";
 
-                    //On initie tous les formes qui on besoin de savoir si on est en mode en ligne 
-                    Program.InitAfterConnection();
+                        //On initie tous les formes qui on besoin de savoir si on est en mode en ligne 
+                        Program.InitAfterConnection();
 
-                    Program.FormManager.CurrentForm = Program.MainMenu;
+                        Program.FormManager.CurrentForm = Program.MainMenu;
 
-                    // Open the friend list windows:
-                    Program.FriendListHost.Show();
-                    Program.unityContainer.Resolve<FriendListViewModel>().InitializeViewModel();
+                        // Open the friend list windows:
+                        Program.FriendListHost.Show();
+                        Program.unityContainer.Resolve<FriendListViewModel>().InitializeViewModel();
+                    }
+                    else
+                    {
+                        //Du cote serveur, on retourne un message d'erreur
+                        var res = response.Content.ReadAsAsync<string>().Result;
+
+                        //On met une erreur seulement sur le password pour indiquer que soit le mdp, soit nom d'usager invalide
+                        PasswordErrMsg = res;
+                    }
+                    return response.Headers.Location;
                 }
                 else
                 {
-                    //Du cote serveur, on retourne un message d'erreur
-                    var res = response.Content.ReadAsAsync<string>().Result;
-
-                    //On met une erreur seulement sur le password pour indiquer que soit le mdp, soit nom d'usager invalide
-                    PasswordErrMsg = res;
+                    return null;
                 }
-                return response.Headers.Location;
             }
             catch(LoginException e)
             {
@@ -203,18 +209,20 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
         #endregion
 
         #region Private Methods
-        private void ValidateLoginEntity()
+        private bool ValidateLoginEntity()
         {
+            bool valid = true;
             if (loginEntity.Username == null || loginEntity.Username == "")
             {
                 UsernameErrMsg = "Nom d'usager requis";
-                throw new LoginException(UsernameErrMsg);
+                valid = false;
             }
             if (loginEntity.Password == null || loginEntity.Password == "")
             {
                 PasswordErrMsg = "Mot de passe requis";
-                throw new LoginException(PasswordErrMsg);
+                valid = false;
             }
+            return valid;
         }
 
         private void Loading()

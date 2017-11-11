@@ -76,17 +76,17 @@ class MapTableViewController: UITableViewController {
     // TODO : bouger ceci dans un service
     func buildMapEntity(json: JSON) -> MapEntity {
         let mapEntity = MapEntity()
-        mapEntity.id.value = json["Id"].int
-        mapEntity.creator = json["Creator"].string
-        mapEntity.mapName = json["MapName"].string
+        mapEntity.id = json["Id"].rawString()
+        mapEntity.creator = json["Creator"].rawString()
+        mapEntity.mapName = json["MapName"].rawString()
         // TODO : Fuseau horaire différent
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-        let date = dateFormatter.date(from: json["LastBackup"].string!)
+        let date = dateFormatter.date(from: json["LastBackup"].rawString()!)
         mapEntity.lastBackup = date
-        mapEntity.json = json["Json"].string
+        mapEntity.json = json["Json"].rawString()
         mapEntity.privacy.value = json["Private"].bool
-        mapEntity.password = json["Password"].string
+        mapEntity.password = json["Password"].rawString()
         mapEntity.currentNumberOfPlayer.value = json["CurrentNumberOfPlayer"].int
         return mapEntity
     }
@@ -111,7 +111,7 @@ class MapTableViewController: UITableViewController {
         creatorLabel.text = self.mapsData[indexPath.row].creator
         
         let idLabel = cell.viewWithTag(5) as! UILabel
-        idLabel.text = self.mapsData[indexPath.row].id.value?.description
+        idLabel.text = self.mapsData[indexPath.row].id
         
         return cell
     }

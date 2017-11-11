@@ -84,7 +84,10 @@ namespace vue {
 	{
 		projection_.redimensionnerFenetre(largeur, hauteur);
 	}
-
+	void VueOrtho::setLargeurFenetre(int largeur, int hauteur)
+	{
+		projection_.setLargeurFenetre(largeur, hauteur);
+	}
 
 	////////////////////////////////////////////////////////////////////////
 	///

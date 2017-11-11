@@ -59,7 +59,8 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
         #region Command Methods
         public async Task JoinChannel()
         {
-            ChannelEntity cE = await chatHub.JoinChannel(ActiveChannel.Instance.JoinChannelEntity.Name);
+            await chatHub.JoinChannel(ActiveChannel.Instance.JoinChannelEntity.Name);
+            ChannelEntity cE = new ChannelEntity { Name = ActiveChannel.Instance.JoinChannelEntity.Name };
             Program.unityContainer.Resolve<ChannelViewModel>().ToggleJoinChannel();
             Program.unityContainer.Resolve<ChatListViewModel>().Items.Add(new ChatListItemViewModel(cE));
             Program.unityContainer.Resolve<ChannelViewModel>().SetAsCurrentChannel(cE);

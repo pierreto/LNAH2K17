@@ -13,7 +13,7 @@ namespace InterfaceGraphique.Game.GameState
     public class SlaveGameState : AbstractGameState
     {
 
-        private GameHub gameHub;
+        //private GameHub gameHub;
         private bool gameHasEnded = false;
 
         public MapService MapService { get; set; }
@@ -42,8 +42,7 @@ namespace InterfaceGraphique.Game.GameState
             this.gameHub.NewGoal += OnNewGoal;
             this.gameHub.NewGameOver += EndGame;
 
-            var map = await MapService.GetMap(gameEntity.SelectedMap.Id.Value);
-            base.LoadOnlineMap(map);
+            selectedMap = gameEntity.SelectedMap;
         }
 
         private void OnNewGoal(GoalMessage goalMessage)

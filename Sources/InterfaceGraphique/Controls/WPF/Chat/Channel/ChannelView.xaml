@@ -44,7 +44,7 @@
                         </StackPanel>
                         <StackPanel Margin="8" Orientation="Horizontal" Grid.Column="2">
                             <StackPanel Orientation="Horizontal" Visibility ="{Binding JoinChannelMenuOpen}">
-                                <Button Name="Options" Visibility ="{Binding ChannelSelected, Converter={convert:BooleanToVisibilityConverter}, ConverterParameter=True}" fa:Awesome.Content="EllipsisH" BorderThickness="0" Background="{StaticResource DarkGrayBrush}" Margin="0,0,8,0" Command="{Binding OpenOptionsPopupCommand}"/>
+                                <Button Name="Remove" Visibility ="{Binding ChannelSelected, Converter={convert:BooleanToVisibilityConverter}, ConverterParameter=True}" fa:Awesome.Content="Trash" BorderThickness="0" Background="{StaticResource DeleteBrush}" Margin="0,0,8,0" Command="{Binding DeleteChannelCommand}"/>
                                 <Button Name="CreateChannel"   fa:Awesome.Content="Plus" BorderThickness="0" Background="{StaticResource AddBrush}" Command="{Binding OpenAddPopupCommand}" Margin="0,0,8,0"/>
                             </StackPanel>
                             <Button Name="JoinChannel"  fa:Awesome.Content="{Binding Arrow}" BorderThickness="0" Background="{StaticResource DarkGrayBrush}" Margin="0,0,10,0" Command="{Binding OpenJoinChannelCommand}"/>
@@ -106,26 +106,6 @@
                                         IsDefault="True" 
                                         Command="{Binding CreateChannelCommand}"/>
                             </Border>
-                        </StackPanel>
-                    </Border>
-                    <!--- Popup pour supprimer un canal-->
-                    <Border Background="{StaticResource UltraDarkGrayBrush}"
-                            Visibility="{Binding IsOpenOptions, Converter={convert:BooleanToVisibilityConverter}, ConverterParameter=True}"
-                            Padding ="2" 
-                            Panel.ZIndex="1"
-                            Grid.Row="1"
-                            BorderThickness="2"
-                            BorderBrush="White"
-                            Margin="0,0,50,0"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Top"
-                            CornerRadius="10">
-                        <Border.Effect>
-                            <DropShadowEffect BlurRadius="5" Opacity="0.4"/>
-                        </Border.Effect>
-                        <StackPanel Margin="4" VerticalAlignment="Center">
-                            <Button fa:Awesome.Content="AngleUp" Background="{StaticResource DarkGrayBrush}" Command="{Binding CloseOptionsCommand}" BorderThickness="0" Margin="0,0,0,8"/>
-                            <Button BorderThickness="0" Background="{StaticResource DeleteBrush}"  Grid.Row="1" fa:Awesome.Content="Trash" IsDefault="True" Command="{Binding DeleteChannelCommand}"/>
                         </StackPanel>
                     </Border>
                     <!-- Contient la liste de tous les canaux -->

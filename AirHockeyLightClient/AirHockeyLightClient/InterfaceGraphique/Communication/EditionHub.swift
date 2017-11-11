@@ -82,24 +82,18 @@ class EditionHub: BaseHub {
                 // print ("Control point command")
                 editionCommand = ControlPointCommand(objectUuid: command["ObjectUuid"].string!)
                 break
+            case .DELETE_COMMAND :
+                print ("Delete command")
+                editionCommand = DeleteCommand(objectUuid: command["ObjectUuid"].string!)
+                break
+            case .COEFFICIENT_COMMAND :
+                print ("Coefficient command")
+                editionCommand = CoefficientCommand(objectUuid: "")
+                break
         }
         
         editionCommand.fromJSON(json: command)
         editionCommand.executeCommand()
-    }
-    
-    func convertMapEntity(mapEntity: MapEntity) -> Any {
-        let map = [
-            "Id": mapEntity.id.value!.description,
-            "Creator": mapEntity.creator!,
-            "MapName": mapEntity.mapName!,
-            "LastBackup": mapEntity.lastBackup!.description,
-            "Json": mapEntity.json!,
-            "Private": mapEntity.privacy.value!.description,
-            "Password": mapEntity.password?.description as Any,
-            "CurrentNumberOfPlayer": mapEntity.currentNumberOfPlayer.value!.description
-        ] as [String : Any]
-        return map
     }
     
     func joinPublicRoom(username: String, mapEntity: MapEntity) {
@@ -107,8 +101,9 @@ class EditionHub: BaseHub {
         var usersInRoom = [Dictionary<String, Any>]()
         
         do {
+            let mapService = MapService()
             try self.hubProxy?.invoke("JoinPublicRoom",
-                                      arguments: [username, convertMapEntity(mapEntity: mapEntity)])
+                                      arguments: [username, mapService.convertMapEntity(mapEntity: mapEntity)])
             { (result, error) in
                 if let e = error {
                     print("Error JoinPublicRoom: \(e)")
@@ -123,8 +118,16 @@ class EditionHub: BaseHub {
                             FacadeModele.instance.setCurrentUserColor(userHexColor: user["HexColor"] as! String)
                         }
                         
-                        FacadeModele.instance.obtenirUserManager()?.addUser(username: user["Username"] as! String,
+                        let username = user["Username"] as! String
+                        FacadeModele.instance.obtenirUserManager()?.addUser(username: username,
                                                                             hexColor: user["HexColor"] as! String)
+                        
+                        if (user["UuidsSelected"] != nil) {
+                            // Un utilisateur dans la salle a déjà des noeuds sélectionnés
+                            for uuid in user["UuidsSelected"] as! [String] {
+                                FacadeModele.instance.selectNode(username: username, uuid: uuid, isSelected: true, deselectAll: false)
+                            }
+                        }
                     }
                 }
             }
@@ -147,19 +150,29 @@ class EditionHub: BaseHub {
     
     func sendEditionCommand(command: EditionCommand) {
         let jsonCommand = command.toJSON()?.rawString(options: [])
-        //print(jsonCommand!)
         
         do {
-            try self.hubProxy?.invoke("SendEditionCommand", arguments: [self.map?.id.value as Any, jsonCommand!])
+            try self.hubProxy?.invoke("SendEditionCommand", arguments: [self.map?.id as Any, jsonCommand!])
         }
         catch {
             print("Error SendEditionCommand")
         }
     }
     
+    func sendSelectionCommand(command: SelectionCommand) {
+        let convertedCommand = command.toDictionary()
+        
+        do {
+            try self.hubProxy?.invoke("SendSelectionCommand", arguments: [self.map?.id as Any, convertedCommand])
+        }
+        catch {
+            print("Error SendSelectionCommand")
+        }
+    }
+    
     func leaveRoom() {
         do {
-            try self.hubProxy?.invoke("LeaveRoom", arguments: [self.map?.id.value as Any])
+            try self.hubProxy?.invoke("LeaveRoom", arguments: [self.map?.id as Any])
         }
         catch {
             print("Error LeaveRoom")

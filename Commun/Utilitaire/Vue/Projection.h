@@ -56,6 +56,8 @@ namespace vue {
 		/// Vérification de si la projection est perspective.
 		inline bool estPerspective() const;
 
+		virtual glm::ivec2 getLargeurFenetre() const = 0;
+
 
 	protected:
 		/// Dimension de la clôture en X.

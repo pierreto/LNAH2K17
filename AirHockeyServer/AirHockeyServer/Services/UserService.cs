@@ -71,11 +71,11 @@ namespace AirHockeyServer.Services
             }
         }
 
-        public void PostUser(UserEntity userEntity)
+        public async Task PostUser(UserEntity userEntity)
         {
             try
             {
-                UserRepository.PostUser(userEntity);
+                await UserRepository.PostUser(userEntity);
             }
             catch (UserException e)
             {

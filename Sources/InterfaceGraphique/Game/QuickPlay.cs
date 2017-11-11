@@ -235,7 +235,13 @@ namespace InterfaceGraphique
             ResetDefaultTable();
             FonctionsNatives.playMusic(true);
 
-            if (currentGameState.MapFilePath != null)
+            if (currentGameState.selectedMap != null) // online mode
+            {
+                float[] coefficients = new float[3];
+                FonctionsNatives.chargerCarte(new StringBuilder(currentGameState.selectedMap.Json), coefficients);
+                Program.GeneralProperties.SetCoefficientValues(coefficients);
+            }
+            else if (currentGameState.MapFilePath != null) // offline mode
             {
                 StringBuilder filePath = new StringBuilder(currentGameState.MapFilePath.Length);
                 filePath.Append(currentGameState.MapFilePath);
@@ -244,11 +250,6 @@ namespace InterfaceGraphique
                 Program.GeneralProperties.SetCoefficientValues(coefficients);
             }
         }
-
-
-
-
-
 
 
         ////////////////////////////////////////////////////////////////////////
@@ -323,6 +324,19 @@ namespace InterfaceGraphique
             this.MenuItem_OrthoView.Enabled = isOrbit;
         }
 
+        public void ApplyEsc()
+        {
+            if (!this.Panel_EndBack.Visible && FonctionsNatives.isGameStarted()) {
+                this.MenuStrip_MenuBar.Visible = !this.MenuStrip_MenuBar.Visible;
+                FonctionsNatives.escape();
+            }
+        }
+
+        public void ReplacePlayerByAI()
+        {
+            ApplyEsc();
+            FonctionsNatives.setCurrentOpponentType((int)OpponentType.VIRTUAL_PLAYER);
+        }
 
         ////////////////////////////////////////////////////////////////////////
         ///
@@ -351,11 +365,8 @@ namespace InterfaceGraphique
                     return true;
 
                 case Keys.Escape:
-                    if (!this.Panel_EndBack.Visible && FonctionsNatives.isGameStarted())
-                    {
-                        this.MenuStrip_MenuBar.Visible = !this.MenuStrip_MenuBar.Visible;
-                        FonctionsNatives.escape();
-                    }
+                    ApplyEsc();
+                    currentGameState.gameHub?.SendGamePauseOrResume();
                     return true;
 
                 case Keys.Space:

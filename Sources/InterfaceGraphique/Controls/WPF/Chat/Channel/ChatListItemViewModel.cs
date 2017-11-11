@@ -71,6 +71,19 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
                 return openChannelCommand;
             }
         }
+
+        private ICommand joinChannelCommand;
+        public ICommand JoinChannelCommand
+        {
+            get
+            {
+                if (joinChannelCommand == null)
+                {
+                    joinChannelCommand = new RelayCommandAsync(JoinChannel);
+                }
+                return joinChannelCommand;
+            }
+        }
         #endregion
 
         #region Command Methods
@@ -82,7 +95,18 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
                 {
                     item.IsSelected = false;
                 }
-                ActiveChannel.Instance.JoinChannelEntity = ChannelEntity;
+                bool channelJoined = false;
+                foreach (var item in Program.unityContainer.Resolve<ChatListViewModel>().Items)
+                {
+                    if (item.ChannelEntity.Name == ChannelEntity.Name)
+                    {
+                        channelJoined = true;
+                    }
+                }
+                if (!channelJoined)
+                {
+                    ActiveChannel.Instance.JoinChannelEntity = ChannelEntity;
+                }
             }
             else
             {
@@ -95,6 +119,11 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
                 Program.unityContainer.Resolve<ChannelViewModel>().OnPropertyChanged("ChannelSelected");
             }
             IsSelected = true;
+        }
+
+        public async Task JoinChannel()
+        {
+            await Program.unityContainer.Resolve<JoinChannelViewModel>().JoinChannel();
         }
         #endregion
 

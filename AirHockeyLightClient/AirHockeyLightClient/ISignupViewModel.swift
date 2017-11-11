@@ -11,8 +11,10 @@ import Foundation
 
 protocol ISignupViewModel {
     var usernameError: Dynamic<String> { get }
+    var nameError: Dynamic<String> { get }
+    var emailError: Dynamic<String> { get }
     var passwordError: Dynamic<String> { get }
     var confirmPasswordError: Dynamic<String> { get }
     
-    func signup(username: String, password: String, confirmPassword: String) -> Promise<Bool>
+    func signup(username: String, name: String, email: String, password: String, confirmPassword: String) -> Promise<Bool>
 }

@@ -131,14 +131,23 @@ class GeneralProperties: NSObject {
                  self.coefficientAcceleration ];
     }
     
-    /// Retourne les valeurs des trois coefficients de la zone en cours
+    /// Assigne les valeurs des trois coefficients de la zone de jeu à partir de string
     public func setCoefficientValues(coefficientFriction: String, coefficientRebond: String, coefficientAcceleration: String) {
-        let coefficientFriction = Float.init(coefficientFriction)
-        self.coefficientFriction = coefficientFriction == nil ? DefaultValues.coefficientFriction : coefficientFriction!
-        let coefficientRebond = Float.init(coefficientRebond)
-        self.coefficientRebond = coefficientRebond == nil ? DefaultValues.coefficientRebond : coefficientRebond!
-        let coefficientAcceleration = Float.init(coefficientAcceleration)
-        self.coefficientAcceleration = coefficientAcceleration == nil ? DefaultValues.coefficientAcceleration : coefficientAcceleration!
+        self.coefficientFriction = Float.init(coefficientFriction) == nil ? DefaultValues.coefficientFriction : Float.init(coefficientFriction)!
+        self.coefficientRebond = Float.init(coefficientRebond) == nil ? DefaultValues.coefficientRebond : Float.init(coefficientRebond)!
+        self.coefficientAcceleration = Float.init(coefficientAcceleration) == nil ? DefaultValues.coefficientAcceleration : Float.init(coefficientAcceleration)!
+        
+        // Envoyer la commande
+        FacadeModele.instance.obtenirEtatEdition().currentUserChangedCoefficient(coefficientFriction: self.coefficientFriction,
+                                                                                 coefficientRebond: self.coefficientRebond,
+                                                                                 coefficientAcceleration: self.coefficientAcceleration)
+    }
+    
+    /// Assigne les valeurs des trois coefficients de la zone de jeu à partir de float
+    public func setCoefficientValuesFromFloat(coefficientFriction: Float, coefficientRebond: Float, coefficientAcceleration: Float) {
+        self.coefficientFriction = coefficientFriction
+        self.coefficientRebond = coefficientRebond
+        self.coefficientAcceleration = coefficientAcceleration
     }
     
 }

@@ -1,5 +1,4 @@
-﻿using AirHockeyServer.DatabaseCore;
-using AirHockeyServer.Entities;
+﻿using AirHockeyServer.Entities;
 using AirHockeyServer.Mapping;
 using AirHockeyServer.Pocos;
 using System;
@@ -14,8 +13,8 @@ namespace AirHockeyServer.Repositories
     public class UserRepository : Repository, IUserRepository
     {
 
-        public UserRepository(DataProvider dataProvider, MapperManager mapperManager)
-            : base(dataProvider, mapperManager)
+        public UserRepository(MapperManager mapperManager)
+            : base(mapperManager)
         {
 
         }
@@ -24,19 +23,23 @@ namespace AirHockeyServer.Repositories
         {
             try
             {
-                IEnumerable<UserPoco> userPocoEnum = await DataProvider.GetBy<UserPoco, int>("test_users", "id_user", id);
-                List<UserPoco> userPocos = userPocoEnum.ToList();
-                if (userPocos.Any())
+                using (MyDataContext DC = new MyDataContext())
                 {
-                    UserPoco userPoco = userPocos.First();
-                    UserEntity userEntity = MapperManager.Mapper.Map<UserPoco, UserEntity>(userPoco);
-                    return userEntity;
+                    var query =
+                        from user in DC.UsersTable
+                        where (user.Id == id)
+                        select user;
+                    List<UserPoco> uP = await Task.Run(
+                        () => query.ToList<UserPoco>());
+                    if (uP.Any())
+                    {
+                        return MapperManager.Mapper.Map<UserPoco, UserEntity>(uP.First());
+                    }
+                    else
+                    {
+                        throw new UserException("Unable to get [user] by [id] = " + id);
+                    }
                 }
-                else
-                {
-                    throw new UserException("Unable to get [user] by [id] = " + id);
-                }
-
             }
             catch (UserException e)
             {
@@ -54,19 +57,22 @@ namespace AirHockeyServer.Repositories
         {
             try
             {
-                IEnumerable<UserPoco> userPocoEnum = await DataProvider.GetBy<UserPoco, string>("test_users", "username", username);
-                List<UserPoco> userPocos = userPocoEnum.ToList();
-                if (userPocos.Any())
+                using (MyDataContext DC = new MyDataContext())
                 {
-                    UserPoco userPoco = userPocos.First();
-                    UserEntity userEntity = MapperManager.Mapper.Map<UserPoco, UserEntity>(userPoco);
-                    return userEntity;
+                    var query =
+                        from user in DC.UsersTable
+                        where (user.Username == username)
+                        select user;
+                    List<UserPoco> uP = await Task<List<UserPoco>>.Run(
+                        () => query.ToList<UserPoco>());
+                    if(uP.Any())
+                    {
+                        return MapperManager.Mapper.Map<UserPoco, UserEntity>(uP.First());
+                    } else
+                    {
+                        return null;
+                    }
                 }
-                else
-                {
-                    return null;
-                }
-
             }
             catch (UserException e)
             {
@@ -84,10 +90,17 @@ namespace AirHockeyServer.Repositories
         {
             try
             {
-                IEnumerable<UserPoco> userPocoEnum = await DataProvider.GetAll<UserPoco>("test_users");
-                List<UserPoco> userPocos = userPocoEnum.ToList();
-                List<UserEntity> userEntities = MapperManager.Mapper.Map<List<UserPoco>, List<UserEntity>>(userPocos);
-                return userEntities;
+                using(MyDataContext DC = new MyDataContext())
+                {
+                    var query =
+                        from user in DC.UsersTable
+                        select user;
+
+                    List<UserPoco> userPocos = await Task.Run(
+                        () => query.ToList<UserPoco>());
+
+                    return MapperManager.Mapper.Map<List<UserPoco>, List<UserEntity>>(userPocos);
+                }
             }
             catch (Exception e)
             {
@@ -96,13 +109,16 @@ namespace AirHockeyServer.Repositories
             }
         }
 
-        public void PostUser(UserEntity userEntity)
+        public async Task PostUser(UserEntity userEntity)
         {
             try
             {
-                UserPoco uP = MapperManager.Mapper.Map<UserEntity, UserPoco>(userEntity);
-                DataProvider.DC.GetTable<UserPoco>().InsertOnSubmit(uP);
-                DataProvider.DC.SubmitChanges();
+                using (MyDataContext DC = new MyDataContext())
+                {
+                    UserPoco uP = MapperManager.Mapper.Map<UserEntity, UserPoco>(userEntity);
+                    DC.GetTable<UserPoco>().InsertOnSubmit(uP);
+                    await Task.Run(() => DC.SubmitChanges());
+                }
             }
             catch (Exception e)
             {

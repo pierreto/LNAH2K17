@@ -50,6 +50,8 @@ namespace vue {
 		virtual void zoomerOut(double valeur);
 		/// Modification de la fenêtre virtuelle.
 		virtual void redimensionnerFenetre(int largeur, int hauteur);
+		void setLargeurFenetre(int largeur, int hauteur);
+		virtual glm::ivec2 getLargeurFenetre() const { return glm::ivec2(largeurFenetre_, hauteurFenetre_); }
 		/// Obtention de la matrice de projection.
 		virtual glm::mat4 obtenirMatrice() const;
 

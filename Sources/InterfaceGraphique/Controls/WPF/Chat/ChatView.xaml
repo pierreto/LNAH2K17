@@ -24,16 +24,16 @@
             <DataTemplate x:Key="MessagesDataTemplate" DataType="entities:ChatMessage" >
 
                 <Border Name="MessageBorder" MinHeight="40" BorderThickness="0 0 0 2" Background="{StaticResource DarkGrayBrush}" 
-                        Margin="6" BorderBrush="#FF3C3F44" CornerRadius="10" SnapsToDevicePixels="True" Padding="4" MinWidth="150" 
+                        Margin="0,0,6,4" BorderBrush="#FF3C3F44" CornerRadius="10" SnapsToDevicePixels="True" Padding="4" MinWidth="150" 
                         HorizontalAlignment="{Binding Sender, Converter={convert:SentByMeToAlignmentConverter}}">
                     <Grid>
 
                         <TextBlock VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="7,3,7,0"                                
-                                   FontWeight="Bold" FontSize="14"
+                                   FontWeight="Bold" FontSize="12"
                                    TextWrapping="Wrap" Text="{Binding Sender}" Foreground="{StaticResource UltraDarkGrayBrush}"/>
-                        <TextBlock VerticalAlignment="Stretch" Margin="7,20,7,0"                                
+                        <TextBlock VerticalAlignment="Stretch" Margin="7,18,7,0"                                
 
-                                   TextWrapping="Wrap" Text="{Binding MessageValue}" FontSize="16" Foreground="{StaticResource TextColorBrush}"/>
+                                   TextWrapping="Wrap" Text="{Binding MessageValue}" FontSize="14" Foreground="{StaticResource TextColorBrush}"/>
                         <TextBlock Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Stretch"
 
                                Margin="0,0,5,5" FontSize="10" Opacity="0.8"
@@ -57,9 +57,9 @@
         <Grid Background="{StaticResource VeryDarkGrayBrush}">
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="60"/>
+                <RowDefinition Height="30"/>
                 <RowDefinition/>
-                <RowDefinition Height="Auto" MinHeight="47"/>
+                <RowDefinition Height="30" MinHeight="30"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -78,10 +78,10 @@
             </channel:JoinChannelView>
 
             <Grid HorizontalAlignment="Stretch" Background="{StaticResource UltraDarkGrayBrush}">
-                <TextBlock Text="{Binding CurrentChannel.Name}" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource DarkGrayBrush}" FontSize="30" FontWeight="Bold"></TextBlock>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Visibility="{Binding DataContext.Docked, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Converter={convert:BooleanToVisibilityConverter}, ConverterParameter=True}">
+                <TextBlock Text="{Binding CurrentChannel.Name}" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource DarkGrayBrush}" FontSize="18" FontWeight="Bold"></TextBlock>
+                <StackPanel Margin="2" Orientation="Horizontal" HorizontalAlignment="Right" Visibility="{Binding DataContext.Docked, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Converter={convert:BooleanToVisibilityConverter}, ConverterParameter=True}">
                     <Button fa:Awesome.Content="WindowMinimize" VerticalAlignment="Center" HorizontalAlignment="Right" Background="{StaticResource DarkGrayBrush}" Command="{Binding DataContext.MinimizeCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" BorderThickness="0"/>
-                    <Button Margin="5" VerticalAlignment="Center" fa:Awesome.Content="WindowRestore" Background="{StaticResource DarkGrayBrush}" BorderThickness="0" HorizontalAlignment="Right" Command="{Binding UnDockCommand}"/>
+                    <Button Margin="5,0,4,0" VerticalAlignment="Center" fa:Awesome.Content="WindowRestore" Background="{StaticResource DarkGrayBrush}" BorderThickness="0" HorizontalAlignment="Right" Command="{Binding UnDockCommand}"/>
                 </StackPanel>
             </Grid>
 
@@ -115,14 +115,14 @@
                     </Grid.ColumnDefinitions>
                     <!-- Message -->
                     <Grid>
-                        <TextBox x:Name="MessageTextBox" MaxHeight="80"
+                        <TextBox x:Name="MessageTextBox" MaxHeight="30"
                              BorderThickness="0"
                                  Padding="4,0,0,0"
                         TextWrapping="Wrap" CaretBrush="#7F000000" 
                         VerticalScrollBarVisibility="Disabled"
                         VerticalAlignment="Center"
                         Margin="30,4,4,4"
-                                 FontSize="18"
+                                 FontSize="12"
                         Text="{Binding MessageTextBox, UpdateSourceTrigger=PropertyChanged}"
                         Background="Transparent" Foreground="White">
                         </TextBox>
@@ -141,11 +141,11 @@
                         </TextBlock>
                     </Grid>
                     <!-- Send -->
-                    <Button x:Name="SendButton" Margin="10" Background="{StaticResource UltraDarkGrayBrush}"
+                    <Button x:Name="SendButton" Margin="3" Background="{StaticResource UltraDarkGrayBrush}"
                             BorderThickness="0"
                             IsDefault="True"
                     Command="{Binding SendMessageCommand}" Grid.Column="1" Height="Auto">
-                        <TextBlock>Envoyer</TextBlock>
+                        <TextBlock FontSize="12">Envoyer</TextBlock>
                     </Button>
                 </Grid>
             </Border>

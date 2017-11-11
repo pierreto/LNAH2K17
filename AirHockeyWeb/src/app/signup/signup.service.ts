@@ -12,6 +12,8 @@ export class SignupService {
     signup(user: User): Observable<boolean> {
         const body = {
             Username: user.Username,
+            Name: user.Name,
+            Email: user.Email,
             Password: user.Password
         };
 

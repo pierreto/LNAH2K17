@@ -77,7 +77,7 @@ class Map: NSObject {
 
     func save(name: String, isLocal: Bool, isPrivate: Bool, password: String) {
         let map = MapEntity()
-        map.id.value = 1 // TODO : générer un UUID
+        map.id = "1" // TODO : générer un UUID
         map.creator = "N/A" // TODO : mettre nom de l'utilisateur
         map.mapName = name
         map.privacy.value = isPrivate

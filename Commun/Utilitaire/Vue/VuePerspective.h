@@ -38,6 +38,7 @@ namespace vue {
 
 		/// Modification de la clotûre.
 		virtual void redimensionnerFenetre(int largeur, int hauteur);
+		virtual void setLargeurFenetre(int largeur, int hauteur) { };
 
 		/// Zoom in, c'est-à-dire un agrandissement.
 		virtual void zoomerIn();

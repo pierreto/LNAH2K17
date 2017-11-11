@@ -1,5 +1,4 @@
-﻿using AirHockeyServer.DatabaseCore;
-using AirHockeyServer.Entities;
+﻿using AirHockeyServer.Entities;
 using AirHockeyServer.Mapping;
 using AirHockeyServer.Pocos;
 using AirHockeyServer.Repositories.Interfaces;
@@ -20,11 +19,9 @@ namespace AirHockeyServer.Repositories
         private Table<AchievementPoco> AchievementsTable { get; set; }
         public IAchievementInfoService AchievementInfoService { get; set; }
 
-        public PlayerStatsRepository(DataProvider dataProvider, MapperManager mapperManager, IAchievementInfoService achievementInfoService)
-            :base(dataProvider, mapperManager)
+        public PlayerStatsRepository(MapperManager mapperManager, IAchievementInfoService achievementInfoService)
+            :base(mapperManager)
         {
-            this.StatsTable = DataProvider.DC.GetTable<StatsPoco>();
-            this.AchievementsTable = DataProvider.DC.GetTable<AchievementPoco>();
             AchievementInfoService = achievementInfoService;
         }
 
@@ -32,12 +29,15 @@ namespace AirHockeyServer.Repositories
         {
             try
             {
-                StatsPoco newStats = MapperManager.Map<StatsEntity, StatsPoco>(playerStats);
-                this.StatsTable.InsertOnSubmit(newStats);
+                using (MyDataContext DC = new MyDataContext())
+                {
+                    StatsPoco newStats = MapperManager.Map<StatsEntity, StatsPoco>(playerStats);
+                    DC.GetTable<StatsPoco>().InsertOnSubmit(newStats);
 
-                await Task.Run(() => this.DataProvider.DC.SubmitChanges());
+                    await Task.Run(() => DC.SubmitChanges());
 
-                return await GetPlayerStat(playerStats.UserId);
+                    return await GetPlayerStat(playerStats.UserId);
+                }
             }
             catch (Exception e)
             {
@@ -50,14 +50,39 @@ namespace AirHockeyServer.Repositories
         {
             try
             {
-                IQueryable<StatsPoco> queryable =
-                    from stats in this.StatsTable where stats.UserId == userId select stats;
+                using (MyDataContext DC = new MyDataContext())
+                {
+                    IQueryable<StatsPoco> queryable =
+                    from stats in DC.GetTable<StatsPoco>() where stats.UserId == userId select stats;
 
-                var results = await Task<IEnumerable<StatsPoco>>.Run(
-                    () => queryable.ToArray());
+                    var results = await Task.Run(
+                        () => queryable.ToArray());
 
-                StatsPoco result = results.Length > 0 ? results.First() : null;
-                return MapperManager.Map<StatsPoco, StatsEntity>(result);
+                    StatsPoco result = results.Length > 0 ? results.First() : null;
+                    return MapperManager.Map<StatsPoco, StatsEntity>(result);
+                }
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("[PlayerStatsRepository.GetPlayerStat] " + e.ToString());
+                return null;
+            }
+        }
+
+        public async Task<List<StatsEntity>> GetAllPlayerStats()
+        {
+            try
+            {
+                using (MyDataContext DC = new MyDataContext())
+                {
+                    IQueryable<StatsPoco> queryable =
+                    from stats in DC.GetTable<StatsPoco>() select stats;
+
+                    var results = await Task.Run(
+                        () => queryable.ToList());
+                    
+                    return MapperManager.Map<List<StatsPoco>, List<StatsEntity>>(results);
+                }
             }
             catch (Exception e)
             {
@@ -70,18 +95,21 @@ namespace AirHockeyServer.Repositories
         {
             try
             {
-                StatsPoco _updatedMap = MapperManager.Map<StatsEntity, StatsPoco>(updatedPlayerStats);
-                var query =
-                    from stats in this.StatsTable where stats.UserId == updatedPlayerStats.UserId select stats;
+                using (MyDataContext DC = new MyDataContext())
+                {
+                    StatsPoco _updatedMap = MapperManager.Map<StatsEntity, StatsPoco>(updatedPlayerStats);
+                    var query =
+                        from stats in DC.GetTable<StatsPoco>() where stats.UserId == updatedPlayerStats.UserId select stats;
 
-                var results = query.ToArray();
-                var existingStats = results.First();
+                    var results = query.ToArray();
+                    var existingStats = results.First();
 
-                existingStats.Points = updatedPlayerStats.Points;
-                existingStats.GamesWon = updatedPlayerStats.GamesWon;
-                existingStats.TournamentsWon = updatedPlayerStats.TournamentsWon;
+                    existingStats.Points = updatedPlayerStats.Points;
+                    existingStats.GamesWon = updatedPlayerStats.GamesWon;
+                    existingStats.TournamentsWon = updatedPlayerStats.TournamentsWon;
 
-                await Task.Run(() => this.DataProvider.DC.SubmitChanges());
+                    await Task.Run(() => DC.SubmitChanges());
+                }
             }
             catch (Exception e)
             {
@@ -89,20 +117,30 @@ namespace AirHockeyServer.Repositories
             }
         }
 
-        public async Task CreateAchievement(int userId, AchivementType achivementType)
+        public async Task CreateAchievement(int userId)
         {
             try
             {
-                AchievementPoco achievementPoco = new AchievementPoco
+                using (MyDataContext DC = new MyDataContext())
                 {
-                    AchievementType = achivementType.ToString(),
-                    IsEnabled = false,
-                    UserId = userId
-                };
+                    List<AchievementPoco> aPs = new List<AchievementPoco>();
+                    foreach (AchivementType achievement in Enum.GetValues(typeof(AchivementType)))
+                    {
+                        AchievementPoco achievementPoco = new AchievementPoco
+                        {
+                            AchievementType = achievement.ToString(),
+                            IsEnabled = false,
+                            UserId = userId
+                        };
+                        aPs.Add(achievementPoco);
+                    }
+                    foreach(var aP in aPs)
+                    {
+                        DC.GetTable<AchievementPoco>().InsertOnSubmit(aP);
+                    }
 
-                this.AchievementsTable.InsertOnSubmit(achievementPoco);
-
-                await Task.Run(() => this.DataProvider.DC.SubmitChanges());
+                    await Task.Run(() => DC.SubmitChanges());
+                }
             }
             catch (Exception e)
             {
@@ -114,30 +152,33 @@ namespace AirHockeyServer.Repositories
         {
             try
             {
-                IQueryable<AchievementPoco> queryable =
-                    from achievements in this.AchievementsTable where achievements.UserId == userId select achievements;
-
-                var results = await Task<IEnumerable<AchievementPoco>>.Run(
-                    () => queryable.ToArray());
-               
-                List<AchievementEntity> resultEntities = new List<AchievementEntity>();
-                foreach (AchievementPoco poco in results)
+                using (MyDataContext DC = new MyDataContext())
                 {
-                    AchivementType achievementType = (AchivementType)Enum.Parse(typeof(AchivementType), poco.AchievementType);
-                    resultEntities.Add(new AchievementEntity
+                    IQueryable<AchievementPoco> queryable =
+                    from achievements in DC.GetTable<AchievementPoco>() where achievements.UserId == userId select achievements;
+
+                    var results = await Task.Run(
+                        () => queryable.ToArray());
+
+                    List<AchievementEntity> resultEntities = new List<AchievementEntity>();
+                    foreach (AchievementPoco poco in results)
                     {
-                        AchivementType = achievementType,
-                        EnabledImageUrl = AchievementInfoService.GetEnabledImage(achievementType),
-                        DisabledImageUrl = AchievementInfoService.GetDisabledImage(achievementType),
-                        IsEnabled = poco.IsEnabled,
-                        Name = AchievementInfoService.GetName(achievementType),
-                        Category = AchievementInfoService.GetCategory(achievementType),
-                        Order = AchievementInfoService.GetOrder(achievementType)
-                    });
+                        AchivementType achievementType = (AchivementType)Enum.Parse(typeof(AchivementType), poco.AchievementType);
+                        resultEntities.Add(new AchievementEntity
+                        {
+                            AchivementType = achievementType,
+                            EnabledImageUrl = AchievementInfoService.GetEnabledImage(achievementType),
+                            DisabledImageUrl = AchievementInfoService.GetDisabledImage(achievementType),
+                            IsEnabled = poco.IsEnabled,
+                            Name = AchievementInfoService.GetName(achievementType),
+                            Category = AchievementInfoService.GetCategory(achievementType),
+                            Order = AchievementInfoService.GetOrder(achievementType)
+                        });
+                    }
+
+
+                    return resultEntities;
                 }
-
-
-                return resultEntities;
             }
             catch (Exception e)
             {
@@ -150,15 +191,18 @@ namespace AirHockeyServer.Repositories
         {
             try
             {
-                var query =
-                    from achievements in this.AchievementsTable where achievements.UserId == userId && achivementType.ToString() == achievements.AchievementType select achievements;
+                using (MyDataContext DC = new MyDataContext())
+                {
+                    var query =
+                    from achievements in DC.GetTable<AchievementPoco>() where achievements.UserId == userId && achivementType.ToString() == achievements.AchievementType select achievements;
 
-                var results = query.ToArray();
-                var existingAchievement = results.First();
+                    var results = query.ToArray();
+                    var existingAchievement = results.First();
 
-                existingAchievement.IsEnabled = isEnabled;
+                    existingAchievement.IsEnabled = isEnabled;
 
-                await Task.Run(() => this.DataProvider.DC.SubmitChanges());
+                    await Task.Run(() => DC.SubmitChanges());
+                }
             }
             catch (Exception e)
             {
