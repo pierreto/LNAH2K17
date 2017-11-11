@@ -10,8 +10,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { LoginComponent } from './login/login.component';
-import { ProfileComponent } from './profile/profile.component';
-import { RankingComponent } from './ranking/ranking.component';
 import { SignupComponent } from './signup/signup.component';
 import { MapComponent } from './map/map.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -20,7 +18,9 @@ import { LoginService } from './login/login.service';
 import { AppService } from './app.service';
 import { MatTableModule, MatPaginatorModule, MatSortModule } from '@angular/material';
 import { HttpModule } from '@angular/http';
-import { ProfileService } from './profile/profile.service';
+import { RankingService } from './ranking/ranking.service';
+import { RankingComponent } from './ranking/ranking.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
     imports: [
@@ -38,14 +38,14 @@ import { ProfileService } from './profile/profile.service';
   declarations: [
     AppComponent,
     LoginComponent,
-    ProfileComponent,
     RankingComponent,
     SignupComponent,
     MapComponent,
     PageNotFoundComponent,
-    HeaderComponent
+    HeaderComponent,
+    ProfileComponent
   ],
-  providers: [SignupService, LoginService, AppService, ProfileService],
+  providers: [SignupService, LoginService, AppService, RankingService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

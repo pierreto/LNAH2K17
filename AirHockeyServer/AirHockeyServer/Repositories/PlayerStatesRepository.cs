@@ -69,6 +69,28 @@ namespace AirHockeyServer.Repositories
             }
         }
 
+        public async Task<List<StatsEntity>> GetAllPlayerStats()
+        {
+            try
+            {
+                using (MyDataContext DC = new MyDataContext())
+                {
+                    IQueryable<StatsPoco> queryable =
+                    from stats in DC.GetTable<StatsPoco>() select stats;
+
+                    var results = await Task.Run(
+                        () => queryable.ToList());
+                    
+                    return MapperManager.Map<List<StatsPoco>, List<StatsEntity>>(results);
+                }
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("[PlayerStatsRepository.GetPlayerStat] " + e.ToString());
+                return null;
+            }
+        }
+
         public async Task UpdatePlayerStats(int userId, StatsEntity updatedPlayerStats)
         {
             try

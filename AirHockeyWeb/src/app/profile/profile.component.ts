@@ -1,51 +1,16 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
-import { Profile } from './profile';
-import { ProfileService } from './profile.service';
-import { AppService } from '../app.service';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css']
+  styleUrls: ['./profile.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
-export class ProfileComponent implements OnInit, AfterViewInit {
-  displayedColumns = ['Username', 'GamesWon', 'TournamentsWon', 'Points'];
-  dataSource = new MatTableDataSource();
-  showPagination: boolean;
-  length: number;
-  pageSize: number;
+export class ProfileComponent implements OnInit {
 
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-
-  constructor(private profileService: ProfileService, private appService: AppService) {
-    this.showPagination = false;
-    this.length = 0;
-    this.pageSize = 25;
-  }
+  constructor() { }
 
   ngOnInit() {
-
   }
 
-  ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
-
-    this.appService.loading = true;
-    this.profileService.getProfiles().subscribe(
-      res => {
-        console.log(res);
-        this.length = res.length;
-        this.dataSource.data = res;
-        this.appService.loading = false;
-      },
-      err => {
-        this.appService.loading = false;
-        console.log(err);
-      }
-    );
-  }
 }

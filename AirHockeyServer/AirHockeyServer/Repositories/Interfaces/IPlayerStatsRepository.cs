@@ -13,6 +13,8 @@ namespace AirHockeyServer.Repositories.Interfaces
 
         Task<StatsEntity> GetPlayerStat(int userId);
 
+        Task<List<StatsEntity>> GetAllPlayerStats();
+
         Task UpdatePlayerStats(int userId, StatsEntity updatedPlayerStats);
 
         Task<List<AchievementEntity>> GetAchievements(int userId);
