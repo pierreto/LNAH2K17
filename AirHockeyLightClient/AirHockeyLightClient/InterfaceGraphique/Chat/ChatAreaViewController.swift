@@ -63,6 +63,7 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
         refreshUI()
         addChannelView.isHidden = true
         delegate = MasterViewController.sharedMasterViewController
+        
         // Do any additional setup after loading the view.
     }
     

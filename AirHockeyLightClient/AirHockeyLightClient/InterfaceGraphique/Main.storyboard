@@ -1147,11 +1147,11 @@
                                 <rect key="frame" x="20" y="20" width="664" height="254"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Message" rowHeight="140" id="ikA-gx-hh9" customClass="MessageViewCell" customModule="AirHockeyLightClient" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="664" height="140"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Message" id="ikA-gx-hh9" customClass="MessageViewCell" customModule="AirHockeyLightClient" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="664" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ikA-gx-hh9" id="5KZ-A1-rO9">
-                                            <rect key="frame" x="0.0" y="0.0" width="664" height="140"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="664" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" text="Sender" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KLl-ch-rkn" userLabel="Sender">
@@ -1162,7 +1162,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" text="MessageValue" textAlignment="justified" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VXA-Aq-66Y" userLabel="MessageValue" customClass="PaddingLabel" customModule="AirHockeyLightClient" customModuleProvider="target">
-                                                    <rect key="frame" x="8" y="30" width="648" height="87"/>
+                                                    <rect key="frame" x="0.0" y="23" width="664" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1174,7 +1174,7 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Timestamp" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Nb-TK-PV3" userLabel="Timestamp">
-                                                    <rect key="frame" x="8" y="117" width="648" height="15"/>
+                                                    <rect key="frame" x="0.0" y="23" width="664" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1183,16 +1183,17 @@
                                             <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
-                                                <constraint firstItem="KLl-ch-rkn" firstAttribute="top" secondItem="5KZ-A1-rO9" secondAttribute="top" constant="8" id="7Ac-sy-Ja8"/>
-                                                <constraint firstItem="VXA-Aq-66Y" firstAttribute="leading" secondItem="KLl-ch-rkn" secondAttribute="leading" id="Unv-iV-AbB"/>
-                                                <constraint firstItem="VXA-Aq-66Y" firstAttribute="top" secondItem="5KZ-A1-rO9" secondAttribute="top" constant="30" id="XRz-XM-qzR"/>
-                                                <constraint firstItem="VXA-Aq-66Y" firstAttribute="trailing" secondItem="4Nb-TK-PV3" secondAttribute="trailing" id="XxS-5K-p1S"/>
-                                                <constraint firstItem="4Nb-TK-PV3" firstAttribute="top" secondItem="VXA-Aq-66Y" secondAttribute="bottom" id="Y2o-Be-y7B"/>
-                                                <constraint firstItem="VXA-Aq-66Y" firstAttribute="trailing" secondItem="KLl-ch-rkn" secondAttribute="trailing" id="cpk-Tq-lzT"/>
-                                                <constraint firstAttribute="trailing" secondItem="4Nb-TK-PV3" secondAttribute="trailing" constant="8" id="g0T-Gv-4bE"/>
-                                                <constraint firstAttribute="bottom" secondItem="4Nb-TK-PV3" secondAttribute="bottom" constant="8" id="qfu-z7-65A"/>
-                                                <constraint firstItem="VXA-Aq-66Y" firstAttribute="leading" secondItem="4Nb-TK-PV3" secondAttribute="leading" id="uJT-ly-dlK"/>
-                                                <constraint firstItem="KLl-ch-rkn" firstAttribute="leading" secondItem="5KZ-A1-rO9" secondAttribute="leading" constant="8" id="uhm-KO-nse"/>
+                                                <constraint firstItem="VXA-Aq-66Y" firstAttribute="leading" secondItem="5KZ-A1-rO9" secondAttribute="leading" id="0nK-Zo-1ms"/>
+                                                <constraint firstItem="VXA-Aq-66Y" firstAttribute="top" secondItem="KLl-ch-rkn" secondAttribute="bottom" id="I0h-Bq-cTZ"/>
+                                                <constraint firstAttribute="trailing" secondItem="4Nb-TK-PV3" secondAttribute="trailing" id="KeQ-bC-3z6"/>
+                                                <constraint firstAttribute="bottom" secondItem="VXA-Aq-66Y" secondAttribute="bottom" id="adx-PR-JHL"/>
+                                                <constraint firstItem="4Nb-TK-PV3" firstAttribute="leading" secondItem="5KZ-A1-rO9" secondAttribute="leading" id="dub-zm-Osf"/>
+                                                <constraint firstItem="4Nb-TK-PV3" firstAttribute="top" secondItem="KLl-ch-rkn" secondAttribute="bottom" id="ib4-cF-vVH"/>
+                                                <constraint firstItem="KLl-ch-rkn" firstAttribute="leading" secondItem="5KZ-A1-rO9" secondAttribute="leadingMargin" id="jl3-hq-OxE"/>
+                                                <constraint firstItem="KLl-ch-rkn" firstAttribute="top" secondItem="5KZ-A1-rO9" secondAttribute="topMargin" id="sIr-tr-8Ci"/>
+                                                <constraint firstAttribute="trailing" secondItem="VXA-Aq-66Y" secondAttribute="trailing" id="uAe-88-9z3"/>
+                                                <constraint firstAttribute="bottom" secondItem="4Nb-TK-PV3" secondAttribute="bottom" id="uEe-RP-puT"/>
+                                                <constraint firstItem="KLl-ch-rkn" firstAttribute="trailing" secondItem="5KZ-A1-rO9" secondAttribute="trailingMargin" id="vSu-sW-bl9"/>
                                             </constraints>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -1200,7 +1201,6 @@
                                                 </userDefinedRuntimeAttribute>
                                             </userDefinedRuntimeAttributes>
                                         </tableViewCellContentView>
-                                        <edgeInsets key="layoutMargins" top="20" left="20" bottom="20" right="20"/>
                                         <connections>
                                             <outlet property="messageValue" destination="VXA-Aq-66Y" id="9Jj-PF-Bqj"/>
                                             <outlet property="sender" destination="KLl-ch-rkn" id="X9B-3b-HvB"/>
@@ -1490,7 +1490,7 @@
                                             <action selector="editIpAddress:" destination="Fz3-e3-z6O" eventType="editingChanged" id="5q5-C8-ctp"/>
                                         </connections>
                                     </textField>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error Messages" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VWk-Fn-IOU" userLabel="iPaddressErrorLabel">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error Messages" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VWk-Fn-IOU" userLabel="iPaddressErrorLabel">
                                         <rect key="frame" x="0.0" y="39" width="119.5" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -1638,7 +1638,7 @@
                                             <action selector="editUsernameInput:" destination="9iZ-5D-aWx" eventType="editingChanged" id="aWS-La-dfI"/>
                                         </connections>
                                     </textField>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error Messages" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tLu-bb-zBI" userLabel="usernameErrorLabel">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error Messages" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tLu-bb-zBI" userLabel="usernameErrorLabel">
                                         <rect key="frame" x="0.0" y="53" width="119.5" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -1656,7 +1656,7 @@
                                             <action selector="editPasswordInput:" destination="9iZ-5D-aWx" eventType="editingChanged" id="ggj-IP-FTB"/>
                                         </connections>
                                     </textField>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error Messages" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MI0-tE-apg" userLabel="passwordErrorLabel">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error Messages" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MI0-tE-apg" userLabel="passwordErrorLabel">
                                         <rect key="frame" x="0.0" y="134.5" width="119.5" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -1762,7 +1762,7 @@
                                             <action selector="editUsernameInput:" destination="v1r-pC-DK7" eventType="editingChanged" id="4ZH-bp-GsJ"/>
                                         </connections>
                                     </textField>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error Message" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Z6-h2-oiz" userLabel="usernameErrorLabel">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error Message" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Z6-h2-oiz" userLabel="usernameErrorLabel">
                                         <rect key="frame" x="0.0" y="53" width="300" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -1782,7 +1782,7 @@
                                             <action selector="editUsernameInput:" destination="v1r-pC-DK7" eventType="editingChanged" id="P5V-rg-mWE"/>
                                         </connections>
                                     </textField>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error Message" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OwM-26-wgY" userLabel="nameErrorLabel">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error Message" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OwM-26-wgY" userLabel="nameErrorLabel">
                                         <rect key="frame" x="0.0" y="134.5" width="300" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -1802,7 +1802,7 @@
                                             <action selector="editUsernameInput:" destination="v1r-pC-DK7" eventType="editingChanged" id="BmW-qM-9CR"/>
                                         </connections>
                                     </textField>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error Message" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WZa-Wo-OjF" userLabel="emailErrorLabel">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error Message" textAlignment="natural" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WZa-Wo-OjF" userLabel="emailErrorLabel">
                                         <rect key="frame" x="0.0" y="216" width="300" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -1821,8 +1821,11 @@
                                             <action selector="editPasswordInput:" destination="v1r-pC-DK7" eventType="editingChanged" id="5Qf-mK-lAx"/>
                                         </connections>
                                     </textField>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ErrorMessage" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TQd-0H-WDW" userLabel="passwordErrorLabel">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ErrorMessage" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TQd-0H-WDW" userLabel="passwordErrorLabel">
                                         <rect key="frame" x="0.0" y="297.5" width="300" height="20.5"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="300" id="Msp-li-OZA"/>
+                                        </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -1840,7 +1843,7 @@
                                             <action selector="editConfirmPasswordInput:" destination="v1r-pC-DK7" eventType="editingChanged" id="26n-kN-7ye"/>
                                         </connections>
                                     </textField>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ErrorMessage" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S5u-Qf-1dz" userLabel="confirmPasswordErrorLabel">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ErrorMessage" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="8" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S5u-Qf-1dz" userLabel="confirmPasswordErrorLabel">
                                         <rect key="frame" x="0.0" y="379" width="300" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -1861,6 +1864,7 @@
                                     </activityIndicatorView>
                                 </subviews>
                                 <constraints>
+                                    <constraint firstItem="TQd-0H-WDW" firstAttribute="top" secondItem="vrI-FR-UF7" secondAttribute="bottom" constant="8" id="407-2z-3Cv"/>
                                     <constraint firstItem="7VX-cu-ouE" firstAttribute="centerX" secondItem="S2W-lR-zPF" secondAttribute="centerX" id="DF4-vi-CdG"/>
                                     <constraint firstItem="4kk-EF-vPh" firstAttribute="leading" secondItem="S2W-lR-zPF" secondAttribute="leading" id="I1S-0t-NgH"/>
                                     <constraint firstItem="S5u-Qf-1dz" firstAttribute="leading" secondItem="S2W-lR-zPF" secondAttribute="leading" id="MkJ-MD-wHY"/>

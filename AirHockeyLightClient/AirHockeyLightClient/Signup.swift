@@ -117,7 +117,7 @@ class Signup: NSObject {
             self.nameError = ""
             return true
         } else {
-            self.nameError = "Nom d'usager invalide"
+            self.nameError = "Nom invalide"
             return false
         }
     }

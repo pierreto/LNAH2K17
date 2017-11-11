@@ -34,7 +34,7 @@ class SignupViewController: UIViewController {
                     self.loadingDone()
                     OperationQueue.main.addOperation {
                         self.performSegue(withIdentifier: "signupSuccess", sender: self)
-                        NotificationCenter.default.post(name: Notification.Name(rawValue: ConnectionNotification.Connection), object: nil)
+                        NotificationCenter.default.post(name: Notification.Name(rawValue: SignupNotification.SubmitNotification), object: nil)
                         self.enableInputs()
                     }
                 } else {
