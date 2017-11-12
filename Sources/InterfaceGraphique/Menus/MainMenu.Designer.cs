@@ -35,6 +35,7 @@
             this.elementHost1 = new System.Windows.Forms.Integration.ElementHost();
             this.testChatView1 = new InterfaceGraphique.Controls.WPF.Chat.TestChatView();
             this.profileButton = new System.Windows.Forms.Button();
+            this.storeButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // boutonPartieRapide
@@ -113,6 +114,22 @@
             this.profileButton.TabStop = false;
             this.profileButton.Text = "Profil";
             this.profileButton.UseVisualStyleBackColor = true;
+            ///
+            /// storeButton
+            ///
+            this.storeButton.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.storeButton.AutoEllipsis = true;
+            this.storeButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.storeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.storeButton.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.storeButton.ForeColor = System.Drawing.Color.White;
+            this.storeButton.Location = new System.Drawing.Point(985, 50);
+            this.storeButton.Name = "storeButton";
+            this.storeButton.Size = new System.Drawing.Size(150, 50);
+            this.storeButton.TabIndex = 4;
+            this.storeButton.TabStop = false;
+            this.storeButton.Text = "Magasin";
+            this.storeButton.UseVisualStyleBackColor = true;
             // 
             // buttonQuitter
             // 
@@ -184,6 +201,7 @@
             this.Controls.Add(this.boutonTournoi);
             this.Controls.Add(this.boutonPartieRapide);
             this.Controls.Add(this.profileButton);
+            this.Controls.Add(this.storeButton);
             this.Name = "MainMenu";
             this.Text = "MainMenu";
             this.ResumeLayout(false);
@@ -199,6 +217,7 @@
         private System.Windows.Forms.Button Button_Credits;
         private System.Windows.Forms.Button profileButton;
         private System.Windows.Forms.Button buttonLogout;
+        private System.Windows.Forms.Button storeButton;
         private System.Windows.Forms.Integration.ElementHost elementHost1;
         private Controls.WPF.Chat.TestChatView testChatView1;
     }

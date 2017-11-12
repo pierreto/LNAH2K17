@@ -96,27 +96,14 @@ class EditionHub: BaseHub {
         editionCommand.executeCommand()
     }
     
-    func convertMapEntity(mapEntity: MapEntity) -> Any {
-        let map = [
-            "Id": mapEntity.id.value!.description,
-            "Creator": mapEntity.creator!,
-            "MapName": mapEntity.mapName!,
-            "LastBackup": mapEntity.lastBackup!.description,
-            "Json": mapEntity.json!,
-            "Private": mapEntity.privacy.value!.description,
-            "Password": mapEntity.password?.description as Any,
-            "CurrentNumberOfPlayer": mapEntity.currentNumberOfPlayer.value!.description
-        ] as [String : Any]
-        return map
-    }
-    
     func joinPublicRoom(username: String, mapEntity: MapEntity) {
         self.map = mapEntity
         var usersInRoom = [Dictionary<String, Any>]()
         
         do {
+            let mapService = MapService()
             try self.hubProxy?.invoke("JoinPublicRoom",
-                                      arguments: [username, convertMapEntity(mapEntity: mapEntity)])
+                                      arguments: [username, mapService.convertMapEntity(mapEntity: mapEntity)])
             { (result, error) in
                 if let e = error {
                     print("Error JoinPublicRoom: \(e)")
@@ -163,10 +150,9 @@ class EditionHub: BaseHub {
     
     func sendEditionCommand(command: EditionCommand) {
         let jsonCommand = command.toJSON()?.rawString(options: [])
-        //print(jsonCommand!)
         
         do {
-            try self.hubProxy?.invoke("SendEditionCommand", arguments: [self.map?.id.value as Any, jsonCommand!])
+            try self.hubProxy?.invoke("SendEditionCommand", arguments: [self.map?.id as Any, jsonCommand!])
         }
         catch {
             print("Error SendEditionCommand")
@@ -177,7 +163,7 @@ class EditionHub: BaseHub {
         let convertedCommand = command.toDictionary()
         
         do {
-            try self.hubProxy?.invoke("SendSelectionCommand", arguments: [self.map?.id.value as Any, convertedCommand])
+            try self.hubProxy?.invoke("SendSelectionCommand", arguments: [self.map?.id as Any, convertedCommand])
         }
         catch {
             print("Error SendSelectionCommand")
@@ -186,7 +172,7 @@ class EditionHub: BaseHub {
     
     func leaveRoom() {
         do {
-            try self.hubProxy?.invoke("LeaveRoom", arguments: [self.map?.id.value as Any])
+            try self.hubProxy?.invoke("LeaveRoom", arguments: [self.map?.id as Any])
         }
         catch {
             print("Error LeaveRoom")

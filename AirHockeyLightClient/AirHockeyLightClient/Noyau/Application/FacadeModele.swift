@@ -93,6 +93,7 @@ class FacadeModele {
     var tapGestureRecognizer: UITapGestureRecognizer?
     var panGestureRecognizer: ImmediatePanGestureRecognizer?
     var pinchGestureRecognizer: UIPinchGestureRecognizer?
+    var rotateGestureRecognizer: UIRotationGestureRecognizer?
     
     /// Etat du modèle
     private var etat: ModeleEtat?
@@ -113,6 +114,7 @@ class FacadeModele {
         self.tapGestureRecognizer = UITapGestureRecognizer(target: self, action:  #selector (self.tapGesture (_:)))
         self.panGestureRecognizer = ImmediatePanGestureRecognizer(target: self, action: #selector (self.panGesture(_:)))
         self.pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector (self.pinchGesture(_:)))
+        self.rotateGestureRecognizer = UIRotationGestureRecognizer(target: self, action: #selector (self.rotateGesture(_:)))
         
         self.arbre?.initialiser()
         self.etat?.initialiser()
@@ -186,6 +188,10 @@ class FacadeModele {
     
     @objc func pinchGesture(_ sender: UIPinchGestureRecognizer) {
         self.etat?.pinchGesture(sender: sender)
+    }
+    
+    @objc func rotateGesture(_ sender: UIRotationGestureRecognizer) {
+        self.etat?.rotateGesture(sender: sender)
     }
     
     /// Réinitialise la scène.
@@ -533,8 +539,8 @@ class FacadeModele {
         self.arbre?.accepterVisiteur(visiteur: visiteur)
         self.sauvegarderCoefficients()
         
-        // Sauvegarder la carte localement
-        DBManager.instance.sauvegarderCarte(map: map, json: (self.docJSON?.rawString(options: []))!)
+        // Sauvegarder la carte
+        self.etatEdition?.sauvegarderCarte(map: map, json: (self.docJSON?.rawString(options: []))!)
     }
     
     private func initializeJson() {

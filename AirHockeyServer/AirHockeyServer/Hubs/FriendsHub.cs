@@ -13,10 +13,12 @@ namespace AirHockeyServer.Hubs
     public class FriendsHub : Hub 
     {
         protected IFriendService FriendService { get; }
+        public ConnectionMapper ConnectionMapper { get; }
 
-        public FriendsHub(IFriendService friendService)
+        public FriendsHub(IFriendService friendService, ConnectionMapper connectionMapper)
         {
             FriendService = friendService;
+            ConnectionMapper = connectionMapper;
         }
 
         public void JoinHub(UserEntity user)

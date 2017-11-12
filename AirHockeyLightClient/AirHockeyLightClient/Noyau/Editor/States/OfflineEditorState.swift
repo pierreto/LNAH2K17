@@ -36,6 +36,11 @@ class OfflineEditorState: EditorState {
     override func currentUserControlPointChanged(uuid: String, pos: SCNVector3) {}
     override func currentUserDeletedNode(uuid: String) {}
     override func currentUserChangedCoefficient(coefficientFriction: Float, coefficientRebond: Float, coefficientAcceleration: Float) {}
+    
+    override func sauvegarderCarte(map: MapEntity, json: String?) {
+        DBManager.instance.sauvegarderCarte(map: map, json: json)
+    }
+    
 }
 
 ///////////////////////////////////////////////////////////////////////////////

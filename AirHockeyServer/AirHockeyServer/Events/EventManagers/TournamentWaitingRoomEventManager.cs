@@ -23,29 +23,31 @@ namespace AirHockeyServer.Events.EventManagers
         protected TournamentEntity Tournament { get; set; }
 
         protected ConcurrentDictionary<int, TournamentEntity> Tournaments { get; set; }
-
-        protected IHubContext HubContext { get; set; }
+        
 
         public IGameService GameService { get; }
 
         public ITournamentManager TournamentManager { get; }
 
         public IMapService MapService { get; set; }
+        public ConnectionMapper ConnectionMapper { get; set; }
 
-        public TournamentWaitingRoomEventManager(IGameService gameService, ITournamentManager tournamentManager, IMapService mapService)
+        public TournamentWaitingRoomEventManager(IGameService gameService, ITournamentManager tournamentManager, 
+            IMapService mapService, ConnectionMapper connectionMapper)
         {
             this.RemainingTime = new ConcurrentDictionary<int, int>();
             TournamentMatchMakerService.Instance().OpponentFound += OnOpponentFound;
-            HubContext = GlobalHost.ConnectionManager.GetHubContext<TournamentWaitingRoomHub>();
+            
             GameService = gameService;
             TournamentManager = tournamentManager;
             MapService = mapService;
+            ConnectionMapper = connectionMapper;
             Tournaments = new ConcurrentDictionary<int, TournamentEntity>();
         }
 
         public void RemoveUser(int id)
         {
-            HubContext.Groups.Remove(ConnectionMapper.GetConnection(id), Tournament.Id.ToString());
+            GlobalHost.ConnectionManager.GetHubContext<TournamentWaitingRoomHub>().Groups.Remove(ConnectionMapper.GetConnection(id), Tournament.Id.ToString());
 
             var user = Tournament.Players.Find(x => x.Id == id);
             Tournament.Players.Remove(user);
@@ -67,11 +69,11 @@ namespace AirHockeyServer.Events.EventManagers
 
             var connection = ConnectionMapper.GetConnection(user.Id);
             string tournamentIdString = Tournament.Id.ToString();
-            HubContext.Groups.Add(connection, tournamentIdString).Wait();
+            GlobalHost.ConnectionManager.GetHubContext<TournamentWaitingRoomHub>().Groups.Add(connection, tournamentIdString).Wait();
 
             Tournament.Players.Add(user);
 
-            HubContext.Clients.Group(Tournament.Id.ToString()).OpponentFoundEvent(Tournament.Players);
+            GlobalHost.ConnectionManager.GetHubContext<TournamentWaitingRoomHub>().Clients.Group(Tournament.Id.ToString()).OpponentFoundEvent(Tournament.Players);
 
             if (Tournament.Players.Count == 4)
             {
@@ -85,7 +87,7 @@ namespace AirHockeyServer.Events.EventManagers
                 Tournaments[Tournament.Id] = Tournament;
                 this.RemainingTime[Tournament.Id] = 0;
 
-                HubContext.Clients.Group(Tournament.Id.ToString()).TournamentAllOpponentsFound(Tournament);
+                GlobalHost.ConnectionManager.GetHubContext<TournamentWaitingRoomHub>().Clients.Group(Tournament.Id.ToString()).TournamentAllOpponentsFound(Tournament);
 
                 System.Timers.Timer timer = CreateTimeoutTimer(Tournament);
                 Tournament = null;
@@ -136,7 +138,7 @@ namespace AirHockeyServer.Events.EventManagers
             {
                 RemainingTime[tournamentId] += 1000;
 
-                HubContext.Clients.Group(tournamentId.ToString()).WaitingRoomRemainingTime((WAITING_TIMEOUT - RemainingTime[tournamentId]) / 1000);
+                GlobalHost.ConnectionManager.GetHubContext<TournamentWaitingRoomHub>().Clients.Group(tournamentId.ToString()).WaitingRoomRemainingTime((WAITING_TIMEOUT - RemainingTime[tournamentId]) / 1000);
             }
             else
             {
@@ -153,7 +155,7 @@ namespace AirHockeyServer.Events.EventManagers
 
                 Tournaments[tournamentId].State = TournamentState.SemiFinals;
                 TournamentManager.AddTournament(Tournaments[tournamentId]);
-                HubContext.Clients.Group(tournamentId.ToString()).TournamentStarting(Tournaments[tournamentId]);
+                GlobalHost.ConnectionManager.GetHubContext<TournamentWaitingRoomHub>().Clients.Group(tournamentId.ToString()).TournamentStarting(Tournaments[tournamentId]);
             }
         }
 

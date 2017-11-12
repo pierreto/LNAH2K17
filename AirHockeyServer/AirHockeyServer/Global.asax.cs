@@ -20,6 +20,7 @@ using AirHockeyServer.Repositories.Interfaces;
 using AirHockeyServer.Manager;
 using AirHockeyServer.Mapping;
 using AirHockeyServer.Services.Interfaces;
+using AirHockeyServer.Hubs;
 
 namespace AirHockeyServer
 {
@@ -65,6 +66,7 @@ namespace AirHockeyServer
             UnityContainer.RegisterType<IUserRepository, UserRepository>(new HierarchicalLifetimeManager());
             UnityContainer.RegisterType<ITournamentRepository, TournamentRepository>(new HierarchicalLifetimeManager());
             UnityContainer.RegisterType<IFriendRequestRepository, FriendRequestRepository>(new HierarchicalLifetimeManager());
+            UnityContainer.RegisterType<IStoreRepository, StoreRepository>(new HierarchicalLifetimeManager());
 
             // Services
             UnityContainer.RegisterType<IChatService, ChatService>(new HierarchicalLifetimeManager());
@@ -80,8 +82,11 @@ namespace AirHockeyServer
             UnityContainer.RegisterType<ITournamentService, TournamentService>(new ContainerControlledLifetimeManager());
             UnityContainer.RegisterType<ILoginService, LoginService>(new ContainerControlledLifetimeManager());
             UnityContainer.RegisterType<IUserService, UserService>(new ContainerControlledLifetimeManager());
+            UnityContainer.RegisterType<IProfileService, ProfileService>(new ContainerControlledLifetimeManager());
+            UnityContainer.RegisterType<IRankingService, RankingService>(new ContainerControlledLifetimeManager());
             UnityContainer.RegisterType<IFriendService, FriendService>(new ContainerControlledLifetimeManager());
             UnityContainer.RegisterType<IAchievementInfoService, AchievementInfoService>(new ContainerControlledLifetimeManager());
+            UnityContainer.RegisterType<IStoreService, StoreService>(new ContainerControlledLifetimeManager());
             
             // Core
             UnityContainer.RegisterType<IConnector, Connector>(new ContainerControlledLifetimeManager());
@@ -89,6 +94,7 @@ namespace AirHockeyServer
 
             // Mapping
             UnityContainer.RegisterType<MapperManager>(new ContainerControlledLifetimeManager());
+            UnityContainer.RegisterType<Hubs.ConnectionMapper>(new ContainerControlledLifetimeManager());
 
             // Managers
             UnityContainer.RegisterType<IGameManager, GameManager>(new ContainerControlledLifetimeManager());

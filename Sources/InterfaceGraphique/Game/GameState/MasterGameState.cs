@@ -50,7 +50,7 @@ namespace InterfaceGraphique.Game.GameState
             player2Name.Append(gameEntity.Slave.Username);
             FonctionsNatives.setPlayerNames(player1Name, player2Name);
 
-            base.LoadOnlineMap(gameEntity.SelectedMap);
+            selectedMap = gameEntity.SelectedMap;
         }
 
         public override void MettreAJour(double tempsInterAffichage, int neededGoalsToWin)

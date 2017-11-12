@@ -246,6 +246,10 @@
     </Compile>
     <Compile Include="Controls\WPF\Matchmaking\MatchmakingViewModel.cs" />
     <Compile Include="Controls\WPF\RelayCommandAsync.cs" />
+    <Compile Include="Controls\WPF\Store\StoreView.xaml.cs">
+      <DependentUpon>StoreView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WPF\Store\StoreViewModel.cs" />
     <Compile Include="Controls\WPF\Tournament\TournamentView.xaml.cs">
       <DependentUpon>TournamentView.xaml</DependentUpon>
     </Compile>
@@ -305,6 +309,7 @@
     <Compile Include="Entities\MemberEntity.cs" />
     <Compile Include="CommunicationInterface\LoginClient.cs" />
     <Compile Include="Entities\PlayerStatsEntity.cs" />
+    <Compile Include="Entities\StoreItemEntity.cs" />
     <Compile Include="Entities\TournamentEntity.cs" />
     <Compile Include="Entities\MockObject\MapEntityMock.cs" />
     <Compile Include="Entities\TournamentOpponentMessage.cs" />
@@ -397,6 +402,12 @@
     <Compile Include="Menus\QuickPlayMenu.Designer.cs">
       <DependentUpon>QuickPlayMenu.cs</DependentUpon>
     </Compile>
+    <Compile Include="Menus\StoreMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Menus\StoreMenu.Designer.cs">
+      <DependentUpon>StoreMenu.cs</DependentUpon>
+    </Compile>
     <Compile Include="Menus\TestChatMenu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -431,6 +442,7 @@
     </Compile>
     <Compile Include="Services\MapService.cs" />
     <Compile Include="Services\PlayerStatsService.cs" />
+    <Compile Include="Services\StoreService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="WPFApplication.cs" />
     <EmbeddedResource Include="Controls\FriendListHost.resx">
@@ -631,6 +643,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\WPF\Matchmaking\MatchmakingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\WPF\Store\StoreView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

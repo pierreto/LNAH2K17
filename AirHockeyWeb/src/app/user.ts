@@ -1,6 +1,6 @@
 export class User {
 
-    constructor(private username?: string, private password?: string, private email?: string, private name?:string) {
+    constructor(private username?: string, private password?: string, private email?: string, private name?: string) {
         this.username = '';
         this.password = '';
         this.email = '';

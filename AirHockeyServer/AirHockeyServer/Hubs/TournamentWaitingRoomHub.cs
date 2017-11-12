@@ -12,12 +12,14 @@ namespace AirHockeyServer.Hubs
 {
     public class TournamentWaitingRoomHub : Hub
     {
-        public TournamentWaitingRoomHub(ITournamentService tournamentService)
+        public TournamentWaitingRoomHub(ITournamentService tournamentService, ConnectionMapper connectionMapper)
         {
             TournamentService = tournamentService;
+            ConnectionMapper = connectionMapper;
         }
 
         public ITournamentService TournamentService { get; }
+        public ConnectionMapper ConnectionMapper { get; set; }
 
         public void Join(UserEntity user)
         {

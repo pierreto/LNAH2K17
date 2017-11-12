@@ -12,5 +12,7 @@ namespace AirHockeyServer.Entities
 
         public string Email { get; set; }
 
+        public string Created { get; set; }
+
     }
 }

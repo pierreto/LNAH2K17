@@ -27,10 +27,7 @@ namespace AirHockeyServer.Services
 
         public async Task SetPlayerAchievements(int userId)
         {
-            foreach (AchivementType achievement in Enum.GetValues(typeof(AchivementType)))
-            {
-                await PlayerStatsRepository.CreateAchievement(userId, achievement);
-            }
+            await PlayerStatsRepository.CreateAchievement(userId);
         }
 
         public async Task AddPoints(int userId, int pointsNb)

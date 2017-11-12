@@ -37,6 +37,7 @@ export class LoginComponent implements OnInit {
   constructor(private fb: FormBuilder, private router: Router, private loginService: LoginService, private appService: AppService) { }
 
   ngOnInit() {
+    localStorage['loggedIn'] = false;
     this.user = new User();
     this.validUser = true;
     this.buildForm();
@@ -75,8 +76,12 @@ export class LoginComponent implements OnInit {
     this.loginService.login(this.user).subscribe(
       (res) => {
           this.appService.loading = false;
+          this.appService.id = res;
+          localStorage['loggedIn'] = JSON.stringify(true);
+          localStorage['id'] = JSON.stringify(res);
           this.validUser = true;
-          this.router.navigate(['GO TO PROFILE']);
+          // res contains the id of the user
+          this.router.navigate(['/profile', res]);
       },
       (err) => {
         this.appService.loading = false;
@@ -86,6 +91,7 @@ export class LoginComponent implements OnInit {
   }
 
   signup() {
+    this.appService.loginPage = false;
     this.router.navigate([SIGNUP_URL]);
   }
 }

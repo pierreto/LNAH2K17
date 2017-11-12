@@ -9,7 +9,7 @@ export class SignupService {
 
     constructor(private http: Http) {}
 
-    signup(user: User): Observable<boolean> {
+    signup(user: User): Observable<number> {
         const body = {
             Username: user.Username,
             Name: user.Name,

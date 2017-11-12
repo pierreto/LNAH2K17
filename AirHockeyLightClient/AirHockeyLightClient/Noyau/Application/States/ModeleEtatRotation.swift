@@ -35,18 +35,18 @@ class ModeleEtatRotation: ModeleEtat {
     
     /// Fonction qui initialise l'état de déplacement
     override func initialiser() {
-        // La rotation des noeuds s'effectue par la gesture pan
-        FacadeModele.instance.obtenirVue().editorView.addGestureRecognizer(FacadeModele.instance.panGestureRecognizer!)
+        // La rotation des noeuds s'effectue par la gesture rotate
+        FacadeModele.instance.obtenirVue().editorView.addGestureRecognizer(FacadeModele.instance.rotateGestureRecognizer!)
     }
     
     override func nettoyerEtat() {
-        /// Enlève la gesture pan
-        FacadeModele.instance.obtenirVue().editorView.removeGestureRecognizer(FacadeModele.instance.panGestureRecognizer!)
+        /// Enlève la gesture rotate
+        FacadeModele.instance.obtenirVue().editorView.removeGestureRecognizer(FacadeModele.instance.rotateGestureRecognizer!)
     }
     
     // Fonctions gérant les entrées de l'utilisateur
-    override func panGesture(sender: ImmediatePanGestureRecognizer) {
-        super.panGesture(sender: sender)
+    override func rotateGesture(sender: UIRotationGestureRecognizer) {
+        super.rotateGesture(sender: sender)
         
         if sender.state == UIGestureRecognizerState.began {
             print("Rotate began")
@@ -64,7 +64,10 @@ class ModeleEtatRotation: ModeleEtat {
             print("Fin rotation noeud")
             
             // Dernier rotation
-            self.appliquerRotation()
+            self.appliquerRotation(rotation: Float(-sender.rotation))
+            
+            // Set the rotation to 0 to avoid compounding the rotations
+            sender.rotation = 0.0
             
             if !self.noeudsSurLaTable() {
                 // Annuler la rotation
@@ -77,14 +80,16 @@ class ModeleEtatRotation: ModeleEtat {
             self.angleTotale = 0.0
         }
         else {
-            self.appliquerRotation()
+            self.appliquerRotation(rotation: Float(-sender.rotation))
+            
+            // Set the rotation to 0 to avoid compounding the rotations
+            sender.rotation = 0.0
         }
     }
     
     // Effectue la rotation des noeuds
-    private func appliquerRotation() {
-        // Calcule de l'angle immediat
-        let angle = GLKMathDegreesToRadians(super.obtenirDeplacement().x)
+    private func appliquerRotation(rotation: Float) {
+        let angle = rotation
         
         // Update de l'angle totale
         self.angleTotale += Float(angle)
