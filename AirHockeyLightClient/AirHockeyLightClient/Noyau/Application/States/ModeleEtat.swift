@@ -39,8 +39,14 @@ class ModeleEtat {
         self.position = point
     }
     
-    // PAN
+    // IMMEDIATE PAN
     func panGesture(sender: ImmediatePanGestureRecognizer) {
+        self.lastPosition = self.position
+        self.position = sender.location(in: sender.view)
+    }
+    
+    // NORMAL PAN
+    func normalPanGesture(sender: UIPanGestureRecognizer) {
         self.lastPosition = self.position
         self.position = sender.location(in: sender.view)
     }
@@ -117,6 +123,26 @@ class ModeleEtat {
         // Envoyer la commande
         FacadeModele.instance.obtenirEtatEdition().currentUserSelectedObject(uuidSelected: "", isSelected: false, deselectAll: true)
     }
+    
+    // Affiche/Cache les bouttons du HUD et la barre de navigation si les noeuds sont sur la table
+    func showButtonsNoeudSurTable() {
+        let noeudsSurTable = self.noeudsSurLaTable()
+        FacadeModele.instance.obtenirVue().editorHUDScene?.showButtonsNoeudSurTable(activer: noeudsSurTable)
+        FacadeModele.instance.obtenirVue().enableNavigationBar(activer: noeudsSurTable)
+    }
+    
+    // Affiche/Cache la barre de navigation si les noeuds sont sur la table
+    func enableNavigationBar() {
+        let noeudsSurTable = self.noeudsSurLaTable()
+        FacadeModele.instance.obtenirVue().enableNavigationBar(activer: noeudsSurTable)
+    }
+    
+    // Réactive tous les buttons du HUD et de la barre de navigation
+    func reactiverButtons() {
+        FacadeModele.instance.obtenirVue().editorHUDScene?.showButtonsNoeudSurTable(activer: true)
+        FacadeModele.instance.obtenirVue().enableNavigationBar(activer: true)
+    }
+    
 }
 
 ///////////////////////////////////////////////////////////////////////////////
