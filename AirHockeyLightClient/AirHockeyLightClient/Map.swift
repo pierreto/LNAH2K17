@@ -16,6 +16,8 @@ enum MapNotification {
 }
 
 class Map: NSObject {
+    
+    private let clientConnection = HubManager.sharedConnection
 
     /// Messages d'erreur
     var mapNameError: String = ""
@@ -74,14 +76,22 @@ class Map: NSObject {
 
     func save(name: String, isPrivate: Bool, password: String) {
         let map = MapEntity()
-        map.id = "1" // TODO : générer un UUID
-        map.creator = "N/A" // TODO : mettre nom de l'utilisateur
+        map.id = "100" // TODO : générer un UUID
+        map.creator = "N/A"
         map.mapName = name
+        map.lastBackup = Date()
+        map.json = ""
         map.privacy.value = isPrivate
         map.password = password
         map.currentNumberOfPlayer.value = 0
         
-        DBManager.instance.sauvegarderCarte(map: map, json: nil)
+        if self.clientConnection.getConnection() != nil && self.clientConnection.connected! {
+            map.creator = self.clientConnection.getUsername()
+            let mapService = MapService()
+            mapService.saveNewMap(map: map)
+        } else {
+            DBManager.instance.sauvegarderCarte(map: map, json: nil)
+        }
     }
     
     private func resetErrorMessages() {
