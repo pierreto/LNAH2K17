@@ -44,7 +44,7 @@ namespace InterfaceGraphique.Editor.EditorState
         private void OnUserLeft(string username)
         {
             FonctionsNatives.removeUser(username);
-
+            Task.Run(() => Editeur.mapManager.SaveMap());
         }
 
         private void OnNewUser(OnlineUser user)
