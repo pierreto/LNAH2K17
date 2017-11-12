@@ -31,6 +31,7 @@
 		1DFE2E4C1F91A8FD0048892D /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFE2E4B1F91A8FD0048892D /* SignupViewController.swift */; };
 		2509B88D1FB8CBDE002DEE9A /* UserEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2509B88C1FB8CBDE002DEE9A /* UserEntity.swift */; };
 		2509B88F1FB8D159002DEE9A /* FriendRequestEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2509B88E1FB8D159002DEE9A /* FriendRequestEntity.swift */; };
+		2509B8911FB8D5D8002DEE9A /* FriendsHub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2509B8901FB8D5D8002DEE9A /* FriendsHub.swift */; };
 		25163A891F9CE62600142418 /* ILoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25163A881F9CE62500142418 /* ILoginViewModel.swift */; };
 		252EC9161FA80FAD008D119C /* EditionHub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252EC9151FA80FAD008D119C /* EditionHub.swift */; };
 		253741AC1FA61B0C00E7DBE1 /* DBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253741AB1FA61B0C00E7DBE1 /* DBManager.swift */; };
@@ -187,6 +188,7 @@
 		1DFE2E4B1F91A8FD0048892D /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SignupViewController.swift; path = InterfaceGraphique/Menus/SignupViewController.swift; sourceTree = "<group>"; };
 		2509B88C1FB8CBDE002DEE9A /* UserEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserEntity.swift; path = Noyau/Entities/UserEntity.swift; sourceTree = "<group>"; };
 		2509B88E1FB8D159002DEE9A /* FriendRequestEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FriendRequestEntity.swift; path = Noyau/Entities/FriendRequestEntity.swift; sourceTree = "<group>"; };
+		2509B8901FB8D5D8002DEE9A /* FriendsHub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FriendsHub.swift; path = InterfaceGraphique/Communication/FriendsHub.swift; sourceTree = "<group>"; };
 		25163A881F9CE62500142418 /* ILoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ILoginViewModel.swift; sourceTree = "<group>"; };
 		252EC9151FA80FAD008D119C /* EditionHub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditionHub.swift; path = InterfaceGraphique/Communication/EditionHub.swift; sourceTree = "<group>"; };
 		253741AB1FA61B0C00E7DBE1 /* DBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DBManager.swift; path = Noyau/Entities/DBManager.swift; sourceTree = "<group>"; };
@@ -799,8 +801,9 @@
 			children = (
 				25FDE43A1FA80D4D0089D9FE /* HubManager.swift */,
 				25FDE43C1FA80DA60089D9FE /* BaseHub.swift */,
-				252EC9151FA80FAD008D119C /* EditionHub.swift */,
 				34C16BC11FAA783700908983 /* ChatHub.swift */,
+				252EC9151FA80FAD008D119C /* EditionHub.swift */,
+				2509B8901FB8D5D8002DEE9A /* FriendsHub.swift */,
 			);
 			name = Communication;
 			sourceTree = "<group>";
@@ -1050,6 +1053,7 @@
 				8FCDF61A1FA1BEDF00631551 /* EditorNotificationScene.swift in Sources */,
 				8FB2F7761FB41CD80047FB53 /* CoefficientCommand.swift in Sources */,
 				8F1D52AA1F9D99C700135A53 /* VisiteurScale.swift in Sources */,
+				2509B8911FB8D5D8002DEE9A /* FriendsHub.swift in Sources */,
 				8FFC5B4A1F7CA7170031474F /* PaddingLabel.swift in Sources */,
 				8F0B94B61F8D5C25007F0E82 /* FacadeModele.swift in Sources */,
 				8F64C0171F775B2500F14AC7 /* AuthentificationViewController.swift in Sources */,

@@ -17,18 +17,11 @@
 ///////////////////////////////////////////////////////////////////////////
 class UserEntity : Entity {
     
-    private var id : Int
-    private var username : String
-    private var name : String
-    private var email : String
-    
-    init(id: Int, username: String, name: String, email: String) {
-        self.id = id
-        self.username = username
-        self.name = name
-        self.email = email
-    }
-    
+    private var id : Int = 0
+    private var username : String = ""
+    private var name : String = ""
+    private var email : String = ""
+
     func getId() -> Int {
         return self.id
     }
@@ -59,6 +52,17 @@ class UserEntity : Entity {
     
     func setEmail(email: String) {
         self.email = email
+    }
+    
+    func toDictionary() -> [String: Any] {
+        let user = [
+            "Id": self.id,
+            "Username": self.username,
+            "Name": self.name,
+            "Email": self.email
+        ] as [String : Any]
+        
+        return user
     }
     
 }
