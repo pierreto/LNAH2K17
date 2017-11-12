@@ -393,7 +393,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G3X-TM-lRo" userLabel="Create Map View">
-                                <rect key="frame" x="228.5" y="203.5" width="567" height="361"/>
+                                <rect key="frame" x="229" y="106" width="567" height="306"/>
                                 <subviews>
                                     <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xcv-ud-tXJ">
                                         <rect key="frame" x="0.0" y="0.0" width="567" height="44"/>
@@ -419,6 +419,9 @@
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <action selector="mapNameEditingBegan:" destination="Rjh-Wh-cdd" eventType="editingDidBegin" id="pBd-Hd-9IZ"/>
+                                        </connections>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Nom de la carte :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tzd-dO-vVj" userLabel="MapNameLabel">
                                         <rect key="frame" x="96" y="78" width="131" height="21"/>
@@ -427,31 +430,6 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Carte locale :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2tW-wV-qUw" userLabel="LocalMapLabel">
-                                        <rect key="frame" x="126" y="140" width="101" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fwd-Wg-xwW" userLabel="isLocalMap">
-                                        <rect key="frame" x="250" y="135" width="51" height="31"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </switch>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Carte privée :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gjy-a6-fTt" userLabel="PrivateMapLabel">
-                                        <rect key="frame" x="123" y="185" width="103" height="21"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MwK-fb-SHQ" userLabel="isPrivateMap">
-                                        <rect key="frame" x="250" y="180" width="51" height="31"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <connections>
-                                            <action selector="changeMapPrivacy:" destination="Rjh-Wh-cdd" eventType="valueChanged" id="OXv-Qy-ROF"/>
-                                        </connections>
-                                    </switch>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Error" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zxl-AW-U9P" userLabel="MapNameErrorLabel">
                                         <rect key="frame" x="250" y="104" width="234" height="23"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -459,43 +437,63 @@
                                         <color key="textColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Carte privée :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gjy-a6-fTt" userLabel="PrivateMapLabel">
+                                        <rect key="frame" x="123" y="139" width="103" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MwK-fb-SHQ" userLabel="isPrivateMap">
+                                        <rect key="frame" x="250" y="134" width="51" height="31"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <connections>
+                                            <action selector="changeMapPrivacy:" destination="Rjh-Wh-cdd" eventType="valueChanged" id="OXv-Qy-ROF"/>
+                                        </connections>
+                                    </switch>
                                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Mot de passe :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vei-Ga-Nzr" userLabel="PasswordLabel">
-                                        <rect key="frame" x="113" y="231" width="113" height="21"/>
+                                        <rect key="frame" x="113" y="185" width="113" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="C4w-BO-K2n" userLabel="password">
-                                        <rect key="frame" x="250" y="226" width="284" height="30"/>
+                                        <rect key="frame" x="250" y="180" width="284" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                        <connections>
+                                            <action selector="passwordEditingBegan:" destination="Rjh-Wh-cdd" eventType="editingDidBegin" id="AVd-8v-4yv"/>
+                                        </connections>
                                     </textField>
                                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Error" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qBD-Ua-Bbd" userLabel="PasswordErrorLabel">
-                                        <rect key="frame" x="250" y="257" width="284" height="23"/>
+                                        <rect key="frame" x="250" y="211" width="284" height="23"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <color key="textColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Confirmer mot de passe :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d3W-Oz-lqr" userLabel="PasswordLabel">
-                                        <rect key="frame" x="33" y="293" width="194" height="21"/>
+                                        <rect key="frame" x="33" y="247" width="194" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1jr-zm-aaJ" userLabel="password">
-                                        <rect key="frame" x="250" y="288" width="284" height="30"/>
+                                        <rect key="frame" x="250" y="242" width="284" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                        <connections>
+                                            <action selector="passwordConfirmationBegan:" destination="Rjh-Wh-cdd" eventType="editingDidBegin" id="wvy-0w-2gZ"/>
+                                        </connections>
                                     </textField>
                                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Error" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dYV-uo-efi" userLabel="PasswordErrorLabel">
-                                        <rect key="frame" x="250" y="319" width="284" height="23"/>
+                                        <rect key="frame" x="250" y="273" width="284" height="23"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <color key="textColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
@@ -504,19 +502,18 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="567" id="KLa-wh-2v4"/>
-                                    <constraint firstAttribute="height" constant="361" id="dVY-cV-rkM"/>
+                                    <constraint firstAttribute="width" constant="567" id="Pjv-i5-1di"/>
+                                    <constraint firstAttribute="height" constant="306" id="bpx-Zj-6Mj"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="G3X-TM-lRo" firstAttribute="centerY" secondItem="x8T-Q9-rRP" secondAttribute="centerY" id="R7S-XB-8fh"/>
-                            <constraint firstItem="G3X-TM-lRo" firstAttribute="centerX" secondItem="x8T-Q9-rRP" secondAttribute="centerX" id="r63-Ui-0Rh"/>
+                            <constraint firstItem="G3X-TM-lRo" firstAttribute="centerY" secondItem="x8T-Q9-rRP" secondAttribute="centerY" constant="-125" id="Ch1-w9-HhK"/>
+                            <constraint firstItem="G3X-TM-lRo" firstAttribute="centerX" secondItem="x8T-Q9-rRP" secondAttribute="centerX" id="yJ5-Eg-W4O"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="isLocalMap" destination="Fwd-Wg-xwW" id="Nd9-Wh-ht9"/>
                         <outlet property="isPrivateMap" destination="MwK-fb-SHQ" id="knp-OI-A6h"/>
                         <outlet property="mapName" destination="meI-3c-EAF" id="lXJ-lq-eoT"/>
                         <outlet property="mapNameError" destination="zxl-AW-U9P" id="LQx-3z-IN6"/>
@@ -1975,16 +1972,48 @@
                                     <rect key="frame" x="0.0" y="0.0" width="984" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nom de la carte" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qvg-sL-ds4">
-                                            <rect key="frame" x="431" y="12" width="122" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="4" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="créateur" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vzs-66-Fok">
+                                            <rect key="frame" x="610" y="11" width="64" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="id" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P6K-GD-urg">
+                                            <rect key="frame" x="735" y="11.5" width="14" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="isPublic" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tYG-sL-4NB">
+                                            <rect key="frame" x="212" y="11.5" width="60" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="nombre de joueurs" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5lf-BJ-9K6">
+                                            <rect key="frame" x="420" y="12" width="144" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="nom de la carte" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qvg-sL-ds4">
+                                            <rect key="frame" x="282.5" y="12" width="119" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="qvg-sL-ds4" firstAttribute="centerY" secondItem="vTT-fA-W0L" secondAttribute="centerY" id="HnA-hg-3Py"/>
-                                        <constraint firstItem="qvg-sL-ds4" firstAttribute="centerX" secondItem="vTT-fA-W0L" secondAttribute="centerX" id="Jvc-CU-nTg"/>
+                                        <constraint firstItem="tYG-sL-4NB" firstAttribute="centerY" secondItem="vTT-fA-W0L" secondAttribute="centerY" id="8St-EC-xNJ"/>
+                                        <constraint firstItem="tYG-sL-4NB" firstAttribute="centerX" secondItem="vTT-fA-W0L" secondAttribute="centerX" constant="-250" id="96b-pJ-26k"/>
+                                        <constraint firstItem="P6K-GD-urg" firstAttribute="centerX" secondItem="vTT-fA-W0L" secondAttribute="centerX" constant="250" id="GH7-Ir-zOB"/>
+                                        <constraint firstItem="qvg-sL-ds4" firstAttribute="centerX" secondItem="vTT-fA-W0L" secondAttribute="centerX" constant="-150" id="HUV-TI-Tu3"/>
+                                        <constraint firstItem="P6K-GD-urg" firstAttribute="centerY" secondItem="vTT-fA-W0L" secondAttribute="centerY" id="KJl-Ok-gQz"/>
+                                        <constraint firstItem="5lf-BJ-9K6" firstAttribute="centerX" secondItem="vTT-fA-W0L" secondAttribute="centerX" id="Rz7-Hz-0i1"/>
+                                        <constraint firstItem="vzs-66-Fok" firstAttribute="centerY" secondItem="vTT-fA-W0L" secondAttribute="centerY" id="b73-4F-Y1q"/>
+                                        <constraint firstItem="5lf-BJ-9K6" firstAttribute="centerY" secondItem="vTT-fA-W0L" secondAttribute="centerY" id="bHd-m0-4hH"/>
+                                        <constraint firstItem="qvg-sL-ds4" firstAttribute="centerY" secondItem="vTT-fA-W0L" secondAttribute="centerY" id="ePX-n3-102"/>
+                                        <constraint firstItem="vzs-66-Fok" firstAttribute="centerX" secondItem="vTT-fA-W0L" secondAttribute="centerX" constant="150" id="nrR-2o-HPQ"/>
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -2001,6 +2030,86 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lcZ-rA-WKR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1446" y="418"/>
+        </scene>
+        <!--Unlock Map View Controller-->
+        <scene sceneID="JsM-Qg-Cwt">
+            <objects>
+                <viewController storyboardIdentifier="UnlockMapViewController" id="qo9-qD-nCY" customClass="UnlockMapViewController" customModule="AirHockeyLightClient" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="v6I-4L-OCt"/>
+                        <viewControllerLayoutGuide type="bottom" id="8JT-Y4-pAY"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="nbB-hw-hry">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bqj-wl-Elh" userLabel="Unlock Map View">
+                                <rect key="frame" x="249" y="188.5" width="527" height="141"/>
+                                <subviews>
+                                    <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8lS-L1-2YG">
+                                        <rect key="frame" x="0.0" y="0.0" width="527" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                        <items>
+                                            <navigationItem title="Déverrouiller carte" id="T20-rO-T4C">
+                                                <barButtonItem key="leftBarButtonItem" title="Annuler" id="Mkn-S6-fSG">
+                                                    <connections>
+                                                        <action selector="closeView:" destination="qo9-qD-nCY" id="HW4-j6-Y9a"/>
+                                                    </connections>
+                                                </barButtonItem>
+                                                <barButtonItem key="rightBarButtonItem" title="Procéder" id="Hoo-1W-OkJ" userLabel="Proceder">
+                                                    <connections>
+                                                        <action selector="unlockMap:" destination="qo9-qD-nCY" id="37W-bT-xgO"/>
+                                                    </connections>
+                                                </barButtonItem>
+                                            </navigationItem>
+                                        </items>
+                                    </navigationBar>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Entrer mot de passe :" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G31-ha-iHI" userLabel="UnlockPasswordLabel">
+                                        <rect key="frame" x="28" y="72" width="163" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4PH-K6-tYb" userLabel="unlockPassword">
+                                        <rect key="frame" x="214" y="67" width="284" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                        <connections>
+                                            <action selector="unlockPasswordEditingBegan:" destination="qo9-qD-nCY" eventType="editingDidBegin" id="25E-Sm-oCp"/>
+                                        </connections>
+                                    </textField>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Error" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dhg-yT-xPu" userLabel="UnlockPasswordErrorLabel">
+                                        <rect key="frame" x="214" y="98" width="284" height="23"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <color key="textColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="527" id="BvJ-yK-KbS"/>
+                                    <constraint firstAttribute="height" constant="141" id="M2q-qJ-1li"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Bqj-wl-Elh" firstAttribute="centerX" secondItem="nbB-hw-hry" secondAttribute="centerX" id="LPe-k7-dkg"/>
+                            <constraint firstItem="Bqj-wl-Elh" firstAttribute="centerY" secondItem="nbB-hw-hry" secondAttribute="centerY" constant="-125" id="qWZ-ri-2Ym"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="unlockPassword" destination="4PH-K6-tYb" id="fKg-VU-tpW"/>
+                        <outlet property="unlockPasswordError" destination="dhg-yT-xPu" id="NEq-JC-xEB"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="f2q-Xl-s50" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-260.15625" y="2500"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
