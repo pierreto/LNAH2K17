@@ -35,11 +35,11 @@ class MapViewModel: NSObject, IMapViewModel {
         unsubscribeFromNotifications()
     }
     
-    func save(name: String, isLocal: Bool, isPrivate: Bool, password: String, passwordConfirmation: String) -> Bool {
+    func save(name: String, isPrivate: Bool, password: String, passwordConfirmation: String) -> Bool {
         let valid = self.map.validate(name: name, isPrivate: isPrivate, password: password, passwordConfirmation: passwordConfirmation)
         
         if valid {
-            self.map.save(name: name, isLocal: isLocal, isPrivate: isPrivate, password: password)
+            self.map.save(name: name, isPrivate: isPrivate, password: password)
         }
         
         return valid

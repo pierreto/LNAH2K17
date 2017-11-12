@@ -16,11 +16,8 @@ enum MapNotification {
 }
 
 class Map: NSObject {
-    
-    /// Propriétés d'une carte
-    private var mapName : String?
-    
-    /// Message d'erreur
+
+    /// Messages d'erreur
     var mapNameError: String = ""
     var passwordError: String = ""
     var passwordConfirmationError: String = ""
@@ -75,7 +72,7 @@ class Map: NSObject {
         return unlocked
     }
 
-    func save(name: String, isLocal: Bool, isPrivate: Bool, password: String) {
+    func save(name: String, isPrivate: Bool, password: String) {
         let map = MapEntity()
         map.id = "1" // TODO : générer un UUID
         map.creator = "N/A" // TODO : mettre nom de l'utilisateur

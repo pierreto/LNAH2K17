@@ -108,6 +108,10 @@ class UnlockMapViewController: UIViewController {
         }
     }
     
+    @IBAction func unlockPasswordEditingBegan(_ sender: Any) {
+        self.resetUI()
+    }
+    
     private func linkErrorMessagesToViewModel() {
         if !isViewLoaded {
             return

@@ -21,7 +21,6 @@ class CreateMapViewController: UIViewController {
     
     @IBOutlet weak var mapName: UITextField!
     @IBOutlet weak var mapNameError: UILabel!
-    @IBOutlet weak var isLocalMap: UISwitch!
     @IBOutlet weak var isPrivateMap: UISwitch!
     @IBOutlet weak var passwordLabel: UILabel!
     @IBOutlet weak var password: UITextField!
@@ -97,7 +96,6 @@ class CreateMapViewController: UIViewController {
         
         if (self.viewModel?.save(
             name: self.mapName.text!,
-            isLocal: self.isLocalMap.isOn,
             isPrivate: self.isPrivateMap.isOn,
             password: self.password.text!,
             passwordConfirmation: self.passwordConfirmation.text!)  )! {
@@ -135,6 +133,21 @@ class CreateMapViewController: UIViewController {
         self.passwordConfirmationError.isHidden = !self.isPrivateMap.isOn
     }
     
+    @IBAction func mapNameEditingBegan(_ sender: Any) {
+        self.mapName.layer.borderWidth = 0.0
+        self.mapNameError.text = ""
+    }
+    
+    @IBAction func passwordEditingBegan(_ sender: Any) {
+        self.password.layer.borderWidth = 0.0
+        self.passwordError.text = ""
+    }
+    
+    @IBAction func passwordConfirmationBegan(_ sender: Any) {
+        self.passwordConfirmation.layer.borderWidth = 0.0
+        self.passwordConfirmationError.text = ""
+    }
+    
     private func linkErrorMessagesToViewModel() {
         if !isViewLoaded {
             return
@@ -150,13 +163,17 @@ class CreateMapViewController: UIViewController {
     }
     
     private func resetUI() {
-        self.resetStyles()
-        self.resetErrorMessages()
+        self.mapName.layer.borderWidth = 0.0
+        self.password.layer.borderWidth = 0.0
+        self.passwordConfirmation.layer.borderWidth = 0.0
+        
+        self.mapNameError.text = ""
+        self.passwordError.text = ""
+        self.passwordConfirmationError.text = ""
     }
     
     private func activateInputs() {
         self.mapName.isEnabled = true
-        self.isLocalMap.isEnabled = true
         self.isPrivateMap.isEnabled = true
         self.password.isEnabled = true
         self.passwordConfirmation.isEnabled = true
@@ -164,22 +181,9 @@ class CreateMapViewController: UIViewController {
     
     private func deactivateInputs() {
         self.mapName.isEnabled = false
-        self.isLocalMap.isEnabled = false
         self.isPrivateMap.isEnabled = false
         self.password.isEnabled = false
         self.passwordConfirmation.isEnabled = false
-    }
-    
-    private func resetStyles() {
-        self.mapName.layer.borderWidth = 0.0
-        self.password.layer.borderWidth = 0.0
-        self.passwordConfirmation.layer.borderWidth = 0.0
-    }
-    
-    private func resetErrorMessages() {
-        self.mapNameError.text = ""
-        self.passwordError.text = ""
-        self.passwordConfirmationError.text = ""
     }
     
     /// Modifier l'apparence du input en cas d'erreur
