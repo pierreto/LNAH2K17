@@ -21,7 +21,7 @@ namespace AirHockeyServer.Pocos
         [Column(Name = "creationDate", DbType = "datetime NOT NULL", CanBeNull = false, UpdateCheck = UpdateCheck.Never)]
         public DateTime CreationDate;
 
-        [Column(Name = "json", DbType = "longtext NOT NULL", CanBeNull = false, UpdateCheck = UpdateCheck.Never)]
+        [Column(Name = "json", DbType = "text NOT NULL", CanBeNull = false, UpdateCheck = UpdateCheck.Never)]
         public string Json;
 
         [Column(Name = "private", DbType = "tinyint(1)", CanBeNull = false)]
