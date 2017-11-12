@@ -43,14 +43,14 @@ namespace InterfaceGraphique.Game.GameState
 
             gameHasEnded = false;
             FonctionsNatives.setOnGoalCallback(callback);
+            
+            base.LoadOnlineMap(gameEntity.SelectedMap);
 
             StringBuilder player1Name = new StringBuilder(gameEntity.Master.Username.Length);
             StringBuilder player2Name = new StringBuilder(gameEntity.Slave.Username.Length);
             player1Name.Append(gameEntity.Master.Username);
             player2Name.Append(gameEntity.Slave.Username);
             FonctionsNatives.setPlayerNames(player1Name, player2Name);
-
-            base.LoadOnlineMap(gameEntity.SelectedMap);
         }
 
         public override void MettreAJour(double tempsInterAffichage, int neededGoalsToWin)

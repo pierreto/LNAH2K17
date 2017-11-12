@@ -79,7 +79,7 @@ namespace AirHockeyServer.Events.EventManagers
                 var connection = ConnectionMapper.GetConnection(player.Id);
                 try
                 {
-                   await GlobalHost.ConnectionManager.GetHubContext<TournamentWaitingRoomHub>().Groups.Add(connection, stringGameId);
+                   await GlobalHost.ConnectionManager.GetHubContext<GameWaitingRoomHub>().Groups.Add(connection, stringGameId);
                 }
                 catch(Exception e)
                 {
@@ -88,7 +88,7 @@ namespace AirHockeyServer.Events.EventManagers
             }
 
             Games[gameCreated.GameId] = gameCreated;
-            await GlobalHost.ConnectionManager.GetHubContext<TournamentWaitingRoomHub>().Clients.Group(stringGameId).OpponentFoundEvent(gameCreated);
+            GlobalHost.ConnectionManager.GetHubContext<GameWaitingRoomHub>().Clients.Group(stringGameId).OpponentFoundEvent(gameCreated);
             
             this.RemainingTime[gameCreated.GameId] = 0;
 
@@ -113,7 +113,7 @@ namespace AirHockeyServer.Events.EventManagers
                 RemainingTime[gameId] += 1000;
 
                 var remainingTime = ((WAITING_TIMEOUT - RemainingTime[gameId]) / 1000);
-                await GlobalHost.ConnectionManager.GetHubContext<TournamentWaitingRoomHub>().Clients.Group(gameId.ToString()).WaitingRoomRemainingTime(remainingTime); 
+                GlobalHost.ConnectionManager.GetHubContext<GameWaitingRoomHub>().Clients.Group(gameId.ToString()).WaitingRoomRemainingTime(remainingTime); 
             }
             else
             {
@@ -133,7 +133,7 @@ namespace AirHockeyServer.Events.EventManagers
                 Games[gameId].SelectedMap = await MapService.GetMap(mapId);
 
                 GameManager.AddGame(Games[gameId]);
-                await GlobalHost.ConnectionManager.GetHubContext<TournamentWaitingRoomHub>().Clients.Group(gameId.ToString()).GameStartingEvent(Games[gameId]);
+                GlobalHost.ConnectionManager.GetHubContext<GameWaitingRoomHub>().Clients.Group(gameId.ToString()).GameStartingEvent(Games[gameId]);
             }
         }
 
