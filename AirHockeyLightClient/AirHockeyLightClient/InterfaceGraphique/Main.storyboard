@@ -1155,14 +1155,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" text="Sender" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KLl-ch-rkn" userLabel="Sender">
-                                                    <rect key="frame" x="8" y="8" width="648" height="15"/>
+                                                    <rect key="frame" x="8" y="8" width="40.5" height="15"/>
                                                     <color key="tintColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" text="MessageValue" textAlignment="justified" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VXA-Aq-66Y" userLabel="MessageValue" customClass="PaddingLabel" customModule="AirHockeyLightClient" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="23" width="664" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="749" text="MessageValue" textAlignment="justified" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VXA-Aq-66Y" userLabel="MessageValue" customClass="PaddingLabel" customModule="AirHockeyLightClient" customModuleProvider="target">
+                                                    <rect key="frame" x="10" y="33" width="644" height="1"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1174,7 +1174,7 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="3" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Timestamp" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Nb-TK-PV3" userLabel="Timestamp">
-                                                    <rect key="frame" x="0.0" y="23" width="664" height="21"/>
+                                                    <rect key="frame" x="601" y="29.5" width="63" height="14.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1183,17 +1183,14 @@
                                             <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
-                                                <constraint firstItem="VXA-Aq-66Y" firstAttribute="leading" secondItem="5KZ-A1-rO9" secondAttribute="leading" id="0nK-Zo-1ms"/>
-                                                <constraint firstItem="VXA-Aq-66Y" firstAttribute="top" secondItem="KLl-ch-rkn" secondAttribute="bottom" id="I0h-Bq-cTZ"/>
-                                                <constraint firstAttribute="trailing" secondItem="4Nb-TK-PV3" secondAttribute="trailing" id="KeQ-bC-3z6"/>
-                                                <constraint firstAttribute="bottom" secondItem="VXA-Aq-66Y" secondAttribute="bottom" id="adx-PR-JHL"/>
-                                                <constraint firstItem="4Nb-TK-PV3" firstAttribute="leading" secondItem="5KZ-A1-rO9" secondAttribute="leading" id="dub-zm-Osf"/>
-                                                <constraint firstItem="4Nb-TK-PV3" firstAttribute="top" secondItem="KLl-ch-rkn" secondAttribute="bottom" id="ib4-cF-vVH"/>
-                                                <constraint firstItem="KLl-ch-rkn" firstAttribute="leading" secondItem="5KZ-A1-rO9" secondAttribute="leadingMargin" id="jl3-hq-OxE"/>
-                                                <constraint firstItem="KLl-ch-rkn" firstAttribute="top" secondItem="5KZ-A1-rO9" secondAttribute="topMargin" id="sIr-tr-8Ci"/>
-                                                <constraint firstAttribute="trailing" secondItem="VXA-Aq-66Y" secondAttribute="trailing" id="uAe-88-9z3"/>
-                                                <constraint firstAttribute="bottom" secondItem="4Nb-TK-PV3" secondAttribute="bottom" id="uEe-RP-puT"/>
-                                                <constraint firstItem="KLl-ch-rkn" firstAttribute="trailing" secondItem="5KZ-A1-rO9" secondAttribute="trailingMargin" id="vSu-sW-bl9"/>
+                                                <constraint firstItem="VXA-Aq-66Y" firstAttribute="leading" secondItem="5KZ-A1-rO9" secondAttribute="leading" constant="10" id="GWh-uY-f1f"/>
+                                                <constraint firstAttribute="bottom" secondItem="4Nb-TK-PV3" secondAttribute="bottom" id="PSz-El-XbQ"/>
+                                                <constraint firstAttribute="trailing" secondItem="4Nb-TK-PV3" secondAttribute="trailing" id="RMe-vZ-ffF"/>
+                                                <constraint firstAttribute="trailing" secondItem="VXA-Aq-66Y" secondAttribute="trailing" constant="10" id="ZUB-jr-sJE"/>
+                                                <constraint firstAttribute="bottom" secondItem="VXA-Aq-66Y" secondAttribute="bottom" constant="10" id="Zsh-pG-pwg"/>
+                                                <constraint firstItem="KLl-ch-rkn" firstAttribute="leading" secondItem="5KZ-A1-rO9" secondAttribute="leadingMargin" id="a4o-LL-f8c"/>
+                                                <constraint firstItem="KLl-ch-rkn" firstAttribute="top" secondItem="5KZ-A1-rO9" secondAttribute="topMargin" id="nLp-t3-tQo"/>
+                                                <constraint firstItem="VXA-Aq-66Y" firstAttribute="top" secondItem="KLl-ch-rkn" secondAttribute="bottom" constant="10" id="ssT-IW-nB5"/>
                                             </constraints>
                                             <userDefinedRuntimeAttributes>
                                                 <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
