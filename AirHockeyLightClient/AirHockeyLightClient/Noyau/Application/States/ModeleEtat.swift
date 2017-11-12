@@ -49,6 +49,10 @@ class ModeleEtat {
     func pinchGesture(sender: UIPinchGestureRecognizer) {
     }
     
+    // ROTATE
+    func rotateGesture(sender: UIRotationGestureRecognizer) {
+    }
+    
     /// Fonction pour obtenir la vue rapidement
     func obtenirVue() -> UIViewController {
         return FacadeModele.instance.obtenirVue()
