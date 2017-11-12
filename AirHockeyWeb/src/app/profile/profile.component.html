@@ -37,12 +37,14 @@
     </div>
   </div>
 </div>
-<div>
-  <h2 id="textSucces">Succès</h2>
-</div>
-<div class="achievements">
-  <div *ngFor="let achievement of profile?.AchievementEntities">
-    <div [style.background-image]="achievement.IsEnabled? 'url(assets' + achievement.EnabledImageUrl + ')' : 'url(assets' + achievement.DisabledImageUrl + ')'" class="aIcon"></div>
-    <div class="achievementName">{{achievement.Name}}</div>
+<div class="succes">
+  <div>
+    <h2 id="textSucces">Succès</h2>
+  </div>
+  <div class="achievements">
+    <div *ngFor="let achievement of profile?.AchievementEntities">
+      <div [style.background-image]="achievement.IsEnabled? 'url(assets' + achievement.EnabledImageUrl + ')' : 'url(assets' + achievement.DisabledImageUrl + ')'" class="aIcon"></div>
+      <div [style.color]="achievement.IsEnabled? '#44D418': '#ccc'" class="achievementName">{{achievement.Name}}</div>
+    </div>
   </div>
 </div>

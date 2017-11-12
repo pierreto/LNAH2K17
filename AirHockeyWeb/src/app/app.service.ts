@@ -7,6 +7,9 @@ export class AppService {
     private _loginPage: boolean;
     private _id: number;
 
+    constructor() {
+    }
+
     public get id() {
         return Number(localStorage.getItem('id'));
     }

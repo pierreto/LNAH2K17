@@ -57,6 +57,7 @@ export class SignupComponent implements OnInit {
   constructor(private fb: FormBuilder, private router: Router, private signupService: SignupService, private appService: AppService) { }
 
   ngOnInit() {
+    this.appService.loginPage = false;
     localStorage['loggedIn'] = false;
     this.user = new User();
     console.log(this.user);
