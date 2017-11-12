@@ -36,9 +36,9 @@ class EditorViewController: UIViewController {
     public var editorHUDScene: EditorHUDScene?
     
     @IBOutlet weak var navigationBar: UINavigationItem!
-    
-    /// Object Properties View
     @IBOutlet weak var objectPropertiesView: ObjectPropertiesView!
+    
+    private var timer: Timer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,6 +73,9 @@ class EditorViewController: UIViewController {
         self.showObjectPropertiesView(activer: false)
         self.objectPropertiesView.objectProperties.isHidden = true;
         self.objectPropertiesView.hideObjectPropertiesButtons()
+        
+        // Activer le timer pour la sauvegarde automatique de la carte
+        self.scheduledTimerWithTimeInterval()
     }
     
     override func viewWillDisappear(_ animated : Bool) {
@@ -81,6 +84,8 @@ class EditorViewController: UIViewController {
         if self.isMovingFromParentViewController {
             FacadeModele.instance.obtenirEtatEdition().leaveEdition()
         }
+        
+        self.timer?.invalidate()
     }
     
     func initView() {
@@ -139,8 +144,16 @@ class EditorViewController: UIViewController {
         }
     }
     
-    @IBAction func sauvegarderCarte(_ sender: Any) {
-        FacadeModele.instance.sauvegarderCarte(map: currentMap!)
+    func scheduledTimerWithTimeInterval() {
+        self.timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(self.sauvegarderCarteAutomatiquement), userInfo: nil, repeats: true)
+    }
+    
+    func sauvegarderCarteAutomatiquement() {
+        FacadeModele.instance.sauvegarderCarte(map: self.currentMap!)
+    }
+    
+    @IBAction func sauvegarderCarteManuellement(_ sender: Any) {
+        FacadeModele.instance.sauvegarderCarte(map: self.currentMap!)
     }
     
     override var shouldAutorotate: Bool {

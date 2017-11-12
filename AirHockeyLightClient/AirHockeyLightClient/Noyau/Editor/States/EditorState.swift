@@ -32,6 +32,7 @@ class EditorState {
     func currentUserControlPointChanged(uuid: String, pos: SCNVector3) {}
     func currentUserDeletedNode(uuid: String) {}
     func currentUserChangedCoefficient(coefficientFriction: Float, coefficientRebond: Float, coefficientAcceleration: Float) {}
+    func sauvegarderCarte(map: MapEntity, json: String?) {}
 }
 
 ///////////////////////////////////////////////////////////////////////////////

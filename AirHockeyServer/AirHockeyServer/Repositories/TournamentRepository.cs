@@ -1,5 +1,4 @@
-﻿using AirHockeyServer.DatabaseCore;
-using AirHockeyServer.Entities;
+﻿using AirHockeyServer.Entities;
 using AirHockeyServer.Mapping;
 using AirHockeyServer.Pocos;
 using AirHockeyServer.Repositories.Interfaces;
@@ -18,23 +17,25 @@ namespace AirHockeyServer.Repositories
 
         protected IMapRepository MapRepository { get; private set; }
 
-        public TournamentRepository(DataProvider dataProvider, MapperManager mapperManager, IMapRepository mapRepository)
-            :base(dataProvider, mapperManager)
+        public TournamentRepository(MapperManager mapperManager, IMapRepository mapRepository)
+            :base(mapperManager)
         {
             MapRepository = mapRepository;
-            this.TournamentTable = DataProvider.DC.GetTable<TournamentPoco>();
         }
 
         public async Task<TournamentEntity> CreateTournament(TournamentEntity tournament)
         {
             try
             {
-                TournamentPoco tournamentToCreate = MapperManager.Map<TournamentEntity, TournamentPoco>(tournament);
-                this.TournamentTable.InsertOnSubmit(tournamentToCreate);
+                using (MyDataContext DC = new MyDataContext())
+                {
+                    TournamentPoco tournamentToCreate = MapperManager.Map<TournamentEntity, TournamentPoco>(tournament);
+                    DC.GetTable<TournamentPoco>().InsertOnSubmit(tournamentToCreate);
 
-                await Task.Run(() => this.DataProvider.DC.SubmitChanges());
+                    await Task.Run(() => DC.SubmitChanges());
 
-                return await GetTournament(tournament.Id);
+                    return await GetTournament(tournament.Id);
+                }
             }
             catch (Exception e)
             {

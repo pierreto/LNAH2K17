@@ -533,8 +533,8 @@ class FacadeModele {
         self.arbre?.accepterVisiteur(visiteur: visiteur)
         self.sauvegarderCoefficients()
         
-        // Sauvegarder la carte localement
-        DBManager.instance.sauvegarderCarte(map: map, json: (self.docJSON?.rawString(options: []))!)
+        // Sauvegarder la carte
+        self.etatEdition?.sauvegarderCarte(map: map, json: (self.docJSON?.rawString(options: []))!)
     }
     
     private func initializeJson() {

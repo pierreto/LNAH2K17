@@ -1,22 +1,20 @@
 <div class="container">
   <form [formGroup]="loginForm">
     <div class="field">
-      <div class="field-center">
         <label for="username">Nom d'usager </label>
-        <input class="control-form" type="text" id="username" formControlName="username" [(ngModel)]="user.username" [ngClass]="{'invalidField': formErrors.username}">
+        <input class="control-form" placeholder="Nom d'usager" type="text" id="username" formControlName="username" [(ngModel)]="user.username" [ngClass]="{'invalidField': formErrors.username}">
         <div *ngIf="formErrors.username" class="errorMsg">
           {{ formErrors.username }}
         </div>
-      </div>
     </div>
     <div class="field">
       <label for="password">Mot de passe </label>
-      <input class="control-form" type="password" id="password" formControlName="password" [(ngModel)]="user.password" [ngClass]="{'invalidField': formErrors.password}">
+      <input class="control-form" placeholder="Mot de passe" type="password" id="password" formControlName="password" [(ngModel)]="user.password" [ngClass]="{'invalidField': formErrors.password}">
       <div *ngIf="formErrors.password" class="errorMsg">
         {{ formErrors.password }}
       </div>
       <div *ngIf="!validUser" class="errorMsg centered">
-        Nom d'usager ou mot de passe incorrect.
+        Impossible de se connecter au serveur.
       </div>
     </div>
     <div class="loginDiv">

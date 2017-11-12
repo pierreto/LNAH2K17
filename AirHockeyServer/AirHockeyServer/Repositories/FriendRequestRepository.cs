@@ -4,7 +4,6 @@ using System.Linq;
 using System.Data.Linq;
 using System.Data.Linq.Mapping;
 using System.Web;
-using AirHockeyServer.DatabaseCore;
 using AirHockeyServer.Entities;
 using AirHockeyServer.Pocos;
 using System.Threading.Tasks;
@@ -17,7 +16,7 @@ namespace AirHockeyServer.Repositories
     {
         MapperManager MapperManager { get; set; }
 
-        public FriendRequestRepository(DataProvider dataProvider, MapperManager mapperManager)
+        public FriendRequestRepository(MapperManager mapperManager)
         {
             MapperManager = mapperManager;
         }

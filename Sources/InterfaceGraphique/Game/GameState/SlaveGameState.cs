@@ -28,21 +28,21 @@ namespace InterfaceGraphique.Game.GameState
         {
             FonctionsNatives.setOnlineClientType((int)OnlineClientType.SLAVE);
             FonctionsNatives.setCurrentOpponentType((int)OpponentType.ONLINE_PLAYER);
-            
-            gameHasEnded = false;
-
-            this.gameHub.InitializeSlaveGameHub(gameEntity.GameId);
-            this.gameHub.NewPositions += OnNewGamePositions;
-            this.gameHub.NewGoal += OnNewGoal;
-            this.gameHub.NewGameOver += EndGame;
-            
-            base.LoadOnlineMap(gameEntity.SelectedMap);
 
             StringBuilder player1Name = new StringBuilder(gameEntity.Slave.Username.Length);
             StringBuilder player2Name = new StringBuilder(gameEntity.Master.Username.Length);
             player1Name.Append(gameEntity.Slave.Username);
             player2Name.Append(gameEntity.Master.Username);
             FonctionsNatives.setPlayerNames(player1Name, player2Name);
+
+            gameHasEnded = false;
+
+            this.gameHub.InitializeSlaveGameHub(gameEntity.GameId);
+            this.gameHub.NewPositions += OnNewGamePositions;
+            this.gameHub.NewGoal += OnNewGoal;
+            this.gameHub.NewGameOver += EndGame;
+
+            selectedMap = gameEntity.SelectedMap;
         }
 
         private void OnNewGoal(GoalMessage goalMessage)

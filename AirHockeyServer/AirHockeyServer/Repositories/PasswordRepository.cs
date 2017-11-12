@@ -1,5 +1,4 @@
-﻿using AirHockeyServer.DatabaseCore;
-using AirHockeyServer.Entities;
+﻿using AirHockeyServer.Entities;
 using AirHockeyServer.Mapping;
 using AirHockeyServer.Pocos;
 using System;
@@ -15,8 +14,8 @@ namespace AirHockeyServer.Repositories
     {
         IUserRepository UserRepository;
 
-        public PasswordRepository(DataProvider dataProvider, MapperManager mapperManager, IUserRepository userRepository)
-            : base(dataProvider, mapperManager)
+        public PasswordRepository(MapperManager mapperManager, IUserRepository userRepository)
+            : base(mapperManager)
         {
             UserRepository = userRepository;
         }
@@ -25,20 +24,22 @@ namespace AirHockeyServer.Repositories
         {
             try
             {
-                IEnumerable<PasswordPoco> passwordPocoEnum = await DataProvider.GetBy<PasswordPoco, int>("test_passwords", "id_password", id);
-                List<PasswordPoco> passwordPocos = passwordPocoEnum.ToList();
-                if (passwordPocos.Any())
+                using (MyDataContext DC = new MyDataContext())
                 {
-                    PasswordPoco passwordPoco = passwordPocos.First();
-                    PasswordEntity passwordEntity = MapperManager.Mapper.Map<PasswordPoco, PasswordEntity>(passwordPoco);
-
-                    //Est-ce que c'est vraiment comme ca que je suis suppose faire les nested objects? 
-                    passwordEntity.User = await UserRepository.GetUserById(passwordEntity.UserId);
-                    return passwordEntity;
-                }
-                else
-                {
-                    return null;
+                    var query =
+                        from password in DC.Passwords
+                        where (password.Id == id)
+                        select password;
+                    List<PasswordPoco> pP = await Task<List<PasswordPoco>>.Run(
+                        () => query.ToList<PasswordPoco>());
+                    if (pP.Any())
+                    {
+                        return MapperManager.Mapper.Map<PasswordPoco, PasswordEntity>(pP.First());
+                    }
+                    else
+                    {
+                        return null;
+                    }
                 }
             }
             catch (LoginException e)
@@ -57,17 +58,22 @@ namespace AirHockeyServer.Repositories
         {
             try
             {
-                IEnumerable<PasswordPoco> passwordPocoEnum = await DataProvider.GetBy<PasswordPoco, int>("test_passwords", "id_user", userId);
-                List<PasswordPoco> passwordPocos = passwordPocoEnum.ToList();
-                if (passwordPocos.Any())
+                using (MyDataContext DC = new MyDataContext())
                 {
-                    PasswordPoco passwordPoco = passwordPocos.First();
-                    PasswordEntity passwordEntity = MapperManager.Mapper.Map<PasswordPoco, PasswordEntity>(passwordPoco);
-                    return passwordEntity;
-                }
-                else
-                {
-                    throw new PasswordException("Unable to get [password] by [id_user] = " + userId);
+                    var query =
+                        from password in DC.Passwords
+                        where (password.UserId == userId)
+                        select password;
+                    List<PasswordPoco> pP = await Task<List<PasswordPoco>>.Run(
+                        () => query.ToList<PasswordPoco>());
+                    if (pP.Any())
+                    {
+                        return MapperManager.Mapper.Map<PasswordPoco, PasswordEntity>(pP.First());
+                    }
+                    else
+                    {
+                        throw new PasswordException("Unable to get [password] by [id_user] = " + userId);
+                    }
                 }
             }
             catch (PasswordException e)
@@ -82,12 +88,16 @@ namespace AirHockeyServer.Repositories
             }
         }
 
-        public void PostPassword(PasswordEntity passwordEntity)
+        public async Task PostPassword(PasswordEntity passwordEntity)
         {
             try
             {
-                PasswordPoco pP = MapperManager.Mapper.Map<PasswordEntity, PasswordPoco>(passwordEntity);
-                DataProvider.Post(pP);
+                using (MyDataContext DC = new MyDataContext())
+                {
+                    PasswordPoco pP = MapperManager.Mapper.Map<PasswordEntity, PasswordPoco>(passwordEntity);
+                    DC.GetTable<PasswordPoco>().InsertOnSubmit(pP);
+                    await Task.Run(() => DC.SubmitChanges());
+                }
             }
             catch (Exception e)
             {

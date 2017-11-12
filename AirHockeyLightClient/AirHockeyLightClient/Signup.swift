@@ -18,6 +18,8 @@ class Signup: NSObject {
     
     // Mark: Properties
     var usernameError: String
+    var nameError: String
+    var emailError: String
     var passwordError: String
     var confirmPasswordError: String
     
@@ -25,33 +27,45 @@ class Signup: NSObject {
     
     override init() {
         self.usernameError = ""
+        self.nameError = ""
+        self.emailError = ""
         self.passwordError = ""
         self.confirmPasswordError = ""
         super.init()
     }
     
-    func validateFields(username: String, password: String, confirmPassword: String) ->Promise<Bool> {
+    func validateFields(username: String, name: String, email: String, password: String, confirmPassword: String) ->Promise<Bool> {
         let validUsername = validateUsername(username: username)
+        let validName = validateName(name: name)
+        let validEmail = validateEmail(email: email)
         let validPassowrd = validatePassword(password: password)
         let validConfirmPassword = validatePasswordsMatch(password: password, confirmPassword: confirmPassword)
         
         NotificationCenter.default.post(name: Notification.Name(rawValue: SignupNotification.SubmitNotification), object: self)
 
-        if validUsername && validPassowrd && validConfirmPassword {
+        if validUsername && validName && validEmail && validPassowrd && validConfirmPassword {
             let parameters: [String: String] = [
                 "Username" : username,
+                "Name" : name,
+                "Email" : email,
                 "Password" : password
             ]
             return Promise { fullfil, error in
                 Alamofire.request("http://" + self.clientConnection.getIpAddress()! + ":63056/api/signup", method: .post, parameters: parameters, encoding: JSONEncoding.default)
                     .responseJSON { response in
                         if(response.response?.statusCode == 200) {
+                            self.clientConnection.setUsername(username: username)
+                            if let result = response.result.value {
+                                let id = result as! Int
+                                self.clientConnection.setId(id: id)
+                            }
+                            HubManager.sharedConnection.getChatHub().subscribe()
                             fullfil(true)
                         } else {
                             if let data = response.data {
                                 let responseJSON = JSON(data: data)
                                 
-                                if let message: String = responseJSON["Message"].stringValue {
+                                if let message: String = responseJSON.stringValue {
                                     if !message.isEmpty {
                                         self.usernameError = message
                                     }
@@ -90,6 +104,40 @@ class Signup: NSObject {
         }
     }
     
+    private func validateName(name: String) -> Bool {
+        let validNameRegex = "^[a-zA-Z0-9_]{1,32}$"
+        let nameMatches = name.range(of: validNameRegex, options: .regularExpression)
+        if(name.isEmpty) {
+            self.nameError = "Nom requis"
+            return false
+        } else if (name.characters.count > 32) {
+            self.nameError = "Maximum 32 charactères permis"
+            return false
+        } else if (nameMatches != nil) {
+            self.nameError = ""
+            return true
+        } else {
+            self.nameError = "Nom invalide"
+            return false
+        }
+    }
+    
+    private func validateEmail(email: String) -> Bool {
+        if(email.isEmpty) {
+            self.emailError = "Courriel requis"
+            return false
+        } else if (email.characters.count > 64) {
+            self.emailError = "Maximum 64 charactères permis"
+            return false
+        } else if (email.isEmail) {
+            self.emailError = ""
+            return true
+        } else {
+            self.emailError = "Courriel invalide"
+            return false
+        }
+    }
+    
     fileprivate func validatePassword(password: String) -> Bool {
         let validPasswordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,16}$"
         let passwordMatches = password.range(of: validPasswordRegex, options: .regularExpression)
@@ -119,4 +167,12 @@ class Signup: NSObject {
         }
     }
     
+}
+
+extension String {
+    var isEmail: Bool {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+        let emailTest  = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailTest.evaluate(with: self)
+    }
 }

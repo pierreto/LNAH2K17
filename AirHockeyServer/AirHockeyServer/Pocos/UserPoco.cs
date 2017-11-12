@@ -15,5 +15,14 @@ namespace AirHockeyServer.Pocos
         [Column(Name = "username")]
         public string Username { get; set; }
 
+        [Column(Name = "name")]
+        public string Name { get; set; }
+
+        [Column(Name = "email")]
+        public string Email { get; set; }
+
+        [Column(Name = "created")]
+        public string Created { get; set; }
+
     }
 }

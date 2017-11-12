@@ -110,6 +110,8 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
                                 this.MasterGameState.InitializeGameState(userGame);
                                 this.MasterGameState.IsOnlineTournementMode = true;
                                 Program.QuickPlay.CurrentGameState = this.MasterGameState;
+
+                                Program.FormManager.CurrentForm = Program.QuickPlay;
                             }
                             else
                             {
@@ -117,11 +119,11 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
                                 this.SlaveGameState.IsOnlineTournementMode = true;
                                 Program.QuickPlay.CurrentGameState = this.SlaveGameState;
 
-                                FonctionsNatives.rotateCamera(180);
+                                Program.FormManager.CurrentForm = Program.QuickPlay;
 
+                                FonctionsNatives.rotateCamera(180);
                             }
 
-                            Program.FormManager.CurrentForm = Program.QuickPlay;
                             Program.QuickPlay.CurrentGameState.IsTournementMode = false;
                         }
                         else
@@ -144,6 +146,8 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
                             this.MasterGameState.InitializeGameState(tournament.Final);
                             this.MasterGameState.IsOnlineTournementMode = true;
                             Program.QuickPlay.CurrentGameState = this.MasterGameState;
+
+                            Program.FormManager.CurrentForm = Program.QuickPlay;
                         }
                         else
                         {
@@ -151,11 +155,11 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
                             this.MasterGameState.IsOnlineTournementMode = true;
                             Program.QuickPlay.CurrentGameState = this.SlaveGameState;
 
+                            Program.FormManager.CurrentForm = Program.QuickPlay;
+
                             FonctionsNatives.rotateCamera(180);
 
                         }
-
-                        Program.FormManager.CurrentForm = Program.QuickPlay;
                         Program.QuickPlay.CurrentGameState.IsTournementMode = false;
 
                     }

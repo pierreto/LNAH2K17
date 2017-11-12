@@ -235,7 +235,13 @@ namespace InterfaceGraphique
             ResetDefaultTable();
             FonctionsNatives.playMusic(true);
 
-            if (currentGameState.MapFilePath != null)
+            if (currentGameState.selectedMap != null) // online mode
+            {
+                float[] coefficients = new float[3];
+                FonctionsNatives.chargerCarte(new StringBuilder(currentGameState.selectedMap.Json), coefficients);
+                Program.GeneralProperties.SetCoefficientValues(coefficients);
+            }
+            else if (currentGameState.MapFilePath != null) // offline mode
             {
                 StringBuilder filePath = new StringBuilder(currentGameState.MapFilePath.Length);
                 filePath.Append(currentGameState.MapFilePath);
@@ -244,11 +250,6 @@ namespace InterfaceGraphique
                 Program.GeneralProperties.SetCoefficientValues(coefficients);
             }
         }
-
-
-
-
-
 
 
         ////////////////////////////////////////////////////////////////////////

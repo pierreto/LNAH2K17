@@ -10,7 +10,8 @@
 
 import SwiftR
 
-class ChatHub: BaseHub {    
+class ChatHub: BaseHub {
+    
     init(connection: SignalR?) {
         super.init()
         self.hubProxy = connection?.createHubProxy("ChatHub")
@@ -25,15 +26,58 @@ class ChatHub: BaseHub {
         }
         
         self.hubProxy?.on("NewJoinableChannel") { args in
-           // ChatAreaViewController.sharedChatAreaViewController.newJoinableChannel(channelName: args?[0] as! String)
+             ChatAreaViewController.sharedChatAreaViewController.newJoinableChannel(channelName: args?[0] as! String)
         }
         
         self.hubProxy?.on("ChannelDeleted") { args in
-           // ChatAreaViewController.sharedChatAreaViewController.channelDeleted(channelName: args?[0] as! String)
+             ChatAreaViewController.sharedChatAreaViewController.channelDeleted(channelName: args?[0] as! String)
         }
-
     }
     
+    func subscribe(){
+        do {
+            try hubProxy!.invoke("Subscribe", arguments: [HubManager.sharedConnection.getId()!]) { (result,error) in
+                if let e = error {
+                    print("Error Subscribe ChatHub: \(e)")
+                }
+                else {
+                    let channelNames = result as! [String]
+                    for channelName in channelNames {
+                        channelsToJoin.append(ChannelEntity(name: channelName))
+                    }
+                    ChatAreaViewController.sharedChatAreaViewController.joinChannelTableView.reloadData()
+                }
+            }
+        }
+        catch {
+            print("Error Subscribe ChatHub")
+        }
+    }
+    
+    func joinChannel(channelName: String) {
+        do {
+            try hubProxy!.invoke("JoinChannel", arguments: [channelName]) { (result,error) in
+                if let e = error {
+                    print("Error JoinChannel ChatHub: \(e)")
+                }
+                else {
+                    channels.append(ChannelEntity(name: channelName))
+                    MasterViewController.sharedMasterViewController.channelTableView.reloadData()
+                    //Set joined channel as selected
+                    let indexPath = IndexPath(row: channels.count - 1, section: 0);
+                    MasterViewController.sharedMasterViewController.channelTableView.selectRow(at: indexPath, animated: true, scrollPosition: .bottom)
+                    MasterViewController.sharedMasterViewController.channelTableView.delegate?.tableView!(MasterViewController.sharedMasterViewController.channelTableView, didSelectRowAt: indexPath)
+                    if let index = channelsToJoin.index(where: { $0.name == channelName }) {
+                        channelsToJoin.remove(at: index)
+                        ChatAreaViewController.sharedChatAreaViewController.joinChannelTableView.reloadData()
+                    }
+                }
+            }
+        }
+        catch {
+            print("Error JoinChannel ChatHub")
+        }
+    }
     ////////////////////////////////////////////////////////////////////////
     ///
     /// @fn Disconnect(username: String)
@@ -47,13 +91,13 @@ class ChatHub: BaseHub {
     ////////////////////////////////////////////////////////////////////////
     public override func logout() {
         /*do {
-            try chatHub!.invoke("Disconnect", arguments: [username], callback: { (response) in
-                print("ChatHub Disconnect Success")
-            })
-        }
-        catch {
-            print("Error Disconnect")
-        }*/
+         try chatHub!.invoke("Disconnect", arguments: [username], callback: { (response) in
+         print("ChatHub Disconnect Success")
+         })
+         }
+         catch {
+         print("Error Disconnect")
+         }*/
     }
     
     ////////////////////////////////////////////////////////////////////////
@@ -117,11 +161,11 @@ class ChatHub: BaseHub {
             print("Error SendPrivate")
         }
     }
-
+    
     public func CreateChannel(channelName: String, res: @escaping (_ message: String?) -> Void) {
         var msg: String?
         do {
-             try hubProxy!.invoke("CreateChannel", arguments: [channelName]) { (result, error) in
+            try hubProxy!.invoke("CreateChannel", arguments: [channelName]) { (result, error) in
                 if let e = error {
                     print("Error CreateChannel: \(e)")
                 }
@@ -144,3 +188,4 @@ class ChatHub: BaseHub {
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////
+

@@ -11,9 +11,10 @@ target 'AirHockeyLightClient' do
   use_frameworks!
 
   # Pods for AirHockeyLightClient
-  pod 'SwiftR'
-  pod 'PromiseKit', '~> 4.4'
   pod 'Alamofire', '~> 4.5'
-  pod 'SwiftyJSON'
+  pod 'iCarousel'
+  pod 'PromiseKit', '~> 4.4'
   pod 'RealmSwift'
+  pod 'SwiftyJSON'
+  pod 'SwiftR'
 end

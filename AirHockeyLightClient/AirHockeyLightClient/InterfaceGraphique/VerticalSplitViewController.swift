@@ -22,10 +22,12 @@ class VerticalSplitViewController: UIViewController {
     }
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     
+    static var sharedVerticalSplitViewController = VerticalSplitViewController()
     override func viewDidLoad() {
         super.viewDidLoad()
         toggleChatButtonVisibility()
         subscribeToNotifications()
+        VerticalSplitViewController.sharedVerticalSplitViewController = self;
         // TODO: Check if user is connected, if not hide the chat button
         // Do any additional setup after loading the view.
     }

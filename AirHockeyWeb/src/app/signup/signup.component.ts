@@ -14,6 +14,8 @@ import { AppService } from '../app.service';
 export class SignupComponent implements OnInit {
   formErrors = {
     'username': '',
+    'name': '',
+    'email': '',
     'passwords': {
       'password': '',
       'passwordConfirm': ''
@@ -26,6 +28,15 @@ export class SignupComponent implements OnInit {
       'minlength':     'Nom d\'usager doit contenir au moins 2 caractères.',
       'maxlength':     'Nom d\'usager doit contenir au plus 15 caractères.',
       'pattern':       'Nom d\'usager invalide.'
+    },
+    'name': {
+      'required':      'Nom requis.',
+      'maxlength':     'Nom doit contenir au plus 32 caractères.',
+      'pattern':       'Nom invalide.'
+    },
+    'email': {
+      'required':      'Courriel requis.',
+      'email':       'Courriel invalide'
     },
     'password': {
       'required':      'Mot de passe requis.',
@@ -46,6 +57,8 @@ export class SignupComponent implements OnInit {
   constructor(private fb: FormBuilder, private router: Router, private signupService: SignupService, private appService: AppService) { }
 
   ngOnInit() {
+    this.appService.loginPage = false;
+    localStorage['loggedIn'] = false;
     this.user = new User();
     console.log(this.user);
     this.passwordConfirm = '';
@@ -61,6 +74,13 @@ buildForm(): void {
           Validators.minLength(2),
           Validators.maxLength(15),
           Validators.pattern(/^[a-zA-Z0-9_.-]*$/)]],
+      name: [this.user.Name, [
+          Validators.required,
+          Validators.maxLength(32),
+          Validators.pattern(/^[a-zA-Z0-9_.-]*$/)]],
+      email: [this.user.Email, [
+          Validators.required,
+          Validators.email]],
       passwords: this.fb.group({
         password: [this.user.Password, [
             Validators.required,
@@ -117,11 +137,15 @@ onValueChanged(data?: any) {
       res => {
         this.signupOk = true;
         this.appService.loading = false;
-        this.router.navigate(['GO TO PROFILE']);
+        this.appService.id = res;
+        localStorage['loggedIn'] = JSON.stringify(true);
+        localStorage['id'] = JSON.stringify(res);
+        // res is the id of the user
+        this.router.navigate(['/profile', res]);
       },
       err => {
         this.signupOk = false;
-        this.errorMessage = err.json().Message;
+        this.formErrors.username = err.json();
         this.appService.loading = false;
       }
     );

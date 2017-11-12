@@ -135,19 +135,6 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
             }
         }
 
-        private ICommand openOptionsPopupCommand;
-        public ICommand OpenOptionsPopupCommand
-        {
-            get
-            {
-                if (openOptionsPopupCommand == null)
-                {
-                    openOptionsPopupCommand = new RelayCommand(ToggleOptionsPopup);
-                }
-                return openOptionsPopupCommand;
-            }
-        }
-
         private ICommand createChannelCommand;
         public ICommand CreateChannelCommand
         {
@@ -187,19 +174,6 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
             }
         }
 
-        private ICommand closeOptionsCommand;
-        public ICommand CloseOptionsCommand
-        {
-            get
-            {
-                if (closeOptionsCommand == null)
-                {
-                    closeOptionsCommand = new RelayCommand(ToggleOptionsPopup);
-                }
-                return closeOptionsCommand;
-            }
-        }
-
         private ICommand openJoinChannelCommand;
         public ICommand OpenJoinChannelCommand
         {
@@ -230,18 +204,6 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
             }
         }
 
-        private void ToggleOptionsPopup()
-        {
-            if (IsOpenOptions)
-            {
-                IsOpenOptions = false;
-            }
-            else
-            {
-                IsOpenOptions = true;
-            }
-        }
-
         private async Task CreateChannel()
         {
             //Valider le nom
@@ -251,7 +213,7 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
             ChannelEntity cE = new ChannelEntity() { Name = Name };
 
             //On cree le canal seulement s'il n'existe pas deja
-            ChannelErrMsg = await chatHub.CreateChannel(cE);
+            ChannelErrMsg = await chatHub.CreateChannel(cE.Name);
             if(ChannelErrMsg == null)
             {
                 ChatListItemViewModel clivm = new ChatListItemViewModel(cE);

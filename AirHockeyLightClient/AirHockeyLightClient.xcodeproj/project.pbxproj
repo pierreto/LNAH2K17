@@ -25,6 +25,7 @@
 		1D90AAFE1F98228E003E0764 /* IConnectServerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D90AAFD1F98228E003E0764 /* IConnectServerViewModel.swift */; };
 		1D90AB001F982332003E0764 /* ConnectServerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D90AAFF1F982332003E0764 /* ConnectServerViewModel.swift */; };
 		1D90AB021F9824BE003E0764 /* ConnectServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D90AB011F9824BE003E0764 /* ConnectServer.swift */; };
+		1DCD0A1B1FB3CD5400A9DA8C /* KeyboardConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCD0A1A1FB3CD5400A9DA8C /* KeyboardConstraints.swift */; };
 		1DD1CFC01FAFC2F4008853DD /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD1CFBF1FAFC2F4008853DD /* MasterViewController.swift */; };
 		1DD1CFC21FAFC59D008853DD /* ChatAreaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD1CFC11FAFC59D008853DD /* ChatAreaViewController.swift */; };
 		1DFE2E4C1F91A8FD0048892D /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DFE2E4B1F91A8FD0048892D /* SignupViewController.swift */; };
@@ -38,8 +39,10 @@
 		25628B9F1FA79C070010B58D /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25628B9E1FA79C070010B58D /* MapViewModel.swift */; };
 		25628BA11FA79CFF0010B58D /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25628BA01FA79CFF0010B58D /* Map.swift */; };
 		256539A91F9D643A00D81E2C /* MapEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256539A81F9D643A00D81E2C /* MapEntity.swift */; };
+		256E41F81FB7D8DF00843E53 /* MapTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256E41F71FB7D8DF00843E53 /* MapTableViewController.swift */; };
+		258A73B71FB3E5D3003725E6 /* UnlockMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258A73B61FB3E5D3003725E6 /* UnlockMapViewController.swift */; };
+		25EFB2A01FB7505100FFD66F /* MapService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EFB29F1FB7505100FFD66F /* MapService.swift */; };
 		25F66FB51FA13071006CB47F /* VisiteurSauvegarde.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F66FB41FA13071006CB47F /* VisiteurSauvegarde.swift */; };
-		25F8091F1FA673050008F048 /* MapTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F8091E1FA673050008F048 /* MapTableViewController.swift */; };
 		25F809231FA6A2680008F048 /* MapDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F809221FA6A2680008F048 /* MapDisplayViewController.swift */; };
 		25F809251FA6AB680008F048 /* CreateMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F809241FA6AB680008F048 /* CreateMapViewController.swift */; };
 		25FDE43B1FA80D4D0089D9FE /* HubManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25FDE43A1FA80D4D0089D9FE /* HubManager.swift */; };
@@ -140,6 +143,7 @@
 		8FDD1E1F1FB3B87000F5E61F /* ControlPointCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FDD1E1E1FB3B87000F5E61F /* ControlPointCommand.swift */; };
 		8FFC5B481F7C90340031474F /* MessageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFC5B471F7C90340031474F /* MessageViewCell.swift */; };
 		8FFC5B4A1F7CA7170031474F /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFC5B491F7CA7170031474F /* PaddingLabel.swift */; };
+		AD70F2A7B1A422D1D23DCBA7 /* Pods_AirHockeyLightClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBD8D3E12409ADBFAB65FC7F /* Pods_AirHockeyLightClient.framework */; };
 		E7B7E3DDFEF5DC14C25C5EF5 /* Pods_AirHockeyLightClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7585740DC43877CD99CDDF6A /* Pods_AirHockeyLightClient.framework */; };
 /* End PBXBuildFile section */
 
@@ -175,6 +179,7 @@
 		1D90AAFD1F98228E003E0764 /* IConnectServerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IConnectServerViewModel.swift; sourceTree = "<group>"; };
 		1D90AAFF1F982332003E0764 /* ConnectServerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectServerViewModel.swift; sourceTree = "<group>"; };
 		1D90AB011F9824BE003E0764 /* ConnectServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectServer.swift; sourceTree = "<group>"; };
+		1DCD0A1A1FB3CD5400A9DA8C /* KeyboardConstraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardConstraints.swift; sourceTree = "<group>"; };
 		1DD1CFBF1FAFC2F4008853DD /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MasterViewController.swift; path = InterfaceGraphique/Chat/MasterViewController.swift; sourceTree = "<group>"; };
 		1DD1CFC11FAFC59D008853DD /* ChatAreaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChatAreaViewController.swift; path = InterfaceGraphique/Chat/ChatAreaViewController.swift; sourceTree = "<group>"; };
 		1DFE2E4B1F91A8FD0048892D /* SignupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SignupViewController.swift; path = InterfaceGraphique/Menus/SignupViewController.swift; sourceTree = "<group>"; };
@@ -188,8 +193,10 @@
 		25628B9E1FA79C070010B58D /* MapViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		25628BA01FA79CFF0010B58D /* Map.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
 		256539A81F9D643A00D81E2C /* MapEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapEntity.swift; sourceTree = "<group>"; };
+		256E41F71FB7D8DF00843E53 /* MapTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapTableViewController.swift; path = InterfaceGraphique/MapTableViewController.swift; sourceTree = "<group>"; };
+		258A73B61FB3E5D3003725E6 /* UnlockMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UnlockMapViewController.swift; path = InterfaceGraphique/UnlockMapViewController.swift; sourceTree = "<group>"; };
+		25EFB29F1FB7505100FFD66F /* MapService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapService.swift; path = Noyau/Services/MapService.swift; sourceTree = "<group>"; };
 		25F66FB41FA13071006CB47F /* VisiteurSauvegarde.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VisiteurSauvegarde.swift; path = Noyau/Arbre/Visiteurs/VisiteurSauvegarde.swift; sourceTree = "<group>"; };
-		25F8091E1FA673050008F048 /* MapTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapTableViewController.swift; path = InterfaceGraphique/MapTableViewController.swift; sourceTree = "<group>"; };
 		25F809221FA6A2680008F048 /* MapDisplayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapDisplayViewController.swift; sourceTree = "<group>"; };
 		25F809241FA6AB680008F048 /* CreateMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateMapViewController.swift; sourceTree = "<group>"; };
 		25FDE43A1FA80D4D0089D9FE /* HubManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HubManager.swift; path = InterfaceGraphique/Communication/HubManager.swift; sourceTree = "<group>"; };
@@ -295,6 +302,9 @@
 		8FDD1E1E1FB3B87000F5E61F /* ControlPointCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ControlPointCommand.swift; path = Noyau/Editor/Commands/ControlPointCommand.swift; sourceTree = "<group>"; };
 		8FFC5B471F7C90340031474F /* MessageViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageViewCell.swift; path = InterfaceGraphique/Chat/MessageViewCell.swift; sourceTree = "<group>"; };
 		8FFC5B491F7CA7170031474F /* PaddingLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PaddingLabel.swift; path = InterfaceGraphique/Chat/PaddingLabel.swift; sourceTree = "<group>"; };
+		C4E26B0732BB80D1FB7B3AC6 /* Pods-AirHockeyLightClient.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AirHockeyLightClient.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AirHockeyLightClient/Pods-AirHockeyLightClient.debug.xcconfig"; sourceTree = "<group>"; };
+		E020C300D19A5CEFE5CEF0ED /* Pods-AirHockeyLightClient.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AirHockeyLightClient.release.xcconfig"; path = "Pods/Target Support Files/Pods-AirHockeyLightClient/Pods-AirHockeyLightClient.release.xcconfig"; sourceTree = "<group>"; };
+		EBD8D3E12409ADBFAB65FC7F /* Pods_AirHockeyLightClient.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AirHockeyLightClient.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -303,12 +313,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				E7B7E3DDFEF5DC14C25C5EF5 /* Pods_AirHockeyLightClient.framework in Frameworks */,
+				AD70F2A7B1A422D1D23DCBA7 /* Pods_AirHockeyLightClient.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		03F3FD091B8B970713D9CB72 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C4E26B0732BB80D1FB7B3AC6 /* Pods-AirHockeyLightClient.debug.xcconfig */,
+				E020C300D19A5CEFE5CEF0ED /* Pods-AirHockeyLightClient.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		0EE1745C1FA92CF70090C45A /* Commands */ = {
 			isa = PBXGroup;
 			children = (
@@ -417,12 +437,21 @@
 			name = Map;
 			sourceTree = "<group>";
 		};
+		25EFB29E1FB74FDD00FFD66F /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				25EFB29F1FB7505100FFD66F /* MapService.swift */,
+			);
+			name = Services;
+			sourceTree = "<group>";
+		};
 		25FDE4391FA80C620089D9FE /* Map */ = {
 			isa = PBXGroup;
 			children = (
+				256E41F71FB7D8DF00843E53 /* MapTableViewController.swift */,
 				25F809241FA6AB680008F048 /* CreateMapViewController.swift */,
-				25F8091E1FA673050008F048 /* MapTableViewController.swift */,
 				25F809221FA6A2680008F048 /* MapDisplayViewController.swift */,
+				258A73B61FB3E5D3003725E6 /* UnlockMapViewController.swift */,
 			);
 			name = Map;
 			sourceTree = "<group>";
@@ -491,6 +520,14 @@
 				8F97A3841FA2C8BD00421FDC /* IGeneralPropertiesViewModel.swift */,
 			);
 			name = GeneralProperties;
+			sourceTree = "<group>";
+		};
+		53D74FA4727193B7D79ECA59 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EBD8D3E12409ADBFAB65FC7F /* Pods_AirHockeyLightClient.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		63B9F5E76BF43EF82631DFF3 /* Frameworks */ = {
@@ -564,6 +601,8 @@
 		8F0FFED51F6EB8B100366D8E /* Noyau */ = {
 			isa = PBXGroup;
 			children = (
+				25EFB29E1FB74FDD00FFD66F /* Services */,
+				8F65B2831FAE260500D8EE20 /* User */,
 				8F0B94AF1F8D4B9D007F0E82 /* Application */,
 				8FB6A9C71F81E35D00FAFFCF /* Arbre */,
 				8FE1EB031F75A90D00A01514 /* Communication */,
@@ -571,7 +610,6 @@
 				8F8706B71F789266000E6824 /* Entities */,
 				253E088F1F818DE1009F301B /* Helper */,
 				1D019A381F911F1E004D79B2 /* Model */,
-				8F65B2831FAE260500D8EE20 /* User */,
 			);
 			name = Noyau;
 			sourceTree = "<group>";
@@ -581,6 +619,7 @@
 			children = (
 				3085577F2BC9CDF3683F45B9 /* Pods */,
 				63B9F5E76BF43EF82631DFF3 /* Frameworks */,
+				1DCD0A1A1FB3CD5400A9DA8C /* KeyboardConstraints.swift */,
 			);
 			name = Utilitaire;
 			sourceTree = "<group>";
@@ -645,6 +684,8 @@
 			children = (
 				8F6AE2BA1F6592EB00A29E8B /* AirHockeyLightClient */,
 				8F6AE2B91F6592EB00A29E8B /* Products */,
+				03F3FD091B8B970713D9CB72 /* Pods */,
+				53D74FA4727193B7D79ECA59 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -877,6 +918,7 @@
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftR/SwiftR.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/iCarousel/iCarousel.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -886,6 +928,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftR.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/iCarousel.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -945,12 +988,13 @@
 				256539A91F9D643A00D81E2C /* MapEntity.swift in Sources */,
 				8FB6A9951F81B9C800FAFFCF /* EditorViewController.swift in Sources */,
 				1D90AAFB1F98205A003E0764 /* ConnectServerViewController.swift in Sources */,
+				1DCD0A1B1FB3CD5400A9DA8C /* KeyboardConstraints.swift in Sources */,
 				8F65B2901FAE600700D8EE20 /* PortalCommand.swift in Sources */,
 				8F1B4BD71FA65C3C005321AF /* VisiteurInformation.swift in Sources */,
 				8FFC5B481F7C90340031474F /* MessageViewCell.swift in Sources */,
 				8F0B94B41F8D4EC1007F0E82 /* ModeleEtatSelection.swift in Sources */,
-				25F8091F1FA673050008F048 /* MapTableViewController.swift in Sources */,
 				8F8706BB1F7892F2000E6824 /* ChatMessageEntity.swift in Sources */,
+				258A73B71FB3E5D3003725E6 /* UnlockMapViewController.swift in Sources */,
 				253741AC1FA61B0C00E7DBE1 /* DBManager.swift in Sources */,
 				8F65B2961FAE614600D8EE20 /* OnlineEditorState.swift in Sources */,
 				8F65B2871FAE265F00D8EE20 /* UserManager.swift in Sources */,
@@ -1010,6 +1054,7 @@
 				253E088E1F818DD2009F301B /* JsonHelper.swift in Sources */,
 				8F8706BD1F78A67F000E6824 /* ChannelViewController.swift in Sources */,
 				344A6E2A1F994E0100CFFBEB /* VisiteurSurTable.swift in Sources */,
+				256E41F81FB7D8DF00843E53 /* MapTableViewController.swift in Sources */,
 				8F0B94AC1F8D3EEE007F0E82 /* VisiteurAbstrait.swift in Sources */,
 				8F65B28B1FAE55C200D8EE20 /* NodeCreator.swift in Sources */,
 				1D90AAFE1F98228E003E0764 /* IConnectServerViewModel.swift in Sources */,
@@ -1029,6 +1074,7 @@
 				8F0B94BA1F8D8C95007F0E82 /* ModeleEtatDeplacement.swift in Sources */,
 				1D863DB11F9848E70025B89D /* OfflineMenuViewController.swift in Sources */,
 				8FB0E29C1FAFF2B100672057 /* WallCommand.swift in Sources */,
+				25EFB2A01FB7505100FFD66F /* MapService.swift in Sources */,
 				8F0B94B21F8D4BCE007F0E82 /* ModeleEtat.swift in Sources */,
 				3475C2431F8FE71800E8BF86 /* ModeleEtatCameraControl.swift in Sources */,
 				1D90AB001F982332003E0764 /* ConnectServerViewModel.swift in Sources */,
