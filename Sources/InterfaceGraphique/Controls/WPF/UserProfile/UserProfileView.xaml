@@ -65,7 +65,7 @@
                     <TextBlock Text="{Binding GameWon}" HorizontalAlignment="Center" FontSize="35" Foreground="SkyBlue" FontWeight="Bold" Margin="0,5,0,0"></TextBlock>
                 </StackPanel>
                 <StackPanel Grid.Column="2" HorizontalAlignment="Center">
-                    <TextBlock Text="Tournois gagnés" FontSize="16" Foreground="White" FontWeight="Bold"></TextBlock>
+                    <TextBlock Text="Tournois Gagnés" FontSize="16" Foreground="White" FontWeight="Bold"></TextBlock>
                     <TextBlock Text="{Binding TournamentWon}" HorizontalAlignment="Center" FontSize="35" Foreground="SkyBlue" FontWeight="Bold" Margin="0,5,0,0"></TextBlock>
                 </StackPanel>
             </Grid>

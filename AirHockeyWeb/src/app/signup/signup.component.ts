@@ -57,6 +57,7 @@ export class SignupComponent implements OnInit {
   constructor(private fb: FormBuilder, private router: Router, private signupService: SignupService, private appService: AppService) { }
 
   ngOnInit() {
+    localStorage['loggedIn'] = false;
     this.user = new User();
     console.log(this.user);
     this.passwordConfirm = '';
@@ -135,7 +136,11 @@ onValueChanged(data?: any) {
       res => {
         this.signupOk = true;
         this.appService.loading = false;
-        this.router.navigate(['GO TO PROFILE']);
+        this.appService.id = res;
+        localStorage['loggedIn'] = JSON.stringify(true);
+        localStorage['id'] = JSON.stringify(res);
+        // res is the id of the user
+        this.router.navigate(['/profile', res]);
       },
       err => {
         this.signupOk = false;

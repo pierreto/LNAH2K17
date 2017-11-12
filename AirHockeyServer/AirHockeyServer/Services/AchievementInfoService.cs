@@ -90,9 +90,11 @@ namespace AirHockeyServer.Services
             EnabledImage.Add(AchivementType.ThirtyPoints, "\\media\\image\\coin_30_enabled.png");
             EnabledImage.Add(AchivementType.EightyPoints, "\\media\\image\\coin_80_enabled.png");
 
+            EnabledImage.Add(AchivementType.FirstTournamentWon, "\\media\\image\\tournament_won_5_enabled.png");
             EnabledImage.Add(AchivementType.FiveTournamentWon, "\\media\\image\\tournament_won_5_enabled.png");
             EnabledImage.Add(AchivementType.TenTournamentWon, "\\media\\image\\tournament_won_10_enabled.png");
 
+            EnabledImage.Add(AchivementType.FirstGameWon, "\\media\\image\\game_won_5_enabled.png");
             EnabledImage.Add(AchivementType.FiveGameWon, "\\media\\image\\game_won_5_enabled.png");
             EnabledImage.Add(AchivementType.TenGameWon, "\\media\\image\\game_won_10_enabled.png");
 
@@ -110,31 +112,35 @@ namespace AirHockeyServer.Services
             DisabledImage.Add(AchivementType.ThirtyPoints, "\\media\\image\\coin_30_disabled.png");
             DisabledImage.Add(AchivementType.EightyPoints, "\\media\\image\\coin_80_disabled.png");
 
+            DisabledImage.Add(AchivementType.FirstTournamentWon, "\\media\\image\\tournament_won_5_disabled.png");
             DisabledImage.Add(AchivementType.FiveTournamentWon, "\\media\\image\\tournament_won_5_disabled.png");
             DisabledImage.Add(AchivementType.TenTournamentWon, "\\media\\image\\tournament_won_10_disabled.png");
 
+            DisabledImage.Add(AchivementType.FirstGameWon, "\\media\\image\\game_won_5_disabled.png");
             DisabledImage.Add(AchivementType.FiveGameWon, "\\media\\image\\game_won_5_disabled.png");
             DisabledImage.Add(AchivementType.TenGameWon, "\\media\\image\\game_won_10_disabled.png");
 
             // ******************************************************************************************* //
 
-            Name.Add(AchivementType.FirstGamePlayed, "Premier match");
-            Name.Add(AchivementType.FiveGamesPlayed, "5 matchs joués");
-            Name.Add(AchivementType.TenGamesPlayed, "10 matchs joués");
+            Name.Add(AchivementType.FirstGamePlayed, "1 partie jouée");
+            Name.Add(AchivementType.FiveGamesPlayed, "5 parties jouées");
+            Name.Add(AchivementType.TenGamesPlayed, "10 partoes jouées");
 
-            Name.Add(AchivementType.FirstTournamentPlayed, "Premier tournois joué");
-            Name.Add(AchivementType.FiveTournamentsPlayed, "5 tournois joué");
-            Name.Add(AchivementType.TenTournamentPlayed, "10 tournois joué");
+            Name.Add(AchivementType.FirstTournamentPlayed, "1 tournoi joué");
+            Name.Add(AchivementType.FiveTournamentsPlayed, "5 tournois joués");
+            Name.Add(AchivementType.TenTournamentPlayed, "10 tournois joués");
 
             Name.Add(AchivementType.FivePoints, "5 points accumulés");
             Name.Add(AchivementType.ThirtyPoints, "30 points accumulés");
             Name.Add(AchivementType.EightyPoints, "80 points accumulés");
 
+            Name.Add(AchivementType.FirstTournamentWon, "1 tournoi gagné");
             Name.Add(AchivementType.FiveTournamentWon, "5 tournois gagnés");
             Name.Add(AchivementType.TenTournamentWon, "10 tournois gagnés");
 
-            Name.Add(AchivementType.FiveGameWon, "5 matchs gagnés");
-            Name.Add(AchivementType.TenGameWon, "10 matchs gagnés");
+            Name.Add(AchivementType.FirstGameWon, "1 partie gagnée");
+            Name.Add(AchivementType.FiveGameWon, "5 parties gagnées");
+            Name.Add(AchivementType.TenGameWon, "10 parties gagnées");
 
             // ***************************************************************************************** //
 
@@ -150,9 +156,11 @@ namespace AirHockeyServer.Services
             Categories.Add(AchivementType.ThirtyPoints, "Points");
             Categories.Add(AchivementType.EightyPoints, "Points");
 
+            Categories.Add(AchivementType.FirstTournamentWon, "TournamentWon");
             Categories.Add(AchivementType.FiveTournamentWon, "TournamentWon");
             Categories.Add(AchivementType.TenTournamentWon, "TournamentWon");
 
+            Categories.Add(AchivementType.FirstGameWon, "GameWon");
             Categories.Add(AchivementType.FiveGameWon, "GameWon");
             Categories.Add(AchivementType.TenGameWon, "GameWon");
 
@@ -170,9 +178,11 @@ namespace AirHockeyServer.Services
             Order.Add(AchivementType.ThirtyPoints, 2);
             Order.Add(AchivementType.EightyPoints, 3);
 
+            Order.Add(AchivementType.FirstTournamentWon, 0);
             Order.Add(AchivementType.FiveTournamentWon, 1);
             Order.Add(AchivementType.TenTournamentWon, 2);
 
+            Order.Add(AchivementType.FirstGameWon, 0);
             Order.Add(AchivementType.FiveGameWon, 1);
             Order.Add(AchivementType.TenGameWon, 2);
         }

@@ -23,6 +23,8 @@ namespace AirHockeyServer.Services
             List<StatsEntity> sEL = await PlayerStatsRepository.GetAllPlayerStats();
             List<UserEntity> uEL = await UserRepository.GetAllUsers();
             List<RankingEntity> pEL = new List<RankingEntity>();
+            // For every user, get his stats if he has any, and join then into a RankingEntity
+            // If the user does not has a stats(user created before adding stats to db), set them to 0
             var query = from uE in uEL
                         join sE in sEL
                         on uE.Id equals sE.UserId

@@ -22,7 +22,7 @@
             <mat-cell *matCellDef="let element"> {{element.Points}} </mat-cell>
         </ng-container>
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns; let i = index" (click)="goToProfileOf(row.Username)"></mat-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="goToProfileOf(row.Id)"></mat-row>
     </mat-table>
     <mat-paginator [length]="length" [pageSize]="pageSize"></mat-paginator>
 </div>

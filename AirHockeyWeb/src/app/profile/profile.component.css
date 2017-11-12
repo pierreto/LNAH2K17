@@ -1,0 +1,93 @@
+/* @import '~bootstrap/dist/css/bootstrap.css'; */
+
+.info {
+    padding: 20px 100px;
+    display: flex;
+}
+
+.profile {
+    width: 250px;
+    height: 250px;
+    margin-right: 30px;
+    background-image: url("../../../../Exe/media/image/default_profile_picture.png");
+    background-size: contain;
+}
+
+.profileInfo {
+    margin-right: 30px;
+}
+
+.profileInfo > div {
+    border-radius: 8px;
+    padding-bottom: 18px;
+    margin-bottom: 5px;
+}
+.stats {
+    display: flex;
+}
+
+.stats > div > h2 {
+    text-align: center;
+    background-color: silver;
+    box-shadow: 0px 3px 5px black;
+}
+.stats > div > h3 {
+    margin-top: 18px;
+    text-align: center;
+    display: inline-block;
+    vertical-align: middle;
+    line-height: normal;
+    font-size: 30px;
+    font-weight: bold;
+}
+#statLabel {
+    text-align: center;
+}
+#joinDate {
+    text-align: center;
+    color: gray;
+}
+.stats > div {
+    box-shadow: 3px 3px 5px gray;
+    border: 2px solid gray;
+    border-radius: 5px;
+    margin: 10px;
+    height: 100px;
+    width: 250px;
+}
+h2 {
+    margin: 0px;
+    text-align: left;
+    font-size: 20px;
+}
+
+h3 {
+    margin: 0px;
+    text-align: left;
+    color: red;
+    font-size: 18px;
+}
+
+.aIcon {
+    margin: 10px 100px 10px 100px;
+    width: 100px;
+    height: 100px;
+    background-size: cover;
+}
+
+.achievements {
+    margin: 0px 500px 0px 500px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.achievementName{
+    margin-bottom: 20px;
+}
+
+#textSucces {
+    text-align: center;
+    font-weight: bold;
+    font-size: 36px;
+    margin-bottom: 20px;
+}

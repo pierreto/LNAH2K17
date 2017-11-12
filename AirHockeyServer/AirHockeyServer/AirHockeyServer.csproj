@@ -228,6 +228,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MapController.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\RankingController.cs" />
     <Compile Include="Controllers\SignupController.cs" />
     <Compile Include="Controllers\StatsController.cs" />
@@ -261,6 +262,7 @@
     <Compile Include="Entities\GameEntity.cs" />
     <Compile Include="Entities\MapEntity.cs" />
     <Compile Include="Entities\LoginEntity.cs" />
+    <Compile Include="Entities\ProfileEntity.cs" />
     <Compile Include="Entities\RankingEntity.cs" />
     <Compile Include="Entities\SignupEntity.cs" />
     <Compile Include="Entities\PlayersMatchEntity.cs" />
@@ -311,7 +313,7 @@
     <Compile Include="Repositories\Interfaces\ITournamentRepository.cs" />
     <Compile Include="Repositories\LoginRepository.cs" />
     <Compile Include="Repositories\MapRepository.cs" />
-    <Compile Include="Repositories\PlayerStatesRepository.cs" />
+    <Compile Include="Repositories\PlayerStatsRepository.cs" />
     <Compile Include="Repositories\Repository.cs" />
     <Compile Include="Repositories\TournamentRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
@@ -333,6 +335,7 @@
     <Compile Include="Services\Interfaces\IMapService.cs" />
     <Compile Include="Services\Interfaces\IPasswordService.cs" />
     <Compile Include="Services\Interfaces\IPlayerStatsService.cs" />
+    <Compile Include="Services\Interfaces\IProfileService.cs" />
     <Compile Include="Services\Interfaces\IRankingService.cs" />
     <Compile Include="Services\Interfaces\IService.cs" />
     <Compile Include="Services\Interfaces\ISignupService.cs" />
@@ -347,6 +350,7 @@
     <Compile Include="Services\MatchMaking\TournamentMatchMaker.cs" />
     <Compile Include="Services\MatchMaking\TournamentMatchMakerService.cs" />
     <Compile Include="Services\PlayerStatsService.cs" />
+    <Compile Include="Services\ProfileService.cs" />
     <Compile Include="Services\RankingService.cs" />
     <Compile Include="Services\TournamentService.cs" />
     <Compile Include="Utilities\HttpResponseGenerator.cs" />

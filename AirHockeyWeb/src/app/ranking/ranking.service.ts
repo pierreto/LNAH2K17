@@ -8,7 +8,7 @@ import 'rxjs/add/operator/map';
 export class RankingService {
     constructor(private http: Http) {}
 
-    getProfiles(): Observable<Ranking[]> {
-        return this.http.get('/api/profile').map(res => res.json());
+    getRankings(): Observable<Ranking[]> {
+        return this.http.get('/api/rankings').map(res => res.json());
     }
 }

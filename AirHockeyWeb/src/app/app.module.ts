@@ -21,6 +21,10 @@ import { HttpModule } from '@angular/http';
 import { RankingService } from './ranking/ranking.service';
 import { RankingComponent } from './ranking/ranking.component';
 import { ProfileComponent } from './profile/profile.component';
+import { ProfileService } from './profile/profile.service';
+import { AsyncPipe } from '@angular/common';
+import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
+import { CanActivateGuard } from './canActivateGuard';
 
 @NgModule({
     imports: [
@@ -33,7 +37,7 @@ import { ProfileComponent } from './profile/profile.component';
     LoadingModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule,
+    MatSortModule
   ],
   declarations: [
     AppComponent,
@@ -43,9 +47,10 @@ import { ProfileComponent } from './profile/profile.component';
     MapComponent,
     PageNotFoundComponent,
     HeaderComponent,
-    ProfileComponent
+    ProfileComponent,
+    UnauthorizedComponent
   ],
-  providers: [SignupService, LoginService, AppService, RankingService],
+  providers: [SignupService, LoginService, AppService, RankingService, ProfileService, CanActivateGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -17,8 +17,8 @@ namespace AirHockeyServer.Controllers
         }
 
         [HttpGet]
-        [Route("api/profile")]
-        public async Task<HttpResponseMessage> GetAllProfiles()
+        [Route("api/rankings")]
+        public async Task<HttpResponseMessage> GetAllRankings()
         {
             try
             {
