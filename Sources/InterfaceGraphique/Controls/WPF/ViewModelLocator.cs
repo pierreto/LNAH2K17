@@ -10,6 +10,7 @@ using InterfaceGraphique.Controls.WPF.Signup;
 using InterfaceGraphique.Controls.WPF.Friends;
 using InterfaceGraphique.Controls.WPF.Chat.Channel;
 using InterfaceGraphique.Controls.WPF.UserProfile;
+using InterfaceGraphique.Controls.WPF.Store;
 
 namespace InterfaceGraphique.Controls.WPF
 {
@@ -89,6 +90,8 @@ namespace InterfaceGraphique.Controls.WPF
         public FriendListViewModel FriendListViewModel => container.Resolve<FriendListViewModel>();
 
         public UserProfileViewModel UserProfileViewModel => container.Resolve<UserProfileViewModel>();
+
+        public StoreViewModel StoreViewModel => container.Resolve<StoreViewModel>();
 
     }
 }

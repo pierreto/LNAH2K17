@@ -9,6 +9,7 @@ using System.Net.Http;
 using InterfaceGraphique.Controls.WPF.Chat;
 using InterfaceGraphique.Controls.WPF.Chat.Channel;
 using InterfaceGraphique.Controls.WPF.UserProfile;
+using InterfaceGraphique.Controls.WPF.Store;
 
 namespace InterfaceGraphique
 {
@@ -82,7 +83,19 @@ namespace InterfaceGraphique
             if(User.Instance.IsConnected)
             {
                 this.profileButton.Click += (sender, e) => OnProfileButtonClicked(sender, e);
+                this.storeButton.Click += (sender, e) => OnStoreButtonClicked(sender, e);
             }
+            else
+            {
+                this.profileButton.Visible = false;
+                this.storeButton.Visible = false;
+            }
+        }
+
+        private void OnStoreButtonClicked(object sender, EventArgs e)
+        {
+            Program.FormManager.CurrentForm = Program.StoreMenu;
+            Program.unityContainer.Resolve<StoreViewModel>().Initialize();
         }
 
         private void OnProfileButtonClicked(object sender, EventArgs e)

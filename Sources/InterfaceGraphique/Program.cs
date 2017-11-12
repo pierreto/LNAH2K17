@@ -24,6 +24,7 @@ using InterfaceGraphique.Services;
 using InterfaceGraphique.Controls.WPF.Chat.Channel;
 using InterfaceGraphique.Editor;
 using InterfaceGraphique.Controls.WPF.UserProfile;
+using InterfaceGraphique.Controls.WPF.Store;
 
 namespace InterfaceGraphique
 {
@@ -52,7 +53,7 @@ namespace InterfaceGraphique
         public static EditorHost EditorHost { get { return editorHost; } set { editorHost = value; } }
         public static FriendListHost FriendListHost {  get { return friendListHost; } set { friendListHost = value; } }
         public static UserProfileMenu UserProfileMenu { get { return userProfileMenu; } set { userProfileMenu = value; } }
-        
+        public static StoreMenu StoreMenu { get { return storeMenu; } set { storeMenu = value; } } 
 
         private static TestChatMenu testChatMenu;
         private static FormManager formManager;
@@ -72,6 +73,7 @@ namespace InterfaceGraphique
         private static OnlineTournament onlineTournament;
         private static FriendListHost friendListHost;
         private static UserProfileMenu userProfileMenu;
+        private static StoreMenu storeMenu;
 
         private static Panel openGLPanel;
         //private static Login login;
@@ -134,6 +136,7 @@ namespace InterfaceGraphique
             editorHost = new EditorHost();
             friendListHost = new FriendListHost();
             userProfileMenu = new UserProfileMenu();
+            storeMenu = new StoreMenu();
 
             FonctionsNatives.loadSounds();
 
@@ -191,6 +194,7 @@ namespace InterfaceGraphique
             unityContainer.RegisterType<EditorViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<FriendListViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<UserProfileViewModel>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<StoreViewModel>(new ContainerControlledLifetimeManager());
 
             //Rest services instantiations
             unityContainer.RegisterType<MapService>();
@@ -198,6 +202,7 @@ namespace InterfaceGraphique
 
             //Other services
             unityContainer.RegisterType<MapManager>();
+            unityContainer.RegisterType<StoreService>();
         }
 
         static void ExecuterQuandInactif(object sender, EventArgs e)
