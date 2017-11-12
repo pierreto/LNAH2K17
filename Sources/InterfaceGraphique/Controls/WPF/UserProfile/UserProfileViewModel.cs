@@ -1,6 +1,7 @@
 ﻿using InterfaceGraphique.CommunicationInterface;
 using InterfaceGraphique.Entities;
 using InterfaceGraphique.Services;
+using Prism.Commands;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -20,11 +21,11 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
         }
 
 
-        public UserProfileViewModel(PlayerStatsService playerStatsService)
+        public UserProfileViewModel(PlayerStatsService playerStatsService, StoreService storeService)
         {
             this.Achievements = new ObservableCollection<Achievement>();
             PlayerStatsService = playerStatsService;
-
+            StoreService = storeService;
             Name = "myName";
             UserName = "myUsername";
             Email = "email@love.com";
@@ -171,10 +172,36 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
         }
 
         public PlayerStatsService PlayerStatsService { get; }
+        public StoreService StoreService { get; }
 
         private async Task MainMenu()
         {
             Program.FormManager.CurrentForm = Program.MainMenu;
+        }
+
+        private List<StoreItemEntity> items;
+        public List<StoreItemEntity> Items
+        {
+            get
+            {
+                return items;
+            }
+            set
+            {
+                items = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private ICommand _selectCommand;
+        public ICommand SelectCommand
+        {
+            get { return _selectCommand ?? (_selectCommand = new DelegateCommand<StoreItemEntity>(DoSelect)); }
+        }
+
+        private async void DoSelect(StoreItemEntity item)
+        {
+            await StoreService.UpdateItemEnable(User.Instance.UserEntity.Id, item);
         }
 
     }

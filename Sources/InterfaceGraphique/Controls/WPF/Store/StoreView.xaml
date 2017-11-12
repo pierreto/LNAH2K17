@@ -1,0 +1,74 @@
+﻿<UserControl x:Class="InterfaceGraphique.Controls.WPF.Store.StoreView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:InterfaceGraphique.Controls.WPF.Store"
+             xmlns:wpf="clr-namespace:InterfaceGraphique.Controls.WPF"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:t="http://schemas.telerik.com/2008/xaml/presentation" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <wpf:ViewModelLocator x:Key="VMLocator" d:IsDataSource="True" />
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.DataContext>
+            <Binding Path="StoreViewModel" Source="{StaticResource VMLocator}"/>
+        </Grid.DataContext>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10*"></RowDefinition>
+            <RowDefinition Height="70*"></RowDefinition>
+            <RowDefinition Height="20*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="60*"></ColumnDefinition>
+            <ColumnDefinition Width="40*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Button Grid.Row="0" Command="{Binding Leave}">
+            <TextBlock Text="Back" ></TextBlock>
+        </Button>
+        <ItemsControl Grid.Row="1" Grid.Column="0" 
+                      ItemsSource="{Binding StoreItems}"
+                      >
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Rows="3" Columns="5"></UniformGrid>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Grid HorizontalAlignment="Center">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Image Grid.Row="0" Source="{Binding ImageUrl}"></Image>
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{Binding Name}"></TextBlock>
+                            <TextBlock Grid.Column="1" Text="{Binding Price}" HorizontalAlignment="Right"></TextBlock>
+                        </Grid>
+                        <CheckBox Grid.Row="2" IsChecked="{Binding IsChecked, Mode=TwoWay}">
+                            
+                        </CheckBox>
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+        <StackPanel Grid.Row="2" HorizontalAlignment="Right" Orientation="Horizontal">
+            <Button Command="{Binding Reset}" Background="Green" BorderBrush="Green">
+                <TextBlock Text="Clear Cart"></TextBlock>
+            </Button>
+            <Button Command="{Binding BuyItems}" Background="Red" BorderBrush="Red">
+                <TextBlock Text="Buy"></TextBlock>
+            </Button>
+        </StackPanel>
+    </Grid>
+</UserControl>

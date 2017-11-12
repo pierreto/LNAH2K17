@@ -99,10 +99,10 @@ class ModeleEtatPointControl : ModeleEtat {
                 // Annuler le déplacement
                 revertPosition()
                 
-                // TODO : À vérifier si on change la géométrie de la table ici ou non
                 table.updateGeometry()
             }
             
+            self.reactiverButtons()
             table.deselectionnerTout()
             
             // Envoyer la commande
@@ -112,6 +112,8 @@ class ModeleEtatPointControl : ModeleEtat {
         else {
             let visiteur = VisiteurDeplacement(delta: super.obtenirDeplacement())
             FacadeModele.instance.obtenirArbreRendu().accepterVisiteur(visiteur: visiteur)
+            
+            self.showButtonsNoeudSurTable()
         }
     }
     
@@ -129,7 +131,7 @@ class ModeleEtatPointControl : ModeleEtat {
     }
     
     /// Cette fonction applique la position sauvée au noeud sélectionné
-    func revertPosition() {
+    private func revertPosition() {
         // Revert position
         let visiteur = VisiteurObtenirSelection()
         FacadeModele.instance.obtenirArbreRendu().accepterVisiteur(visiteur: visiteur)

@@ -7,6 +7,8 @@
              xmlns:local="clr-namespace:InterfaceGraphique.Controls.WPF.UserProfile"
              xmlns:fa="http://schemas.fontawesome.io/icons/"
              mc:Ignorable="d" 
+            xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:t="http://schemas.telerik.com/2008/xaml/presentation" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -94,5 +96,20 @@
                 </ItemsControl>
             </Grid>
         </Grid>
+        <ItemsControl ItemsSource="{Binding Items}">
+            <DataTemplate>
+                <StackPanel>
+                    <CheckBox IsChecked="{Binding IsGameEnabled, Mode=TwoWay}">
+                        <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Checked">
+                                    <i:InvokeCommandAction Command="{Binding ElementName=listView, Path=DataContext.SelectCommand}"
+                                                       CommandParameter="{Binding}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                    </CheckBox>
+                    <TextBlock Text="{Binding Name}"></TextBlock>
+                </StackPanel>
+            </DataTemplate>
+        </ItemsControl>
     </Grid>
 </UserControl>

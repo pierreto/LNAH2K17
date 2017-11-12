@@ -66,6 +66,7 @@ namespace AirHockeyServer
             UnityContainer.RegisterType<IUserRepository, UserRepository>(new HierarchicalLifetimeManager());
             UnityContainer.RegisterType<ITournamentRepository, TournamentRepository>(new HierarchicalLifetimeManager());
             UnityContainer.RegisterType<IFriendRequestRepository, FriendRequestRepository>(new HierarchicalLifetimeManager());
+            UnityContainer.RegisterType<IStoreRepository, StoreRepository>(new HierarchicalLifetimeManager());
 
             // Services
             UnityContainer.RegisterType<IChatService, ChatService>(new HierarchicalLifetimeManager());
@@ -85,6 +86,7 @@ namespace AirHockeyServer
             UnityContainer.RegisterType<IRankingService, RankingService>(new ContainerControlledLifetimeManager());
             UnityContainer.RegisterType<IFriendService, FriendService>(new ContainerControlledLifetimeManager());
             UnityContainer.RegisterType<IAchievementInfoService, AchievementInfoService>(new ContainerControlledLifetimeManager());
+            UnityContainer.RegisterType<IStoreService, StoreService>(new ContainerControlledLifetimeManager());
             
             // Core
             UnityContainer.RegisterType<IConnector, Connector>(new ContainerControlledLifetimeManager());

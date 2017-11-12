@@ -19,7 +19,8 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress>true</Use64BitIISExpress>
+    <Use64BitIISExpress>
+    </Use64BitIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication>
     </IISExpressAnonymousAuthentication>
@@ -232,6 +233,7 @@
     <Compile Include="Controllers\RankingController.cs" />
     <Compile Include="Controllers\SignupController.cs" />
     <Compile Include="Controllers\StatsController.cs" />
+    <Compile Include="Controllers\StoreController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Core\Connector.cs" />
     <Compile Include="Core\Cache.cs" />
@@ -267,6 +269,7 @@
     <Compile Include="Entities\SignupEntity.cs" />
     <Compile Include="Entities\PlayersMatchEntity.cs" />
     <Compile Include="Entities\StatsEntity.cs" />
+    <Compile Include="Entities\StoreItemEntity.cs" />
     <Compile Include="Entities\TournamentEntity.cs" />
     <Compile Include="Entities\UserEntity.cs" />
     <Compile Include="Events\EventManagers\GameWaitingRoomEventManager.cs" />
@@ -295,6 +298,7 @@
     <Compile Include="Pocos\PasswordPoco.cs" />
     <Compile Include="Pocos\Poco.cs" />
     <Compile Include="Pocos\StatsPoco.cs" />
+    <Compile Include="Pocos\StoreItemPoco.cs" />
     <Compile Include="Pocos\TournamentPoco.cs" />
     <Compile Include="Pocos\UserPoco.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -309,12 +313,14 @@
     <Compile Include="Repositories\Interfaces\IPasswordRepository.cs" />
     <Compile Include="Repositories\Interfaces\IPlayerStatsRepository.cs" />
     <Compile Include="Repositories\Interfaces\IRepository.cs" />
+    <Compile Include="Repositories\Interfaces\IStoreRepository.cs" />
     <Compile Include="Repositories\Interfaces\IUserRepository.cs" />
     <Compile Include="Repositories\Interfaces\ITournamentRepository.cs" />
     <Compile Include="Repositories\LoginRepository.cs" />
     <Compile Include="Repositories\MapRepository.cs" />
     <Compile Include="Repositories\PlayerStatsRepository.cs" />
     <Compile Include="Repositories\Repository.cs" />
+    <Compile Include="Repositories\StoreRepository.cs" />
     <Compile Include="Repositories\TournamentRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
     <Compile Include="Repositories\PasswordRepository.cs" />
@@ -339,6 +345,7 @@
     <Compile Include="Services\Interfaces\IRankingService.cs" />
     <Compile Include="Services\Interfaces\IService.cs" />
     <Compile Include="Services\Interfaces\ISignupService.cs" />
+    <Compile Include="Services\Interfaces\IStoreService.cs" />
     <Compile Include="Services\Interfaces\ITournamentService.cs" />
     <Compile Include="Services\Interfaces\IUserService.cs" />
     <Compile Include="Services\LoginService.cs" />
@@ -352,6 +359,7 @@
     <Compile Include="Services\PlayerStatsService.cs" />
     <Compile Include="Services\ProfileService.cs" />
     <Compile Include="Services\RankingService.cs" />
+    <Compile Include="Services\StoreService.cs" />
     <Compile Include="Services\TournamentService.cs" />
     <Compile Include="Utilities\HttpResponseGenerator.cs" />
     <Compile Include="Services\SignupService.cs" />
