@@ -83,7 +83,8 @@ class MapDisplayViewController: UIViewController {
                     if(response.response?.statusCode == 200) {
                         print("Succeed to fetch map with id from server")
                         let maps = JSON(response.result.value!)
-                        editor.currentMap = self.buildMapEntity(json: maps)
+                        let mapService = MapService()
+                        editor.currentMap = mapService.buildMapEntity(json: maps)
                         
                         // Rejoindre la salle d'édition
                         // TODO : A enlever quand toutes les commandes du mode en ligne seront faites
@@ -103,24 +104,6 @@ class MapDisplayViewController: UIViewController {
             
             self.navigationController?.pushViewController(editor, animated: true)
         }
-    }
-    
-    // TODO : bouger ceci dans un service
-    func buildMapEntity(json: JSON) -> MapEntity {
-        let mapEntity = MapEntity()
-        mapEntity.id = json["Id"].rawString()
-        mapEntity.creator = json["Creator"].rawString()
-        mapEntity.mapName = json["MapName"].rawString()
-        // TODO : Fuseau horaire différent
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-        let date = dateFormatter.date(from: json["LastBackup"].rawString()!)
-        mapEntity.lastBackup = date
-        mapEntity.json = json["Json"].rawString()
-        mapEntity.privacy.value = json["Private"].bool
-        mapEntity.password = json["Password"].rawString()
-        mapEntity.currentNumberOfPlayer.value = json["CurrentNumberOfPlayer"].int
-        return mapEntity
     }
     
     func enableNavigationBar(activer: Bool) {
