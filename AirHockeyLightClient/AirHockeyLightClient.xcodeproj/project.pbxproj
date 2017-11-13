@@ -107,6 +107,17 @@
 		8F1B4BD71FA65C3C005321AF /* VisiteurInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1B4BD61FA65C3C005321AF /* VisiteurInformation.swift */; };
 		8F1D52AA1F9D99C700135A53 /* VisiteurScale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1D52A91F9D99C700135A53 /* VisiteurScale.swift */; };
 		8F27E8111FA1803400A8856D /* Tap.png in Resources */ = {isa = PBXBuildFile; fileRef = 8F27E8101FA1803400A8856D /* Tap.png */; };
+		8F4B407D1FB9460100DFDA2F /* AudioService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F4B407C1FB9460100DFDA2F /* AudioService.swift */; };
+		8F4B408D1FB94FBB00DFDA2F /* Delete.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8F4B407F1FB94FBB00DFDA2F /* Delete.wav */; };
+		8F4B40901FB94FBB00DFDA2F /* Error.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8F4B40821FB94FBB00DFDA2F /* Error.wav */; };
+		8F4B40911FB94FBB00DFDA2F /* HUD.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8F4B40831FB94FBB00DFDA2F /* HUD.wav */; };
+		8F4B40941FB94FBB00DFDA2F /* Save.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8F4B40861FB94FBB00DFDA2F /* Save.wav */; };
+		8F4B40951FB94FBB00DFDA2F /* Selection1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8F4B40871FB94FBB00DFDA2F /* Selection1.wav */; };
+		8F4B409B1FB956F900DFDA2F /* Selection2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8F4B409A1FB956F900DFDA2F /* Selection2.wav */; };
+		8F4B409F1FB962F000DFDA2F /* Duplicate.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8F4B409E1FB962F000DFDA2F /* Duplicate.wav */; };
+		8F4B40A21FB9676200DFDA2F /* Object1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8F4B40A01FB9676200DFDA2F /* Object1.wav */; };
+		8F4B40A31FB9676200DFDA2F /* Object2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8F4B40A11FB9676200DFDA2F /* Object2.wav */; };
+		8F4B40A51FB9685F00DFDA2F /* Transform.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8F4B40A41FB9685F00DFDA2F /* Transform.wav */; };
 		8F4C1DC41FB412D100B570C8 /* DeleteCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F4C1DC31FB412D100B570C8 /* DeleteCommand.swift */; };
 		8F4D5E3C1FA060150002D5C5 /* Delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 8F4D5E3B1FA060140002D5C5 /* Delete.png */; };
 		8F64C0111F7754EF00F14AC7 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F64C0101F7754EF00F14AC7 /* ChatViewController.swift */; };
@@ -270,6 +281,17 @@
 		8F1B4BD61FA65C3C005321AF /* VisiteurInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VisiteurInformation.swift; path = Noyau/Arbre/Visiteurs/VisiteurInformation.swift; sourceTree = "<group>"; };
 		8F1D52A91F9D99C700135A53 /* VisiteurScale.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VisiteurScale.swift; path = Noyau/Arbre/Visiteurs/VisiteurScale.swift; sourceTree = "<group>"; };
 		8F27E8101FA1803400A8856D /* Tap.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Tap.png; path = ../../Sources/Icons/Tap.png; sourceTree = "<group>"; };
+		8F4B407C1FB9460100DFDA2F /* AudioService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AudioService.swift; path = Noyau/Services/AudioService.swift; sourceTree = "<group>"; };
+		8F4B407F1FB94FBB00DFDA2F /* Delete.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Delete.wav; path = ../../Exe/media/audio/son/Delete.wav; sourceTree = "<group>"; };
+		8F4B40821FB94FBB00DFDA2F /* Error.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Error.wav; path = ../../Exe/media/audio/son/Error.wav; sourceTree = "<group>"; };
+		8F4B40831FB94FBB00DFDA2F /* HUD.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = HUD.wav; path = ../../Exe/media/audio/son/HUD.wav; sourceTree = "<group>"; };
+		8F4B40861FB94FBB00DFDA2F /* Save.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Save.wav; path = ../../Exe/media/audio/son/Save.wav; sourceTree = "<group>"; };
+		8F4B40871FB94FBB00DFDA2F /* Selection1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Selection1.wav; path = ../../Exe/media/audio/son/Selection1.wav; sourceTree = "<group>"; };
+		8F4B409A1FB956F900DFDA2F /* Selection2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Selection2.wav; path = ../../Exe/media/audio/son/Selection2.wav; sourceTree = "<group>"; };
+		8F4B409E1FB962F000DFDA2F /* Duplicate.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Duplicate.wav; path = ../../Exe/media/audio/son/Duplicate.wav; sourceTree = "<group>"; };
+		8F4B40A01FB9676200DFDA2F /* Object1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Object1.wav; path = ../../Exe/media/audio/son/Object1.wav; sourceTree = "<group>"; };
+		8F4B40A11FB9676200DFDA2F /* Object2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Object2.wav; path = ../../Exe/media/audio/son/Object2.wav; sourceTree = "<group>"; };
+		8F4B40A41FB9685F00DFDA2F /* Transform.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Transform.wav; path = ../../Exe/media/audio/son/Transform.wav; sourceTree = "<group>"; };
 		8F4C1DC31FB412D100B570C8 /* DeleteCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DeleteCommand.swift; path = Noyau/Editor/Commands/DeleteCommand.swift; sourceTree = "<group>"; };
 		8F4D5E3B1FA060140002D5C5 /* Delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Delete.png; path = ../../Sources/Icons/Delete.png; sourceTree = "<group>"; };
 		8F64C0101F7754EF00F14AC7 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatViewController.swift; path = InterfaceGraphique/Chat/ChatViewController.swift; sourceTree = "<group>"; };
@@ -474,6 +496,7 @@
 			children = (
 				25EFB29F1FB7505100FFD66F /* MapService.swift */,
 				2509B8A01FB93631002DEE9A /* FriendsService.swift */,
+				8F4B407C1FB9460100DFDA2F /* AudioService.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -682,6 +705,23 @@
 			name = Menus;
 			sourceTree = "<group>";
 		};
+		8F4B40771FB944E700DFDA2F /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				8F4B407F1FB94FBB00DFDA2F /* Delete.wav */,
+				8F4B409E1FB962F000DFDA2F /* Duplicate.wav */,
+				8F4B40821FB94FBB00DFDA2F /* Error.wav */,
+				8F4B40831FB94FBB00DFDA2F /* HUD.wav */,
+				8F4B40A01FB9676200DFDA2F /* Object1.wav */,
+				8F4B40A11FB9676200DFDA2F /* Object2.wav */,
+				8F4B40861FB94FBB00DFDA2F /* Save.wav */,
+				8F4B40871FB94FBB00DFDA2F /* Selection1.wav */,
+				8F4B409A1FB956F900DFDA2F /* Selection2.wav */,
+				8F4B40A41FB9685F00DFDA2F /* Transform.wav */,
+			);
+			name = Sounds;
+			sourceTree = "<group>";
+		};
 		8F65B2801FAE1B0700D8EE20 /* Editor */ = {
 			isa = PBXGroup;
 			children = (
@@ -775,6 +815,7 @@
 		8FB6A9C31F81DCA000FAFFCF /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				8F4B40771FB944E700DFDA2F /* Sounds */,
 				3475C22D1F8FB98500E8BF86 /* Icons */,
 				34B66FDA1F843CC100A9CCB9 /* Textures */,
 				8FB6A9C41F81DCA800FAFFCF /* Models */,
@@ -914,25 +955,35 @@
 				8F6AE2C91F6592EB00A29E8B /* Assets.xcassets in Resources */,
 				34B66FDC1F843CD400A9CCB9 /* fire_texture.png in Resources */,
 				3415E6D91F85A99500DB1CAD /* controlPoint.obj in Resources */,
+				8F4B40901FB94FBB00DFDA2F /* Error.wav in Resources */,
 				34B66FE01F844C2100A9CCB9 /* table_texture.png in Resources */,
 				3475C23D1F8FB9A100E8BF86 /* Resize.png in Resources */,
 				3475C2291F8FAF8D00E8BF86 /* EditorHUDScene.sks in Resources */,
 				344A6E201F990ECA00CFFBEB /* accelerateur.obj in Resources */,
 				8FCDF6191FA1BEDF00631551 /* EditorNotificationScene.sks in Resources */,
+				8F4B40941FB94FBB00DFDA2F /* Save.wav in Resources */,
 				3475C2401F8FB9A100E8BF86 /* Wall.png in Resources */,
 				3475C2411F8FB9A100E8BF86 /* Zoom.png in Resources */,
 				342E7C561F985AD50062017A /* portail.obj in Resources */,
+				8F4B409B1FB956F900DFDA2F /* Selection2.wav in Resources */,
 				344A6E1C1F9908EB00CFFBEB /* Camera.png in Resources */,
+				8F4B409F1FB962F000DFDA2F /* Duplicate.wav in Resources */,
+				8F4B40951FB94FBB00DFDA2F /* Selection1.wav in Resources */,
 				3475C23F1F8FB9A100E8BF86 /* Select.png in Resources */,
 				0EED62811F98301C00CD8C56 /* mur.obj in Resources */,
 				8F4D5E3C1FA060150002D5C5 /* Delete.png in Resources */,
+				8F4B40911FB94FBB00DFDA2F /* HUD.wav in Resources */,
 				3475C23A1F8FB9A100E8BF86 /* Duplicate.png in Resources */,
 				2509B8991FB8F65D002DEE9A /* сontacts.png in Resources */,
 				3475C23C1F8FB9A100E8BF86 /* Portal.png in Resources */,
 				8F64C0131F7754FD00F14AC7 /* LaunchScreen.storyboard in Resources */,
+				8F4B408D1FB94FBB00DFDA2F /* Delete.wav in Resources */,
 				3475C23E1F8FB9A100E8BF86 /* Rotate.png in Resources */,
+				8F4B40A31FB9676200DFDA2F /* Object2.wav in Resources */,
 				3475C2391F8FB9A100E8BF86 /* ControlPoint.png in Resources */,
 				3475C2381F8FB9A100E8BF86 /* Booster.png in Resources */,
+				8F4B40A21FB9676200DFDA2F /* Object1.wav in Resources */,
+				8F4B40A51FB9685F00DFDA2F /* Transform.wav in Resources */,
 				8F6AE2C01F6592EB00A29E8B /* Actions.sks in Resources */,
 				344A6E1E1F9908F500CFFBEB /* Cancel.png in Resources */,
 			);
@@ -1073,6 +1124,7 @@
 				8F64C0111F7754EF00F14AC7 /* ChatViewController.swift in Sources */,
 				1D019A221F911DF6004D79B2 /* Signup.swift in Sources */,
 				8F0B94BC1F8D8EA6007F0E82 /* VisiteurDeplacement.swift in Sources */,
+				8F4B407D1FB9460100DFDA2F /* AudioService.swift in Sources */,
 				2509B8A11FB93631002DEE9A /* FriendsService.swift in Sources */,
 				3415E6C41F8547CE00DB1CAD /* ArbreRendu.swift in Sources */,
 				0EED627D1F9825B500CD8C56 /* NoeudMur.swift in Sources */,

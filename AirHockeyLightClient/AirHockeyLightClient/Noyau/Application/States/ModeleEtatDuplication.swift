@@ -84,6 +84,9 @@ class ModeleEtatDuplication: ModeleEtat {
                 
                 // Désélectionner les noeuds pour les autres utilisateurs
                 FacadeModele.instance.obtenirEtatEdition().currentUserSelectedObject(uuidSelected: "", isSelected: false, deselectAll: true)
+                
+                // Jouer le son
+                AudioService.instance.playSound(soundName: EDITION_SOUND.DUPLICATE.rawValue)
             }
             else {
                 // Déplacer les noeuds dupliqués où l'utilisateur touche l'écran
@@ -124,6 +127,9 @@ class ModeleEtatDuplication: ModeleEtat {
                 }
                 
                 self.copieEnCours = false
+                
+                // Jouer le son
+                AudioService.instance.playSound(soundName: EDITION_SOUND.SELECTION2.rawValue)
             }
         }
     }
@@ -182,8 +188,8 @@ class ModeleEtatDuplication: ModeleEtat {
                 FacadeModele.instance.obtenirEtatEdition().currentUserCreatedPortal(
                     startUuid: noeud.obtenirUUID(),
                     startPos: noeud.position, startRotation: noeud.rotation.w, startScale: noeud.scale,
-                    endUuid: noeudOppose.obtenirUUID(),
-                    endPos: noeudOppose.position, endRotation: noeudOppose.rotation.w, endScale: noeudOppose.scale)
+                    endUuid: (noeudOppose?.obtenirUUID())!,
+                    endPos: (noeudOppose?.position)!, endRotation: (noeudOppose?.rotation.w)!, endScale: (noeudOppose?.scale)!)
                 break
             default :
                 break

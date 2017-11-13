@@ -56,8 +56,8 @@ class NoeudPortail : NoeudCommun {
     }
     
     /// Cette fonction permet d'obtenir le portail opposé
-    func obtenirOppose() -> NoeudPortail {
-        return self.portailOppose!
+    func obtenirOppose() -> NoeudPortail? {
+        return self.portailOppose
     }
     
     /// Activer/Désactiver le noeud

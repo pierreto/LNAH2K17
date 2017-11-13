@@ -101,6 +101,9 @@ class VisiteurSelection: VisiteurAbstrait {
                 }
                 
                 self.nbSelections += 1
+                
+                // Jouer le son
+                AudioService.instance.playSound(soundName: EDITION_SOUND.SELECTION1.rawValue)
             }
             // Déselectionner le noeud sauf pour le point de contrôle
             else if (noeud.obtenirType() != FacadeModele.instance.obtenirArbreRendu().NOM_POINT_CONTROL) {
@@ -111,6 +114,9 @@ class VisiteurSelection: VisiteurAbstrait {
                                                                                      isSelected: noeud.estSelectionne(),
                                                                                      deselectAll: false)
                 self.nbSelections -= 1
+                
+                // Jouer le son
+                AudioService.instance.playSound(soundName: EDITION_SOUND.SELECTION2.rawValue)
             }
         }
     }

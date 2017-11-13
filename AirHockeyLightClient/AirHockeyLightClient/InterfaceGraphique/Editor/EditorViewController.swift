@@ -156,6 +156,9 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
     
     @IBAction func sauvegarderCarteManuellement(_ sender: Any) {
         FacadeModele.instance.sauvegarderCarte(map: self.currentMap!)
+        
+        // Jouer le son
+        AudioService.instance.playSound(soundName: EDITION_SOUND.SAVE.rawValue)
     }
     
     /// Permettre la reconnaissance simultanée de plusieurs gestures

@@ -90,7 +90,7 @@ class VisiteurDuplication: VisiteurAbstrait {
     
     /// Visiter un portail pour la duplication
     func visiterPortail(noeud: NoeudPortail) {
-        if noeud.estSelectionne() && noeud.obtenirOppose().estSelectionne() {
+        if noeud.estSelectionne() && noeud.obtenirOppose()!.estSelectionne() {
             let arbre = FacadeModele.instance.obtenirArbreRendu()
             
             // Création du noeud
@@ -108,12 +108,12 @@ class VisiteurDuplication: VisiteurAbstrait {
                 
                 // Assigner les mêmes propriétés
                 self.copyProperties(node: noeud, nodeCopy: noeudDouble)
-                self.copyProperties(node: noeud.obtenirOppose(), nodeCopy: noeudDouble.obtenirOppose())
+                self.copyProperties(node: noeud.obtenirOppose()!, nodeCopy: noeudDouble.obtenirOppose()!)
                 
                 // Ajouter les portails sur la table
                 let table = arbre.childNode(withName: arbre.NOM_TABLE, recursively: true) as! NoeudTable
                 table.addChildNode(noeudDouble)
-                table.addChildNode(noeudDouble.obtenirOppose())
+                table.addChildNode(noeudDouble.obtenirOppose()!)
                 
                 self.premierNoeud = nil
             }

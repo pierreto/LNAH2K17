@@ -37,11 +37,13 @@ class VisiteurSauvegarde: VisiteurAbstrait {
     /// Cette fonction permet de visiteur un portail pour la sauvegarde.
     func visiterPortail(noeud: NoeudPortail) {
         if  (!self.linkedPortals.contains{ element in return element == noeud }) {
-            sauvegarderNoeud(noeud: noeud, nom: "Portail")
-            sauvegarderNoeud(noeud: noeud.obtenirOppose(), nom: "Portail")
+            if (noeud.obtenirOppose() != nil) {
+                sauvegarderNoeud(noeud: noeud, nom: "Portail")
+                sauvegarderNoeud(noeud: noeud.obtenirOppose()!, nom: "Portail")
                 
-            self.linkedPortals.append(noeud)
-            self.linkedPortals.append(noeud.obtenirOppose())
+                self.linkedPortals.append(noeud)
+                self.linkedPortals.append(noeud.obtenirOppose()!)
+            }
         }
     }
     

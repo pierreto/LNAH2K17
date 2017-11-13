@@ -91,6 +91,9 @@ class ModeleEtatCreerPortail: ModeleEtat {
                 self.premierNoeud = noeud
                 self.premierNoeud?.appliquerMaterielSelection(activer: true)
                 FacadeModele.instance.obtenirVue().editorHUDScene?.showCancelButton(activer: true)
+                
+                // Jouer le son
+                AudioService.instance.playSound(soundName: EDITION_SOUND.OBJECT1.rawValue)
             }
             else {
                 // Verification que les noeuds soient sur la table
@@ -110,6 +113,9 @@ class ModeleEtatCreerPortail: ModeleEtat {
                     
                     self.premierNoeud = nil;
                     FacadeModele.instance.obtenirVue().editorHUDScene?.showCancelButton(activer: false)
+                    
+                    // Jouer le son
+                    AudioService.instance.playSound(soundName: EDITION_SOUND.OBJECT2.rawValue)
                 }
                 else { // Annulation de la commande
                     self.annulerCreation()
