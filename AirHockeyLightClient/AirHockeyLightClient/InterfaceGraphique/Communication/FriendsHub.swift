@@ -108,8 +108,7 @@ class FriendsHub: BaseHub {
     
     func acceptFriendRequest(request : FriendRequestEntity) {
         do {
-            let user = HubManager.sharedConnection.getUser().toDictionary()
-            try self.hubProxy?.invoke("AcceptFriendRequest", arguments: [user])
+            try self.hubProxy?.invoke("AcceptFriendRequest", arguments: [request.toDictionary()])
         }
         catch {
             print("Error AcceptFriendRequest")
@@ -118,8 +117,7 @@ class FriendsHub: BaseHub {
     
     func refuseFriendRequest(request : FriendRequestEntity) {
         do {
-            let user = HubManager.sharedConnection.getUser().toDictionary()
-            try self.hubProxy?.invoke("RefuseFriendRequest", arguments: [user])
+            try self.hubProxy?.invoke("RefuseFriendRequest", arguments: [request.toDictionary()])
         }
         catch {
             print("Error RefuseFriendRequest")
@@ -128,8 +126,9 @@ class FriendsHub: BaseHub {
     
     func removeFriend(exFriend : UserEntity) {
         do {
-            let user = HubManager.sharedConnection.getUser().toDictionary()
-            try self.hubProxy?.invoke("RemoveFriend", arguments: [user, exFriend])
+            let userDictionary = HubManager.sharedConnection.getUser().toDictionary()
+            let exFriendDictionary = exFriend.toDictionary()
+            try self.hubProxy?.invoke("RemoveFriend", arguments: [userDictionary, exFriendDictionary])
         }
         catch {
             print("Error RemoveFriend")

@@ -67,6 +67,17 @@ class FriendRequestEntity : Entity {
         self.status = status
     }
     
+    func toDictionary() -> [String: Any] {
+        let request = [
+            "Id": self.id,
+            "Requestor": self.requestor.toDictionary(),
+            "Friend": self.friend.toDictionary(),
+            "Status": self.status
+            ] as [String : Any]
+        
+        return request
+    }
+    
 }
 
 ///////////////////////////////////////////////////////////////////////////////

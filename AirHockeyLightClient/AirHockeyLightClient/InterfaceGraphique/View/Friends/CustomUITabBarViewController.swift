@@ -24,7 +24,7 @@ class CustomUITabBarViewController: UITabBarController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         var tabFrame:CGRect = self.tabBar.frame
-        tabFrame.origin.y = self.view.frame.origin.y + 150
+        tabFrame.origin.y = self.view.frame.origin.y + 65
         self.tabBar.frame = tabFrame
     }
 
