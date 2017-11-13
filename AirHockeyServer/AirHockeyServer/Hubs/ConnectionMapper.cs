@@ -22,8 +22,8 @@ namespace AirHockeyServer.Hubs
     ///////////////////////////////////////////////////////////////////////////////
     public class ConnectionMapper
     {
-        private static ConcurrentDictionary<int, string> _ConnectionsMapping;
-        private static ConcurrentDictionary<int, string> ConnectionsMapping
+        private ConcurrentDictionary<int, string> _ConnectionsMapping;
+        private ConcurrentDictionary<int, string> ConnectionsMapping
         {
             get
             {
@@ -39,8 +39,8 @@ namespace AirHockeyServer.Hubs
             }
         }
 
-        private static ConcurrentDictionary<string, Guid> _GameID;
-        private static ConcurrentDictionary<string, Guid> GameID
+        private ConcurrentDictionary<string, Guid> _GameID;
+        private  ConcurrentDictionary<string, Guid> GameID
         {
             get
             {
@@ -60,7 +60,7 @@ namespace AirHockeyServer.Hubs
         /// @return true si la connection a été ajoutée
         ///
         ////////////////////////////////////////////////////////////////////////
-        public static bool AddConnection(int userId, string connection)
+        public bool AddConnection(int userId, string connection)
         {
             if (!ConnectionsMapping.ContainsKey(userId))
             {
@@ -80,7 +80,7 @@ namespace AirHockeyServer.Hubs
         /// @return retourne la connection 
         ///
         ////////////////////////////////////////////////////////////////////////
-        public static string GetConnection(int userId)
+        public string GetConnection(int userId)
         {
             if (ConnectionsMapping.ContainsKey(userId))
             {
@@ -89,18 +89,18 @@ namespace AirHockeyServer.Hubs
             return string.Empty;
         }
 
-        public static void AddGameID(string connection, Guid gameID)
+        public void AddGameID(string connection, Guid gameID)
         {
             GameID[connection] = gameID;
         }
 
-        public static Guid GetGameId(string connection)
+        public Guid GetGameId(string connection)
         {
             return GameID[connection];
         }
 
-        private static ConcurrentDictionary<string, OnlineUser> usersConnectionMapping;
-        private static ConcurrentDictionary<string, OnlineUser> UsersConnectionMapping
+        private ConcurrentDictionary<string, OnlineUser> usersConnectionMapping;
+        private ConcurrentDictionary<string, OnlineUser> UsersConnectionMapping
         {
             get
             {
@@ -110,22 +110,22 @@ namespace AirHockeyServer.Hubs
             set => usersConnectionMapping = value;
         }
 
-        public static void AddUserConnection(string connectionId, OnlineUser User)
+        public void AddUserConnection(string connectionId, OnlineUser User)
         {
             UsersConnectionMapping[connectionId] = User;
         }
 
-        public static void RemoveUserConnection(string connectionId)
+        public void RemoveUserConnection(string connectionId)
         {
             ((IDictionary)UsersConnectionMapping).Remove(connectionId);
         }
 
-        public static OnlineUser GetUserFromConnectionId(string connectionId)
+        public OnlineUser GetUserFromConnectionId(string connectionId)
         {
             return UsersConnectionMapping[connectionId];
         }
 
-        public static void DeleteConnection(int userId)
+        public void DeleteConnection(int userId)
         {
             if (ConnectionsMapping.ContainsKey(userId))
             {

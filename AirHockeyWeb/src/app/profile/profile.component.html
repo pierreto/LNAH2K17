@@ -1,3 +1,50 @@
-<p>
-  profile works!
-</p>
+<div class="info">
+  <div class="profile">
+  </div>
+  <div class="profileInfo">
+    <div>
+      <h2>Nom d'usager</h2>
+      <h3>{{profile?.UserEntity.Username || "..."}}</h3>
+    </div>
+    <div>
+      <h2>Nom</h2>
+      <h3>{{(profile?.UserEntity.Name) || "Non disponible"}}</h3>
+    </div>
+    <div>
+      <h2>Adresse Courriel</h2>
+      <h3>{{(profile?.UserEntity.Email) || "Non disponible"}}</h3>
+    </div>
+    <div>
+      <h2>Date de création de compte</h2>
+      <h3>{{(profile?.UserEntity.Created | date) || "..."}}</h3>
+    </div>
+  </div>
+  <div>
+    <h2 id="statLabel">Statistiques</h2>
+    <div class="stats">
+      <div>
+        <h2>Points</h2>
+        <h3>{{profile?.StatsEntity?.Points || "0"}}</h3>
+      </div>
+      <div>
+        <h2>Parties Gagnées</h2>
+        <h3>{{profile?.StatsEntity?.GamesWon || "0"}}</h3>
+      </div>
+      <div>
+        <h2>Tournois Gagnés</h2>
+        <h3>{{profile?.StatsEntity?.TournamentsWon || "0"}}</h3>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="succes">
+  <div>
+    <h2 id="textSucces">Succès</h2>
+  </div>
+  <div class="achievements">
+    <div *ngFor="let achievement of profile?.AchievementEntities">
+      <div [style.background-image]="achievement.IsEnabled? 'url(assets' + achievement.EnabledImageUrl + ')' : 'url(assets' + achievement.DisabledImageUrl + ')'" class="aIcon"></div>
+      <div [style.color]="achievement.IsEnabled? '#44D418': '#ccc'" class="achievementName">{{achievement.Name}}</div>
+    </div>
+  </div>
+</div>

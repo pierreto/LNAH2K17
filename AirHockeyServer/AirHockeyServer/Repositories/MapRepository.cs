@@ -83,19 +83,19 @@ namespace AirHockeyServer.Repositories
 
                     // To fetch the db auto-generated Id of the new created map, we have to compare
                     // creation dates without considering milliseconds (or it will fail):
-                    map.LastBackup = new DateTime(
-                        map.LastBackup.Year,
-                        map.LastBackup.Month,
-                        map.LastBackup.Day,
-                        map.LastBackup.Hour,
-                        map.LastBackup.Minute,
-                        map.LastBackup.Second,
-                        map.LastBackup.Kind);
+                    map.CreationDate = new DateTime(
+                        map.CreationDate.Year,
+                        map.CreationDate.Month,
+                        map.CreationDate.Day,
+                        map.CreationDate.Hour,
+                        map.CreationDate.Minute,
+                        map.CreationDate.Second,
+                        map.CreationDate.Kind);
 
                     // We have to fetch the db auto-generated Id of the new created map:
                     var query =
                         from _map in DC.MapsTable
-                        where _map.Creator == map.Creator && _map.CreationDate == map.LastBackup
+                        where _map.Creator == map.Creator && _map.CreationDate == map.CreationDate
                         select _map.Id;
 
                     var results = await Task<List<int?>>.Run(
@@ -122,6 +122,7 @@ namespace AirHockeyServer.Repositories
                     var results = query.ToArray();
                     var existingMap = results.First();
                     existingMap.Json = updatedMap.Json;
+                    existingMap.LastBackup = updatedMap.LastBackup;
                     await Task.Run(() => DC.SubmitChanges());
                     return true;
                 }

@@ -35,16 +35,13 @@ namespace AirHockeyServer.Mapping
 
                 cfg.CreateMap<MapPoco, MapEntity>()
                 .ForMember(
-                    dest => dest.LastBackup,
+                    dest => dest.CreationDate,
                     opt => opt.MapFrom(src => src.CreationDate))
                 .ForMember(
                     dest => dest.MapName,
                     opt => opt.MapFrom(src => src.Name));
 
                 cfg.CreateMap<MapEntity, MapPoco>()
-                .ForMember(
-                    dest => dest.CreationDate,
-                    opt => opt.MapFrom(src => src.LastBackup))
                 .ForMember(
                     dest => dest.Name,
                     opt => opt.MapFrom(src => src.MapName));

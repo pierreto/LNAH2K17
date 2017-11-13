@@ -1,3 +1,28 @@
-<p>
-  ranking works!
-</p>
+<h1>Liste des joueurs de LNAH</h1>
+<div class="example-container">
+    <mat-table #table [dataSource]="dataSource" matSort>
+        <!-- <ng-container matColumnDef="No">
+            <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
+            <mat-cell *matCellDef="let i = index"> {{i + 1}} </mat-cell>
+        </ng-container> -->
+        <ng-container matColumnDef="Username">
+            <mat-header-cell *matHeaderCellDef> Nom d'usager </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.Username}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="GamesWon">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Parties Gagnées </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.GamesWon}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="TournamentsWon">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Tournois Gagnés </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.TournamentsWon}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="Points">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Points </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.Points}} </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="goToProfileOf(row.Id)"></mat-row>
+    </mat-table>
+    <mat-paginator [length]="length" [pageSize]="pageSize"></mat-paginator>
+</div>

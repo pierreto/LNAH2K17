@@ -19,7 +19,7 @@ import SceneKit
 /// @author Mikael Ferland et Pierre To
 /// @date 2017-10-01
 ///////////////////////////////////////////////////////////////////////////
-class EditorViewController: UIViewController {
+class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
 
     /// Instance singleton
     static var instance = EditorViewController()
@@ -36,9 +36,9 @@ class EditorViewController: UIViewController {
     public var editorHUDScene: EditorHUDScene?
     
     @IBOutlet weak var navigationBar: UINavigationItem!
-    
-    /// Object Properties View
     @IBOutlet weak var objectPropertiesView: ObjectPropertiesView!
+    
+    private var timer: Timer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,6 +73,9 @@ class EditorViewController: UIViewController {
         self.showObjectPropertiesView(activer: false)
         self.objectPropertiesView.objectProperties.isHidden = true;
         self.objectPropertiesView.hideObjectPropertiesButtons()
+        
+        // Activer le timer pour la sauvegarde automatique de la carte
+        self.scheduledTimerWithTimeInterval()
     }
     
     override func viewWillDisappear(_ animated : Bool) {
@@ -81,6 +84,8 @@ class EditorViewController: UIViewController {
         if self.isMovingFromParentViewController {
             FacadeModele.instance.obtenirEtatEdition().leaveEdition()
         }
+        
+        self.timer?.invalidate()
     }
     
     func initView() {
@@ -127,6 +132,8 @@ class EditorViewController: UIViewController {
         for button in self.navigationBar.rightBarButtonItems! {
             button.isEnabled = activer
         }
+        
+        // TODO : Si c'est désactivé, il faudrait interrompre la sauvegarde automatique. Lorque c'est reactivé, reprendre la sauvegarde auto.
     }
     
     /// Afficher/Cacher la vue
@@ -139,8 +146,26 @@ class EditorViewController: UIViewController {
         }
     }
     
-    @IBAction func sauvegarderCarte(_ sender: Any) {
-        FacadeModele.instance.sauvegarderCarte(map: currentMap!)
+    func scheduledTimerWithTimeInterval() {
+        self.timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(self.sauvegarderCarteAutomatiquement), userInfo: nil, repeats: true)
+    }
+    
+    func sauvegarderCarteAutomatiquement() {
+        FacadeModele.instance.sauvegarderCarte(map: self.currentMap!)
+    }
+    
+    @IBAction func sauvegarderCarteManuellement(_ sender: Any) {
+        FacadeModele.instance.sauvegarderCarte(map: self.currentMap!)
+    }
+    
+    /// Permettre la reconnaissance simultanée de plusieurs gestures
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        if (gestureRecognizer is UIPinchGestureRecognizer || gestureRecognizer is UIRotationGestureRecognizer
+            || gestureRecognizer is UIPanGestureRecognizer || gestureRecognizer is UITapGestureRecognizer) {
+            return true
+        } else {
+            return false
+        }
     }
     
     override var shouldAutorotate: Bool {

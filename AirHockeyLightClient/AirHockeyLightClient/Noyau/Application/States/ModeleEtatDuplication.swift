@@ -57,6 +57,8 @@ class ModeleEtatDuplication: ModeleEtat {
             }
         }
         
+        self.reactiverButtons()
+        
         /// Désélectionner tous les noeuds
         let arbre = FacadeModele.instance.obtenirArbreRendu()
         let table = arbre.childNode(withName: arbre.NOM_TABLE, recursively: true) as! NoeudTable
@@ -97,6 +99,8 @@ class ModeleEtatDuplication: ModeleEtat {
             // Déplacer les noeuds dupliqués
             let deplacement = super.obtenirDeplacement()
             self.deplacerNoeud(deplacement: deplacement)
+            
+            self.enableNavigationBar()
         }
         else if sender.state == .ended {
             print("Fin duplication noeud")
@@ -125,7 +129,7 @@ class ModeleEtatDuplication: ModeleEtat {
     }
     
     /// Dupliquer les noeuds sélectionnés
-    func dupliquerNoeud() {
+    private func dupliquerNoeud() {
         let duplication = VisiteurDuplication()
         FacadeModele.instance.obtenirArbreRendu().accepterVisiteur(visiteur: duplication)
         
@@ -138,7 +142,7 @@ class ModeleEtatDuplication: ModeleEtat {
     }
     
     /// Déterminer le déplacement des noeuds dupliqués au toucher de l'utilisateur
-    func obtenirDeplacementDuplication(centreDuplication: GLKVector3) -> GLKVector3 {
+    private func obtenirDeplacementDuplication(centreDuplication: GLKVector3) -> GLKVector3 {
         let arbre = FacadeModele.instance.obtenirArbreRendu()
         let table = arbre.childNode(withName: arbre.NOM_TABLE, recursively: true) as! NoeudTable
         

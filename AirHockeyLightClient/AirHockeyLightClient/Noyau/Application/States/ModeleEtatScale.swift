@@ -51,6 +51,9 @@ class ModeleEtatScale: ModeleEtat {
             // Dernier rotation
             self.appliquerScaling(scale: Float(sender.scale))
             
+            // Set the scale factor to 1.0 to avoid exponential growth
+            sender.scale = 1.0
+            
             if !self.noeudsSurLaTable() {
                 // Annuler la rotation
                 self.revertScale()
@@ -58,6 +61,9 @@ class ModeleEtatScale: ModeleEtat {
         }
         else {
             self.appliquerScaling(scale: Float(sender.scale))
+            
+            // Set the scale factor to 1.0 to avoid exponential growth
+            sender.scale = 1.0
         }
     }
     
@@ -71,7 +77,7 @@ class ModeleEtatScale: ModeleEtat {
         }
         // Pinch out
         else {
-            ajoutScale = -Float(scale) * 6.0
+            ajoutScale = -Float(scale) * 2.0
         }
         
         // Apply nouveau scale

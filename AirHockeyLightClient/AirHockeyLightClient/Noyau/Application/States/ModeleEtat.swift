@@ -27,6 +27,12 @@ class ModeleEtat {
     /// Position du toucher
     var position = CGPoint()
     
+    /// Position du dernier toucher associé au pan
+    var lastPanPosition = CGPoint()
+    
+    /// Position du toucher associé au pan
+    var panPosition = CGPoint()
+    
     func initialiser() {}
     
     /// Annule l'action en cours
@@ -39,14 +45,24 @@ class ModeleEtat {
         self.position = point
     }
     
-    // PAN
+    // IMMEDIATE PAN
     func panGesture(sender: ImmediatePanGestureRecognizer) {
         self.lastPosition = self.position
         self.position = sender.location(in: sender.view)
     }
     
+    // NORMAL PAN
+    func normalPanGesture(sender: UIPanGestureRecognizer) {
+        self.lastPanPosition = self.panPosition
+        self.panPosition = sender.translation(in: sender.view)
+    }
+    
     // PINCH
     func pinchGesture(sender: UIPinchGestureRecognizer) {
+    }
+    
+    // ROTATE
+    func rotateGesture(sender: UIRotationGestureRecognizer) {
     }
     
     /// Fonction pour obtenir la vue rapidement
@@ -68,7 +84,7 @@ class ModeleEtat {
         return sontSurTable
     }
     
-    /// Détermine le déplacement (delta)
+    /// Détermine le déplacement d'un immediate pan gesture (delta)
     func obtenirDeplacement() -> GLKVector3 {
         let arbre = FacadeModele.instance.obtenirArbreRendu()
         let table = arbre.childNode(withName: arbre.NOM_TABLE, recursively: true) as! NoeudTable
@@ -77,6 +93,20 @@ class ModeleEtat {
                                                    depth: table.position.z, point: self.lastPosition)
         let end = MathHelper.CGPointToSCNVector3(view: FacadeModele.instance.obtenirVue().editorView,
                                                  depth: table.position.z, point: self.position)
+        let delta = GLKVector3Make(end.x - start.x, end.y - start.y, end.z - start.z)
+        
+        return delta
+    }
+
+    /// Détermine le déplacement d'un pan gesture normal (delta)
+    func obtenirPanDeplacement() -> GLKVector3 {
+        let arbre = FacadeModele.instance.obtenirArbreRendu()
+        let table = arbre.childNode(withName: arbre.NOM_TABLE, recursively: true) as! NoeudTable
+        
+        let start = MathHelper.CGPointToSCNVector3(view: FacadeModele.instance.obtenirVue().editorView,
+                                                   depth: table.position.z, point: self.lastPanPosition)
+        let end = MathHelper.CGPointToSCNVector3(view: FacadeModele.instance.obtenirVue().editorView,
+                                                 depth: table.position.z, point: self.panPosition)
         let delta = GLKVector3Make(end.x - start.x, end.y - start.y, end.z - start.z)
         
         return delta
@@ -113,6 +143,26 @@ class ModeleEtat {
         // Envoyer la commande
         FacadeModele.instance.obtenirEtatEdition().currentUserSelectedObject(uuidSelected: "", isSelected: false, deselectAll: true)
     }
+    
+    // Affiche/Cache les bouttons du HUD et la barre de navigation si les noeuds sont sur la table
+    func showButtonsNoeudSurTable() {
+        let noeudsSurTable = self.noeudsSurLaTable()
+        FacadeModele.instance.obtenirVue().editorHUDScene?.showButtonsNoeudSurTable(activer: noeudsSurTable)
+        FacadeModele.instance.obtenirVue().enableNavigationBar(activer: noeudsSurTable)
+    }
+    
+    // Affiche/Cache la barre de navigation si les noeuds sont sur la table
+    func enableNavigationBar() {
+        let noeudsSurTable = self.noeudsSurLaTable()
+        FacadeModele.instance.obtenirVue().enableNavigationBar(activer: noeudsSurTable)
+    }
+    
+    // Réactive tous les buttons du HUD et de la barre de navigation
+    func reactiverButtons() {
+        FacadeModele.instance.obtenirVue().editorHUDScene?.showButtonsNoeudSurTable(activer: true)
+        FacadeModele.instance.obtenirVue().enableNavigationBar(activer: true)
+    }
+    
 }
 
 ///////////////////////////////////////////////////////////////////////////////

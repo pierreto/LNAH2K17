@@ -10,6 +10,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Timers;
 using System.Web;
 
@@ -32,22 +33,22 @@ namespace AirHockeyServer.Events.EventManagers
         protected ConcurrentDictionary<Guid, int> RemainingTime { get; set; }
 
         protected ConcurrentDictionary<Guid, GameEntity> Games { get; set; }
-
-        protected IHubContext HubContext { get; set; }
+        
         
 
         public IGameManager GameManager { get; private set; }
         public MapService MapService { get; set; }
+        public ConnectionMapper ConnectionMapper { get; set; }
 
-        public GameWaitingRoomEventManager(IGameManager gameManager, MapService mapService)
+        public GameWaitingRoomEventManager(IGameManager gameManager, MapService mapService, ConnectionMapper connectionMapper)
         {
             this.RemainingTime = new ConcurrentDictionary<Guid, int>();
 
             GameMatchMakerService.Instance().MatchFoundEvent += OnMatchFound;
 
-            HubContext = GlobalHost.ConnectionManager.GetHubContext<GameWaitingRoomHub>();
             GameManager = gameManager;
             MapService = mapService;
+            ConnectionMapper = connectionMapper;
             Games = new ConcurrentDictionary<Guid, GameEntity>();
         }
 
@@ -60,7 +61,7 @@ namespace AirHockeyServer.Events.EventManagers
         /// avertir qu'un adversaire leur a été attribué.
         ///
         ////////////////////////////////////////////////////////////////////////
-        private void OnMatchFound(object sender, MatchFoundArgs args)
+        private async void OnMatchFound(object sender, MatchFoundArgs args)
         {
             GameEntity gameCreated = new GameEntity()
             {
@@ -78,7 +79,7 @@ namespace AirHockeyServer.Events.EventManagers
                 var connection = ConnectionMapper.GetConnection(player.Id);
                 try
                 {
-                    HubContext.Groups.Add(connection, stringGameId).Wait();
+                   await GlobalHost.ConnectionManager.GetHubContext<GameWaitingRoomHub>().Groups.Add(connection, stringGameId);
                 }
                 catch(Exception e)
                 {
@@ -87,7 +88,7 @@ namespace AirHockeyServer.Events.EventManagers
             }
 
             Games[gameCreated.GameId] = gameCreated;
-            HubContext.Clients.Group(stringGameId).OpponentFoundEvent(gameCreated);
+            GlobalHost.ConnectionManager.GetHubContext<GameWaitingRoomHub>().Clients.Group(stringGameId).OpponentFoundEvent(gameCreated);
             
             this.RemainingTime[gameCreated.GameId] = 0;
 
@@ -112,7 +113,7 @@ namespace AirHockeyServer.Events.EventManagers
                 RemainingTime[gameId] += 1000;
 
                 var remainingTime = ((WAITING_TIMEOUT - RemainingTime[gameId]) / 1000);
-                HubContext.Clients.Group(gameId.ToString()).WaitingRoomRemainingTime(remainingTime); 
+                GlobalHost.ConnectionManager.GetHubContext<GameWaitingRoomHub>().Clients.Group(gameId.ToString()).WaitingRoomRemainingTime(remainingTime); 
             }
             else
             {
@@ -132,7 +133,7 @@ namespace AirHockeyServer.Events.EventManagers
                 Games[gameId].SelectedMap = await MapService.GetMap(mapId);
 
                 GameManager.AddGame(Games[gameId]);
-                HubContext.Clients.Group(gameId.ToString()).GameStartingEvent(Games[gameId]);
+                GlobalHost.ConnectionManager.GetHubContext<GameWaitingRoomHub>().Clients.Group(gameId.ToString()).GameStartingEvent(Games[gameId]);
             }
         }
 

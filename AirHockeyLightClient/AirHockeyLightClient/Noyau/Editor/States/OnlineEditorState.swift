@@ -93,6 +93,12 @@ class OnlineEditorState: EditorState {
         self.clientConnection.getEditionHub().sendEditionCommand(command: command)
     }
     
+    override func sauvegarderCarte(map: MapEntity, json: String?) {
+        map.json = json
+        let mapService = MapService()
+        mapService.saveMap(map: map)
+    }
+    
 }
 
 ///////////////////////////////////////////////////////////////////////////////

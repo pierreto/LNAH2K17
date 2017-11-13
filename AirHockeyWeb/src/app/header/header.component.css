@@ -5,7 +5,8 @@
     top: 0;
     height: 80px;
     width: 100%;
-    background-color: #aaa;
+    background-color: #2e2e2e;
+    z-index: 100;
 }
 
 #login {
@@ -55,3 +56,38 @@ span.year {
     color: red;
 }
 
+.profileBtn {
+    font-size: 24px;
+    font-weight: bold;
+    width: 220px;
+    height: 40px;
+    background-color: #3EABE6;
+    color: #fff;
+    border-radius: 5px;
+    margin: 10px auto;  
+    padding: 3px;
+}
+
+.rankings {
+    font-size: 24px;
+    font-weight: bold;
+    width: 220px;
+    height: 40px;
+    background-color: gold;
+    color: #fff;
+    border-radius: 5px;
+    margin: 10px auto;  
+    padding: 3px;
+}
+
+.deconnexion {
+    font-size: 24px;
+    font-weight: bold;
+    width: 220px;
+    height: 40px;
+    background-color: #DA3737;
+    color: #fff;
+    border-radius: 5px;
+    margin: 10px auto;  
+    padding: 3px;
+}

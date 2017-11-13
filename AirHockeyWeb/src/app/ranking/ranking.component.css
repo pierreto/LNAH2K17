@@ -1,0 +1,47 @@
+.example-container {
+  display: flex;
+  flex-direction: column;
+  width: auto;
+  padding: 0px 200px 0px 200px;
+}
+  
+.mat-table {
+  overflow: auto;
+  border: 1px solid #2f2f2f;
+  border-radius: 5px;
+  box-shadow: 5px 5px 5px black;
+  font-size: 0px;
+  min-width: 600px;
+}
+
+.mat-header-cell {
+  color: #cccccc;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+}
+
+.mat-header-row {
+    background-color:#777;
+    box-shadow: 1px 1px 1px 1px #888888;
+}
+
+.mat-header-cell.mat-sort-header-sorted {
+  color: #FFFFFF;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.mat-paginator {
+  align-self: center;
+  max-width: 500px;
+  border-radius: 5px;
+  margin: 20px 0px 0px 0px;
+  box-shadow: 1px 1px 1px 1px #888888;
+  margin-bottom: 20px;
+}
+
+.mat-row:hover {
+  background-color: #dedede;
+  transition: background-color 1s ease-out;
+}

@@ -22,7 +22,7 @@ namespace InterfaceGraphique.Editor
         public bool Private;
         public string Password;
 
-        // Add NumberOfPlayers?
+        public DateTime LastBackup;
     }
 
     public class MapManager
@@ -34,14 +34,15 @@ namespace InterfaceGraphique.Editor
         public MapManager(MapService mapService)
         {
             this.mapService = mapService;
-            this.currentMapInfo = new MapMetaData();
+            this.currentMapInfo = new MapMetaData { LastBackup = DateTime.Now };
         }
 
         public void resetMapInfo()
         {
             this.currentMapInfo = new MapMetaData
             {
-                Creator = User.Instance.UserEntity.Username
+                Creator = User.Instance.UserEntity.Username,
+                LastBackup = DateTime.Now
             };
         }
 
@@ -65,7 +66,8 @@ namespace InterfaceGraphique.Editor
                 {
                     savedOnce = true,
                     Creator = User.Instance.UserEntity.Username,
-                    Name = ofd.FileName
+                    Name = ofd.FileName,
+                    LastBackup = DateTime.Now
                 };
             }
         }
@@ -104,7 +106,8 @@ namespace InterfaceGraphique.Editor
                 Creator = mapMetaData.Creator,
                 Name = mapMetaData.MapName,
                 Private = mapMetaData.Private,
-                Password = mapMetaData.Password
+                Password = mapMetaData.Password,
+                LastBackup = DateTime.Now
             };
         }
 
@@ -119,10 +122,21 @@ namespace InterfaceGraphique.Editor
         }
 
         private async Task SaveOnlineMap()
-        {/*
+        {
             // First, we fetch the JSON of the map:
-            StringBuilder sb = new StringBuilder(2000);
-            FonctionsNatives.getMapJson(Program.GeneralProperties.GetCoefficientValues(), sb);
+            StringBuilder sb = new StringBuilder(60000);
+            try
+            {
+                FonctionsNatives.getMapJson(Program.GeneralProperties.GetCoefficientValues(), sb);
+            }
+            catch
+            {
+                MessageBox.Show(
+                     @"Impossible de sauvegarder la carte : celle-ci contient trop d'objets. :-(",
+                     @"Internal error",
+                     MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             string json = sb.ToString();
 
             MapEntity map = new MapEntity
@@ -130,10 +144,11 @@ namespace InterfaceGraphique.Editor
                 Id = this.currentMapInfo.Id,
                 Creator = this.currentMapInfo.Creator,
                 MapName = this.currentMapInfo.Name,
-                LastBackup = DateTime.Now,
+                CreationDate = DateTime.Now,
                 Json = json,
                 Private = this.currentMapInfo.Private,
-                Password = this.currentMapInfo.Password
+                Password = this.currentMapInfo.Password,
+                LastBackup = DateTime.Now
             };
 
             bool saved = false;
@@ -164,7 +179,7 @@ namespace InterfaceGraphique.Editor
                 // we have to update the properties of the current map:
                 this.currentMapInfo.savedOnce = true;
                 this.currentMapInfo.savedOnline = true;
-            }*/
+            }
         }
 
         public void ManageSavingLocalMap()
@@ -193,7 +208,8 @@ namespace InterfaceGraphique.Editor
                 this.currentMapInfo = new MapMetaData
                 {
                     Creator = User.Instance.UserEntity.Username,
-                    Name = form.Text_MapName.Text
+                    Name = form.Text_MapName.Text,
+                    LastBackup = DateTime.Now
                 };
 
                 if (form.Button_PrivateMap.Checked)
@@ -237,7 +253,11 @@ namespace InterfaceGraphique.Editor
             {
                 if (this.currentMapInfo.savedOnline)
                 {
-                    await SaveOnlineMap();
+                    if ((DateTime.Now - this.currentMapInfo.LastBackup).TotalSeconds >= 1) // Il s'est passe plus de 1s depuis la derniere sauvegarde
+                    {
+                        this.currentMapInfo.LastBackup = DateTime.Now;
+                        await SaveOnlineMap();  
+                    }
                 }
                 else
                 {

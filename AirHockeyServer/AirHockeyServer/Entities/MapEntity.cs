@@ -18,6 +18,7 @@ namespace AirHockeyServer.Entities
         public int? Id { get; set; }
         public string Creator { get; set; }
         public string MapName { get; set; }
+        public DateTime CreationDate { get; set; }
         public DateTime LastBackup { get; set; }
         public string Json { get; set; }
         public bool Private { get; set; }

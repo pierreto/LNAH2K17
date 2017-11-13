@@ -24,16 +24,13 @@ enum ConnectionNotification {
 
 class HubManager {
     
-    /// Instance singleton de l'objet HubManager
+    /// Instance singleton
     static let sharedConnection = HubManager()
     
     private var connection: SignalR?
     private var hubs = [BaseHub]()
-    
-    /// Adresse IP du serveur
+    private var user = UserEntity()
     private var ipAddress: String?
-    private var username: String?
-    private var id: Int?
     
     private var _connected: Bool? = false
     
@@ -58,6 +55,14 @@ class HubManager {
         return self.hubs.first(where: { $0 is EditionHub }) as! EditionHub
     }
     
+    public func getFriendsHub() -> FriendsHub {
+        return self.hubs.first(where: { $0 is FriendsHub }) as! FriendsHub
+    }
+    
+    public func getUser() -> UserEntity {
+        return self.user
+    }
+    
     public func getIpAddress() -> String? {
         return self.ipAddress
     }
@@ -67,19 +72,19 @@ class HubManager {
     }
     
     public func getUsername() -> String? {
-        return self.username
+        return self.user.getUsername()
     }
     
     public func setUsername(username: String) {
-        self.username = username
+        self.user.setUsername(username: username)
     }
     
     public func getId() -> Int? {
-        return self.id
+        return self.user.getId()
     }
     
     public func setId(id: Int) {
-        self.id = id
+        self.user.setId(id: id)
     }
     
     ////////////////////////////////////////////////////////////////////////
@@ -111,8 +116,8 @@ class HubManager {
     public func AddHubs() {
         self.hubs.append(ChatHub(connection: self.connection))
         self.hubs.append(EditionHub(connection: self.connection))
+        self.hubs.append(FriendsHub(connection: self.connection))
     }
-    
 
     /// Déconnecter tous les hubs et terminer la connexion
     public func Logout() {
@@ -121,6 +126,7 @@ class HubManager {
         }
         self.connection?.stop()
     }
+    
 }
 
 ///////////////////////////////////////////////////////////////////////////////

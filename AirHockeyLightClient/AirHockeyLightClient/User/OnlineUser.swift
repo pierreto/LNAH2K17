@@ -19,23 +19,23 @@ import UIKit
 ///////////////////////////////////////////////////////////////////////////
 class OnlineUser {
     
-    private var username : String
+    private var user = UserEntity()
     private var hexColor : UIColor
     private var uuidsSelected = [String]()
     private var nodesSelected: [NoeudCommun]
     
     init(username: String, hexColor: String) {
-        self.username = username
+        self.user.setUsername(username: username)
         self.hexColor = MathHelper.hexToUIColor(hex: hexColor)
         self.nodesSelected = [NoeudCommun]()
     }
     
     public func getUsername() -> String {
-        return self.username
+        return self.user.getUsername()
     }
     
     public func setUsername(username: String) {
-        self.username = username
+        self.user.setUsername(username: username)
     }
     
     public func getHexColor() -> UIColor {

@@ -29,7 +29,7 @@ namespace AirHockeyServer.Repositories
                         from user in DC.UsersTable
                         where (user.Id == id)
                         select user;
-                    List<UserPoco> uP = await Task<List<UserPoco>>.Run(
+                    List<UserPoco> uP = await Task.Run(
                         () => query.ToList<UserPoco>());
                     if (uP.Any())
                     {
@@ -96,7 +96,7 @@ namespace AirHockeyServer.Repositories
                         from user in DC.UsersTable
                         select user;
 
-                    List<UserPoco> userPocos = await Task<List<UserPoco>>.Run(
+                    List<UserPoco> userPocos = await Task.Run(
                         () => query.ToList<UserPoco>());
 
                     return MapperManager.Mapper.Map<List<UserPoco>, List<UserEntity>>(userPocos);

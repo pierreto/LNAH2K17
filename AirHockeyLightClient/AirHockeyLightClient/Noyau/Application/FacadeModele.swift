@@ -20,11 +20,11 @@ enum MODELE_ETAT : Int {
     case CREATION_ACCELERATEUR = 2
     case CREATION_MURET = 3
     case CREATION_PORTAIL = 4
-    case DEPLACEMENT = 5
-    case ROTATION = 6
-    case MISE_A_ECHELLE = 7
+    case DEPLACEMENT = 5    // CLIENT LOURD
+    case ROTATION = 6       // CLIENT LOURD
+    case MISE_A_ECHELLE = 7 // CLIENT LOURD
     case DUPLIQUER = 8
-    case ZOOM = 9
+    case ZOOM = 9           // CLIENT LOURD
     case POINTS_CONTROLE = 10
     // TODO : Avoir une caméra libre en tout temps
     case CAMERA_CONTROLE = 11
@@ -93,6 +93,8 @@ class FacadeModele {
     var tapGestureRecognizer: UITapGestureRecognizer?
     var panGestureRecognizer: ImmediatePanGestureRecognizer?
     var pinchGestureRecognizer: UIPinchGestureRecognizer?
+    var rotateGestureRecognizer: UIRotationGestureRecognizer?
+    var normalPanGestureRecognizer: UIPanGestureRecognizer?
     
     /// Etat du modèle
     private var etat: ModeleEtat?
@@ -113,6 +115,14 @@ class FacadeModele {
         self.tapGestureRecognizer = UITapGestureRecognizer(target: self, action:  #selector (self.tapGesture (_:)))
         self.panGestureRecognizer = ImmediatePanGestureRecognizer(target: self, action: #selector (self.panGesture(_:)))
         self.pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector (self.pinchGesture(_:)))
+        self.rotateGestureRecognizer = UIRotationGestureRecognizer(target: self, action: #selector (self.rotateGesture(_:)))
+        self.normalPanGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector (self.normalPanGesture(_:)))
+        
+        // Permettre la reconnaissance simultanée de gestures
+        self.tapGestureRecognizer?.delegate = self.viewController
+        self.pinchGestureRecognizer?.delegate = self.viewController
+        self.rotateGestureRecognizer?.delegate = self.viewController
+        self.normalPanGestureRecognizer?.delegate = self.viewController
         
         self.arbre?.initialiser()
         self.etat?.initialiser()
@@ -184,8 +194,16 @@ class FacadeModele {
         self.etat?.panGesture(sender: sender)
     }
     
+    @objc func normalPanGesture(_ sender: UIPanGestureRecognizer) {
+        self.etat?.normalPanGesture(sender: sender)
+    }
+    
     @objc func pinchGesture(_ sender: UIPinchGestureRecognizer) {
         self.etat?.pinchGesture(sender: sender)
+    }
+    
+    @objc func rotateGesture(_ sender: UIRotationGestureRecognizer) {
+        self.etat?.rotateGesture(sender: sender)
     }
     
     /// Réinitialise la scène.
@@ -206,16 +224,16 @@ class FacadeModele {
                 self.etat = ModeleEtatSelection.instance
                 break
             case .DEPLACEMENT:
-                self.etat = ModeleEtatDeplacement.instance
+                // Ne fait rien
                 break
             case .ROTATION:
-                self.etat = ModeleEtatRotation.instance
+                // Ne fait rien
                 break
             case .MISE_A_ECHELLE:
-                self.etat = ModeleEtatScale.instance
+                // Ne fait rien
                 break
             case .ZOOM:
-                //self.etat = ModeleEtatZoom.instance
+                // Ne fait rien
                 break
             case .DUPLIQUER:
                 self.etat = ModeleEtatDuplication.instance
@@ -533,8 +551,8 @@ class FacadeModele {
         self.arbre?.accepterVisiteur(visiteur: visiteur)
         self.sauvegarderCoefficients()
         
-        // Sauvegarder la carte localement
-        DBManager.instance.sauvegarderCarte(map: map, json: (self.docJSON?.rawString(options: []))!)
+        // Sauvegarder la carte
+        self.etatEdition?.sauvegarderCarte(map: map, json: (self.docJSON?.rawString(options: []))!)
     }
     
     private func initializeJson() {
