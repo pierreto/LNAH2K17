@@ -144,10 +144,11 @@ namespace InterfaceGraphique.Editor
                 Id = this.currentMapInfo.Id,
                 Creator = this.currentMapInfo.Creator,
                 MapName = this.currentMapInfo.Name,
-                LastBackup = DateTime.Now,
+                CreationDate = DateTime.Now,
                 Json = json,
                 Private = this.currentMapInfo.Private,
-                Password = this.currentMapInfo.Password
+                Password = this.currentMapInfo.Password,
+                LastBackup = DateTime.Now
             };
 
             bool saved = false;

@@ -29,5 +29,8 @@ namespace AirHockeyServer.Pocos
 
         [Column(Name = "password", DbType = "varchar(255)", CanBeNull = true)]
         public string Password;
+
+        [Column(Name = "lastBackup", DbType = "datetime NOT NULL", CanBeNull = false, UpdateCheck = UpdateCheck.Never)]
+        public DateTime LastBackup;
     }
 }
