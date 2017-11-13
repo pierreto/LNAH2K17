@@ -59,6 +59,9 @@ class ModeleEtatSelection: ModeleEtat {
         
         // La mise à l'échelle des noeuds s'effectue par la gesture pinch
         FacadeModele.instance.obtenirVue().editorView.addGestureRecognizer(FacadeModele.instance.pinchGestureRecognizer!)
+        
+        // Désactiver le contrôle de la caméra
+        FacadeModele.instance.obtenirVue().editorView.allowsCameraControl = false
     }
     
     override func nettoyerEtat() {
@@ -73,6 +76,9 @@ class ModeleEtatSelection: ModeleEtat {
         
         /// Enlève la gesture pinch
         FacadeModele.instance.obtenirVue().editorView.removeGestureRecognizer(FacadeModele.instance.pinchGestureRecognizer!)
+        
+        // Réactiver le contrôle de la caméra
+        FacadeModele.instance.obtenirVue().editorView.allowsCameraControl = true
     }
     
     // Fonctions gérant les entrées de l'utilisateur
@@ -80,6 +86,8 @@ class ModeleEtatSelection: ModeleEtat {
     // TAP
     override func tapGesture(point: CGPoint) {
         super.tapGesture(point: point)
+        
+        print("Tap gesture")
         
         let visiteur = VisiteurSelection(point: self.position)
         FacadeModele.instance.obtenirArbreRendu().accepterVisiteur(visiteur: visiteur)
@@ -200,7 +208,7 @@ class ModeleEtatSelection: ModeleEtat {
     
     // Déplacer des noeuds
     private func deplacer() {
-        let deplacement = super.obtenirDeplacement()
+        let deplacement = super.obtenirPanDeplacement()
         let visiteur = VisiteurDeplacement(delta: deplacement)
         FacadeModele.instance.obtenirArbreRendu().accepterVisiteur(visiteur: visiteur)
         
@@ -267,11 +275,11 @@ class ModeleEtatSelection: ModeleEtat {
         // Pinch in
         let ajoutScale: Float
         if (scale > 1.0) {
-            ajoutScale = Float(scale) * 2.0
+            ajoutScale = Float(scale)
         }
             // Pinch out
         else {
-            ajoutScale = -Float(scale) * 2.0
+            ajoutScale = -Float(scale)
         }
         
         // Apply nouveau scale

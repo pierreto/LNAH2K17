@@ -261,14 +261,14 @@ class NoeudCommun : SCNNode {
     /// le scaling et la rotation
     func deplacer(position: GLKVector3) {
         // Sauvegarder rotation et scaling
-        self.savedRotation = self.rotation
-        self.savedScale = self.scale
+        let savedRotation = self.rotation
+        let savedScale = self.scale
         
         self.assignerPositionRelative(positionRelative: position)
         
         // Réappliquer rotation et scaling
-        self.rotation = self.savedRotation
-        self.scale = self.savedScale
+        self.rotation = savedRotation
+        self.scale = savedScale
         
         //let glkRotation = SCNVector4ToGLKVector4(self.rotation)
         //let glkScale = GLKVector4MakeWithVector3(SCNVector3ToGLKVector3(self.scale), 0.0)

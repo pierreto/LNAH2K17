@@ -27,6 +27,12 @@ class ModeleEtat {
     /// Position du toucher
     var position = CGPoint()
     
+    /// Position du dernier toucher associé au pan
+    var lastPanPosition = CGPoint()
+    
+    /// Position du toucher associé au pan
+    var panPosition = CGPoint()
+    
     func initialiser() {}
     
     /// Annule l'action en cours
@@ -47,8 +53,8 @@ class ModeleEtat {
     
     // NORMAL PAN
     func normalPanGesture(sender: UIPanGestureRecognizer) {
-        self.lastPosition = self.position
-        self.position = sender.location(in: sender.view)
+        self.lastPanPosition = self.panPosition
+        self.panPosition = sender.translation(in: sender.view)
     }
     
     // PINCH
@@ -78,7 +84,7 @@ class ModeleEtat {
         return sontSurTable
     }
     
-    /// Détermine le déplacement (delta)
+    /// Détermine le déplacement d'un immediate pan gesture (delta)
     func obtenirDeplacement() -> GLKVector3 {
         let arbre = FacadeModele.instance.obtenirArbreRendu()
         let table = arbre.childNode(withName: arbre.NOM_TABLE, recursively: true) as! NoeudTable
@@ -87,6 +93,20 @@ class ModeleEtat {
                                                    depth: table.position.z, point: self.lastPosition)
         let end = MathHelper.CGPointToSCNVector3(view: FacadeModele.instance.obtenirVue().editorView,
                                                  depth: table.position.z, point: self.position)
+        let delta = GLKVector3Make(end.x - start.x, end.y - start.y, end.z - start.z)
+        
+        return delta
+    }
+
+    /// Détermine le déplacement d'un pan gesture normal (delta)
+    func obtenirPanDeplacement() -> GLKVector3 {
+        let arbre = FacadeModele.instance.obtenirArbreRendu()
+        let table = arbre.childNode(withName: arbre.NOM_TABLE, recursively: true) as! NoeudTable
+        
+        let start = MathHelper.CGPointToSCNVector3(view: FacadeModele.instance.obtenirVue().editorView,
+                                                   depth: table.position.z, point: self.lastPanPosition)
+        let end = MathHelper.CGPointToSCNVector3(view: FacadeModele.instance.obtenirVue().editorView,
+                                                 depth: table.position.z, point: self.panPosition)
         let delta = GLKVector3Make(end.x - start.x, end.y - start.y, end.z - start.z)
         
         return delta

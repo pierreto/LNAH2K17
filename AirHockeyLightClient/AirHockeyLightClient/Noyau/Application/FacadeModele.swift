@@ -118,6 +118,12 @@ class FacadeModele {
         self.rotateGestureRecognizer = UIRotationGestureRecognizer(target: self, action: #selector (self.rotateGesture(_:)))
         self.normalPanGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector (self.normalPanGesture(_:)))
         
+        // Permettre la reconnaissance simultanée de gestures
+        self.tapGestureRecognizer?.delegate = self.viewController
+        self.pinchGestureRecognizer?.delegate = self.viewController
+        self.rotateGestureRecognizer?.delegate = self.viewController
+        self.normalPanGestureRecognizer?.delegate = self.viewController
+        
         self.arbre?.initialiser()
         self.etat?.initialiser()
         self.initVue()
