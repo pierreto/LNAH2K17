@@ -632,10 +632,7 @@ std::string FacadeModele::_getMapJson(float coefficients[]) {
 
 	if (!docJSON_.HasMember("Icon")) {
 		rapidjson::Value iconBytes(rapidjson::kArrayType);
-
-
-		//docJSON_.AddMember("Icon", iconBytes, docJSON_.GetAllocator());
-
+		docJSON_.AddMember("Icon", iconBytes, docJSON_.GetAllocator());
 	}
 
 	VisiteurSauvegarde visiteur = VisiteurSauvegarde();
@@ -682,10 +679,25 @@ void FacadeModele::createMapIcon() {
 
 	FIBITMAP* image = FreeImage_ConvertFromRawBits(outPixels, sizex, newDim.y, 3 * sizex, 24, 0x0000FF, 0xFF0000, 0x00FF00, false);
 
-	FreeImage_Save(FIF_BMP, image, "test.bmp", 0);
+	FIBITMAP* imageRescaled = FreeImage_Rescale(image, 128, 128, FILTER_BOX);
+
+	BYTE* bytes = nullptr;
+	FreeImage_ConvertToRawBits(bytes, imageRescaled, 3 * 128, 24, 0x0000FF, 0xFF0000, 0x00FF00, false);
+	//FreeImage_Save(FIF_JPEG, imageRescaled, "test.jpg", 0);
+
+	rapidjson::Value tempArray(rapidjson::kArrayType);
+	for(int i =0; i<128*128*3;i++ )
+	{
+		tempArray.PushBack(bytes[i], docJSON_.GetAllocator());
+	}
+
+	docJSON_["Icon"].PushBack(tempArray, docJSON_.GetAllocator());
+
+
 
 	// Free resources
 	FreeImage_Unload(image);
+	FreeImage_Unload(imageRescaled);
 
 	vue_->setLargeurFenetre(oldDim.x, oldDim.y);
 

@@ -414,8 +414,13 @@ namespace InterfaceGraphique {
             FonctionsNatives.resetCameraPosition();
             FonctionsNatives.redimensionnerFenetre(this.Size.Width + Toolbar.Size.Width, this.Size.Height - MenuBar.Size.Height);
             Program.GeneralProperties.ResetProperties();
-            mapManager.resetMapInfo();
+
+
             changerEtatEdition(this.Toolbar_Select, null, MODELE_ETAT.SELECTION);
+
+            mapManager.resetMapInfo();
+          
+
         }
 
 
