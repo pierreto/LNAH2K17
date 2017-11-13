@@ -23,6 +23,8 @@ class SignupViewController: UIViewController {
     @IBOutlet weak var confirmPasswordErrorLabel: UILabel!
     
     @IBOutlet weak var loadingSpinner: UIActivityIndicatorView!
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var stackView: UIStackView!
     // Mark: Actions
     @IBAction func createAccount(_ sender: Any) {
         disableInputs()
@@ -167,5 +169,21 @@ class SignupViewController: UIViewController {
         self.loadingSpinner.stopAnimating()
         self.view.alpha = 1.0
     }
+    
+//    override func viewDidLayoutSubviews()
+//    {
+//        let scrollViewBounds = scrollView.bounds
+//        let containerViewBounds = stackView.bounds
+//        
+//        var scrollViewInsets = UIEdgeInsets.zero
+//        scrollViewInsets.top = scrollViewBounds.size.height/2.0;
+//        scrollViewInsets.top -= stackView.bounds.size.height/2.0;
+//        
+//        scrollViewInsets.bottom = scrollViewBounds.size.height/2.0
+//        scrollViewInsets.bottom -= stackView.bounds.size.height/2.0;
+//        scrollViewInsets.bottom += 1
+//        
+//        scrollView.contentInset = scrollViewInsets
+//    }
 }
 
