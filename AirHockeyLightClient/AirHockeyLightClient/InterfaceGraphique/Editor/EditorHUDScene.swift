@@ -24,9 +24,6 @@ class EditorHUDScene: SKScene {
     private var currentButton: SKSpriteNode?
     private var cameraControlButton: SKSpriteNode?
     private var selectionButton: SKSpriteNode?
-    private var deplacementButton: SKSpriteNode?
-    private var rotationButton: SKSpriteNode?
-    private var resizeButton: SKSpriteNode?
     private var duplicateButton: SKSpriteNode?
     private var cancelButton: SKSpriteNode?
     private var deselectAllButton: SKSpriteNode?
@@ -50,9 +47,6 @@ class EditorHUDScene: SKScene {
         // Chercher les boutons noeud
         self.cameraControlButton = (self.childNode(withName: "//cameraControlButton") as? SKSpriteNode)!
         self.selectionButton = (self.childNode(withName: "//selectionButton") as? SKSpriteNode)!
-        self.deplacementButton = (self.childNode(withName: "//deplacementButton") as? SKSpriteNode)!
-        self.rotationButton = (self.childNode(withName: "//rotationButton") as? SKSpriteNode)!
-        self.resizeButton = (self.childNode(withName: "//resizeButton") as? SKSpriteNode)!
         self.duplicateButton = (self.childNode(withName: "//duplicateButton") as? SKSpriteNode)!
         self.cancelButton = (self.childNode(withName: "//cancelButton") as? SKSpriteNode)!
         self.deselectAllButton = (self.childNode(withName: "//deselectAllButton") as? SKSpriteNode)!
@@ -72,9 +66,6 @@ class EditorHUDScene: SKScene {
         // Charger les images
         self.cameraControlButton?.texture = SKTexture(imageNamed: "Camera");
         self.selectionButton?.texture = SKTexture(imageNamed: "Tap")
-        self.deplacementButton?.texture = SKTexture(imageNamed: "Move")
-        self.rotationButton?.texture = SKTexture(imageNamed: "Rotate")
-        self.resizeButton?.texture = SKTexture(imageNamed: "Resize")
         self.duplicateButton?.texture = SKTexture(imageNamed: "Duplicate")
         self.cancelButton?.texture = SKTexture(imageNamed: "Cancel");
         self.deselectAllButton?.texture = SKTexture(imageNamed: "Cancel");
@@ -110,6 +101,23 @@ class EditorHUDScene: SKScene {
     /// Active les boutons liés à la sélection
     func disableSelectContextButtons() {
         self.selectContextButtonsEnable = false
+    }
+    
+    /// Affiche/Cache les boutons liés au fait si les noeuds sont sur la table
+    func showButtonsNoeudSurTable(activer: Bool) {
+        self.cameraControlButton?.isHidden = !activer;
+        self.selectionButton?.isHidden = !activer;
+        self.duplicateButton?.isHidden = !activer;
+        self.deselectAllButton?.isHidden = !activer;
+        self.pointControlButton?.isHidden = !activer;
+        self.portalButton?.isHidden = !activer;
+        self.wallButton?.isHidden = !activer;
+        self.boosterButton?.isHidden = !activer;
+        
+        if !self.selectContextButtonsEnable {
+            self.deleteButton?.isHidden = true
+            self.deselectAllButton?.isHidden = true
+        }
     }
     
     /// Affiche/Cache le bouton d'annulation
@@ -163,18 +171,6 @@ class EditorHUDScene: SKScene {
             else if touchedNode?.name == "selectionButton"{
                 print("Selection")
                 FacadeModele.instance.changerModeleEtat(etat: .SELECTION)
-            }
-            else if touchedNode?.name == "deplacementButton"{
-                print("Deplacement")
-                FacadeModele.instance.changerModeleEtat(etat: .DEPLACEMENT)
-            }
-            else if touchedNode?.name == "rotationButton"{
-                print("Rotation")
-                FacadeModele.instance.changerModeleEtat(etat: .ROTATION)
-            }
-            else if touchedNode?.name == "resizeButton"{
-                print("Mise à l'échelle")
-                FacadeModele.instance.changerModeleEtat(etat: .MISE_A_ECHELLE)
             }
             else if touchedNode?.name == "duplicateButton"{
                 print("Duplication")

@@ -19,7 +19,7 @@ import SceneKit
 /// @author Mikael Ferland et Pierre To
 /// @date 2017-10-01
 ///////////////////////////////////////////////////////////////////////////
-class EditorViewController: UIViewController {
+class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
 
     /// Instance singleton
     static var instance = EditorViewController()
@@ -132,6 +132,8 @@ class EditorViewController: UIViewController {
         for button in self.navigationBar.rightBarButtonItems! {
             button.isEnabled = activer
         }
+        
+        // TODO : Si c'est désactivé, il faudrait interrompre la sauvegarde automatique. Lorque c'est reactivé, reprendre la sauvegarde auto.
     }
     
     /// Afficher/Cacher la vue
@@ -154,6 +156,16 @@ class EditorViewController: UIViewController {
     
     @IBAction func sauvegarderCarteManuellement(_ sender: Any) {
         FacadeModele.instance.sauvegarderCarte(map: self.currentMap!)
+    }
+    
+    /// Permettre la reconnaissance simultanée de plusieurs gestures
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        if (gestureRecognizer is UIPinchGestureRecognizer || gestureRecognizer is UIRotationGestureRecognizer
+            || gestureRecognizer is UIPanGestureRecognizer || gestureRecognizer is UITapGestureRecognizer) {
+            return true
+        } else {
+            return false
+        }
     }
     
     override var shouldAutorotate: Bool {

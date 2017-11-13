@@ -124,8 +124,19 @@ namespace InterfaceGraphique.Editor
         private async Task SaveOnlineMap()
         {
             // First, we fetch the JSON of the map:
-            StringBuilder sb = new StringBuilder(2000);
-            FonctionsNatives.getMapJson(Program.GeneralProperties.GetCoefficientValues(), sb);
+            StringBuilder sb = new StringBuilder(60000);
+            try
+            {
+                FonctionsNatives.getMapJson(Program.GeneralProperties.GetCoefficientValues(), sb);
+            }
+            catch
+            {
+                MessageBox.Show(
+                     @"Impossible de sauvegarder la carte : celle-ci contient trop d'objets. :-(",
+                     @"Internal error",
+                     MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             string json = sb.ToString();
 
             MapEntity map = new MapEntity
@@ -133,10 +144,11 @@ namespace InterfaceGraphique.Editor
                 Id = this.currentMapInfo.Id,
                 Creator = this.currentMapInfo.Creator,
                 MapName = this.currentMapInfo.Name,
-                LastBackup = DateTime.Now,
+                CreationDate = DateTime.Now,
                 Json = json,
                 Private = this.currentMapInfo.Private,
-                Password = this.currentMapInfo.Password
+                Password = this.currentMapInfo.Password,
+                LastBackup = DateTime.Now
             };
 
             bool saved = false;

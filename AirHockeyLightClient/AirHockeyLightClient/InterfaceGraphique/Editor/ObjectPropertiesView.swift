@@ -46,6 +46,8 @@ class ObjectPropertiesView: UIView {
     @IBAction func hideObjectProperties(_ sender: Any) {
         self.removeAnimate()
         self.hideObjectPropertiesButtons()
+        
+        // TODO : Si c'est caché, permettre les touch gesture de reconnaître dans la view
     }
     
     /// Animation à l'ouverture
