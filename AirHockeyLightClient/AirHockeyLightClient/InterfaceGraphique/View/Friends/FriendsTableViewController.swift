@@ -19,26 +19,39 @@ import UIKit
 ///////////////////////////////////////////////////////////////////////////
 class FriendsTableViewController: UITableViewController {
     
+    /// Instance singleton
+    static var instance = FriendsTableViewController()
+    
     @IBOutlet weak var friends: UITableView!
     
+    private let friendsHub = HubManager.sharedConnection.getFriendsHub()
     private var friendsData = [UserEntity]()
+    private var pendingRequestsData = [FriendRequestEntity]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        HubManager.sharedConnection.getFriendsHub().initialize()
+        FriendsTableViewController.instance = self
         
         self.friends.delegate = self
         self.friends.dataSource = self
         
-        self.updateEntries()
+        self.friendsHub.initialize()
+        self.friendsHub.getAllFriends()
+        self.friendsHub.getAllPendingRequest()
     }
     
-    func updateEntries() {
+    func updateFriendsEntries(friends: [UserEntity]) {
+        self.friendsData = friends
+        
         DispatchQueue.main.async(execute: { () -> Void in
             // Reload tableView
             self.friends.reloadData()
         })
+    }
+    
+    func updatePendingRequestsEntries(pendingRequests: [FriendRequestEntity]) {
+        self.pendingRequestsData = pendingRequests
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

@@ -58,7 +58,15 @@ class FriendsHub: BaseHub {
     func getAllFriends() {
         do {
             let user = HubManager.sharedConnection.getUser().toDictionary()
-            try self.hubProxy?.invoke("GetAllFriends", arguments: [user])
+            try self.hubProxy?.invoke("GetAllFriends", arguments: [user]) { (result, error) in
+                if let e = error {
+                    print("Error GetAllFriends FriendsHub: \(e)")
+                }
+                else {
+                    let friends = result as! [UserEntity]
+                    FriendsTableViewController.instance.updateFriendsEntries(friends: friends)
+                }
+            }
         }
         catch {
             print("Error GetAllFriends")
@@ -68,7 +76,15 @@ class FriendsHub: BaseHub {
     func getAllPendingRequest() {
         do {
             let user = HubManager.sharedConnection.getUser().toDictionary()
-            try self.hubProxy?.invoke("GetAllPendingRequests", arguments: [user])
+            try self.hubProxy?.invoke("GetAllPendingRequests", arguments: [user]) { (result, error) in
+                if let e = error {
+                    print("Error GetAllFriends FriendsHub: \(e)")
+                }
+                else {
+                    let pendingRequests = result as! [FriendRequestEntity]
+                    FriendsTableViewController.instance.updatePendingRequestsEntries(pendingRequests: pendingRequests)
+                }
+            }
         }
         catch {
             print("Error GetAllPendingRequests")
@@ -77,8 +93,13 @@ class FriendsHub: BaseHub {
     
     func sendFriendRequest(newFriend : UserEntity) {
         do {
-            let user = HubManager.sharedConnection.getUser().toDictionary()
-            try self.hubProxy?.invoke("SendFriendRequest", arguments: [user, newFriend])
+            let userDictionary = HubManager.sharedConnection.getUser().toDictionary()
+            let friendDictionary = newFriend.toDictionary()
+            try self.hubProxy?.invoke("SendFriendRequest", arguments: [userDictionary, friendDictionary]) { (result, error) in
+                if let e = error {
+                    print("Error GetAllFriends FriendsHub: \(e)")
+                }
+            }
         }
         catch {
             print("Error SendFriendRequest")

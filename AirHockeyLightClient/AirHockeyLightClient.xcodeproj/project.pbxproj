@@ -37,6 +37,7 @@
 		2509B8991FB8F65D002DEE9A /* сontacts.png in Resources */ = {isa = PBXBuildFile; fileRef = 2509B8981FB8F65D002DEE9A /* сontacts.png */; };
 		2509B89B1FB8F673002DEE9A /* user_group_man_woman.png in Resources */ = {isa = PBXBuildFile; fileRef = 2509B89A1FB8F673002DEE9A /* user_group_man_woman.png */; };
 		2509B89F1FB8F878002DEE9A /* CustomUITabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2509B89E1FB8F878002DEE9A /* CustomUITabBarViewController.swift */; };
+		2509B8A11FB93631002DEE9A /* FriendsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2509B8A01FB93631002DEE9A /* FriendsService.swift */; };
 		25163A891F9CE62600142418 /* ILoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25163A881F9CE62500142418 /* ILoginViewModel.swift */; };
 		252EC9161FA80FAD008D119C /* EditionHub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252EC9151FA80FAD008D119C /* EditionHub.swift */; };
 		253741AC1FA61B0C00E7DBE1 /* DBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253741AB1FA61B0C00E7DBE1 /* DBManager.swift */; };
@@ -196,6 +197,7 @@
 		2509B8981FB8F65D002DEE9A /* сontacts.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "сontacts.png"; sourceTree = "<group>"; };
 		2509B89A1FB8F673002DEE9A /* user_group_man_woman.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = user_group_man_woman.png; sourceTree = "<group>"; };
 		2509B89E1FB8F878002DEE9A /* CustomUITabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomUITabBarViewController.swift; path = InterfaceGraphique/View/Friends/CustomUITabBarViewController.swift; sourceTree = "<group>"; };
+		2509B8A01FB93631002DEE9A /* FriendsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FriendsService.swift; path = Noyau/Services/FriendsService.swift; sourceTree = "<group>"; };
 		25163A881F9CE62500142418 /* ILoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ILoginViewModel.swift; sourceTree = "<group>"; };
 		252EC9151FA80FAD008D119C /* EditionHub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditionHub.swift; path = InterfaceGraphique/Communication/EditionHub.swift; sourceTree = "<group>"; };
 		253741AB1FA61B0C00E7DBE1 /* DBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DBManager.swift; path = Noyau/Entities/DBManager.swift; sourceTree = "<group>"; };
@@ -471,6 +473,7 @@
 			isa = PBXGroup;
 			children = (
 				25EFB29F1FB7505100FFD66F /* MapService.swift */,
+				2509B8A01FB93631002DEE9A /* FriendsService.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -1070,6 +1073,7 @@
 				8F64C0111F7754EF00F14AC7 /* ChatViewController.swift in Sources */,
 				1D019A221F911DF6004D79B2 /* Signup.swift in Sources */,
 				8F0B94BC1F8D8EA6007F0E82 /* VisiteurDeplacement.swift in Sources */,
+				2509B8A11FB93631002DEE9A /* FriendsService.swift in Sources */,
 				3415E6C41F8547CE00DB1CAD /* ArbreRendu.swift in Sources */,
 				0EED627D1F9825B500CD8C56 /* NoeudMur.swift in Sources */,
 				8F764A4D1FAFBA7F00198FA4 /* BoostCommand.swift in Sources */,
