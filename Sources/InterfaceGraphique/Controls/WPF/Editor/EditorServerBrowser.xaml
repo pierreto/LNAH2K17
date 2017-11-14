@@ -17,6 +17,8 @@
                 <ResourceDictionary Source="/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Blue.xaml" />
                 <ResourceDictionary Source="/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Green.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            
+            
             <wpf:ViewModelLocator x:Key="VMLocator" d:IsDataSource="True" />
             <!--<x:Array   x:Key="SampleServerList" x:Name="OnlineEditedMapInfos" Type="model:OnlineEditedMapInfo"
                      xmlns:sys="clr-namespace:System;assembly=mscorlib">
@@ -70,6 +72,7 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
+                            <!--<Image Source="{Binding Icon}" Stretch="UniformToFill"/>-->
                             <TextBlock HorizontalAlignment="Center" Grid.Column="0" Text="{Binding Private}" Foreground="#DDFFFFFF" />
                             <TextBlock HorizontalAlignment="Center" Grid.Column="1" Text="{Binding MapName}" Foreground="#DDFFFFFF" Margin="0,0,0,0" />
                             <TextBlock HorizontalAlignment="Center" Grid.Column="2" Text="{Binding CurrentNumberOfPlayer, StringFormat= ' {0}/4'}" Foreground="#DDFFFFFF" />

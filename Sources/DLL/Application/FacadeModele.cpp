@@ -630,13 +630,11 @@ std::string FacadeModele::_getMapJson(float coefficients[]) {
 		docJSON_.AddMember("Coefficients", coefArray, docJSON_.GetAllocator());
 	}
 
-	if (!docJSON_.HasMember("Icon")) {
-		rapidjson::Value iconBytes(rapidjson::kArrayType);
-		docJSON_.AddMember("Icon", iconBytes, docJSON_.GetAllocator());
-	}
-
 	VisiteurSauvegarde visiteur = VisiteurSauvegarde();
 	arbre_->accepterVisiteur(&visiteur);
+
+
+	//createMapIcon();
 
 
 	rapidjson::StringBuffer buffer2;
@@ -648,6 +646,12 @@ std::string FacadeModele::_getMapJson(float coefficients[]) {
 
 
 void FacadeModele::createMapIcon() {
+
+	if (!docJSON_.HasMember("Icon")) {
+		rapidjson::Value iconBytes(rapidjson::kArrayType);
+		docJSON_.AddMember("Icon", iconBytes, docJSON_.GetAllocator());
+	}
+
 	glm::ivec2 oldDim = vue_->obtenirProjection().getLargeurFenetre();
 
 	glm::ivec2 newLargeur = glm::ivec2(1184,600);
@@ -681,7 +685,7 @@ void FacadeModele::createMapIcon() {
 
 	FIBITMAP* imageRescaled = FreeImage_Rescale(image, 128, 128, FILTER_BOX);
 
-	BYTE* bytes = nullptr;
+	BYTE bytes[128 * 128 * 3];
 	FreeImage_ConvertToRawBits(bytes, imageRescaled, 3 * 128, 24, 0x0000FF, 0xFF0000, 0x00FF00, false);
 	//FreeImage_Save(FIF_JPEG, imageRescaled, "test.jpg", 0);
 
@@ -725,8 +729,7 @@ void FacadeModele::getMapJson(float coefficients[], char* map) {
 ///
 ////////////////////////////////////////////////////////////////////////
 void FacadeModele::enregistrerSous(std::string filePath, float coefficients[]) {
-	createMapIcon();
-
+	
 	std::string json = _getMapJson(coefficients);
 	std::ofstream(filePath) << json.c_str();
 }
