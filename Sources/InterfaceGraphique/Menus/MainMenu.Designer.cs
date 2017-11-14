@@ -1,4 +1,9 @@
-﻿namespace InterfaceGraphique
+﻿using InterfaceGraphique.Controls;
+using InterfaceGraphique.Controls.WPF.Chat;
+using InterfaceGraphique.Controls.WPF.Friends;
+using Microsoft.Practices.Unity;
+
+namespace InterfaceGraphique
 {
     partial class MainMenu
     {
@@ -33,9 +38,9 @@
             this.Button_Credits = new System.Windows.Forms.Button();
             this.buttonLogout = new System.Windows.Forms.Button();
             this.elementHost1 = new System.Windows.Forms.Integration.ElementHost();
-            this.testChatView1 = new InterfaceGraphique.Controls.WPF.Chat.TestChatView();
             this.profileButton = new System.Windows.Forms.Button();
             this.storeButton = new System.Windows.Forms.Button();
+            this.elementHost2 = new System.Windows.Forms.Integration.ElementHost();
             this.SuspendLayout();
             // 
             // boutonPartieRapide
@@ -98,38 +103,6 @@
             this.buttonEditeur.TabStop = false;
             this.buttonEditeur.Text = "Éditeur";
             this.buttonEditeur.UseVisualStyleBackColor = true;
-            ///
-            /// buttonProfile
-            ///
-            this.profileButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.profileButton.AutoEllipsis = true;
-            this.profileButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.profileButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.profileButton.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.profileButton.ForeColor = System.Drawing.Color.White;
-            this.profileButton.Location = new System.Drawing.Point(517, 50);
-            this.profileButton.Name = "profileButton";
-            this.profileButton.Size = new System.Drawing.Size(150, 50);
-            this.profileButton.TabIndex = 4;
-            this.profileButton.TabStop = false;
-            this.profileButton.Text = "Profil";
-            this.profileButton.UseVisualStyleBackColor = true;
-            ///
-            /// storeButton
-            ///
-            this.storeButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.storeButton.AutoEllipsis = true;
-            this.storeButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.storeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.storeButton.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.storeButton.ForeColor = System.Drawing.Color.White;
-            this.storeButton.Location = new System.Drawing.Point(985, 50);
-            this.storeButton.Name = "storeButton";
-            this.storeButton.Size = new System.Drawing.Size(150, 50);
-            this.storeButton.TabIndex = 4;
-            this.storeButton.TabStop = false;
-            this.storeButton.Text = "Magasin";
-            this.storeButton.UseVisualStyleBackColor = true;
             // 
             // buttonQuitter
             // 
@@ -178,13 +151,55 @@
             // 
             // elementHost1
             // 
-            this.elementHost1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.elementHost1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.elementHost1.Location = new System.Drawing.Point(0, 348);
             this.elementHost1.Name = "elementHost1";
-            this.elementHost1.Size = new System.Drawing.Size(1184, 300);
+            this.elementHost1.Size = new System.Drawing.Size(580, 300);
             this.elementHost1.TabIndex = 10;
             this.elementHost1.Text = "elementHost1";
-            this.elementHost1.Child = this.testChatView1;
+            this.elementHost1.Child = null;
+            // 
+            // profileButton
+            // 
+            this.profileButton.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.profileButton.AutoEllipsis = true;
+            this.profileButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.profileButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.profileButton.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.profileButton.ForeColor = System.Drawing.Color.White;
+            this.profileButton.Location = new System.Drawing.Point(517, 50);
+            this.profileButton.Name = "profileButton";
+            this.profileButton.Size = new System.Drawing.Size(150, 50);
+            this.profileButton.TabIndex = 4;
+            this.profileButton.TabStop = false;
+            this.profileButton.Text = "Profil";
+            this.profileButton.UseVisualStyleBackColor = true;
+            // 
+            // storeButton
+            // 
+            this.storeButton.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.storeButton.AutoEllipsis = true;
+            this.storeButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.storeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.storeButton.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.storeButton.ForeColor = System.Drawing.Color.White;
+            this.storeButton.Location = new System.Drawing.Point(985, 50);
+            this.storeButton.Name = "storeButton";
+            this.storeButton.Size = new System.Drawing.Size(150, 50);
+            this.storeButton.TabIndex = 4;
+            this.storeButton.TabStop = false;
+            this.storeButton.Text = "Magasin";
+            this.storeButton.UseVisualStyleBackColor = true;
+            // 
+            // elementHost2
+            // 
+            this.elementHost2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.elementHost2.Location = new System.Drawing.Point(985, 348);
+            this.elementHost2.Name = "elementHost2";
+            this.elementHost2.Size = new System.Drawing.Size(203, 300);
+            this.elementHost2.TabIndex = 11;
+            this.elementHost2.Text = "elementHost2";
+            this.elementHost2.Child = null;
             // 
             // MainMenu
             // 
@@ -192,6 +207,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(49)))), ((int)(((byte)(54)))));
             this.ClientSize = new System.Drawing.Size(1184, 648);
+            this.Controls.Add(this.elementHost2);
             this.Controls.Add(this.elementHost1);
             this.Controls.Add(this.buttonLogout);
             this.Controls.Add(this.Button_Credits);
@@ -220,5 +236,7 @@
         private System.Windows.Forms.Button storeButton;
         private System.Windows.Forms.Integration.ElementHost elementHost1;
         private Controls.WPF.Chat.TestChatView testChatView1;
+        private FriendContentControl hostedComponent1;
+        private System.Windows.Forms.Integration.ElementHost elementHost2;
     }
 }

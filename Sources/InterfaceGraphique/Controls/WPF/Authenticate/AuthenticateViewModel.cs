@@ -166,8 +166,10 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
                         Program.FormManager.CurrentForm = Program.MainMenu;
 
                         // Open the friend list windows:
-                        Program.FriendListHost.Show();
+                        //Program.FriendListHost.Show();
+                        await Program.unityContainer.Resolve<FriendsHub>().InitializeFriendsHub();
                         Program.unityContainer.Resolve<FriendListViewModel>().InitializeViewModel();
+                        Program.unityContainer.Resolve<AddUserViewModel>().InitializeViewModel();
                     }
                     else
                     {

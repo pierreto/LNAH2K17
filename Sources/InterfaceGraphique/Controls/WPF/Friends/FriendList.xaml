@@ -6,7 +6,7 @@
              xmlns:wpf="clr-namespace:InterfaceGraphique.Controls.WPF"
              xmlns:entities="clr-namespace:InterfaceGraphique.Entities"
              xmlns:behaviors="clr-namespace:WPFTextBoxAutoComplete;assembly=WPFTextBoxAutoComplete"
-             mc:Ignorable="d" d:DesignWidth="717.783" Height="536.985">
+             mc:Ignorable="d" d:DesignHeight="500" d:DesignWidth="300">
 
     <UserControl.Resources>
         <ResourceDictionary>
@@ -30,50 +30,41 @@
 
     </UserControl.Resources>
 
-    <Grid Margin="0,-21,-34.4,-0.2"
+    <Grid
           DataContext="{Binding Source={StaticResource VMLocator}, Path=FriendListViewModel}">
-        <Grid Margin="0,0,0,56.8">
-            <Label Content="Liste d'amis" Height="38" Margin="313,18,297,0" VerticalAlignment="Top" FontSize="24" Foreground="#FF2288F7"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40*"/>
+            <RowDefinition Height="25*"/>
+            <RowDefinition Height="33*"/>
+            <RowDefinition Height="26*"/>
+            <RowDefinition Height="326*"/>
+            <RowDefinition Height="50*"/>
+        </Grid.RowDefinitions>
+        <Label Content="Liste d'amis"  FontSize="24" Foreground="#FF2288F7"/>
 
-            <Label Content="Ajouter un ami :" HorizontalAlignment="Left" Margin="33,76,0,0" VerticalAlignment="Top" Width="98" Foreground="#FF2288F7"/>
-            <TextBox x:Name="FriendUsername"
+        <Label Content="Ajouter un ami :" Margin="0,0,0,1"   Foreground="#FF2288F7" Grid.Row="1"/>
+        <TextBox x:Name="FriendUsername"
                  Text="{Binding FriendUsername, UpdateSourceTrigger=PropertyChanged}"
                  behaviors:AutoCompleteBehavior.AutoCompleteItemsSource="{Binding Usernames, UpdateSourceTrigger=PropertyChanged}"
-                 behaviors:AutoCompleteBehavior.AutoCompleteStringComparison="InvariantCultureIgnoreCase"
-                 HorizontalAlignment="Left" Height="26" Margin="131,76,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="193" Foreground="Black"/>
-            <Button Command="{Binding SendFriendRequestCommand}"
-                    Content="Envoyer la demande" HorizontalAlignment="Left" Height="25" Margin="361,77,0,0" VerticalAlignment="Top" Width="188"/>
+                 behaviors:AutoCompleteBehavior.AutoCompleteStringComparison="InvariantCultureIgnoreCase" Margin="108,6,10,8" TextWrapping="Wrap" Foreground="White" Grid.Row="1" />
+        <Button Command="{Binding SendFriendRequestCommand}"
+                    Content="Envoyer la demande" Margin="57,4,61,0" Grid.Row="2" Background ="#FF5387C5" Height="Auto"/>
 
-            <Label Content="Amis :" HorizontalAlignment="Left" Height="30" Margin="33,124,0,0" VerticalAlignment="Top" Width="47" Foreground="#FF2288F7"/>
-            <Label Content="Demandes d'amis&#xA;en attentes :" HorizontalAlignment="Left" Height="44" Margin="394,110,0,0" VerticalAlignment="Top" Width="118" Foreground="#FF2288F7"/>
+        <Label Content="Amis :" Margin="0,0,248,0" Foreground="#FF2288F7" Grid.Row="3"/>
 
-            <DataGrid ItemsSource="{Binding FriendList, UpdateSourceTrigger=PropertyChanged}"
+        <DataGrid ItemsSource="{Binding FriendList, UpdateSourceTrigger=PropertyChanged}"
                       d:DataContext="{Binding Source={StaticResource UserEntity}}"
                       SelectedItem="{Binding SelectedFriend}"
                       AutoGenerateColumns="False"
-                      x:Name="FriendsGrid" HorizontalAlignment="Left" Height="290" Margin="33,154,0,0" VerticalAlignment="Top" Width="285">
+                      x:Name="FriendsGrid"  Margin="10,0,10,6" Grid.Row="4" Background="#FF32373C" >
 
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Pseudonyme" Binding="{Binding Username}" IsReadOnly="True" />
-                </DataGrid.Columns>
-            </DataGrid>
-            <Button  Command="{Binding RemoveFriendCommand}"
-                     Content="Supprimer cet ami" HorizontalAlignment="Left" Height="36" Margin="33,449,0,0" VerticalAlignment="Top" Width="285"/>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Pseudonyme" Binding="{Binding Username}" IsReadOnly="True" Foreground="White" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button  Command="{Binding RemoveFriendCommand}"
+                     Content="Supprimer cet ami"  Margin="10,8,10,10" Grid.Row="5"  Background="#FFC3423C" Height="Auto" />
 
-            <DataGrid ItemsSource="{Binding FriendRequestList, UpdateSourceTrigger=PropertyChanged}"
-                      d:DataContext="{Binding Source={StaticResource FriendRequestEntity}}"
-                      SelectedItem="{Binding SelectedFriendRequest}"
-                      AutoGenerateColumns="False"
-                      HorizontalAlignment="Left" Height="290" Margin="394,154,0,0" VerticalAlignment="Top" Width="285">
 
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Pseudonyme" Binding="{Binding Requestor.Username}" IsReadOnly="True" />
-                </DataGrid.Columns>
-            </DataGrid>
-            <Button Command="{Binding AcceptFriendRequestCommand}"
-                    Content="Accepter" HorizontalAlignment="Left" Height="36" Margin="394,449,0,0" VerticalAlignment="Top" Width="140"/>
-            <Button Command="{Binding RefuseFriendRequestCommand}"
-                    Content="Refuser" HorizontalAlignment="Left" Height="36" Margin="539,449,0,0" VerticalAlignment="Top" Width="140"/>
-        </Grid>
     </Grid>
 </UserControl>

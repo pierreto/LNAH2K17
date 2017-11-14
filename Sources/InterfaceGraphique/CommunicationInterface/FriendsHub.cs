@@ -28,10 +28,10 @@ namespace InterfaceGraphique.CommunicationInterface
             FriendsProxy = Connection.CreateHubProxy("FriendsHub");
         }
 
-        public async Task InitializeFriendsHub(UserEntity user)
+        public async Task InitializeFriendsHub()
         {
-            this.user = user;
-            await FriendsProxy.Invoke("JoinHub", user);
+            this.user = User.Instance.UserEntity;
+            await FriendsProxy.Invoke("JoinHub", this.user);
             InitializeEvents();
         }
 

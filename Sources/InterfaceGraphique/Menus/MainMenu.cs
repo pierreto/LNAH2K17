@@ -1,15 +1,20 @@
 ﻿using System;
-using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Practices.Unity;
 using InterfaceGraphique.CommunicationInterface;
 using InterfaceGraphique.Controls.WPF.Home;
 using System.Net.Http;
+using System.Windows;
+using System.Windows.Interop;
+using System.Windows.Media;
 using InterfaceGraphique.Controls.WPF.Chat;
 using InterfaceGraphique.Controls.WPF.Chat.Channel;
+using InterfaceGraphique.Controls.WPF.Friends;
 using InterfaceGraphique.Controls.WPF.UserProfile;
 using InterfaceGraphique.Controls.WPF.Store;
+using Point = System.Drawing.Point;
+using Size = System.Drawing.Size;
 
 namespace InterfaceGraphique
 {
@@ -34,6 +39,9 @@ namespace InterfaceGraphique
         public MainMenu()
         {
             InitializeComponent();
+            elementHost1.Child = Program.unityContainer.Resolve<TestChatView>();
+            elementHost2.Child = Program.unityContainer.Resolve<FriendContentControl>();
+
             InitializeEvents();
             chatHeight = elementHost1.Height;
             chatLocation = elementHost1.Location;
@@ -51,7 +59,6 @@ namespace InterfaceGraphique
             //    this.testChatView = new InterfaceGraphique.Controls.WPF.Chat.TestChatView();
             //}
         }
-
         ////////////////////////////////////////////////////////////////////////
         ///
         /// Initialise les events sur la form courrante

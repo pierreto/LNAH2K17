@@ -150,12 +150,6 @@
     <Compile Include="CommunicationInterface\WaitingRooms\GameWaitingRoomHub.cs" />
     <Compile Include="CommunicationInterface\User.cs" />
     <Compile Include="CommunicationInterface\HubManager.cs" />
-    <Compile Include="Controls\FriendListHost.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Controls\FriendListHost.Designer.cs">
-      <DependentUpon>FriendListHost.cs</DependentUpon>
-    </Compile>
     <Compile Include="Controls\LobbyHost.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -198,6 +192,13 @@
     <Compile Include="Controls\WPF\Converters\SentByMeToAlignmentConverter.cs" />
     <Compile Include="Controls\WPF\Converters\StringToVisibilityConverter.cs" />
     <Compile Include="Controls\WPF\DraggablePopup.cs" />
+    <Compile Include="Controls\WPF\Friends\AddUserView.xaml.cs">
+      <DependentUpon>AddUserView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WPF\Friends\AddUserViewModel.cs" />
+    <Compile Include="Controls\WPF\Friends\FriendContentControl.xaml.cs">
+      <DependentUpon>FriendContentControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\WPF\Navigation\NavigationView.xaml.cs">
       <DependentUpon>NavigationView.xaml</DependentUpon>
     </Compile>
@@ -445,9 +446,6 @@
     <Compile Include="Services\StoreService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="WPFApplication.cs" />
-    <EmbeddedResource Include="Controls\FriendListHost.resx">
-      <DependentUpon>FriendListHost.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Controls\OnlineTournament.resx">
       <DependentUpon>OnlineTournament.cs</DependentUpon>
     </EmbeddedResource>
@@ -611,6 +609,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\WPF\Chat\ChatView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\WPF\Friends\AddUserView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\WPF\Friends\FriendContentControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

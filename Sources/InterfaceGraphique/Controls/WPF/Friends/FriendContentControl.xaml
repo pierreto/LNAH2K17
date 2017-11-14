@@ -1,0 +1,66 @@
+﻿<UserControl x:Class="InterfaceGraphique.Controls.WPF.Friends.FriendContentControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:InterfaceGraphique.Controls.WPF.Friends"
+             xmlns:wpf="clr-namespace:InterfaceGraphique.Controls.WPF"
+
+             mc:Ignorable="d" 
+             d:DesignHeight="546" d:DesignWidth="300" >
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Name="FriendList" DataType="{x:Type local:FriendListViewModel}">
+                <local:FriendList DataContext="{Binding}"/>
+            </DataTemplate>
+            <DataTemplate x:Name="AddUserView" DataType="{x:Type local:AddUserViewModel}">
+                <local:AddUserView DataContext="{Binding}"/>
+            </DataTemplate>
+
+            <ResourceDictionary.MergedDictionaries >
+                <ResourceDictionary Source="/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                <ResourceDictionary Source="/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                <ResourceDictionary Source="/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Blue.xaml" />
+                <ResourceDictionary Source="/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Green.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+
+        <ListBox Grid.Row="0" Style="{StaticResource MaterialDesignToolToggleListBox}" SelectedIndex="0" 
+                       Margin="0,10,0,0" Height="36" VerticalAlignment="Top"  HorizontalAlignment="Center"
+                 SelectionChanged="ListBox_SelectionChanged" RenderTransformOrigin="0.5,0.5">
+            <ListBox.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleY="0.452"/>
+                    <RotateTransform/>
+                    <TranslateTransform Y="-1.242"/>
+                </TransformGroup>
+            </ListBox.RenderTransform>
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                </Style>
+            </ListBox.ItemContainerStyle>
+            <ListBox.ToolTip>
+                <StackPanel >
+                    <TextBlock Grid.Column="0" Text="Liste d'amis"  />
+                    <TextBlock  Grid.Column="1" Text="Ajouter un ami" />
+                </StackPanel>
+            </ListBox.ToolTip>
+            <ListBoxItem Uid="ListeAmis"  Grid.Column="0" Width="150" >
+                <TextBlock>Liste d'amis</TextBlock>
+            </ListBoxItem>
+            <ListBoxItem  Uid="AjouterAmis" Grid.Column="1" Width="150"  >
+                <TextBlock>Ajouter un ami</TextBlock>
+            </ListBoxItem>
+        </ListBox>
+
+        <ContentControl Margin="0,46,0,0" Content="{Binding }"/>
+
+    </Grid>
+
+</UserControl>

@@ -1,0 +1,52 @@
+﻿<UserControl x:Class="InterfaceGraphique.Controls.WPF.Friends.AddUserView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:InterfaceGraphique.Controls.WPF.Friends"
+             xmlns:wpf="clr-namespace:InterfaceGraphique.Controls.WPF"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="300">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+
+
+            <ResourceDictionary.MergedDictionaries >
+                <ResourceDictionary Source="/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                <ResourceDictionary Source="/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                <ResourceDictionary Source="/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Blue.xaml" />
+                <ResourceDictionary Source="/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Green.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <wpf:ViewModelLocator x:Key="VMLocator" d:IsDataSource="True" />
+
+        </ResourceDictionary>
+
+    </UserControl.Resources>
+    <Grid DataContext="{Binding Source={StaticResource VMLocator}, Path=AddUserViewModel}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="5*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="7*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Label Content="Demandes d'amis en attentes :"  Margin="10,18,113,0" VerticalAlignment="Top"  Foreground="White" Grid.RowSpan="2" Grid.ColumnSpan="2" Height="26" Background="{x:Null}"/>
+
+        <DataGrid ItemsSource="{Binding FriendRequestList, UpdateSourceTrigger=PropertyChanged}"
+                  SelectedItem="{Binding SelectedFriendRequest}"
+                  AutoGenerateColumns="False"  Margin="10,7,10,1" Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0"
+                  Background="#FF32373C">
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Pseudonyme" Binding="{Binding Requestor.Username}" IsReadOnly="True" Foreground="White" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Command="{Binding AcceptFriendRequestCommand}"
+                Content="Accepter"  Margin="32,6,26,12" Grid.Row="2" Height="Auto" Background="#FF5387C5" />
+        <Button Command="{Binding RefuseFriendRequestCommand}"
+                Content="Refuser" Margin="32,6,26,12" Grid.Row="2" Grid.Column="1" Height="Auto" Background="#FFC3423C" />
+    </Grid>
+</UserControl>

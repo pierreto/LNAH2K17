@@ -18,17 +18,14 @@ namespace InterfaceGraphique.Controls.WPF.Friends
         private FriendsHub friendsHub;
         private UserService userService;
         private List<UserEntity> friendList;
-        private List<FriendRequestEntity> friendRequestList;
         private string friendUsername;
         private ObservableCollection<string> usernames;
 
         private ICommand sendFriendRequestCommand;
-        private ICommand acceptFriendRequestCommand;
-        private ICommand refuseFriendRequestCommand;
+
         private ICommand removeFriendCommand;
 
         public UserEntity SelectedFriend { get; set; }
-        public FriendRequestEntity SelectedFriendRequest { get; set; }
 
         public FriendListViewModel(FriendsHub friendsHub, UserService userService)
         {
@@ -46,29 +43,14 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             }
         }
 
-        public List<FriendRequestEntity> FriendRequestList
-        {
-            get => this.friendRequestList;
-            set
-            {
-                this.friendRequestList = value;
-                this.OnPropertyChanged();
-            }
-        }
+  
 
         public override async void InitializeViewModel()
         {
-            await this.friendsHub.InitializeFriendsHub(User.Instance.UserEntity);
             FriendList = await this.friendsHub.GetAllFriends();
-            FriendRequestList = await this.friendsHub.GetAllPendingRequests();
-
             List<UserEntity> userEntities = await userService.GetAllUsers();
-            //Usernames = new ObservableCollection<string>(userEntities.Select(user => user.Username));
-
             this.friendsHub.NewFriendEvent += NewFriendEvent;
-            this.friendsHub.FriendRequestEvent += FriendRequestEvent;
             this.friendsHub.RemovedFriendEvent += RemovedFriendEvent;
-            this.friendsHub.CanceledFriendRequestEvent += CanceledFriendRequestEvent;
         }
 
         public string FriendUsername
@@ -100,23 +82,6 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             }
         }
 
-        public ICommand AcceptFriendRequestCommand
-        {
-            get
-            {
-                return acceptFriendRequestCommand ??
-                       (acceptFriendRequestCommand = new RelayCommandAsync(AcceptFriendRequest));
-            }
-        }
-
-        public ICommand RefuseFriendRequestCommand
-        {
-            get
-            {
-                return refuseFriendRequestCommand ??
-                       (refuseFriendRequestCommand = new RelayCommandAsync(RefuseFriendRequest));
-            }
-        }
 
         public ICommand RemoveFriendCommand
         {
@@ -137,22 +102,7 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             }
         }
 
-        private async Task AcceptFriendRequest()
-        {
-            if (SelectedFriendRequest != null)
-            {
-                await this.friendsHub.AcceptFriendRequest(SelectedFriendRequest);
-            }
-        }
-
-       private async Task RefuseFriendRequest()
-        {
-            if (SelectedFriendRequest != null)
-            {
-                if (await this.friendsHub.RefuseFriendRequest(SelectedFriendRequest))
-                    updateLists();
-            }
-        }
+  
 
         private async Task RemoveFriend()
         {
@@ -167,9 +117,6 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             Task.Run(async () =>
                 FriendList = await this.friendsHub.GetAllFriends()
             );
-            Task.Run(async () =>
-                FriendRequestList = await this.friendsHub.GetAllPendingRequests()
-            );
         }
 
         private void NewFriendEvent(UserEntity friend)
@@ -177,19 +124,12 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             updateLists();
         }
 
-        private void FriendRequestEvent(FriendRequestEntity request)
-        {
-            updateLists();
-        }
+
 
         private void RemovedFriendEvent(UserEntity ex_friend)
         {
             updateLists();
         }
 
-        private void CanceledFriendRequestEvent(FriendRequestEntity request)
-        {
-            updateLists();
-        }
     }
 }
