@@ -10,52 +10,72 @@ namespace InterfaceGraphique.Editor.EditorState
 {
     public class OfflineEditorState : AbstractEditorState
     {
-        public override void MouseUp(object sender, MouseEventArgs e)
+        public OfflineEditorState()
         {
-            FonctionsNatives.modifierKeys((Control.ModifierKeys == Keys.Alt), (Control.ModifierKeys == Keys.Control));
-            if (e.Button == MouseButtons.Left)
-            {
-                FonctionsNatives.mouseUpL();
-                Program.Editeur.EditionSupprimer.Enabled = FonctionsNatives.verifierSelection();
-                Program.Editeur.resetProprietesPanel(null, null);
-            }
-            if (e.Button == MouseButtons.Right)
-            {
-                FonctionsNatives.mouseUpR();
-            }
-
-            /*if (Editeur.mapManager.CurrentMapAlreadySaved())
-                Task.Run(() => Editeur.mapManager.SaveMap());*/
-        }
-
-        public override void MouseDown(object sender, MouseEventArgs e)
-        {
-            FonctionsNatives.modifierKeys((Control.ModifierKeys == Keys.Alt), (Control.ModifierKeys == Keys.Control));
-            if (e.Button == MouseButtons.Left)
-            {
-                FonctionsNatives.mouseDownL();
-            }
-            if (e.Button == MouseButtons.Right)
-            {
-                FonctionsNatives.mouseDownR();
-            }
+            this.InitializeCallbacks();
         }
 
         public override void JoinEdition(MapEntity mapEntity)
         {
-            //Online is not working in offline mode so we do nothing
             FonctionsNatives.setOnlineClientType((int)OnlineClientType.OFFLINE_EDITION);
             FonctionsNatives.setCurrentPlayerSelectionColorToDefault();
+            //FonctionsNatives.clearUsers();
+
+            this.SetCallbacks();
+        }
+
+        protected override void SaveMap()
+        {
+            if (Editeur.mapManager.CurrentMapAlreadySaved())
+                Task.Run(() =>
+                    Editeur.mapManager.SaveMap()
+                    );
+        }
+
+        protected override void CurrentUserCreatedPortal(string startUuid, IntPtr startPos, float startRotation, IntPtr startScale, string endUuid, IntPtr endPosition, float endRotation, IntPtr endScale)
+        {
+            SaveMap();
+        }
+
+        protected override void CurrentUserCreatedWall(string uuid, IntPtr pos, float rotation, IntPtr scale)
+        {
+            SaveMap();
+        }
+
+        protected override void CurrentUserCreatedBoost(string uuid, IntPtr startpos, float rotation, IntPtr scale)
+        {
+            SaveMap();
+        }
+
+        protected override void CurrentUserObjectTransformChanged(string uuid, IntPtr pos, float rotation, IntPtr scale)
+        {
+            this.inTransformation = true;
+        }
+
+        protected override void CurrentUserSelectedObject(string uuidselected, bool isSelected, bool deselectAll)
+        {
+            // Do nothing.
+        }
+
+        protected override void CurrentUserChangedControlPoint(string uuid, IntPtr position)
+        {
+            SaveMap();
+        }
+
+        protected override void CurrentUserDeletedNode(string uuid)
+        {
+            SaveMap();
         }
 
         public override Task LeaveEdition()
         {
-            //Nothing
+            // Nothing
             return Task.FromResult(0);
         }
 
         public override void HandleCoefficientChanges(float coefficientFriction, float coefficientAcceleration, float coefficientRebond)
         {
+            // Do nothing.
         }
     }
 }

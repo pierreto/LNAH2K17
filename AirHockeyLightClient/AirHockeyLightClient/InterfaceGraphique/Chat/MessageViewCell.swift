@@ -21,6 +21,9 @@ class MessageViewCell: UITableViewCell {
     @IBOutlet weak var sender: UILabel!
     @IBOutlet weak var messageValue: PaddingLabel!
     @IBOutlet weak var timestamp: UILabel!
+    @IBOutlet var leadingConstraint: NSLayoutConstraint!
+    @IBOutlet var bubbleConstraint: NSLayoutConstraint!
+    @IBOutlet weak var messageContainer: UIView!
 }
 
 ///////////////////////////////////////////////////////////////////////////////

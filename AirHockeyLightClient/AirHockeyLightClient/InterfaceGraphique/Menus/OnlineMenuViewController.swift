@@ -9,6 +9,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 import Foundation
+import Alamofire
 import UIKit
 
 ///////////////////////////////////////////////////////////////////////////
@@ -19,6 +20,19 @@ import UIKit
 /// @date 2017-11-05
 ///////////////////////////////////////////////////////////////////////////
 class OnlineMenuViewController: UIViewController {
+    @IBAction func disconnectAction(_ sender: Any) {
+        let parameters: [String: Any] = [
+            "Username" : HubManager.sharedConnection.getUsername()!
+        ]
+        Alamofire.request("http://" + HubManager.sharedConnection.getIpAddress()! + ":63056/api/logout", method: .post, parameters: parameters, encoding: JSONEncoding.default)
+            .responseJSON { response in
+                if (!(HubManager.sharedConnection.getIpAddress()?.isEmpty)!) {
+                    HubManager.sharedConnection.Logout()
+                    self.performSegue(withIdentifier: "disconnectSegway", sender: self)
+                }
+        }
+        
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.setNavigationBarHidden(false, animated: true)

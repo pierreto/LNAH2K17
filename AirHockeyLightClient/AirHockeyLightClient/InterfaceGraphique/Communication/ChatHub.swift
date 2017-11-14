@@ -78,6 +78,15 @@ class ChatHub: BaseHub {
             print("Error JoinChannel ChatHub")
         }
     }
+    
+    func leaveRoom(roomName: String) {
+        do {
+            try hubProxy!.invoke("LeaveRoom", arguments: [roomName, HubManager.sharedConnection.getId()!]);
+        }
+        catch {
+            print("Error JoinChannel ChatHub")
+        }
+    }
     ////////////////////////////////////////////////////////////////////////
     ///
     /// @fn Disconnect(username: String)
@@ -90,14 +99,17 @@ class ChatHub: BaseHub {
     ///
     ////////////////////////////////////////////////////////////////////////
     public override func logout() {
-        /*do {
-         try chatHub!.invoke("Disconnect", arguments: [username], callback: { (response) in
-         print("ChatHub Disconnect Success")
-         })
-         }
-         catch {
-         print("Error Disconnect")
-         }*/
+        do {
+            var roomNames = channels.map({ (cE: ChannelEntity) -> String in
+                cE.getName()
+            })
+            //Principal ne pas quitter
+            roomNames.remove(at: 0)
+            try hubProxy!.invoke("Disconnect", arguments: [roomNames, HubManager.sharedConnection.getId()!]);
+        }
+        catch {
+            print("Error JoinChannel ChatHub")
+        }
     }
     
     ////////////////////////////////////////////////////////////////////////

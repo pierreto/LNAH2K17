@@ -137,11 +137,7 @@ void ModeleEtatCreerMuret::mouseUpL() {
 			if (noeudsSurLaTable()) {
 				// Desactiver effet fantome
 				noeud_->effetFantome(false);
-
-				if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
-				{
-					wallCreationCallback_(noeud_->getUUID(), glm::value_ptr(noeud_->obtenirPositionRelative()), noeud_->obtenirRotation().y, glm::value_ptr(noeud_->obtenirScale()));
-				}
+				wallCreationCallback_(noeud_->getUUID(), glm::value_ptr(noeud_->obtenirPositionRelative()), noeud_->obtenirRotation().y, glm::value_ptr(noeud_->obtenirScale()));
 
 				noeud_ = nullptr;
 

@@ -118,10 +118,7 @@ void ModeleEtatCreerBoost::mouseUpL() {
 		if (!noeudsSurLaTable()) {
 			FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->effacer(noeud);
 		}
-		else if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
-		{
-			boostCreationCallback_(noeud->getUUID(), glm::value_ptr(noeud->obtenirPositionRelative()),noeud->obtenirRotation().y, glm::value_ptr(noeud->obtenirScale()));
-		}
+		boostCreationCallback_(noeud->getUUID(), glm::value_ptr(noeud->obtenirPositionRelative()),noeud->obtenirRotation().y, glm::value_ptr(noeud->obtenirScale()));
 	}
 	mouseDownL_ = false;
 }
