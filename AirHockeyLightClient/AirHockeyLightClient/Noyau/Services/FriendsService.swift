@@ -27,11 +27,24 @@ class FriendsService {
             Alamofire.request("http://" + self.clientConnection.getIpAddress()! + ":63056/api/user/u/" + friendUsername, method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON { response in
                 switch response.result {
                 case .success(let value):
-                    print(value)
                     let newFriend = self.buildUserEntity(json: JSON(value))
                     HubManager.sharedConnection.getFriendsHub().sendFriendRequest(newFriend: newFriend)
                 case .failure(let error):
                     print("Error sendFriendRequest FriendService: \(error)")
+                }
+            }
+        }
+    }
+    
+    func getAllUsers(completionHandler: @escaping (JSON?, Error?) -> ()) {
+        if self.clientConnection.getConnection() != nil && self.clientConnection.connected! {
+            Alamofire.request("http://" + self.clientConnection.getIpAddress()! + ":63056/api/user", method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON { response in
+                switch response.result {
+                case .success(let value):
+                    let users = JSON(value)
+                    completionHandler(users, nil)
+                case .failure(let error):
+                    completionHandler(nil, error)
                 }
             }
         }
