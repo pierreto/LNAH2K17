@@ -84,7 +84,14 @@ class MasterViewController: UITableViewController {
 
         // Configure the cell...
         let channel = channels[indexPath.row]
+        cell.backgroundColor = UIColor(red:0.24, green:0.24, blue:0.24, alpha:1.0)
         cell.textLabel?.text = channel.name
+        cell.textLabel?.textColor = UIColor .white
+        
+        let bgColorView = UIView()
+        bgColorView.backgroundColor = UIColor(red:0.29, green:0.29, blue:0.29, alpha:1.0)
+        cell.selectedBackgroundView = bgColorView
+        
         return cell
     }
 
