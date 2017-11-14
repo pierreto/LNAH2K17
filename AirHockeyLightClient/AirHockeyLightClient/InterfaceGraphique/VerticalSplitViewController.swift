@@ -49,10 +49,10 @@ class VerticalSplitViewController: UIViewController {
     
     func togChat() {
         if(!chatOpen){
-            bottomConstraint.constant = 0
+            //bottomConstraint.constant = 0
             UIView.animate(withDuration: 0.5, animations: {self.view.layoutIfNeeded()})
         } else {
-            bottomConstraint.constant = -330
+            //bottomConstraint.constant = -330
             UIView.animate(withDuration: 0.5, animations: {self.view.layoutIfNeeded()})
         }
         chatOpen = !chatOpen
@@ -64,7 +64,7 @@ class VerticalSplitViewController: UIViewController {
             chatButton.layer.shadowOpacity = 0.5
             chatButton.layer.shadowRadius = 5
         } else {
-            chatButtonBottomConstraint.constant = -44
+            //chatButtonBottomConstraint.constant = -44
             chatButton.layer.shadowOpacity = 0
         }
     }
