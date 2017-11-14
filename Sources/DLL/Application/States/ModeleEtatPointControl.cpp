@@ -194,11 +194,7 @@ void ModeleEtatPointControl::mouseUpL() {
 
 	// Reinitialiser l'etat
 	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->deselectionnerTout();
-	if(ModeleEtatJeu::obtenirInstance()->currentOnlineClientType()==ModeleEtatJeu::ONLINE_EDITION)
-	{
-		selectionCallback_("", false, true);
-
-	}
+	selectionCallback_("", false, true);
 
 	initialiser();
 }
@@ -297,17 +293,13 @@ void ModeleEtatPointControl::revertPosition()
 	for (auto noeud : noeuds) {
 		noeud->revertPosition();
 		static_cast<NoeudPointControl*>(noeud)->obtenirNoeudOppose()->revertPosition();
-		if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
+		if (controlPointEventCallback_)
 		{
-			if (controlPointEventCallback_)
-			{
-				controlPointEventCallback_(noeud->getUUID(), glm::value_ptr(noeud->obtenirPositionRelative()));
-				controlPointEventCallback_(static_cast<NoeudPointControl*>(noeud)->obtenirNoeudOppose()->getUUID(), glm::value_ptr(static_cast<NoeudPointControl*>(noeud)->obtenirNoeudOppose()->obtenirPositionRelative()));
+			controlPointEventCallback_(noeud->getUUID(), glm::value_ptr(noeud->obtenirPositionRelative()));
+			controlPointEventCallback_(static_cast<NoeudPointControl*>(noeud)->obtenirNoeudOppose()->getUUID(), glm::value_ptr(static_cast<NoeudPointControl*>(noeud)->obtenirNoeudOppose()->obtenirPositionRelative()));
 
-				selectionCallback_(noeud->getUUID(), false, false);
-			}
+			selectionCallback_(noeud->getUUID(), false, false);
 		}
-
 	}
 }
 

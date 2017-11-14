@@ -544,10 +544,8 @@ void FacadeModele::applyNodeInfos(float infos[]) {
 		noeud->assignerPositionRelative(position);
 		noeud->scale(scale);
 		noeud->rotate(rotation, glm::vec3(0, 1, 0));
-	}else if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
-	{
-		ModeleEtatJeu::obtenirInstance()->getTransformEventCallback()(noeud->getUUID(), glm::value_ptr(noeud->obtenirPositionRelative()), noeud->obtenirRotation().y, glm::value_ptr(noeud->obtenirScale()));
 	}
+	ModeleEtatJeu::obtenirInstance()->getTransformEventCallback()(noeud->getUUID(), glm::value_ptr(noeud->obtenirPositionRelative()), noeud->obtenirRotation().y, glm::value_ptr(noeud->obtenirScale()));
 }
 
 ////////////////////////////////////////////////////////////////////////

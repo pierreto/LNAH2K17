@@ -34,15 +34,16 @@ namespace InterfaceGraphique.Editor
         public MapManager(MapService mapService)
         {
             this.mapService = mapService;
-            this.currentMapInfo = new MapMetaData { LastBackup = DateTime.Now };
+            this.currentMapInfo = new MapMetaData();// { LastBackup = DateTime.Now };
         }
 
         public void resetMapInfo()
         {
+            string creator = User.Instance.UserEntity?.Username;
             this.currentMapInfo = new MapMetaData
             {
-                Creator = User.Instance.UserEntity.Username,
-                LastBackup = DateTime.Now
+                Creator = creator
+                //LastBackup = DateTime.Now
             };
         }
 
@@ -62,12 +63,13 @@ namespace InterfaceGraphique.Editor
                 this.LoadJSON(File.ReadAllText(ofd.FileName));
 
                 // We have to set the properties of the new current map:
+                string creator = User.Instance.UserEntity?.Username;
                 this.currentMapInfo = new MapMetaData
                 {
                     savedOnce = true,
-                    Creator = User.Instance.UserEntity.Username,
-                    Name = ofd.FileName,
-                    LastBackup = DateTime.Now
+                    Creator = creator,
+                    Name = ofd.FileName
+                    //LastBackup = DateTime.Now
                 };
             }
         }
@@ -106,8 +108,8 @@ namespace InterfaceGraphique.Editor
                 Creator = mapMetaData.Creator,
                 Name = mapMetaData.MapName,
                 Private = mapMetaData.Private,
-                Password = mapMetaData.Password,
-                LastBackup = DateTime.Now
+                Password = mapMetaData.Password
+                //LastBackup = DateTime.Now
             };
         }
 
@@ -208,8 +210,8 @@ namespace InterfaceGraphique.Editor
                 this.currentMapInfo = new MapMetaData
                 {
                     Creator = User.Instance.UserEntity.Username,
-                    Name = form.Text_MapName.Text,
-                    LastBackup = DateTime.Now
+                    Name = form.Text_MapName.Text
+                    //LastBackup = DateTime.Now
                 };
 
                 if (form.Button_PrivateMap.Checked)
@@ -253,11 +255,11 @@ namespace InterfaceGraphique.Editor
             {
                 if (this.currentMapInfo.savedOnline)
                 {
-                    if ((DateTime.Now - this.currentMapInfo.LastBackup).TotalSeconds >= 1) // Il s'est passe plus de 1s depuis la derniere sauvegarde
-                    {
-                        this.currentMapInfo.LastBackup = DateTime.Now;
-                        await SaveOnlineMap();  
-                    }
+                    //if ((DateTime.Now - this.currentMapInfo.LastBackup).TotalSeconds >= 1) // Il s'est passe plus de 1s depuis la derniere sauvegarde
+                    //{
+                        //this.currentMapInfo.LastBackup = DateTime.Now;
+                    await SaveOnlineMap();  
+                    //}
                 }
                 else
                 {

@@ -126,10 +126,10 @@ void NoeudComposite::effacer(const NoeudAbstrait* noeud, DeleteEventCallback del
 			NoeudAbstrait* noeudAEffacer{ (*it) };
 			enfants_.erase(it);
 
-			if (onlineMode)
-			{
-				deleteEventCallback(noeudAEffacer->getUUID());
-			}
+			//if (onlineMode)
+			//{
+			deleteEventCallback(noeudAEffacer->getUUID());
+			//}
 			delete noeudAEffacer;
 			return;
 		}

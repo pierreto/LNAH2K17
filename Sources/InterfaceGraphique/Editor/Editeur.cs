@@ -597,13 +597,12 @@ namespace InterfaceGraphique {
                     return true;
 
                 case Keys.Escape:
+                    CurrentState.Escape();
                     FonctionsNatives.escape();
                     return true;
 
                 case Keys.Delete:
                     FonctionsNatives.deleteSelection();
-                    if (Editeur.mapManager.CurrentMapAlreadySaved())
-                        Task.Run(() => Editeur.mapManager.SaveMap());
                     return true;
                     
                 case Keys.D1:
