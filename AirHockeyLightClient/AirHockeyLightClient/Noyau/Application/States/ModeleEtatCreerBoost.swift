@@ -60,6 +60,9 @@ class ModeleEtatCreerBoost: ModeleEtat {
             // Ajout du noeud à l'arbre de rendu
             let table = arbre.childNode(withName: arbre.NOM_TABLE, recursively: true) as! NoeudTable
             table.addChildNode(noeud)
+            
+            // Jouer le son
+            AudioService.instance.playSound(soundName: EDITION_SOUND.OBJECT1.rawValue)
         }
         else {
             // Afficher un message d'erreur

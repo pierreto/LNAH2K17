@@ -32,8 +32,8 @@ class ModeleEtatCreerMuret: ModeleEtat {
     /// Point initial pour la création du muret
     private var pointInitial = GLKVector3()
     
-    /// Détermine si l'action est débutée
-    private var actionCommencee : Bool?
+    /// Joue le son de la fin
+    private var playEndSound : Bool = false
     
     /// Fonction qui initialise l'état de création de murets
     override func initialiser() {
@@ -55,8 +55,6 @@ class ModeleEtatCreerMuret: ModeleEtat {
         
         // La création des murets s'effectue via un gesture pan
         FacadeModele.instance.obtenirVue().editorView.addGestureRecognizer(FacadeModele.instance.panGestureRecognizer!)
-        
-        self.actionCommencee = false;
     }
     
     /// Cette fonction nettoie l'état des changements apportes
@@ -92,6 +90,10 @@ class ModeleEtatCreerMuret: ModeleEtat {
                     // Ajout du noeud à l'arbre de rendu
                     let table = arbre.childNode(withName: arbre.NOM_TABLE, recursively: true) as! NoeudTable
                     table.addChildNode(self.noeud!)
+                    
+                    // Jouer le son
+                    AudioService.instance.playSound(soundName: EDITION_SOUND.OBJECT1.rawValue)
+                    self.playEndSound = true
                 }
                 else {
                     // Afficher un message d'erreur
@@ -112,6 +114,12 @@ class ModeleEtatCreerMuret: ModeleEtat {
                                                                                       scale: (noeud?.scale)!)
                     
                     self.noeud = nil
+                    
+                    if playEndSound {
+                        // Jouer le son
+                        AudioService.instance.playSound(soundName: EDITION_SOUND.OBJECT2.rawValue)
+                        self.playEndSound = false
+                    }
                 }
                 else {
                     if (self.noeud != nil) {

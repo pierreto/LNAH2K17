@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="vvr-1d-tU6">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="vvr-1d-tU6">
     <device id="ipad9_7" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -75,7 +75,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="Rzq-vQ-VcJ">
-                                <rect key="frame" x="362" y="316" width="300" height="136"/>
+                                <rect key="frame" x="362" y="278" width="300" height="212"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xba-A2-IsC">
                                         <rect key="frame" x="0.0" y="0.0" width="300" height="60"/>
@@ -96,8 +96,27 @@
                                             <segue destination="8q1-PD-X5V" kind="show" id="6DQ-jn-lmH"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qcU-OT-gvk">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MWT-Ze-KkP">
                                         <rect key="frame" x="0.0" y="76" width="300" height="60"/>
+                                        <color key="backgroundColor" red="0.3294117647" green="0.76470588240000004" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="UVb-XY-3zl"/>
+                                            <constraint firstAttribute="width" constant="300" id="VAE-lQ-j0W"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
+                                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" title="Liste d'amis"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="6"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <segue destination="BZQ-LP-ciu" kind="show" id="Wa1-md-faV"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qcU-OT-gvk">
+                                        <rect key="frame" x="0.0" y="152" width="300" height="60"/>
                                         <color key="backgroundColor" red="1" green="0.31372549019607843" blue="0.31372549019607843" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="300" id="SRM-KZ-KXN"/>
@@ -128,6 +147,88 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sZF-Co-9Gv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-747" y="-316"/>
+        </scene>
+        <!--Amis-->
+        <scene sceneID="9gK-JE-86f">
+            <objects>
+                <viewController id="ZYo-Bm-cas" customClass="FriendsViewController" customModule="AirHockeyLightClient" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="3IY-Pq-iAn"/>
+                        <viewControllerLayoutGuide type="bottom" id="msS-bq-0ad"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="fUe-m4-ImC">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MCW-in-Nz6">
+                                <rect key="frame" x="20" y="64" width="984" height="655"/>
+                                <connections>
+                                    <segue destination="gQA-nK-6l7" kind="embed" id="LZH-0V-H41"/>
+                                </connections>
+                            </containerView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="MCW-in-Nz6" firstAttribute="leading" secondItem="fUe-m4-ImC" secondAttribute="leadingMargin" id="7Ro-WL-vxX"/>
+                            <constraint firstItem="MCW-in-Nz6" firstAttribute="top" secondItem="3IY-Pq-iAn" secondAttribute="bottom" id="IZ9-0D-PEm"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="MCW-in-Nz6" secondAttribute="trailing" id="SPY-BL-UCF"/>
+                            <constraint firstItem="msS-bq-0ad" firstAttribute="top" secondItem="MCW-in-Nz6" secondAttribute="bottom" id="ygo-Sf-RP0"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Amis" image="сontacts" id="TGB-nW-nAj"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MUx-3Z-3ZY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-19.3359375" y="187.5"/>
+        </scene>
+        <!--Friends Table View Controller-->
+        <scene sceneID="8Lh-1k-lk0">
+            <objects>
+                <tableViewController id="gQA-nK-6l7" customClass="FriendsTableViewController" customModule="AirHockeyLightClient" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Ds5-M1-rF6">
+                        <rect key="frame" x="0.0" y="0.0" width="984" height="655"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="K66-tY-rh8">
+                                <rect key="frame" x="0.0" y="28" width="984" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="K66-tY-rh8" id="ney-VF-590">
+                                    <rect key="frame" x="0.0" y="0.0" width="984" height="44"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="gQA-nK-6l7" id="sVi-MP-gli"/>
+                            <outlet property="delegate" destination="gQA-nK-6l7" id="OOu-db-BDM"/>
+                        </connections>
+                    </tableView>
+                    <connections>
+                        <outlet property="friends" destination="Ds5-M1-rF6" id="6ia-3f-eIV"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1RO-eA-62l" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="694" y="187"/>
+        </scene>
+        <!--Friends Tab Bar View Controller-->
+        <scene sceneID="NqB-hg-So2">
+            <objects>
+                <tabBarController id="BZQ-LP-ciu" customClass="FriendsTabBarViewController" customModule="AirHockeyLightClient" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="OyH-lz-J7z">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="ZYo-Bm-cas" kind="relationship" relationship="viewControllers" id="t17-7V-iYx"/>
+                        <segue destination="986-7H-Xmx" kind="relationship" relationship="viewControllers" id="GzT-aU-Tqd"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SlX-Nq-f5J" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-732" y="502"/>
         </scene>
         <!--Vertical Split View Controller-->
         <scene sceneID="UUc-0Z-jyK">
@@ -787,11 +888,11 @@
                         <viewControllerLayoutGuide type="bottom" id="ogV-kE-d0E"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="gNr-xk-Ff0" userLabel="ChatView">
-                        <rect key="frame" x="0.0" y="0.0" width="703.5" height="330"/>
+                        <rect key="frame" x="0.0" y="0.0" width="703" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="90" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1lr-0t-fPh">
-                                <rect key="frame" x="20" y="20" width="664" height="254"/>
+                                <rect key="frame" x="20" y="0.0" width="664" height="712"/>
                                 <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Message" id="ikA-gx-hh9" customClass="MessageViewCell" customModule="AirHockeyLightClient" customModuleProvider="target">
@@ -873,7 +974,7 @@
                                 </prototypes>
                             </tableView>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Entrez un message ..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6c7-wi-h1e">
-                                <rect key="frame" x="20" y="282" width="531" height="40"/>
+                                <rect key="frame" x="20" y="720" width="531" height="40"/>
                                 <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="MTS-FN-hob"/>
@@ -883,7 +984,7 @@
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eEe-Oz-ati">
-                                <rect key="frame" x="568" y="282" width="116" height="40"/>
+                                <rect key="frame" x="568" y="720" width="116" height="40"/>
                                 <color key="backgroundColor" red="0.23529411764705882" green="0.80000000000000004" blue="0.44313725490196076" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="116" id="8HR-eH-PFR"/>
@@ -983,7 +1084,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l9y-ot-Y10" userLabel="JoinChannelView">
-                                <rect key="frame" x="0.0" y="0.0" width="240" height="330"/>
+                                <rect key="frame" x="0.0" y="438" width="240" height="330"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Chercher Canal ..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="H5C-uB-QYt">
                                         <rect key="frame" x="45" y="8" width="150" height="30"/>
@@ -1078,7 +1179,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="canaux" useStoryboardIdentifierAsRestorationIdentifier="YES" clearsSelectionOnViewWillAppear="NO" id="Ddf-9a-mzz" customClass="MasterViewController" customModule="AirHockeyLightClient" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="Cell" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="90" sectionHeaderHeight="28" sectionFooterHeight="28" id="aX1-Iw-hcH">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="330"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.24313725490196078" green="0.24313725490196078" blue="0.24313725490196078" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
@@ -1381,7 +1482,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="brK-5P-ttK">
-                                <rect key="frame" x="20" y="64" width="984" height="704"/>
+                                <rect key="frame" x="20" y="0.0" width="984" height="768"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="riN-hG-6w2">
                                         <rect key="frame" x="292" y="153" width="400" height="397"/>
@@ -1792,7 +1893,7 @@
                                 <rect key="frame" x="0.0" y="28" width="984" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="K2A-q2-Fv2" id="vTT-fA-W0L">
-                                    <rect key="frame" x="0.0" y="0.0" width="984" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="984" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="4" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="créateur" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vzs-66-Fok">
@@ -1935,10 +2036,78 @@
             </objects>
             <point key="canvasLocation" x="-260.15625" y="2500"/>
         </scene>
+        <!--Demandes d'amitié-->
+        <scene sceneID="4qW-hM-858">
+            <objects>
+                <viewController id="986-7H-Xmx" customClass="FriendRequestsViewController" customModule="AirHockeyLightClient" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="aUe-s4-u2n"/>
+                        <viewControllerLayoutGuide type="bottom" id="3c1-JF-6YG"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="XKs-20-yYV">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qXX-1X-2YK">
+                                <rect key="frame" x="20" y="64" width="984" height="655"/>
+                                <connections>
+                                    <segue destination="KCs-lW-paM" kind="embed" id="6FN-88-nFe"/>
+                                </connections>
+                            </containerView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="qXX-1X-2YK" firstAttribute="leading" secondItem="XKs-20-yYV" secondAttribute="leadingMargin" id="F1N-gY-oQF"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="qXX-1X-2YK" secondAttribute="trailing" id="hkf-QH-VS4"/>
+                            <constraint firstItem="qXX-1X-2YK" firstAttribute="top" secondItem="aUe-s4-u2n" secondAttribute="bottom" id="lUH-Xp-XyH"/>
+                            <constraint firstItem="3c1-JF-6YG" firstAttribute="top" secondItem="qXX-1X-2YK" secondAttribute="bottom" id="lg6-fD-31l"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Demandes d'amitié" image="user_group_man_woman" id="Jf0-aA-KHQ"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9i9-k0-7n5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-19" y="909"/>
+        </scene>
+        <!--Friend Requests Table View Controller-->
+        <scene sceneID="TxK-JP-bLj">
+            <objects>
+                <tableViewController id="KCs-lW-paM" customClass="FriendRequestsTableViewController" customModule="AirHockeyLightClient" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="S4u-6B-kNj">
+                        <rect key="frame" x="0.0" y="0.0" width="984" height="655"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="SNc-aH-ayg" userLabel="Request">
+                                <rect key="frame" x="0.0" y="28" width="984" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SNc-aH-ayg" id="QFF-5E-JYD">
+                                    <rect key="frame" x="0.0" y="0.0" width="984" height="44"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="KCs-lW-paM" id="yrj-T9-tuM"/>
+                            <outlet property="delegate" destination="KCs-lW-paM" id="km0-Wy-Ps8"/>
+                        </connections>
+                    </tableView>
+                    <connections>
+                        <outlet property="pendingRequests" destination="S4u-6B-kNj" id="PPA-qQ-inT"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hKC-e9-SwL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="694" y="908"/>
+        </scene>
     </scenes>
+    <resources>
+        <image name="user_group_man_woman" width="30" height="30"/>
+        <image name="сontacts" width="30" height="30"/>
+    </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="nja-Df-3RZ"/>
         <segue reference="D9p-zm-qef"/>
+        <segue reference="6DQ-jn-lmH"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
 </document>

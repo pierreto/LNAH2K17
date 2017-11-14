@@ -143,6 +143,11 @@ class EditorHUDScene: SKScene {
         let touchedNode = self.nodes(at: positionInScene).first
         
         if touchedNode is SKSpriteNode {
+            if touchedNode?.name != "deleteButton" {
+                // Jouer le son sauf pour le button delete
+                AudioService.instance.playSound(soundName: EDITION_SOUND.HUD.rawValue)
+            }
+            
             if self.buttonSelectionnable(button: touchedNode as! SKSpriteNode) {
                 if touchedNode == self.currentButton {
                     if touchedNode != self.cameraControlButton {
@@ -195,6 +200,9 @@ class EditorHUDScene: SKScene {
             else if touchedNode?.name == "deleteButton"{
                 print("Delete")
                 FacadeModele.instance.obtenirEtat().supprimerSelection()
+                
+                // Jouer le son
+                AudioService.instance.playSound(soundName: EDITION_SOUND.DELETE.rawValue)
             }
             else if touchedNode?.name == "cancelButton"{
                 print("Annuler")
@@ -216,11 +224,11 @@ class EditorHUDScene: SKScene {
     
     private func colorCurrentButton(button: SKSpriteNode) {
         // Enlever la couleur de l'ancien bouton
-        let colorizeWhite = SKAction.colorize(with: .white, colorBlendFactor: 1, duration: 0.25)
+        let colorizeWhite = SKAction.colorize(with: .white, colorBlendFactor: 1, duration: 0.10)
         self.currentButton?.run(colorizeWhite)
         
         // Ajouter la couleur au nouveau bouton
-        let colorizeColor = SKAction.colorize(with: self.SELECTED_COLOR, colorBlendFactor: 1, duration: 0.5)
+        let colorizeColor = SKAction.colorize(with: self.SELECTED_COLOR, colorBlendFactor: 1, duration: 0.35)
         button.run(colorizeColor)
     }
     
