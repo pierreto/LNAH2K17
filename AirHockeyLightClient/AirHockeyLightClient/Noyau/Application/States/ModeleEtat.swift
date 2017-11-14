@@ -33,6 +33,10 @@ class ModeleEtat {
     /// Position du toucher associé au pan
     var panPosition = CGPoint()
     
+    /// Pour l'affichage d'un message d'erreur et pour le son
+    private var sendError: Bool = true
+    private var timer: Timer?
+    
     func initialiser() {}
     
     /// Annule l'action en cours
@@ -78,10 +82,24 @@ class ModeleEtat {
         
         // Faire apparaître un message d'erreur
         if !sontSurTable {
-            FacadeModele.instance.obtenirVue().editorNotificationScene?.showErrorOutOfBoundMessage(activer: true)
+            if self.sendError {
+                self.sendError = false
+                timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(self.resetSendError), userInfo: nil, repeats: false)
+            
+                // Message d'erreur
+                FacadeModele.instance.obtenirVue().editorNotificationScene?.showErrorOutOfBoundMessage(activer: true)
+            }
+        }
+        else {
+            self.sendError = true
         }
         
         return sontSurTable
+    }
+    
+    /// Réactive l'envoi de signaux d'erreur
+    @objc private func resetSendError() {
+        self.sendError = true
     }
     
     /// Détermine le déplacement d'un immediate pan gesture (delta)
@@ -125,10 +143,10 @@ class ModeleEtat {
             // Suppression du portail opposé qu'il soit sélectionné ou non
             if noeud.obtenirType() == arbre.NOM_PORTAIL {
                 let portail = noeud as! NoeudPortail
-                portail.obtenirOppose().removeFromParentNode()
+                portail.obtenirOppose()?.removeFromParentNode()
                 
                 // Envoyer la commande
-                FacadeModele.instance.obtenirEtatEdition().currentUserDeletedNode(uuid: portail.obtenirOppose().obtenirUUID())
+                FacadeModele.instance.obtenirEtatEdition().currentUserDeletedNode(uuid: (portail.obtenirOppose()?.obtenirUUID())!)
             }
             
             noeud.removeFromParentNode()

@@ -43,6 +43,9 @@ class EditorNotificationScene: SKScene {
             self.errorOutOfBound?.run(SKAction.fadeIn(withDuration: 0.5))
             self.errorOutOfBound?.run(SKAction.sequence([SKAction.wait(forDuration: 1.5),
                                                          SKAction.fadeOut(withDuration: 0.5)]))
+            
+            // Jouer le son
+            AudioService.instance.playSound(soundName: EDITION_SOUND.ERROR.rawValue)
         }
     }
     

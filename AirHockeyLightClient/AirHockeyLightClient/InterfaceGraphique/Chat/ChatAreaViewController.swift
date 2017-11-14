@@ -77,9 +77,13 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
         let sender = message["Sender"]
         let messageValue = message["MessageValue"]
         let timestamp = message["TimeStamp"]
-        print("Message: \(String(describing: sender! + " (" + timestamp! + ") : " + messageValue!))\n")
+        
+        let dateString = self.convertDate(dateString: timestamp!)
+        
+        print("Message: \(String(describing: sender! + " (" + dateString + ") : " + messageValue!))\n")
         let chan = channels.first(where: { $0.name == "Principal" })
-        chan?.messages.insert(ChatMessageEntity(sender:sender!, messageValue: messageValue!, timestamp: (timestamp?.description)!), at: 0)
+        
+        chan?.messages.append(ChatMessageEntity(sender:sender!, messageValue: messageValue!, timestamp: (dateString)))
         
         DispatchQueue.main.async(execute: { () -> Void in
             self.chatTableView.reloadData()
@@ -90,9 +94,12 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
         let sender = message["Sender"]
         let messageValue = message["MessageValue"]
         let timestamp = message["TimeStamp"]
-        print("Message: \(String(describing: sender! + " (" + timestamp! + ") : " + messageValue!))\n")
+        
+        let dateString = self.convertDate(dateString: timestamp!)
+        
+        print("Message: \(String(describing: sender! + " (" + dateString + ") : " + messageValue!))\n")
         let chan = channels.first(where: { $0.name == channelName })
-        chan?.messages.insert(ChatMessageEntity(sender:sender!, messageValue: messageValue!, timestamp: (timestamp?.description)!), at: 0)
+        chan?.messages.append(ChatMessageEntity(sender:sender!, messageValue: messageValue!, timestamp: (dateString)))
         
         DispatchQueue.main.async(execute: { () -> Void in
             self.chatTableView.reloadData()
@@ -237,6 +244,17 @@ extension ChatAreaViewController: ChannelSelectionDelegate {
     
     func toggleAddChannelView() {
         self.addChannelView.isHidden = !self.addChannelView.isHidden
+    }
+    
+    func convertDate(dateString: String) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        let date = dateFormatter.date(from: dateString)
+        
+        dateFormatter.dateFormat = "HH:mm:ss"
+        let dateString = dateFormatter.string(from: date!)
+        
+        return dateString
     }
 }
 

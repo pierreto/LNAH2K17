@@ -103,6 +103,9 @@ class ModeleEtatSelection: ModeleEtat {
         else if sender.state == UIGestureRecognizerState.ended {
             print("Fin deplacement noeud")
             
+            // Jouer le son
+            AudioService.instance.playSound(soundName: EDITION_SOUND.TRANSFORM.rawValue)
+            
             // Dernier déplacement
             self.deplacer()
             
@@ -143,6 +146,9 @@ class ModeleEtatSelection: ModeleEtat {
         else if sender.state == UIGestureRecognizerState.ended {
             print("Fin rotation noeud")
             
+            // Jouer le son
+            AudioService.instance.playSound(soundName: EDITION_SOUND.TRANSFORM.rawValue)
+            
             // Dernier rotation
             self.appliquerRotation(rotation: Float(-sender.rotation))
             
@@ -182,6 +188,9 @@ class ModeleEtatSelection: ModeleEtat {
         }
         else if sender.state == UIGestureRecognizerState.ended {
             print("Pinch ended")
+            
+            // Jouer le son
+            AudioService.instance.playSound(soundName: EDITION_SOUND.TRANSFORM.rawValue)
             
             // Dernier rotation
             self.appliquerScaling(scale: Float(sender.scale))

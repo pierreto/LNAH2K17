@@ -24,6 +24,8 @@ class ModeleEtatPointControl : ModeleEtat {
     /// Instance singleton
     static let instance = ModeleEtatPointControl()
     
+    private var playEndSound: Bool = false
+    
     /// Cette fonction initialise l'etat. Elle ajuste la couleur des points
     /// de controle et rend ces derniers selectionnables
     override func initialiser() {
@@ -105,6 +107,12 @@ class ModeleEtatPointControl : ModeleEtat {
             self.reactiverButtons()
             table.deselectionnerTout()
             
+            if self.playEndSound {
+                // Jouer le son
+                AudioService.instance.playSound(soundName: EDITION_SOUND.SELECTION2.rawValue)
+                self.playEndSound = false
+            }
+            
             // Envoyer la commande
             FacadeModele.instance.obtenirEtatEdition().currentUserSelectedObject(uuidSelected: "", isSelected: false, deselectAll: true)
         }
@@ -127,6 +135,8 @@ class ModeleEtatPointControl : ModeleEtat {
         for noeud in noeuds {
             noeud.savePosition()
             (noeud as! NoeudPointControl).obtenirNoeudOppose().savePosition()
+            
+            self.playEndSound = true;
         }
     }
     
