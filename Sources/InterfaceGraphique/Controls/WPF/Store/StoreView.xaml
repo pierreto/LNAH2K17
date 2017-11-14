@@ -30,15 +30,14 @@
         <Button Grid.Row="0" Command="{Binding Leave}">
             <TextBlock Text="Back" ></TextBlock>
         </Button>
-        <ItemsControl Grid.Row="1" Grid.Column="0" 
-                      ItemsSource="{Binding StoreItems}"
-                      >
-            <ItemsControl.ItemsPanel>
+        <ListView Grid.Row="1" Grid.Column="0"
+                  ItemsSource="{Binding StoreItems, UpdateSourceTrigger=PropertyChanged}" x:Name="storeItems">
+            <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid Rows="3" Columns="5"></UniformGrid>
                 </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid HorizontalAlignment="Center">
                         <Grid.RowDefinitions>
@@ -46,22 +45,26 @@
                             <RowDefinition Height="*"></RowDefinition>
                             <RowDefinition Height="*"></RowDefinition>
                         </Grid.RowDefinitions>
-                        <Image Grid.Row="0" Source="{Binding ImageUrl}"></Image>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseUp">
+                                <i:InvokeCommandAction Command="{Binding ElementName=storeItems, Path=DataContext.ClickCommand}"
+                                                       CommandParameter="{Binding}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <Image HorizontalAlignment="Center" Grid.Row="0" Source="{Binding Path=ImageUrl}"></Image>
                         <Grid Grid.Row="1">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"></ColumnDefinition>
-                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="70*"></ColumnDefinition>
+                                <ColumnDefinition Width="30*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="{Binding Name}"></TextBlock>
-                            <TextBlock Grid.Column="1" Text="{Binding Price}" HorizontalAlignment="Right"></TextBlock>
+                            <TextBlock Grid.Column="0" Text="{Binding Path=Name}"></TextBlock>
+                            <TextBlock Grid.Column="1" Text="{Binding Path=Price}" HorizontalAlignment="Right"></TextBlock>
                         </Grid>
-                        <CheckBox Grid.Row="2" IsChecked="{Binding IsChecked, Mode=TwoWay}">
-                            
-                        </CheckBox>
+                        <CheckBox Grid.Row="2" IsChecked="{Binding Path=IsChecked, Mode=TwoWay}"></CheckBox>
                     </Grid>
                 </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+            </ListView.ItemTemplate>
+        </ListView>
         <StackPanel Grid.Row="2" HorizontalAlignment="Right" Orientation="Horizontal">
             <Button Command="{Binding Reset}" Background="Green" BorderBrush="Green">
                 <TextBlock Text="Clear Cart"></TextBlock>

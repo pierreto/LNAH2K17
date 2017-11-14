@@ -4,6 +4,7 @@ using InterfaceGraphique.Services;
 using Prism.Commands;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,7 +18,7 @@ namespace InterfaceGraphique.Controls.WPF.Store
 
         public StoreViewModel(StoreService storeService)
         {
-            this.StoreItems = new List<StoreItemEntity>();
+            this.StoreItems = new ObservableCollection<ItemViewModel>();
             StoreService = storeService;
         }
 
@@ -28,17 +29,64 @@ namespace InterfaceGraphique.Controls.WPF.Store
 
         public async Task Initialize()
         {
-            StoreItems = await StoreService.GetStoreItems(); 
-
+            var items = await StoreService.GetStoreItems();
+            foreach(var item in items)
+            {
+                StoreItems.Add(new ItemViewModel(item));
+            }
         }
 
-        private List<StoreItemEntity> storeItems;
-        public List<StoreItemEntity> StoreItems
+        private ObservableCollection<ItemViewModel> storeItems;
+        public ObservableCollection<ItemViewModel> StoreItems
         {
             get => storeItems;
             set
             {
                 storeItems = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string mainDescription;
+        public string MainDescription
+        {
+            get => mainDescription;
+            set
+            {
+                mainDescription = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private int mainPrice;
+        public int MainPrice
+        {
+            get => mainPrice;
+            set
+            {
+                mainPrice = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string mainName;
+        public string MainName
+        {
+            get => mainName;
+            set
+            {
+                mainName = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string mainImageUrl;
+        public string MaintImageUrl
+        {
+            get => mainImageUrl;
+            set
+            {
+                mainImageUrl = value;
                 OnPropertyChanged();
             }
         }
@@ -55,7 +103,7 @@ namespace InterfaceGraphique.Controls.WPF.Store
 
         private async Task BuyItems()
         {
-            await StoreService.BuyElements(StoreItems.Where(x => x.IsChecked).ToList(), User.Instance.UserEntity.Id);
+            await StoreService.BuyElements(StoreItems.Where(x => x.IsChecked).Select(x => x.StoreItem).ToList(), User.Instance.UserEntity.Id);
             EmptyCart();
         }
         
@@ -92,6 +140,17 @@ namespace InterfaceGraphique.Controls.WPF.Store
         {
             EmptyCart();
             Program.FormManager.CurrentForm = Program.MainMenu;
+        }
+
+        private ICommand clickCommand;
+        public ICommand ClickCommand
+        {
+            get { return clickCommand ?? (clickCommand = new DelegateCommand<ItemViewModel>(DoSelect)); }
+        }
+
+        private void DoSelect(ItemViewModel item)
+        {
+            
         }
     }
 }

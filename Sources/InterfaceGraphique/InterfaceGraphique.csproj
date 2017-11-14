@@ -248,6 +248,7 @@
     </Compile>
     <Compile Include="Controls\WPF\Matchmaking\MatchmakingViewModel.cs" />
     <Compile Include="Controls\WPF\RelayCommandAsync.cs" />
+    <Compile Include="Controls\WPF\Store\ItemViewModel.cs" />
     <Compile Include="Controls\WPF\Store\StoreView.xaml.cs">
       <DependentUpon>StoreView.xaml</DependentUpon>
     </Compile>

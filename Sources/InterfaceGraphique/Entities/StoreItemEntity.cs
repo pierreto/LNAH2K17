@@ -18,8 +18,6 @@ namespace InterfaceGraphique.Entities
 
         public int Id { get; set; }
 
-        public bool IsChecked { get; set; }
-
         public bool IsGameEnabled { get; set; }
     }
 }

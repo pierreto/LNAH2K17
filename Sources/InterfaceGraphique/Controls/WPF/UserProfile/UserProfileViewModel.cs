@@ -185,15 +185,17 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
             get
             {
                 return mainMenuCommand ??
-                       (mainMenuCommand = new RelayCommandAsync(MainMenu, (o) => true));
+                       (mainMenuCommand = new DelegateCommand(MainMenu));
             }
         }
 
         public PlayerStatsService PlayerStatsService { get; }
+
         public StoreService StoreService { get; }
+
         public UserService UserService { get; }
 
-        private async Task MainMenu()
+        private void MainMenu()
         {
             Program.FormManager.CurrentForm = Program.MainMenu;
         }
