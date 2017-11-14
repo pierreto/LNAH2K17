@@ -10,27 +10,23 @@ using InterfaceGraphique.CommunicationInterface.RestInterface;
 using System.Net.Http;
 using InterfaceGraphique.Services;
 using System.Collections.ObjectModel;
+using Microsoft.Practices.Unity;
 
 namespace InterfaceGraphique.Controls.WPF.Friends
 {
-    public class FriendListViewModel : ViewModelBase
+    public class FriendListViewModel : MinimizableViewModelBase
     {
         private FriendsHub friendsHub;
-        private UserService userService;
         private List<UserEntity> friendList;
-        private string friendUsername;
-        private ObservableCollection<string> usernames;
 
-        private ICommand sendFriendRequestCommand;
 
         private ICommand removeFriendCommand;
 
         public UserEntity SelectedFriend { get; set; }
 
-        public FriendListViewModel(FriendsHub friendsHub, UserService userService)
+        public FriendListViewModel(FriendsHub friendsHub)
         {
             this.friendsHub = friendsHub;
-            this.userService = userService;
         }
 
         public List<UserEntity> FriendList
@@ -47,39 +43,34 @@ namespace InterfaceGraphique.Controls.WPF.Friends
 
         public override async void InitializeViewModel()
         {
+            Minimize();
+
             FriendList = await this.friendsHub.GetAllFriends();
-            List<UserEntity> userEntities = await userService.GetAllUsers();
+            //List<UserEntity> userEntities = await userService.GetAllUsers();
             this.friendsHub.NewFriendEvent += NewFriendEvent;
             this.friendsHub.RemovedFriendEvent += RemovedFriendEvent;
+
+
         }
 
-        public string FriendUsername
+        public override void Minimize()
         {
-            get => friendUsername;
-            set
+            if (Collapsed == System.Windows.Visibility.Visible)
             {
-                friendUsername = value;
-                this.OnPropertyChanged();
+                TabIcon = "Users";
+                Collapsed = System.Windows.Visibility.Collapsed;
+                Program.FormManager.CurrentForm?.MinimizeFriendList();
             }
-        }
+            else
+            {
+                TabIcon = "AngleDown";
+                Collapsed = System.Windows.Visibility.Visible;
+                Program.FormManager.CurrentForm?.MaximizeFriendList();
+            }
+            Program.unityContainer.Resolve<AddUserViewModel>().Collapsed = Collapsed;
+            Program.unityContainer.Resolve<AddUserViewModel>().TabIcon = TabIcon;
 
-        public ObservableCollection<string> Usernames
-        {
-            get => usernames;
-            set
-            {
-                usernames = value;
-                this.OnPropertyChanged();
-            }
-        }
 
-        public ICommand SendFriendRequestCommand
-        {
-            get
-            {
-                return sendFriendRequestCommand ??
-                       (sendFriendRequestCommand = new RelayCommandAsync(SendFriendRequest));
-            }
         }
 
 
@@ -92,15 +83,6 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             }
         }
 
-        private async Task SendFriendRequest()
-        {
-            if (FriendUsername != null)
-            {
-                HttpResponseMessage response = await Program.client.GetAsync("api/user/u/" + FriendUsername);
-                UserEntity friend = await HttpResponseParser.ParseResponse<UserEntity>(response);
-                await this.friendsHub.SendFriendRequest(friend);
-            }
-        }
 
   
 

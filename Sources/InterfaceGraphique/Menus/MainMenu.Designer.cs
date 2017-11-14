@@ -194,9 +194,9 @@ namespace InterfaceGraphique
             // elementHost2
             // 
             this.elementHost2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.elementHost2.Location = new System.Drawing.Point(985, 348);
+            this.elementHost2.Location = new System.Drawing.Point(985, 211);
             this.elementHost2.Name = "elementHost2";
-            this.elementHost2.Size = new System.Drawing.Size(203, 300);
+            this.elementHost2.Size = new System.Drawing.Size(200, 437);
             this.elementHost2.TabIndex = 11;
             this.elementHost2.Text = "elementHost2";
             this.elementHost2.Child = null;

@@ -5,8 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:InterfaceGraphique.Controls.WPF.Friends"
              xmlns:wpf="clr-namespace:InterfaceGraphique.Controls.WPF"
+             xmlns:wpfTextBoxAutoComplete="clr-namespace:WPFTextBoxAutoComplete;assembly=WPFTextBoxAutoComplete"
+             xmlns:mockObject="clr-namespace:InterfaceGraphique.Entities.MockObject"
              mc:Ignorable="d" 
-             d:DesignHeight="500" d:DesignWidth="300">
+             d:DesignHeight="500" d:DesignWidth="200">
 
     <UserControl.Resources>
         <ResourceDictionary>
@@ -19,6 +21,8 @@
                 <ResourceDictionary Source="/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Green.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <wpf:ViewModelLocator x:Key="VMLocator" d:IsDataSource="True" />
+            <mockObject:UserMock
+                x:Key="UserMock"/>
 
         </ResourceDictionary>
 
@@ -29,24 +33,45 @@
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="7*"/>
-            <RowDefinition Height="1*"/>
+            <RowDefinition Height="26*"/>
+            <RowDefinition Height="35*"/>
+            <RowDefinition Height="40*"/>
+            <RowDefinition Height="30*"/>
+            <RowDefinition Height="150*"/>
+            <RowDefinition Height="55*"/>
         </Grid.RowDefinitions>
-        <Label Content="Demandes d'amis en attentes :"  Margin="10,18,113,0" VerticalAlignment="Top"  Foreground="White" Grid.RowSpan="2" Grid.ColumnSpan="2" Height="26" Background="{x:Null}"/>
-
+        <Label Content="Demandes d'amis en attentes :"  Margin="10,0,0,0"  Foreground="White" Grid.ColumnSpan="2" Background="{x:Null}" Grid.Row="3"/>
+        <Label Content="Ajouter un ami :"   Foreground="White" Margin="10,0,0,0" Grid.ColumnSpan="2"/>
+        <TextBox x:Name="FriendUsername"
+                 Text="{Binding FriendUsername, UpdateSourceTrigger=PropertyChanged}"
+                 wpfTextBoxAutoComplete:AutoCompleteBehavior.AutoCompleteItemsSource="{Binding Usernames, UpdateSourceTrigger=PropertyChanged}"
+                 wpfTextBoxAutoComplete:AutoCompleteBehavior.AutoCompleteStringComparison="InvariantCultureIgnoreCase" Margin="6,1,5,1" TextWrapping="Wrap" Foreground="White" 
+                 Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0" Background="White">
+            <TextBox.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform AngleX="-1.414"/>
+                    <RotateTransform/>
+                    <TranslateTransform X="-0.309"/>
+                </TransformGroup>
+            </TextBox.RenderTransform>
+        </TextBox>
+        <Button Command="{Binding SendFriendRequestCommand}"
+                Content="Envoyer la demande" Margin="10,5" Background ="#FF5387C5" Height="Auto" Grid.ColumnSpan="2" Grid.Row="2" FontSize="12" />
         <DataGrid ItemsSource="{Binding FriendRequestList, UpdateSourceTrigger=PropertyChanged}"
                   SelectedItem="{Binding SelectedFriendRequest}"
-                  AutoGenerateColumns="False"  Margin="10,7,10,1" Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0"
-                  Background="#FF32373C">
+                  d:DataContext="{Binding Source={StaticResource UserMock}}"
+                  CanUserAddRows="false"
+                  AutoGenerateColumns="False"  Margin="10,7,10,1" Grid.Row="4" Grid.ColumnSpan="2" Grid.Column="0"
+                  Background="#FF464A50">
 
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Pseudonyme" Binding="{Binding Requestor.Username}" IsReadOnly="True" Foreground="White" />
+                <DataGridTextColumn Header="Pseudonyme" Binding="{Binding Requestor.Username}" IsReadOnly="True" Foreground="White" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
         <Button Command="{Binding AcceptFriendRequestCommand}"
-                Content="Accepter"  Margin="32,6,26,12" Grid.Row="2" Height="Auto" Background="#FF5387C5" />
+                Content="Accepter"  Margin="10,7,10,13" Grid.Row="5" Height="Auto"  Background="#FF5387C5" FontSize="12"  />
         <Button Command="{Binding RefuseFriendRequestCommand}"
-                Content="Refuser" Margin="32,6,26,12" Grid.Row="2" Grid.Column="1" Height="Auto" Background="#FFC3423C" />
+                Content="Refuser" Margin="10,7,10,13" Grid.Row="5" Grid.Column="1" Height="Auto" Background="#FFC3423C" FontSize="12" />
     </Grid>
 </UserControl>

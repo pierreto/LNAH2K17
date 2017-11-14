@@ -20,4 +20,19 @@ namespace InterfaceGraphique.Entities.MockObject
         }
         public ObservableCollection<MapEntity> OnlineEditedMapInfos { get; set; }
     }
+
+    public class UserMock
+    {
+        public UserMock()
+        {
+            FriendList = new List<UserEntity>
+            {
+                new UserEntity() {Username = "abstr",},
+                new UserEntity() {Username = "test text "},
+                new UserEntity() {Username = "test text 3"}
+            };
+        }
+        public List<UserEntity> FriendList { get; set; }
+    }
 }
+
