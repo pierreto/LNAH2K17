@@ -82,8 +82,8 @@ namespace InterfaceGraphique
             }
             if(User.Instance.IsConnected)
             {
-                this.profileButton.Click += (sender, e) => OnProfileButtonClicked(sender, e);
-                this.storeButton.Click += (sender, e) => OnStoreButtonClicked(sender, e);
+                this.profileButton.Click += async (sender, e) => await OnProfileButtonClicked(sender, e);
+                this.storeButton.Click += async (sender, e) => await OnStoreButtonClicked(sender, e);
             }
             else
             {
@@ -92,16 +92,16 @@ namespace InterfaceGraphique
             }
         }
 
-        private void OnStoreButtonClicked(object sender, EventArgs e)
+        private async Task OnStoreButtonClicked(object sender, EventArgs e)
         {
             Program.FormManager.CurrentForm = Program.StoreMenu;
-            Program.unityContainer.Resolve<StoreViewModel>().Initialize();
+            await Program.unityContainer.Resolve<StoreViewModel>().Initialize();
         }
 
-        private void OnProfileButtonClicked(object sender, EventArgs e)
+        private async Task OnProfileButtonClicked(object sender, EventArgs e)
         {
             Program.FormManager.CurrentForm = Program.UserProfileMenu;
-            Program.unityContainer.Resolve<UserProfileViewModel>().Initialize();
+            await Program.unityContainer.Resolve<UserProfileViewModel>().Initialize();
         }
 
         public async Task Logout()

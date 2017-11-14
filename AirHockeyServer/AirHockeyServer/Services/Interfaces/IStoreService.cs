@@ -15,7 +15,7 @@ namespace AirHockeyServer.Services.Interfaces
 
         Task UpdateUserItem(int userId, StoreItemEntity item);
 
-        Task AddUserItem(int userId, StoreItemEntity item);
+        Task AddUserItems(int userId, List<StoreItemEntity> item);
 
 
     }
