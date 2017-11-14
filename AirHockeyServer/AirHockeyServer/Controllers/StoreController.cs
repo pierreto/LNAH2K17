@@ -37,7 +37,7 @@ namespace AirHockeyServer.Controllers
 
         [HttpGet]
         [Route("api/store/{id}")]
-        public async Task<HttpResponseMessage> GetStoreItems(int id)
+        public async Task<HttpResponseMessage> GetUserStoreItems(int id)
         {
             try
             {
@@ -52,11 +52,11 @@ namespace AirHockeyServer.Controllers
 
         [HttpPost]
         [Route("api/store/{id}")]
-        public async Task<HttpResponseMessage> AddUserItem(int id, [FromBody] StoreItemEntity storeItem)
+        public async Task<HttpResponseMessage> AddUserItem(int id, [FromBody] List<StoreItemEntity> storeItems)
         {
             try
             {
-                await StoreService.AddUserItem(id, storeItem);
+                await StoreService.AddUserItems(id, storeItems);
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
             catch (Exception e)

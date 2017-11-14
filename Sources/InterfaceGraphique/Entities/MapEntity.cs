@@ -20,5 +20,7 @@ namespace InterfaceGraphique.Entities
         public bool Private { get; set; }
         public string Password { get; set; }
         public int CurrentNumberOfPlayer { get; set; }
+
+        public byte[] Icon { get; set; }
     }
 }

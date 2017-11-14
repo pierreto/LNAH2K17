@@ -20,9 +20,11 @@ import Foundation
 class ChannelEntity : Entity {
     
     public var name : String
+    public var hasUnreadMessage: Bool
     public var messages = [ChatMessageEntity]()
     init(name: String) {
         self.name = name;
+        self.hasUnreadMessage = false
     }
     
     public func getName() -> String {
@@ -32,7 +34,6 @@ class ChannelEntity : Entity {
     public func setName(name: String) {
         self.name = name
     }
-    
 }
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -31,12 +31,6 @@ class MasterViewController: UITableViewController {
             delegate?.cJoinChannelConstraint = 1
         }
     }
-    
-//    required init(coder aDecoder: NSCoder) {
-//        super.init(coder: aDecoder)!
-//        MasterViewController.sharedMasterViewController = self
-//        self.channels.append(ChannelEntity(name: "Principal"))
-//    }
 
     @IBAction func addChannel(_ sender: Any) {
         self.delegate?.toggleAddChannelView()
@@ -55,6 +49,7 @@ class MasterViewController: UITableViewController {
         let indexPath = IndexPath(row: 0, section: 0);
         self.channelTableView.selectRow(at: indexPath, animated: true, scrollPosition: .bottom)
         self.channelTableView.delegate?.tableView!(self.channelTableView, didSelectRowAt: indexPath)
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -84,12 +79,24 @@ class MasterViewController: UITableViewController {
 
         // Configure the cell...
         let channel = channels[indexPath.row]
+        cell.backgroundColor = UIColor(red:0.24, green:0.24, blue:0.24, alpha:1.0)
         cell.textLabel?.text = channel.name
+        if channel.hasUnreadMessage {
+            cell.textLabel?.textColor = UIColor .red
+        } else {
+            cell.textLabel?.textColor = UIColor .white
+        }
+        
+        let bgColorView = UIView()
+        bgColorView.backgroundColor = UIColor(red:0.29, green:0.29, blue:0.29, alpha:1.0)
+        cell.selectedBackgroundView = bgColorView
+        
         return cell
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedChannel = channels[indexPath.row]
+        selectedChannel.hasUnreadMessage = false
         self.delegate?.channelSelected(newChannel: selectedChannel)
     }
 
@@ -101,13 +108,14 @@ class MasterViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
-        return "Supprimer"
+        return "Quitter"
     }
     
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the data source
+            HubManager.sharedConnection.getChatHub().leaveRoom(roomName: channels[indexPath.row].getName())
             channels.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
@@ -170,5 +178,9 @@ extension MasterViewController: AddChannelDelegate {
             // Reload tableView
             self.channelTableView.reloadData()
         })
+    }
+    
+    func newUnreadMessage() {
+        self.channelTableView.reloadData()
     }
 }

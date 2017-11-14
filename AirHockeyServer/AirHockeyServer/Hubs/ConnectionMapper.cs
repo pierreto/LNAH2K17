@@ -96,7 +96,11 @@ namespace AirHockeyServer.Hubs
 
         public Guid GetGameId(string connection)
         {
-            return GameID[connection];
+            if(GameID.ContainsKey(connection))
+            {
+                return GameID[connection];
+            }
+            return default(Guid);
         }
 
         private ConcurrentDictionary<string, OnlineUser> usersConnectionMapping;

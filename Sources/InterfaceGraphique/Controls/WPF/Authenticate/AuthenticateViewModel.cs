@@ -15,8 +15,6 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
     public class AuthenticateViewModel : ViewModelBase
     {
         //TODO: Mettre ailleurs?
-        static HttpClient client = new HttpClient();
-
         #region Private Properties
         private LoginEntity loginEntity;
         private HubManager hubManager;
@@ -148,7 +146,7 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
                 Loading();
                 if (ValidateLoginEntity())
                 {
-                    var response = await client.PostAsJsonAsync(Program.client.BaseAddress + "api/login", loginEntity);
+                    var response = await Program.client.PostAsJsonAsync(Program.client.BaseAddress + "api/login", loginEntity);
                     if (response.IsSuccessStatusCode)
                     {
                         int userId = response.Content.ReadAsAsync<int>().Result;
@@ -168,8 +166,10 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
                         Program.FormManager.CurrentForm = Program.MainMenu;
 
                         // Open the friend list windows:
-                        Program.FriendListHost.Show();
+                        //Program.FriendListHost.Show();
+                        await Program.unityContainer.Resolve<FriendsHub>().InitializeFriendsHub();
                         Program.unityContainer.Resolve<FriendListViewModel>().InitializeViewModel();
+                        Program.unityContainer.Resolve<AddUserViewModel>().InitializeViewModel();
                     }
                     else
                     {

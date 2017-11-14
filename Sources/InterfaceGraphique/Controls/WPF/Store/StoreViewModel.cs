@@ -1,4 +1,5 @@
-﻿using InterfaceGraphique.Entities;
+﻿using InterfaceGraphique.CommunicationInterface;
+using InterfaceGraphique.Entities;
 using InterfaceGraphique.Services;
 using Prism.Commands;
 using System;
@@ -16,39 +17,7 @@ namespace InterfaceGraphique.Controls.WPF.Store
 
         public StoreViewModel(StoreService storeService)
         {
-            this.StoreItems = new List<StoreItemEntity>()
-            {
-                new StoreItemEntity
-                {
-                    Name = "Name1",
-                    Description = "Desc1",
-                    Price = 5
-                },
-                new StoreItemEntity
-                {
-                    Name = "Name2",
-                    Description = "Desc2",
-                    Price = 4
-                },
-                new StoreItemEntity
-                {
-                    Name = "Name3",
-                    Description = "Desc3",
-                    Price = 8
-                },
-                new StoreItemEntity
-                {
-                    Name = "Name4",
-                    Description = "Desc4",
-                    Price = 9
-                },
-                new StoreItemEntity
-                {
-                    Name = "Name5",
-                    Description = "Desc5",
-                    Price = 15
-                }
-            };
+            this.StoreItems = new List<StoreItemEntity>();
             StoreService = storeService;
         }
 
@@ -57,9 +26,10 @@ namespace InterfaceGraphique.Controls.WPF.Store
             //
         }
 
-        public void Initialize()
+        public async Task Initialize()
         {
-            
+            StoreItems = await StoreService.GetStoreItems(); 
+
         }
 
         private List<StoreItemEntity> storeItems;
@@ -85,7 +55,7 @@ namespace InterfaceGraphique.Controls.WPF.Store
 
         private async Task BuyItems()
         {
-            await StoreService.BuyElements(StoreItems.Where(x => x.IsChecked).ToList());
+            await StoreService.BuyElements(StoreItems.Where(x => x.IsChecked).ToList(), User.Instance.UserEntity.Id);
             EmptyCart();
         }
         

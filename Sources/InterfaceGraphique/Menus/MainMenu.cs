@@ -1,15 +1,20 @@
 ﻿using System;
-using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Practices.Unity;
 using InterfaceGraphique.CommunicationInterface;
 using InterfaceGraphique.Controls.WPF.Home;
 using System.Net.Http;
+using System.Windows;
+using System.Windows.Interop;
+using System.Windows.Media;
 using InterfaceGraphique.Controls.WPF.Chat;
 using InterfaceGraphique.Controls.WPF.Chat.Channel;
+using InterfaceGraphique.Controls.WPF.Friends;
 using InterfaceGraphique.Controls.WPF.UserProfile;
 using InterfaceGraphique.Controls.WPF.Store;
+using Point = System.Drawing.Point;
+using Size = System.Drawing.Size;
 
 namespace InterfaceGraphique
 {
@@ -25,6 +30,9 @@ namespace InterfaceGraphique
         static HttpClient client = new HttpClient();
         private int chatHeight;
         private Point chatLocation;
+
+        private int friendHeight;
+
         private readonly int COLLAPSED_CHAT_HEIGHT = 40;
         ////////////////////////////////////////////////////////////////////////
         ///
@@ -34,9 +42,16 @@ namespace InterfaceGraphique
         public MainMenu()
         {
             InitializeComponent();
+            elementHost1.Child = Program.unityContainer.Resolve<TestChatView>();
+            elementHost2.Child = Program.unityContainer.Resolve<FriendContentControl>();
+
             InitializeEvents();
             chatHeight = elementHost1.Height;
             chatLocation = elementHost1.Location;
+
+            this.friendHeight = elementHost2.Height;
+    
+
             if (User.Instance.IsConnected)
             {
 
@@ -51,7 +66,6 @@ namespace InterfaceGraphique
             //    this.testChatView = new InterfaceGraphique.Controls.WPF.Chat.TestChatView();
             //}
         }
-
         ////////////////////////////////////////////////////////////////////////
         ///
         /// Initialise les events sur la form courrante
@@ -82,8 +96,8 @@ namespace InterfaceGraphique
             }
             if(User.Instance.IsConnected)
             {
-                this.profileButton.Click += (sender, e) => OnProfileButtonClicked(sender, e);
-                this.storeButton.Click += (sender, e) => OnStoreButtonClicked(sender, e);
+                this.profileButton.Click += async (sender, e) => await OnProfileButtonClicked(sender, e);
+                this.storeButton.Click += async (sender, e) => await OnStoreButtonClicked(sender, e);
             }
             else
             {
@@ -92,16 +106,16 @@ namespace InterfaceGraphique
             }
         }
 
-        private void OnStoreButtonClicked(object sender, EventArgs e)
+        private async Task OnStoreButtonClicked(object sender, EventArgs e)
         {
             Program.FormManager.CurrentForm = Program.StoreMenu;
-            Program.unityContainer.Resolve<StoreViewModel>().Initialize();
+            await Program.unityContainer.Resolve<StoreViewModel>().Initialize();
         }
 
-        private void OnProfileButtonClicked(object sender, EventArgs e)
+        private async Task OnProfileButtonClicked(object sender, EventArgs e)
         {
             Program.FormManager.CurrentForm = Program.UserProfileMenu;
-            Program.unityContainer.Resolve<UserProfileViewModel>().Initialize();
+            await Program.unityContainer.Resolve<UserProfileViewModel>().Initialize();
         }
 
         public async Task Logout()
@@ -183,9 +197,25 @@ namespace InterfaceGraphique
         public void MaximizeChat()
         {
             HideChat();
-            elementHost1.Location = chatLocation;
             elementHost1.Size = new Size(elementHost1.Width, chatHeight);
+            elementHost1.Location = new Point(elementHost1.Location.X, elementHost1.Location.Y - chatHeight + COLLAPSED_CHAT_HEIGHT);
             ShowChat();
+        }
+
+        public void MinimizeFriendList()
+        {
+            this.elementHost2.Hide();
+            elementHost2.Size = new Size(elementHost2.Width, COLLAPSED_CHAT_HEIGHT);
+            elementHost2.Location = new Point(elementHost2.Location.X, elementHost2.Location.Y + friendHeight - COLLAPSED_CHAT_HEIGHT);
+            this.elementHost2.Show();
+        }
+
+        public void MaximizeFriendList()
+        {
+            this.elementHost2.Hide();
+            elementHost2.Size = new Size(elementHost2.Width, friendHeight);
+            elementHost2.Location = new Point(elementHost2.Location.X, elementHost2.Location.Y - friendHeight + COLLAPSED_CHAT_HEIGHT);
+            this.elementHost2.Show();
         }
         public void HideChat()
         {

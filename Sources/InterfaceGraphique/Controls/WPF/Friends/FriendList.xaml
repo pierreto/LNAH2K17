@@ -6,7 +6,8 @@
              xmlns:wpf="clr-namespace:InterfaceGraphique.Controls.WPF"
              xmlns:entities="clr-namespace:InterfaceGraphique.Entities"
              xmlns:behaviors="clr-namespace:WPFTextBoxAutoComplete;assembly=WPFTextBoxAutoComplete"
-             mc:Ignorable="d" d:DesignWidth="717.783" Height="536.985">
+             xmlns:mockObject="clr-namespace:InterfaceGraphique.Entities.MockObject"
+             mc:Ignorable="d" d:DesignHeight="500" d:DesignWidth="200">
 
     <UserControl.Resources>
         <ResourceDictionary>
@@ -23,57 +24,102 @@
             <entities:UserEntity
                 x:Key="UserEntity"/>
 
-            <entities:FriendRequestEntity
-                x:Key="FriendRequestEntity"/>
+            <mockObject:UserMock
+                x:Key="UserMock"/>
+
 
         </ResourceDictionary>
 
     </UserControl.Resources>
 
-    <Grid Margin="0,-21,-34.4,-0.2"
+    <Grid
           DataContext="{Binding Source={StaticResource VMLocator}, Path=FriendListViewModel}">
-        <Grid Margin="0,0,0,56.8">
-            <Label Content="Liste d'amis" Height="38" Margin="313,18,297,0" VerticalAlignment="Top" FontSize="24" Foreground="#FF2288F7"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="24*"/>
+            <RowDefinition Height="197*"/>
+            <RowDefinition Height="29*"/>
+        </Grid.RowDefinitions>
+        <Label Content="Liste d'amis"  FontSize="24" Foreground="White" HorizontalAlignment="Center" Margin="34,0" Width="132"/>
 
-            <Label Content="Ajouter un ami :" HorizontalAlignment="Left" Margin="33,76,0,0" VerticalAlignment="Top" Width="98" Foreground="#FF2288F7"/>
-            <TextBox x:Name="FriendUsername"
-                 Text="{Binding FriendUsername, UpdateSourceTrigger=PropertyChanged}"
-                 behaviors:AutoCompleteBehavior.AutoCompleteItemsSource="{Binding Usernames, UpdateSourceTrigger=PropertyChanged}"
-                 behaviors:AutoCompleteBehavior.AutoCompleteStringComparison="InvariantCultureIgnoreCase"
-                 HorizontalAlignment="Left" Height="26" Margin="131,76,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="193" Foreground="Black"/>
-            <Button Command="{Binding SendFriendRequestCommand}"
-                    Content="Envoyer la demande" HorizontalAlignment="Left" Height="25" Margin="361,77,0,0" VerticalAlignment="Top" Width="188"/>
-
-            <Label Content="Amis :" HorizontalAlignment="Left" Height="30" Margin="33,124,0,0" VerticalAlignment="Top" Width="47" Foreground="#FF2288F7"/>
-            <Label Content="Demandes d'amis&#xA;en attentes :" HorizontalAlignment="Left" Height="44" Margin="394,110,0,0" VerticalAlignment="Top" Width="118" Foreground="#FF2288F7"/>
-
-            <DataGrid ItemsSource="{Binding FriendList, UpdateSourceTrigger=PropertyChanged}"
-                      d:DataContext="{Binding Source={StaticResource UserEntity}}"
+        <DataGrid ItemsSource="{Binding FriendList, UpdateSourceTrigger=PropertyChanged}"
+                         d:DataContext="{Binding Source={StaticResource UserMock}}"
                       SelectedItem="{Binding SelectedFriend}"
                       AutoGenerateColumns="False"
-                      x:Name="FriendsGrid" HorizontalAlignment="Left" Height="290" Margin="33,154,0,0" VerticalAlignment="Top" Width="285">
+                      x:Name="FriendsGrid"  Margin="10" Grid.Row="1" Background="#FF484B51" Foreground="#DDFFFFFF" 
+                  HorizontalGridLinesBrush="#FF666666" CanUserAddRows="false"
 
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Pseudonyme" Binding="{Binding Username}" IsReadOnly="True" />
-                </DataGrid.Columns>
-            </DataGrid>
-            <Button  Command="{Binding RemoveFriendCommand}"
-                     Content="Supprimer cet ami" HorizontalAlignment="Left" Height="36" Margin="33,449,0,0" VerticalAlignment="Top" Width="285"/>
+                  >
+            <DataGrid.Resources>
+                <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}">
+                    <Setter Property="Background" Value="#FF747474" />
+                    <Setter Property="FontWeight" Value="Bold"/>
+                    <Setter Property="Foreground" Value="White"/>
 
-            <DataGrid ItemsSource="{Binding FriendRequestList, UpdateSourceTrigger=PropertyChanged}"
-                      d:DataContext="{Binding Source={StaticResource FriendRequestEntity}}"
-                      SelectedItem="{Binding SelectedFriendRequest}"
-                      AutoGenerateColumns="False"
-                      HorizontalAlignment="Left" Height="290" Margin="394,154,0,0" VerticalAlignment="Top" Width="285">
+                </Style>
 
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Pseudonyme" Binding="{Binding Requestor.Username}" IsReadOnly="True" />
-                </DataGrid.Columns>
-            </DataGrid>
-            <Button Command="{Binding AcceptFriendRequestCommand}"
-                    Content="Accepter" HorizontalAlignment="Left" Height="36" Margin="394,449,0,0" VerticalAlignment="Top" Width="140"/>
-            <Button Command="{Binding RefuseFriendRequestCommand}"
-                    Content="Refuser" HorizontalAlignment="Left" Height="36" Margin="539,449,0,0" VerticalAlignment="Top" Width="140"/>
-        </Grid>
+                <Style TargetType="DataGridCell">
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="#FF3C3C3C"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="BorderBrush" Value="#FF484B51"/>
+                        </Trigger>
+                        </Style.Triggers>
+                 </Style>
+
+            </DataGrid.Resources>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Pseudonyme" Binding="{Binding Username}" IsReadOnly="True" Width="*"  />
+            </DataGrid.Columns>
+            <DataGrid.ItemContainerStyle>
+
+                <Style TargetType="{x:Type DataGridRow}">
+                    <Setter Property="Width" Value="180" />
+
+                    <Setter Property="Background" Value="{x:Null}" />
+                    <Setter Property="Validation.ErrorTemplate" Value="{x:Null}" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type DataGridRow}">
+                                <Border x:Name="DGR_Border"
+                                        SnapsToDevicePixels="True" Background="#FF484B51">
+                                    <SelectiveScrollingGrid Height="30">
+                                        <SelectiveScrollingGrid.ColumnDefinitions >
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="2*" />
+                                        </SelectiveScrollingGrid.ColumnDefinitions>
+                                        <SelectiveScrollingGrid.RowDefinitions>
+                                            <RowDefinition Height="2*" />
+                                            <RowDefinition Height="Auto" />
+                                        </SelectiveScrollingGrid.RowDefinitions>
+                                        <DataGridCellsPresenter Grid.Column="1"
+                                                                ItemsPanel="{TemplateBinding ItemsPanel}"
+                                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                        <DataGridDetailsPresenter Grid.Row="1"
+                                                                  Grid.Column="1"
+                                                                  SelectiveScrollingGrid.SelectiveScrollingOrientation="{Binding 
+ AreRowDetailsFrozen,
+  ConverterParameter={x:Static SelectiveScrollingOrientation.Vertical},
+			  Converter={x:Static DataGrid.RowDetailsScrollingConverter},
+			  RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+                                                                  Visibility="{TemplateBinding DetailsVisibility}" />
+                                        <DataGridRowHeader Grid.RowSpan="2"
+                                                           SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical"
+                                                           Visibility="{Binding HeadersVisibility,
+ConverterParameter={x:Static DataGridHeadersVisibility.Row},
+   Converter={x:Static DataGrid.HeadersVisibilityConverter},
+    RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
+                                    </SelectiveScrollingGrid>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </DataGrid.ItemContainerStyle>
+        </DataGrid>
+        <Button  Command="{Binding RemoveFriendCommand}"
+                     Content="Supprimer cet ami"  Margin="10,8,10,10" Grid.Row="2"  Background="#FFC3423C" Height="Auto" />
+
+
     </Grid>
 </UserControl>

@@ -10,10 +10,12 @@ import UIKit
 
 protocol AddChannelDelegate: class {
     func addChannel(channelName: String)
+    func newUnreadMessage()
 }
 
 var channelsToJoin = [ChannelEntity]()
-class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+var filteredChannelsToJoin = [ChannelEntity]()
+class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchControllerDelegate {
     //Mark : Properties
     @IBOutlet weak var joinChannelConstraint: NSLayoutConstraint!
     @IBOutlet weak var messageField: UITextField!
@@ -21,6 +23,19 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var addChannelView: UIView!
     @IBOutlet weak var joinChannelView: UIView!
     @IBOutlet weak var joinChannelTableView: UITableView!
+    
+    @IBOutlet weak var channelNameField: UITextField!
+    @IBOutlet weak var channelNameErrMsg: UILabel!
+    
+    @IBOutlet weak var searchBar: UISearchBar!
+    //let searchController = UISearchController(searchResultsController: nil)
+    
+    var isSearching = false;
+    weak var delegate: AddChannelDelegate?
+    let clientConnection = HubManager.sharedConnection
+    static var sharedChatAreaViewController = ChatAreaViewController()
+    
+    //Mar : Actions
     @IBAction func editChannelName(_ sender: Any) {
         self.channelNameErrMsg.text = ""
     }
@@ -33,13 +48,6 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
         channelNameField.text = ""
         toggleAddChannelView()
     }
-    
-    @IBOutlet weak var channelNameField: UITextField!
-    @IBOutlet weak var channelNameErrMsg: UILabel!
-    
-    weak var delegate: AddChannelDelegate?
-    let clientConnection = HubManager.sharedConnection
-    static var sharedChatAreaViewController = ChatAreaViewController()
     
     public var channel: ChannelEntity! {
         didSet (newChannel) {
@@ -64,12 +72,16 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
         addChannelView.isHidden = true
         delegate = MasterViewController.sharedMasterViewController
         
-        // Do any additional setup after loading the view.
+        joinChannelTableView.autoresizingMask = UIViewAutoresizing()
+        joinChannelTableView.translatesAutoresizingMaskIntoConstraints = false
+        
+        //Search bar
+        searchBar.delegate = self
+
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    override func viewWillAppear(_ animated: Bool) {
+        extendedLayoutIncludesOpaqueBars = true
     }
     
     /// Enclenché lorsqu'un message est reçu
@@ -77,12 +89,22 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
         let sender = message["Sender"]
         let messageValue = message["MessageValue"]
         let timestamp = message["TimeStamp"]
-        print("Message: \(String(describing: sender! + " (" + timestamp! + ") : " + messageValue!))\n")
-        let chan = channels.first(where: { $0.name == "Principal" })
-        chan?.messages.insert(ChatMessageEntity(sender:sender!, messageValue: messageValue!, timestamp: (timestamp?.description)!), at: 0)
+        let dateString = self.convertDate(dateString: timestamp!)
         
+        print("Message: \(String(describing: sender! + " (" + dateString + ") : " + messageValue!))\n")
+        let chan = channels.first(where: { $0.name == "Principal" })
+        if channel.name != chan?.name {
+            chan?.hasUnreadMessage = true;
+            delegate = MasterViewController.sharedMasterViewController
+            delegate?.newUnreadMessage()
+        }
+        chan?.messages.append(ChatMessageEntity(sender:sender!, messageValue: messageValue!, timestamp: (dateString)))
+//        let indexPath = IndexPath(row: (chan?.messages.count)! - 1, section: 0);
+//        self.chatTableView?.scrollToRow(at: indexPath, at: UITableViewScrollPosition.bottom, animated: false)
         DispatchQueue.main.async(execute: { () -> Void in
             self.chatTableView.reloadData()
+            let indexPath = IndexPath(row: (chan?.messages.count)! - 1, section: 0);
+            self.chatTableView?.scrollToRow(at: indexPath, at: .bottom, animated: true)
         })
     }
     
@@ -90,12 +112,22 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
         let sender = message["Sender"]
         let messageValue = message["MessageValue"]
         let timestamp = message["TimeStamp"]
-        print("Message: \(String(describing: sender! + " (" + timestamp! + ") : " + messageValue!))\n")
-        let chan = channels.first(where: { $0.name == channelName })
-        chan?.messages.insert(ChatMessageEntity(sender:sender!, messageValue: messageValue!, timestamp: (timestamp?.description)!), at: 0)
         
+        let dateString = self.convertDate(dateString: timestamp!)
+        
+        print("Message: \(String(describing: sender! + " (" + dateString + ") : " + messageValue!))\n")
+        let chan = channels.first(where: { $0.name == channelName })
+        if channel.name != chan?.name {
+            chan?.hasUnreadMessage = true;
+            delegate = MasterViewController.sharedMasterViewController
+            delegate?.newUnreadMessage()
+        }
+        chan?.messages.append(ChatMessageEntity(sender:sender!, messageValue: messageValue!, timestamp: (dateString)))
+
         DispatchQueue.main.async(execute: { () -> Void in
             self.chatTableView.reloadData()
+            let indexPath = IndexPath(row: (chan?.messages.count)! - 1, section: 0);
+            self.chatTableView?.scrollToRow(at: indexPath, at: .bottom, animated: true)
         })
     }
     
@@ -130,7 +162,6 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
                 chatHub.SendChannel(channelName: channel.name, message : message)
             }
             
-            
             // Clear chat box
             self.messageField.text = ""
         }
@@ -148,7 +179,11 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
         }
         
         if tableView == self.joinChannelTableView {
-            count =  channelsToJoin.count
+            if isSearching {
+                return filteredChannelsToJoin.count
+            } else {
+                count = channelsToJoin.count
+            }
         }
         
         return count!
@@ -157,6 +192,7 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView == self.joinChannelTableView {
             self.joinChannel(channelName: channelsToJoin[indexPath.row].name)
+            cJoinChannelConstraint = -241
         }
     }
     
@@ -174,19 +210,70 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
             messageValue.text = channel.messages[indexPath.row].getMessageValue()
             
             let timestamp = cell!.viewWithTag(3) as! UILabel
-            timestamp.text = channel.messages[indexPath.row].getTimestamp()
+            //timestamp.text = channel.messages[indexPath.row].getTimestamp()
+            timestamp.text = "temp val"
+
+            if sender.text != HubManager.sharedConnection.getUsername() {
+                (cell as! MessageViewCell).leadingConstraint.isActive = true
+                (cell as! MessageViewCell).bubbleConstraint.isActive = false
+                (cell as! MessageViewCell).messageContainer.backgroundColor = UIColor(red:0.79, green:0.79, blue:0.79, alpha:1.0)
+                sender.textColor = UIColor .black
+                messageValue.textColor = UIColor .black
+                timestamp.textColor = UIColor .black
+            } else {
+                (cell as! MessageViewCell).leadingConstraint.isActive = false
+                (cell as! MessageViewCell).bubbleConstraint.isActive = true
+            }
         }
         
         if tableView == self.joinChannelTableView {
             cell = joinChannelTableView.dequeueReusableCell(withIdentifier: "JoinCell", for: indexPath)
-            let channelToJoin = channelsToJoin[indexPath.row]
+            let channelToJoin: ChannelEntity
+            if isSearching {
+                channelToJoin = filteredChannelsToJoin[indexPath.row]
+            } else {
+                channelToJoin = channelsToJoin[indexPath.row]
+            }
+            cell?.backgroundColor = UIColor(red:0.24, green:0.24, blue:0.24, alpha:1.0)
+            cell?.textLabel?.textColor = UIColor .white
+            
+            let bgColorView = UIView()
+            bgColorView.backgroundColor = UIColor(red:0.29, green:0.29, blue:0.29, alpha:1.0)
+            cell?.selectedBackgroundView = bgColorView
             cell!.textLabel?.text = channelToJoin.name
         }
+
+        
         return cell!
     }
     
     private func refreshUI() {
     }
+    
+    func convertDate(dateString: String) -> String {
+        /*let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        let date = dateFormatter.date(from: dateString)
+        
+        dateFormatter.dateFormat = "HH:mm:ss"
+        let dateString = dateFormatter.string(from: date!)*/
+        
+        return dateString
+    }
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchBar.text == nil || searchBar.text == "" {
+            isSearching = false
+            view.endEditing(true)
+            joinChannelTableView.reloadData()
+        } else {
+            isSearching = true
+            filteredChannelsToJoin = channelsToJoin.filter({ (ce: ChannelEntity) -> Bool in
+                ce.getName().lowercased().contains((searchBar.text as String!).lowercased())
+            })
+            joinChannelTableView.reloadData()
+        }
+    }
+
     /*
      // MARK: - Navigation
      
@@ -236,6 +323,7 @@ extension ChatAreaViewController: ChannelSelectionDelegate {
     }
     
     func toggleAddChannelView() {
+        cJoinChannelConstraint = -241
         self.addChannelView.isHidden = !self.addChannelView.isHidden
     }
 }
