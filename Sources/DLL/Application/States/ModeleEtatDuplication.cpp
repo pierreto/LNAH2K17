@@ -196,7 +196,6 @@ void ModeleEtatDuplication::playerMouseMove(int x, int y) {
 				node->setSelectedWithoutGhostEffect(true);
 			}
 
-
 			selectionCallback_("", false, true);
 
 			VisiteurDeplacement deplacementInit = VisiteurDeplacement(mousePos - centreDuplication, false);

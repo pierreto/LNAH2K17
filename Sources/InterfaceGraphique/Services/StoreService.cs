@@ -19,10 +19,9 @@ namespace InterfaceGraphique.Services
             HttpClient = new HttpClient();
         }
 
-        public async Task<bool> BuyElements(List<StoreItemEntity> items)
+        public async Task<bool> BuyElements(List<StoreItemEntity> items, int userId)
         {
-            HttpContent content = new StringContent(JsonConvert.SerializeObject(items));
-            HttpResponseMessage response = await Program.client.PostAsync("api/store/", content);
+            HttpResponseMessage response = await Program.client.PostAsJsonAsync("api/store/" + userId, items);
 
             return response.IsSuccessStatusCode;
         }
@@ -41,8 +40,7 @@ namespace InterfaceGraphique.Services
 
         public async Task<bool> UpdateItemEnable(int userId, StoreItemEntity item)
         {
-            HttpContent content = new StringContent(JsonConvert.SerializeObject(item));
-            HttpResponseMessage response = await Program.client.PutAsync("api/store/" + userId, content);
+            HttpResponseMessage response = await Program.client.PutAsJsonAsync("api/store/" + userId, item);
 
             return response.IsSuccessStatusCode;
         }

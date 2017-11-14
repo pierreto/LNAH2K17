@@ -110,6 +110,14 @@ namespace AirHockeyServer.Mapping
                     .ForMember(
                     dest => dest.Player4,
                     opt => opt.MapFrom(src => src.Players[3].Id));
+
+                cfg.CreateMap<StoreItemEntity, StoreItemPoco>()
+                    .ForMember(
+                        dest => dest.Id,
+                        opt => opt.MapFrom(src => src.Id))
+                    .ForMember(
+                    dest => dest.IsGameEnabled,
+                    opt => opt.MapFrom(src => src.IsGameEnabled));
             });
 
             //config.AssertConfigurationIsValid();

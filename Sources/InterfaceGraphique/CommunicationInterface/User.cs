@@ -12,6 +12,19 @@ namespace InterfaceGraphique.CommunicationInterface
         public UserEntity UserEntity { get; set; }
         public bool IsConnected { get; set; }
         private static User instance;
+
+        public User()
+        {
+            UserEntity = new UserEntity()
+            {
+                Email = "local",
+                Username = "local",
+                Id = -1,
+                Name = "local"
+
+            };
+        }
+
         public static User Instance
         {
             get

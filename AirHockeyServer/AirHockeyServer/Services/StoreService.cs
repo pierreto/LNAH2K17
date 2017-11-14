@@ -19,9 +19,12 @@ namespace AirHockeyServer.Services
 
         public IStoreRepository StoreRepository { get; }
 
-        public async Task AddUserItem(int userId, StoreItemEntity item)
+        public async Task AddUserItems(int userId, List<StoreItemEntity> items)
         {
-            await StoreRepository.AddUserItem(userId, item);
+            foreach(var item in items)
+            {
+                await StoreRepository.AddUserItem(userId, item);
+            }
         }
 
         public List<StoreItemEntity> GetStoreItems()

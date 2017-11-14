@@ -21,11 +21,18 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
         }
 
 
-        public UserProfileViewModel(PlayerStatsService playerStatsService, StoreService storeService)
+        public UserProfileViewModel(PlayerStatsService playerStatsService, StoreService storeService, UserService userService)
         {
-            this.Achievements = new ObservableCollection<Achievement>();
             PlayerStatsService = playerStatsService;
             StoreService = storeService;
+            UserService = userService;
+            Reset();
+        }
+
+        public void Reset()
+        {
+            this.Achievements = new ObservableCollection<Achievement>();
+            items = new List<StoreItemEntity>();
             Name = "myName";
             UserName = "myUsername";
             Email = "email@love.com";
@@ -36,18 +43,28 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
             ProfilePictureUrl = Directory.GetCurrentDirectory() + "\\media\\image\\default_profile_picture.png";
         }
 
-        public async void Initialize(int userId = 0)
+        public async Task Initialize(int userId = 0)
         {
-            bool isFriendProfile = userId != 0;
+            isFriendProfile = userId != 0;
+            OnPropertyChanged("IsFriendProfile");
+
             int profileId = isFriendProfile ? userId : User.Instance.UserEntity.Id;
 
             if (!isFriendProfile)
             {
                 UserName = User.Instance.UserEntity.Username;
+                Name = User.Instance.UserEntity.Name;
+                Email = User.Instance.UserEntity.Email;
+                Items = await StoreService.GetUserStoreItems(User.Instance.UserEntity.Id);
             }
             else
             {
-                // get friend's info
+                var users = await UserService.GetAllUsers();
+                var friend = users.Find(x => x.Id == userId);
+
+                UserName = friend.Username;
+                Name = friend.Name;
+                Email = friend.Email;
             }
 
             var achievements = await PlayerStatsService.GetPlayerAchivements(profileId);
@@ -60,6 +77,7 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
                 TournamentWon = playerStats.TournamentsWon;
                 GameWon = playerStats.GamesWon;
             }
+
         }
 
         private ObservableCollection<Achievement> achievements;
@@ -173,6 +191,7 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
 
         public PlayerStatsService PlayerStatsService { get; }
         public StoreService StoreService { get; }
+        public UserService UserService { get; }
 
         private async Task MainMenu()
         {
@@ -202,6 +221,58 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
         private async void DoSelect(StoreItemEntity item)
         {
             await StoreService.UpdateItemEnable(User.Instance.UserEntity.Id, item);
+        }
+
+        private int friendId;
+        public int FriendId
+        {
+            get => friendId;
+            set
+            {
+                friendId = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private ICommand searchFriend;
+        public ICommand SearchFriend
+        {
+            get
+            {
+                return searchFriend ??
+                                       (searchFriend = new RelayCommandAsync(SearchFriendAction, (o) => true));
+            }
+        }
+
+        private async Task SearchFriendAction()
+        {
+            if(friendId > -1)
+            {
+                Reset();
+                await Initialize(friendId);
+            }
+        }
+
+        private ICommand backProfile;
+        public ICommand BackProfile
+        {
+            get
+            {
+                return backProfile ??
+                                       (backProfile = new RelayCommandAsync(BackToUserProfile, (o) => true));
+            }
+        }
+
+        public async Task BackToUserProfile()
+        {
+            Reset();
+            await Initialize();
+        }
+
+        private bool isFriendProfile;
+        public string IsFriendProfile
+        {
+            get => isFriendProfile ? "Visible" : "Hidden";
         }
 
     }

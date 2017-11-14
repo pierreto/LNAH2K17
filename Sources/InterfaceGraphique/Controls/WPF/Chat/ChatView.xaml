@@ -42,9 +42,10 @@
                     </Grid>
                 </Border>
             </DataTemplate>
+            <!--
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/InterfaceGraphique;component/Resource/appresources.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
+            </ResourceDictionary.MergedDictionaries>-->
         </ResourceDictionary>
 
     </UserControl.Resources>

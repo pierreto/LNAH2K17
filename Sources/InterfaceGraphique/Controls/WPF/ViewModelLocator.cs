@@ -93,5 +93,8 @@ namespace InterfaceGraphique.Controls.WPF
 
         public StoreViewModel StoreViewModel => container.Resolve<StoreViewModel>();
 
+        public AddUserViewModel AddUserViewModel => container.Resolve<AddUserViewModel>();
+
+
     }
 }

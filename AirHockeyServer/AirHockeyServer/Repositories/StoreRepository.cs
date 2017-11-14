@@ -78,7 +78,6 @@ namespace AirHockeyServer.Repositories
             {
                 using (MyDataContext DC = new MyDataContext())
                 {
-                    StoreItemPoco _updatedMap = MapperManager.Map<StoreItemEntity, StoreItemPoco>(item);
                     var query =
                         from items in DC.GetTable<StoreItemPoco>() where items.UserId == userId && items.Id == item.Id select items;
 
