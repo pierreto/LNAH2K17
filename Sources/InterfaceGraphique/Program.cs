@@ -51,7 +51,6 @@ namespace InterfaceGraphique
         public static LobbyHost LobbyHost { get { return lobbyHost; } set { lobbyHost = value; } }
         public static OnlineTournament OnlineTournament { get { return onlineTournament;  } set { onlineTournament = value; } }
         public static EditorHost EditorHost { get { return editorHost; } set { editorHost = value; } }
-        public static FriendListHost FriendListHost {  get { return friendListHost; } set { friendListHost = value; } }
         public static UserProfileMenu UserProfileMenu { get { return userProfileMenu; } set { userProfileMenu = value; } }
         public static StoreMenu StoreMenu { get { return storeMenu; } set { storeMenu = value; } } 
 
@@ -71,7 +70,6 @@ namespace InterfaceGraphique
         private static LobbyHost lobbyHost;
         private static EditorHost editorHost;
         private static OnlineTournament onlineTournament;
-        private static FriendListHost friendListHost;
         private static UserProfileMenu userProfileMenu;
         private static StoreMenu storeMenu;
 
@@ -134,7 +132,6 @@ namespace InterfaceGraphique
             lobbyHost = new LobbyHost();
             onlineTournament = new OnlineTournament();
             editorHost = new EditorHost();
-            friendListHost = new FriendListHost();
             userProfileMenu = new UserProfileMenu();
             storeMenu = new StoreMenu();
 
@@ -195,6 +192,10 @@ namespace InterfaceGraphique
             unityContainer.RegisterType<FriendListViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<UserProfileViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<StoreViewModel>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<AddUserViewModel>(new ContainerControlledLifetimeManager());
+
+
+
 
             //Rest services instantiations
             unityContainer.RegisterType<MapService>();
