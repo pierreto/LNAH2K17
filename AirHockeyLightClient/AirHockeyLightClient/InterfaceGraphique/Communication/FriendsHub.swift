@@ -82,7 +82,7 @@ class FriendsHub: BaseHub {
                 }
                 else {
                     let pendingRequests = result as! [FriendRequestEntity]
-                    FriendsTableViewController.instance.updatePendingRequestsEntries(pendingRequests: pendingRequests)
+                    FriendRequestsTableViewController.instance.updatePendingRequestsEntries(pendingRequests: pendingRequests)
                 }
             }
         }

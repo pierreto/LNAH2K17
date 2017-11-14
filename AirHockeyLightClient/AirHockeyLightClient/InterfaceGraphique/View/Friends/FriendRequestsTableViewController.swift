@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////////
-/// @file FriendsTableViewController.swift
+/// @file FriendRequestsTableViewController.swift
 /// @author Mikael Ferland
-/// @date 2017-11-12
+/// @date 2017-11-13
 /// @version 1
 ///
 /// @addtogroup log3900 LOG3990
@@ -11,49 +11,41 @@
 import UIKit
 
 ///////////////////////////////////////////////////////////////////////////
-/// @class FriendsTableViewController
-/// @brief Contrôleur pour visualiser les amis d'un utilisateur
+/// @class FriendRequestsTableViewController
+/// @brief Contrôleur pour visualiser les demandes d'amitié d'un utilisateur
 ///
 /// @author Mikael Ferland
-/// @date 2017-11-12
+/// @date 2017-11-13
 ///////////////////////////////////////////////////////////////////////////
-class FriendsTableViewController: UITableViewController {
+class FriendRequestsTableViewController: UITableViewController {
     
     /// Instance singleton
-    static var instance = FriendsTableViewController()
+    static var instance = FriendRequestsTableViewController()
     
-    @IBOutlet weak var friends: UITableView!
-    
+    @IBOutlet weak var pendingRequests: UITableView!
+
     private let friendsHub = HubManager.sharedConnection.getFriendsHub()
-    private var friendsData = [UserEntity]()
+    private var pendingRequestsData = [FriendRequestEntity]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        FriendsTableViewController.instance = self
+        FriendRequestsTableViewController.instance = self
         
-        self.friends.delegate = self
-        self.friends.dataSource = self
-        
-        self.friendsHub.initialize()
-        self.friendsHub.getAllFriends()
+        self.pendingRequests.delegate = self
+        self.pendingRequests.dataSource = self
     }
     
-    func updateFriendsEntries(friends: [UserEntity]) {
-        self.friendsData = friends
-        
-        DispatchQueue.main.async(execute: { () -> Void in
-            // Reload tableView
-            self.friends.reloadData()
-        })
+    func updatePendingRequestsEntries(pendingRequests: [FriendRequestEntity]) {
+        self.pendingRequestsData = pendingRequests
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.friendsData.count
+        return self.pendingRequestsData.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return self.friends.dequeueReusableCell(withIdentifier: "Friend", for: indexPath)
+        return self.pendingRequests.dequeueReusableCell(withIdentifier: "Request", for: indexPath)
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -64,7 +56,7 @@ class FriendsTableViewController: UITableViewController {
         
         if editingStyle == .delete {
             // remove the item from the data model
-            self.friendsData.remove(at: indexPath.row)
+            self.pendingRequestsData.remove(at: indexPath.row)
             
             // delete the table view row
             tableView.deleteRows(at: [indexPath], with: .fade)

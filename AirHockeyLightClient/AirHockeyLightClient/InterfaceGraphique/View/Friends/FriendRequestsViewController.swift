@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////////
-/// @file FriendsViewController.swift
+/// @file FriendRequestsViewController.swift
 /// @author Mikael Ferland
-/// @date 2017-11-12
+/// @date 2017-11-13
 /// @version 1
 ///
 /// @addtogroup log3900 LOG3990
@@ -11,14 +11,14 @@
 import UIKit
 
 ///////////////////////////////////////////////////////////////////////////
-/// @class FriendsViewController
-/// @brief Contrôleur de la liste d'amis d'un utilisateur
+/// @class FriendRequestsViewController
+/// @brief Contrôleur pour gérer les demandes d'amitié d'un utilisateur
 ///
 /// @author Mikael Ferland
-/// @date 2017-11-12
+/// @date 2017-11-13
 ///////////////////////////////////////////////////////////////////////////
-class FriendsViewController: UIViewController {
-    
+class FriendRequestsViewController: UIViewController {
+
     func enableNavigationBar(activer: Bool) {
         self.navigationItem.hidesBackButton = !activer
         

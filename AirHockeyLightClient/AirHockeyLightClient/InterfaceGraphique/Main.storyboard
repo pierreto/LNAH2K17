@@ -148,38 +148,10 @@
             </objects>
             <point key="canvasLocation" x="-747" y="-316"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="dvI-FB-xtj">
-            <objects>
-                <viewController id="JtH-21-EKb" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="3Qx-Zy-2VM"/>
-                        <viewControllerLayoutGuide type="bottom" id="33h-IE-02O"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="pgO-Jk-qc9">
-                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="REQUESTS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XKx-1l-hgJ">
-                                <rect key="frame" x="469" y="374" width="87" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" systemItem="contacts" id="1uu-1n-hDr"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ddI-1n-NVp" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-19.3359375" y="867.96875"/>
-        </scene>
-        <!--View Controller-->
+        <!--Amis-->
         <scene sceneID="9gK-JE-86f">
             <objects>
-                <viewController id="ZYo-Bm-cas" sceneMemberID="viewController">
+                <viewController id="ZYo-Bm-cas" customClass="FriendsViewController" customModule="AirHockeyLightClient" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="3IY-Pq-iAn"/>
                         <viewControllerLayoutGuide type="bottom" id="msS-bq-0ad"/>
@@ -188,26 +160,62 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="FRIENDS" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pNG-KE-KsR">
-                                <rect key="frame" x="478" y="374" width="69" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MCW-in-Nz6">
+                                <rect key="frame" x="20" y="64" width="984" height="655"/>
+                                <connections>
+                                    <segue destination="gQA-nK-6l7" kind="embed" id="LZH-0V-H41"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="MCW-in-Nz6" firstAttribute="leading" secondItem="fUe-m4-ImC" secondAttribute="leadingMargin" id="7Ro-WL-vxX"/>
+                            <constraint firstItem="MCW-in-Nz6" firstAttribute="top" secondItem="3IY-Pq-iAn" secondAttribute="bottom" id="IZ9-0D-PEm"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="MCW-in-Nz6" secondAttribute="trailing" id="SPY-BL-UCF"/>
+                            <constraint firstItem="msS-bq-0ad" firstAttribute="top" secondItem="MCW-in-Nz6" secondAttribute="bottom" id="ygo-Sf-RP0"/>
+                        </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" systemItem="downloads" id="TGB-nW-nAj"/>
+                    <tabBarItem key="tabBarItem" title="Amis" image="сontacts" id="TGB-nW-nAj"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MUx-3Z-3ZY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-19.3359375" y="187.5"/>
         </scene>
-        <!--CustomUI Tab Bar View Controller-->
+        <!--Friends Table View Controller-->
+        <scene sceneID="8Lh-1k-lk0">
+            <objects>
+                <tableViewController id="gQA-nK-6l7" customClass="FriendsTableViewController" customModule="AirHockeyLightClient" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Ds5-M1-rF6">
+                        <rect key="frame" x="0.0" y="0.0" width="984" height="655"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="K66-tY-rh8">
+                                <rect key="frame" x="0.0" y="28" width="984" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="K66-tY-rh8" id="ney-VF-590">
+                                    <rect key="frame" x="0.0" y="0.0" width="984" height="44"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="gQA-nK-6l7" id="sVi-MP-gli"/>
+                            <outlet property="delegate" destination="gQA-nK-6l7" id="OOu-db-BDM"/>
+                        </connections>
+                    </tableView>
+                    <connections>
+                        <outlet property="friends" destination="Ds5-M1-rF6" id="6ia-3f-eIV"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1RO-eA-62l" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="694" y="187"/>
+        </scene>
+        <!--Friends Tab Bar View Controller-->
         <scene sceneID="NqB-hg-So2">
             <objects>
-                <tabBarController id="BZQ-LP-ciu" customClass="CustomUITabBarViewController" customModule="AirHockeyLightClient" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController id="BZQ-LP-ciu" customClass="FriendsTabBarViewController" customModule="AirHockeyLightClient" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" id="OyH-lz-J7z">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -215,7 +223,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="ZYo-Bm-cas" kind="relationship" relationship="viewControllers" id="t17-7V-iYx"/>
-                        <segue destination="JtH-21-EKb" kind="relationship" relationship="viewControllers" id="Pdp-R7-BZi"/>
+                        <segue destination="986-7H-Xmx" kind="relationship" relationship="viewControllers" id="GzT-aU-Tqd"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SlX-Nq-f5J" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1967,7 +1975,75 @@
             </objects>
             <point key="canvasLocation" x="-260.15625" y="2500"/>
         </scene>
+        <!--Demandes d'amitié-->
+        <scene sceneID="4qW-hM-858">
+            <objects>
+                <viewController id="986-7H-Xmx" customClass="FriendRequestsViewController" customModule="AirHockeyLightClient" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="aUe-s4-u2n"/>
+                        <viewControllerLayoutGuide type="bottom" id="3c1-JF-6YG"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="XKs-20-yYV">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qXX-1X-2YK">
+                                <rect key="frame" x="20" y="64" width="984" height="655"/>
+                                <connections>
+                                    <segue destination="KCs-lW-paM" kind="embed" id="6FN-88-nFe"/>
+                                </connections>
+                            </containerView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="qXX-1X-2YK" firstAttribute="leading" secondItem="XKs-20-yYV" secondAttribute="leadingMargin" id="F1N-gY-oQF"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="qXX-1X-2YK" secondAttribute="trailing" id="hkf-QH-VS4"/>
+                            <constraint firstItem="qXX-1X-2YK" firstAttribute="top" secondItem="aUe-s4-u2n" secondAttribute="bottom" id="lUH-Xp-XyH"/>
+                            <constraint firstItem="3c1-JF-6YG" firstAttribute="top" secondItem="qXX-1X-2YK" secondAttribute="bottom" id="lg6-fD-31l"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Demandes d'amitié" image="user_group_man_woman" id="Jf0-aA-KHQ"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9i9-k0-7n5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-19" y="909"/>
+        </scene>
+        <!--Friend Requests Table View Controller-->
+        <scene sceneID="TxK-JP-bLj">
+            <objects>
+                <tableViewController id="KCs-lW-paM" customClass="FriendRequestsTableViewController" customModule="AirHockeyLightClient" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="S4u-6B-kNj">
+                        <rect key="frame" x="0.0" y="0.0" width="984" height="655"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="SNc-aH-ayg" userLabel="Request">
+                                <rect key="frame" x="0.0" y="28" width="984" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SNc-aH-ayg" id="QFF-5E-JYD">
+                                    <rect key="frame" x="0.0" y="0.0" width="984" height="44"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="KCs-lW-paM" id="yrj-T9-tuM"/>
+                            <outlet property="delegate" destination="KCs-lW-paM" id="km0-Wy-Ps8"/>
+                        </connections>
+                    </tableView>
+                    <connections>
+                        <outlet property="pendingRequests" destination="S4u-6B-kNj" id="PPA-qQ-inT"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hKC-e9-SwL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="694" y="908"/>
+        </scene>
     </scenes>
+    <resources>
+        <image name="user_group_man_woman" width="30" height="30"/>
+        <image name="сontacts" width="30" height="30"/>
+    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="D9p-zm-qef"/>
         <segue reference="6DQ-jn-lmH"/>
