@@ -461,6 +461,7 @@ void ModeleEtatJeu::aiActiveProfile(int speed, int passivity) {
 	aiPassivity_ = passivity;
 }
 
+
 void ModeleEtatJeu::player1Goal()
 {
 	scorePlayer1_++;
@@ -606,6 +607,17 @@ void ModeleEtatJeu::setLocalPlayerSkin(std::string skinkName) {
 void ModeleEtatJeu::setOpponentPlayerSkin(std::string skinkName) {
 	maillet2_->setCurrentTexture(skinkName);
 }
+
+void ModeleEtatJeu::setLocalPlayerSkinToDefault()
+{
+	maillet1_->freeCurrentTexture();
+}
+
+void ModeleEtatJeu::setOpponentPlayerSkinToDefault()
+{
+	maillet2_->freeCurrentTexture();
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////
