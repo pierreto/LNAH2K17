@@ -70,7 +70,7 @@ class MapService {
     
     func convertMapEntity(mapEntity: MapEntity) -> Any {
         let map = [
-            "Id": mapEntity.id!,
+            "Id": mapEntity.id == nil ? "" : mapEntity.id!,
             "Creator": mapEntity.creator!,
             "MapName": mapEntity.mapName!,
             "LastBackup": mapEntity.lastBackup!.description,
