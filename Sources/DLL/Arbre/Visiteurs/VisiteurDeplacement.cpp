@@ -83,12 +83,15 @@ void VisiteurDeplacement::visiterPointControl(NoeudPointControl * noeud)
 
 		// Deplacer son opposé
 		noeud->obtenirNoeudOppose()->deplacer(pos * glm::dvec3(noeud->obtenirSymmetrie()));
-		ControlPointEventCallback callback = ModeleEtatPointControl::obtenirInstance()->getControlPointEventCallback();
-		if(callback)
+		if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
 		{
-			callback(noeud->getUUID(), glm::value_ptr(noeud->obtenirPositionRelative()));
+			ControlPointEventCallback callback = ModeleEtatPointControl::obtenirInstance()->getControlPointEventCallback();
+			if(callback)
+			{
+				callback(noeud->getUUID(), glm::value_ptr(noeud->obtenirPositionRelative()));
 
-			callback(noeud->obtenirNoeudOppose()->getUUID(), glm::value_ptr(noeud->obtenirNoeudOppose()->obtenirPositionRelative()));
+				callback(noeud->obtenirNoeudOppose()->getUUID(), glm::value_ptr(noeud->obtenirNoeudOppose()->obtenirPositionRelative()));
+			}
 		}
 	}
 }
@@ -132,16 +135,16 @@ void VisiteurDeplacement::defaultVisit(NoeudAbstrait* noeud)
 		if (noeud->estSelectionne())
 	{
 		noeud->deplacer(noeud->obtenirPositionRelative() + delta_);
-		//if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION
-		//	&& sendToServer_)
-		//{
-		TransformEventCallback callback = ModeleEtatJeu::obtenirInstance()->getTransformEventCallback();
-
-		if (callback)
+		if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION
+			&& sendToServer_)
 		{
-			callback(noeud->getUUID(), glm::value_ptr(noeud->obtenirPositionRelative()), noeud->obtenirRotation().y, glm::value_ptr(noeud->obtenirScale()));
+			TransformEventCallback callback = ModeleEtatJeu::obtenirInstance()->getTransformEventCallback();
+
+			if (callback)
+			{
+				callback(noeud->getUUID(), glm::value_ptr(noeud->obtenirPositionRelative()), noeud->obtenirRotation().y, glm::value_ptr(noeud->obtenirScale()));
+			}
 		}
-		//}
 	}
 }
 ///////////////////////////////////////////////////////////////////////////////

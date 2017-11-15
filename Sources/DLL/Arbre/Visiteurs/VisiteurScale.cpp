@@ -170,10 +170,13 @@ void VisiteurScale::visiterRondelle(NoeudRondelle * noeud)
 
 void VisiteurScale::sendTransform(NoeudAbstrait* node)
 {
-	TransformEventCallback callback = ModeleEtatJeu::obtenirInstance()->getTransformEventCallback();
-	if (callback)
+	if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
 	{
-		callback(node->getUUID(), glm::value_ptr(node->obtenirPositionRelative()),node->obtenirRotation().y, glm::value_ptr(node->obtenirScale()));
+		TransformEventCallback callback = ModeleEtatJeu::obtenirInstance()->getTransformEventCallback();
+		if (callback)
+		{
+			callback(node->getUUID(), glm::value_ptr(node->obtenirPositionRelative()),node->obtenirRotation().y, glm::value_ptr(node->obtenirScale()));
+		}
 	}
 }
 

@@ -150,11 +150,15 @@ void ModeleEtatRotation::playerMouseMove(int x, int y) {
 			// Remettre le point central à sa position initiale
 			noeud->appliquerDeplacement(centreRotation_);
 
-			TransformEventCallback callback = ModeleEtatJeu::obtenirInstance()->getTransformEventCallback();
-			if (callback)
+			if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
 			{
-				callback(noeud->getUUID(), glm::value_ptr(noeud->obtenirPositionRelative()), noeud->obtenirRotation().y, glm::value_ptr(noeud->obtenirScale()));
+				TransformEventCallback callback = ModeleEtatJeu::obtenirInstance()->getTransformEventCallback();
+				if (callback)
+				{
+					callback(noeud->getUUID(), glm::value_ptr(noeud->obtenirPositionRelative()), noeud->obtenirRotation().y, glm::value_ptr(noeud->obtenirScale()));
+				}
 			}
+			
 		}
 	}
 }
@@ -206,11 +210,13 @@ void ModeleEtatRotation::escape()
 
 		// Remettre le point central à sa position initiale
 		noeud->appliquerDeplacement(centreRotation_);
-
-		TransformEventCallback callback = ModeleEtatJeu::obtenirInstance()->getTransformEventCallback();
-		if (callback)
+		if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
 		{
-			callback(noeud->getUUID(), glm::value_ptr(noeud->obtenirPositionRelative()), noeud->obtenirRotation().y, glm::value_ptr(noeud->obtenirScale()));
+			TransformEventCallback callback = ModeleEtatJeu::obtenirInstance()->getTransformEventCallback();
+			if (callback)
+			{
+				callback(noeud->getUUID(), glm::value_ptr(noeud->obtenirPositionRelative()), noeud->obtenirRotation().y, glm::value_ptr(noeud->obtenirScale()));
+			}
 		}
 	}
 
