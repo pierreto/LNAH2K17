@@ -105,6 +105,47 @@ class SignupViewController: UIViewController {
         super.viewDidLoad()
         styleUI()
         fillUI()
+        NotificationCenter.default.addObserver(self, selector: #selector(adjustForKeyboard), name:NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(adjustForKeyboard), name:NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.scrollView.contentSize = self.stackView.frame.size
+    }
+    
+    func adjustForKeyboard(notification: Notification) {
+        let userInfo = notification.userInfo!
+        
+        let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
+        
+        if notification.name == Notification.Name.UIKeyboardWillHide {
+            scrollView.contentInset = UIEdgeInsets.zero
+        } else {
+            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height + 64, right: 0)
+        }
+        
+        scrollView.scrollIndicatorInsets = scrollView.contentInset
+        
+//        let selectedRange = scrollView.selectedRange
+//        scrollView.scrollRangeToVisible(selectedRange)
+    }
+    
+    func keyboardWillShow(notification:NSNotification){
+        //give room at the bottom of the scroll view, so it doesn't cover up anything the user needs to tap
+        var userInfo = notification.userInfo!
+        var keyboardFrame:CGRect = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
+        keyboardFrame = self.view.convert(keyboardFrame, from: nil)
+        
+        var contentInset:UIEdgeInsets = self.scrollView.contentInset
+        contentInset.bottom = keyboardFrame.size.height
+        scrollView.contentInset = contentInset
+    }
+    
+    func keyboardWillHide(notification:NSNotification){
+        let contentInset:UIEdgeInsets = UIEdgeInsets.zero
+        scrollView.contentInset = contentInset
+        scrollView.scrollIndicatorInsets = contentInset
     }
     
     fileprivate func styleUI() {
@@ -169,21 +210,6 @@ class SignupViewController: UIViewController {
         self.loadingSpinner.stopAnimating()
         self.view.alpha = 1.0
     }
-    
-//    override func viewDidLayoutSubviews()
-//    {
-//        let scrollViewBounds = scrollView.bounds
-//        let containerViewBounds = stackView.bounds
-//        
-//        var scrollViewInsets = UIEdgeInsets.zero
-//        scrollViewInsets.top = scrollViewBounds.size.height/2.0;
-//        scrollViewInsets.top -= stackView.bounds.size.height/2.0;
-//        
-//        scrollViewInsets.bottom = scrollViewBounds.size.height/2.0
-//        scrollViewInsets.bottom -= stackView.bounds.size.height/2.0;
-//        scrollViewInsets.bottom += 1
-//        
-//        scrollView.contentInset = scrollViewInsets
-//    }
+
 }
 
