@@ -4,6 +4,8 @@ namespace AirHockeyServer.Entities
 {
     public class RankingEntity : Entity
     {
+        public int Id { get; set; }
+
         public string Username { get; set; }
 
         public int GamesWon { get; set; }

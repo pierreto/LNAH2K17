@@ -33,9 +33,18 @@ namespace AirHockeyServer.Services
             return pE;
         }
 
-        public async Task<ProfileEntity> GetProfileByUsername(int username)
+        public async Task<ProfileEntity> GetProfileByUsername(string username)
         {
-            throw new System.NotImplementedException();
+            UserEntity uE = await UserRepository.GetUserByUsername(username);
+            StatsEntity sE = await PlayerStatsRepository.GetPlayerStat(uE.Id);
+            AchievementEntity[] aEL = (await PlayerStatsRepository.GetAchievements(uE.Id)).OrderBy(x => x.Category).ThenBy(x => x.Order).ToArray();
+            ProfileEntity pE = new ProfileEntity
+            {
+                UserEntity = uE,
+                StatsEntity = sE,
+                AchievementEntities = aEL
+            };
+            return pE;
         }
     }
 }
