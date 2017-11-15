@@ -42,6 +42,7 @@ export class ProfileComponent implements OnInit, AfterViewInit {
           (achivement as any).DisabledImageUrl = ((achivement as any).DisabledImageUrl as any).replace(/\\/g, '/');
           (achivement as any).EnabledImageUrl = ((achivement as any).EnabledImageUrl as any).replace(/\\/g, '/');
         }
+        console.log(res);
         this.profile = res;
         setTimeout(() => {
           this.appService.loading = false;

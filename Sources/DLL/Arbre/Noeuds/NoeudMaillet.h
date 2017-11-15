@@ -53,6 +53,10 @@ public:
 	// Patron visiteur
 	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
 
+
+	void setCurrentTexture(std::string textureName);
+	void freeCurrentTexture();
+
 private:
 	/// Le collider du maillet
 	utilitaire::CylindreEnglobant collider_;

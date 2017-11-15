@@ -30,6 +30,7 @@ namespace InterfaceGraphique.Editor
         private MapService mapService;
         // The meta data of the current edited map have to be ALWAYS accurate:
         private MapMetaData currentMapInfo;
+        private Object saveMapLock = new object();
 
         public MapManager(MapService mapService)
         {
@@ -123,64 +124,71 @@ namespace InterfaceGraphique.Editor
             this.currentMapInfo.savedOnline = false;
         }
 
-        private async Task SaveOnlineMap()
+        private void SaveOnlineMap()
         {
-            // First, we fetch the JSON of the map:
-            StringBuilder sb = new StringBuilder(60000);
-            try
+            lock (this.saveMapLock)
             {
-                FonctionsNatives.getMapJson(Program.GeneralProperties.GetCoefficientValues(), sb);
-            }
-            catch
-            {
-                MessageBox.Show(
-                     @"Impossible de sauvegarder la carte : celle-ci contient trop d'objets. :-(",
-                     @"Internal error",
-                     MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            string json = sb.ToString();
-
-            MapEntity map = new MapEntity
-            {
-                Id = this.currentMapInfo.Id,
-                Creator = this.currentMapInfo.Creator,
-                MapName = this.currentMapInfo.Name,
-                CreationDate = DateTime.Now,
-                Json = json,
-                Private = this.currentMapInfo.Private,
-                Password = this.currentMapInfo.Password,
-                LastBackup = DateTime.Now
-            };
-
-            bool saved = false;
-
-            if (this.currentMapInfo.savedOnce)
-            {
-                saved = await this.mapService.SaveMap(map);
-            }
-            else
-            {
-                int? savedMapId = await this.mapService.SaveNewMap(map);
-                if (savedMapId != null)
+                // First, we fetch the JSON of the map:
+                StringBuilder sb = new StringBuilder(60000);
+                try
                 {
-                    this.currentMapInfo.Id = savedMapId;
-                    saved = true;
+                    FonctionsNatives.getMapJson(Program.GeneralProperties.GetCoefficientValues(), sb);
                 }
-            }
+                catch
+                {
+                    MessageBox.Show(
+                         @"Impossible de sauvegarder la carte : celle-ci contient trop d'objets. :-(",
+                         @"Internal error",
+                         MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                string json = sb.ToString();
 
-            if (!saved)
-            {
-                MessageBox.Show(
-                    @"Impossible de sauvegarder la carte. Veuillez ré-essayer plus tard.",
-                    @"Internal error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            else
-            {
-                // we have to update the properties of the current map:
-                this.currentMapInfo.savedOnce = true;
-                this.currentMapInfo.savedOnline = true;
+                MapEntity map = new MapEntity
+                {
+                    Id = this.currentMapInfo.Id,
+                    Creator = this.currentMapInfo.Creator,
+                    MapName = this.currentMapInfo.Name,
+                    CreationDate = DateTime.Now,
+                    Json = json,
+                    Private = this.currentMapInfo.Private,
+                    Password = this.currentMapInfo.Password,
+                    LastBackup = DateTime.Now
+                };
+
+                bool saved = false;
+
+                if (this.currentMapInfo.savedOnce)
+                {
+                    var task = this.mapService.SaveMap(map);
+                    task.Wait();
+                    saved = task.Result;
+                }
+                else
+                {
+                    var task = this.mapService.SaveNewMap(map);
+                    task.Wait();
+                    int? savedMapId = task.Result;
+                    if (savedMapId != null)
+                    {
+                        this.currentMapInfo.Id = savedMapId;
+                        saved = true;
+                    }
+                }
+
+                if (!saved)
+                {
+                    MessageBox.Show(
+                        @"Impossible de sauvegarder la carte. Veuillez ré-essayer plus tard.",
+                        @"Internal error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    // we have to update the properties of the current map:
+                    this.currentMapInfo.savedOnce = true;
+                    this.currentMapInfo.savedOnline = true;
+                }
             }
         }
 
@@ -221,7 +229,7 @@ namespace InterfaceGraphique.Editor
                         this.currentMapInfo.Private = true;
                         this.currentMapInfo.Password = form.Text_PwdMap.Text;
 
-                        await SaveOnlineMap();
+                        await Task.Run(() => SaveOnlineMap());
                     }
                     else
                     {
@@ -233,7 +241,7 @@ namespace InterfaceGraphique.Editor
                 }
                 else
                 {
-                    await SaveOnlineMap();
+                    await Task.Run(() => SaveOnlineMap());
                 }
             }
             else
@@ -258,7 +266,7 @@ namespace InterfaceGraphique.Editor
                     //if ((DateTime.Now - this.currentMapInfo.LastBackup).TotalSeconds >= 1) // Il s'est passe plus de 1s depuis la derniere sauvegarde
                     //{
                         //this.currentMapInfo.LastBackup = DateTime.Now;
-                    await SaveOnlineMap();  
+                    await Task.Run(() => SaveOnlineMap());
                     //}
                 }
                 else

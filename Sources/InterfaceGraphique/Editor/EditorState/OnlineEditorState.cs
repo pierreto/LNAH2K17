@@ -15,22 +15,36 @@ namespace InterfaceGraphique.Editor.EditorState
     public class OnlineEditorState : AbstractEditorState
     {
         private EditionHub editionHub;
+        private FonctionsNatives.PortalCreationCallback portalCreationCallback;
+        private FonctionsNatives.WallCreationCallback wallCreationCallback;
+        private FonctionsNatives.BoostCreationCallback boostCreationCallback;
+        private FonctionsNatives.TransformEventCallback _transformEventCallback;
+        private FonctionsNatives.SelectionEventCallback selectionEventCallback;
+        private FonctionsNatives.ControlPointEventCallback controlPoinEventCallback;
+        private FonctionsNatives.DeleteEventCallback deleteEventCallback;
+
+        private bool inTransformation;
 
         public OnlineEditorState(EditionHub editionHub)
         {
             this.editionHub = editionHub;
 
-            this.InitializeCallbacks();
-
             this.editionHub.NewCommand += OnNewCommand;
             this.editionHub.NewUser += OnNewUser;
             this.editionHub.UserLeft += OnUserLeft;
+
+            this.portalCreationCallback = CurrentUserCreatedPortal;
+            this.wallCreationCallback = CurrentUserCreatedWall;
+            this.boostCreationCallback = CurrentUserCreatedBoost;
+            this._transformEventCallback = CurrentUserObjectTransformChanged;
+            this.selectionEventCallback = CurrentUserSelectedObject;
+            this.controlPoinEventCallback = CurrentUserChangedControlPoint;
+            this.deleteEventCallback = CurrentUserDeletedNode;
         }
 
         private void OnUserLeft(string username)
         {
             FonctionsNatives.removeUser(username);
-            Task.Run(() => Editeur.mapManager.SaveMap());
         }
 
         private void OnNewUser(OnlineUser user)
@@ -38,11 +52,57 @@ namespace InterfaceGraphique.Editor.EditorState
             FonctionsNatives.addNewUser(user.Username,user.HexColor);
         }
 
+        public override void Escape()
+        {
+            this.inTransformation = false;
+        }
+
+        public override void MouseUp(object sender, MouseEventArgs e)
+        {
+            FonctionsNatives.modifierKeys((Control.ModifierKeys == Keys.Alt), (Control.ModifierKeys == Keys.Control));
+            if (e.Button == MouseButtons.Left)
+            {
+                FonctionsNatives.mouseUpL();
+                Program.Editeur.EditionSupprimer.Enabled = FonctionsNatives.verifierSelection();
+                Program.Editeur.resetProprietesPanel(null, null);
+            }
+            if (e.Button == MouseButtons.Right)
+            {
+                FonctionsNatives.mouseUpR();
+            }
+
+            if (inTransformation)
+            {
+                Task.Run(() => Editeur.mapManager.SaveMap());
+                this.inTransformation = false;
+            }
+        }
+
+        public override void MouseDown(object sender, MouseEventArgs e)
+        {
+            FonctionsNatives.modifierKeys((Control.ModifierKeys == Keys.Alt), (Control.ModifierKeys == Keys.Control));
+            if (e.Button == MouseButtons.Left)
+            {
+                FonctionsNatives.mouseDownL();
+            }
+            if (e.Button == MouseButtons.Right)
+            {
+                FonctionsNatives.mouseDownR();
+            }
+        }
+
         public override async void JoinEdition(MapEntity mapEntity)
         {
             FonctionsNatives.clearUsers();
+
             FonctionsNatives.setOnlineClientType((int)OnlineClientType.ONLINE_EDITION);
-            this.SetCallbacks();
+            FonctionsNatives.setPortalCreationCallback(this.portalCreationCallback);
+            FonctionsNatives.setWallCreationCallback(this.wallCreationCallback);
+            FonctionsNatives.setBoostCreationCallback(this.boostCreationCallback);
+            FonctionsNatives.setTransformEventCallback(this._transformEventCallback);
+            FonctionsNatives.setSelectionEventCallback(this.selectionEventCallback);
+            FonctionsNatives.setControlPointEventCallback(this.controlPoinEventCallback);
+            FonctionsNatives.setDeleteEventCallback(this.deleteEventCallback);
 
             List<OnlineUser> usersInTheGame = await this.editionHub.JoinPublicRoom(mapEntity);
             foreach (OnlineUser user in usersInTheGame)
@@ -86,14 +146,7 @@ namespace InterfaceGraphique.Editor.EditorState
             editionCommand.ExecuteCommand();
         }
 
-        protected override void SaveMap()
-        {
-            Task.Run(() =>
-                Editeur.mapManager.SaveMap()
-            );
-        }
-
-        protected override void CurrentUserCreatedPortal(string startUuid, IntPtr startPos, float startRotation, IntPtr startScale, string endUuid, IntPtr endPosition, float endRotation, IntPtr endScale)
+        private void CurrentUserCreatedPortal(string startUuid, IntPtr startPos, float startRotation, IntPtr startScale, string endUuid, IntPtr endPosition, float endRotation, IntPtr endScale)
         {
 
             PortalCommand portalCommand = new PortalCommand(startUuid)
@@ -110,10 +163,10 @@ namespace InterfaceGraphique.Editor.EditorState
             };
 
             this.editionHub.SendEditorCommand(portalCommand);
-            this.SaveMap();
+            Task.Run(() => Editeur.mapManager.SaveMap());
         }
      
-        protected override void CurrentUserCreatedWall(string uuid,IntPtr pos, float rotation, IntPtr scale)
+        private void CurrentUserCreatedWall(string uuid,IntPtr pos, float rotation, IntPtr scale)
         {
             float[] posVec = getVec3FromIntptr(pos);
             float[] scaleVec = getVec3FromIntptr(scale);
@@ -126,10 +179,10 @@ namespace InterfaceGraphique.Editor.EditorState
             };
 
             this.editionHub.SendEditorCommand(wallCommand);
-            this.SaveMap();
+            Task.Run(() => Editeur.mapManager.SaveMap());
         }
 
-        protected override void CurrentUserCreatedBoost(string uuid, IntPtr startpos, float rotation, IntPtr scale)
+        private void CurrentUserCreatedBoost(string uuid, IntPtr startpos, float rotation, IntPtr scale)
         {
 
             BoostCommand boostCommand = new BoostCommand(uuid)
@@ -141,10 +194,10 @@ namespace InterfaceGraphique.Editor.EditorState
             };
 
             this.editionHub.SendEditorCommand(boostCommand);
-            this.SaveMap();
+            Task.Run(() => Editeur.mapManager.SaveMap());
         }
 
-        protected override void CurrentUserObjectTransformChanged(string uuid, IntPtr pos, float rotation, IntPtr scale)
+        private void CurrentUserObjectTransformChanged(string uuid, IntPtr pos, float rotation, IntPtr scale)
         {
             float[] posVec = getVec3FromIntptr(pos);
             float[] scaleVec = getVec3FromIntptr(scale);
@@ -157,9 +210,10 @@ namespace InterfaceGraphique.Editor.EditorState
                 Scale = scaleVec
             });
             this.inTransformation = true;
+
         }
 
-        protected override void CurrentUserSelectedObject(string uuidselected, bool isSelected, bool deselectAll)
+        private void CurrentUserSelectedObject(string uuidselected, bool isSelected, bool deselectAll)
         {
             this.editionHub.SendSelectionCommand(new SelectionCommand(uuidselected)
             {
@@ -169,7 +223,7 @@ namespace InterfaceGraphique.Editor.EditorState
             });
         }
 
-        protected override void CurrentUserChangedControlPoint(string uuid, IntPtr position)
+        private void CurrentUserChangedControlPoint(string uuid, IntPtr position)
         {
             float[] positionVec = getVec3FromIntptr(position);
 
@@ -178,7 +232,7 @@ namespace InterfaceGraphique.Editor.EditorState
                 Username = User.Instance.UserEntity.Username,
                 Position = positionVec
             });
-            this.SaveMap();
+            this.inTransformation = true;
         }
 
         private float[] getVec3FromIntptr(IntPtr ptr)
@@ -188,13 +242,13 @@ namespace InterfaceGraphique.Editor.EditorState
             return vec3;
         }
 
-        protected override void CurrentUserDeletedNode(string uuid)
+        private void CurrentUserDeletedNode(string uuid)
         {
             this.editionHub.SendEditorCommand(new DeleteCommand(uuid)
             {
                 Username = User.Instance.UserEntity.Username,
             });
-            this.SaveMap();
+            Task.Run(() => Editeur.mapManager.SaveMap());
         }
 
     }

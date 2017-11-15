@@ -32,10 +32,11 @@ namespace AirHockeyServer.Services
                         from sE in uEsE.DefaultIfEmpty()
                         select new RankingEntity
                         {
+                            Id = uE.Id,
                             Username = uE.Username,
                             GamesWon = sE != null ? sE.GamesWon : 0,
                             TournamentsWon = sE != null ? sE.TournamentsWon : 0,
-                          Points = sE != null ? sE.Points : 0
+                            Points = sE != null ? sE.Points : 0
                       };
             List<RankingEntity> results = await Task.Run(
                         () => query.ToList<RankingEntity>());

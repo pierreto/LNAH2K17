@@ -14,7 +14,7 @@ namespace InterfaceGraphique
     /// @author Julien Charbonneau
     /// @date 2016-09-13
     ///////////////////////////////////////////////////////////////////////////
-    static public partial class FonctionsNatives
+    static partial class FonctionsNatives
     {
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]

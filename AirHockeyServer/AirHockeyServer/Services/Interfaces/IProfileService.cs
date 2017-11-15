@@ -6,6 +6,6 @@ namespace AirHockeyServer.Services.Interfaces
     public interface IProfileService
     {
         Task<ProfileEntity> GetProfileById(int id);
-        Task<ProfileEntity> GetProfileByUsername(int username);
+        Task<ProfileEntity> GetProfileByUsername(string username);
     }
 }
