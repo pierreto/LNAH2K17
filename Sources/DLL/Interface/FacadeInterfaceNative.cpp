@@ -1214,8 +1214,17 @@ void setLocalPlayerSkin(const char* skinName)
 	ModeleEtatJeu::obtenirInstance()->setLocalPlayerSkin(skinName);
 
 }
+void setLocalPlayerSkinToDefault()
+{
+	ModeleEtatJeu::obtenirInstance()->setLocalPlayerSkinToDefault();
+
+}
 
 void setOpponentPlayerSkin(const char* skinName)
 {
 	ModeleEtatJeu::obtenirInstance()->setOpponentPlayerSkin(skinName);
+}
+void setOpponentPlayerSkinToDefault()
+{
+	ModeleEtatJeu::obtenirInstance()->setOpponentPlayerSkinToDefault();
 }

@@ -71,7 +71,9 @@ public:
 
 	void toggleTestMode(bool isActive) { testMode_ = isActive; }
 	void setSpeedXMaillet(float speedZ) { speedMailletZ_ = speedZ; }
-	void setSpeedYMaillet(float speedX) { speedMailletX_ = speedX; };
+	void setSpeedYMaillet(float speedX) { speedMailletX_ = speedX; }
+	void setLocalPlayerSkinToDefault();
+	void setOpponentPlayerSkinToDefault();;
 	void player1Goal();
 	void player2Goal();
 

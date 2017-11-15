@@ -200,6 +200,8 @@ void NoeudMaillet::freeCurrentTexture()
 	{
 		//We free the previous texture
 		glDeleteTextures(static_cast<GLsizei>(1), &(this->options_.textureHandle_));
+		this->options_.textureHandle_ = -1;
+
 	}
 }
 

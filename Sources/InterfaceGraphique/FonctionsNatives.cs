@@ -297,6 +297,11 @@ namespace InterfaceGraphique
         public static extern void setLocalPlayerSkin(string skinName);
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void setOpponentPlayerSkin(string skinName);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void setLocalPlayerSkinToDefault();
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void setOpponentPlayerSkinToDefault();
     }
 }
 

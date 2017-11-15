@@ -127,6 +127,10 @@ extern "C" {
 	__declspec(dllexport) void setLocalPlayerSkin(const char* skinName);
 
 	__declspec(dllexport) void setOpponentPlayerSkin(const char* skinName);
+
+
+	__declspec(dllexport) void setLocalPlayerSkinToDefault();
+	__declspec(dllexport) void setOpponentPlayerSkinToDefault();
 }
 
 #endif // __FACADE_INTERFACE_NATIVE_H__
