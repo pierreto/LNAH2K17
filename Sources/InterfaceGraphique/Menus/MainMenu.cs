@@ -29,9 +29,9 @@ namespace InterfaceGraphique
     {
         static HttpClient client = new HttpClient();
         private int chatHeight;
-        private Point chatLocation;
 
         private int friendHeight;
+        private bool firstTimeMaximizeChat;
 
         private readonly int COLLAPSED_CHAT_HEIGHT = 40;
         ////////////////////////////////////////////////////////////////////////
@@ -47,8 +47,7 @@ namespace InterfaceGraphique
 
             InitializeEvents();
             chatHeight = elementHost1.Height;
-            chatLocation = elementHost1.Location;
-
+            firstTimeMaximizeChat = true;
             this.friendHeight = elementHost2.Height;
     
 
@@ -198,7 +197,15 @@ namespace InterfaceGraphique
         {
             HideChat();
             elementHost1.Size = new Size(elementHost1.Width, chatHeight);
-            elementHost1.Location = new Point(elementHost1.Location.X, elementHost1.Location.Y - chatHeight + COLLAPSED_CHAT_HEIGHT);
+            if (firstTimeMaximizeChat)
+            {
+                elementHost1.Location = new Point(elementHost1.Location.X, elementHost1.Location.Y);
+                firstTimeMaximizeChat = false;
+            }
+            else
+            {
+                elementHost1.Location = new Point(elementHost1.Location.X, elementHost1.Location.Y -chatHeight + COLLAPSED_CHAT_HEIGHT);
+            }
             ShowChat();
         }
 
