@@ -19,7 +19,8 @@ class LoginViewController: UIViewController {
     
     @IBOutlet weak var loadingSpinner: UIActivityIndicatorView!
     
-
+    @IBOutlet weak var scrollView: UIScrollView!
+    
     // Mark: Actions
     @IBAction func login(_ sender: Any) {
         self.loading()
@@ -52,6 +53,21 @@ class LoginViewController: UIViewController {
         }
     }
     
+    func adjustForKeyboard(notification: Notification) {
+        let userInfo = notification.userInfo!
+        
+        let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
+        
+        if notification.name == Notification.Name.UIKeyboardWillHide {
+            scrollView.contentInset = UIEdgeInsets.zero
+        } else {
+            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height + 64, right: 0)
+        }
+        
+        scrollView.scrollIndicatorInsets = scrollView.contentInset
+    }
+    
     @IBAction func editUsernameInput(_ sender: Any) {
         resetStyle(textField: usernameInput)
         self.usernameErrorLabel.text = ""
@@ -76,6 +92,8 @@ class LoginViewController: UIViewController {
         viewModel = LoginViewModel(loginModel: loginModel)
         styleUI()
         fillUI()
+        NotificationCenter.default.addObserver(self, selector: #selector(adjustForKeyboard), name:NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(adjustForKeyboard), name:NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
 
     fileprivate func styleUI() {

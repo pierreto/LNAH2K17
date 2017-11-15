@@ -234,11 +234,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AirHockeyLightClient/InterfaceGraphique/Menus/ConnectServerViewController.swift"
-            timestampString = "531723443.658335"
+            timestampString = "532473083.919217"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "24"
-            endingLineNumber = "24"
+            startingLineNumber = "25"
+            endingLineNumber = "25"
             landmarkName = "connectServer(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -435,11 +435,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AirHockeyLightClient/InterfaceGraphique/Menus/LoginViewController.swift"
-            timestampString = "532375296.271814"
+            timestampString = "532473083.919438"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "137"
-            endingLineNumber = "137"
+            startingLineNumber = "155"
+            endingLineNumber = "155"
             landmarkName = "viewWillDisappear(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -451,11 +451,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AirHockeyLightClient/InterfaceGraphique/Menus/LoginViewController.swift"
-            timestampString = "532375296.271884"
+            timestampString = "532473083.919512"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "138"
-            endingLineNumber = "138"
+            startingLineNumber = "156"
+            endingLineNumber = "156"
             landmarkName = "viewWillDisappear(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -511,11 +511,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AirHockeyLightClient/InterfaceGraphique/Menus/LoginViewController.swift"
-            timestampString = "532375296.272035"
+            timestampString = "532473083.919632"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "34"
-            endingLineNumber = "34"
+            startingLineNumber = "35"
+            endingLineNumber = "35"
             landmarkName = "login(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1050,11 +1050,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AirHockeyLightClient/InterfaceGraphique/Menus/SignupViewController.swift"
-            timestampString = "532409881.981192"
+            timestampString = "532473083.920183"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "135"
-            endingLineNumber = "135"
+            startingLineNumber = "132"
+            endingLineNumber = "132"
             landmarkName = "keyboardWillShow(notification:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1066,12 +1066,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AirHockeyLightClient/InterfaceGraphique/Menus/SignupViewController.swift"
-            timestampString = "532409881.983514"
+            timestampString = "532473083.920262"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "142"
-            endingLineNumber = "142"
-            landmarkName = "keyboardWillShow(notification:)"
+            startingLineNumber = "139"
+            endingLineNumber = "139"
+            landmarkName = "keyboardWillHide(notification:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1082,12 +1082,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AirHockeyLightClient/InterfaceGraphique/Menus/SignupViewController.swift"
-            timestampString = "532409881.985708"
+            timestampString = "532473083.920326"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "142"
-            endingLineNumber = "142"
-            landmarkName = "keyboardWillShow(notification:)"
+            startingLineNumber = "139"
+            endingLineNumber = "139"
+            landmarkName = "keyboardWillHide(notification:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -1098,7 +1098,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AirHockeyLightClient/InterfaceGraphique/Menus/SignupViewController.swift"
-            timestampString = "532409881.98785"
+            timestampString = "532473083.92039"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "113"
