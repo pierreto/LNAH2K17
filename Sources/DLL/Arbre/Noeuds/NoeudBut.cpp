@@ -140,6 +140,7 @@ void NoeudBut::dessiner(const glm::mat4 & matrice) const
 
 	int disableAmbiant = light::LightManager::obtenirInstance()->obtenirAmbiantState() ? 1 : 0;
 	programme_.assignerUniforme("disableAmbiant", disableAmbiant);
+	programme_.assignerUniforme("colorAppliedToTexture",1);
 	
 	// TODO :  Enlever ce uniform quand la specularité va fonctionner
 	programme_.assignerUniforme("disableSpeculaire", 1);

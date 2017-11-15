@@ -31,6 +31,7 @@
 NoeudMaillet::NoeudMaillet(const std::string& typeNoeud, const char* uuid)
 	: NoeudAbstrait{ typeNoeud }, collider_{ 0,0,0 }, vitesse_(0), lastPosition_(0)
 {
+	setCurrentTexture("2260.jpg");
 }
 
 
@@ -184,6 +185,23 @@ void NoeudMaillet::calculerCollider()
 ////////////////////////////////////////////////////////////////////////
 void NoeudMaillet::accepterVisiteur(VisiteurAbstrait* visiteur) {
 	visiteur->visiterMaillet(this);
+}
+
+
+void NoeudMaillet::setCurrentTexture(std::string textureName)
+{
+	freeCurrentTexture();
+	glGenTextures(1, &this->options_.textureHandle_);
+	aidegl::glLoadTexture(std::string{ "media/textures/" } +textureName, this->options_.textureHandle_, false);
+}
+
+void NoeudMaillet::freeCurrentTexture()
+{
+	if (this->options_.textureHandle_ != -1)
+	{
+		//We free the previous texture
+		glDeleteTextures(static_cast<GLsizei>(1), &(this->options_.textureHandle_));
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -297,6 +297,7 @@ void NoeudTable::dessiner(const glm::mat4& matrice) const
 	programme_.assignerUniforme("matrVisu", matrices.matrVisu);
 	programme_.assignerUniforme("matrNormale", glm::transpose(glm::inverse(glm::mat3(matrices.matrModel))));
 	programme_.assignerUniforme("positionCamera", matrices.positionCamera);
+	programme_.assignerUniforme("colorAppliedToTexture", 1);
 
 	int disableAmbiant = light::LightManager::obtenirInstance()->obtenirAmbiantState() ? 1 : 0;
 	programme_.assignerUniforme("disableAmbiant", disableAmbiant);

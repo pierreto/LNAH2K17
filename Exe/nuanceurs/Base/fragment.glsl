@@ -14,6 +14,7 @@ uniform Material material;
 uniform bool useDiffuseColor;
 uniform bool disableSpeculaire;
 uniform bool disableAmbiant;
+uniform bool colorAppliedToTexture;
 
 layout(binding=0) uniform sampler2D diffuseTex;
 layout (std140, binding = 2) uniform LightSource
@@ -123,7 +124,12 @@ void main()
 		couleur += calculerReflexion(N, O, i);
 	}
 	
-    color = (useDiffuseColor) ? couleur : couleur * texture2D(diffuseTex, AttribsIn.texCoord.st);;
+	if(colorAppliedToTexture){
+		color = (useDiffuseColor) ? couleur : couleur * texture2D(diffuseTex, AttribsIn.texCoord.st);
+	}
+	else{
+		color = (useDiffuseColor) ? couleur : texture2D(diffuseTex, AttribsIn.texCoord.st);
+	}
 	color.a = material.transparence;  
 	color = clamp(color, 0.0f, 1.0f);
 }

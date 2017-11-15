@@ -154,11 +154,14 @@ namespace opengl{
 
 		int disableAmbiant = light::LightManager::obtenirInstance()->obtenirAmbiantState() ? 1 : 0;
 		programme_.assignerUniforme("disableAmbiant", disableAmbiant);
+		programme_.assignerUniforme("colorAppliedToTexture", 0);
+
+
 
 		for (auto const& mesh : noeud.obtenirMeshes())
 		{
 			// Appliquer le matériau pour le mesh courant
-			appliquerMateriau(mesh.obtenirMateriau());
+			appliquerMateriau(mesh.obtenirMateriau(), options.textureHandle_);
 
 			bool possedeNormales{ mesh.possedeNormales() };
 			bool possedeCouleurs{ mesh.possedeCouleurs() };
@@ -201,7 +204,7 @@ namespace opengl{
 				programme_.assignerUniforme("useDiffuseColor", 1);
 
 			}
-			else if (options.useOtherColor_)
+			else if (options.useOtherColor_ && options.textureHandle_==-1)
 			{
 				programme_.assignerUniforme("material.diffuse", glm::vec3(options.color_));
 				programme_.assignerUniforme("material.transparence", options.color_.w);
@@ -266,11 +269,20 @@ namespace opengl{
 	/// @return Aucune.
 	///
 	////////////////////////////////////////////////////////////////////////
-	void VBO::appliquerMateriau(modele::Materiau const& materiau) const
+	void VBO::appliquerMateriau(modele::Materiau const& materiau, unsigned int customTextureHandle) const
 	{
 		/// Vérifier si texture existe
 		GLint useDiffuseColorLoc = glGetUniformLocation(programme_.obtenirHandle(), "useDiffuseColor");
-		if (modele_->possedeTexture(materiau.nomTexture_)) {
+
+		if(customTextureHandle!=-1)
+		{
+			//We activate the dynamically assigned custom texture 
+			glEnable(GL_TEXTURE_2D);
+			glScalef(1.0, -1.0, 1.0);
+			glBindTexture(GL_TEXTURE_2D, customTextureHandle);
+			glUniform1i(useDiffuseColorLoc, false);
+		}
+		else if (modele_->possedeTexture(materiau.nomTexture_)) {
 			// Activer le texturage OpenGL et lier la texture appropriée
 			glEnable(GL_TEXTURE_2D);
 			glScalef(1.0, -1.0, 1.0);
