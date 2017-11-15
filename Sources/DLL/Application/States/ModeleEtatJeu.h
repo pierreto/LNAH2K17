@@ -63,6 +63,8 @@ public:
 
 	void setPlayerNames(std::string player1, std::string player2);
 	void setPlayerColors(glm::vec4 player1, glm::vec4 player2);
+	void setLocalPlayerSkin(std::string skinkName);
+	void setOpponentPlayerSkin(std::string skinkName);
 	void getGameScore(int score[]) const;
 	bool isGameOver(const int& neededGoals);
 	void aiActiveProfile(int speed, int passivity);

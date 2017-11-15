@@ -31,7 +31,6 @@
 NoeudMaillet::NoeudMaillet(const std::string& typeNoeud, const char* uuid)
 	: NoeudAbstrait{ typeNoeud }, collider_{ 0,0,0 }, vitesse_(0), lastPosition_(0)
 {
-	setCurrentTexture("2260.jpg");
 }
 
 

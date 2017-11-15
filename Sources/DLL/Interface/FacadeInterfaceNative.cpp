@@ -1208,3 +1208,14 @@ void setDeleteEventCallback(DeleteEventCallback callback)
 {
 	ModeleEtatJeu::obtenirInstance()->setDeleteEventCallback(callback);
 }
+
+void setLocalPlayerSkin(const char* skinName)
+{
+	ModeleEtatJeu::obtenirInstance()->setLocalPlayerSkin(skinName);
+
+}
+
+void setOpponentPlayerSkin(const char* skinName)
+{
+	ModeleEtatJeu::obtenirInstance()->setOpponentPlayerSkin(skinName);
+}
