@@ -64,7 +64,7 @@ namespace opengl{
 		inline void enregistrerTampon(T const& data);
 
 		/// Assigne le matériau/texture courante d'un mesh.
-		void appliquerMateriau(modele::Materiau const& materiau) const;
+		void appliquerMateriau(modele::Materiau const& materiau, unsigned int customTextureHandle = -1 ) const;
 		/// Création récursive des VBO
 		void creerVBO(modele::Noeud const& noeud);
 		/// Dessin récursifw	
