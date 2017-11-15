@@ -13,6 +13,7 @@ class ConnectServerViewController: UIViewController {
     @IBOutlet weak var ipAddressErrorLabel: UILabel!
     @IBOutlet weak var loadingSpinner: UIActivityIndicatorView!
     
+    @IBOutlet weak var scrollView: UIScrollView!
     private let clientConnection = HubManager.sharedConnection
     
     // Mark: Actions
@@ -57,6 +58,22 @@ class ConnectServerViewController: UIViewController {
         viewModel = ConnectServerViewModel(connectServerModel: connectServerModel)
         styleUI()
         fillUI()
+        NotificationCenter.default.addObserver(self, selector: #selector(adjustForKeyboard), name:NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(adjustForKeyboard), name:NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
+    
+    func adjustForKeyboard(notification: Notification) {
+        let userInfo = notification.userInfo!
+        
+        let keyboardScreenEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
+        
+        if notification.name == Notification.Name.UIKeyboardWillHide {
+            scrollView.contentInset = UIEdgeInsets.zero
+        } else {
+            scrollView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height + 64, right: 0)
+        }
+        scrollView.scrollIndicatorInsets = scrollView.contentInset
     }
     
     var viewModel: IConnectServerViewModel? {

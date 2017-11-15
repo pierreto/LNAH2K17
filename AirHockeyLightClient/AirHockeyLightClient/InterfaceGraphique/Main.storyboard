@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="vvr-1d-tU6">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Fz3-e3-z6O">
     <device id="ipad9_7" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
@@ -1158,7 +1158,7 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="0.2774507705479452" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="l9y-ot-Y10" secondAttribute="bottom" id="2Cd-i6-HFs"/>
                             <constraint firstItem="eEe-Oz-ati" firstAttribute="bottom" secondItem="6c7-wi-h1e" secondAttribute="bottom" id="3d5-ib-91G"/>
@@ -1333,63 +1333,77 @@
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="t2Q-ce-rVS">
-                                <rect key="frame" x="312" y="292" width="400" height="184.5"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fnu-2G-Ghg">
+                                <rect key="frame" x="20" y="20" width="984" height="748"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Adresse IP" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hhw-I4-KJN" userLabel="iPaddressInput">
-                                        <rect key="frame" x="0.0" y="0.0" width="400" height="60"/>
-                                        <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="calibratedRGB"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="t2Q-ce-rVS">
+                                        <rect key="frame" x="292" y="281" width="400" height="184.5"/>
+                                        <subviews>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Adresse IP" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hhw-I4-KJN" userLabel="iPaddressInput">
+                                                <rect key="frame" x="0.0" y="0.0" width="400" height="60"/>
+                                                <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="calibratedRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="60" id="2zK-Hs-imx"/>
+                                                    <constraint firstAttribute="width" constant="400" id="qJi-CV-0j8"/>
+                                                </constraints>
+                                                <nil key="textColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                                <connections>
+                                                    <action selector="editIpAddress:" destination="Fz3-e3-z6O" eventType="editingChanged" id="5q5-C8-ctp"/>
+                                                </connections>
+                                            </textField>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error Messages" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VWk-Fn-IOU" userLabel="iPaddressErrorLabel">
+                                                <rect key="frame" x="0.0" y="68" width="119.5" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g5E-VN-eRW" userLabel="loginButton">
+                                                <rect key="frame" x="0.0" y="96.5" width="400" height="60"/>
+                                                <color key="backgroundColor" red="0.23529411759999999" green="0.80000000000000004" blue="0.4431372549" alpha="1" colorSpace="calibratedRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="60" id="GJ0-FY-75f"/>
+                                                    <constraint firstAttribute="width" constant="400" id="yXW-em-LdM"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <state key="normal" title="Se Connecter"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <integer key="value" value="6"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="connectServer:" destination="Fz3-e3-z6O" eventType="touchUpInside" id="jaf-I4-uzl"/>
+                                                    <action selector="login:" destination="9iZ-5D-aWx" eventType="touchUpInside" id="qNY-rt-L3t"/>
+                                                </connections>
+                                            </button>
+                                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="QVw-yN-6Ky" userLabel="connectionIndicator">
+                                                <rect key="frame" x="0.0" y="164.5" width="400" height="20"/>
+                                            </activityIndicatorView>
+                                        </subviews>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="60" id="2zK-Hs-imx"/>
+                                            <constraint firstItem="hhw-I4-KJN" firstAttribute="leading" secondItem="t2Q-ce-rVS" secondAttribute="leading" id="bEc-AA-IGu"/>
+                                            <constraint firstAttribute="width" constant="400" id="kVy-5r-JfN"/>
+                                            <constraint firstItem="QVw-yN-6Ky" firstAttribute="centerX" secondItem="t2Q-ce-rVS" secondAttribute="centerX" id="zic-OT-HhT"/>
                                         </constraints>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                        <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
-                                        <connections>
-                                            <action selector="editIpAddress:" destination="Fz3-e3-z6O" eventType="editingChanged" id="5q5-C8-ctp"/>
-                                        </connections>
-                                    </textField>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error Messages" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VWk-Fn-IOU" userLabel="iPaddressErrorLabel">
-                                        <rect key="frame" x="0.0" y="68" width="119.5" height="20.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g5E-VN-eRW" userLabel="loginButton">
-                                        <rect key="frame" x="0.0" y="96.5" width="400" height="60"/>
-                                        <color key="backgroundColor" red="0.23529411759999999" green="0.80000000000000004" blue="0.4431372549" alpha="1" colorSpace="calibratedRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="60" id="GJ0-FY-75f"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
-                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <state key="normal" title="Se Connecter"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                <integer key="value" value="6"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <action selector="connectServer:" destination="Fz3-e3-z6O" eventType="touchUpInside" id="jaf-I4-uzl"/>
-                                            <action selector="login:" destination="9iZ-5D-aWx" eventType="touchUpInside" id="qNY-rt-L3t"/>
-                                        </connections>
-                                    </button>
-                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="QVw-yN-6Ky" userLabel="connectionIndicator">
-                                        <rect key="frame" x="0.0" y="164.5" width="400" height="20"/>
-                                    </activityIndicatorView>
+                                    </stackView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="hhw-I4-KJN" firstAttribute="width" secondItem="t2Q-ce-rVS" secondAttribute="width" id="BUx-Pa-Y8j"/>
-                                    <constraint firstItem="g5E-VN-eRW" firstAttribute="width" secondItem="t2Q-ce-rVS" secondAttribute="width" id="jU0-p3-m6a"/>
-                                    <constraint firstItem="QVw-yN-6Ky" firstAttribute="centerX" secondItem="t2Q-ce-rVS" secondAttribute="centerX" id="pXn-X5-TZY"/>
-                                    <constraint firstAttribute="width" constant="400" id="y1A-DQ-e9v"/>
+                                    <constraint firstItem="t2Q-ce-rVS" firstAttribute="top" secondItem="Fnu-2G-Ghg" secondAttribute="top" constant="281" id="HCE-sa-lW6"/>
+                                    <constraint firstItem="t2Q-ce-rVS" firstAttribute="leading" secondItem="Fnu-2G-Ghg" secondAttribute="leading" constant="292" id="OwQ-iX-qTP"/>
+                                    <constraint firstAttribute="bottom" secondItem="t2Q-ce-rVS" secondAttribute="bottom" constant="282.5" id="cEI-fj-lmf"/>
+                                    <constraint firstAttribute="trailing" secondItem="t2Q-ce-rVS" secondAttribute="trailing" constant="292" id="iBK-vJ-0kc"/>
                                 </constraints>
-                            </stackView>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" red="0.24313725490196078" green="0.24313725490196078" blue="0.24313725490196078" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="t2Q-ce-rVS" firstAttribute="centerY" secondItem="tzU-jI-NcD" secondAttribute="centerY" id="AbG-mU-BBN"/>
-                            <constraint firstItem="t2Q-ce-rVS" firstAttribute="centerX" secondItem="tzU-jI-NcD" secondAttribute="centerX" id="E4L-Lf-Vtf"/>
+                            <constraint firstItem="Fnu-2G-Ghg" firstAttribute="leading" secondItem="tzU-jI-NcD" secondAttribute="leadingMargin" id="GiX-Ca-Ahk"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Fnu-2G-Ghg" secondAttribute="trailing" id="KlQ-J2-hCA"/>
+                            <constraint firstItem="Fnu-2G-Ghg" firstAttribute="top" secondItem="tzU-jI-NcD" secondAttribute="topMargin" id="KyM-IZ-J48"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="Fnu-2G-Ghg" secondAttribute="bottom" id="pWM-UH-Av5"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Se Connecter" id="WWf-4r-lIy">
@@ -1399,6 +1413,7 @@
                         <outlet property="ipAddressErrorLabel" destination="VWk-Fn-IOU" id="9zt-6Y-2M5"/>
                         <outlet property="ipAddressInput" destination="hhw-I4-KJN" id="0LB-4F-VVx"/>
                         <outlet property="loadingSpinner" destination="QVw-yN-6Ky" id="Qnx-WQ-ZdS"/>
+                        <outlet property="scrollView" destination="Fnu-2G-Ghg" id="I97-l8-1F6"/>
                         <segue destination="9iZ-5D-aWx" kind="show" identifier="connectionSuccess" id="ShH-57-1HW"/>
                     </connections>
                 </viewController>
@@ -1670,6 +1685,7 @@
                         <outlet property="loadingSpinner" destination="hyr-YX-cKZ" id="a2H-6n-jRM"/>
                         <outlet property="passwordErrorLabel" destination="MI0-tE-apg" id="Mw7-1O-ufU"/>
                         <outlet property="passwordInput" destination="kZ7-IX-vjq" id="dgq-CB-EKK"/>
+                        <outlet property="scrollView" destination="brK-5P-ttK" id="57n-nV-HtO"/>
                         <outlet property="usernameErrorLabel" destination="tLu-bb-zBI" id="iol-Ul-o9G"/>
                         <outlet property="usernameInput" destination="Tue-6k-iTD" id="0tU-b5-Ppq"/>
                         <segue destination="H5p-E5-hIj" kind="show" identifier="loginSuccess" id="siQ-V2-je8"/>
@@ -2160,9 +2176,9 @@
         <image name="сontacts" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="6DQ-jn-lmH"/>
+        <segue reference="nja-Df-3RZ"/>
         <segue reference="dvs-2S-kMa"/>
-        <segue reference="D9p-zm-qef"/>
+        <segue reference="siQ-V2-je8"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
 </document>

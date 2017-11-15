@@ -126,9 +126,6 @@ class SignupViewController: UIViewController {
         }
         
         scrollView.scrollIndicatorInsets = scrollView.contentInset
-        
-//        let selectedRange = scrollView.selectedRange
-//        scrollView.scrollRangeToVisible(selectedRange)
     }
     
     func keyboardWillShow(notification:NSNotification){
