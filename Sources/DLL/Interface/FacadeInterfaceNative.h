@@ -123,7 +123,11 @@ extern "C" {
 	typedef void(__stdcall * DeleteEventCallback)(const char* uuid);
 	__declspec(dllexport) void setDeleteEventCallback(DeleteEventCallback callback);
 	__declspec(dllexport) void deleteNode(const char* username,  const char* uuid);
-} 
+
+	__declspec(dllexport) void setLocalPlayerSkin(const char* skinName);
+
+	__declspec(dllexport) void setOpponentPlayerSkin(const char* skinName);
+}
 
 #endif // __FACADE_INTERFACE_NATIVE_H__
 

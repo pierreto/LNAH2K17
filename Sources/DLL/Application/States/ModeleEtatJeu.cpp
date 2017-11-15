@@ -600,6 +600,12 @@ void ModeleEtatJeu::setPlayerColors(glm::vec4 player1, glm::vec4 player2) {
 	player2Color_ = player2 / 255.0f;
 }
 
+void ModeleEtatJeu::setLocalPlayerSkin(std::string skinkName) {
+	maillet1_->setCurrentTexture(skinkName);
+}
+void ModeleEtatJeu::setOpponentPlayerSkin(std::string skinkName) {
+	maillet2_->setCurrentTexture(skinkName);
+}
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////
