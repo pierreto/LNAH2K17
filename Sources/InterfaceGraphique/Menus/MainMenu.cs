@@ -237,6 +237,7 @@ namespace InterfaceGraphique
         public void HideCompletely()
         {
             HideChat();
+            this.elementHost2.Hide();
             elementHost1.Size = new Size(0, 0);
         }
     }
