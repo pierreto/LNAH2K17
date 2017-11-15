@@ -218,7 +218,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AirHockeyLightClient/ConnectServer.swift"
-            timestampString = "531594792.351437"
+            timestampString = "532402720.844934"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "32"
@@ -389,11 +389,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AirHockeyLightClient/InterfaceGraphique/VerticalSplitViewController.swift"
-            timestampString = "532360447.800799"
+            timestampString = "532402720.845175"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "27"
-            endingLineNumber = "27"
+            startingLineNumber = "42"
+            endingLineNumber = "42"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
@@ -405,13 +405,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AirHockeyLightClient/InterfaceGraphique/VerticalSplitViewController.swift"
-            timestampString = "532360447.800944"
+            timestampString = "532402720.846353"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "100"
-            endingLineNumber = "100"
-            landmarkName = "VerticalSplitViewController"
-            landmarkType = "3">
+            startingLineNumber = "129"
+            endingLineNumber = "129">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -421,27 +419,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AirHockeyLightClient/InterfaceGraphique/VerticalSplitViewController.swift"
-            timestampString = "532360447.801022"
+            timestampString = "532402720.847297"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "78"
-            endingLineNumber = "78"
-            landmarkName = "togChatButtonVisibility(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "AirHockeyLightClient/InterfaceGraphique/VerticalSplitViewController.swift"
-            timestampString = "532360447.801102"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "36"
-            endingLineNumber = "36"
+            startingLineNumber = "51"
+            endingLineNumber = "51"
             landmarkName = "subscribeToNotifications()"
             landmarkType = "7">
          </BreakpointContent>
@@ -485,13 +467,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AirHockeyLightClient/InterfaceGraphique/VerticalSplitViewController.swift"
-            timestampString = "532360447.801265"
+            timestampString = "532402720.84833"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "65"
-            endingLineNumber = "65"
-            landmarkName = "toggleChatButtonVisibility()"
-            landmarkType = "7">
+            startingLineNumber = "129"
+            endingLineNumber = "129">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -501,29 +481,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AirHockeyLightClient/InterfaceGraphique/VerticalSplitViewController.swift"
-            timestampString = "532360447.801345"
+            timestampString = "532402720.849533"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "81"
-            endingLineNumber = "81"
-            landmarkName = "togChatButtonVisibility(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "AirHockeyLightClient/InterfaceGraphique/VerticalSplitViewController.swift"
-            timestampString = "532360447.801416"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "84"
-            endingLineNumber = "84"
-            landmarkName = "togChatButtonVisibility(_:)"
-            landmarkType = "7">
+            startingLineNumber = "129"
+            endingLineNumber = "129">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -946,13 +908,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AirHockeyLightClient/InterfaceGraphique/VerticalSplitViewController.swift"
-            timestampString = "532360447.802901"
+            timestampString = "532402720.851308"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "62"
-            endingLineNumber = "62"
-            landmarkName = "toggleChatButtonVisibility()"
-            landmarkType = "7">
+            startingLineNumber = "119"
+            endingLineNumber = "119"
+            landmarkName = "VerticalSplitViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -962,13 +924,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AirHockeyLightClient/InterfaceGraphique/VerticalSplitViewController.swift"
-            timestampString = "532360447.802999"
+            timestampString = "532402720.852431"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "76"
-            endingLineNumber = "76"
-            landmarkName = "togChatButtonVisibility(_:)"
-            landmarkType = "7">
+            startingLineNumber = "129"
+            endingLineNumber = "129">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1048,6 +1008,38 @@
             startingLineNumber = "224"
             endingLineNumber = "224"
             landmarkName = "tableView(_:cellForRowAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AirHockeyLightClient/InterfaceGraphique/VerticalSplitViewController.swift"
+            timestampString = "532402720.853441"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "87"
+            endingLineNumber = "87"
+            landmarkName = "toggleChatButtonVisibility()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AirHockeyLightClient/InterfaceGraphique/VerticalSplitViewController.swift"
+            timestampString = "532402720.854313"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "105"
+            endingLineNumber = "105"
+            landmarkName = "togChatButtonVisibility(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

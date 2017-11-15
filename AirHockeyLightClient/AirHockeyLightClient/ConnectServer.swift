@@ -54,7 +54,7 @@ class ConnectServer: NSObject {
             let timerTask = DispatchWorkItem {
                 if !(HubManager.sharedConnection.getConnection()?.state == .connected) {
                     self.ipAddressError = "Adresse non joinable"
-                    NotificationCenter.default.post(name: Notification.Name(rawValue: LoginNotification.SubmitNotification), object: self)
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: ConnectServerNotification.ConnectServerNotification), object: self)
                     fullfil(false)
                 }
             }
