@@ -233,7 +233,7 @@ namespace InterfaceGraphique.Editor.EditorState
                 Username = User.Instance.UserEntity.Username,
                 Position = positionVec
             });
-            Task.Run(() => Editeur.mapManager.SaveMap());
+            this.inTransformation = true;
         }
 
         private float[] getVec3FromIntptr(IntPtr ptr)
