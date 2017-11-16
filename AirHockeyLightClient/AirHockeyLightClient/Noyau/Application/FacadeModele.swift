@@ -106,7 +106,6 @@ class FacadeModele {
     
     /// Initialise la vue, l'arbre et l'état
     func initialiser() {
-        self.arbre = ArbreRendu.instance
         self.viewController = EditorViewController.instance
         self.etat = ModeleEtatCameraControl.instance
         self.generalProperties = GeneralProperties()
@@ -124,9 +123,14 @@ class FacadeModele {
         self.rotateGestureRecognizer?.delegate = self.viewController
         self.normalPanGestureRecognizer?.delegate = self.viewController
         
-        self.arbre?.initialiser()
+        self.initialiserArbre()
         self.etat?.initialiser()
         self.initVue()
+    }
+    
+    func initialiserArbre() {
+        self.arbre = ArbreRendu.instance
+        self.arbre?.initialiser()
     }
     
     /// Retourne la vue courante.
@@ -539,7 +543,10 @@ class FacadeModele {
     
     func sauvegarderCoefficients() {
         let coefficients = self.generalProperties?.getCoefficientValues()
-        let cJSON = JSON([coefficients?[0], coefficients?[1], coefficients?[2]])
+        let friction = coefficients?[0] == nil ? 1.0 : coefficients?[0]
+        let rebond = coefficients?[1] == nil ? 0.0 : coefficients?[1]
+        let acceleration = coefficients?[2] == nil ? 40.0 : coefficients?[2]
+        let cJSON = JSON([friction, rebond, acceleration])
         self.docJSON?["Coefficients"] = cJSON
     }
     

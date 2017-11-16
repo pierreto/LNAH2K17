@@ -97,7 +97,6 @@ class ModeleEtatCreerPortail: ModeleEtat {
             }
             else {
                 // Verification que les noeuds soient sur la table
-                // TODO : implémenter VisiteurSurTable
                 if (self.noeudsSurLaTable()) {
                     // Link portal together
                     noeud.assignerOppose(portail: self.premierNoeud!);
