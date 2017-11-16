@@ -1,8 +1,11 @@
 ﻿using AirHockeyServer.Entities;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
+
 
 namespace AirHockeyServer.Core
 {
@@ -20,32 +23,19 @@ namespace AirHockeyServer.Core
             Tournaments = new Dictionary<int, TournamentEntity>();
             StoreItems = new Dictionary<int, StoreItemEntity>();
 
-            StoreItems.Add(1, new StoreItemEntity
-            {
-                Name = "Name1",
-                Description = "Description1",
-                Id = 1,
-                Price = 5,
-                IsGameEnabled = false
-            });
-
-            StoreItems.Add(2, new StoreItemEntity
-            {
-                Name = "Name2",
-                Description = "Description2",
-                Id = 2,
-                Price = 5,
-                IsGameEnabled = false
-            });
-
-            StoreItems.Add(3, new StoreItemEntity
-            {
-                Name = "Name3",
-                Description = "Description3",
-                Id = 3,
-                Price = 5,
-                IsGameEnabled = false
-            });
+            LoadStoreItems();
         }
-}
+
+        private void LoadStoreItems()
+        {
+            string path = System.Web.Hosting.HostingEnvironment.MapPath("/") + "\\..\\..\\Exe\\données\\StoreItems.json";
+            using (StreamReader reader = new StreamReader(path))
+            {
+                string json = reader.ReadToEnd();
+                List<StoreItemEntity> items = JsonConvert.DeserializeObject<List<StoreItemEntity>>(json);
+
+                items.ForEach(item => StoreItems.Add(item.Id, item));
+            }
+        }
+    }
 }

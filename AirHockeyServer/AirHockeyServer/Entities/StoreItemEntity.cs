@@ -21,6 +21,8 @@ namespace AirHockeyServer.Entities
 
         public bool IsGameEnabled { get; set; }
 
+        public string TextureName { get; set; }
+
         public StoreItemEntity(StoreItemPoco poco)
         {
             var entity = Cache.StoreItems[poco.Id];
@@ -29,6 +31,7 @@ namespace AirHockeyServer.Entities
             Description = entity.Description;
             Id = poco.Id;
             ImageUrl = entity.ImageUrl;
+            TextureName = entity.TextureName;
         }
 
         public StoreItemEntity()
