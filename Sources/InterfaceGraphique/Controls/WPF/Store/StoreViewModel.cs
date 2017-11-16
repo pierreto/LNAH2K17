@@ -47,50 +47,17 @@ namespace InterfaceGraphique.Controls.WPF.Store
             }
         }
 
-        private string mainDescription;
-        public string MainDescription
+        private ItemViewModel focusItem;
+        public ItemViewModel FocusItem
         {
-            get => mainDescription;
+            get => focusItem;
             set
             {
-                mainDescription = value;
+                focusItem = value;
                 OnPropertyChanged();
             }
         }
-
-        private int mainPrice;
-        public int MainPrice
-        {
-            get => mainPrice;
-            set
-            {
-                mainPrice = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string mainName;
-        public string MainName
-        {
-            get => mainName;
-            set
-            {
-                mainName = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string mainImageUrl;
-        public string MaintImageUrl
-        {
-            get => mainImageUrl;
-            set
-            {
-                mainImageUrl = value;
-                OnPropertyChanged();
-            }
-        }
-
+        
         private ICommand buy;
         public ICommand Buy
         {
@@ -103,7 +70,7 @@ namespace InterfaceGraphique.Controls.WPF.Store
 
         private async Task BuyItems()
         {
-            await StoreService.BuyElements(StoreItems.Where(x => x.IsChecked).Select(x => x.StoreItem).ToList(), User.Instance.UserEntity.Id);
+            await StoreService.BuyElements(StoreItems.Where(x => x.IsChecked && x.CanBuy).Select(x => x.StoreItem).ToList(), User.Instance.UserEntity.Id);
             EmptyCart();
         }
         
@@ -150,7 +117,7 @@ namespace InterfaceGraphique.Controls.WPF.Store
 
         private void DoSelect(ItemViewModel item)
         {
-            
+            FocusItem = item;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using InterfaceGraphique.Entities;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,8 +16,9 @@ namespace InterfaceGraphique.Controls.WPF.Store
             IsChecked = false;
             Price = item.Price;
             Description = item.Description;
-            ImageUrl = item.ImageUrl;
+            ImageUrl = Directory.GetCurrentDirectory() + "\\media\\image\\default_profile_picture.png";
             StoreItem = item;
+            CanBuy = true;
         }
 
         public StoreItemEntity StoreItem { get; set; }
@@ -24,7 +26,7 @@ namespace InterfaceGraphique.Controls.WPF.Store
         private string name;
         public string Name
         {
-            get => name;
+            get => name ?? "";
             set
             {
                 name = value;
@@ -57,7 +59,7 @@ namespace InterfaceGraphique.Controls.WPF.Store
         private string imageUrl;
         public string ImageUrl
         {
-            get => imageUrl;
+            get => imageUrl ?? "";
             set
             {
                 imageUrl = value;
@@ -68,10 +70,21 @@ namespace InterfaceGraphique.Controls.WPF.Store
         private string description;
         public string Description
         {
-            get => description;
+            get => description ?? "";
             set
             {
                 description = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool canBuy;
+        public bool CanBuy
+        {
+            get => canBuy;
+            set
+            {
+                canBuy = value;
                 OnPropertyChanged();
             }
         }
