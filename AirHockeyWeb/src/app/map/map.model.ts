@@ -1,4 +1,4 @@
-export interface Map {
+export interface MapModel {
     Id: number;
     Creator: string;
     Name: string;

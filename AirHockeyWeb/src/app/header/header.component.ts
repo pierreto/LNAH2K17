@@ -7,6 +7,8 @@ const LOGIN_URL = '/login';
 const SIGNUP_URL = '/signup';
 const RANKING_URL = '/rankings';
 const PROFILE_URL = '/profile';
+const MAPS_URL = '/maps';
+
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -25,6 +27,10 @@ export class HeaderComponent implements OnInit {
   login() {
     this.appService.loginPage = true;
     this.router.navigate([LOGIN_URL]);
+  }
+
+  maps() {
+    this.router.navigate([MAPS_URL]);
   }
 
   signup() {

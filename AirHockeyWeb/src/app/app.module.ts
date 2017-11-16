@@ -26,6 +26,8 @@ import { AsyncPipe } from '@angular/common';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { CanActivateGuard } from './canActivateGuard';
 import { MapsComponent } from './maps/maps.component';
+import { MapsService } from './maps/maps.service';
+import { MapService } from './map/map.service';
 
 @NgModule({
     imports: [
@@ -52,7 +54,7 @@ import { MapsComponent } from './maps/maps.component';
     UnauthorizedComponent,
     MapsComponent
   ],
-  providers: [SignupService, LoginService, AppService, RankingService, ProfileService, CanActivateGuard],
+  providers: [SignupService, LoginService, AppService, RankingService, ProfileService, MapsService, MapService, CanActivateGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
