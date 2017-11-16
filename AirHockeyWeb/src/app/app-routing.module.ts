@@ -7,6 +7,8 @@ import { RankingComponent } from './ranking/ranking.component';
 import { ProfileComponent } from './profile/profile.component';
 import { CanActivateGuard } from './canActivateGuard';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
+import { MapComponent } from './map/map.component';
+import { MapsComponent } from './maps/maps.component';
 
 
 // TODO : Put the right paths
@@ -15,6 +17,8 @@ const routes: Routes = [
   { path: 'signup', component: SignupComponent },
   { path: 'rankings', component: RankingComponent, canActivate: [CanActivateGuard]},
   { path: 'profile/:id', component: ProfileComponent, canActivate: [CanActivateGuard] },
+  { path: 'maps/:id', component: MapComponent, canActivate: [CanActivateGuard] },
+  { path: 'maps', component: MapsComponent, canActivate: [CanActivateGuard] },
   { path: 'forbidden', component: UnauthorizedComponent},
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent }

@@ -25,6 +25,7 @@ import { ProfileService } from './profile/profile.service';
 import { AsyncPipe } from '@angular/common';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { CanActivateGuard } from './canActivateGuard';
+import { MapsComponent } from './maps/maps.component';
 
 @NgModule({
     imports: [
@@ -48,7 +49,8 @@ import { CanActivateGuard } from './canActivateGuard';
     PageNotFoundComponent,
     HeaderComponent,
     ProfileComponent,
-    UnauthorizedComponent
+    UnauthorizedComponent,
+    MapsComponent
   ],
   providers: [SignupService, LoginService, AppService, RankingService, ProfileService, CanActivateGuard],
   bootstrap: [AppComponent]
