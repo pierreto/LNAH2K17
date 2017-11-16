@@ -32,13 +32,15 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
         public StoreService StoreService { get; }
 
-        public StoreItemEntity OpponentTexture { get; set; }
+        public GameManager GameManager { get; }
 
-        public GameWaitingRoomHub(SlaveGameState slaveGameState,MasterGameState masterGameState, StoreService storeService)
+        public GameWaitingRoomHub(SlaveGameState slaveGameState,MasterGameState masterGameState, 
+            StoreService storeService, GameManager gameManager)
         {
             this.slaveGameState = slaveGameState;
             this.masterGameState = masterGameState;
             StoreService = storeService;
+            GameManager = gameManager;
         }
 
         public void InitializeHub(HubConnection connection)
@@ -65,31 +67,26 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
             {
                 this.CurrentGameId = newgame.GameId;
                 this.OpponentFoundEvent.Invoke(this, newgame);
-                
-                var items = await StoreService.GetUserStoreItems(1);
-                OpponentTexture = items.Find(x => x.IsGameEnabled);
 
-                WaitingRoomProxy.On<GameEntity>("GameStartingEvent", officialGame =>
+                //var items = await StoreService.GetUserStoreItems(1);
+                //OpponentTexture = items.Find(x => x.IsGameEnabled);
+
+
+                WaitingRoomProxy.On<GameEntity>("GameStartingEvent", async officialGame =>
                 {
                     Console.WriteLine("Game is starting!");
 
-                    Program.LobbyHost.Invoke(new MethodInvoker(() =>
+                    Program.LobbyHost.Invoke(new MethodInvoker(async () =>
                     {
-                        //var texture = User.Instance.Inventory.Find(x => x.IsGameEnabled);
-                        //if(texture != null)
-                        //{
-                        //    FonctionsNatives.setLocalPlayerSkin(texture.TextureName);
-                        //}
-                        //if(OpponentTexture != null)
-                        //{
-                        //    FonctionsNatives.setOpponentPlayerSkin(texture.TextureName);
-                        //}
-                        
+                        GameManager.CurrentOnlineGame = newgame;
+                        await GameManager.SetTextures();
+
                         if (User.Instance.UserEntity.Id == officialGame.Master.Id)
                         {
                             this.masterGameState.InitializeGameState(officialGame);
-
+                            
                             Program.QuickPlay.CurrentGameState = this.masterGameState;
+                            Program.QuickPlay.CurrentGameState.IsOnline = true;
                             Program.FormManager.CurrentForm = Program.QuickPlay;
                         }
                         else
@@ -97,6 +94,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
                             this.slaveGameState.InitializeGameState(officialGame);
 
                             Program.QuickPlay.CurrentGameState = this.slaveGameState;
+                            Program.QuickPlay.CurrentGameState.IsOnline = true;
                             Program.FormManager.CurrentForm = Program.QuickPlay;
 
                             FonctionsNatives.rotateCamera(180);
