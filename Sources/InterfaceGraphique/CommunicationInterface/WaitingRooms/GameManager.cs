@@ -33,7 +33,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
         public async Task SetTextures()
         {
-            for(int i = 0; i < Textures.Length; i++)
+            for(int i = 0; i < CurrentOnlineGame.Players.Length; i++)
             {
                 var userId = CurrentOnlineGame.Players[i].Id;
                 var items = await StoreService.GetUserStoreItems(userId);
