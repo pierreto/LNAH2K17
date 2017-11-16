@@ -24,7 +24,7 @@ class FriendRequestsTableViewController: UITableViewController {
     
     @IBOutlet weak var pendingRequests: UITableView!
 
-    private let friendsHub = HubManager.sharedConnection.getFriendsHub()
+    private var friendsHub: FriendsHub?
     private var pendingRequestsData = [FriendRequestEntity]()
     
     override func viewDidLoad() {
