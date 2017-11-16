@@ -230,6 +230,18 @@ class NoeudCommun : SCNNode {
                             GLKMatrix4Multiply(
                                 SCNMatrix4ToGLKMatrix4(rotation),
                                 SCNMatrix4ToGLKMatrix4(self.transform)))
+        
+        /*let rotation = SCNMatrix4MakeRotation(angle, axes.x, axes.y, axes.z)
+         let newTransform = SCNMatrix4Mult(self.worldTransform, rotation)
+         
+         // Set the new transform
+         if let parent = self.parent {
+         self.transform = parent.convertTransform(newTransform, from: nil)
+         } else {
+         self.transform = newTransform
+         }*/
+        
+        //self.eulerAngles.y += angle
     }
     
     /// Obtient la position relative du noeud.
@@ -291,6 +303,7 @@ class NoeudCommun : SCNNode {
         /// Faire une copie du matériel pour ne pas affecter le matériel des autres noeuds du même type
         let material = self.geometry?.firstMaterial?.copy() as! SCNMaterial
         self.geometry?.firstMaterial = material
+        self.geometry?.firstMaterial?.locksAmbientWithDiffuse = true
         
         if (activer) {
             material.diffuse.contents = color
@@ -301,28 +314,16 @@ class NoeudCommun : SCNNode {
     
     func appliquerMaterielSelection(activer: Bool) {
         self.colorerSelection(activer: activer)
-        self.effetFantome(activer: activer)
     }
     
-    /// Cette fonction active ou désactive un effet fantome sur le mur
-    private func effetFantome(activer: Bool) {
-        let material = self.geometry?.firstMaterial?.copy() as! SCNMaterial
-        
-        if (material.diffuse.contents is UIColor) {
-            self.geometry?.firstMaterial = material
-            self.geometry?.firstMaterial?.lightingModel = SCNMaterial.LightingModel.phong
-            self.geometry?.firstMaterial?.transparency = activer ? 0.50 : 1.0
-        }
-    }
-    
-    /// Cette fonction colore les noeuds sélectionnables lors de la sélection
+    /// Cette fonction colore les noeuds sélectionnables lors de la sélection de l'utilisateur courant
     private func colorerSelection(activer: Bool) {
         let material = self.geometry?.firstMaterial?.copy() as! SCNMaterial
         
         if material.diffuse.contents is UIColor && self.estSelectionnable() {
             self.geometry?.firstMaterial = material
             self.geometry?.firstMaterial?.locksAmbientWithDiffuse = true
-            self.useOtherColor(activer: activer, color: self.selectionneColor)
+            self.useOtherColor(activer: activer, color: FacadeModele.instance.getCurrentUserColor())
         }
     }
     
