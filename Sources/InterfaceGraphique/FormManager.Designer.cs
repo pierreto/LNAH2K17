@@ -26,8 +26,8 @@
             // 
             // elementHost2
             // 
-            this.elementHost2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.elementHost2.Location = new System.Drawing.Point(72, -167);
+            this.elementHost2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.elementHost2.Location = new System.Drawing.Point(586, 213);
             this.elementHost2.Name = "elementHost2";
             this.elementHost2.Size = new System.Drawing.Size(200, 437);
             this.elementHost2.TabIndex = 12;
@@ -37,7 +37,7 @@
             // elementHost1
             // 
             this.elementHost1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.elementHost1.Location = new System.Drawing.Point(0, -38);
+            this.elementHost1.Location = new System.Drawing.Point(0, 350);
             this.elementHost1.Name = "elementHost1";
             this.elementHost1.Size = new System.Drawing.Size(580, 300);
             this.elementHost1.TabIndex = 13;
@@ -48,7 +48,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.ClientSize = new System.Drawing.Size(1184, 648);
             this.Controls.Add(this.elementHost2);
             this.Controls.Add(this.elementHost1);
             this.Name = "FormManager";

@@ -34,7 +34,6 @@
 		2509B8911FB8D5D8002DEE9A /* FriendsHub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2509B8901FB8D5D8002DEE9A /* FriendsHub.swift */; };
 		2509B8941FB8E91B002DEE9A /* FriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2509B8931FB8E91B002DEE9A /* FriendsViewController.swift */; };
 		2509B8961FB8E9F0002DEE9A /* FriendsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2509B8951FB8E9F0002DEE9A /* FriendsTableViewController.swift */; };
-		2509B89F1FB8F878002DEE9A /* FriendsTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2509B89E1FB8F878002DEE9A /* FriendsTabBarViewController.swift */; };
 		2509B8A11FB93631002DEE9A /* FriendsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2509B8A01FB93631002DEE9A /* FriendsService.swift */; };
 		25163A891F9CE62600142418 /* ILoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25163A881F9CE62500142418 /* ILoginViewModel.swift */; };
 		252EC9161FA80FAD008D119C /* EditionHub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252EC9151FA80FAD008D119C /* EditionHub.swift */; };
@@ -205,7 +204,6 @@
 		2509B8901FB8D5D8002DEE9A /* FriendsHub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FriendsHub.swift; path = InterfaceGraphique/Communication/FriendsHub.swift; sourceTree = "<group>"; };
 		2509B8931FB8E91B002DEE9A /* FriendsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FriendsViewController.swift; path = InterfaceGraphique/View/Friends/FriendsViewController.swift; sourceTree = "<group>"; };
 		2509B8951FB8E9F0002DEE9A /* FriendsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FriendsTableViewController.swift; path = InterfaceGraphique/View/Friends/FriendsTableViewController.swift; sourceTree = "<group>"; };
-		2509B89E1FB8F878002DEE9A /* FriendsTabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FriendsTabBarViewController.swift; path = InterfaceGraphique/View/Friends/FriendsTabBarViewController.swift; sourceTree = "<group>"; };
 		2509B8A01FB93631002DEE9A /* FriendsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FriendsService.swift; path = Noyau/Services/FriendsService.swift; sourceTree = "<group>"; };
 		25163A881F9CE62500142418 /* ILoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ILoginViewModel.swift; sourceTree = "<group>"; };
 		252EC9151FA80FAD008D119C /* EditionHub.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditionHub.swift; path = InterfaceGraphique/Communication/EditionHub.swift; sourceTree = "<group>"; };
@@ -449,7 +447,6 @@
 			children = (
 				2509B8931FB8E91B002DEE9A /* FriendsViewController.swift */,
 				2509B8951FB8E9F0002DEE9A /* FriendsTableViewController.swift */,
-				2509B89E1FB8F878002DEE9A /* FriendsTabBarViewController.swift */,
 				25CF7B8A1FBA759800B536DB /* FriendRequestsViewController.swift */,
 				25CF7B8C1FBA760600B536DB /* FriendRequestsTableViewController.swift */,
 			);
@@ -1106,7 +1103,6 @@
 				1D019A2A1F911E33004D79B2 /* LoginViewModel.swift in Sources */,
 				8F97A3861FA2C8BD00421FDC /* IGeneralPropertiesViewModel.swift in Sources */,
 				3415E6DB1F85C1F300DB1CAD /* NoeudPointControl.swift in Sources */,
-				2509B89F1FB8F878002DEE9A /* FriendsTabBarViewController.swift in Sources */,
 				8F97A3851FA2C8BD00421FDC /* GeneralPropertiesViewModel.swift in Sources */,
 				8F4C1DC41FB412D100B570C8 /* DeleteCommand.swift in Sources */,
 				34B965D01FA2976600BD17CC /* GeneralProperties.swift in Sources */,

@@ -9,6 +9,7 @@ using Microsoft.Practices.Unity;
 using InterfaceGraphique.Controls.WPF.ConnectServer;
 using InterfaceGraphique.Controls.WPF.Friends;
 using InterfaceGraphique.Exceptions;
+using InterfaceGraphique.Services;
 
 namespace InterfaceGraphique.Controls.WPF.Authenticate
 {
@@ -100,11 +101,12 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
         #endregion
 
         #region Constructor
-        public AuthenticateViewModel(LoginEntity loginEntity, ChatHub chatHub)
+        public AuthenticateViewModel(LoginEntity loginEntity, ChatHub chatHub, StoreService storeService)
         {
             Title = "Authentification";
             this.loginEntity = loginEntity;
             this.chatHub = chatHub;
+            StoreService = storeService;
             this.hubManager = HubManager.Instance;
             this.inputsEnabled = true;
         }
@@ -136,6 +138,8 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
                 return signupCommand;
             }
         }
+
+        public StoreService StoreService { get; set; }
         #endregion
 
         #region Command Methods
@@ -154,6 +158,8 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
                         //On set l'instance statique du user.
                         User.Instance.UserEntity = new UserEntity { Id = userId, Username = loginEntity.Username };
                         User.Instance.IsConnected = true;
+
+                        User.Instance.Inventory = await StoreService.GetUserStoreItems(User.Instance.UserEntity.Id);
 
                         await chatHub.InitializeChat();
 

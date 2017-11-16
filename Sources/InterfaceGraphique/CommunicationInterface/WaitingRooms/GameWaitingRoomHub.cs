@@ -8,6 +8,7 @@ using System.Windows.Forms;
 using InterfaceGraphique.Entities;
 using InterfaceGraphique.Game.GameState;
 using Microsoft.AspNet.SignalR.Client;
+using InterfaceGraphique.Services;
 
 namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 {
@@ -29,10 +30,15 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
         protected HubConnection HubConnection { get; set; }
 
-        public GameWaitingRoomHub(SlaveGameState slaveGameState,MasterGameState masterGameState)
+        public StoreService StoreService { get; }
+
+        public StoreItemEntity OpponentTexture { get; set; }
+
+        public GameWaitingRoomHub(SlaveGameState slaveGameState,MasterGameState masterGameState, StoreService storeService)
         {
             this.slaveGameState = slaveGameState;
             this.masterGameState = masterGameState;
+            StoreService = storeService;
         }
 
         public void InitializeHub(HubConnection connection)
@@ -43,7 +49,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
         
         public async void Join()
         {
-            InitializeEvents();
+            await InitializeEvents();
             
             await WaitingRoomProxy.Invoke("Join", User.Instance.UserEntity);
         }
@@ -53,12 +59,15 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
             await WaitingRoomProxy.Invoke("LeaveGame", User.Instance.UserEntity, CurrentGameId);
         }
 
-        private void InitializeEvents()
+        private async Task InitializeEvents()
         {
-            WaitingRoomProxy.On<GameEntity>("OpponentFoundEvent", newgame =>
+            WaitingRoomProxy.On<GameEntity>("OpponentFoundEvent", async newgame =>
             {
                 this.CurrentGameId = newgame.GameId;
                 this.OpponentFoundEvent.Invoke(this, newgame);
+                
+                var items = await StoreService.GetUserStoreItems(1);
+                OpponentTexture = items.Find(x => x.IsGameEnabled);
 
                 WaitingRoomProxy.On<GameEntity>("GameStartingEvent", officialGame =>
                 {
@@ -66,6 +75,16 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
                     Program.LobbyHost.Invoke(new MethodInvoker(() =>
                     {
+                        //var texture = User.Instance.Inventory.Find(x => x.IsGameEnabled);
+                        //if(texture != null)
+                        //{
+                        //    FonctionsNatives.setLocalPlayerSkin(texture.TextureName);
+                        //}
+                        //if(OpponentTexture != null)
+                        //{
+                        //    FonctionsNatives.setOpponentPlayerSkin(texture.TextureName);
+                        //}
+                        
                         if (User.Instance.UserEntity.Id == officialGame.Master.Id)
                         {
                             this.masterGameState.InitializeGameState(officialGame);

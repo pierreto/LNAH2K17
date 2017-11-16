@@ -28,7 +28,7 @@ namespace InterfaceGraphique
     public partial class MainMenu : Form
     {
         static HttpClient client = new HttpClient();
-   
+
         ////////////////////////////////////////////////////////////////////////
         ///
         /// Constructeur de la classe MainMenu
@@ -37,16 +37,9 @@ namespace InterfaceGraphique
         public MainMenu()
         {
             InitializeComponent();
-
             InitializeEvents();
-
-            //if (onlineMode)
-            //{
-            //    this.buttonLogout = new System.Windows.Forms.Button();
-            //    this.elementHost1 = new System.Windows.Forms.Integration.ElementHost();
-            //    this.testChatView = new InterfaceGraphique.Controls.WPF.Chat.TestChatView();
-            //}
         }
+
         ////////////////////////////////////////////////////////////////////////
         ///
         /// Initialise les events sur la form courrante
@@ -168,7 +161,5 @@ namespace InterfaceGraphique
         {
             Program.FormManager.SizeChanged -= new EventHandler(WindowSizeChanged);
         }
-
-
     }
 }

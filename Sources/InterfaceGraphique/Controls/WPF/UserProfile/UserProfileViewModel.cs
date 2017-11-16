@@ -223,6 +223,7 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
         private async void DoSelect(StoreItemEntity item)
         {
             await StoreService.UpdateItemEnable(User.Instance.UserEntity.Id, item);
+            User.Instance.Inventory = await StoreService.GetUserStoreItems(User.Instance.UserEntity.Id);
         }
 
         private int friendId;
