@@ -162,6 +162,12 @@
     <Compile Include="Controls\OnlineTournament.Designer.cs">
       <DependentUpon>OnlineTournament.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\TutorialHost.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\TutorialHost.Designer.cs">
+      <DependentUpon>TutorialHost.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\WPF\Chat\Channel\ChannelView.xaml.cs">
       <DependentUpon>ChannelView.xaml</DependentUpon>
     </Compile>
@@ -261,6 +267,10 @@
       <DependentUpon>SignupView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\WPF\Signup\SignupViewModel.cs" />
+    <Compile Include="Controls\WPF\Tutorial\TutorialView.xaml.cs">
+      <DependentUpon>TutorialView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WPF\Tutorial\TutorialViewModel.cs" />
     <Compile Include="Controls\WPF\UserProfile\UserProfileView.xaml.cs">
       <DependentUpon>UserProfileView.xaml</DependentUpon>
     </Compile>
@@ -451,6 +461,9 @@
     <EmbeddedResource Include="Controls\OnlineTournament.resx">
       <DependentUpon>OnlineTournament.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TutorialHost.resx">
+      <DependentUpon>TutorialHost.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Editor\OpenPrivateMapForm.resx">
       <DependentUpon>OpenPrivateMapForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -529,6 +542,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.manifest" />
+    <Content Include="Controls\WPF\Tutorial\piggy-bank.png" />
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.woff" />
@@ -674,6 +688,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\WPF\Signup\SignupView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\WPF\Tutorial\TutorialView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
