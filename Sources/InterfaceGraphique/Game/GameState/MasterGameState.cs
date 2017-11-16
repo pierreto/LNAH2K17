@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using InterfaceGraphique.CommunicationInterface;
 using InterfaceGraphique.Entities;
 using InterfaceGraphique.Services;
+using System.Drawing;
 
 namespace InterfaceGraphique.Game.GameState
 {
@@ -51,6 +52,9 @@ namespace InterfaceGraphique.Game.GameState
             player1Name.Append(gameEntity.Master.Username);
             player2Name.Append(gameEntity.Slave.Username);
             FonctionsNatives.setPlayerNames(player1Name, player2Name);
+
+            float[] playerColor = new float[4] { Color.White.R, Color.White.G, Color.White.B, Color.White.A };
+            FonctionsNatives.setPlayerColors(playerColor, playerColor);
 
             selectedMap = gameEntity.SelectedMap;
         }
