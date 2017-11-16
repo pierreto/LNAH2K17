@@ -15,11 +15,16 @@ namespace InterfaceGraphique.Controls.WPF.Store
     public class StoreViewModel : ViewModelBase
     {
         public StoreService StoreService { get; }
+        public PlayerStatsService PlayerStatsService { get; }
 
-        public StoreViewModel(StoreService storeService)
+        public StoreViewModel(StoreService storeService, PlayerStatsService playerStatsService)
         {
             this.StoreItems = new ObservableCollection<ItemViewModel>();
             StoreService = storeService;
+            PlayerStatsService = playerStatsService;
+            notEnoughPoints = false;
+
+            OnPropertyChanged("NotEnoughtPoints");
         }
 
         public override void InitializeViewModel()
@@ -27,13 +32,26 @@ namespace InterfaceGraphique.Controls.WPF.Store
             //
         }
 
+        private int playerPoints = 0;
+
         public async Task Initialize()
         {
             var items = await StoreService.GetStoreItems();
             foreach(var item in items)
             {
-                StoreItems.Add(new ItemViewModel(item));
+                StoreItems.Add(new ItemViewModel(item, User.Instance.Inventory.Find(x => x.Id == item.Id) != null));
             }
+
+            var stats = await PlayerStatsService.GetPlayerStats(User.Instance.UserEntity.Id);
+            if(stats == null)
+            {
+                playerPoints = 0;
+            }
+            else
+            {
+                playerPoints = stats.Points;
+            }
+            
         }
 
         private ObservableCollection<ItemViewModel> storeItems;
@@ -70,8 +88,19 @@ namespace InterfaceGraphique.Controls.WPF.Store
 
         private async Task BuyItems()
         {
-            await StoreService.BuyElements(StoreItems.Where(x => x.IsChecked && x.CanBuy).Select(x => x.StoreItem).ToList(), User.Instance.UserEntity.Id);
-            EmptyCart();
+            if(StoreItems.Where(x => x.IsChecked).Sum(x => x.Price) <= playerPoints)
+            {
+                await StoreService.BuyElements(StoreItems.Where(x => x.IsChecked && x.CanBuy).Select(x => x.StoreItem).ToList(), User.Instance.UserEntity.Id);
+                playerPoints -= StoreItems.Where(x => x.IsChecked).Sum(x => x.Price);
+
+                User.Instance.Inventory = await StoreService.GetUserStoreItems(User.Instance.UserEntity.Id);
+                EmptyCart();
+            }
+            else
+            {
+                notEnoughPoints = true;
+                OnPropertyChanged("NotEnoughPoints");
+            }
         }
         
         private ICommand reset;
@@ -118,6 +147,12 @@ namespace InterfaceGraphique.Controls.WPF.Store
         private void DoSelect(ItemViewModel item)
         {
             FocusItem = item;
+        }
+
+        private bool notEnoughPoints;
+        public string NotEnoughPointsError
+        {
+            get => notEnoughPoints ? "Visible" : "Hidden";
         }
     }
 }

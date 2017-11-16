@@ -24,6 +24,7 @@ namespace InterfaceGraphique.Menus
         public HomeMenu()
         {
             InitializeComponent();
+            Program.FormManager.HideCompletely();
         }
 
         public void ChangeViewTo(ViewModelBase vmb)

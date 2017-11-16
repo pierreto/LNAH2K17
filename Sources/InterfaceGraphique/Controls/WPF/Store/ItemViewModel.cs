@@ -10,15 +10,15 @@ namespace InterfaceGraphique.Controls.WPF.Store
 {
     public class ItemViewModel : ViewModelBase
     {
-        public ItemViewModel(StoreItemEntity item)
+        public ItemViewModel(StoreItemEntity item, bool sold)
         {
             Name = item.Name;
             IsChecked = false;
             Price = item.Price;
             Description = item.Description;
-            ImageUrl = Directory.GetCurrentDirectory() + "\\media\\image\\default_profile_picture.png";
+            ImageUrl = item.ImageUrl;
             StoreItem = item;
-            CanBuy = true;
+            CanBuy = sold;
         }
 
         public StoreItemEntity StoreItem { get; set; }
@@ -87,6 +87,12 @@ namespace InterfaceGraphique.Controls.WPF.Store
                 canBuy = value;
                 OnPropertyChanged();
             }
+        }
+
+        private bool notEnoughPoints;
+        public string NotEnoughPoints
+        {
+            get => notEnoughPoints ? "Hidden" : "Visible";
         }
 
         public override void InitializeViewModel()

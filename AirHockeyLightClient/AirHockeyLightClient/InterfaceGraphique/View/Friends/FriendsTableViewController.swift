@@ -23,8 +23,8 @@ class FriendsTableViewController: UITableViewController {
     static var instance = FriendsTableViewController()
     
     @IBOutlet weak var friends: UITableView!
-    
-    private let friendsHub = HubManager.sharedConnection.getFriendsHub()
+
+    private var friendsHub: FriendsHub?
     private var friendsData = [UserEntity]()
     
     override func viewDidLoad() {
@@ -35,8 +35,11 @@ class FriendsTableViewController: UITableViewController {
         self.friends.delegate = self
         self.friends.dataSource = self
         
-        self.friendsHub.initialize()
-        self.friendsHub.getAllFriends()
+        /*
+        self.friendsHub = HubManager.sharedConnection.getFriendsHub()
+        self.friendsHub?.initialize()
+        self.friendsHub?.getAllFriends()
+         */
     }
     
     func updateFriendsEntries(friends: [UserEntity]) {

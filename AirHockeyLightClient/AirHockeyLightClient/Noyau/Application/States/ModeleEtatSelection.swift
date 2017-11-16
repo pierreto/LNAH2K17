@@ -240,22 +240,26 @@ class ModeleEtatSelection: ModeleEtat {
         self.angleTotale += Float(angle)
         
         for noeud in self.noeuds {
-            // Effectue une translation du point central vers l'origine
-            noeud.appliquerDeplacement(deplacement: GLKVector3Negate(self.centreRotation))
+            if noeud.estSelectionne() {
+                // Effectue une translation du point central vers l'origine
+                noeud.appliquerDeplacement(deplacement: GLKVector3Negate(self.centreRotation))
             
-            // Effectuer la rotation
-            noeud.appliquerRotation(angle: Float(angle), axes: GLKVector3.init(v: (x: 0.0, y: 1.0, z: 0.0)))
+                // Effectuer la rotation
+                noeud.appliquerRotation(angle: Float(angle), axes: GLKVector3.init(v: (x: 0.0, y: 1.0, z: 0.0)))
             
-            // Remettre le point central à sa position initiale
-            noeud.appliquerDeplacement(deplacement: self.centreRotation)
+                // Remettre le point central à sa position initiale
+                noeud.appliquerDeplacement(deplacement: self.centreRotation)
             
-            //print("rotation envoyée")
-            //print (GLKMathRadiansToDegrees(noeud.rotation.w))
-            //print (GLKMathRadiansToDegrees(noeud.eulerAngles.y))
+                //print("rotation envoyée")
+                //print (GLKMathRadiansToDegrees(noeud.rotation.w))
+                //print (GLKMathRadiansToDegrees(noeud.eulerAngles.y))
             
-            // Envoyer la commande
-            FacadeModele.instance.obtenirEtatEdition().currentUserObjectTransformChanged(uuid: noeud.obtenirUUID(),
-                                                                                         pos: noeud.position, rotation: noeud.rotation.w, scale: noeud.scale)
+                // Envoyer la commande
+                FacadeModele.instance.obtenirEtatEdition().currentUserObjectTransformChanged(uuid: noeud.obtenirUUID(),
+                                                                                             pos: noeud.position,
+                                                                                             rotation: noeud.rotation.w,
+                                                                                             scale: noeud.scale)
+            }
         }
     }
     
@@ -281,19 +285,11 @@ class ModeleEtatSelection: ModeleEtat {
     /// Applique le scaling
     private func appliquerScaling(scale: Float) {
         // Calcul du nouveau scale
-        // Pinch in
-        let ajoutScale: Float
-        if (scale > 1.0) {
-            ajoutScale = Float(scale)
-        }
-            // Pinch out
-        else {
-            ajoutScale = -Float(scale)
-        }
+        // Pinch out (grossir)  : >= 1.0. Pinch in (rapetisser) : < 1.0
+        let scale = Float(scale)
         
         // Apply nouveau scale
-        let visiteur = VisiteurScale(scale: GLKVector3.init(v: (ajoutScale, ajoutScale, ajoutScale)),
-                                     ajusterScaling: true)
+        let visiteur = VisiteurScale(scale: scale)
         FacadeModele.instance.obtenirArbreRendu().accepterVisiteur(visiteur: visiteur)
     }
     
