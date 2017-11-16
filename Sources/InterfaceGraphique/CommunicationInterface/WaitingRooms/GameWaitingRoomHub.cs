@@ -51,7 +51,6 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
         
         public async void Join()
         {
-            Program.QuickPlay.CurrentGameState.IsOnline = true;
             await InitializeEvents();
             
             await WaitingRoomProxy.Invoke("Join", User.Instance.UserEntity);
@@ -72,20 +71,22 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
                 //var items = await StoreService.GetUserStoreItems(1);
                 //OpponentTexture = items.Find(x => x.IsGameEnabled);
 
-                GameManager.CurrentOnlineGame = newgame;
 
                 WaitingRoomProxy.On<GameEntity>("GameStartingEvent", async officialGame =>
                 {
                     Console.WriteLine("Game is starting!");
-                    await GameManager.SetTextures();
 
-                    Program.LobbyHost.Invoke(new MethodInvoker(() =>
-                    {                        
+                    Program.LobbyHost.Invoke(new MethodInvoker(async () =>
+                    {
+                        GameManager.CurrentOnlineGame = newgame;
+                        await GameManager.SetTextures();
+
                         if (User.Instance.UserEntity.Id == officialGame.Master.Id)
                         {
                             this.masterGameState.InitializeGameState(officialGame);
-
+                            
                             Program.QuickPlay.CurrentGameState = this.masterGameState;
+                            Program.QuickPlay.CurrentGameState.IsOnline = true;
                             Program.FormManager.CurrentForm = Program.QuickPlay;
                         }
                         else
@@ -93,6 +94,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
                             this.slaveGameState.InitializeGameState(officialGame);
 
                             Program.QuickPlay.CurrentGameState = this.slaveGameState;
+                            Program.QuickPlay.CurrentGameState.IsOnline = true;
                             Program.FormManager.CurrentForm = Program.QuickPlay;
 
                             FonctionsNatives.rotateCamera(180);

@@ -28,31 +28,30 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-
             this.elementHost1 = new System.Windows.Forms.Integration.ElementHost();
             this.SuspendLayout();
             // 
             // elementHost1
             // 
-            this.elementHost1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.elementHost1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.elementHost1.Location = new System.Drawing.Point(0, 0);
             this.elementHost1.Name = "elementHost1";
-            this.elementHost1.Size = new System.Drawing.Size(1186, 636);
+            this.elementHost1.Size = new System.Drawing.Size(1184, 648);
             this.elementHost1.TabIndex = 0;
             this.elementHost1.Text = "elementHost1";
             this.elementHost1.Child = null;
             // 
-            // LobbyHost
+            // UserProfileMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(49)))), ((int)(((byte)(54)))));
             this.ClientSize = new System.Drawing.Size(1184, 648);
             this.Controls.Add(this.elementHost1);
-            this.Name = "UserProfile";
-            this.ResumeLayout(false);
+            this.Name = "UserProfileMenu";
             this.Text = "UserProfileMenu";
+            this.ResumeLayout(false);
+
         }
 
         #endregion

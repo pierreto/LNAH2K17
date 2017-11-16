@@ -97,7 +97,7 @@ namespace InterfaceGraphique.CommunicationInterface
 
             gameHubProxy.On<GameDataMessage>("ReceivedGameData", message =>
             {
-                NewPositions?.Invoke(message);
+                //NewPositions?.Invoke(message);
             });
 
             gameHubProxy.On("ReceivedGamePauseOrResume", () =>

@@ -90,8 +90,8 @@ namespace InterfaceGraphique
             FonctionsNatives.setLights(2, true);
             FonctionsNatives.resetGame();
 
-            if(currentGameState.IsOnline)
-            {
+            //if(CurrentGameState.IsOnline)
+            //{
                 var gameManager = Program.unityContainer.Resolve<GameManager>();
                 var textures = gameManager.Textures;
 
@@ -106,7 +106,7 @@ namespace InterfaceGraphique
                         FonctionsNatives.setOpponentPlayerSkin(textures[1]);
                     }
                 }
-            }
+            //}
         }
 
 
