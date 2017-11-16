@@ -97,6 +97,9 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
         self.editorScene = SCNScene()
         self.editorView.scene = editorScene
         self.editorView.isPlaying = true
+        self.editorScene.background.contents = ["rightImage.png", "leftImage.png",
+                                                "upImage.png", "downImage.png",
+                                                "backImage.png", "frontImage.png"]
         
         self.hudScene = SCNScene()
         self.hudView.scene = hudScene
