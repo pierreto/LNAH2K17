@@ -30,16 +30,13 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
         protected HubConnection HubConnection { get; set; }
 
-        public StoreService StoreService { get; }
-
         public GameManager GameManager { get; }
 
         public GameWaitingRoomHub(SlaveGameState slaveGameState,MasterGameState masterGameState, 
-            StoreService storeService, GameManager gameManager)
+            GameManager gameManager)
         {
             this.slaveGameState = slaveGameState;
             this.masterGameState = masterGameState;
-            StoreService = storeService;
             GameManager = gameManager;
         }
 
@@ -47,12 +44,11 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
         {
             this.HubConnection = connection;
             WaitingRoomProxy = this.HubConnection.CreateHubProxy("GameWaitingRoomHub");
+            InitializeEvents();
         }
         
         public async void Join()
         {
-            await InitializeEvents();
-            
             await WaitingRoomProxy.Invoke("Join", User.Instance.UserEntity);
         }
         
@@ -61,61 +57,64 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
             await WaitingRoomProxy.Invoke("LeaveGame", User.Instance.UserEntity, CurrentGameId);
         }
 
-        private async Task InitializeEvents()
-        {
-            WaitingRoomProxy.On<GameEntity>("OpponentFoundEvent", async newgame =>
-            {
-                this.CurrentGameId = newgame.GameId;
-                this.OpponentFoundEvent.Invoke(this, newgame);
-
-                //var items = await StoreService.GetUserStoreItems(1);
-                //OpponentTexture = items.Find(x => x.IsGameEnabled);
-
-
-                WaitingRoomProxy.On<GameEntity>("GameStartingEvent", async officialGame =>
-                {
-                    Console.WriteLine("Game is starting!");
-
-                    Program.LobbyHost.Invoke(new MethodInvoker(async () =>
-                    {
-                        GameManager.CurrentOnlineGame = newgame;
-                        await GameManager.SetTextures();
-
-                        if (User.Instance.UserEntity.Id == officialGame.Master.Id)
-                        {
-                            this.masterGameState.InitializeGameState(officialGame);
-                            
-                            Program.QuickPlay.CurrentGameState = this.masterGameState;
-                            Program.QuickPlay.CurrentGameState.IsOnline = true;
-                            Program.FormManager.CurrentForm = Program.QuickPlay;
-                        }
-                        else
-                        {
-                            this.slaveGameState.InitializeGameState(officialGame);
-
-                            Program.QuickPlay.CurrentGameState = this.slaveGameState;
-                            Program.QuickPlay.CurrentGameState.IsOnline = true;
-                            Program.FormManager.CurrentForm = Program.QuickPlay;
-
-                            FonctionsNatives.rotateCamera(180);
-                        }
-                    }));
-                });
-                WaitingRoomProxy.On<MapEntity>("GameMapUpdatedEvent", mapUpdated =>
-                {
-                    this.MapUpdatedEvent.Invoke(this, mapUpdated);                    
-                });
-
-                WaitingRoomProxy.On<int>("WaitingRoomRemainingTime", remainingTime =>
-                {
-                    this.RemainingTimeEvent.Invoke(this, remainingTime);
-                });
-            });
-        }
-
         public async void UpdateSelectedMap(MapEntity map)
         {
             await WaitingRoomProxy.Invoke("UpdateMap", CurrentGameId, map);
+        }
+
+        private void InitializeEvents()
+        {
+            WaitingRoomProxy.On<GameEntity>("OpponentFoundEvent", newgame => OnOpponentFound(newgame)); { };
+            
+            WaitingRoomProxy.On<GameEntity>("GameStartingEvent", officialGame => OnGameStarting(officialGame)); { };
+
+            WaitingRoomProxy.On<MapEntity>("GameMapUpdatedEvent", mapUpdated => OnMapUpdated(mapUpdated)); { };
+
+            WaitingRoomProxy.On<int>("WaitingRoomRemainingTime", remainingTime => OnRemainingTime(remainingTime)); { };
+        }
+
+        public void OnOpponentFound(GameEntity game)
+        {
+            this.CurrentGameId = game.GameId;
+            this.OpponentFoundEvent.Invoke(this, game);
+        }
+
+        public void OnGameStarting(GameEntity game)
+        {
+            Program.LobbyHost.Invoke(new MethodInvoker(async () =>
+            {
+                GameManager.CurrentOnlineGame = game;
+                await GameManager.SetTextures();
+
+                if (User.Instance.UserEntity.Id == game.Master.Id)
+                {
+                    this.masterGameState.InitializeGameState(game);
+
+                    Program.QuickPlay.CurrentGameState = this.masterGameState;
+                    Program.QuickPlay.CurrentGameState.IsOnline = true;
+                    Program.FormManager.CurrentForm = Program.QuickPlay;
+                }
+                else
+                {
+                    this.slaveGameState.InitializeGameState(game);
+
+                    Program.QuickPlay.CurrentGameState = this.slaveGameState;
+                    Program.QuickPlay.CurrentGameState.IsOnline = true;
+                    Program.FormManager.CurrentForm = Program.QuickPlay;
+
+                    FonctionsNatives.rotateCamera(180);
+                }
+            }));
+        }
+
+        public void OnMapUpdated(MapEntity map)
+        {
+            this.MapUpdatedEvent.Invoke(this, map);
+        }
+
+        public void OnRemainingTime(int remainingTime)
+        {
+            this.RemainingTimeEvent.Invoke(this, remainingTime);
         }
 
         public async Task Logout()

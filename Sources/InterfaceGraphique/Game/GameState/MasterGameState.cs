@@ -33,12 +33,12 @@ namespace InterfaceGraphique.Game.GameState
                 };
         }
 
-        public override async void InitializeGameState(GameEntity gameEntity)
+        public override void InitializeGameState(GameEntity gameEntity)
         {
             FonctionsNatives.setOnlineClientType((int) OnlineClientType.MASTER);
             FonctionsNatives.setCurrentOpponentType((int)OpponentType.ONLINE_PLAYER);
 
-            this.gameHub.InitializeMasterGameHub(gameEntity.GameId);
+            this.gameHub.InitialiseGame(gameEntity.GameId);
             this.gameHub.NewPositions += OnNewGamePositions;
 
             gameHasEnded = false;
@@ -147,7 +147,7 @@ namespace InterfaceGraphique.Game.GameState
 
         private void OnNewGamePositions(GameDataMessage gameData)
         {
-            if (!gameHasEnded && gameData.SlavePosition != null)
+            if (Program.QuickPlay.CurrentGameState.GameInitialized && !gameHasEnded && gameData.SlavePosition != null)
             {
                 FonctionsNatives.setMasterGameElementPositions(gameData.SlavePosition);
             }

@@ -33,12 +33,11 @@ namespace InterfaceGraphique.CommunicationInterface
         public void InitializeHub(HubConnection connection)
         {
             hubProxy = connection.CreateHubProxy("EditionHub");
-
+            InializeEvents();
         }
 
         public async Task<List<OnlineUser>> JoinPublicRoom(MapEntity mapEntity)
         {
-            InializeEvents();
             this.map = mapEntity;
             return await hubProxy.Invoke<List<OnlineUser>>("JoinPublicRoom", User.Instance.UserEntity.Username, mapEntity);
         }

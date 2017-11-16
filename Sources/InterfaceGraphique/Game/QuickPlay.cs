@@ -90,23 +90,22 @@ namespace InterfaceGraphique
             FonctionsNatives.setLights(2, true);
             FonctionsNatives.resetGame();
 
-            //if(CurrentGameState.IsOnline)
-            //{
-                var gameManager = Program.unityContainer.Resolve<GameManager>();
-                var textures = gameManager.Textures;
+            var gameManager = Program.unityContainer.Resolve<GameManager>();
+            var textures = gameManager.Textures;
 
-                if(textures != null)
+            if(textures != null)
+            {
+                if(textures[0] != null)
                 {
-                    if(textures[0] != null)
-                    {
-                        FonctionsNatives.setLocalPlayerSkin(textures[0]);
-                    }
-                    if(textures[1] != null)
-                    {
-                        FonctionsNatives.setOpponentPlayerSkin(textures[1]);
-                    }
+                    FonctionsNatives.setLocalPlayerSkin(textures[0]);
                 }
-            //}
+                if(textures[1] != null)
+                {
+                    FonctionsNatives.setOpponentPlayerSkin(textures[1]);
+                }
+            }
+
+            Program.QuickPlay.CurrentGameState.GameInitialized = true;
         }
 
 
@@ -302,6 +301,7 @@ namespace InterfaceGraphique
 
         public void EndGame()
         {
+            Program.QuickPlay.CurrentGameState.GameInitialized = false;
             this.BeginInvoke(new MethodInvoker(delegate
             {
                 int[] score = new int[2];
