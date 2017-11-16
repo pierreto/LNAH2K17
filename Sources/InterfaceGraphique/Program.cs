@@ -53,6 +53,7 @@ namespace InterfaceGraphique
         public static EditorHost EditorHost { get { return editorHost; } set { editorHost = value; } }
         public static UserProfileMenu UserProfileMenu { get { return userProfileMenu; } set { userProfileMenu = value; } }
         public static StoreMenu StoreMenu { get { return storeMenu; } set { storeMenu = value; } } 
+        public static TutorialHost TutorialHost { get { return tutorialHost; } set { tutorialHost = value; } } 
 
         private static TestChatMenu testChatMenu;
         private static FormManager formManager;
@@ -72,6 +73,7 @@ namespace InterfaceGraphique
         private static OnlineTournament onlineTournament;
         private static UserProfileMenu userProfileMenu;
         private static StoreMenu storeMenu;
+        private static TutorialHost tutorialHost;
 
         private static Panel openGLPanel;
         //private static Login login;
@@ -118,7 +120,7 @@ namespace InterfaceGraphique
 
             InitializeUnityDependencyInjection();
 
-            //login = unityContainer.Resolve<Login>(); ;
+            tutorialHost = new TutorialHost();
             openGLPanel = new Panel();
             formManager = new FormManager();
             homeMenu = new HomeMenu();
@@ -138,7 +140,10 @@ namespace InterfaceGraphique
             FonctionsNatives.loadSounds();
 
             formManager.CurrentForm = homeMenu;
+
             Application.Run(formManager);
+
+
 
         }
 

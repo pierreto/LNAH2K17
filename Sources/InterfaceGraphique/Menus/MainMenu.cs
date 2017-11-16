@@ -55,6 +55,8 @@ namespace InterfaceGraphique
             //this.boutonPartieRapide.Click += (sender, e) => Program.FormManager.CurrentForm = Program.LobbyHost;
             this.boutonTournoi.Click += (sender, e) => Program.FormManager.CurrentForm = Program.TournementMenu;
             this.buttonConfiguration.Click += (sender, e) => Program.ConfigurationMenu.ShowDialog();
+            this.Tutoriel.Click += (sender, e) => Program.TutorialHost.Show();
+
             this.buttonEditeur.Click += (sender, e) =>
             {
                 Program.Editeur.ResetDefaultTable();

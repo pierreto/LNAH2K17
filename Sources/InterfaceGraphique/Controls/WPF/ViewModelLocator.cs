@@ -11,6 +11,7 @@ using InterfaceGraphique.Controls.WPF.Friends;
 using InterfaceGraphique.Controls.WPF.Chat.Channel;
 using InterfaceGraphique.Controls.WPF.UserProfile;
 using InterfaceGraphique.Controls.WPF.Store;
+using InterfaceGraphique.Controls.WPF.Tutorial;
 
 namespace InterfaceGraphique.Controls.WPF
 {
@@ -94,6 +95,7 @@ namespace InterfaceGraphique.Controls.WPF
         public StoreViewModel StoreViewModel => container.Resolve<StoreViewModel>();
 
         public AddUserViewModel AddUserViewModel => container.Resolve<AddUserViewModel>();
+        public TutorialViewModel TutorialViewModel => container.Resolve<TutorialViewModel>();
 
 
     }

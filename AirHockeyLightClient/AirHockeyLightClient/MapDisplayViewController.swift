@@ -82,17 +82,19 @@ class MapDisplayViewController: UIViewController {
                 .responseJSON { response in
                     if(response.response?.statusCode == 200) {
                         print("Succeed to fetch map with id from server")
-                        let maps = JSON(response.result.value!)
-                        let mapService = MapService()
-                        editor.currentMap = mapService.buildMapEntity(json: maps)
-                        
-                        // Rejoindre la salle d'édition
-                        // TODO : A enlever quand toutes les commandes du mode en ligne seront faites
-                        FacadeModele.instance.changerEditorState(etat: .ONLINE_EDITION)
-                        
-                        FacadeModele.instance.obtenirEtatEdition().joinEdition(mapEntity: editor.currentMap!)
-                        
-                        self.navigationController?.pushViewController(editor, animated: true)
+                        if (response.result.value != nil) {
+                            let maps = JSON(response.result.value!)
+                            let mapService = MapService()
+                            editor.currentMap = mapService.buildMapEntity(json: maps)
+                            
+                            // Rejoindre la salle d'édition
+                            // TODO : A enlever quand toutes les commandes du mode en ligne seront faites
+                            FacadeModele.instance.changerEditorState(etat: .ONLINE_EDITION)
+                            
+                            FacadeModele.instance.obtenirEtatEdition().joinEdition(mapEntity: editor.currentMap!)
+                            
+                            self.navigationController?.pushViewController(editor, animated: true)
+                        }
                     } else {
                         print("Failed to fetch map with id from server")
                     }

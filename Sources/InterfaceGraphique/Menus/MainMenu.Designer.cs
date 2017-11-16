@@ -39,6 +39,7 @@ namespace InterfaceGraphique
             this.buttonLogout = new System.Windows.Forms.Button();
             this.profileButton = new System.Windows.Forms.Button();
             this.storeButton = new System.Windows.Forms.Button();
+            this.Tutoriel = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // boutonPartieRapide
@@ -179,12 +180,29 @@ namespace InterfaceGraphique
             this.storeButton.Text = "Magasin";
             this.storeButton.UseVisualStyleBackColor = true;
             // 
+            // Tutoriel
+            // 
+            this.Tutoriel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.Tutoriel.AutoEllipsis = true;
+            this.Tutoriel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Tutoriel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Tutoriel.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Tutoriel.ForeColor = System.Drawing.Color.White;
+            this.Tutoriel.Location = new System.Drawing.Point(733, 50);
+            this.Tutoriel.Name = "Tutoriel";
+            this.Tutoriel.Size = new System.Drawing.Size(150, 50);
+            this.Tutoriel.TabIndex = 10;
+            this.Tutoriel.TabStop = false;
+            this.Tutoriel.Text = "Tutoriel";
+            this.Tutoriel.UseVisualStyleBackColor = true;
+            // 
             // MainMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(49)))), ((int)(((byte)(54)))));
             this.ClientSize = new System.Drawing.Size(1184, 648);
+            this.Controls.Add(this.Tutoriel);
             this.Controls.Add(this.buttonLogout);
             this.Controls.Add(this.Button_Credits);
             this.Controls.Add(this.buttonQuitter);
@@ -212,5 +230,6 @@ namespace InterfaceGraphique
         private System.Windows.Forms.Button storeButton;
         private Controls.WPF.Chat.TestChatView testChatView1;
         private FriendContentControl hostedComponent1;
+        private System.Windows.Forms.Button Tutoriel;
     }
 }

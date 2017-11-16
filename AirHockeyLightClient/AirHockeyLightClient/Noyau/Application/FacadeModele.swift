@@ -530,9 +530,9 @@ class FacadeModele {
     }
     
     func chargerCoefficients() {
-        let cFriction = self.docJSON?["Coefficients"][0][0].rawString(options: [])
-        let cRebond = self.docJSON?["Coefficients"][0][1].rawString(options: [])
-        let cAcceleration = self.docJSON?["Coefficients"][0][2].rawString(options: [])
+        let cFriction = self.docJSON?["Coefficients"][0].rawString(options: [])
+        let cRebond = self.docJSON?["Coefficients"][1].rawString(options: [])
+        let cAcceleration = self.docJSON?["Coefficients"][2].rawString(options: [])
         
         self.generalProperties?.setCoefficientValues(coefficientFriction: cFriction!, coefficientRebond: cRebond!, coefficientAcceleration: cAcceleration!)
     }
@@ -540,7 +540,7 @@ class FacadeModele {
     func sauvegarderCoefficients() {
         let coefficients = self.generalProperties?.getCoefficientValues()
         let cJSON = JSON([coefficients?[0], coefficients?[1], coefficients?[2]])
-        self.docJSON?["Coefficients"].appendArray(json: cJSON)
+        self.docJSON?["Coefficients"] = cJSON
     }
     
     /// Cette fonction permet d'enregistrer la patinoire en format JSON
