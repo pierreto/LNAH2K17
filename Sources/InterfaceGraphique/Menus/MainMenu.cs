@@ -29,9 +29,7 @@ namespace InterfaceGraphique
     {
         static HttpClient client = new HttpClient();
         private int chatHeight;
-
         private int friendHeight;
-        private bool firstTimeMaximizeChat;
 
         private readonly int COLLAPSED_CHAT_HEIGHT = 40;
         ////////////////////////////////////////////////////////////////////////
@@ -47,10 +45,14 @@ namespace InterfaceGraphique
 
             InitializeEvents();
             chatHeight = elementHost1.Height;
-            firstTimeMaximizeChat = true;
             this.friendHeight = elementHost2.Height;
-    
-
+            elementHost1.Size = new Size(Program.FormManager.ClientSize.Width * 3 / 4 + 1, COLLAPSED_CHAT_HEIGHT);
+            elementHost1.Location = new Point(elementHost1.Location.X, elementHost1.Location.Y + chatHeight - COLLAPSED_CHAT_HEIGHT);
+            elementHost2.Size = new Size(Program.FormManager.ClientSize.Width * 1 / 4 + 1, COLLAPSED_CHAT_HEIGHT);
+            System.Diagnostics.Debug.WriteLine("Client Size: " + Program.FormManager.ClientSize.Width + "     Size width: " + Size.Width + "    TotalWidth: " + (elementHost1.Width + elementHost2.Width));
+            System.Diagnostics.Debug.WriteLine("Friends width: " + elementHost2.Width);
+            System.Diagnostics.Debug.WriteLine("Friends starting X: " + (Program.FormManager.ClientSize.Width - elementHost2.Width));
+            elementHost2.Location = new Point(Program.FormManager.ClientSize.Width - elementHost2.Width, elementHost2.Location.Y);
             if (User.Instance.IsConnected)
             {
 
@@ -154,6 +156,9 @@ namespace InterfaceGraphique
         private void WindowSizeChanged(object sender, EventArgs e)
         {
             this.Size = new Size(Program.FormManager.ClientSize.Width, Program.FormManager.ClientSize.Height);
+            this.elementHost1.Size = new Size(Program.FormManager.ClientSize.Width * 3 / 4 + 1, elementHost1.Size.Height);
+            this.elementHost2.Size = new Size(Program.FormManager.ClientSize.Width * 1 / 4 + 1, elementHost2.Size.Height);
+            elementHost2.Location = new Point(Program.FormManager.ClientSize.Width - elementHost2.Width, elementHost2.Location.Y);
         }
 
 
@@ -197,15 +202,7 @@ namespace InterfaceGraphique
         {
             HideChat();
             elementHost1.Size = new Size(elementHost1.Width, chatHeight);
-            if (firstTimeMaximizeChat)
-            {
-                elementHost1.Location = new Point(elementHost1.Location.X, elementHost1.Location.Y);
-                firstTimeMaximizeChat = false;
-            }
-            else
-            {
-                elementHost1.Location = new Point(elementHost1.Location.X, elementHost1.Location.Y -chatHeight + COLLAPSED_CHAT_HEIGHT);
-            }
+            elementHost1.Location = new Point(elementHost1.Location.X, elementHost1.Location.Y -chatHeight + COLLAPSED_CHAT_HEIGHT);
             ShowChat();
         }
 

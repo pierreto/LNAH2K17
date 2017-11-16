@@ -193,45 +193,13 @@ namespace InterfaceGraphique
             // 
             // elementHost2
             // 
-            this.elementHost2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.elementHost2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.elementHost2.Location = new System.Drawing.Point(985, 211);
             this.elementHost2.Name = "elementHost2";
             this.elementHost2.Size = new System.Drawing.Size(200, 437);
             this.elementHost2.TabIndex = 11;
             this.elementHost2.Text = "elementHost2";
             this.elementHost2.Child = null;
-            // 
-            // profileButton
-            // 
-            this.profileButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.profileButton.AutoEllipsis = true;
-            this.profileButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.profileButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.profileButton.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.profileButton.ForeColor = System.Drawing.Color.White;
-            this.profileButton.Location = new System.Drawing.Point(517, 50);
-            this.profileButton.Name = "profileButton";
-            this.profileButton.Size = new System.Drawing.Size(150, 50);
-            this.profileButton.TabIndex = 4;
-            this.profileButton.TabStop = false;
-            this.profileButton.Text = "Profil";
-            this.profileButton.UseVisualStyleBackColor = true;
-            // 
-            // storeButton
-            // 
-            this.storeButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.storeButton.AutoEllipsis = true;
-            this.storeButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.storeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.storeButton.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.storeButton.ForeColor = System.Drawing.Color.White;
-            this.storeButton.Location = new System.Drawing.Point(985, 50);
-            this.storeButton.Name = "storeButton";
-            this.storeButton.Size = new System.Drawing.Size(150, 50);
-            this.storeButton.TabIndex = 4;
-            this.storeButton.TabStop = false;
-            this.storeButton.Text = "Magasin";
-            this.storeButton.UseVisualStyleBackColor = true;
             // 
             // MainMenu
             // 
