@@ -82,6 +82,7 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
         super.viewWillDisappear(animated)
         
         if self.isMovingFromParentViewController {
+            FacadeModele.instance.obtenirEtat().nettoyerEtat()
             FacadeModele.instance.obtenirEtatEdition().leaveEdition()
         }
         
@@ -97,6 +98,9 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
         self.editorScene = SCNScene()
         self.editorView.scene = editorScene
         self.editorView.isPlaying = true
+        self.editorScene.background.contents = ["rightImage.png", "leftImage.png",
+                                                "upImage.png", "downImage.png",
+                                                "backImage.png", "frontImage.png"]
         
         self.hudScene = SCNScene()
         self.hudView.scene = hudScene

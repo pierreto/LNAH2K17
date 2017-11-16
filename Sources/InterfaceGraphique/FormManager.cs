@@ -80,6 +80,11 @@ namespace InterfaceGraphique {
             InitializeScreenSize();
             InitializeOpenGLPanel();
             InitializeEvents();
+
+            elementHost1.Size = new Size(this.ClientSize.Width * 3 / 4 + 1, COLLAPSED_CHAT_HEIGHT);
+            elementHost1.Location = new Point(0, this.ClientSize.Height - chatHeight);
+            elementHost2.Size = new Size(this.ClientSize.Width * 1 / 4, COLLAPSED_CHAT_HEIGHT);
+            elementHost2.Location = new Point(this.ClientSize.Width - elementHost2.Width,  this.ClientSize.Height - friendHeight);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -136,6 +141,8 @@ namespace InterfaceGraphique {
         ///
         ////////////////////////////////////////////////////////////////////////
         private void InitializeOpenGLPanel() {
+            this.SizeChanged += new EventHandler(WindowSizeChanged);
+
             Program.OpenGLPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             Program.OpenGLPanel.Location = new System.Drawing.Point(0, 0);
             Program.OpenGLPanel.Name = "OpenGL";
@@ -144,7 +151,14 @@ namespace InterfaceGraphique {
             FonctionsNatives.initialiserOpenGL(Program.OpenGLPanel.Handle);
             FonctionsNatives.dessinerOpenGL();
         }
-        
+
+        private void WindowSizeChanged(object sender, EventArgs e)
+        {
+            this.elementHost1.Size = new Size(this.ClientSize.Width * 3 / 4 + 1, elementHost1.Size.Height);
+            this.elementHost2.Size = new Size(this.ClientSize.Width * 1 / 4, elementHost2.Size.Height);
+            elementHost2.Location = new Point(this.ClientSize.Width - elementHost2.Width, elementHost2.Location.Y);
+        }
+
         public void MinimizeFriendList()
         {
             HideFriendList();

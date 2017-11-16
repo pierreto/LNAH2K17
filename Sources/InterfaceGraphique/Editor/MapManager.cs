@@ -5,6 +5,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -124,15 +125,17 @@ namespace InterfaceGraphique.Editor
             this.currentMapInfo.savedOnline = false;
         }
 
-        private void SaveOnlineMap()
+        private async Task SaveOnlineMap()
         {
+            // First, we fetch the JSON of the map:
+            ThreadLocal<string> json = new ThreadLocal<string>();
             lock (this.saveMapLock)
             {
-                // First, we fetch the JSON of the map:
-                StringBuilder sb = new StringBuilder(60000);
                 try
                 {
+                    StringBuilder sb = new StringBuilder(60000);
                     FonctionsNatives.getMapJson(Program.GeneralProperties.GetCoefficientValues(), sb);
+                    json.Value = sb.ToString();
                 }
                 catch
                 {
@@ -142,53 +145,52 @@ namespace InterfaceGraphique.Editor
                          MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                string json = sb.ToString();
+            }
 
-                MapEntity map = new MapEntity
+            ThreadLocal<MapEntity> map = new ThreadLocal<MapEntity>(
+                () =>
                 {
-                    Id = this.currentMapInfo.Id,
-                    Creator = this.currentMapInfo.Creator,
-                    MapName = this.currentMapInfo.Name,
-                    CreationDate = DateTime.Now,
-                    Json = json,
-                    Private = this.currentMapInfo.Private,
-                    Password = this.currentMapInfo.Password,
-                    LastBackup = DateTime.Now
-                };
-
-                bool saved = false;
-
-                if (this.currentMapInfo.savedOnce)
-                {
-                    var task = this.mapService.SaveMap(map);
-                    task.Wait();
-                    saved = task.Result;
-                }
-                else
-                {
-                    var task = this.mapService.SaveNewMap(map);
-                    task.Wait();
-                    int? savedMapId = task.Result;
-                    if (savedMapId != null)
+                    return new MapEntity
                     {
-                        this.currentMapInfo.Id = savedMapId;
-                        saved = true;
-                    }
-                }
+                        Id = this.currentMapInfo.Id,
+                        Creator = this.currentMapInfo.Creator,
+                        MapName = this.currentMapInfo.Name,
+                        CreationDate = DateTime.Now,
+                        Json = json.Value,
+                        Private = this.currentMapInfo.Private,
+                        Password = this.currentMapInfo.Password,
+                        LastBackup = DateTime.Now
+                    };
+                });
 
-                if (!saved)
+            ThreadLocal<bool> saved = new ThreadLocal<bool>();
+
+            if (this.currentMapInfo.savedOnce)
+            {
+                saved.Value = await this.mapService.SaveMap(map.Value);
+            }
+            else
+            {
+                int? savedMapId = await this.mapService.SaveNewMap(map.Value);
+                if (savedMapId != null)
                 {
-                    MessageBox.Show(
-                        @"Impossible de sauvegarder la carte. Veuillez ré-essayer plus tard.",
-                        @"Internal error",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    this.currentMapInfo.Id = savedMapId;
+                    saved.Value = true;
                 }
-                else
-                {
-                    // we have to update the properties of the current map:
-                    this.currentMapInfo.savedOnce = true;
-                    this.currentMapInfo.savedOnline = true;
-                }
+            }
+
+            if (!saved.Value)
+            {
+                MessageBox.Show(
+                    @"Impossible de sauvegarder la carte. Veuillez ré-essayer plus tard.",
+                    @"Internal error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                // we have to update the properties of the current map:
+                this.currentMapInfo.savedOnce = true;
+                this.currentMapInfo.savedOnline = true;
             }
         }
 
@@ -219,7 +221,6 @@ namespace InterfaceGraphique.Editor
                 {
                     Creator = User.Instance.UserEntity.Username,
                     Name = form.Text_MapName.Text
-                    //LastBackup = DateTime.Now
                 };
 
                 if (form.Button_PrivateMap.Checked)
@@ -229,7 +230,7 @@ namespace InterfaceGraphique.Editor
                         this.currentMapInfo.Private = true;
                         this.currentMapInfo.Password = form.Text_PwdMap.Text;
 
-                        await Task.Run(() => SaveOnlineMap());
+                        await SaveOnlineMap();
                     }
                     else
                     {
@@ -241,7 +242,7 @@ namespace InterfaceGraphique.Editor
                 }
                 else
                 {
-                    await Task.Run(() => SaveOnlineMap());
+                    await SaveOnlineMap();
                 }
             }
             else
@@ -263,11 +264,7 @@ namespace InterfaceGraphique.Editor
             {
                 if (this.currentMapInfo.savedOnline)
                 {
-                    //if ((DateTime.Now - this.currentMapInfo.LastBackup).TotalSeconds >= 1) // Il s'est passe plus de 1s depuis la derniere sauvegarde
-                    //{
-                        //this.currentMapInfo.LastBackup = DateTime.Now;
-                    await Task.Run(() => SaveOnlineMap());
-                    //}
+                    await SaveOnlineMap();
                 }
                 else
                 {

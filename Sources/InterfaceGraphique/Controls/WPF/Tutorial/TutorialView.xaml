@@ -1,0 +1,60 @@
+﻿<UserControl x:Class="InterfaceGraphique.Controls.WPF.Tutorial.TutorialView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:InterfaceGraphique.Controls.WPF.Tutorial"
+             xmlns:wpf="clr-namespace:InterfaceGraphique.Controls.WPF"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <wpf:ViewModelLocator x:Key="VMLocator" d:IsDataSource="True" />
+            <materialDesign:SlideWipe x:Key="SlideWipe" />
+
+            <materialDesign:SlideWipe x:Key="BSlideWipe" Direction="Right" />
+            <ResourceDictionary.MergedDictionaries >
+                <ResourceDictionary Source="/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                <ResourceDictionary Source="/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                <ResourceDictionary Source="/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Blue.xaml" />
+                <ResourceDictionary Source="/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Green.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="5*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="9*"/>
+            <RowDefinition Height="91*"/>
+        </Grid.RowDefinitions>
+        <Grid.DataContext>
+            <Binding Path="TutorialViewModel" Source="{StaticResource VMLocator}"/>
+        </Grid.DataContext>
+        <Button   HorizontalAlignment="Right"  Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"  fa:Awesome.Content="ArrowCircleRight" Command="{Binding NextCommand}" VerticalAlignment="Center"  Grid.Column="1" Grid.Row="1"  />
+
+        <Button Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"  fa:Awesome.Content="ArrowCircleLeft" Command="{Binding PreviousCommand}" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="1"  />
+
+        <materialDesign:Transitioner SelectedIndex="{Binding ActiveSlideIndex}" 
+                                     ItemsSource="{Binding CurrentSlides}"   
+                                     Grid.Row="1" Grid.ColumnSpan="2"
+                                     HorizontalContentAlignment="Stretch"
+                                     >
+
+            <materialDesign:Transitioner.ItemContainerStyle>
+                <Style TargetType="materialDesign:TransitionerSlide">
+                    <Setter Property="ForwardWipe"  Value="{StaticResource SlideWipe}"/>
+                    <Setter Property="BackwardWipe"  Value="{StaticResource BSlideWipe}"/>
+
+                </Style>
+            </materialDesign:Transitioner.ItemContainerStyle>
+        </materialDesign:Transitioner>
+        <Button Content="Editeur" Command="{Binding EditorSlideCommand}"  Height="Auto"/>
+        <Button Content="Partie rapide" Command="{Binding MatchSlideCommand}"  Height="Auto" Grid.Column="1"/>
+    </Grid>
+</UserControl>

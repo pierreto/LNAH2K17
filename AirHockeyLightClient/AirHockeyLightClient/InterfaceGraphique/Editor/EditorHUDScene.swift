@@ -203,6 +203,8 @@ class EditorHUDScene: SKScene {
                 
                 // Jouer le son
                 AudioService.instance.playSound(soundName: EDITION_SOUND.DELETE.rawValue)
+                
+                FacadeModele.instance.sauvegarderCarte(map: EditorViewController.instance.currentMap!)
             }
             else if touchedNode?.name == "cancelButton"{
                 print("Annuler")

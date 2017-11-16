@@ -78,7 +78,7 @@
 
         <ContentControl Margin="0,13,0,0" Content="{Binding }" Grid.Row="1"/>
         <DockPanel Background="{StaticResource VeryDarkGrayBrush}" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" LastChildFill="True" Height="Auto" Visibility="{Binding Docked, Converter={converters:BooleanToVisibilityConverter}, ConverterParameter=False}">
-            <Button Foreground="White"  fa:Awesome.Content="{Binding TabIcon }" Background="Transparent" Command="{Binding MinimizeCommand}" BorderThickness="0" Focusable="False" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Center" VerticalAlignment="Center"/>
+            <Button Foreground="White" Height="Auto"  fa:Awesome.Content="{Binding TabIcon }" Background="Transparent" Command="{Binding MinimizeCommand}" BorderThickness="0" Focusable="False" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Center" VerticalAlignment="Center"/>
         </DockPanel>
     </Grid>
 

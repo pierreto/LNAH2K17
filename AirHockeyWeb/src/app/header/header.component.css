@@ -23,7 +23,6 @@
 
 #login:hover {
     background-color: #3EABE6;
-;
 }
 
 .buttons {
@@ -61,11 +60,15 @@ span.year {
     font-weight: bold;
     width: 220px;
     height: 40px;
-    background-color: #3EABE6;
+    background-color: #54C3FF;
     color: #fff;
     border-radius: 5px;
     margin: 10px auto;  
     padding: 3px;
+}
+
+.profileBtn:hover {
+    background-color: #3EABE6;
 }
 
 .rankings {
@@ -80,6 +83,10 @@ span.year {
     padding: 3px;
 }
 
+.rankings:hover {
+    background-color: #FFC118;
+}
+
 .deconnexion {
     font-size: 24px;
     font-weight: bold;
@@ -90,4 +97,24 @@ span.year {
     border-radius: 5px;
     margin: 10px auto;  
     padding: 3px;
+}
+
+.deconnexion:hover {
+    background-color: #D11C1C;
+}
+
+.mapsBtn {
+    font-size: 24px;
+    font-weight: bold;
+    width: 220px;
+    height: 40px;
+    background-color: #630948;
+    color: #fff;
+    border-radius: 5px;
+    margin: 10px auto;  
+    padding: 3px;
+}
+
+.mapsBtn:hover {
+    background-color: #4D0738;
 }
