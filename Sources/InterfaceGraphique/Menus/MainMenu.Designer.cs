@@ -37,10 +37,8 @@ namespace InterfaceGraphique
             this.buttonQuitter = new System.Windows.Forms.Button();
             this.Button_Credits = new System.Windows.Forms.Button();
             this.buttonLogout = new System.Windows.Forms.Button();
-            this.elementHost1 = new System.Windows.Forms.Integration.ElementHost();
             this.profileButton = new System.Windows.Forms.Button();
             this.storeButton = new System.Windows.Forms.Button();
-            this.elementHost2 = new System.Windows.Forms.Integration.ElementHost();
             this.SuspendLayout();
             // 
             // boutonPartieRapide
@@ -149,16 +147,6 @@ namespace InterfaceGraphique
             this.buttonLogout.Text = "Déconnexion";
             this.buttonLogout.UseVisualStyleBackColor = true;
             // 
-            // elementHost1
-            // 
-            this.elementHost1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.elementHost1.Location = new System.Drawing.Point(0, 348);
-            this.elementHost1.Name = "elementHost1";
-            this.elementHost1.Size = new System.Drawing.Size(580, 300);
-            this.elementHost1.TabIndex = 10;
-            this.elementHost1.Text = "elementHost1";
-            this.elementHost1.Child = null;
-            // 
             // profileButton
             // 
             this.profileButton.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -191,24 +179,12 @@ namespace InterfaceGraphique
             this.storeButton.Text = "Magasin";
             this.storeButton.UseVisualStyleBackColor = true;
             // 
-            // elementHost2
-            // 
-            this.elementHost2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.elementHost2.Location = new System.Drawing.Point(985, 211);
-            this.elementHost2.Name = "elementHost2";
-            this.elementHost2.Size = new System.Drawing.Size(200, 437);
-            this.elementHost2.TabIndex = 11;
-            this.elementHost2.Text = "elementHost2";
-            this.elementHost2.Child = null;
-            // 
             // MainMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(49)))), ((int)(((byte)(54)))));
             this.ClientSize = new System.Drawing.Size(1184, 648);
-            this.Controls.Add(this.elementHost2);
-            this.Controls.Add(this.elementHost1);
             this.Controls.Add(this.buttonLogout);
             this.Controls.Add(this.Button_Credits);
             this.Controls.Add(this.buttonQuitter);
@@ -234,9 +210,7 @@ namespace InterfaceGraphique
         private System.Windows.Forms.Button profileButton;
         private System.Windows.Forms.Button buttonLogout;
         private System.Windows.Forms.Button storeButton;
-        private System.Windows.Forms.Integration.ElementHost elementHost1;
         private Controls.WPF.Chat.TestChatView testChatView1;
         private FriendContentControl hostedComponent1;
-        private System.Windows.Forms.Integration.ElementHost elementHost2;
     }
 }

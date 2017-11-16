@@ -28,10 +28,7 @@ namespace InterfaceGraphique
     public partial class MainMenu : Form
     {
         static HttpClient client = new HttpClient();
-        private int chatHeight;
-        private int friendHeight;
 
-        private readonly int COLLAPSED_CHAT_HEIGHT = 40;
         ////////////////////////////////////////////////////////////////////////
         ///
         /// Constructeur de la classe MainMenu
@@ -40,33 +37,9 @@ namespace InterfaceGraphique
         public MainMenu()
         {
             InitializeComponent();
-            elementHost1.Child = Program.unityContainer.Resolve<TestChatView>();
-            elementHost2.Child = Program.unityContainer.Resolve<FriendContentControl>();
-
             InitializeEvents();
-            chatHeight = elementHost1.Height;
-            this.friendHeight = elementHost2.Height;
-            elementHost1.Size = new Size(Program.FormManager.ClientSize.Width * 3 / 4 + 1, COLLAPSED_CHAT_HEIGHT);
-            elementHost1.Location = new Point(elementHost1.Location.X, elementHost1.Location.Y + chatHeight - COLLAPSED_CHAT_HEIGHT);
-            elementHost2.Size = new Size(Program.FormManager.ClientSize.Width * 1 / 4 + 1, COLLAPSED_CHAT_HEIGHT);
-            System.Diagnostics.Debug.WriteLine("Client Size: " + Program.FormManager.ClientSize.Width + "     Size width: " + Size.Width + "    TotalWidth: " + (elementHost1.Width + elementHost2.Width));
-            System.Diagnostics.Debug.WriteLine("Friends width: " + elementHost2.Width);
-            System.Diagnostics.Debug.WriteLine("Friends starting X: " + (Program.FormManager.ClientSize.Width - elementHost2.Width));
-            elementHost2.Location = new Point(Program.FormManager.ClientSize.Width - elementHost2.Width, elementHost2.Location.Y);
-            if (User.Instance.IsConnected)
-            {
-
-            } else
-            {
-                HideCompletely();
-            }
-            //if (onlineMode)
-            //{
-            //    this.buttonLogout = new System.Windows.Forms.Button();
-            //    this.elementHost1 = new System.Windows.Forms.Integration.ElementHost();
-            //    this.testChatView = new InterfaceGraphique.Controls.WPF.Chat.TestChatView();
-            //}
         }
+
         ////////////////////////////////////////////////////////////////////////
         ///
         /// Initialise les events sur la form courrante
@@ -156,9 +129,6 @@ namespace InterfaceGraphique
         private void WindowSizeChanged(object sender, EventArgs e)
         {
             this.Size = new Size(Program.FormManager.ClientSize.Width, Program.FormManager.ClientSize.Height);
-            this.elementHost1.Size = new Size(Program.FormManager.ClientSize.Width * 3 / 4 + 1, elementHost1.Size.Height);
-            this.elementHost2.Size = new Size(Program.FormManager.ClientSize.Width * 1 / 4 + 1, elementHost2.Size.Height);
-            elementHost2.Location = new Point(Program.FormManager.ClientSize.Width - elementHost2.Width, elementHost2.Location.Y);
         }
 
 
@@ -188,54 +158,6 @@ namespace InterfaceGraphique
         public void UnsuscribeEventHandlers()
         {
             Program.FormManager.SizeChanged -= new EventHandler(WindowSizeChanged);
-        }
-
-        public void MinimizeChat()
-        {
-            HideChat();
-            elementHost1.Size = new Size(elementHost1.Width, COLLAPSED_CHAT_HEIGHT);
-            elementHost1.Location = new Point(elementHost1.Location.X, elementHost1.Location.Y + chatHeight - COLLAPSED_CHAT_HEIGHT);
-            ShowChat();
-        }
-
-        public void MaximizeChat()
-        {
-            HideChat();
-            elementHost1.Size = new Size(elementHost1.Width, chatHeight);
-            elementHost1.Location = new Point(elementHost1.Location.X, elementHost1.Location.Y -chatHeight + COLLAPSED_CHAT_HEIGHT);
-            ShowChat();
-        }
-
-        public void MinimizeFriendList()
-        {
-            this.elementHost2.Hide();
-            elementHost2.Size = new Size(elementHost2.Width, COLLAPSED_CHAT_HEIGHT);
-            elementHost2.Location = new Point(elementHost2.Location.X, elementHost2.Location.Y + friendHeight - COLLAPSED_CHAT_HEIGHT);
-            this.elementHost2.Show();
-        }
-
-        public void MaximizeFriendList()
-        {
-            this.elementHost2.Hide();
-            elementHost2.Size = new Size(elementHost2.Width, friendHeight);
-            elementHost2.Location = new Point(elementHost2.Location.X, elementHost2.Location.Y - friendHeight + COLLAPSED_CHAT_HEIGHT);
-            this.elementHost2.Show();
-        }
-        public void HideChat()
-        {
-            this.elementHost1.Hide();
-        }
-
-        public void ShowChat()
-        {
-            this.elementHost1.Show();
-        }
-
-        public void HideCompletely()
-        {
-            HideChat();
-            this.elementHost2.Hide();
-            elementHost1.Size = new Size(0, 0);
         }
     }
 }
