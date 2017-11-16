@@ -64,10 +64,10 @@ namespace InterfaceGraphique.Game.GameState
 
             float[] slavePosition = new float[3];
             FonctionsNatives.getSlavePosition(slavePosition);
-            Task.Run(() =>this.gameHub.SendSlavePosition(slavePosition));
+            Task.Run(() => this.gameHub.SendSlavePosition(slavePosition));
         }
 
-    
+
         ////////////////////////////////////////////////////////////////////////
         ///
         /// Cette fonction suit le mouvement de la souris.
@@ -80,8 +80,8 @@ namespace InterfaceGraphique.Game.GameState
         public override void MouseMoved(object sender, MouseEventArgs e)
         {
 
-                FonctionsNatives.opponentMouseMove(e.Location.X, e.Location.Y);
-                
+            FonctionsNatives.opponentMouseMove(e.Location.X, e.Location.Y);
+
         }
         ////////////////////////////////////////////////////////////////////////
         ///
@@ -123,6 +123,8 @@ namespace InterfaceGraphique.Game.GameState
         {
             gameHasEnded = true;
             Program.QuickPlay.EndGame();
+            Program.QuickPlay.UnsuscribeEventHandlers();
+            FonctionsNatives.setGameEnded();
             if (IsOnlineTournementMode)
             {
                 Program.OnlineTournament.Invoke(new MethodInvoker(() =>

@@ -76,7 +76,7 @@ public:
 	void setOpponentPlayerSkinToDefault();;
 	void player1Goal();
 	void player2Goal();
-
+	void setGameEnded();
 	bool isGameStarted() { return gameStarted_; };
 
 
