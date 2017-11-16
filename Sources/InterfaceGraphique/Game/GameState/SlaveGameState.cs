@@ -37,10 +37,10 @@ namespace InterfaceGraphique.Game.GameState
 
             gameHasEnded = false;
 
-            this.gameHub.InitializeSlaveGameHub(gameEntity.GameId);
+            this.gameHub.InitialiseGame(gameEntity.GameId);
             this.gameHub.NewPositions += OnNewGamePositions;
             this.gameHub.NewGoal += OnNewGoal;
-            this.gameHub.NewGameOver += EndGame;
+            this.gameHub.GameOver += EndGame;
 
             selectedMap = gameEntity.SelectedMap;
         }
@@ -134,7 +134,7 @@ namespace InterfaceGraphique.Game.GameState
 
         private void OnNewGamePositions(GameDataMessage gameData)
         {
-            if (!gameHasEnded && gameData.MasterPosition != null && gameData.SlavePosition != null && gameData.PuckPosition != null)
+            if (Program.QuickPlay.CurrentGameState.GameInitialized && !gameHasEnded && gameData.MasterPosition != null && gameData.SlavePosition != null && gameData.PuckPosition != null)
             {
                 FonctionsNatives.setSlaveGameElementPositions(gameData.SlavePosition, gameData.MasterPosition, gameData.PuckPosition);
             }

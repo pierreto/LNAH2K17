@@ -114,5 +114,7 @@ namespace InterfaceGraphique.Game.GameState
         public bool IsOnline { get; set; }
 
         public GameEntity OnlineGame { get; set; }
+
+        public bool GameInitialized { get; set; }
     }
 }
