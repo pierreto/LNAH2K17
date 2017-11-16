@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Practices.Unity;
 using InterfaceGraphique.Controls.WPF.Chat;
+using InterfaceGraphique.Controls.WPF.Friends;
 
 namespace InterfaceGraphique {
 
@@ -20,6 +21,11 @@ namespace InterfaceGraphique {
     /// @date 2016-09-13
     ///////////////////////////////////////////////////////////////////////////
     public partial class FormManager : Form {
+        private int friendHeight;
+        private readonly int COLLAPSED_CHAT_HEIGHT = 40;
+        private int chatHeight;
+
+        private bool firstTimeMaximizeChat;
 
         public dynamic CurrentForm {
             get { return currentForm; }
@@ -39,8 +45,20 @@ namespace InterfaceGraphique {
                 currentForm.InitializeOpenGlPanel();
                 this.Controls.Add(currentForm);
                 currentForm.Focus();
+
+
+                if (User.Instance.IsConnected)
+                {
+                    ShowCompletely();
+                }
+                else
+                {
+                    HideCompletely();
+                }
             }
         }
+
+   
 
         private dynamic currentForm;
 
@@ -52,6 +70,13 @@ namespace InterfaceGraphique {
         ////////////////////////////////////////////////////////////////////////
         public FormManager() {
             InitializeComponent();
+            this.elementHost2.Child = Program.unityContainer.Resolve<FriendContentControl>();
+            this.friendHeight = this.elementHost2.Height;
+
+            elementHost1.Child = Program.unityContainer.Resolve<TestChatView>();
+            chatHeight = elementHost1.Height;
+            firstTimeMaximizeChat = false;
+
             InitializeScreenSize();
             InitializeOpenGLPanel();
             InitializeEvents();
@@ -118,6 +143,80 @@ namespace InterfaceGraphique {
             this.DoubleBuffered = false;
             FonctionsNatives.initialiserOpenGL(Program.OpenGLPanel.Handle);
             FonctionsNatives.dessinerOpenGL();
+        }
+        
+        public void MinimizeFriendList()
+        {
+            HideFriendList();
+            elementHost2.Size = new Size(elementHost2.Width, COLLAPSED_CHAT_HEIGHT);
+            elementHost2.Location = new Point(elementHost2.Location.X, elementHost2.Location.Y + friendHeight - COLLAPSED_CHAT_HEIGHT);
+            ShowFriendList();
+        }
+
+        public void MaximizeFriendList()
+        {
+            HideFriendList();
+            elementHost2.Size = new Size(elementHost2.Width, friendHeight);
+            elementHost2.Location = new Point(elementHost2.Location.X, elementHost2.Location.Y - friendHeight + COLLAPSED_CHAT_HEIGHT);
+            ShowFriendList();
+        }
+
+        public void HideFriendList()
+        {
+            this.elementHost2.Hide();
+        }
+        public void ShowFriendList()
+        {
+            this.elementHost2.Show();
+
+        }
+        public void HideCompletely()
+        {
+            HideFriendList();
+            HideChat();
+
+            //elementHost1.Size = new Size(0, 0);
+        }
+
+        private void ShowCompletely()
+        {
+            ShowFriendList();
+            ShowChat();
+        }
+
+
+        public void MinimizeChat()
+        {
+            HideChat();
+            elementHost1.Size = new Size(elementHost1.Width, COLLAPSED_CHAT_HEIGHT);
+            elementHost1.Location = new Point(elementHost1.Location.X, elementHost1.Location.Y + chatHeight - COLLAPSED_CHAT_HEIGHT);
+            ShowChat();
+        }
+
+        public void MaximizeChat()
+        {
+            HideChat();
+            elementHost1.Size = new Size(elementHost1.Width, chatHeight);
+            if (firstTimeMaximizeChat)
+            {
+                elementHost1.Location = new Point(elementHost1.Location.X, elementHost1.Location.Y);
+                firstTimeMaximizeChat = false;
+            }
+            else
+            {
+                elementHost1.Location = new Point(elementHost1.Location.X, elementHost1.Location.Y - chatHeight + COLLAPSED_CHAT_HEIGHT);
+            }
+            ShowChat();
+        }
+
+        public void HideChat()
+        {
+            this.elementHost1.Hide();
+        }
+
+        public void ShowChat()
+        {
+            this.elementHost1.Show();
         }
     }
 }

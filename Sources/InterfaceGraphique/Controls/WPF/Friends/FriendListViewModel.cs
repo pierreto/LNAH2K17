@@ -59,13 +59,13 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             {
                 TabIcon = "Users";
                 Collapsed = System.Windows.Visibility.Collapsed;
-                Program.FormManager.CurrentForm?.MinimizeFriendList();
+                Program.FormManager.MinimizeFriendList();
             }
             else
             {
                 TabIcon = "AngleDown";
                 Collapsed = System.Windows.Visibility.Visible;
-                Program.FormManager.CurrentForm?.MaximizeFriendList();
+                Program.FormManager.MaximizeFriendList();
             }
             Program.unityContainer.Resolve<AddUserViewModel>().Collapsed = Collapsed;
             Program.unityContainer.Resolve<AddUserViewModel>().TabIcon = TabIcon;
