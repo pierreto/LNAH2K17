@@ -119,6 +119,8 @@ class ModeleEtatCreerMuret: ModeleEtat {
                         // Jouer le son
                         AudioService.instance.playSound(soundName: EDITION_SOUND.OBJECT2.rawValue)
                         self.playEndSound = false
+                        
+                        FacadeModele.instance.sauvegarderCarte(map: EditorViewController.instance.currentMap!)
                     }
                 }
                 else {

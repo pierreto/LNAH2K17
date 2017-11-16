@@ -63,6 +63,8 @@ class ModeleEtatCreerBoost: ModeleEtat {
             
             // Jouer le son
             AudioService.instance.playSound(soundName: EDITION_SOUND.OBJECT1.rawValue)
+            
+            FacadeModele.instance.sauvegarderCarte(map: EditorViewController.instance.currentMap!)
         }
         else {
             // Afficher un message d'erreur
