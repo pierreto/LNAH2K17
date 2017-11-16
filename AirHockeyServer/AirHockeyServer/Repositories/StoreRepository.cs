@@ -95,6 +95,38 @@ namespace AirHockeyServer.Repositories
             }
         }
 
+        public async Task UpdateUserItems(int userId, List<StoreItemEntity> storeItems)
+        {
+            try
+            {
+                using (MyDataContext DC = new MyDataContext())
+                {
+                    var query =
+                        from items in DC.GetTable<StoreItemPoco>() where items.UserId == userId 
+                        //&& storeItems.Any(x => x.Id == items.Id)
+                        select items;
+
+                    var results = query.ToArray();
+
+                    foreach(var item in results)
+                    {
+                        var storeItem = storeItems.Find(w => item.Id == w.Id);
+                        if(storeItem != null)
+                        {
+
+                        item.IsGameEnabled = storeItem.IsGameEnabled;
+                        }
+                    }
+
+                    await Task.Run(() => DC.SubmitChanges());
+                }
+            }
+            catch(Exception e)
+            {
+
+            }
+        }
+
         private List<StoreItemEntity> GetStoreEntitiesFromPocos(List<StoreItemPoco> pocos)
         {
             List<StoreItemEntity> results = new List<StoreItemEntity>();
