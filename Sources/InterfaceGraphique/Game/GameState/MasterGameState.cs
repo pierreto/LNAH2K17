@@ -31,6 +31,7 @@ namespace InterfaceGraphique.Game.GameState
                     Console.WriteLine("Player {0} scored", player);
                     Task.Run(() =>this.gameHub.SendGoal(player));
                 };
+            
         }
 
         public override void InitializeGameState(GameEntity gameEntity)
@@ -39,10 +40,11 @@ namespace InterfaceGraphique.Game.GameState
             FonctionsNatives.setCurrentOpponentType((int)OpponentType.ONLINE_PLAYER);
 
             this.gameHub.InitialiseGame(gameEntity.GameId);
-            this.gameHub.NewPositions += OnNewGamePositions;
 
             gameHasEnded = false;
             FonctionsNatives.setOnGoalCallback(callback);
+
+            this.gameHub.NewPositions += OnNewGamePositions;
 
             StringBuilder player1Name = new StringBuilder(gameEntity.Master.Username.Length);
             StringBuilder player2Name = new StringBuilder(gameEntity.Slave.Username.Length);

@@ -22,6 +22,7 @@ namespace InterfaceGraphique.Game.GameState
         {
             this.gameHub = gameHub;
             MapService = mapService;
+         
         }
 
         public override async void InitializeGameState(GameEntity gameEntity)
@@ -37,12 +38,14 @@ namespace InterfaceGraphique.Game.GameState
 
             gameHasEnded = false;
 
-            this.gameHub.InitialiseGame(gameEntity.GameId);
             this.gameHub.NewPositions += OnNewGamePositions;
             this.gameHub.NewGoal += OnNewGoal;
             this.gameHub.GameOver += EndGame;
 
+            this.gameHub.InitialiseGame(gameEntity.GameId);
             selectedMap = gameEntity.SelectedMap;
+
+
         }
 
         private void OnNewGoal(GoalMessage goalMessage)
@@ -125,6 +128,11 @@ namespace InterfaceGraphique.Game.GameState
             Program.QuickPlay.EndGame();
             Program.QuickPlay.UnsuscribeEventHandlers();
             FonctionsNatives.setGameEnded();
+
+            this.gameHub.NewPositions -= OnNewGamePositions;
+            this.gameHub.NewGoal -= OnNewGoal;
+            this.gameHub.GameOver -= EndGame;
+
             if (IsOnlineTournementMode)
             {
                 Program.OnlineTournament.Invoke(new MethodInvoker(() =>

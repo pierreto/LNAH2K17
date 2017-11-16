@@ -25,6 +25,7 @@ using InterfaceGraphique.Controls.WPF.Chat.Channel;
 using InterfaceGraphique.Editor;
 using InterfaceGraphique.Controls.WPF.UserProfile;
 using InterfaceGraphique.Controls.WPF.Store;
+using InterfaceGraphique.Game.GameState;
 
 namespace InterfaceGraphique
 {
@@ -202,8 +203,8 @@ namespace InterfaceGraphique
             unityContainer.RegisterType<StoreViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<AddUserViewModel>(new ContainerControlledLifetimeManager());
 
-
-
+            unityContainer.RegisterType<MasterGameState>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<SlaveGameState>(new ContainerControlledLifetimeManager());
 
             //Rest services instantiations
             unityContainer.RegisterType<MapService>();
