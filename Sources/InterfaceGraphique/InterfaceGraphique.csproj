@@ -466,6 +466,9 @@
     <EmbeddedResource Include="Controls\LobbyHost.resx">
       <DependentUpon>LobbyHost.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormManager.resx">
+      <DependentUpon>FormManager.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ListMaps.resx">
       <DependentUpon>ListMaps.cs</DependentUpon>
     </EmbeddedResource>

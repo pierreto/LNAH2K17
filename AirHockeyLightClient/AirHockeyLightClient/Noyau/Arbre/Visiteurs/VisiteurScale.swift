@@ -21,35 +21,29 @@ import GLKit
 ///////////////////////////////////////////////////////////////////////////
 class VisiteurScale: VisiteurAbstrait {
     
-    /// Vecteur trois dimensions pour le redimensionnement
-    private var scale: GLKVector3
-    
-    /// Bool d'ajustement pour le redimensionnement
-    private var ajusterScaling: Bool
+    /// Facteur de redimensionnement (grossir : >= 1.0, rapetisser : < 1.0)
+    private var scale: Float
     
     /// Constructeur
-    init(scale: GLKVector3, ajusterScaling: Bool) {
+    init(scale: Float) {
         self.scale = scale
-        self.ajusterScaling = ajusterScaling
     }
     
     /// Cette fonction permet d'assigner les facteurs de redimensionnement
-    func assignerScale(scale: GLKVector3) {
+    func assignerScale(scale: Float) {
         self.scale = scale
     }
 
     /// Visiter un accélérateur pour le rendre sélectionnable
     func visiterAccelerateur(noeud: NoeudAccelerateur) {
         if (noeud.estSelectionne()) {
-            var scale = GLKVector3Add(
-                            SCNVector3ToGLKVector3(noeud.scale),
-                            (self.ajusterScaling ? GLKVector3DivideScalar(self.scale, 6.0) : self.scale))
+            var scale = SCNVector3.init(noeud.scale.x * self.scale, noeud.scale.y * self.scale, noeud.scale.z * self.scale)
             
             if (scale.x <= 1.0) {
-                scale = GLKVector3.init(v: (1.0, 1.0, 1.0))
+                scale = SCNVector3.init(1.0, 1.0, 1.0)
             }
             
-            noeud.scale = SCNVector3FromGLKVector3(scale)
+            noeud.scale = scale
             
             // Envoyer la commande
             FacadeModele.instance.obtenirEtatEdition().currentUserObjectTransformChanged(uuid: noeud.obtenirUUID(),
@@ -73,13 +67,13 @@ class VisiteurScale: VisiteurAbstrait {
     /// Visiter un mur pour le rendre sélectionnable
     func visiterMur(noeud: NoeudMur) {
         if noeud.estSelectionne() {
-            var scale = GLKVector3Add(SCNVector3ToGLKVector3(noeud.scale), self.scale)
+            var scaleZ = self.scale * noeud.scale.z
             
-            if (scale.z <= 1.0) {
-                scale.z = 1.0
+            if (scaleZ <= 1.0) {
+                scaleZ = 1.0
             }
             
-            noeud.scale = SCNVector3.init(x: 1.0, y: 1.0, z: scale.z)
+            noeud.scale = SCNVector3.init(x: 1.0, y: 1.0, z: scaleZ)
             
             // Envoyer la commande
             FacadeModele.instance.obtenirEtatEdition().currentUserObjectTransformChanged(uuid: noeud.obtenirUUID(),
@@ -90,15 +84,13 @@ class VisiteurScale: VisiteurAbstrait {
     /// Visiter un portail pour le rendre sélectionnable
     func visiterPortail(noeud: NoeudPortail) {
         if noeud.estSelectionne() {
-            var scale = GLKVector3Add(
-                SCNVector3ToGLKVector3(noeud.scale),
-                (self.ajusterScaling ? GLKVector3DivideScalar(self.scale, 12.0) : self.scale))
+            var scale = SCNVector3.init(noeud.scale.x * self.scale, noeud.scale.y * self.scale, noeud.scale.z * self.scale)
             
             if (scale.x <= 1) {
-                scale = GLKVector3.init(v: (1.0, 1.0, 1.0))
+                scale = SCNVector3.init(1.0, 1.0, 1.0)
             }
             
-            noeud.scale = SCNVector3FromGLKVector3(scale)
+            noeud.scale = scale
             
             // Envoyer la commande
             FacadeModele.instance.obtenirEtatEdition().currentUserObjectTransformChanged(uuid: noeud.obtenirUUID(),

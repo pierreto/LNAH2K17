@@ -216,7 +216,7 @@ namespace InterfaceGraphique.Controls.WPF.Chat
         private void UnDock()
         {
             Docked = false;
-            Program.FormManager.CurrentForm?.HideChat();
+            Program.FormManager.HideChat();
             UndockedChat = new Window
             {
                 Title = "Chat",
@@ -239,13 +239,13 @@ namespace InterfaceGraphique.Controls.WPF.Chat
             {
                 TabIcon = "Comment";
                 Collapsed = System.Windows.Visibility.Collapsed;
-                Program.FormManager.CurrentForm?.MinimizeChat();
+                Program.FormManager.MinimizeChat();
             }
             else
             {
                 TabIcon = "AngleDown";
                 Collapsed = System.Windows.Visibility.Visible;
-                Program.FormManager.CurrentForm?.MaximizeChat();
+                Program.FormManager.MaximizeChat();
             }
         }
         #endregion
@@ -253,7 +253,7 @@ namespace InterfaceGraphique.Controls.WPF.Chat
         #region Private Methods
         private void OnUnDockedWindowClosing(object sender, CancelEventArgs e)
         {
-            Program.FormManager.CurrentForm?.ShowChat();
+            Program.FormManager.ShowChat();
             Docked = true;
             ChatTabHeight = CHAT_TAB_HEIGHT;
         }

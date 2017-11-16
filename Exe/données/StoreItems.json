@@ -1,0 +1,98 @@
+[
+{
+  "Name": "Maillet Rouge",
+  "Description": "Change la couleur de ton maillet pour rouge",
+  "Id": 0,
+  "Price": 5,
+  "ImageUrl": "\\media\\textures\\fire_texture.png",
+  "TextureName": "fire_texture"
+},
+{
+  "Name": "Maillet Bleu",
+  "Description": "Change la couleur de ton maillet pour bleu",
+  "Id": 1,
+  "Price": 5,
+  "ImageUrl": "\\media\\textures\\fire_texture.png",
+  "TextureName": "fire_texture"
+},
+{
+  "Name": "Maillet Orange",
+  "Description": "Change la couleur de ton maillet pour orange",
+  "Id": 2,
+  "Price": 5,
+  "ImageUrl": "\\media\\textures\\fire_texture.png",
+  "TextureName": "fire_texture"
+},
+{
+  "Name": "Maillet Vert",
+  "Description": "Change la couleur de ton maillet pour vert",
+  "Id": 3,
+  "Price": 5,
+  "ImageUrl": "\\media\\textures\\fire_texture.png",
+  "TextureName": "fire_texture"
+},
+{
+  "Name": "Maillet Mauve",
+  "Description": "Change la couleur de ton maillet pour mauve",
+  "Id": 4,
+  "Price": 5,
+  "ImageUrl": "\\media\\textures\\fire_texture.png",
+  "TextureName": "fire_texture"
+},
+{
+  "Name": "Maillet Jaune",
+  "Description": "Change la couleur de ton maillet pour jaune",
+  "Id": 5,
+  "Price": 5,
+  "ImageUrl": "\\media\\textures\\fire_texture.png",
+  "TextureName": "fire_texture"
+},
+{
+  "Name": "Maillet Gris",
+  "Description": "Change la couleur de ton maillet pour gris",
+  "Id": 6,
+  "Price": 5,
+  "ImageUrl": "\\media\\textures\\fire_texture.png",
+  "TextureName": "fire_texture"
+},
+{
+  "Name": "Maillet Briqué",
+  "Description": "Change la couleur de ton maillet pour une texture brique",
+  "Id": 7,
+  "Price": 10,
+  "ImageUrl": "\\media\\textures\\fire_texture.png",
+  "TextureName": "fire_texture"
+},
+{
+  "Name": "Maillet 2",
+  "Description": "Change la couleur de ton maillet pour 2",
+  "Id": 8,
+  "Price": 15,
+  "ImageUrl": "\\media\\textures\\fire_texture.png",
+  "TextureName": "fire_texture"
+},
+{
+  "Name": "Maillet 3",
+  "Description": "Change la couleur de ton maillet pour 3",
+  "Id": 9,
+  "Price": 20,
+  "ImageUrl": "\\media\\textures\\fire_texture.png",
+  "TextureName": "fire_texture"
+},
+{
+  "Name": "Maillet 4",
+  "Description": "Change la couleur de ton maillet pour 4",
+  "Id": 10,
+  "Price": 25,
+  "ImageUrl": "\\media\\textures\\fire_texture.png",
+  "TextureName": "fire_texture"
+},
+{
+  "Name": "Maillet 5",
+  "Description": "Change la couleur de ton maillet pour 5",
+  "Id": 11,
+  "Price": 30,
+  "ImageUrl": "\\media\\textures\\fire_texture.png",
+  "TextureName": "fire_texture"
+}
+]

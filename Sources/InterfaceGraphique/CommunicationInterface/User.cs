@@ -10,7 +10,13 @@ namespace InterfaceGraphique.CommunicationInterface
     public class User
     {
         public UserEntity UserEntity { get; set; }
+
         public bool IsConnected { get; set; }
+
+        public List<StoreItemEntity> Inventory { get; set; }
+
+        public PlayerStatsEntity Stats { get; set; }
+
         private static User instance;
 
         public User()
