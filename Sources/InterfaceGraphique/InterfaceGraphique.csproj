@@ -275,8 +275,7 @@
     <Compile Include="Controls\WPF\Tutorial\TutorialView.xaml.cs">
       <DependentUpon>TutorialView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\WPF\Tutorial\EditorTutorialViewModel.cs" />
-    <Compile Include="Controls\WPF\Tutorial\MatchTutorialViewModel.cs" />
+    <Compile Include="Controls\WPF\Tutorial\TutorialViewModel.cs" />
     <Compile Include="Controls\WPF\UserProfile\UserProfileView.xaml.cs">
       <DependentUpon>UserProfileView.xaml</DependentUpon>
     </Compile>
