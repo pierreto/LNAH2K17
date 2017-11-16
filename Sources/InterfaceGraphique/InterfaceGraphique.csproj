@@ -146,6 +146,7 @@
     <Compile Include="CommunicationInterface\RestInterface\HttpResponseParser.cs" />
     <Compile Include="CommunicationInterface\RestInterface\MapsRepository.cs" />
     <Compile Include="CommunicationInterface\RestInterface\Repository.cs" />
+    <Compile Include="CommunicationInterface\WaitingRooms\GameManager.cs" />
     <Compile Include="CommunicationInterface\WaitingRooms\TournamentWaitingRoomHub.cs" />
     <Compile Include="CommunicationInterface\WaitingRooms\GameWaitingRoomHub.cs" />
     <Compile Include="CommunicationInterface\User.cs" />

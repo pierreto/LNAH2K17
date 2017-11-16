@@ -166,6 +166,9 @@ namespace InterfaceGraphique
         {
             unityContainer = new UnityContainer();
 
+            // Service
+            unityContainer.RegisterType<GameManager>();
+
             //Hub instantiations
             unityContainer.RegisterType<IBaseHub, ChatHub>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<IBaseHub,GameWaitingRoomHub>(new ContainerControlledLifetimeManager());

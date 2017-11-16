@@ -19,6 +19,8 @@ namespace InterfaceGraphique.CommunicationInterface
         private Guid gameGuid;
 
         private IHubProxy gameHubProxy;
+
+        public string[] Textures { get; set; }
         public void InitializeHub(HubConnection connection)
         {
             //   gameHubProxy = connection.CreateHubProxy("GameWaitingRoomHub");
