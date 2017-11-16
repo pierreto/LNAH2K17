@@ -70,6 +70,9 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dragablz, Version=0.0.3.197, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dragablz.0.0.3.197\lib\net45\Dragablz.dll</HintPath>
+    </Reference>
     <Reference Include="FontAwesome.WPF, Version=4.7.0.37774, Culture=neutral, PublicKeyToken=0758b07a11a4f466, processorArchitecture=MSIL">
       <HintPath>..\packages\FontAwesome.WPF.4.7.0.9\lib\net40\FontAwesome.WPF.dll</HintPath>
     </Reference>
@@ -205,6 +208,7 @@
     <Compile Include="Controls\WPF\Friends\FriendContentControl.xaml.cs">
       <DependentUpon>FriendContentControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\WPF\Friends\SizePercentageConverter.cs" />
     <Compile Include="Controls\WPF\MinimizableViewModelBase.cs" />
     <Compile Include="Controls\WPF\Navigation\NavigationView.xaml.cs">
       <DependentUpon>NavigationView.xaml</DependentUpon>
@@ -270,7 +274,8 @@
     <Compile Include="Controls\WPF\Tutorial\TutorialView.xaml.cs">
       <DependentUpon>TutorialView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\WPF\Tutorial\TutorialViewModel.cs" />
+    <Compile Include="Controls\WPF\Tutorial\EditorTutorialViewModel.cs" />
+    <Compile Include="Controls\WPF\Tutorial\MatchTutorialViewModel.cs" />
     <Compile Include="Controls\WPF\UserProfile\UserProfileView.xaml.cs">
       <DependentUpon>UserProfileView.xaml</DependentUpon>
     </Compile>
@@ -542,7 +547,6 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.manifest" />
-    <Content Include="Controls\WPF\Tutorial\piggy-bank.png" />
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.woff" />
