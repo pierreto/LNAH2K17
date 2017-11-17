@@ -99,7 +99,7 @@ class VisiteurDeplacement: VisiteurAbstrait {
         
         // Envoyer la commande
         FacadeModele.instance.obtenirEtatEdition().currentUserObjectTransformChanged(uuid: noeud.obtenirUUID(),
-                                                                                     pos: noeud.position, rotation: noeud.rotation.w, scale: noeud.scale)
+                                                                                     pos: noeud.position, rotation: MathHelper.determinerAngleAxeY(rotation: noeud.rotation), scale: noeud.scale)
     }
     
 }

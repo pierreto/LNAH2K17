@@ -250,21 +250,10 @@ class ModeleEtatSelection: ModeleEtat {
                 // Remettre le point central à sa position initiale
                 noeud.appliquerDeplacement(deplacement: self.centreRotation)
 
-                var angleEnvoye: Float = 0.0
-                
-                if noeud.rotation.y > 0 {
-                    angleEnvoye = noeud.rotation.w
-                }
-                else {
-                    angleEnvoye = ( 2 * Float.pi ) - noeud.rotation.w
-                }
-                
-                // print (GLKMathRadiansToDegrees(angleEnvoye))
-
                 // Envoyer la commande
                 FacadeModele.instance.obtenirEtatEdition().currentUserObjectTransformChanged(uuid: noeud.obtenirUUID(),
                                                                                              pos: noeud.position,
-                                                                                             rotation: angleEnvoye,
+                                                                                             rotation: MathHelper.determinerAngleAxeY(rotation: noeud.rotation),
                                                                                              scale: noeud.scale)
             }
         }
@@ -285,7 +274,9 @@ class ModeleEtatSelection: ModeleEtat {
             
             // Envoyer la commande
             FacadeModele.instance.obtenirEtatEdition().currentUserObjectTransformChanged(uuid: noeud.obtenirUUID(),
-                                                                                         pos: noeud.position, rotation: noeud.rotation.w, scale: noeud.scale)
+                                                                                         pos: noeud.position,
+                                                                                         rotation: MathHelper.determinerAngleAxeY(rotation: noeud.rotation),
+                                                                                         scale: noeud.scale)
         }
     }
     
@@ -324,7 +315,9 @@ class ModeleEtatSelection: ModeleEtat {
             
             // Envoyer la commande
             FacadeModele.instance.obtenirEtatEdition().currentUserObjectTransformChanged(uuid: noeud.obtenirUUID(),
-                                                                                         pos: noeud.position, rotation: noeud.rotation.w, scale: noeud.scale)
+                                                                                         pos: noeud.position,
+                                                                                         rotation: MathHelper.determinerAngleAxeY(rotation: noeud.rotation),
+                                                                                         scale: noeud.scale)
         }
     }
 
