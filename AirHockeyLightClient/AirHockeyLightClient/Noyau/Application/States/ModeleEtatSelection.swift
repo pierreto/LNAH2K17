@@ -243,21 +243,28 @@ class ModeleEtatSelection: ModeleEtat {
             if noeud.estSelectionne() {
                 // Effectue une translation du point central vers l'origine
                 noeud.appliquerDeplacement(deplacement: GLKVector3Negate(self.centreRotation))
-            
+
                 // Effectuer la rotation
                 noeud.appliquerRotation(angle: Float(angle), axes: GLKVector3.init(v: (x: 0.0, y: 1.0, z: 0.0)))
-            
+
                 // Remettre le point central à sa position initiale
                 noeud.appliquerDeplacement(deplacement: self.centreRotation)
-            
-                //print("rotation envoyée")
-                //print (GLKMathRadiansToDegrees(noeud.rotation.w))
-                //print (GLKMathRadiansToDegrees(noeud.eulerAngles.y))
-            
+
+                var angleEnvoye: Float = 0.0
+                
+                if noeud.rotation.y > 0 {
+                    angleEnvoye = noeud.rotation.w
+                }
+                else {
+                    angleEnvoye = ( 2 * Float.pi ) - noeud.rotation.w
+                }
+                
+                // print (GLKMathRadiansToDegrees(angleEnvoye))
+
                 // Envoyer la commande
                 FacadeModele.instance.obtenirEtatEdition().currentUserObjectTransformChanged(uuid: noeud.obtenirUUID(),
                                                                                              pos: noeud.position,
-                                                                                             rotation: noeud.rotation.w,
+                                                                                             rotation: angleEnvoye,
                                                                                              scale: noeud.scale)
             }
         }
