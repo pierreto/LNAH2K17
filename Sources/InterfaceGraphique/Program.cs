@@ -25,6 +25,7 @@ using InterfaceGraphique.Controls.WPF.Chat.Channel;
 using InterfaceGraphique.Editor;
 using InterfaceGraphique.Controls.WPF.UserProfile;
 using InterfaceGraphique.Controls.WPF.Store;
+using InterfaceGraphique.Editor.EditorState;
 using InterfaceGraphique.Game.GameState;
 
 namespace InterfaceGraphique
@@ -205,6 +206,10 @@ namespace InterfaceGraphique
 
             unityContainer.RegisterType<MasterGameState>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<SlaveGameState>(new ContainerControlledLifetimeManager());
+
+            unityContainer.RegisterType<OfflineEditorState>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<OnlineEditorState>(new ContainerControlledLifetimeManager());
+
 
             //Rest services instantiations
             unityContainer.RegisterType<MapService>();
