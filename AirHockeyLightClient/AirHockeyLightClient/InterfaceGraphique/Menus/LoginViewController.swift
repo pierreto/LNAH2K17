@@ -23,22 +23,35 @@ class LoginViewController: UIViewController {
     
     // Mark: Actions
     @IBAction func login(_ sender: Any) {
+        login()
+    }
+    
+    @IBAction func usernameInputReturn(_ sender: Any) {
+        passwordInput.becomeFirstResponder()
+    }
+    
+    
+    @IBAction func loginReturn(_ sender: Any) {
+        login()
+    }
+    
+    func login() {
         self.loading()
         disableInputs()
         viewModel?.login(username: usernameInput.text!, password: passwordInput.text!)
             .then {
                 data -> Void in
-                    if(data) {
-                        self.loadingDone()
-                        OperationQueue.main.addOperation {
-                            self.performSegue(withIdentifier: "loginSuccess", sender: self)
-                            NotificationCenter.default.post(name: Notification.Name(rawValue: LoginNotification.SubmitNotification), object: nil)
-                            self.enableInputs()
-                        }
-                    } else {
-                        self.connectionError()
+                if(data) {
+                    self.loadingDone()
+                    OperationQueue.main.addOperation {
+                        self.performSegue(withIdentifier: "loginSuccess", sender: self)
+                        NotificationCenter.default.post(name: Notification.Name(rawValue: LoginNotification.SubmitNotification), object: nil)
                         self.enableInputs()
                     }
+                } else {
+                    self.connectionError()
+                    self.enableInputs()
+                }
             }.always {
                 //Laisse le temps au message d'erreur d'apparaitre avant le shake
                 let when = DispatchTime.now() + 0.1
@@ -52,7 +65,6 @@ class LoginViewController: UIViewController {
                 }
         }
     }
-    
     func adjustForKeyboard(notification: Notification) {
         let userInfo = notification.userInfo!
         
