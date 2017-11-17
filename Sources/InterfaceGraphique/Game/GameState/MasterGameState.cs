@@ -32,7 +32,6 @@ namespace InterfaceGraphique.Game.GameState
                     Console.WriteLine("Player {0} scored", player);
                     Task.Run(() =>this.gameHub.SendGoal(player));
                 };
-            
         }
 
         public override void InitializeGameState(GameEntity gameEntity)
@@ -44,9 +43,7 @@ namespace InterfaceGraphique.Game.GameState
 
             gameHasEnded = false;
             FonctionsNatives.setOnGoalCallback(callback);
-
-            this.gameHub.NewPositions += OnNewGamePositions;
-
+            
             StringBuilder player1Name = new StringBuilder(gameEntity.Master.Username.Length);
             StringBuilder player2Name = new StringBuilder(gameEntity.Slave.Username.Length);
             player1Name.Append(gameEntity.Master.Username);
@@ -55,6 +52,9 @@ namespace InterfaceGraphique.Game.GameState
 
             float[] playerColor = new float[4] { Color.White.R, Color.White.G, Color.White.B, Color.White.A };
             FonctionsNatives.setPlayerColors(playerColor, playerColor);
+
+            this.gameHub.NewPositions += OnNewGamePositions;
+            this.gameHub.DisconnectedEvent += OnDisconnexion;
 
             selectedMap = gameEntity.SelectedMap;
         }
@@ -142,7 +142,11 @@ namespace InterfaceGraphique.Game.GameState
             gameHasEnded = true;
             Task.Run(() => gameHub.SendGameOver());
             Program.QuickPlay.EndGame();
-            if(IsOnlineTournementMode)
+
+            this.gameHub.NewPositions -= OnNewGamePositions;
+            this.gameHub.DisconnectedEvent -= OnDisconnexion;
+
+            if (IsOnlineTournementMode)
             {
                 Program.OnlineTournament.Invoke(new MethodInvoker(() =>
                 {

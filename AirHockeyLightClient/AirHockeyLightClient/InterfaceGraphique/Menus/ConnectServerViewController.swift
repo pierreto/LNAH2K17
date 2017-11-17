@@ -18,6 +18,31 @@ class ConnectServerViewController: UIViewController {
     
     // Mark: Actions
     @IBAction func connectServer(_ sender: Any) {
+        connectServer()
+    }
+    
+    @IBAction func ipAddressInputReturn(_ sender: Any) {
+        connectServer()
+    }
+    
+    @IBAction func editIpAddress(_ sender: Any) {
+        resetStyle(textField: ipAddressInput)
+        self.ipAddressErrorLabel.text = ""
+    }
+    
+    // Mark: Functions
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+        let connectServerModel: ConnectServer = ConnectServer()
+        viewModel = ConnectServerViewModel(connectServerModel: connectServerModel)
+        styleUI()
+        fillUI()
+        NotificationCenter.default.addObserver(self, selector: #selector(adjustForKeyboard), name:NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(adjustForKeyboard), name:NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
+    
+    func connectServer() {
         self.loading()
         disableInputs()
         viewModel?.connect(ipAddress: ipAddressInput.text!).then {
@@ -45,23 +70,6 @@ class ConnectServerViewController: UIViewController {
                 }
         }
     }
-    @IBAction func editIpAddress(_ sender: Any) {
-        resetStyle(textField: ipAddressInput)
-        self.ipAddressErrorLabel.text = ""
-    }
-    
-    // Mark: Functions
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.navigationController?.setNavigationBarHidden(false, animated: true)
-        let connectServerModel: ConnectServer = ConnectServer()
-        viewModel = ConnectServerViewModel(connectServerModel: connectServerModel)
-        styleUI()
-        fillUI()
-        NotificationCenter.default.addObserver(self, selector: #selector(adjustForKeyboard), name:NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(adjustForKeyboard), name:NSNotification.Name.UIKeyboardWillHide, object: nil)
-    }
-    
     func adjustForKeyboard(notification: Notification) {
         let userInfo = notification.userInfo!
         
@@ -81,7 +89,7 @@ class ConnectServerViewController: UIViewController {
             fillUI()
         }
     }
-    
+
     fileprivate func fillUI() {
         if !isViewLoaded {
             return

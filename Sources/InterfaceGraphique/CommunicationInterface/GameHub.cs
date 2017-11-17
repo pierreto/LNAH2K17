@@ -15,6 +15,7 @@ namespace InterfaceGraphique.CommunicationInterface
         public event Action<GameDataMessage> NewPositions;
         public event Action<GoalMessage> NewGoal;
         public event Action GameOver;
+        public event Action DisconnectedEvent;
 
         private Guid gameGuid;
 
@@ -28,15 +29,7 @@ namespace InterfaceGraphique.CommunicationInterface
 
         private void ManagePlayerDisconnection()
         {
-            Program.QuickPlay.Invoke(new MethodInvoker(() =>
-            {
-                Program.QuickPlay.ReplacePlayerByAI();
-            }));
-
-            MessageBox.Show(
-                @"Votre adversaire n'est plus en ligne et vient d'être remplacé par un joueur virtuel. Vous pouvez reprendre la partie en appuyant sur Esc.",
-                @"Information",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
+            DisconnectedEvent?.Invoke();
         }
 
         public void InitializeEvents()

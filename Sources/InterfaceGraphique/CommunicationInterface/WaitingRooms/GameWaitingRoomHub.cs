@@ -32,7 +32,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
         public GameManager GameManager { get; }
 
-        public GameWaitingRoomHub(SlaveGameState slaveGameState,MasterGameState masterGameState, 
+        public GameWaitingRoomHub(SlaveGameState slaveGameState, MasterGameState masterGameState,
             GameManager gameManager)
         {
             this.slaveGameState = slaveGameState;
@@ -46,12 +46,12 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
             WaitingRoomProxy = this.HubConnection.CreateHubProxy("GameWaitingRoomHub");
             InitializeEvents();
         }
-        
+
         public async void Join()
         {
             await WaitingRoomProxy.Invoke("Join", User.Instance.UserEntity);
         }
-        
+
         public async Task LeaveGame()
         {
             await WaitingRoomProxy.Invoke("LeaveGame", User.Instance.UserEntity, CurrentGameId);
@@ -59,18 +59,27 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
         public async void UpdateSelectedMap(MapEntity map)
         {
-            await WaitingRoomProxy.Invoke("UpdateMap", CurrentGameId, map);
+            try
+            {
+                await WaitingRoomProxy.Invoke("UpdateMap", CurrentGameId, map);
+            }
+            catch (Exception e)
+            { }
         }
 
         private void InitializeEvents()
         {
-            WaitingRoomProxy.On<GameEntity>("OpponentFoundEvent", newgame => OnOpponentFound(newgame)); { };
-            
-            WaitingRoomProxy.On<GameEntity>("GameStartingEvent", officialGame => OnGameStarting(officialGame)); { };
+            WaitingRoomProxy.On<GameEntity>("OpponentFoundEvent", newgame => OnOpponentFound(newgame));
+            { };
 
-            WaitingRoomProxy.On<MapEntity>("GameMapUpdatedEvent", mapUpdated => OnMapUpdated(mapUpdated)); { };
+            WaitingRoomProxy.On<GameEntity>("GameStartingEvent", officialGame => OnGameStarting(officialGame));
+            { };
 
-            WaitingRoomProxy.On<int>("WaitingRoomRemainingTime", remainingTime => OnRemainingTime(remainingTime)); { };
+            WaitingRoomProxy.On<MapEntity>("GameMapUpdatedEvent", mapUpdated => OnMapUpdated(mapUpdated));
+            { };
+
+            WaitingRoomProxy.On<int>("WaitingRoomRemainingTime", remainingTime => OnRemainingTime(remainingTime));
+            { };
         }
 
         public void OnOpponentFound(GameEntity game)
@@ -81,6 +90,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
         public void OnGameStarting(GameEntity game)
         {
+            CurrentGameId = new Guid();
             Program.LobbyHost.Invoke(new MethodInvoker(async () =>
             {
                 GameManager.CurrentOnlineGame = game;
