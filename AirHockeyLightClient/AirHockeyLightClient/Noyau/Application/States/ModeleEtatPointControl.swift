@@ -111,6 +111,8 @@ class ModeleEtatPointControl : ModeleEtat {
                 // Jouer le son
                 AudioService.instance.playSound(soundName: EDITION_SOUND.SELECTION2.rawValue)
                 self.playEndSound = false
+                
+                FacadeModele.instance.sauvegarderCarte(map: EditorViewController.instance.currentMap!)
             }
             
             // Envoyer la commande

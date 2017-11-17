@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using InterfaceGraphique.Controls.WPF.Store;
 
 namespace InterfaceGraphique.Services
 {
@@ -40,7 +41,14 @@ namespace InterfaceGraphique.Services
 
         public async Task<bool> UpdateItemEnable(int userId, StoreItemEntity item)
         {
-            HttpResponseMessage response = await Program.client.PutAsJsonAsync("api/store/" + userId, item);
+            HttpResponseMessage response = await Program.client.PutAsJsonAsync("api/store/" + userId + "/" + item.Id, item);
+
+            return response.IsSuccessStatusCode;
+        }
+
+        public async Task<bool> UpdateItemsEnable(int userId, List<StoreItemEntity> items)
+        {
+            HttpResponseMessage response = await Program.client.PutAsJsonAsync("api/store/" + userId, items);
 
             return response.IsSuccessStatusCode;
         }

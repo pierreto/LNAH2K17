@@ -70,6 +70,9 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dragablz, Version=0.0.3.197, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dragablz.0.0.3.197\lib\net45\Dragablz.dll</HintPath>
+    </Reference>
     <Reference Include="FontAwesome.WPF, Version=4.7.0.37774, Culture=neutral, PublicKeyToken=0758b07a11a4f466, processorArchitecture=MSIL">
       <HintPath>..\packages\FontAwesome.WPF.4.7.0.9\lib\net40\FontAwesome.WPF.dll</HintPath>
     </Reference>
@@ -146,6 +149,7 @@
     <Compile Include="CommunicationInterface\RestInterface\HttpResponseParser.cs" />
     <Compile Include="CommunicationInterface\RestInterface\MapsRepository.cs" />
     <Compile Include="CommunicationInterface\RestInterface\Repository.cs" />
+    <Compile Include="CommunicationInterface\WaitingRooms\GameManager.cs" />
     <Compile Include="CommunicationInterface\WaitingRooms\TournamentWaitingRoomHub.cs" />
     <Compile Include="CommunicationInterface\WaitingRooms\GameWaitingRoomHub.cs" />
     <Compile Include="CommunicationInterface\User.cs" />
@@ -205,6 +209,7 @@
     <Compile Include="Controls\WPF\Friends\FriendContentControl.xaml.cs">
       <DependentUpon>FriendContentControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\WPF\Friends\SizePercentageConverter.cs" />
     <Compile Include="Controls\WPF\MinimizableViewModelBase.cs" />
     <Compile Include="Controls\WPF\Navigation\NavigationView.xaml.cs">
       <DependentUpon>NavigationView.xaml</DependentUpon>
@@ -525,11 +530,17 @@
     <EmbeddedResource Include="Menus\QuickPlayMenu.resx">
       <DependentUpon>QuickPlayMenu.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Menus\StoreMenu.resx">
+      <DependentUpon>StoreMenu.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Menus\TestChatMenu.resx">
       <DependentUpon>TestChatMenu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Menus\TournementMenu.resx">
       <DependentUpon>TournementMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Menus\UserProfileMenu.resx">
+      <DependentUpon>UserProfileMenu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -542,7 +553,6 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.manifest" />
-    <Content Include="Controls\WPF\Tutorial\piggy-bank.png" />
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.woff" />

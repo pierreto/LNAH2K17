@@ -14,5 +14,7 @@ namespace AirHockeyServer.Repositories.Interfaces
         Task<List<StoreItemEntity>> GetUserStoreItems(int userId);
 
         Task UpdateUserItem(int userId, StoreItemEntity item);
+
+        Task UpdateUserItems(int userId, List<StoreItemEntity> storeItems);
     }
 }

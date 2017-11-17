@@ -1,0 +1,55 @@
+.map {
+    box-shadow: 3px 3px 3px black;
+    width: 400px;
+    height: 400px;
+    background-image: url("../../../../Exe/media/image/default_profile_picture.png");
+    background-size: contain;
+    margin: 30px auto;
+}
+
+.title {
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.mapContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mapInfo {
+    text-align: left;
+    margin-left: 40px;
+}
+
+.mapInfo > div > h3 {
+    color: #aaa;
+    margin-bottom: 20px;
+}
+
+h2 {
+    margin: 0px;
+    text-align: left;
+    font-size: 40px;
+    font-weight: normal;
+}
+
+h3 {
+    margin: 0px;
+    text-align: left;
+    color: #000;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.mapTitle {
+    font-size: 72px;
+    font-weight: bold;
+    background-color: #0E0E0E;
+    border-radius: 8px;
+    padding-left: 20px;
+    padding-right: 20px;
+    width: fit-content;
+    margin: 0 auto;
+}

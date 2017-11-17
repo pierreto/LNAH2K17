@@ -157,6 +157,12 @@
 		8FCDF6191FA1BEDF00631551 /* EditorNotificationScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8FCDF6171FA1BEDF00631551 /* EditorNotificationScene.sks */; };
 		8FCDF61A1FA1BEDF00631551 /* EditorNotificationScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCDF6181FA1BEDF00631551 /* EditorNotificationScene.swift */; };
 		8FDD1E1F1FB3B87000F5E61F /* ControlPointCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FDD1E1E1FB3B87000F5E61F /* ControlPointCommand.swift */; };
+		8FF4B5C61FBD70CE00BB2941 /* leftImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FF4B5C01FBD70CE00BB2941 /* leftImage.png */; };
+		8FF4B5C71FBD70CE00BB2941 /* backImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FF4B5C11FBD70CE00BB2941 /* backImage.png */; };
+		8FF4B5C81FBD70CE00BB2941 /* downImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FF4B5C21FBD70CE00BB2941 /* downImage.png */; };
+		8FF4B5C91FBD70CE00BB2941 /* rightImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FF4B5C31FBD70CE00BB2941 /* rightImage.png */; };
+		8FF4B5CA1FBD70CE00BB2941 /* upImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FF4B5C41FBD70CE00BB2941 /* upImage.png */; };
+		8FF4B5CB1FBD70CE00BB2941 /* frontImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FF4B5C51FBD70CE00BB2941 /* frontImage.png */; };
 		8FFC5B481F7C90340031474F /* MessageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFC5B471F7C90340031474F /* MessageViewCell.swift */; };
 		8FFC5B4A1F7CA7170031474F /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFC5B491F7CA7170031474F /* PaddingLabel.swift */; };
 		AD70F2A7B1A422D1D23DCBA7 /* Pods_AirHockeyLightClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EBD8D3E12409ADBFAB65FC7F /* Pods_AirHockeyLightClient.framework */; };
@@ -332,6 +338,12 @@
 		8FCDF6171FA1BEDF00631551 /* EditorNotificationScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = EditorNotificationScene.sks; path = InterfaceGraphique/Editor/EditorNotificationScene.sks; sourceTree = "<group>"; };
 		8FCDF6181FA1BEDF00631551 /* EditorNotificationScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditorNotificationScene.swift; path = InterfaceGraphique/Editor/EditorNotificationScene.swift; sourceTree = "<group>"; };
 		8FDD1E1E1FB3B87000F5E61F /* ControlPointCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ControlPointCommand.swift; path = Noyau/Editor/Commands/ControlPointCommand.swift; sourceTree = "<group>"; };
+		8FF4B5C01FBD70CE00BB2941 /* leftImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = leftImage.png; path = ../../Exe/media/skybox/leftImage.png; sourceTree = "<group>"; };
+		8FF4B5C11FBD70CE00BB2941 /* backImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = backImage.png; path = ../../Exe/media/skybox/backImage.png; sourceTree = "<group>"; };
+		8FF4B5C21FBD70CE00BB2941 /* downImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = downImage.png; path = ../../Exe/media/skybox/downImage.png; sourceTree = "<group>"; };
+		8FF4B5C31FBD70CE00BB2941 /* rightImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = rightImage.png; path = ../../Exe/media/skybox/rightImage.png; sourceTree = "<group>"; };
+		8FF4B5C41FBD70CE00BB2941 /* upImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = upImage.png; path = ../../Exe/media/skybox/upImage.png; sourceTree = "<group>"; };
+		8FF4B5C51FBD70CE00BB2941 /* frontImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = frontImage.png; path = ../../Exe/media/skybox/frontImage.png; sourceTree = "<group>"; };
 		8FFC5B471F7C90340031474F /* MessageViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MessageViewCell.swift; path = InterfaceGraphique/Chat/MessageViewCell.swift; sourceTree = "<group>"; };
 		8FFC5B491F7CA7170031474F /* PaddingLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PaddingLabel.swift; path = InterfaceGraphique/Chat/PaddingLabel.swift; sourceTree = "<group>"; };
 		C4E26B0732BB80D1FB7B3AC6 /* Pods-AirHockeyLightClient.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AirHockeyLightClient.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AirHockeyLightClient/Pods-AirHockeyLightClient.debug.xcconfig"; sourceTree = "<group>"; };
@@ -804,6 +816,7 @@
 		8FB6A9C31F81DCA000FAFFCF /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				8FF4B59B1FBD602500BB2941 /* Skybox */,
 				8F4B40771FB944E700DFDA2F /* Sounds */,
 				3475C22D1F8FB98500E8BF86 /* Icons */,
 				34B66FDA1F843CC100A9CCB9 /* Textures */,
@@ -861,6 +874,19 @@
 				2509B8901FB8D5D8002DEE9A /* FriendsHub.swift */,
 			);
 			name = Communication;
+			sourceTree = "<group>";
+		};
+		8FF4B59B1FBD602500BB2941 /* Skybox */ = {
+			isa = PBXGroup;
+			children = (
+				8FF4B5C01FBD70CE00BB2941 /* leftImage.png */,
+				8FF4B5C11FBD70CE00BB2941 /* backImage.png */,
+				8FF4B5C21FBD70CE00BB2941 /* downImage.png */,
+				8FF4B5C31FBD70CE00BB2941 /* rightImage.png */,
+				8FF4B5C41FBD70CE00BB2941 /* upImage.png */,
+				8FF4B5C51FBD70CE00BB2941 /* frontImage.png */,
+			);
+			name = Skybox;
 			sourceTree = "<group>";
 		};
 		8FFC5B4B1F7CAC0A0031474F /* UI */ = {
@@ -939,6 +965,7 @@
 				3475C23B1F8FB9A100E8BF86 /* Move.png in Resources */,
 				8F27E8111FA1803400A8856D /* Tap.png in Resources */,
 				8F6AE2BE1F6592EB00A29E8B /* GameScene.sks in Resources */,
+				8FF4B5C71FBD70CE00BB2941 /* backImage.png in Resources */,
 				8F64C0151F77550800F14AC7 /* Main.storyboard in Resources */,
 				8F6AE2C91F6592EB00A29E8B /* Assets.xcassets in Resources */,
 				34B66FDC1F843CD400A9CCB9 /* fire_texture.png in Resources */,
@@ -947,6 +974,7 @@
 				34B66FE01F844C2100A9CCB9 /* table_texture.png in Resources */,
 				3475C23D1F8FB9A100E8BF86 /* Resize.png in Resources */,
 				3475C2291F8FAF8D00E8BF86 /* EditorHUDScene.sks in Resources */,
+				8FF4B5C91FBD70CE00BB2941 /* rightImage.png in Resources */,
 				344A6E201F990ECA00CFFBEB /* accelerateur.obj in Resources */,
 				8FCDF6191FA1BEDF00631551 /* EditorNotificationScene.sks in Resources */,
 				8F4B40941FB94FBB00DFDA2F /* Save.wav in Resources */,
@@ -966,10 +994,14 @@
 				8F64C0131F7754FD00F14AC7 /* LaunchScreen.storyboard in Resources */,
 				8F4B408D1FB94FBB00DFDA2F /* Delete.wav in Resources */,
 				3475C23E1F8FB9A100E8BF86 /* Rotate.png in Resources */,
+				8FF4B5CB1FBD70CE00BB2941 /* frontImage.png in Resources */,
+				8FF4B5C61FBD70CE00BB2941 /* leftImage.png in Resources */,
 				8F4B40A31FB9676200DFDA2F /* Object2.wav in Resources */,
 				3475C2391F8FB9A100E8BF86 /* ControlPoint.png in Resources */,
 				3475C2381F8FB9A100E8BF86 /* Booster.png in Resources */,
+				8FF4B5C81FBD70CE00BB2941 /* downImage.png in Resources */,
 				8F4B40A21FB9676200DFDA2F /* Object1.wav in Resources */,
+				8FF4B5CA1FBD70CE00BB2941 /* upImage.png in Resources */,
 				8F4B40A51FB9685F00DFDA2F /* Transform.wav in Resources */,
 				8F6AE2C01F6592EB00A29E8B /* Actions.sks in Resources */,
 				344A6E1E1F9908F500CFFBEB /* Cancel.png in Resources */,

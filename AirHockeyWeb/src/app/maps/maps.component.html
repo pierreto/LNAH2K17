@@ -1,0 +1,32 @@
+<h1>Liste des cartes</h1>
+<div class="example-container">
+    <mat-table #table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="Preview">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Aperçu</mat-header-cell>
+            <mat-cell *matCellDef="let map" class="imagePreview"></mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="MapName">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Nom</mat-header-cell>
+            <mat-cell *matCellDef="let map"> {{map.MapName}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="Creator">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Créateur</mat-header-cell>
+            <mat-cell *matCellDef="let map"> {{map.Creator}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="CreationDate">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Date de création</mat-header-cell>
+            <mat-cell *matCellDef="let map"> {{map.CreationDate | date: 'medium'}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="LastBackup">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Dernière modificaiton</mat-header-cell>
+          <mat-cell *matCellDef="let map"> {{map.LastBackup | date: 'medium'}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="Private">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
+          <mat-cell [ngClass]="{'public': map.Private != true, 'private': map.Private == true}" *matCellDef="let map"> {{map.Private == true ? 'Privée' : 'Publique'}} </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="goToMap(row.Id)"></mat-row>
+    </mat-table>
+    <mat-paginator [length]="length" [pageSize]="pageSize"></mat-paginator>
+</div>

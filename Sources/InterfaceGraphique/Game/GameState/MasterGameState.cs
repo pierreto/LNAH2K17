@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using InterfaceGraphique.CommunicationInterface;
 using InterfaceGraphique.Entities;
 using InterfaceGraphique.Services;
+using System.Drawing;
 
 namespace InterfaceGraphique.Game.GameState
 {
@@ -31,24 +32,29 @@ namespace InterfaceGraphique.Game.GameState
                     Console.WriteLine("Player {0} scored", player);
                     Task.Run(() =>this.gameHub.SendGoal(player));
                 };
+            
         }
 
-        public override async void InitializeGameState(GameEntity gameEntity)
+        public override void InitializeGameState(GameEntity gameEntity)
         {
             FonctionsNatives.setOnlineClientType((int) OnlineClientType.MASTER);
             FonctionsNatives.setCurrentOpponentType((int)OpponentType.ONLINE_PLAYER);
 
-            this.gameHub.InitializeMasterGameHub(gameEntity.GameId);
-            this.gameHub.NewPositions += OnNewGamePositions;
+            this.gameHub.InitialiseGame(gameEntity.GameId);
 
             gameHasEnded = false;
             FonctionsNatives.setOnGoalCallback(callback);
+
+            this.gameHub.NewPositions += OnNewGamePositions;
 
             StringBuilder player1Name = new StringBuilder(gameEntity.Master.Username.Length);
             StringBuilder player2Name = new StringBuilder(gameEntity.Slave.Username.Length);
             player1Name.Append(gameEntity.Master.Username);
             player2Name.Append(gameEntity.Slave.Username);
             FonctionsNatives.setPlayerNames(player1Name, player2Name);
+
+            float[] playerColor = new float[4] { Color.White.R, Color.White.G, Color.White.B, Color.White.A };
+            FonctionsNatives.setPlayerColors(playerColor, playerColor);
 
             selectedMap = gameEntity.SelectedMap;
         }
@@ -147,7 +153,7 @@ namespace InterfaceGraphique.Game.GameState
 
         private void OnNewGamePositions(GameDataMessage gameData)
         {
-            if (!gameHasEnded && gameData.SlavePosition != null)
+            if (Program.QuickPlay.CurrentGameState.GameInitialized && !gameHasEnded && gameData.SlavePosition != null)
             {
                 FonctionsNatives.setMasterGameElementPositions(gameData.SlavePosition);
             }

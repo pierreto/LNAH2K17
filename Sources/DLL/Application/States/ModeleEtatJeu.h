@@ -77,7 +77,7 @@ public:
 	bool getCanSendToServer() { return canSendToServer_; }
 	void player1Goal();
 	void player2Goal();
-
+	void setGameEnded();
 	bool isGameStarted() { return gameStarted_; };
 
 

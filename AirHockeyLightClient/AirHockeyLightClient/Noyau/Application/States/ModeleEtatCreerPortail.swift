@@ -97,7 +97,6 @@ class ModeleEtatCreerPortail: ModeleEtat {
             }
             else {
                 // Verification que les noeuds soient sur la table
-                // TODO : implémenter VisiteurSurTable
                 if (self.noeudsSurLaTable()) {
                     // Link portal together
                     noeud.assignerOppose(portail: self.premierNoeud!);
@@ -116,6 +115,8 @@ class ModeleEtatCreerPortail: ModeleEtat {
                     
                     // Jouer le son
                     AudioService.instance.playSound(soundName: EDITION_SOUND.OBJECT2.rawValue)
+                    
+                    FacadeModele.instance.sauvegarderCarte(map: EditorViewController.instance.currentMap!)
                 }
                 else { // Annulation de la commande
                     self.annulerCreation()

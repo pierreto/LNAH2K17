@@ -10,7 +10,7 @@ namespace InterfaceGraphique.Controls.WPF.Store
 {
     public class ItemViewModel : ViewModelBase
     {
-        public ItemViewModel(StoreItemEntity item, bool sold)
+        public ItemViewModel(StoreItemEntity item, bool available)
         {
             Name = item.Name;
             IsChecked = false;
@@ -18,7 +18,9 @@ namespace InterfaceGraphique.Controls.WPF.Store
             Description = item.Description;
             ImageUrl = item.ImageUrl;
             StoreItem = item;
-            CanBuy = sold;
+            CanBuy = available;
+            Id = item.Id;
+            IsGameEnabled = item.IsGameEnabled;
         }
 
         public StoreItemEntity StoreItem { get; set; }
@@ -89,11 +91,18 @@ namespace InterfaceGraphique.Controls.WPF.Store
             }
         }
 
-        private bool notEnoughPoints;
-        public string NotEnoughPoints
+        private bool isGameEnabled;
+        public bool IsGameEnabled
         {
-            get => notEnoughPoints ? "Hidden" : "Visible";
+            get => isGameEnabled;
+            set
+            {
+                isGameEnabled = value;
+                OnPropertyChanged();
+            }
         }
+
+        public int Id { get; set; }
 
         public override void InitializeViewModel()
         {

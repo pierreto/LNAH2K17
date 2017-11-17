@@ -84,7 +84,7 @@ class VisiteurSurTable: VisiteurAbstrait {
         
         // Point maximal
         sommets.append(noeud.convertPosition(noeud.boundingBox.max, to: FacadeModele.instance.obtenirVue().editorScene.rootNode))
-    
+
         // Verifier que tous les noeuds sont sur la table
         for sommet in sommets {
             if (!pointSurTable(sommet: sommet)) {
@@ -161,21 +161,16 @@ class VisiteurSurTable: VisiteurAbstrait {
         
         var sommets = [GLKVector3]()
         sommets.append(GLKVector3.init(v: (cMin.x, 0, cMin.z)))
-        sommets.append(GLKVector3.init(v: (cMin.x, 0, cMax.z)))
         sommets.append(GLKVector3.init(v: (cMax.x, 0, cMax.z)))
-        sommets.append(GLKVector3.init(v: (cMax.x, 0, cMin.z)))
     
         let sommetsTableCount: Int! = sommetsTable?.count
-        let sommetsCount = sommets.count
         for i in 1..<sommetsTableCount {
-            for j in 0..<sommetsCount {
-                if MathHelper.segmentsIntersect(
-                    s11: SCNVector3ToGLKVector3(sommetsTable![i]),
-                    s12: SCNVector3ToGLKVector3(sommetsTable![(i % (sommetsTableCount - 1)) + 1]),
-                    s21: sommets[j],
-                    s22: sommets[(j + 1) % sommetsCount]) {
-                        self.sontSurTable = false
-                }
+            if MathHelper.segmentsIntersect(
+                s11: SCNVector3ToGLKVector3(sommetsTable![i]),
+                s12: SCNVector3ToGLKVector3(sommetsTable![(i % (sommetsTableCount - 1)) + 1]),
+                s21: sommets[0],
+                s22: sommets[1]) {
+                    self.sontSurTable = false
             }
         }
     }

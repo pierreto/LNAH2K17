@@ -106,7 +106,6 @@ class FacadeModele {
     
     /// Initialise la vue, l'arbre et l'état
     func initialiser() {
-        self.arbre = ArbreRendu.instance
         self.viewController = EditorViewController.instance
         self.etat = ModeleEtatCameraControl.instance
         self.generalProperties = GeneralProperties()
@@ -124,9 +123,14 @@ class FacadeModele {
         self.rotateGestureRecognizer?.delegate = self.viewController
         self.normalPanGestureRecognizer?.delegate = self.viewController
         
-        self.arbre?.initialiser()
+        self.initialiserArbre()
         self.etat?.initialiser()
         self.initVue()
+    }
+    
+    func initialiserArbre() {
+        self.arbre = ArbreRendu.instance
+        self.arbre?.initialiser()
     }
     
     /// Retourne la vue courante.
@@ -530,17 +534,20 @@ class FacadeModele {
     }
     
     func chargerCoefficients() {
-        let cFriction = self.docJSON?["Coefficients"][0][0].rawString(options: [])
-        let cRebond = self.docJSON?["Coefficients"][0][1].rawString(options: [])
-        let cAcceleration = self.docJSON?["Coefficients"][0][2].rawString(options: [])
+        let cFriction = self.docJSON?["Coefficients"][0].rawString(options: [])
+        let cRebond = self.docJSON?["Coefficients"][1].rawString(options: [])
+        let cAcceleration = self.docJSON?["Coefficients"][2].rawString(options: [])
         
         self.generalProperties?.setCoefficientValues(coefficientFriction: cFriction!, coefficientRebond: cRebond!, coefficientAcceleration: cAcceleration!)
     }
     
     func sauvegarderCoefficients() {
         let coefficients = self.generalProperties?.getCoefficientValues()
-        let cJSON = JSON([coefficients?[0], coefficients?[1], coefficients?[2]])
-        self.docJSON?["Coefficients"].appendArray(json: cJSON)
+        let friction = coefficients?[0] == nil ? 1.0 : coefficients?[0]
+        let rebond = coefficients?[1] == nil ? 0.0 : coefficients?[1]
+        let acceleration = coefficients?[2] == nil ? 40.0 : coefficients?[2]
+        let cJSON = JSON([friction, rebond, acceleration])
+        self.docJSON?["Coefficients"] = cJSON
     }
     
     /// Cette fonction permet d'enregistrer la patinoire en format JSON

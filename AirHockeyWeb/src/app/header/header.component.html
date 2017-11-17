@@ -4,6 +4,7 @@
       <button *ngIf="!appService.loggedIn && !appService.loginPage" id="login" (click)="login()">SE CONNECTER</button>
       <button *ngIf="!appService.loggedIn && appService.loginPage" class="signUp" (click)="signup()">CRÉER COMPTE</button>
       <button *ngIf="appService.loggedIn" class="profileBtn" (click)="profile()">MON PROFIL</button>
+      <button *ngIf="appService.loggedIn" class="mapsBtn" (click)="maps()">CARTES</button>
       <button *ngIf="appService.loggedIn" class="rankings" (click)="ranking()">CLASSEMENT</button>
       <button *ngIf="appService.loggedIn" class="deconnexion" (click)="login()">DÉCONNEXION</button>
   </div>

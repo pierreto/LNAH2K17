@@ -42,6 +42,7 @@
 }
 
 .mat-row:hover {
+  cursor: pointer;
   background-color: #dedede;
   transition: background-color 1s ease-out;
 }
