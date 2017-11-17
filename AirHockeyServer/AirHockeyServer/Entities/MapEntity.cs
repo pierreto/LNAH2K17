@@ -21,6 +21,7 @@ namespace AirHockeyServer.Entities
         public DateTime CreationDate { get; set; }
         public DateTime LastBackup { get; set; }
         public string Json { get; set; }
+        public string Icon { get; set; }
         public bool Private { get; set; }
         public string Password { get; set; }
         public int CurrentNumberOfPlayer { get; set; }

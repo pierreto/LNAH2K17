@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Data.Linq.Mapping;
 using System.Web;
+using System.Data.Linq;
 
 namespace AirHockeyServer.Pocos
 {
@@ -23,6 +24,9 @@ namespace AirHockeyServer.Pocos
 
         [Column(Name = "json", DbType = "text NOT NULL", CanBeNull = false, UpdateCheck = UpdateCheck.Never)]
         public string Json;
+
+        [Column(Name = "icon", DbType = "text", CanBeNull = true, UpdateCheck = UpdateCheck.Never)]
+        public string Icon;
 
         [Column(Name = "private", DbType = "tinyint(1)", CanBeNull = false)]
         public bool Private;

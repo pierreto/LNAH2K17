@@ -1,7 +1,9 @@
 ﻿using InterfaceGraphique.CommunicationInterface;
 using InterfaceGraphique.Entities;
 using InterfaceGraphique.Services;
+using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
@@ -32,6 +34,7 @@ namespace InterfaceGraphique.Editor
         // The meta data of the current edited map have to be ALWAYS accurate:
         private MapMetaData currentMapInfo;
         private Object saveMapLock = new object();
+        private Object saveIconLock = new object();
 
         public MapManager(MapService mapService)
         {
@@ -123,6 +126,18 @@ namespace InterfaceGraphique.Editor
             // We have to update the properties of the current map:
             this.currentMapInfo.savedOnce = true;
             this.currentMapInfo.savedOnline = false;
+        }
+
+        public void SaveIcon()
+        {
+            byte[] icon = new byte[128*128*3];
+            FonctionsNatives.getMapIcon(icon);
+            MapEntity map = new MapEntity
+            {
+                Id = this.currentMapInfo.Id,
+                Icon = System.Convert.ToBase64String(icon)
+            };
+            Task.Run(async () => await this.mapService.SaveMap(map));
         }
 
         private async Task SaveOnlineMap()
