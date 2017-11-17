@@ -162,10 +162,6 @@ namespace InterfaceGraphique.Editor
                 }
             }
 
-            Dictionary<string, object> fulljson = JsonConvert.DeserializeObject<Dictionary<string, object>>(json.Value);
-            fulljson.Remove("Icon");
-            json.Value = JsonConvert.SerializeObject(fulljson);
-
             ThreadLocal<MapEntity> map = new ThreadLocal<MapEntity>(
                 () =>
                 {
