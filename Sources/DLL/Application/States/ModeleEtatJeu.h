@@ -73,7 +73,7 @@ public:
 	void setSpeedXMaillet(float speedZ) { speedMailletZ_ = speedZ; }
 	void setSpeedYMaillet(float speedX) { speedMailletX_ = speedX; }
 	void setLocalPlayerSkinToDefault();
-	void setOpponentPlayerSkinToDefault();;
+	void setOpponentPlayerSkinToDefault();
 	void player1Goal();
 	void player2Goal();
 	void setGameEnded();
@@ -102,6 +102,10 @@ public:
 
 	void setDeleteEventCallback(DeleteEventCallback callback) { deleteEventCallback_=callback; }
 	DeleteEventCallback getDeleteEventCallback() { return deleteEventCallback_; }
+
+
+	bool getCanSendPreviewToServer() { return canSendPreviewToServer_; }
+	void setCanSendPreviewToServer(bool canSendPreviewToServer) { canSendPreviewToServer_= canSendPreviewToServer; }
 
 private:
 	/// Constructeur.
@@ -168,6 +172,8 @@ private:
 
 	TransformEventCallback transformEventCallback_;
 	DeleteEventCallback deleteEventCallback_;
+
+	bool canSendPreviewToServer_;
 
 };
 
