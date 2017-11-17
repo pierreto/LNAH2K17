@@ -121,8 +121,15 @@ namespace AirHockeyServer.Repositories
                     var query = from map in DC.MapsTable where map.Id == updatedMap.Id select map;
                     var results = query.ToArray();
                     var existingMap = results.First();
-                    existingMap.Json = updatedMap.Json;
-                    existingMap.LastBackup = updatedMap.LastBackup;
+                    if (updatedMap.Json != null)
+                    {
+                        existingMap.Json = updatedMap.Json;
+                        existingMap.LastBackup = updatedMap.LastBackup;
+                    }
+                    if (updatedMap.Icon != null)
+                    {
+                        existingMap.Icon = updatedMap.Icon;
+                    }
                     await Task.Run(() => DC.SubmitChanges());
                     return true;
                 }
