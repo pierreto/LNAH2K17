@@ -107,12 +107,12 @@ class VerticalSplitViewController: UIViewController {
     func togChat() {
         if(!chatOpen){
             chatBottom.constant = 0
-            chatButtonBottom.constant = 330
+            chatButtonBottom.constant = 300
             UIView.animate(withDuration: 0.5, animations: {self.view.layoutIfNeeded()})
         } else {
             chatView.endEditing(true)
             chatButtonBottom.constant = 0
-            chatBottom.constant = -330
+            chatBottom.constant = -300
             UIView.animate(withDuration: 0.5, animations: {self.view.layoutIfNeeded()})
         }
         chatOpen = !chatOpen
@@ -121,12 +121,12 @@ class VerticalSplitViewController: UIViewController {
     func togFriends() {
         if(!friendsOpen){
             friendsBottom.constant = 0
-            friendsButtonBottom.constant = 330
+            friendsButtonBottom.constant = 300
             UIView.animate(withDuration: 0.5, animations: {self.view.layoutIfNeeded()})
         } else {
             friendsView.endEditing(true)
             friendsButtonBottom.constant = 0
-            friendsBottom.constant = -330
+            friendsBottom.constant = -300
             UIView.animate(withDuration: 0.5, animations: {self.view.layoutIfNeeded()})
         }
         friendsOpen = !friendsOpen
