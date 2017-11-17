@@ -724,8 +724,8 @@ void FacadeModele::createMapIcon(unsigned char* dest) {
 	// load an image from the memory handle
 	FIBITMAP *check = FreeImage_LoadFromMemory(mem_fif, hmem, 0);
 
-
-	FreeImage_ConvertToRawBits(dest, check, 3 * 128, 24, 0x0000FF, 0xFF0000, 0x00FF00, false);
+	
+	FreeImage_ConvertToRawBits(dest, check, FreeImage_GetPitch(check), FreeImage_GetBPP(check), 0x0000FF, 0xFF0000, 0x00FF00, false);
 
 
 
@@ -737,6 +737,8 @@ void FacadeModele::createMapIcon(unsigned char* dest) {
 	// Free resources
 	FreeImage_Unload(image);
 	FreeImage_Unload(imageRescaled);
+	// close the memory stream (otherwise we may get a memory leak).
+	FreeImage_CloseMemory(hmem);
 
 	vue_->setLargeurFenetre(oldDim.x, oldDim.y);
 }
