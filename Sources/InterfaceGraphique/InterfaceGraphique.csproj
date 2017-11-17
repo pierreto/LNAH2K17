@@ -199,6 +199,7 @@
     <Compile Include="Controls\WPF\Converters\BaseValueConverter.cs" />
     <Compile Include="Controls\WPF\Converters\BooleanToCollapsedConverter.cs" />
     <Compile Include="Controls\WPF\Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Controls\WPF\Converters\BytesToImageConverter.cs" />
     <Compile Include="Controls\WPF\Converters\SentByMeToAlignmentConverter.cs" />
     <Compile Include="Controls\WPF\Converters\StringToVisibilityConverter.cs" />
     <Compile Include="Controls\WPF\DraggablePopup.cs" />
@@ -209,7 +210,7 @@
     <Compile Include="Controls\WPF\Friends\FriendContentControl.xaml.cs">
       <DependentUpon>FriendContentControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\WPF\Friends\SizePercentageConverter.cs" />
+    <Compile Include="Controls\WPF\Converters\SizePercentageConverter.cs" />
     <Compile Include="Controls\WPF\MinimizableViewModelBase.cs" />
     <Compile Include="Controls\WPF\Navigation\NavigationView.xaml.cs">
       <DependentUpon>NavigationView.xaml</DependentUpon>

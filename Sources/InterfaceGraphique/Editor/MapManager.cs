@@ -122,6 +122,8 @@ namespace InterfaceGraphique.Editor
         {
             StringBuilder filePath = new StringBuilder(this.currentMapInfo.Name);
             FonctionsNatives.enregistrerSous(filePath, Program.GeneralProperties.GetCoefficientValues());
+            byte[] bytes = new byte[128*128*3];
+            FonctionsNatives.getMapIcon(bytes);
 
             // We have to update the properties of the current map:
             this.currentMapInfo.savedOnce = true;

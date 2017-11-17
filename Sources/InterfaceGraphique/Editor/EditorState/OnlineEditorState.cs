@@ -53,10 +53,7 @@ namespace InterfaceGraphique.Editor.EditorState
                 FonctionsNatives.setCanSendPreviewToServer(true);
                 this.accumTime = 0;
             }
-            else
-            {
-                FonctionsNatives.setCanSendPreviewToServer(false);
-            }
+      
         }
 
         private void OnUserLeft(string username)
@@ -217,17 +214,29 @@ namespace InterfaceGraphique.Editor.EditorState
 
         private void CurrentUserObjectTransformChanged(string uuid, IntPtr pos, float rotation, IntPtr scale)
         {
-            float[] posVec = getVec3FromIntptr(pos);
-            float[] scaleVec = getVec3FromIntptr(scale);
-
-            this.editionHub.SendEditorCommand(new TransformCommand(uuid)
+            if (rotation == 1000)
             {
-                Username = User.Instance.UserEntity.Username,
-                Position = posVec,
-                Rotation = rotation,
-                Scale = scaleVec
-            });
-            this.inTransformation = true;
+
+                
+            }else if (rotation == -1000)
+            {
+                FonctionsNatives.setCanSendPreviewToServer(true);
+            }
+            else
+            {
+                float[] posVec = getVec3FromIntptr(pos);
+                float[] scaleVec = getVec3FromIntptr(scale);
+
+                this.editionHub.SendEditorCommand(new TransformCommand(uuid)
+                {
+                    Username = User.Instance.UserEntity.Username,
+                    Position = posVec,
+                    Rotation = rotation,
+                    Scale = scaleVec
+                });
+                this.inTransformation = true;
+
+            }
 
         }
 
