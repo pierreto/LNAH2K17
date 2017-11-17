@@ -116,6 +116,7 @@ namespace InterfaceGraphique {
                 this.Invoke((MethodInvoker)delegate {
                     FonctionsNatives.animer(tempsInterAffichage);
                     FonctionsNatives.dessinerOpenGL();
+                    this.CurrentState.frameUpdate(tempsInterAffichage);
                 });
             }
             catch (Exception e ){

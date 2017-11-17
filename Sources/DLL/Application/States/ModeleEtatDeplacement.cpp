@@ -125,7 +125,8 @@ void ModeleEtatDeplacement::playerMouseMove(int x, int y) {
 
 		visiteurDeplacement_ = VisiteurDeplacement(end - start);
 		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(&visiteurDeplacement_);
-		if (ModeleEtatJeu::obtenirInstance()->getCanSendToServer())
+		if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION
+			&& ModeleEtatJeu::obtenirInstance()->getCanSendPreviewToServer())
 		{
 			sendToServer();
 		}

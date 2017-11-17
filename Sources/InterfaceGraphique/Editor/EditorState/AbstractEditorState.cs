@@ -13,6 +13,8 @@ namespace InterfaceGraphique.Editor.EditorState
         public abstract void MouseUp(object sender, MouseEventArgs e);
         public abstract void MouseDown(object sender, MouseEventArgs e);
 
+        public virtual void frameUpdate(double tempsInterAffichage) { }
+
         public abstract void JoinEdition(MapEntity mapEntity=null);
         public abstract void Escape();
         public abstract Task LeaveEdition();

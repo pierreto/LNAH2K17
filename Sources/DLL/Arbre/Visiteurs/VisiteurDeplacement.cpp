@@ -132,8 +132,9 @@ void VisiteurDeplacement::visiterRondelle(NoeudRondelle * noeud)
 
 void VisiteurDeplacement::defaultVisit(NoeudAbstrait* noeud)
 {
-		if (noeud->estSelectionne())
+	if (noeud->estSelectionne())
 	{
+		selectedNodes_.push_back(noeud);
 		noeud->deplacer(noeud->obtenirPositionRelative() + delta_);
 	
 	}

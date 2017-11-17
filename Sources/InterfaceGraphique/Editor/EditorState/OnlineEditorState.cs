@@ -14,6 +14,7 @@ namespace InterfaceGraphique.Editor.EditorState
 {
     public class OnlineEditorState : AbstractEditorState
     {
+        private double accumTime;
         private EditionHub editionHub;
         private FonctionsNatives.PortalCreationCallback portalCreationCallback;
         private FonctionsNatives.WallCreationCallback wallCreationCallback;
@@ -40,6 +41,22 @@ namespace InterfaceGraphique.Editor.EditorState
             this.selectionEventCallback = CurrentUserSelectedObject;
             this.controlPoinEventCallback = CurrentUserChangedControlPoint;
             this.deleteEventCallback = CurrentUserDeletedNode;
+            this.accumTime = 0;
+        }
+
+        public override void frameUpdate(double tempsInterAffichage)
+        {
+
+            this.accumTime += tempsInterAffichage;
+            if (this.accumTime > 0.025)
+            {
+                FonctionsNatives.setCanSendPreviewToServer(true);
+                this.accumTime = 0;
+            }
+            else
+            {
+                FonctionsNatives.setCanSendPreviewToServer(false);
+            }
         }
 
         private void OnUserLeft(string username)

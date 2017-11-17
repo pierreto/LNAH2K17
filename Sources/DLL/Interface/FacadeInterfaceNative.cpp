@@ -1233,3 +1233,8 @@ void setGameEnded()
 {
 	ModeleEtatJeu::obtenirInstance()->setGameEnded();
 }
+
+void setCanSendPreviewToServer(bool canSendPreviewToServer)
+{
+	ModeleEtatJeu::obtenirInstance()->setCanSendPreviewToServer(canSendPreviewToServer);
+}
