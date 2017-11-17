@@ -172,15 +172,15 @@ namespace InterfaceGraphique {
             this.Fichier_OuvrirEnLigne.Click += (sender, e) => OpenOnlineMap();
             this.Fichier_Nouveau.Click += async (sender, e) =>
             { 
-                ResetDefaultTable();
                 await CurrentState.LeaveEdition();
+                ResetDefaultTable();
                 this.CurrentState = this.offlineState;
                 this.CurrentState.JoinEdition(null);
             };
             this.Fichier_MenuPrincipal.Click += async (sender, e) =>
             {
-                ResetDefaultTable();
                 await CurrentState.LeaveEdition();
+                ResetDefaultTable();
                 Program.FormManager.CurrentForm = Program.MainMenu;
             };
             this.Fichier_ModeTest.Click += (sender, e) => Program.FormManager.CurrentForm = Program.TestMode;
@@ -390,7 +390,7 @@ namespace InterfaceGraphique {
             await mapManager.OpenOnlineMap(map);
 
             this.CurrentState = this.onlineState;
-            await this.CurrentState.LeaveEdition();
+            //await this.CurrentState.LeaveEdition();
             this.CurrentState.JoinEdition(map);
         }
 

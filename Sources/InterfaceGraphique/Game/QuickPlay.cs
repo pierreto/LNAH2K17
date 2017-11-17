@@ -233,6 +233,10 @@ namespace InterfaceGraphique
             FonctionsNatives.redimensionnerFenetre(this.Size.Width, this.Size.Height);
             FonctionsNatives.playMusic(false);
 
+            currentGameState.IsOnline = false;
+            currentGameState.IsOnlineTournementMode = false;
+            currentGameState.IsTournementMode = false;
+
             if (!currentGameState.IsOnlineTournementMode)
             {
                 Program.unityContainer.Resolve<MatchmakingViewModel>().SetDefaultValues();

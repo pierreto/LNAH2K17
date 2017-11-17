@@ -452,6 +452,11 @@ extern "C"
 		FacadeModele::obtenirInstance()->getMapJson(coefficients, map);
 	}
 
+	__declspec(dllexport) void getMapIcon(unsigned char* icon)
+	{
+		FacadeModele::obtenirInstance()->getMapIcon(icon);
+	}
+
 	////////////////////////////////////////////////////////////////////////
 	///
 	/// @fn __declspec(dllexport) void enregistrerSous(char* filePath, float coefficients[])

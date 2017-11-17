@@ -230,18 +230,6 @@ class NoeudCommun : SCNNode {
                             GLKMatrix4Multiply(
                                 SCNMatrix4ToGLKMatrix4(rotation),
                                 SCNMatrix4ToGLKMatrix4(self.transform)))
-        
-        /*let rotation = SCNMatrix4MakeRotation(angle, axes.x, axes.y, axes.z)
-         let newTransform = SCNMatrix4Mult(self.worldTransform, rotation)
-         
-         // Set the new transform
-         if let parent = self.parent {
-         self.transform = parent.convertTransform(newTransform, from: nil)
-         } else {
-         self.transform = newTransform
-         }*/
-        
-        //self.eulerAngles.y += angle
     }
     
     /// Obtient la position relative du noeud.

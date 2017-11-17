@@ -21,6 +21,6 @@ namespace InterfaceGraphique.Entities
         public string Password { get; set; }
         public int CurrentNumberOfPlayer { get; set; }
 
-        public byte[] Icon { get; set; }
+        public string Icon { get; set; }
     }
 }
