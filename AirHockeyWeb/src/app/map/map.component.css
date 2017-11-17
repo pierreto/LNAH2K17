@@ -1,10 +1,12 @@
 .map {
-    box-shadow: 3px 3px 3px black;
+    width: 400px;
+    height: 400px;
+    /* box-shadow: 3px 3px 3px black;
     width: 400px;
     height: 400px;
     background-image: url("../../../../Exe/media/image/default_profile_picture.png");
     background-size: contain;
-    margin: 30px auto;
+    margin: 30px auto; */
 }
 
 .title {

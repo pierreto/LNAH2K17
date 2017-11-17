@@ -3,7 +3,7 @@
     <mat-table #table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="Preview">
             <mat-header-cell *matHeaderCellDef mat-sort-header>Aperçu</mat-header-cell>
-            <mat-cell *matCellDef="let map" class="imagePreview"></mat-cell>
+            <mat-cell *matCellDef="let map"><img [src]="'data:image/jpg;base64,'+map.Icon" /></mat-cell>
         </ng-container>
         <ng-container matColumnDef="MapName">
             <mat-header-cell *matHeaderCellDef mat-sort-header>Nom</mat-header-cell>
