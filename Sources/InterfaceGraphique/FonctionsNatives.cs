@@ -308,6 +308,9 @@ namespace InterfaceGraphique
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void setGameEnded();
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void setCanSendPreviewToServer(bool canSendPreviewToServer);
     }
 }
 
