@@ -65,6 +65,7 @@ class LoginViewController: UIViewController {
                 }
         }
     }
+    
     func adjustForKeyboard(notification: Notification) {
         let userInfo = notification.userInfo!
         

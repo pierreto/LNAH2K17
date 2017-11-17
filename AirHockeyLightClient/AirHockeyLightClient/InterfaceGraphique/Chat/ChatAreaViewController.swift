@@ -46,6 +46,7 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
     //Utilisateur pese sur return lorsqu'il tappe un message
     @IBAction func messageInputReturn(_ sender: Any) {
         sendMessage()
+        self.messageField.resignFirstResponder()
     }
     
     //Changement dans le nom du canal pour effacer le message d'erreur
@@ -67,7 +68,6 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
     
     public var channel: ChannelEntity! {
         didSet (newChannel) {
-            self.refreshUI()
         }
     }
     
@@ -78,15 +78,13 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
         channelNameErrMsg.text = ""
         ChatAreaViewController.sharedChatAreaViewController = self;
         
-        self.refreshUI()
-        
         //Les messages du chat
         chatTableView.delegate = self
         chatTableView.dataSource = self
         chatTableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         
         //Les canals joignables (initialement plus a gauche -- hidden --)
-        modifyJoinChannelConstraint = joinChannelHiddenX
+        joinChannelConstraint.constant = -241
         joinChannelTableView.dataSource = self
         joinChannelTableView.delegate = self
         joinChannelTableView.register(UITableViewCell.self, forCellReuseIdentifier: "JoinCell")
@@ -99,14 +97,16 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
         searchBar.delegate = self
     }
 
-    func refreshUI(){}
     /// Enclenché lorsqu'un message est reçu dans le canal principal
     func receiveMessage(message: Dictionary<String, String>) {
         let sender = message["Sender"]
         let messageValue = message["MessageValue"]
         let timestamp = message["TimeStamp"]
         
-        let dateString = self.convertDate(dateString: timestamp!)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm:ss"
+        let dateString = dateFormatter.string(from: Date())
+        // let dateString = self.convertDate(dateString: timestamp!)
         
         print("Message: \(String(describing: sender! + " (" + dateString + ") : " + messageValue!))\n")
         //Make sure the channel to which messages are added is the main channel
@@ -134,7 +134,11 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
         let messageValue = message["MessageValue"]
         let timestamp = message["TimeStamp"]
         
-        let dateString = self.convertDate(dateString: timestamp!)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm:ss"
+        let dateString = dateFormatter.string(from: Date())
+        
+        //let dateString = self.convertDate(dateString: timestamp!)
         
         print("Message: \(String(describing: sender! + " (" + dateString + ") : " + messageValue!))\n")
         let chan = channels.first(where: { $0.name == channelName })
@@ -218,7 +222,7 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
         if tableView == self.joinChannelTableView {
             self.joinChannel(channelName: channelsToJoin[indexPath.row].name)
             // Hide join table view a channel is joined
-            modifyJoinChannelConstraint = joinChannelHiddenX
+            cJoinChannelConstraint = -241
         }
     }
     
@@ -260,8 +264,10 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
             cell = joinChannelTableView.dequeueReusableCell(withIdentifier: "JoinCell", for: indexPath)
             let channelToJoin: ChannelEntity
             if isSearching {
+                // Display filtered channels
                 channelToJoin = filteredChannelsToJoin[indexPath.row]
             } else {
+                // Display unfiltered channels
                 channelToJoin = channelsToJoin[indexPath.row]
             }
             cell?.backgroundColor = UIColor(red:0.24, green:0.24, blue:0.24, alpha:1.0)
@@ -303,7 +309,7 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
 }
 
 extension ChatAreaViewController: ChannelSelectionDelegate {
-    var modifyJoinChannelConstraint: Float {
+    var cJoinChannelConstraint: Float {
         get {
             return Float(self.joinChannelConstraint.constant)
         }
@@ -340,7 +346,7 @@ extension ChatAreaViewController: ChannelSelectionDelegate {
     }
     
     func toggleAddChannelView() {
-        modifyJoinChannelConstraint = -241
+        cJoinChannelConstraint = -241
         self.addChannelView.isHidden = !self.addChannelView.isHidden
     }
 }

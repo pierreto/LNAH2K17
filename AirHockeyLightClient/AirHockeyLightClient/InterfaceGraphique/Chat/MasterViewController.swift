@@ -11,7 +11,7 @@ import UIKit
 protocol ChannelSelectionDelegate: class {
     var sChannelNameErrMsg: String {get set}
     var sChannelName: String { get set}
-    var modifyJoinChannelConstraint: Float { get set}
+    var cJoinChannelConstraint: Float { get set}
     func channelSelected(newChannel: ChannelEntity)
     func toggleAddChannelView()
 }
@@ -25,10 +25,10 @@ class MasterViewController: UITableViewController {
     weak var delegate: ChannelSelectionDelegate?
     @IBOutlet var channelTableView: UITableView!
     @IBAction func toggleJoinChannelMenu(_ sender: Any) {
-        if delegate?.modifyJoinChannelConstraint == 1 {
-            delegate?.modifyJoinChannelConstraint = -241
+        if delegate?.cJoinChannelConstraint == 1 {
+            delegate?.cJoinChannelConstraint = -241
         } else {
-            delegate?.modifyJoinChannelConstraint = 1
+            delegate?.cJoinChannelConstraint = 1
         }
     }
 

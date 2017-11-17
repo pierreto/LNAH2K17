@@ -271,6 +271,7 @@
                         <outlet property="friendsBottom" destination="Fft-DI-bVh" id="cz0-bO-FZF"/>
                         <outlet property="friendsButton" destination="u4z-z3-hQe" id="aIm-NG-VMK"/>
                         <outlet property="friendsButtonBottom" destination="msh-IQ-2b1" id="N1f-T1-E8s"/>
+                        <outlet property="friendsView" destination="A8c-g2-mLv" id="Gln-Uo-y94"/>
                         <outlet property="topView" destination="E24-ll-FvZ" id="6AX-XP-42S"/>
                         <outlet property="topViewBottom" destination="KGS-nE-2TJ" id="S93-BA-xG5"/>
                     </connections>
@@ -1404,6 +1405,7 @@
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Adresse IP" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hhw-I4-KJN" userLabel="iPaddressInput">
                                                 <rect key="frame" x="0.0" y="0.0" width="400" height="60"/>
                                                 <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="tintColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="60" id="2zK-Hs-imx"/>
                                                     <constraint firstAttribute="width" constant="400" id="qJi-CV-0j8"/>
@@ -1623,13 +1625,14 @@
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Nom d'usager" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Tue-6k-iTD" userLabel="usernameInput">
                                                 <rect key="frame" x="0.0" y="0.0" width="400" height="60"/>
                                                 <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="tintColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="ctR-ni-o8G"/>
                                                     <constraint firstAttribute="width" constant="400" id="rx3-9w-nCh"/>
                                                 </constraints>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                                <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                                <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
                                                 <connections>
                                                     <action selector="editUsernameInput:" destination="9iZ-5D-aWx" eventType="editingChanged" id="aWS-La-dfI"/>
                                                     <action selector="usernameInputReturn:" destination="9iZ-5D-aWx" eventType="primaryActionTriggered" id="EYW-Ue-h6o"/>
@@ -1644,6 +1647,7 @@
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Mot de passe" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kZ7-IX-vjq" userLabel="passwordInput">
                                                 <rect key="frame" x="0.0" y="112.5" width="400" height="60"/>
                                                 <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="tintColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="400" id="szb-JZ-suK"/>
                                                     <constraint firstAttribute="height" constant="60" id="wVf-1D-TER"/>
@@ -1782,13 +1786,14 @@
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Nom d'usager" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Kwn-mD-qor" userLabel="usernameInput">
                                                 <rect key="frame" x="0.0" y="0.0" width="400" height="60"/>
                                                 <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="tintColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="60" id="3DA-OX-3Bp"/>
                                                     <constraint firstAttribute="width" constant="400" id="Ahh-K6-eJI"/>
                                                 </constraints>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                                <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                                <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
                                                 <connections>
                                                     <action selector="editUsernameInput:" destination="v1r-pC-DK7" eventType="editingChanged" id="4ZH-bp-GsJ"/>
                                                     <action selector="usernameInputReturn:" destination="v1r-pC-DK7" eventType="primaryActionTriggered" id="Duz-Yu-peN"/>
@@ -1803,13 +1808,14 @@
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Nom" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="G3u-u3-lIO" userLabel="nameInput">
                                                 <rect key="frame" x="0.0" y="112.5" width="400" height="60"/>
                                                 <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="tintColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="400" id="1pi-RW-FYG"/>
                                                     <constraint firstAttribute="height" constant="60" id="LHv-MO-UYI"/>
                                                 </constraints>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                                <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                                <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
                                                 <connections>
                                                     <action selector="editNameInput:" destination="v1r-pC-DK7" eventType="editingChanged" id="UbR-tJ-I6h"/>
                                                     <action selector="editUsernameInput:" destination="v1r-pC-DK7" eventType="editingChanged" id="P5V-rg-mWE"/>
@@ -1825,12 +1831,13 @@
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Courriel" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qaQ-v0-oEt" userLabel="emailInput">
                                                 <rect key="frame" x="0.0" y="225" width="400" height="60"/>
                                                 <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="tintColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="60" id="7st-WW-hDx"/>
                                                 </constraints>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                                <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES" textContentType="email"/>
+                                                <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES" textContentType="email"/>
                                                 <connections>
                                                     <action selector="editEmailInput:" destination="v1r-pC-DK7" eventType="editingChanged" id="DI8-uf-FyJ"/>
                                                     <action selector="editUsernameInput:" destination="v1r-pC-DK7" eventType="editingChanged" id="BmW-qM-9CR"/>
@@ -1846,13 +1853,14 @@
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Mot de passe" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vrI-FR-UF7" userLabel="passwordInput">
                                                 <rect key="frame" x="0.0" y="337.5" width="400" height="60"/>
                                                 <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="tintColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="60" id="2oa-gI-2PA"/>
                                                     <constraint firstAttribute="width" constant="400" id="qmq-rW-4IA"/>
                                                 </constraints>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                                <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
+                                                <textInputTraits key="textInputTraits" returnKeyType="next" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
                                                 <connections>
                                                     <action selector="editPasswordInput:" destination="v1r-pC-DK7" eventType="editingChanged" id="5Qf-mK-lAx"/>
                                                     <action selector="passwordInputReturn:" destination="v1r-pC-DK7" eventType="primaryActionTriggered" id="3Q8-IY-PkJ"/>
@@ -1867,6 +1875,7 @@
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Confirmation mot de passe" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4kk-EF-vPh" userLabel="confirmPasswordInput">
                                                 <rect key="frame" x="0.0" y="450" width="400" height="60"/>
                                                 <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="tintColor" red="0.53333333329999999" green="0.53333333329999999" blue="0.53333333329999999" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="60" id="Vdj-NP-s5Z"/>
                                                     <constraint firstAttribute="width" constant="400" id="kaI-AV-UYI"/>
