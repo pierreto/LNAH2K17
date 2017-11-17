@@ -14,6 +14,7 @@
 
 #include "FacadeModele.h"
 #include "Vue.h"
+#include "ModeleEtatJeu.h"
 
 
 /// Pointeur vers l'instance unique de la classe.
@@ -81,7 +82,7 @@ void ModeleEtatDeplacement::initialiser()
 ///
 ////////////////////////////////////////////////////////////////////////
 ModeleEtatDeplacement::ModeleEtatDeplacement()
-	: ModeleEtat(), deplacementTotal_(0)
+	: ModeleEtat(), deplacementTotal_(0), visiteurDeplacement_(glm::vec3(),false)
 {
 }
 
@@ -122,8 +123,12 @@ void ModeleEtatDeplacement::playerMouseMove(int x, int y) {
 		FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(lastMousePosX_, lastMousePosY_, start);
 		FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(mousePosX_, mousePosY_, end);
 
-		VisiteurDeplacement visiteur = VisiteurDeplacement(end - start);
-		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(&visiteur);
+		visiteurDeplacement_ = VisiteurDeplacement(end - start);
+		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(&visiteurDeplacement_);
+		if (ModeleEtatJeu::obtenirInstance()->getCanSendToServer())
+		{
+			sendToServer();
+		}
 
 		deplacementTotal_  += (end - start);
 	}
@@ -147,6 +152,12 @@ void ModeleEtatDeplacement::mouseUpL()
 		escape();
 	}
 
+	if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
+	{
+		sendToServer();
+	}
+
+
 	initialiser();
 }
 
@@ -162,8 +173,8 @@ void ModeleEtatDeplacement::mouseUpL()
 void ModeleEtatDeplacement::escape()
 {
 	// Revert Changes
-	VisiteurDeplacement visiteur = VisiteurDeplacement(-deplacementTotal_);
-	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(&visiteur);
+	visiteurDeplacement_ = VisiteurDeplacement(-deplacementTotal_);
+	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(&visiteurDeplacement_);
 	// Reinitialiser l'etat
 	initialiser();
 
@@ -175,3 +186,15 @@ void ModeleEtatDeplacement::escape()
 /// @}
 ///////////////////////////////////////////////////////////////////////////////
 
+void ModeleEtatDeplacement::sendToServer()
+{
+	for (NoeudAbstrait* node : visiteurDeplacement_.getSelectedNodes())
+	{
+		TransformEventCallback callback = ModeleEtatJeu::obtenirInstance()->getTransformEventCallback();
+
+		if (callback)
+		{
+			callback(node->getUUID(), glm::value_ptr(node->obtenirPositionRelative()), node->obtenirRotation().y, glm::value_ptr(node->obtenirScale()));
+		}
+	}
+}

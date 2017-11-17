@@ -73,7 +73,8 @@ public:
 	void setSpeedXMaillet(float speedZ) { speedMailletZ_ = speedZ; }
 	void setSpeedYMaillet(float speedX) { speedMailletX_ = speedX; }
 	void setLocalPlayerSkinToDefault();
-	void setOpponentPlayerSkinToDefault();;
+	void setOpponentPlayerSkinToDefault();
+	bool getCanSendToServer() { return canSendToServer_; }
 	void player1Goal();
 	void player2Goal();
 
@@ -168,6 +169,8 @@ private:
 
 	TransformEventCallback transformEventCallback_;
 	DeleteEventCallback deleteEventCallback_;
+
+	bool canSendToServer_;
 
 };
 

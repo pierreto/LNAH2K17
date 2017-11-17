@@ -22,7 +22,6 @@
 ///////////////////////////////////////////////////////////////////////////
 
 #include "ModeleEtat.h"
-#include "ModeleEtatCreerBoost.h"
 
 class ModeleEtatDeplacement : public ModeleEtat
 {
@@ -40,6 +39,7 @@ public:
 	virtual void mouseUpL();
 	/// Évènement appelé lorsque la touche escape est enfoncée
 	virtual void escape();
+	void sendToServer();
 
 
 private:
@@ -59,6 +59,9 @@ private:
 
 	/// Déplacement total appliqué
 	glm::vec3 deplacementTotal_;
+
+	VisiteurDeplacement visiteurDeplacement_;
+
 };
 
 
