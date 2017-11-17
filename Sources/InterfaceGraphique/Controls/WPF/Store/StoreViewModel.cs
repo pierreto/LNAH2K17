@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Timers;
 
 namespace InterfaceGraphique.Controls.WPF.Store
 {
@@ -32,24 +33,22 @@ namespace InterfaceGraphique.Controls.WPF.Store
             //
         }
 
-        private int playerPoints = 0;
-
         public async Task Initialize()
         {
             var items = await StoreService.GetStoreItems();
             foreach(var item in items)
             {
-                StoreItems.Add(new ItemViewModel(item, User.Instance.Inventory.Find(x => x.Id == item.Id) != null));
+                StoreItems.Add(new ItemViewModel(item, User.Instance.Inventory.Find(x => x.Id == item.Id) == null));
             }
 
             var stats = await PlayerStatsService.GetPlayerStats(User.Instance.UserEntity.Id);
             if(stats == null)
             {
-                playerPoints = 0;
+                Points = 0;
             }
             else
             {
-                playerPoints = stats.Points;
+                Points = stats.Points;
             }
             
         }
@@ -86,23 +85,55 @@ namespace InterfaceGraphique.Controls.WPF.Store
             }
         }
 
+        private int points;
+        public int Points
+        {
+            get => points;
+            set
+            {
+                points = value;
+                OnPropertyChanged();
+            }
+        }
+
         private async Task BuyItems()
         {
-            if(StoreItems.Where(x => x.IsChecked).Sum(x => x.Price) <= playerPoints)
+            if(TotalPrice <= Points)
             {
                 await StoreService.BuyElements(StoreItems.Where(x => x.IsChecked && x.CanBuy).Select(x => x.StoreItem).ToList(), User.Instance.UserEntity.Id);
-                playerPoints -= StoreItems.Where(x => x.IsChecked).Sum(x => x.Price);
+                Points -= StoreItems.Where(x => x.IsChecked).Sum(x => x.Price);
 
                 User.Instance.Inventory = await StoreService.GetUserStoreItems(User.Instance.UserEntity.Id);
+
+                foreach(var item in StoreItems)
+                {
+                    if(User.Instance.Inventory.Any(x => x.Id == item.Id))
+                    {
+                        item.CanBuy = false;
+                    }
+                }
+
                 EmptyCart();
             }
             else
             {
                 notEnoughPoints = true;
+
+                Timer timer = new Timer();
+                timer.Interval = 3000;
+                timer.Elapsed += (timerSender, e) => ErrorNotice(timerSender, e, timer, "NotEnoughPoints");
+
                 OnPropertyChanged("NotEnoughPoints");
             }
         }
-        
+
+        private void ErrorNotice(object timerSender, ElapsedEventArgs e, System.Timers.Timer timer, string property)
+        {
+            timer.Stop();
+            notEnoughPoints = false;
+            OnPropertyChanged(property);
+        }
+
         private ICommand reset;
         public ICommand Reset
         {
@@ -149,10 +180,32 @@ namespace InterfaceGraphique.Controls.WPF.Store
             FocusItem = item;
         }
 
+        private ICommand checkItemCommand;
+        public ICommand CheckItemCommand
+        {
+            get { return checkItemCommand ?? (checkItemCommand = new DelegateCommand<ItemViewModel>(OnCheckbox)); }
+        }
+
+        private void OnCheckbox(ItemViewModel item)
+        {
+            TotalPrice = item.IsChecked ? TotalPrice + item.Price : TotalPrice - item.Price;
+        }
+
         private bool notEnoughPoints;
         public string NotEnoughPointsError
         {
             get => notEnoughPoints ? "Visible" : "Hidden";
+        }
+
+        private int totalPrice;
+        public int TotalPrice
+        {
+            get => totalPrice;
+            set
+            {
+                totalPrice = value;
+                OnPropertyChanged();
+            }
         }
     }
 }

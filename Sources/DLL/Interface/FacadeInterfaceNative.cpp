@@ -1233,3 +1233,8 @@ void setOpponentPlayerSkinToDefault()
 {
 	ModeleEtatJeu::obtenirInstance()->setOpponentPlayerSkinToDefault();
 }
+
+void setGameEnded()
+{
+	ModeleEtatJeu::obtenirInstance()->setGameEnded();
+}

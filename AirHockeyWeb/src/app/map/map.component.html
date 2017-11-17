@@ -8,25 +8,25 @@
       
     </div>
     <div class="title">
-      Map Name
+        {{ map?.Name }}
     </div>
   </div>
   <div class="mapInfo">
       <div>
           <h2>Créateur</h2>
-          <h3>Bobbbbbbby</h3>
+          <h3>{{ map?.Creator || "..."}}</h3>
         </div>
         <div>
           <h2>Date de création</h2>
-          <h3>Today</h3>
+          <h3>{{ (map?.CreationDate | date:'medium') || "..."}}</h3>
         </div>
         <div>
           <h2>Date de la dernière modification</h2>
-          <h3>Not today</h3>
+          <h3>{{ (map?.LastBackup | date:'medium') || "..."}}</h3>
         </div>
         <div>
           <h2>Status</h2>
-          <h3>Publique</h3>
+          <h3>{{ map?.Private? "Privée" : "Publique" }}</h3>
         </div>
   </div>
 </div>

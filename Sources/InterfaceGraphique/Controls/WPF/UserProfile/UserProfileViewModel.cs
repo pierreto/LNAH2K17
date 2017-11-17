@@ -1,4 +1,5 @@
 ﻿using InterfaceGraphique.CommunicationInterface;
+using InterfaceGraphique.Controls.WPF.Store;
 using InterfaceGraphique.Entities;
 using InterfaceGraphique.Services;
 using Prism.Commands;
@@ -32,7 +33,7 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
         public void Reset()
         {
             this.Achievements = new ObservableCollection<Achievement>();
-            items = new List<StoreItemEntity>();
+            Items = new List<ItemViewModel>();
             Name = "myName";
             UserName = "myUsername";
             Email = "email@love.com";
@@ -55,7 +56,17 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
                 UserName = User.Instance.UserEntity.Username;
                 Name = User.Instance.UserEntity.Name;
                 Email = User.Instance.UserEntity.Email;
-                Items = await StoreService.GetUserStoreItems(User.Instance.UserEntity.Id);
+
+                var items = await StoreService.GetUserStoreItems(User.Instance.UserEntity.Id);
+
+                Items = new List<ItemViewModel>();
+                foreach (var item in items)
+                {
+                    Items.Add(new ItemViewModel(item, false));
+                }
+                OnPropertyChanged("Items");
+
+                //Items = await StoreService.GetUserStoreItems(User.Instance.UserEntity.Id);
             }
             else
             {
@@ -71,7 +82,7 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
             Achievements = new ObservableCollection<Achievement>(achievements.OrderBy(x => x.Category).ThenBy(x => x.Order));
 
             var playerStats = await PlayerStatsService.GetPlayerStats(profileId);
-            if(playerStats != null)
+            if (playerStats != null)
             {
                 PointsNb = playerStats.Points;
                 TournamentWon = playerStats.TournamentsWon;
@@ -200,8 +211,8 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
             Program.FormManager.CurrentForm = Program.MainMenu;
         }
 
-        private List<StoreItemEntity> items;
-        public List<StoreItemEntity> Items
+        private List<ItemViewModel> items;
+        public List<ItemViewModel> Items
         {
             get
             {
@@ -217,12 +228,30 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
         private ICommand _selectCommand;
         public ICommand SelectCommand
         {
-            get { return _selectCommand ?? (_selectCommand = new DelegateCommand<StoreItemEntity>(DoSelect)); }
+            get { return _selectCommand ?? (_selectCommand = new DelegateCommand<ItemViewModel>(DoSelect)); }
         }
 
-        private async void DoSelect(StoreItemEntity item)
+        private async void DoSelect(ItemViewModel item)
         {
-            await StoreService.UpdateItemEnable(User.Instance.UserEntity.Id, item);
+            if (item.IsGameEnabled)
+            {
+                item.StoreItem.IsGameEnabled = true;
+                foreach (var element in Items)
+                {
+                    if (element.Id != item.Id && element.IsGameEnabled)
+                    {
+                        element.IsGameEnabled = false;
+                    }
+                }
+
+                await StoreService.UpdateItemEnable(User.Instance.UserEntity.Id, item.StoreItem);
+            }
+            else
+            {
+                item.StoreItem.IsGameEnabled = false;
+                await StoreService.UpdateItemEnable(User.Instance.UserEntity.Id, item.StoreItem);
+            }
+
             User.Instance.Inventory = await StoreService.GetUserStoreItems(User.Instance.UserEntity.Id);
         }
 
@@ -249,7 +278,7 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
 
         private async Task SearchFriendAction()
         {
-            if(friendId > -1)
+            if (friendId > -1)
             {
                 Reset();
                 await Initialize(friendId);

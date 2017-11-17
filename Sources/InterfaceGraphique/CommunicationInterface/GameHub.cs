@@ -14,15 +14,16 @@ namespace InterfaceGraphique.CommunicationInterface
     {
         public event Action<GameDataMessage> NewPositions;
         public event Action<GoalMessage> NewGoal;
-        public event Action NewGameOver;
+        public event Action GameOver;
 
         private Guid gameGuid;
 
         private IHubProxy gameHubProxy;
+        
         public void InitializeHub(HubConnection connection)
         {
-            //   gameHubProxy = connection.CreateHubProxy("GameWaitingRoomHub");
             gameHubProxy = GameWaitingRoomHub.WaitingRoomProxy;
+            InitializeEvents();
         }
 
         private void ManagePlayerDisconnection()
@@ -38,42 +39,54 @@ namespace InterfaceGraphique.CommunicationInterface
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        //For the slave
-        public void InitializeSlaveGameHub(Guid gameGuid)
+        public void InitializeEvents()
+        {
+            gameHubProxy.On<GameDataMessage>("ReceivedGameData", message => OnGameData(message));
+
+            gameHubProxy.On<GoalMessage>("ReceivedGoal", message => OnGoalMessage(message));
+
+            gameHubProxy.On("ReceivedGameOver", () => OnGameOver());
+
+            gameHubProxy.On("ReceivedGamePauseOrResume", () => OnGamePauseOrResume());
+
+            gameHubProxy.On("DisconnectedOpponent", () => OnDisconnectedOpponent());
+        }
+
+        public void OnGameData(GameDataMessage gameData)
+        {
+            NewPositions?.Invoke(gameData);
+        }
+
+        public void OnGoalMessage(GoalMessage goal)
+        {
+            NewGoal?.Invoke(goal);
+        }
+
+        public void OnGameOver()
+        {
+            GameOver?.Invoke();
+        }
+
+        public void OnGamePauseOrResume()
+        {
+            Program.QuickPlay.Invoke(new MethodInvoker(() =>
+            {
+                Program.QuickPlay.ApplyEsc();
+            }));
+        }
+
+        public void OnDisconnectedOpponent()
+        {
+            ManagePlayerDisconnection();
+        }
+
+        public void InitialiseGame(Guid gameGuid)
         {
             this.gameGuid = gameGuid;
 
             // We need to give a mapping master<->gameId to the server hub so we can handle
             // disconnections properly:
             Task.Run(() => gameHubProxy.Invoke("RegisterPlayer", gameGuid));
-
-            gameHubProxy.On<GameDataMessage>("ReceivedGameData", message =>
-            {
-                NewPositions?.Invoke(message);
-            });
-
-            gameHubProxy.On<GoalMessage>("ReceivedGoal", message =>
-            {
-                NewGoal?.Invoke(message);
-            });
-            
-            gameHubProxy.On("ReceivedGameOver", () =>
-            {
-                NewGameOver?.Invoke();
-            });
-
-            gameHubProxy.On("ReceivedGamePauseOrResume", () =>
-            {
-                Program.QuickPlay.Invoke(new MethodInvoker(() =>
-                {
-                    Program.QuickPlay.ApplyEsc();
-                }));
-            });
-
-            gameHubProxy.On("DisconnectedOpponent", () =>
-            {
-                ManagePlayerDisconnection();
-            });
         }
 
         public async Task SendSlavePosition(float[] slavePosition)
@@ -81,35 +94,6 @@ namespace InterfaceGraphique.CommunicationInterface
             GameDataMessage gameDataMessage = new GameDataMessage(slavePosition);
 
             await gameHubProxy.Invoke("SendGameData", gameGuid, gameDataMessage);
-        }
-
-
-        //For the master
-        public void InitializeMasterGameHub(Guid gameId)
-        {
-            this.gameGuid = gameId;
-
-            // We need to give a mapping master<->gameId to the server hub so we can handle
-            // disconnections properly:
-            Task.Run(() => gameHubProxy.Invoke("RegisterPlayer", gameGuid));
-
-            gameHubProxy.On<GameDataMessage>("ReceivedGameData", message =>
-            {
-                NewPositions?.Invoke(message);
-            });
-
-            gameHubProxy.On("ReceivedGamePauseOrResume", () =>
-            {
-                Program.QuickPlay.Invoke(new MethodInvoker(() =>
-                {
-                    Program.QuickPlay.ApplyEsc();
-                }));
-            });
-
-            gameHubProxy.On("DisconnectedOpponent", () =>
-            {
-                ManagePlayerDisconnection();
-            });
         }
 
         public async Task SendGameData(float[] slavePosition, float[] masterPosition, float[] puckPosition)

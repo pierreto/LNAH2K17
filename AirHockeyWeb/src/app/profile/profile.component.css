@@ -70,9 +70,11 @@ h3 {
     color: #000;
     font-size: 18px;
 }
+
 .profileInfo > div > h3 {
     color: #aaa;
 }
+
 .aIcon {
     margin: 10px 100px 10px 100px;
     width: 100px;

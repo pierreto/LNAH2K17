@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using InterfaceGraphique.CommunicationInterface;
 using InterfaceGraphique.Entities;
 using InterfaceGraphique.Services;
+using System.Drawing;
 
 namespace InterfaceGraphique.Game.GameState
 {
@@ -22,6 +23,7 @@ namespace InterfaceGraphique.Game.GameState
         {
             this.gameHub = gameHub;
             MapService = mapService;
+         
         }
 
         public override async void InitializeGameState(GameEntity gameEntity)
@@ -35,14 +37,19 @@ namespace InterfaceGraphique.Game.GameState
             player2Name.Append(gameEntity.Master.Username);
             FonctionsNatives.setPlayerNames(player1Name, player2Name);
 
+            float[] playerColor = new float[4] { Color.White.R, Color.White.G, Color.White.B, Color.White.A };
+            FonctionsNatives.setPlayerColors(playerColor, playerColor);
+
             gameHasEnded = false;
 
-            this.gameHub.InitializeSlaveGameHub(gameEntity.GameId);
             this.gameHub.NewPositions += OnNewGamePositions;
             this.gameHub.NewGoal += OnNewGoal;
-            this.gameHub.NewGameOver += EndGame;
+            this.gameHub.GameOver += EndGame;
 
+            this.gameHub.InitialiseGame(gameEntity.GameId);
             selectedMap = gameEntity.SelectedMap;
+
+
         }
 
         private void OnNewGoal(GoalMessage goalMessage)
@@ -64,10 +71,10 @@ namespace InterfaceGraphique.Game.GameState
 
             float[] slavePosition = new float[3];
             FonctionsNatives.getSlavePosition(slavePosition);
-            Task.Run(() =>this.gameHub.SendSlavePosition(slavePosition));
+            Task.Run(() => this.gameHub.SendSlavePosition(slavePosition));
         }
 
-    
+
         ////////////////////////////////////////////////////////////////////////
         ///
         /// Cette fonction suit le mouvement de la souris.
@@ -80,8 +87,8 @@ namespace InterfaceGraphique.Game.GameState
         public override void MouseMoved(object sender, MouseEventArgs e)
         {
 
-                FonctionsNatives.opponentMouseMove(e.Location.X, e.Location.Y);
-                
+            FonctionsNatives.opponentMouseMove(e.Location.X, e.Location.Y);
+
         }
         ////////////////////////////////////////////////////////////////////////
         ///
@@ -123,6 +130,13 @@ namespace InterfaceGraphique.Game.GameState
         {
             gameHasEnded = true;
             Program.QuickPlay.EndGame();
+            Program.QuickPlay.UnsuscribeEventHandlers();
+            FonctionsNatives.setGameEnded();
+
+            this.gameHub.NewPositions -= OnNewGamePositions;
+            this.gameHub.NewGoal -= OnNewGoal;
+            this.gameHub.GameOver -= EndGame;
+
             if (IsOnlineTournementMode)
             {
                 Program.OnlineTournament.Invoke(new MethodInvoker(() =>
@@ -134,7 +148,7 @@ namespace InterfaceGraphique.Game.GameState
 
         private void OnNewGamePositions(GameDataMessage gameData)
         {
-            if (!gameHasEnded && gameData.MasterPosition != null && gameData.SlavePosition != null && gameData.PuckPosition != null)
+            if (Program.QuickPlay.CurrentGameState.GameInitialized && !gameHasEnded && gameData.MasterPosition != null && gameData.SlavePosition != null && gameData.PuckPosition != null)
             {
                 FonctionsNatives.setSlaveGameElementPositions(gameData.SlavePosition, gameData.MasterPosition, gameData.PuckPosition);
             }

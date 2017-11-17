@@ -130,6 +130,8 @@ class ModeleEtatDuplication: ModeleEtat {
                 
                 // Jouer le son
                 AudioService.instance.playSound(soundName: EDITION_SOUND.SELECTION2.rawValue)
+                
+                FacadeModele.instance.sauvegarderCarte(map: EditorViewController.instance.currentMap!)
             }
         }
     }

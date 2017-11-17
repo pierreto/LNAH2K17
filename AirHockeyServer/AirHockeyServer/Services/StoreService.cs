@@ -12,12 +12,14 @@ namespace AirHockeyServer.Services
 {
     public class StoreService : IStoreService
     {
-        public StoreService(IStoreRepository storeRepository)
+        public StoreService(IStoreRepository storeRepository, IPlayerStatsService playerStatsService)
         {
             StoreRepository = storeRepository;
+            PlayerStatsService = playerStatsService;
         }
 
         public IStoreRepository StoreRepository { get; }
+        public IPlayerStatsService PlayerStatsService { get; }
 
         public async Task AddUserItems(int userId, List<StoreItemEntity> items)
         {
@@ -25,6 +27,9 @@ namespace AirHockeyServer.Services
             {
                 await StoreRepository.AddUserItem(userId, item);
             }
+
+            int totalPrice = items.Sum(x => x.Price);
+            await PlayerStatsService.AddPoints(userId, -totalPrice);
         }
 
         public List<StoreItemEntity> GetStoreItems()
@@ -40,6 +45,11 @@ namespace AirHockeyServer.Services
         public async Task UpdateUserItem(int userId, StoreItemEntity item)
         {
             await StoreRepository.UpdateUserItem(userId, item);
+        }
+
+        public async Task UpdateUserItems(int userId, List<StoreItemEntity> storeItems)
+        {
+            await StoreRepository.UpdateUserItems(userId, storeItems);
         }
     }
 }

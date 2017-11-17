@@ -7,6 +7,7 @@
              xmlns:wpf="clr-namespace:InterfaceGraphique.Controls.WPF"
              xmlns:converters="clr-namespace:InterfaceGraphique.Controls.WPF.Converters"
              xmlns:fa="http://schemas.fontawesome.io/icons/"
+             xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
 
              mc:Ignorable="d" 
              d:DesignHeight="546" d:DesignWidth="200" Background="#FF32373C" >
@@ -18,66 +19,49 @@
             <DataTemplate x:Name="AddUserView" DataType="{x:Type local:AddUserViewModel}">
                 <local:AddUserView DataContext="{Binding}"/>
             </DataTemplate>
+            <local:SizePercentageConverter x:Key="PercentageConverter" d:IsDataSource="True" />
 
+            <wpf:ViewModelLocator x:Key="VMLocator" d:IsDataSource="True" />
+            <Style TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource MaterialDesignTabablzControlStyle}" />
+            <Style x:Key="mdTabHeader" TargetType="{x:Type dragablz:DragablzItem}" BasedOn="{StaticResource MaterialDesignDragableTabItemStyle}">
+                <Setter Property="Width" Value="{Binding Converter={StaticResource PercentageConverter}, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type dragablz:TabablzControl}},Path=ActualWidth}" />
+            </Style>
             <ResourceDictionary.MergedDictionaries >
                 <ResourceDictionary Source="/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
                 <ResourceDictionary Source="/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
                 <ResourceDictionary Source="/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Blue.xaml" />
                 <ResourceDictionary Source="/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Green.xaml" />
+
+                <!-- Include the Dragablz Material Design style -->
+                <ResourceDictionary Source="pack://application:,,,/Dragablz;component/Themes/materialdesign.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
-
-
+ 
+           
         </ResourceDictionary>
 
 
     </UserControl.Resources>
-    <Grid>
+    <Grid >
+  
+
         <Grid.RowDefinitions>
-            <RowDefinition Height="31*"/>
-            <RowDefinition Height="222*"/>
+            <RowDefinition/>
             <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
-
-        <ListBox Grid.Row="0" Style="{StaticResource MaterialDesignToolToggleListBox}" SelectedIndex="0"
-                 SelectionChanged="ListBox_SelectionChanged" RenderTransformOrigin="0.5,0.5" Background="{x:Null}" Margin="0,0,0,8" >
-            <ListBox.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform AngleY="0.452"/>
-                    <RotateTransform/>
-                    <TranslateTransform Y="-1.242"/>
-                </TransformGroup>
-            </ListBox.RenderTransform>
-            <ListBox.ItemContainerStyle>
-                <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
-                    <Setter Property="Background" Value="#FF3E3E40"/>
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                    <Setter Property="BorderThickness" Value="0" />
-                    <Setter Property="BorderBrush" Value="#FF3E3E40" />
-
-                    <Style.Triggers>
-                        <Trigger Property="IsSelected" Value="True" >
-                            <Setter Property="FontWeight" Value="Bold" />
-                            <Setter Property="Background" Value="#FF32373C" />
-                            <Setter Property="Foreground" Value="#FFFBFBFB" />
-                        </Trigger>
-                    </Style.Triggers>
-                    <Style.Resources>
-                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent"/>
-                    </Style.Resources>
-                </Style>
-            </ListBox.ItemContainerStyle>
-            <ListBoxItem Uid="ListeAmis"  Grid.Column="0" Width="100" >
-                <TextBlock HorizontalAlignment ="Center" Foreground="#DDFFFFFF">Liste d'amis</TextBlock>
-            </ListBoxItem>
-            <ListBoxItem  Uid="AjouterAmis" Grid.Column="1" Width="100"   >
-                <TextBlock  HorizontalAlignment ="Center" Foreground="#DDFFFFFF" Height="17" Margin="3,0">Ajouter un ami</TextBlock>
-            </ListBoxItem>
-        </ListBox>
-
-        <ContentControl Margin="0,13,0,0" Content="{Binding }" Grid.Row="1"/>
-        <DockPanel Background="{StaticResource VeryDarkGrayBrush}" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" LastChildFill="True" Height="Auto" Visibility="{Binding Docked, Converter={converters:BooleanToVisibilityConverter}, ConverterParameter=False}">
+        <dragablz:TabablzControl Grid.Row="0" ItemContainerStyle ="{StaticResource mdTabHeader}" BorderBrush="#FF8C8C8C" Grid.ColumnSpan="2"  FixedHeaderCount="2">
+            <!--
+            <dragablz:TabablzControl.InterTabController>
+                <dragablz:InterTabController />
+            </dragablz:TabablzControl.InterTabController>-->
+            <TabItem  Header="Liste d'amis" Grid.Column="0">
+                <ContentControl Content="{Binding Source={StaticResource VMLocator}, Path=FriendListViewModel}"  />
+            </TabItem>
+            <TabItem Header="Requête d'amis" Grid.Column="1" >
+                <ContentControl Content="{Binding Source={StaticResource VMLocator}, Path=AddUserViewModel}" />
+            </TabItem>
+        </dragablz:TabablzControl>
+        <DockPanel Background="{StaticResource VeryDarkGrayBrush}" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" LastChildFill="True" Height="Auto" Visibility="{Binding Docked, Converter={converters:BooleanToVisibilityConverter}, ConverterParameter=False}" Grid.ColumnSpan="2">
             <Button Foreground="White" Height="Auto"  fa:Awesome.Content="{Binding TabIcon }" Background="Transparent" Command="{Binding MinimizeCommand}" BorderThickness="0" Focusable="False" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Center" VerticalAlignment="Center"/>
         </DockPanel>
     </Grid>

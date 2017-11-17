@@ -67,12 +67,28 @@ namespace AirHockeyServer.Controllers
         }
 
         [HttpPut]
-        [Route("api/store/{id}")]
-        public async Task<HttpResponseMessage> UpdateUserItem(int id, [FromBody] StoreItemEntity storeItem)
+        [Route("api/store/{id}/{itemId}")]
+        public async Task<HttpResponseMessage> UpdateUserItem(int id, int itemId, [FromBody] StoreItemEntity storeItem)
         {
             try
             {
                 await StoreService.UpdateUserItem(id, storeItem);
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
+        }
+
+        [HttpPut]
+        [Route("api/store/{id}")]
+        public async Task<HttpResponseMessage> UpdateUserItems(int id, [FromBody] List<StoreItemEntity> storeItems)
+        {
+            try
+            {
+                await StoreService.UpdateUserItems(id, storeItems);
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
             catch (Exception e)

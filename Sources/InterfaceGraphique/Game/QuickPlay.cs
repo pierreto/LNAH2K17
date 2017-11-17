@@ -12,6 +12,7 @@ using InterfaceGraphique.Editor.EditorState;
 using InterfaceGraphique.Game.GameState;
 using Microsoft.Practices.Unity;
 using InterfaceGraphique.Controls.WPF.Tournament;
+using InterfaceGraphique.CommunicationInterface.WaitingRooms;
 
 namespace InterfaceGraphique
 {
@@ -88,6 +89,23 @@ namespace InterfaceGraphique
             FonctionsNatives.setLights(1, true);
             FonctionsNatives.setLights(2, true);
             FonctionsNatives.resetGame();
+
+            var gameManager = Program.unityContainer.Resolve<GameManager>();
+            var textures = gameManager.Textures;
+
+            if(textures != null)
+            {
+                if(textures[0] != null)
+                {
+                    FonctionsNatives.setLocalPlayerSkin(textures[0]);
+                }
+                if(textures[1] != null)
+                {
+                    FonctionsNatives.setOpponentPlayerSkin(textures[1]);
+                }
+            }
+
+            Program.QuickPlay.CurrentGameState.GameInitialized = true;
         }
 
 
@@ -283,6 +301,7 @@ namespace InterfaceGraphique
 
         public void EndGame()
         {
+            Program.QuickPlay.CurrentGameState.GameInitialized = false;
             this.BeginInvoke(new MethodInvoker(delegate
             {
                 int[] score = new int[2];

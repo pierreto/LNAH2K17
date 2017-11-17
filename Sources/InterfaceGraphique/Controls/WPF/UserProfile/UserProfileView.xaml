@@ -118,7 +118,7 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal" Margin="5 0 0 0">
-                            <CheckBox IsChecked="{Binding IsGameEnabled, Mode=TwoWay}">
+                            <CheckBox IsChecked="{Binding Path=IsGameEnabled, Mode=TwoWay}">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Checked">
                                         <i:InvokeCommandAction Command="{Binding ElementName=storeItems, Path=DataContext.SelectCommand}"
@@ -130,8 +130,8 @@
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </CheckBox>
-                            <Image Source="{Binding ImageUrl}" Margin="10 0 0 0" Height="20" Width="20"></Image>
-                            <TextBlock Text="{Binding Name}" Margin="5 0 0 0" Foreground="White" FontSize="15"></TextBlock>
+                            <Image Source="{Binding Path=ImageUrl}" Margin="10 0 0 0" Height="20" Width="20"></Image>
+                            <TextBlock Text="{Binding Path=Name}" Margin="5 0 0 0" Foreground="White" FontSize="15"></TextBlock>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>

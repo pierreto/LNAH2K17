@@ -79,18 +79,12 @@ class Map: NSObject {
         map.creator = "N/A"
         map.mapName = name
         map.lastBackup = Date()
-        map.json = ""
         map.privacy.value = isPrivate
         map.password = password
         map.currentNumberOfPlayer.value = 0
         
-        if self.clientConnection.getConnection() != nil && self.clientConnection.connected! {
-            map.creator = self.clientConnection.getUsername()
-            let mapService = MapService()
-            mapService.saveNewMap(map: map)
-        } else {
-            DBManager.instance.sauvegarderCarte(map: map, json: nil)
-        }
+        FacadeModele.instance.initialiserArbre()
+        FacadeModele.instance.sauvegarderCarte(map: map)
     }
     
     private func resetErrorMessages() {

@@ -31,7 +31,9 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
         public static IHubProxy WaitingRoomProxy { get; set; }
 
         protected HubConnection HubConnection { get; set; }
+
         protected SlaveGameState SlaveGameState { get; set; }
+
         protected MasterGameState MasterGameState { get; set; }
 
         public TournamentWaitingRoomHub(SlaveGameState slaveGameState, MasterGameState masterGameState)
@@ -44,12 +46,12 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
         {
             this.HubConnection = connection;
             WaitingRoomProxy = connection.CreateHubProxy("TournamentWaitingRoomHub");
-
+            InitializeWaitingRoomEvents();
+            InitializeTournamentsEvents();
         }
 
         public async void Join()
         {
-            InitializeWaitingRoomEvents();
             await WaitingRoomProxy.Invoke("Join", User.Instance.UserEntity);
         }
 
@@ -60,7 +62,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
         public async void UpdateSelectedMap(MapEntity map)
         {
-            if(CurrentTournamentId > 0)
+            if (CurrentTournamentId > 0)
             {
                 await WaitingRoomProxy.Invoke<TournamentEntity>("UpdateMap", CurrentTournamentId, map);
             }
@@ -71,117 +73,118 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
             await WaitingRoomProxy.Invoke("LeaveTournament", User.Instance.UserEntity, CurrentTournamentId);
         }
 
-        private void InitializeWaitingRoomEvents()
-        {
-            InitializeTournamentsEvents();
-            WaitingRoomProxy.On<List<UserEntity>>("OpponentFoundEvent", (opponents) =>
-            {
-                this.OpponentFoundEvent.Invoke(this, opponents);
-            });
-
-            WaitingRoomProxy.On<TournamentEntity>("TournamentAllOpponentsFound", (tournament) =>
-            {
-                this.TournamentAllOpponentsFound.Invoke(this, tournament);
-                CurrentTournamentId = tournament.Id;
-            });
-
-            WaitingRoomProxy.On<int>("WaitingRoomRemainingTime", remainingTime =>
-            {
-                this.RemainingTimeEvent.Invoke(this, remainingTime);
-            });
-
-            WaitingRoomProxy.On<MapEntity>("TournamentMapUpdatedEvent", map =>
-            {
-                this.MapUpdatedEvent.Invoke(this, map);
-            });
-        }
-
         private void InitializeTournamentsEvents()
         {
-            WaitingRoomProxy.On<TournamentEntity>("TournamentStarting", tournament =>
-            {
-                Program.OnlineTournament.Invoke(new MethodInvoker(() =>
-                    {
-                        var userGame = tournament.SemiFinals.Find(game => game.Players.Any(player => player.Id == User.Instance.UserEntity.Id));
-                        if (userGame != null)
-                        {
-                            if (userGame.Master.Id == User.Instance.UserEntity.Id)
-                            {
-                                this.MasterGameState.InitializeGameState(userGame);
-                                this.MasterGameState.IsOnlineTournementMode = true;
-                                Program.QuickPlay.CurrentGameState = this.MasterGameState;
+            WaitingRoomProxy.On<TournamentEntity>("TournamentStarting", tournament => OnTournamentStarting(tournament));
 
-                                Program.FormManager.CurrentForm = Program.QuickPlay;
-                            }
-                            else
-                            {
-                                this.SlaveGameState.InitializeGameState(userGame);
-                                this.SlaveGameState.IsOnlineTournementMode = true;
-                                Program.QuickPlay.CurrentGameState = this.SlaveGameState;
+            WaitingRoomProxy.On<TournamentEntity>("StartFinal", tournament => OnFinalStarting(tournament));
 
-                                Program.FormManager.CurrentForm = Program.QuickPlay;
+            WaitingRoomProxy.On<TournamentEntity>("TournamentSemiFinalResults", tournament => OnSemiFinalResults(tournament));
 
-                                FonctionsNatives.rotateCamera(180);
-                            }
+            WaitingRoomProxy.On<TournamentEntity>("TournamentFinalResult", tournament => OnFinalResults(tournament));
+        }
+        
+        private void InitializeWaitingRoomEvents()
+        {
+            WaitingRoomProxy.On<List<UserEntity>>("OpponentFoundEvent", (opponents) => OnOpponentFoundEvent(opponents));
 
-                            Program.QuickPlay.CurrentGameState.IsTournementMode = false;
-                        }
-                        else
-                        {
-                            Program.FormManager.CurrentForm = Program.MainMenu;
-                        }
+            WaitingRoomProxy.On<TournamentEntity>("TournamentAllOpponentsFound", (tournament) => OnAllOpponentsFound(tournament));
 
-                    }));
-            });
+            WaitingRoomProxy.On<int>("WaitingRoomRemainingTime", remainingTime => OnRemainingTime(remainingTime));
 
-            WaitingRoomProxy.On<TournamentEntity>("StartFinal", tournament =>
-            {
-                Program.OnlineTournament.Invoke(new MethodInvoker(() =>
-                {
-                    if (tournament.Final.Players[0].Id == User.Instance.UserEntity.Id || tournament.Final.Players[1].Id == User.Instance.UserEntity.Id)
-                    {
-                        
-                        if (tournament.Final.Master.Id == User.Instance.UserEntity.Id)
-                        {
-                            this.MasterGameState.InitializeGameState(tournament.Final);
-                            this.MasterGameState.IsOnlineTournementMode = true;
-                            Program.QuickPlay.CurrentGameState = this.MasterGameState;
-
-                            Program.FormManager.CurrentForm = Program.QuickPlay;
-                        }
-                        else
-                        {
-                            this.SlaveGameState.InitializeGameState(tournament.Final);
-                            this.MasterGameState.IsOnlineTournementMode = true;
-                            Program.QuickPlay.CurrentGameState = this.SlaveGameState;
-
-                            Program.FormManager.CurrentForm = Program.QuickPlay;
-
-                            FonctionsNatives.rotateCamera(180);
-
-                        }
-                        Program.QuickPlay.CurrentGameState.IsTournementMode = false;
-
-                    }
-                    else
-                    {
-                        Program.FormManager.CurrentForm = Program.MainMenu;
-                    }
-
-                }));
-            });
-
-            WaitingRoomProxy.On<TournamentEntity>("TournamentSemiFinalResults", tournament =>
-            {
-                SemiFinalResultEvent.Invoke(this, new List<UserEntity>() { tournament.SemiFinals[0].Winner, tournament.SemiFinals[1].Winner });
-            });
-
-            WaitingRoomProxy.On<TournamentEntity>("TournamentFinalResult", tournament =>
-            {
-                WinnerResultEvent.Invoke(this, tournament.Final.Winner);
-            });
+            WaitingRoomProxy.On<MapEntity>("TournamentMapUpdatedEvent", map => OnMapUpdated(map));
         }
 
+        public void OnOpponentFoundEvent(List<UserEntity> opponents)
+        {
+            this.OpponentFoundEvent.Invoke(this, opponents);
+        }
 
+        public void OnAllOpponentsFound(TournamentEntity tournament)
+        {
+            this.TournamentAllOpponentsFound.Invoke(this, tournament);
+            CurrentTournamentId = tournament.Id;
+        }
+
+        public void OnRemainingTime(int remainingTime)
+        {
+            this.RemainingTimeEvent.Invoke(this, remainingTime);
+        }
+
+        public void OnMapUpdated(MapEntity map)
+        {
+            this.MapUpdatedEvent.Invoke(this, map);
+        }
+
+        public void OnSemiFinalResults(TournamentEntity tournament)
+        {
+            SemiFinalResultEvent.Invoke(this, new List<UserEntity>() { tournament.SemiFinals[0].Winner, tournament.SemiFinals[1].Winner });
+        }
+
+        public void OnFinalResults(TournamentEntity tournament)
+        {
+            WinnerResultEvent.Invoke(this, tournament.Final.Winner);
+        }
+
+        public void OnFinalStarting(TournamentEntity tournament)
+        {
+            Program.OnlineTournament.Invoke(new MethodInvoker(() =>
+            {
+                if (tournament.Final.Players[0].Id == User.Instance.UserEntity.Id || tournament.Final.Players[1].Id == User.Instance.UserEntity.Id)
+                {
+                    SetGame(tournament.Final, tournament.Final.Master.Id == User.Instance.UserEntity.Id);
+                }
+                else
+                {
+                    Program.FormManager.CurrentForm = Program.MainMenu;
+                }
+
+            }));
+        }
+
+        public void OnTournamentStarting(TournamentEntity tournament)
+        {
+            Program.OnlineTournament.Invoke(new MethodInvoker(() =>
+            {
+                var userGame = tournament.SemiFinals.Find(game => game.Players.Any(player => player.Id == User.Instance.UserEntity.Id));
+                if (userGame != null)
+                {
+                    SetGame(userGame, userGame.Master.Id == User.Instance.UserEntity.Id);
+                }
+                else
+                {
+                    Program.FormManager.CurrentForm = Program.MainMenu;
+                }
+
+            }));
+        }
+
+        private void SetGame(GameEntity game,  bool isMaster)
+        {
+            Program.OnlineTournament.Invoke(new MethodInvoker(() =>
+            {
+                if (isMaster)
+                {
+                    this.MasterGameState.InitializeGameState(game);
+                    this.MasterGameState.IsOnlineTournementMode = true;
+                    Program.QuickPlay.CurrentGameState = this.MasterGameState;
+
+                    Program.FormManager.CurrentForm = Program.QuickPlay;
+                }
+                else
+                {
+                    this.SlaveGameState.InitializeGameState(game);
+                    this.MasterGameState.IsOnlineTournementMode = true;
+                    Program.QuickPlay.CurrentGameState = this.SlaveGameState;
+
+                    Program.FormManager.CurrentForm = Program.QuickPlay;
+
+                    FonctionsNatives.rotateCamera(180);
+
+                }
+
+                Program.QuickPlay.CurrentGameState.IsTournementMode = false;
+            }));
+        }
     }
 }

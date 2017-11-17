@@ -110,5 +110,11 @@ namespace InterfaceGraphique.Game.GameState
             get => mapFilePath;
             set => mapFilePath = value;
         }
+
+        public bool IsOnline { get; set; }
+
+        public GameEntity OnlineGame { get; set; }
+
+        public bool GameInitialized { get; set; }
     }
 }

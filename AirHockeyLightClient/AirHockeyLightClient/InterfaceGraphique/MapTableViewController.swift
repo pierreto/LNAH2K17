@@ -72,7 +72,7 @@ class MapTableViewController: UITableViewController {
         let cell = self.maps.dequeueReusableCell(withIdentifier: "Map", for: indexPath)
         
         let isPublicLabel = cell.viewWithTag(1) as! UILabel
-        isPublicLabel.text = "true"
+        isPublicLabel.text = self.mapsData[indexPath.row].privacy.value == true ? "false" : "true"
         
         let mapNameLabel = cell.viewWithTag(2) as! UILabel
         mapNameLabel.text = self.mapsData[indexPath.row].mapName
