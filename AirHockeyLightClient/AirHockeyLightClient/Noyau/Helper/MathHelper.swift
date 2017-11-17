@@ -126,6 +126,18 @@ class MathHelper {
         return color
     }
     
+    /// Retourne l'angle de rotation en radian autour de l'axe positif des y
+    static func determinerAngleAxeY(rotation: SCNVector4) -> Float {
+        // Rotation autour de l'axe positif des y
+        if rotation.y > 0 {
+            return rotation.w
+        }
+            // Rotation autour de l'axe négatif des y
+        else {
+            return ( 2 * Float.pi ) - rotation.w
+        }
+    }
+    
 }
 
 ///////////////////////////////////////////////////////////////////////////////
