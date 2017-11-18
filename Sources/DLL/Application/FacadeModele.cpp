@@ -683,10 +683,10 @@ void FacadeModele::createMapIcon(unsigned char* dest) {
 
 	FIBITMAP* image = FreeImage_ConvertFromRawBits(outPixels, sizex, newDim.y, 3 * sizex, 24, 0x0000FF, 0xFF0000, 0x00FF00, false);
 
-	FIBITMAP* imageRescaled = FreeImage_Rescale(image, 128, 128, FILTER_BOX);
+	FIBITMAP* imageRescaled = FreeImage_Rescale(image, 500, 500, FILTER_BOX);
 
-	BYTE bytes[128 * 128 * 3];
-	//FreeImage_ConvertToRawBits(bytes, imageRescaled, 3 * 128, 24, 0x0000FF, 0xFF0000, 0x00FF00, false);
+	BYTE bytes[500 * 500 * 3];
+	FreeImage_ConvertToRawBits(bytes, imageRescaled, 3 * 500, 24, 0x0000FF, 0xFF0000, 0x00FF00, false);
 	//FreeImage_Save(FIF_JPEG, imageRescaled, "test.jpg", 0);
 
 	/*
@@ -698,41 +698,11 @@ void FacadeModele::createMapIcon(unsigned char* dest) {
 
 	docJSON_["Icon"].PushBack(tempArray, docJSON_.GetAllocator());
 	*/
-/*
-	for (int i = 0; i < 128 * 128 * 3; i++)
+
+	for (int i = 500 * 500 * 3; i > 0; i--)
 	{
 		dest[i] = (unsigned char)bytes[i];
-	}*/
-
-	FIMEMORY *hmem = NULL;
-
-	// load and decode a regular file
-
-	// open a memory stream
-	hmem = FreeImage_OpenMemory();
-
-	// encode and save the image to the memory
-	FreeImage_SaveToMemory(FIF_JPEG, imageRescaled, hmem, 0);
-
-
-	// seek to the start of the memory stream
-	FreeImage_SeekMemory(hmem, 0L, SEEK_SET);
-
-	// get the file type
-	FREE_IMAGE_FORMAT mem_fif = FreeImage_GetFileTypeFromMemory(hmem, 0);
-
-	// load an image from the memory handle
-	FIBITMAP *check = FreeImage_LoadFromMemory(mem_fif, hmem, 0);
-
-
-	FreeImage_ConvertToRawBits(dest, check, 3 * 128, 24, 0x0000FF, 0xFF0000, 0x00FF00, false);
-
-
-
-	FreeImage_Save(FIF_JPEG, check, "test.jpg", 0);
-
-
-
+	}
 
 	// Free resources
 	FreeImage_Unload(image);

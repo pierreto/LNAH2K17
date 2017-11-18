@@ -81,8 +81,7 @@ export class LoginComponent implements OnInit {
           localStorage['id'] = JSON.stringify(res);
           this.validUser = true;
           // res contains the id of the user
-          // this.router.navigate(['/profile', res]);
-          this.router.navigate(['/maps', 0]);
+          this.router.navigate(['/profile', res]);
       },
       (err) => {
         this.appService.loading = false;

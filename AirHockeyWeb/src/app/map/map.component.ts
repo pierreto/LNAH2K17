@@ -2,6 +2,8 @@ import { Component, OnInit , AfterViewInit} from '@angular/core';
 import { MapService } from './map.service';
 import { AppService } from '../app.service';
 import { ActivatedRoute } from '@angular/router';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { MapModel } from './map.model';
 
 @Component({
   selector: 'app-map',
@@ -9,16 +11,20 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./map.component.css']
 })
 export class MapComponent implements OnInit, AfterViewInit {
-  map: any;
-  constructor(private mapService: MapService, private route: ActivatedRoute, private appService: AppService) {
+  map: MapModel;
+  imageSafe: SafeUrl;
+  constructor(private mapService: MapService, private route: ActivatedRoute, private appService: AppService,
+    private sanitizer: DomSanitizer) {
   }
 
   ngOnInit() {
     this.route.params.subscribe(param => {
       setTimeout(() => {
+                // tslint:disable-next-line:max-line-length
+
         this.map = null;
         this.appService.loading = true;
-        this.getProfile();
+        this.getMap();
       });
     });
   }
@@ -26,16 +32,17 @@ export class MapComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     setTimeout(() => {
       this.appService.loading = true;
-      this.getProfile();
+      this.getMap();
     });
   }
 
-  private getProfile() {
+  private getMap() {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.mapService.getMap(id).subscribe(
       (res) => {
         console.log(res);
         this.map = res;
+        this.imageSafe = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/jpg;base64,' + this.map.Icon );
         setTimeout(() => {
           this.appService.loading = false;
         });

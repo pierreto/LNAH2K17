@@ -5,7 +5,10 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -132,12 +135,22 @@ namespace InterfaceGraphique.Editor
 
         public void SaveIcon()
         {
-            byte[] icon = new byte[128*128*3];
+            byte[] icon = new byte[500*500*3];
             FonctionsNatives.getMapIcon(icon);
+            var str = "";
+            Bitmap bmp = new Bitmap(500, 500, PixelFormat.Format24bppRgb);
+            BitmapData bmpData = bmp.LockBits(
+                new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.WriteOnly, bmp.PixelFormat);
+            Marshal.Copy(icon, 0, bmpData.Scan0, icon.Length);
+            bmp.UnlockBits(bmpData);
+            MemoryStream ms = new MemoryStream();
+            bmp.Save(ms, ImageFormat.Jpeg);
+            byte[] res = ms.ToArray();
+            str = Convert.ToBase64String(res);
             MapEntity map = new MapEntity
             {
                 Id = this.currentMapInfo.Id,
-                //Icon = System.Convert.ToBase64String(icon)
+                Icon = str
             };
             Task.Run(async () => await this.mapService.SaveMap(map));
         }

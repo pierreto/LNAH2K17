@@ -1,3 +1,5 @@
+import { SafeResourceUrl } from '@angular/platform-browser';
+
 export interface MapModel {
     Id: number;
     Creator: string;
@@ -5,4 +7,5 @@ export interface MapModel {
     CreationDate: Date;
     Private: boolean;
     LastBackup: Date;
+    Icon: SafeResourceUrl;
 }

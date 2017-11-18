@@ -3,7 +3,7 @@
     <mat-table #table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="Preview">
             <mat-header-cell *matHeaderCellDef mat-sort-header>Aperçu</mat-header-cell>
-            <mat-cell *matCellDef="let map" class="imagePreview"></mat-cell>
+            <mat-cell *matCellDef="let map"><img *ngIf="!map.Private" [src]="'data:image/JPEG;base64,'+map.Icon" /><img *ngIf="map.Private" src="assets/media/image/private_map.png" /></mat-cell>
         </ng-container>
         <ng-container matColumnDef="MapName">
             <mat-header-cell *matHeaderCellDef mat-sort-header>Nom</mat-header-cell>
