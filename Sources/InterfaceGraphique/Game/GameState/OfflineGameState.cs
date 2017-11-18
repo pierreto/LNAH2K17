@@ -122,7 +122,7 @@ namespace InterfaceGraphique.Game.GameState
         public override void EndGame()
         {
             Program.QuickPlay.GetReplayButton().Visible = true;
-            Program.QuickPlay.EndGame();
+            Program.QuickPlay.EndGame(false);
         }
     }
 }
