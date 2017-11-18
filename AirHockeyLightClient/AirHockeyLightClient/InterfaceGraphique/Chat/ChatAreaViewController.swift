@@ -13,10 +13,6 @@ protocol AddChannelDelegate: class {
     func newUnreadMessage()
 }
 
-//These should not be global but ain't nobody got time to refactor
-var channelsToJoin = [ChannelEntity]()
-var filteredChannelsToJoin = [ChannelEntity]()
-
 class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchControllerDelegate {
     //Mark : Properties
     @IBOutlet weak var joinChannelConstraint: NSLayoutConstraint!
@@ -38,6 +34,9 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
     let clientConnection = HubManager.sharedConnection
     static var sharedChatAreaViewController = ChatAreaViewController()
 
+    var channelsToJoin = [ChannelEntity]()
+    var filteredChannelsToJoin = [ChannelEntity]()
+    
     //Mark : Actions
     //Envoi le message lorsqu'on pese sur envoyer
     @IBAction func sendButton(_ sender: Any) {
@@ -110,7 +109,7 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
         
         print("Message: \(String(describing: sender! + " (" + dateString + ") : " + messageValue!))\n")
         //Make sure the channel to which messages are added is the main channel
-        let chan = channels.first(where: { $0.name == "Principal" })
+        let chan = MasterViewController.sharedMasterViewController.channels.first(where: { $0.name == "Principal" })
         //If currently active channel is not the main channel, receive an unread message notification
         if channel.name != chan?.name {
             chan?.hasUnreadMessage = true;
@@ -123,8 +122,11 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
             //Reload table to see new message
             self.chatTableView.reloadData()
             //Scroll to the last message on insert
-            let indexPath = IndexPath(row: (chan?.messages.count)! - 1, section: 0);
-            self.chatTableView?.scrollToRow(at: indexPath, at: .bottom, animated: true)
+            print("NUM MSG: ", (chan?.messages.count)!)
+            if(chan?.messages.count)! > 1 {
+                let indexPath = IndexPath(row: (chan?.messages.count)! - 1, section: 0);
+                self.chatTableView?.scrollToRow(at: indexPath, at: .bottom, animated: true)
+            }
         })
     }
     
@@ -141,7 +143,7 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
         //let dateString = self.convertDate(dateString: timestamp!)
         
         print("Message: \(String(describing: sender! + " (" + dateString + ") : " + messageValue!))\n")
-        let chan = channels.first(where: { $0.name == channelName })
+        let chan = MasterViewController.sharedMasterViewController.channels.first(where: { $0.name == channelName })
         if channel.name != chan?.name {
             chan?.hasUnreadMessage = true;
             delegate = MasterViewController.sharedMasterViewController
@@ -151,8 +153,11 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
 
         DispatchQueue.main.async(execute: { () -> Void in
             self.chatTableView.reloadData()
-            let indexPath = IndexPath(row: (chan?.messages.count)! - 1, section: 0);
-            self.chatTableView?.scrollToRow(at: indexPath, at: .bottom, animated: true)
+            print("NUM MSG: ", (chan?.messages.count)!)
+            if(chan?.messages.count)! > 1 {
+                let indexPath = IndexPath(row: (chan?.messages.count)! - 1, section: 0);
+                self.chatTableView?.scrollToRow(at: indexPath, at: .bottom, animated: true)
+            }
         })
     }
     
@@ -167,8 +172,12 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
     
     //Message envoye par le chatHub lorsqu'un nouveau canal joignable est cree
     func newJoinableChannel(channelName: String) {
-        channelsToJoin.append(ChannelEntity(name: channelName))
-        joinChannelTableView.reloadData()
+        if !channelsToJoin.contains(where: { (cE: ChannelEntity) -> Bool in
+            cE.name == channelName
+        }) {
+            channelsToJoin.append(ChannelEntity(name: channelName))
+            joinChannelTableView.reloadData()
+        }
     }
     
     //Envoi le message dans le canal
@@ -257,6 +266,11 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
                 //Align bubble to the right
                 (cell as! MessageViewCell).leadingConstraint.isActive = false
                 (cell as! MessageViewCell).bubbleConstraint.isActive = true
+                (cell as! MessageViewCell).messageContainer.backgroundColor = UIColor(red:0.0, green:0.0, blue:0.0, alpha:1.0)
+
+                sender.textColor = UIColor .white
+                messageValue.textColor = UIColor .white
+                timestamp.textColor = UIColor .white
             }
         }
         
