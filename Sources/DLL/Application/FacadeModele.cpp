@@ -699,7 +699,7 @@ void FacadeModele::createMapIcon(unsigned char* dest) {
 	docJSON_["Icon"].PushBack(tempArray, docJSON_.GetAllocator());
 	*/
 
-	for (int i = 0; i < 128 * 128 * 3; i++)
+	for (int i = 128 * 128 * 3; i > 0; i--)
 	{
 		dest[i] = (unsigned char)bytes[i];
 	}
