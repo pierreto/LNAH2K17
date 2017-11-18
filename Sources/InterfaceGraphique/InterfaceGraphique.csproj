@@ -326,6 +326,7 @@
     <Compile Include="Entities\MapEntity.cs" />
     <Compile Include="Entities\MemberEntity.cs" />
     <Compile Include="CommunicationInterface\LoginClient.cs" />
+    <Compile Include="Entities\PlayerEndOfGameStatsEntity.cs" />
     <Compile Include="Entities\PlayerStatsEntity.cs" />
     <Compile Include="Entities\StoreItemEntity.cs" />
     <Compile Include="Entities\TournamentEntity.cs" />
