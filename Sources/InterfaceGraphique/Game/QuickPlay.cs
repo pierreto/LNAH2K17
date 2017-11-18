@@ -13,6 +13,9 @@ using InterfaceGraphique.Game.GameState;
 using Microsoft.Practices.Unity;
 using InterfaceGraphique.Controls.WPF.Tournament;
 using InterfaceGraphique.CommunicationInterface.WaitingRooms;
+using InterfaceGraphique.Entities;
+using InterfaceGraphique.CommunicationInterface;
+using System.IO;
 
 namespace InterfaceGraphique
 {
@@ -90,18 +93,22 @@ namespace InterfaceGraphique
             FonctionsNatives.setLights(2, true);
             FonctionsNatives.resetGame();
 
-            var gameManager = Program.unityContainer.Resolve<GameManager>();
-            var textures = gameManager.Textures;
-
-            if(textures != null)
+            if (User.Instance.IsConnected)
             {
-                if(textures[0] != null)
+                this.CurrentGameState.gameHub.EndOfGameStatsEvent += OnEndOfGameStats;
+                var gameManager = Program.unityContainer.Resolve<GameManager>();
+                var textures = gameManager.Textures;
+
+                if (textures != null)
                 {
-                    FonctionsNatives.setLocalPlayerSkin(textures[0]);
-                }
-                if(textures[1] != null)
-                {
-                    FonctionsNatives.setOpponentPlayerSkin(textures[1]);
+                    if (textures[0] != null)
+                    {
+                        FonctionsNatives.setLocalPlayerSkin(textures[0]);
+                    }
+                    if (textures[1] != null)
+                    {
+                        FonctionsNatives.setOpponentPlayerSkin(textures[1]);
+                    }
                 }
             }
 
@@ -126,6 +133,35 @@ namespace InterfaceGraphique
             this.Button_PlayAgain.Click += (sender, e) => { ResetDefaultTable(); Program.FormManager.CurrentForm = Program.QuickPlay; };
             this.KeyDown += new KeyEventHandler(currentGameState.KeyDownEvent);
             this.KeyUp += new KeyEventHandler(currentGameState.KeyUpEvent);
+
+        }
+
+        private void OnEndOfGameStats(PlayerEndOfGameStatsEntity stats)
+        {
+            if(stats.Id != User.Instance.UserEntity.Id)
+            {
+                return;
+            }
+
+            this.BeginInvoke(new MethodInvoker(delegate
+            {
+                this.pointsNb.Text = "+" + stats.PointsWon;
+                List<PictureBox> pictures = new List<PictureBox>();
+                pictures.Add(this.achievement1);
+                pictures.Add(this.achievement2);
+                pictures.Add(this.achievement3);
+                for (int i = 0; i < stats.UnlockedAchievements.Count; i++)
+                {
+                    if(i < pictures.Count)
+                    {
+                        pictures[i].Visible = true;
+                        pictures[i].ImageLocation = Directory.GetCurrentDirectory() + stats.UnlockedAchievements[i].EnabledImageUrl;
+                        pictures[i].SizeMode = PictureBoxSizeMode.StretchImage;
+                    }
+                }
+            }));
+
+            this.CurrentGameState.gameHub.EndOfGameStatsEvent -= OnEndOfGameStats;
         }
 
         private async Task OnMainMenuClicked(object sender, EventArgs e)
@@ -320,14 +356,24 @@ namespace InterfaceGraphique
                 {
                     this.Panel_EndBack.Visible = true;
                     this.Label_Score.Text = score[0] + " - " + score[1];
-                    if(isOnlineGame)
+                    if (User.Instance.IsConnected)
                     {
+                        this.playerName1.Text = User.Instance.UserEntity.Username;
+                    }
+                    else
+                    {
+                        this.CurrentGameState.gameHub.EndOfGameStatsEvent -= OnEndOfGameStats;
+                    }
+
+                    if (isOnlineGame)
+                    {
+                        var gameManager = Program.unityContainer.Resolve<GameManager>();
+
+                        var players = gameManager.CurrentOnlineGame.Players;
+
+                        this.playerName2.Text = players[0].Id == User.Instance.UserEntity.Id ? players[1].Username : players[0].Username;
                         this.pointsNb.Visible = true;
-                        if(score[0] > score[1])
-                        {
-                            this.pointsNb.Text = "+20";
-                        }
-                        this.pointsLabel.Visible = true;
+                        this.label3.Visible = true;
                     }
                 }
             }));
@@ -357,7 +403,8 @@ namespace InterfaceGraphique
 
         public void ApplyEsc()
         {
-            if (!this.Panel_EndBack.Visible && FonctionsNatives.isGameStarted()) {
+            if (!this.Panel_EndBack.Visible && FonctionsNatives.isGameStarted())
+            {
                 this.MenuStrip_MenuBar.Visible = !this.MenuStrip_MenuBar.Visible;
                 FonctionsNatives.escape();
             }
