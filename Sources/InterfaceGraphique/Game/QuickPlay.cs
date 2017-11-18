@@ -303,7 +303,7 @@ namespace InterfaceGraphique
         }
 
 
-        public void EndGame()
+        public void EndGame(bool isOnlineGame)
         {
             Program.QuickPlay.CurrentGameState.GameInitialized = false;
             this.BeginInvoke(new MethodInvoker(delegate
@@ -320,6 +320,15 @@ namespace InterfaceGraphique
                 {
                     this.Panel_EndBack.Visible = true;
                     this.Label_Score.Text = score[0] + " - " + score[1];
+                    if(isOnlineGame)
+                    {
+                        this.pointsNb.Visible = true;
+                        if(score[0] > score[1])
+                        {
+                            this.pointsNb.Text = "+20";
+                        }
+                        this.pointsLabel.Visible = true;
+                    }
                 }
             }));
 

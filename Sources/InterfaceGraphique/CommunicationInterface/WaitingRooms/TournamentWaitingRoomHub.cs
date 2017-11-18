@@ -36,10 +36,13 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
         protected MasterGameState MasterGameState { get; set; }
 
-        public TournamentWaitingRoomHub(SlaveGameState slaveGameState, MasterGameState masterGameState)
+        public GameManager GameManager { get; set; }
+
+        public TournamentWaitingRoomHub(SlaveGameState slaveGameState, MasterGameState masterGameState, GameManager gameManager)
         {
             SlaveGameState = slaveGameState;
             MasterGameState = masterGameState;
+            GameManager = gameManager;
         }
 
         public void InitializeHub(HubConnection connection)
@@ -71,6 +74,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
         public async Task LeaveTournament()
         {
             await WaitingRoomProxy.Invoke("LeaveTournament", User.Instance.UserEntity, CurrentTournamentId);
+            CurrentTournamentId = 0;
         }
 
         private void InitializeTournamentsEvents()
@@ -128,16 +132,11 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
         public void OnFinalStarting(TournamentEntity tournament)
         {
-            CurrentTournamentId = 0;
             Program.OnlineTournament.Invoke(new MethodInvoker(() =>
             {
                 if (tournament.Final.Players[0].Id == User.Instance.UserEntity.Id || tournament.Final.Players[1].Id == User.Instance.UserEntity.Id)
                 {
                     SetGame(tournament.Final, tournament.Final.Master.Id == User.Instance.UserEntity.Id);
-                }
-                else
-                {
-                    Program.FormManager.CurrentForm = Program.MainMenu;
                 }
 
             }));
@@ -152,39 +151,35 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
                 {
                     SetGame(userGame, userGame.Master.Id == User.Instance.UserEntity.Id);
                 }
-                else
-                {
-                    Program.FormManager.CurrentForm = Program.MainMenu;
-                }
 
             }));
         }
 
         private void SetGame(GameEntity game,  bool isMaster)
         {
-            Program.OnlineTournament.Invoke(new MethodInvoker(() =>
+            Program.OnlineTournament.Invoke(new MethodInvoker(async () =>
             {
+                GameManager.CurrentOnlineGame = game;
+                await GameManager.SetTextures();
+
                 if (isMaster)
                 {
                     this.MasterGameState.InitializeGameState(game);
-                    this.MasterGameState.IsOnlineTournementMode = true;
                     Program.QuickPlay.CurrentGameState = this.MasterGameState;
 
                     Program.FormManager.CurrentForm = Program.QuickPlay;
+                    Program.QuickPlay.CurrentGameState.IsOnlineTournementMode = true;
                 }
                 else
                 {
                     this.SlaveGameState.InitializeGameState(game);
-                    this.MasterGameState.IsOnlineTournementMode = true;
                     Program.QuickPlay.CurrentGameState = this.SlaveGameState;
 
                     Program.FormManager.CurrentForm = Program.QuickPlay;
-
+                    Program.QuickPlay.CurrentGameState.IsOnlineTournementMode = true;
                     FonctionsNatives.rotateCamera(180);
 
                 }
-
-                Program.QuickPlay.CurrentGameState.IsTournementMode = false;
             }));
         }
     }
