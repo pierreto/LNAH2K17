@@ -95,8 +95,6 @@ namespace AirHockeyServer.Manager
         {
             var connection = ConnectionMapper.GetConnection(userId);
             await GlobalHost.ConnectionManager.GetHubContext<T>().Groups.Remove(connection, group);
-
-            ConnectionMapper.DeleteConnection(userId);
         }
 
         private int CaculateGamePoints(GameEntity gameEntity)
