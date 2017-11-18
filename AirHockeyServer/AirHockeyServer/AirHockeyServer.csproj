@@ -264,6 +264,7 @@
     <Compile Include="Entities\GameEntity.cs" />
     <Compile Include="Entities\MapEntity.cs" />
     <Compile Include="Entities\LoginEntity.cs" />
+    <Compile Include="Entities\PlayerEndOfGameStatsEntity.cs" />
     <Compile Include="Entities\ProfileEntity.cs" />
     <Compile Include="Entities\RankingEntity.cs" />
     <Compile Include="Entities\SignupEntity.cs" />
