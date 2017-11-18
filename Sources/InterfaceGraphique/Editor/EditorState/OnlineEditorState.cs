@@ -90,7 +90,6 @@ namespace InterfaceGraphique.Editor.EditorState
 
             if (inTransformation)
             {
-                Editeur.mapManager.SaveIcon();
                 Task.Run(() => Editeur.mapManager.SaveMap());
                 this.inTransformation = false;
             }
