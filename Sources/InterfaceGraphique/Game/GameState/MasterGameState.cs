@@ -58,7 +58,7 @@ namespace InterfaceGraphique.Game.GameState
 
             selectedMap = gameEntity.SelectedMap;
         }
-
+        
         public override void MettreAJour(double tempsInterAffichage, int neededGoalsToWin)
         {
             if (!gameHasEnded && FonctionsNatives.isGameOver(neededGoalsToWin) == 1)
