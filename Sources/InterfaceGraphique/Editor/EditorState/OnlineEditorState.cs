@@ -48,7 +48,7 @@ namespace InterfaceGraphique.Editor.EditorState
         {
 
             this.accumTime += tempsInterAffichage;
-            if (this.accumTime > 0.025)
+            if (this.accumTime > 0.1)
             {
                 FonctionsNatives.setCanSendPreviewToServer(true);
                 this.accumTime = 0;
