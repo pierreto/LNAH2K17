@@ -135,10 +135,6 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
                 {
                     SetGame(tournament.Final, tournament.Final.Master.Id == User.Instance.UserEntity.Id);
                 }
-                else
-                {
-                    Program.FormManager.CurrentForm = Program.MainMenu;
-                }
 
             }));
         }
@@ -152,10 +148,6 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
                 {
                     SetGame(userGame, userGame.Master.Id == User.Instance.UserEntity.Id);
                 }
-                else
-                {
-                    Program.FormManager.CurrentForm = Program.MainMenu;
-                }
 
             }));
         }
@@ -167,24 +159,21 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
                 if (isMaster)
                 {
                     this.MasterGameState.InitializeGameState(game);
-                    this.MasterGameState.IsOnlineTournementMode = true;
                     Program.QuickPlay.CurrentGameState = this.MasterGameState;
 
                     Program.FormManager.CurrentForm = Program.QuickPlay;
+                    Program.QuickPlay.CurrentGameState.IsOnlineTournementMode = true;
                 }
                 else
                 {
                     this.SlaveGameState.InitializeGameState(game);
-                    this.MasterGameState.IsOnlineTournementMode = true;
                     Program.QuickPlay.CurrentGameState = this.SlaveGameState;
 
                     Program.FormManager.CurrentForm = Program.QuickPlay;
-
+                    Program.QuickPlay.CurrentGameState.IsOnlineTournementMode = true;
                     FonctionsNatives.rotateCamera(180);
 
                 }
-
-                Program.QuickPlay.CurrentGameState.IsTournementMode = false;
             }));
         }
     }
