@@ -79,7 +79,7 @@
             this.Panel_EndFront.Controls.Add(this.Label_Score);
             this.Panel_EndFront.Controls.Add(this.Label_ScoreSeparator);
             this.Panel_EndFront.Controls.Add(this.Label_GameEnded);
-            this.Panel_EndFront.Location = new System.Drawing.Point(3, 3);
+            this.Panel_EndFront.Location = new System.Drawing.Point(3, 1);
             this.Panel_EndFront.Name = "Panel_EndFront";
             this.Panel_EndFront.Size = new System.Drawing.Size(319, 205);
             this.Panel_EndFront.TabIndex = 29;
@@ -128,7 +128,7 @@
             this.Button_MainMenu.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Button_MainMenu.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Button_MainMenu.ForeColor = System.Drawing.Color.White;
-            this.Button_MainMenu.Location = new System.Drawing.Point(167, 130);
+            this.Button_MainMenu.Location = new System.Drawing.Point(106, 128);
             this.Button_MainMenu.Name = "Button_MainMenu";
             this.Button_MainMenu.Size = new System.Drawing.Size(100, 30);
             this.Button_MainMenu.TabIndex = 32;
@@ -143,7 +143,7 @@
             this.Button_PlayAgain.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Button_PlayAgain.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Button_PlayAgain.ForeColor = System.Drawing.Color.White;
-            this.Button_PlayAgain.Location = new System.Drawing.Point(50, 130);
+            this.Button_PlayAgain.Location = new System.Drawing.Point(106, 164);
             this.Button_PlayAgain.Name = "Button_PlayAgain";
             this.Button_PlayAgain.Size = new System.Drawing.Size(100, 30);
             this.Button_PlayAgain.TabIndex = 31;
