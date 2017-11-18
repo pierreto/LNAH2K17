@@ -12,11 +12,15 @@ namespace AirHockeyServer.Services
 
         private IUserRepository UserRepository;
         private IPlayerStatsRepository PlayerStatsRepository;
+        private IGameRepository GameRepository;
+        private ITournamentRepository TournamentRepository;
 
-        public ProfileService(IUserRepository userRepository, IPlayerStatsRepository playerStatsRepository)
+        public ProfileService(IUserRepository userRepository, IPlayerStatsRepository playerStatsRepository, IGameRepository gameRepository, ITournamentRepository tournamentRepository)
         {
             UserRepository = userRepository;
             PlayerStatsRepository = playerStatsRepository;
+            GameRepository = gameRepository;
+            TournamentRepository = tournamentRepository;
         }
 
         public async Task<ProfileEntity> GetProfileById(int id)
@@ -24,25 +28,15 @@ namespace AirHockeyServer.Services
             UserEntity uE = await UserRepository.GetUserById(id);
             StatsEntity sE = await PlayerStatsRepository.GetPlayerStat(id);
             AchievementEntity[] aEL = (await PlayerStatsRepository.GetAchievements(id)).OrderBy(x=> x.Category).ThenBy(x => x.Order).ToArray();
+            int gamesPlayed = await GameRepository.GetUserGamesNb(id);
+            int tournamentsPlayed = await TournamentRepository.GetUserTournamentsNb(id);
             ProfileEntity pE = new ProfileEntity
             {
                 UserEntity = uE,
                 StatsEntity = sE,
-                AchievementEntities = aEL
-            };
-            return pE;
-        }
-
-        public async Task<ProfileEntity> GetProfileByUsername(string username)
-        {
-            UserEntity uE = await UserRepository.GetUserByUsername(username);
-            StatsEntity sE = await PlayerStatsRepository.GetPlayerStat(uE.Id);
-            AchievementEntity[] aEL = (await PlayerStatsRepository.GetAchievements(uE.Id)).OrderBy(x => x.Category).ThenBy(x => x.Order).ToArray();
-            ProfileEntity pE = new ProfileEntity
-            {
-                UserEntity = uE,
-                StatsEntity = sE,
-                AchievementEntities = aEL
+                AchievementEntities = aEL,
+                GamesPlayed = gamesPlayed,
+                TournamentsPlayed = tournamentsPlayed
             };
             return pE;
         }

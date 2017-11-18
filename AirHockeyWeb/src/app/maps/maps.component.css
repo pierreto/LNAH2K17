@@ -55,13 +55,12 @@
     color:red;
   }
 
-  .imagePreview {
-    margin: 5px;
-    width: 150px;
+  img {
+    border: 3px solid #777;
+    border-radius: 10px;
     height: 150px;
-    background-image: url("../../../../Exe/media/image/default_profile_picture.png");
-    background-size: contain;
-    background-repeat: no-repeat;
+    margin: 15px;
   }
+
 
   
