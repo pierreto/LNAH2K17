@@ -137,7 +137,7 @@ namespace InterfaceGraphique.Editor
             MapEntity map = new MapEntity
             {
                 Id = this.currentMapInfo.Id,
-                Icon = System.Convert.ToBase64String(icon)
+                //Icon = System.Convert.ToBase64String(icon)
             };
             Task.Run(async () => await this.mapService.SaveMap(map));
         }
