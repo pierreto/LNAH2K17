@@ -99,6 +99,26 @@ class SCNNodeHelper {
         }
     }
     
+    /// Fait shaker le noeud
+    static func shakeNode(node: SCNNode, duration: Float) {
+        let amplitudeX: Float = 10;
+        let amplitudeZ: Float = 6;
+        let numberOfShakes = duration / 0.04;
+        var actionsArray: [SCNAction] = [];
+        
+        for _ in 1...Int(numberOfShakes) {
+            let moveX = Float(arc4random_uniform(UInt32(amplitudeX))) - amplitudeX / 2;
+            let moveZ = Float(arc4random_uniform(UInt32(amplitudeZ))) - amplitudeZ / 2;
+            let shakeAction = SCNAction.moveBy(x: CGFloat(moveX), y: CGFloat(0.0), z: CGFloat(moveZ), duration: 0.02);
+            shakeAction.timingMode = SCNActionTimingMode.easeOut;
+            actionsArray.append(shakeAction);
+            actionsArray.append(shakeAction.reversed());
+        }
+        
+        let actionSeq = SCNAction.sequence(actionsArray)
+        node.runAction(actionSeq)
+    }
+    
 }
 
 ///////////////////////////////////////////////////////////////////////////////

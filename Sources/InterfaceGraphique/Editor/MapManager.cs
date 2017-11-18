@@ -135,7 +135,7 @@ namespace InterfaceGraphique.Editor
             MapEntity map = new MapEntity
             {
                 Id = this.currentMapInfo.Id,
-                Icon = System.Convert.ToBase64String(icon)
+                //Icon = System.Convert.ToBase64String(icon)
             };
             Task.Run(async () => await this.mapService.SaveMap(map));
         }
@@ -161,10 +161,6 @@ namespace InterfaceGraphique.Editor
                     return;
                 }
             }
-
-            Dictionary<string, object> fulljson = JsonConvert.DeserializeObject<Dictionary<string, object>>(json.Value);
-            fulljson.Remove("Icon");
-            json.Value = JsonConvert.SerializeObject(fulljson);
 
             ThreadLocal<MapEntity> map = new ThreadLocal<MapEntity>(
                 () =>

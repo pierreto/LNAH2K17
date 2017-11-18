@@ -128,6 +128,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
         public void OnFinalStarting(TournamentEntity tournament)
         {
+            CurrentTournamentId = 0;
             Program.OnlineTournament.Invoke(new MethodInvoker(() =>
             {
                 if (tournament.Final.Players[0].Id == User.Instance.UserEntity.Id || tournament.Final.Players[1].Id == User.Instance.UserEntity.Id)

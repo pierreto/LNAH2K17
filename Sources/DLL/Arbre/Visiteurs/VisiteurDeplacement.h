@@ -46,11 +46,14 @@ public:
 
 	virtual void visiterRondelle(NoeudRondelle* noeud);
 
+	std::vector<NoeudAbstrait*> getSelectedNodes() { return selectedNodes_; }
+
 private:
 	/// Vecteur trois dimensions pour le changement de position de l'objet
 	glm::vec3 delta_;
 	bool sendToServer_;
 	void defaultVisit(NoeudAbstrait* noeud);
+	std::vector<NoeudAbstrait*> selectedNodes_;
 
 };
 

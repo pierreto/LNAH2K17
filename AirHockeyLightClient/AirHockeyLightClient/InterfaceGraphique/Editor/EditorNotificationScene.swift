@@ -44,6 +44,8 @@ class EditorNotificationScene: SKScene {
             self.errorOutOfBound?.run(SKAction.sequence([SKAction.wait(forDuration: 1.5),
                                                          SKAction.fadeOut(withDuration: 0.5)]))
             
+            SCNNodeHelper.shakeNode(node: FacadeModele.instance.obtenirVue().editorView.pointOfView!, duration: 0.2)
+            
             // Jouer le son
             AudioService.instance.playSound(soundName: EDITION_SOUND.ERROR.rawValue)
         }

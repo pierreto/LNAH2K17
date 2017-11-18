@@ -27,44 +27,29 @@ class SignupViewController: UIViewController {
     @IBOutlet weak var stackView: UIStackView!
     // Mark: Actions
     @IBAction func createAccount(_ sender: Any) {
-        disableInputs()
-        loading()
-        viewModel?.signup(username: usernameInput.text!, name: nameInput.text!, email: emailInput.text!, password: passwordInput.text!, confirmPassword: confirmPasswordInput.text!)
-            .then{
-                data -> Void in
-                if(data) {
-                    self.loadingDone()
-                    OperationQueue.main.addOperation {
-                        self.performSegue(withIdentifier: "signupSuccess", sender: self)
-                        NotificationCenter.default.post(name: Notification.Name(rawValue: SignupNotification.SubmitNotification), object: nil)
-                        self.enableInputs()
-                    }
-                } else {
-                    self.connectionError()
-                    self.enableInputs()
-                }
-            }.always {
-                //Laisse le temps au message d'erreur d'apparaitre avant le shake
-                let when = DispatchTime.now() + 0.1
-                DispatchQueue.main.asyncAfter(deadline: when) {
-                    if(self.usernameErrorLabel.text != ""){
-                        self.notifyErrorInput(textField: self.usernameInput)
-                    }
-                    if(self.nameErrorLabel.text != ""){
-                        self.notifyErrorInput(textField: self.nameInput)
-                    }
-                    if(self.emailErrorLabel.text != ""){
-                        self.notifyErrorInput(textField: self.emailInput)
-                    }
-                    if(self.passwordErrorLabel.text != ""){
-                        self.notifyErrorInput(textField: self.passwordInput)
-                    }
-                    if(self.confirmPasswordErrorLabel.text != ""){
-                        self.notifyErrorInput(textField: self.confirmPasswordInput)
-                    }
-                }
-        }
+        createAccount()
     }
+    
+    @IBAction func usernameInputReturn(_ sender: Any) {
+        nameInput.becomeFirstResponder()
+    }
+    
+    @IBAction func nameInputReturn(_ sender: Any) {
+        emailInput.becomeFirstResponder()
+    }
+    
+    @IBAction func emailInputReturn(_ sender: Any) {
+        passwordInput.becomeFirstResponder()
+    }
+    
+    @IBAction func passwordInputReturn(_ sender: Any) {
+        confirmPasswordInput.becomeFirstResponder()
+    }
+    
+    @IBAction func confirmPasswordInputReturn(_ sender: Any) {
+        createAccount()
+    }
+    
     
     @IBAction func editUsernameInput(_ sender: Any) {
         self.resetStyle(textField: self.usernameInput)
@@ -111,6 +96,45 @@ class SignupViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         self.scrollView.contentSize = self.stackView.frame.size
+    }
+    func createAccount() {
+        disableInputs()
+        loading()
+        viewModel?.signup(username: usernameInput.text!, name: nameInput.text!, email: emailInput.text!, password: passwordInput.text!, confirmPassword: confirmPasswordInput.text!)
+            .then{
+                data -> Void in
+                if(data) {
+                    self.loadingDone()
+                    OperationQueue.main.addOperation {
+                        self.performSegue(withIdentifier: "signupSuccess", sender: self)
+                        NotificationCenter.default.post(name: Notification.Name(rawValue: SignupNotification.SubmitNotification), object: nil)
+                        self.enableInputs()
+                    }
+                } else {
+                    self.connectionError()
+                    self.enableInputs()
+                }
+            }.always {
+                //Laisse le temps au message d'erreur d'apparaitre avant le shake
+                let when = DispatchTime.now() + 0.1
+                DispatchQueue.main.asyncAfter(deadline: when) {
+                    if(self.usernameErrorLabel.text != ""){
+                        self.notifyErrorInput(textField: self.usernameInput)
+                    }
+                    if(self.nameErrorLabel.text != ""){
+                        self.notifyErrorInput(textField: self.nameInput)
+                    }
+                    if(self.emailErrorLabel.text != ""){
+                        self.notifyErrorInput(textField: self.emailInput)
+                    }
+                    if(self.passwordErrorLabel.text != ""){
+                        self.notifyErrorInput(textField: self.passwordInput)
+                    }
+                    if(self.confirmPasswordErrorLabel.text != ""){
+                        self.notifyErrorInput(textField: self.confirmPasswordInput)
+                    }
+                }
+        }
     }
     
     func adjustForKeyboard(notification: Notification) {

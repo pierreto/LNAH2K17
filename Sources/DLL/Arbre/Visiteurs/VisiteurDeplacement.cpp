@@ -132,19 +132,11 @@ void VisiteurDeplacement::visiterRondelle(NoeudRondelle * noeud)
 
 void VisiteurDeplacement::defaultVisit(NoeudAbstrait* noeud)
 {
-		if (noeud->estSelectionne())
+	if (noeud->estSelectionne())
 	{
+		selectedNodes_.push_back(noeud);
 		noeud->deplacer(noeud->obtenirPositionRelative() + delta_);
-		if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION
-			&& sendToServer_)
-		{
-			TransformEventCallback callback = ModeleEtatJeu::obtenirInstance()->getTransformEventCallback();
-
-			if (callback)
-			{
-				callback(noeud->getUUID(), glm::value_ptr(noeud->obtenirPositionRelative()), noeud->obtenirRotation().y, glm::value_ptr(noeud->obtenirScale()));
-			}
-		}
+	
 	}
 }
 ///////////////////////////////////////////////////////////////////////////////
