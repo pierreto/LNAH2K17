@@ -133,10 +133,10 @@ namespace InterfaceGraphique.Editor
 
         public void SaveIcon()
         {
-            byte[] icon = new byte[128*128*3];
+            byte[] icon = new byte[500*500*3];
             FonctionsNatives.getMapIcon(icon);
             var str = "";
-            Bitmap bmp = new Bitmap(128, 128, PixelFormat.Format24bppRgb);
+            Bitmap bmp = new Bitmap(500, 500, PixelFormat.Format24bppRgb);
             BitmapData bmpData = bmp.LockBits(
                 new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.WriteOnly, bmp.PixelFormat);
             Marshal.Copy(icon, 0, bmpData.Scan0, icon.Length);
