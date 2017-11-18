@@ -25,6 +25,7 @@
 		1D90AAFE1F98228E003E0764 /* IConnectServerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D90AAFD1F98228E003E0764 /* IConnectServerViewModel.swift */; };
 		1D90AB001F982332003E0764 /* ConnectServerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D90AAFF1F982332003E0764 /* ConnectServerViewModel.swift */; };
 		1D90AB021F9824BE003E0764 /* ConnectServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D90AB011F9824BE003E0764 /* ConnectServer.swift */; };
+		1DC31A511FBFB4EA0000B7DE /* fontawesome-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1DC31A501FBF7BD50000B7DE /* fontawesome-webfont.ttf */; };
 		1DCD0A1B1FB3CD5400A9DA8C /* KeyboardConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DCD0A1A1FB3CD5400A9DA8C /* KeyboardConstraints.swift */; };
 		1DD1CFC01FAFC2F4008853DD /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD1CFBF1FAFC2F4008853DD /* MasterViewController.swift */; };
 		1DD1CFC21FAFC59D008853DD /* ChatAreaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DD1CFC11FAFC59D008853DD /* ChatAreaViewController.swift */; };
@@ -198,6 +199,7 @@
 		1D90AAFD1F98228E003E0764 /* IConnectServerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IConnectServerViewModel.swift; sourceTree = "<group>"; };
 		1D90AAFF1F982332003E0764 /* ConnectServerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectServerViewModel.swift; sourceTree = "<group>"; };
 		1D90AB011F9824BE003E0764 /* ConnectServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectServer.swift; sourceTree = "<group>"; };
+		1DC31A501FBF7BD50000B7DE /* fontawesome-webfont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "fontawesome-webfont.ttf"; sourceTree = "<group>"; };
 		1DCD0A1A1FB3CD5400A9DA8C /* KeyboardConstraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardConstraints.swift; sourceTree = "<group>"; };
 		1DD1CFBF1FAFC2F4008853DD /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MasterViewController.swift; path = InterfaceGraphique/Chat/MasterViewController.swift; sourceTree = "<group>"; };
 		1DD1CFC11FAFC59D008853DD /* ChatAreaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChatAreaViewController.swift; path = InterfaceGraphique/Chat/ChatAreaViewController.swift; sourceTree = "<group>"; };
@@ -771,6 +773,7 @@
 				8F6AE2BD1F6592EB00A29E8B /* GameScene.sks */,
 				8F6AE2C11F6592EB00A29E8B /* GameScene.swift */,
 				8F6AE2C81F6592EB00A29E8B /* Assets.xcassets */,
+				1DC31A501FBF7BD50000B7DE /* fontawesome-webfont.ttf */,
 				8F6AE2CD1F6592EB00A29E8B /* Info.plist */,
 			);
 			path = AirHockeyLightClient;
@@ -953,6 +956,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1DC31A511FBFB4EA0000B7DE /* fontawesome-webfont.ttf in Resources */,
 				3475C23B1F8FB9A100E8BF86 /* Move.png in Resources */,
 				8F27E8111FA1803400A8856D /* Tap.png in Resources */,
 				8F6AE2BE1F6592EB00A29E8B /* GameScene.sks in Resources */,
