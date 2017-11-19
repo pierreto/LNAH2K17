@@ -29,11 +29,6 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>SearchTextField.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>SwiftR.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -52,17 +47,22 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>258B70D8F107101FF7BE15125EFB505F</key>
+		<key>01B6F6E299E388EA25B16A7FF17D0AC0</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>545D1C78D18223873BE677D5D2389EFC</key>
+		<key>113DB632A5A7BA43D5ACE74C28130244</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>734D6EE03EFCC263C974AA06F663B77C</key>
+		<key>1C832220A51B1EB776BE8B800B11D808</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>7BDB8E5BF37528D69A727D645D5E1EA5</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -72,12 +72,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>94BE08C0E57E6BA7D0B43CE51489B38B</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>AD28325DBCFF1B162BDB871EB30CB1CF</key>
+		<key>A292D79D2EE7E8EBAA425CEDD1F31B07</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -87,12 +82,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BD6F6264193757CE69C40B348D9A0AD8</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>F5E9BB2ACD9417F161D74C8C1FAF6B6C</key>
+		<key>E523C78D9C50B75D997B6739A178CA7A</key>
 		<dict>
 			<key>primary</key>
 			<true/>

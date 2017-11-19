@@ -776,16 +776,16 @@
                                     <rect key="frame" x="0.0" y="0.0" width="268" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Slx-Pf-2XI" userLabel="username">
+                                        <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Slx-Pf-2XI" userLabel="username">
                                             <rect key="frame" x="52" y="11" width="76" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="user_group_man_woman" translatesAutoresizingMaskIntoConstraints="NO" id="3RD-Yr-tub" userLabel="profilePicture">
+                                        <imageView userInteractionEnabled="NO" tag="1" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user_group_man_woman" translatesAutoresizingMaskIntoConstraints="NO" id="3RD-Yr-tub" userLabel="profilePicture">
                                             <rect key="frame" x="8" y="6" width="30" height="30"/>
                                         </imageView>
-                                        <button opaque="NO" tag="3" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XZ5-gX-By8">
+                                        <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XZ5-gX-By8">
                                             <rect key="frame" x="227" y="6" width="33" height="30"/>
                                             <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="17"/>
                                             <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2819,7 +2819,7 @@
         <!--Add Friend-->
         <scene sceneID="yP0-i1-0fp">
             <objects>
-                <viewController title="Add Friend" id="y87-U4-i7z" customClass="FriendRequestsViewController" customModule="AirHockeyLightClient" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Add Friend" id="y87-U4-i7z" customClass="AddFriendViewController" customModule="AirHockeyLightClient" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="H5r-Y1-FJ4"/>
                         <viewControllerLayoutGuide type="bottom" id="HT7-Ug-X9C"/>
@@ -2827,9 +2827,21 @@
                     <view key="view" contentMode="scaleToFill" id="gt7-Ab-6g5">
                         <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cix-pZ-8rR">
+                                <rect key="frame" x="102" y="135" width="97" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <tabBarItem key="tabBarItem" systemItem="more" id="6if-Fj-0P6"/>
+                    <connections>
+                        <outlet property="search" destination="cix-pZ-8rR" id="M3k-I6-tEd"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vZN-NT-IbN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
