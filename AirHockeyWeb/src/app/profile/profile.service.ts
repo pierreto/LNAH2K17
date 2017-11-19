@@ -13,4 +13,11 @@ export class ProfileService {
     public getProfile(id: number): Observable<any> {
         return this.http.get('/api/profile/' + id).map(res => res.json());
     }
+
+    public updateProfilePicture(id: number, imageBase64: String): any {
+        const body = {
+            Profile: imageBase64
+        };
+        return this.http.put('/api/user/' + id, body);
+    }
 }

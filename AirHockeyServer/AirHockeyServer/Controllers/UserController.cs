@@ -1,4 +1,5 @@
-﻿using AirHockeyServer.Services;
+﻿using AirHockeyServer.Entities;
+using AirHockeyServer.Services;
 using AirHockeyServer.Services.Interfaces;
 using System;
 using System.Net;
@@ -73,18 +74,19 @@ namespace AirHockeyServer.Controllers
             }
         }
 
-        [HttpPost]
-        [Route("api/user")]
-        public HttpResponseMessage PostUser()
+        [HttpPut]
+        [Route("api/user/{id}")]
+        public async Task<HttpResponseMessage> UpdateUser(int id, [FromBody]UserEntity userEntity)
         {
             try
             {
+                await UserService.UpdateUser(id, userEntity);
                 return Request.CreateResponse(HttpStatusCode.OK);
             }
             catch (UserException e)
             {
                 System.Diagnostics.Debug.WriteLine(e);
-                return Request.CreateResponse(HttpStatusCode.Forbidden, e);
+                return Request.CreateResponse(HttpStatusCode.NotFound, e);
             }
             catch (Exception e)
             {

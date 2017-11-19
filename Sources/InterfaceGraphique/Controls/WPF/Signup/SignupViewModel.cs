@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Microsoft.Practices.Unity;
 using InterfaceGraphique.Exceptions;
+using InterfaceGraphique.CommunicationInterface.RestInterface;
 
 namespace InterfaceGraphique.Controls.WPF.Signup
 {
@@ -231,8 +232,8 @@ namespace InterfaceGraphique.Controls.WPF.Signup
                         int userId = response.Content.ReadAsAsync<int>().Result;
 
                         //On set l'instance statique du user.
-                        User.Instance.UserEntity = new UserEntity { Id = userId, Username = signupEntity.Username, Name = signupEntity.Name, Email = signupEntity.Email};
-                        User.Instance.IsConnected = true;
+                        HttpResponseMessage uEResponse = await Program.client.GetAsync(Program.client.BaseAddress + "api/user/" + userId);
+                        User.Instance.UserEntity = await HttpResponseParser.ParseResponse<UserEntity>(uEResponse); User.Instance.IsConnected = true;
 
                         await chatHub.InitializeChat();
 

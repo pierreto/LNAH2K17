@@ -24,5 +24,8 @@ namespace AirHockeyServer.Pocos
         [Column(Name = "created")]
         public string Created { get; set; }
 
+        [Column(Name = "profile")]
+        public string Profile { get; set; }
+
     }
 }

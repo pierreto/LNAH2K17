@@ -61,7 +61,7 @@ private:
 	glm::vec3 deplacementTotal_;
 
 	VisiteurDeplacement visiteurDeplacement_;
-
+	long accTime = 0;
 };
 
 

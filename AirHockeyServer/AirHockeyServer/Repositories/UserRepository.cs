@@ -126,5 +126,27 @@ namespace AirHockeyServer.Repositories
                 throw new UserException("Unable to create user");
             }
         }
+
+        public async Task UpdateUser(int id, UserEntity userEntity)
+        {
+            try
+            {
+                using (MyDataContext DC = new MyDataContext())
+                {
+                    var query =
+                       from user in DC.UsersTable where user.Id == id select user;
+
+                    var results = query.ToArray();
+                    UserPoco userPoco = results.First();
+                    userPoco.Profile = userEntity.Profile;
+                    await Task.Run(() => DC.SubmitChanges());
+                }
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("[UserRepository.PostUser] " + e.ToString());
+                throw new UserException("Unable to create user");
+            }
+        }
     }
 }

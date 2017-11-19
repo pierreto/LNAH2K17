@@ -14,7 +14,6 @@ namespace InterfaceGraphique.Editor.EditorState
 {
     public class OnlineEditorState : AbstractEditorState
     {
-        private double accumTime;
         private EditionHub editionHub;
         private FonctionsNatives.PortalCreationCallback portalCreationCallback;
         private FonctionsNatives.WallCreationCallback wallCreationCallback;
@@ -41,18 +40,12 @@ namespace InterfaceGraphique.Editor.EditorState
             this.selectionEventCallback = CurrentUserSelectedObject;
             this.controlPoinEventCallback = CurrentUserChangedControlPoint;
             this.deleteEventCallback = CurrentUserDeletedNode;
-            this.accumTime = 0;
         }
 
         public override void frameUpdate(double tempsInterAffichage)
         {
 
-            this.accumTime += tempsInterAffichage;
-            if (this.accumTime > 0.1)
-            {
-                FonctionsNatives.setCanSendPreviewToServer(true);
-                this.accumTime = 0;
-            }
+ 
       
         }
 
@@ -214,30 +207,17 @@ namespace InterfaceGraphique.Editor.EditorState
 
         private void CurrentUserObjectTransformChanged(string uuid, IntPtr pos, float rotation, IntPtr scale)
         {
-            if (rotation == 1000)
+            float[] posVec = getVec3FromIntptr(pos);
+            float[] scaleVec = getVec3FromIntptr(scale);
+
+            this.editionHub.SendEditorCommand(new TransformCommand(uuid)
             {
-
-                
-            }else if (rotation == -1000)
-            {
-                FonctionsNatives.setCanSendPreviewToServer(true);
-            }
-            else
-            {
-                float[] posVec = getVec3FromIntptr(pos);
-                float[] scaleVec = getVec3FromIntptr(scale);
-
-                this.editionHub.SendEditorCommand(new TransformCommand(uuid)
-                {
-                    Username = User.Instance.UserEntity.Username,
-                    Position = posVec,
-                    Rotation = rotation,
-                    Scale = scaleVec
-                });
-                this.inTransformation = true;
-
-            }
-
+                Username = User.Instance.UserEntity.Username,
+                Position = posVec,
+                Rotation = rotation,
+                Scale = scaleVec
+            });
+            this.inTransformation = true;
         }
 
         private void CurrentUserSelectedObject(string uuidselected, bool isSelected, bool deselectAll)

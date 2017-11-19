@@ -103,10 +103,6 @@ public:
 	void setDeleteEventCallback(DeleteEventCallback callback) { deleteEventCallback_=callback; }
 	DeleteEventCallback getDeleteEventCallback() { return deleteEventCallback_; }
 
-
-	bool getCanSendPreviewToServer() { return canSendPreviewToServer_; }
-	void setCanSendPreviewToServer(bool canSendPreviewToServer) { canSendPreviewToServer_= canSendPreviewToServer; }
-
 private:
 	/// Constructeur.
 	ModeleEtatJeu();
@@ -172,9 +168,6 @@ private:
 
 	TransformEventCallback transformEventCallback_;
 	DeleteEventCallback deleteEventCallback_;
-
-	bool canSendPreviewToServer_;
-
 };
 
 
