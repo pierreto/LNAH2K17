@@ -58,7 +58,7 @@ namespace InterfaceGraphique.Game.GameState
 
             selectedMap = gameEntity.SelectedMap;
         }
-
+        
         public override void MettreAJour(double tempsInterAffichage, int neededGoalsToWin)
         {
             if (!gameHasEnded && FonctionsNatives.isGameOver(neededGoalsToWin) == 1)
@@ -141,7 +141,7 @@ namespace InterfaceGraphique.Game.GameState
         public override void EndGame() {
             gameHasEnded = true;
             Task.Run(() => gameHub.SendGameOver());
-            Program.QuickPlay.EndGame();
+            Program.QuickPlay.EndGame(true);
 
             this.gameHub.NewPositions -= OnNewGamePositions;
             this.gameHub.DisconnectedEvent -= OnDisconnexion;

@@ -26,7 +26,7 @@ namespace AirHockeyServer.Manager
 
         protected Dictionary<int, int> ElapsedTime { get; set; }
 
-        public GameManager(IPlayerStatsService playerStatsService, IGameRepository gameRepository, 
+        public GameManager(IPlayerStatsService playerStatsService, IGameRepository gameRepository,
             ITournamentRepository tournamentRepository, ConnectionMapper connectionMapper)
         {
             ElapsedTime = new Dictionary<int, int>();
@@ -38,7 +38,7 @@ namespace AirHockeyServer.Manager
 
         public void AddGame(GameEntity game)
         {
-            if(game != null && !Cache.Games.ContainsKey(game.GameId))
+            if (game != null && !Cache.Games.ContainsKey(game.GameId))
             {
                 Cache.Games[game.GameId] = game;
             }
@@ -61,7 +61,7 @@ namespace AirHockeyServer.Manager
 
         public async Task GameEnded(Guid gameId)
         {
-            if(Cache.Games.ContainsKey(gameId))
+            if (Cache.Games.ContainsKey(gameId))
             {
                 var game = Cache.Games[gameId];
                 game.GameState = GameState.Ended;
@@ -69,25 +69,60 @@ namespace AirHockeyServer.Manager
 
                 await GameRepository.CreateGame(game);
 
-                if(game.TournamentId > -1)
+                if (game.TournamentId > -1)
                 {
                     await UpdateTournamentState(game.TournamentId, game);
                 }
                 else
                 {
-                    int points = CaculateGamePoints(Cache.Games[gameId]);
-                    await PlayerStatsService.AddPoints(game.Winner.Id, points);
-                    await PlayerStatsService.IncrementGamesWon(game.Winner.Id);
+                    //await PlayerStatsService.UpdateAchievements(game.Players[0].Id);
+                    //await PlayerStatsService.UpdateAchievements(game.Players[1].Id);
 
-                    await PlayerStatsService.UpdateAchievements(game.Players[0].Id);
-                    await PlayerStatsService.UpdateAchievements(game.Players[1].Id);
-                    
+                    await SendStats(game);
+
+
                     await RemoveConnection<GameWaitingRoomHub>(game.Players[0].Id, game.GameId.ToString());
-                    await RemoveConnection< GameWaitingRoomHub>(game.Players[1].Id, game.GameId.ToString());
+                    await RemoveConnection<GameWaitingRoomHub>(game.Players[1].Id, game.GameId.ToString());
                 }
-                
+
                 Cache.Games.Remove(gameId);
 
+            }
+        }
+
+        private async Task SendStats(GameEntity game)
+        {
+            List<PlayerEndOfGameStatsEntity> stats = new List<PlayerEndOfGameStatsEntity>();
+            foreach (var player in game.Players)
+            {
+                PlayerEndOfGameStatsEntity playerStats = new PlayerEndOfGameStatsEntity();
+                playerStats.Id = player.Id;
+
+                if (game.Winner.Id == player.Id)
+                {
+                    int points = CaculateGamePoints(Cache.Games[game.GameId]);
+                    playerStats.PointsWon = points;
+                }
+
+                playerStats.UnlockedAchievements = await PlayerStatsService.GetAchievementsToUpdate(player.Id);
+
+                stats.Add(playerStats);
+            }
+
+            stats.ForEach(x =>
+            {
+                GlobalHost.ConnectionManager.GetHubContext<GameWaitingRoomHub>()
+                                .Clients.Group(game.GameId.ToString()).EndOfGameInfo(x);
+            });
+
+            foreach (var stat in stats)
+            {
+                if (stat.Id == game.Winner.Id)
+                {
+                    await PlayerStatsService.AddPoints(game.Winner.Id, stat.PointsWon);
+                    await PlayerStatsService.IncrementGamesWon(game.Winner.Id);
+                }
+                await PlayerStatsService.UpdateAchievements(stat.Id, stat.UnlockedAchievements.Select(x => x.AchivementType).ToList());
             }
         }
 
@@ -95,8 +130,6 @@ namespace AirHockeyServer.Manager
         {
             var connection = ConnectionMapper.GetConnection(userId);
             await GlobalHost.ConnectionManager.GetHubContext<T>().Groups.Remove(connection, group);
-
-            ConnectionMapper.DeleteConnection(userId);
         }
 
         private int CaculateGamePoints(GameEntity gameEntity)
@@ -121,15 +154,17 @@ namespace AirHockeyServer.Manager
 
                         GlobalHost.ConnectionManager.GetHubContext<TournamentWaitingRoomHub>()
                             .Clients.Group(tournament.Id.ToString()).TournamentFinalResult(tournament);
-                        
+
                         await PlayerStatsService.IncrementTournamentsWon(tournament.Winner.Id);
                         await PlayerStatsService.AddPoints(tournament.Winner.Id, 80);
                         await TournamentRepository.CreateTournament(tournament);
 
-                        await PlayerStatsService.UpdateAchievements(tournament.Players[0].Id);
-                        await PlayerStatsService.UpdateAchievements(tournament.Players[1].Id);
-                        await PlayerStatsService.UpdateAchievements(tournament.Players[2].Id);
-                        await PlayerStatsService.UpdateAchievements(tournament.Players[3].Id);
+                        List<AchievementEntity> achievementsToUpdate = new List<AchievementEntity>();
+                        foreach(var player in tournament.Players)
+                        {
+                            achievementsToUpdate = await PlayerStatsService.GetAchievementsToUpdate(player.Id);
+                            await PlayerStatsService.UpdateAchievements(player.Id, achievementsToUpdate.Select(x => x.AchivementType).ToList());
+                        }
 
                         Cache.Tournaments.Remove(tournamentId);
 
@@ -137,7 +172,7 @@ namespace AirHockeyServer.Manager
                         await RemoveConnection<TournamentWaitingRoomHub>(tournament.Players[1].Id, tournament.Id.ToString());
                         await RemoveConnection<TournamentWaitingRoomHub>(tournament.Players[2].Id, tournament.Id.ToString());
                         await RemoveConnection<TournamentWaitingRoomHub>(tournament.Players[3].Id, tournament.Id.ToString());
-                    
+
                     }
                     else
                     {
@@ -160,7 +195,7 @@ namespace AirHockeyServer.Manager
 
                         GlobalHost.ConnectionManager.GetHubContext<TournamentWaitingRoomHub>()
                             .Clients.Group(tournament.Id.ToString()).TournamentSemiFinalResults(tournament);
-                        
+
                         AddGame(finalGame);
                         Cache.Tournaments[tournament.Id] = tournament;
 

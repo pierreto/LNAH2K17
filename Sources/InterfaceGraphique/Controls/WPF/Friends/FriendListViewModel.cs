@@ -57,7 +57,7 @@ namespace InterfaceGraphique.Controls.WPF.Friends
         {
             if (Collapsed == System.Windows.Visibility.Visible)
             {
-                TabIcon = "Users";
+                TabIcon = "User";
                 Collapsed = System.Windows.Visibility.Collapsed;
                 Program.FormManager.MinimizeFriendList();
             }

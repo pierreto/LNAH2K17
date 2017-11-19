@@ -14,6 +14,7 @@ namespace InterfaceGraphique.CommunicationInterface
     {
         public event Action<GameDataMessage> NewPositions;
         public event Action<GoalMessage> NewGoal;
+        public event Action<PlayerEndOfGameStatsEntity> EndOfGameStatsEvent;
         public event Action GameOver;
         public event Action DisconnectedEvent;
 
@@ -42,7 +43,14 @@ namespace InterfaceGraphique.CommunicationInterface
 
             gameHubProxy.On("ReceivedGamePauseOrResume", () => OnGamePauseOrResume());
 
+            gameHubProxy.On<PlayerEndOfGameStatsEntity>("EndOfGameInfo", infos => OnEndOfGameInfo(infos));
+
             gameHubProxy.On("DisconnectedOpponent", () => OnDisconnectedOpponent());
+        }
+
+        public void OnEndOfGameInfo(PlayerEndOfGameStatsEntity infos)
+        {
+            EndOfGameStatsEvent?.Invoke(infos);
         }
 
         public void OnGameData(GameDataMessage gameData)

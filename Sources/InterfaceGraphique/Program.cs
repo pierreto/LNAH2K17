@@ -25,6 +25,7 @@ using InterfaceGraphique.Controls.WPF.Chat.Channel;
 using InterfaceGraphique.Editor;
 using InterfaceGraphique.Controls.WPF.UserProfile;
 using InterfaceGraphique.Controls.WPF.Store;
+using InterfaceGraphique.Controls.WPF.Tutorial;
 using InterfaceGraphique.Game.GameState;
 
 namespace InterfaceGraphique
@@ -121,7 +122,7 @@ namespace InterfaceGraphique
 
             InitializeUnityDependencyInjection();
 
-            tutorialHost = new TutorialHost();
+            //tutorialHost = new TutorialHost();
             openGLPanel = new Panel();
             formManager = new FormManager();
             homeMenu = new HomeMenu();
@@ -202,7 +203,7 @@ namespace InterfaceGraphique
             unityContainer.RegisterType<UserProfileViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<StoreViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<AddUserViewModel>(new ContainerControlledLifetimeManager());
-
+            unityContainer.RegisterType<TutorialViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<MasterGameState>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<SlaveGameState>(new ContainerControlledLifetimeManager());
 

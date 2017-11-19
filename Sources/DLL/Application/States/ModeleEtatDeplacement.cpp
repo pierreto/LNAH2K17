@@ -129,6 +129,10 @@ void ModeleEtatDeplacement::playerMouseMove(int x, int y) {
 			&& ModeleEtatJeu::obtenirInstance()->getCanSendPreviewToServer())
 		{
 			sendToServer();
+			TransformEventCallback callback = ModeleEtatJeu::obtenirInstance()->getTransformEventCallback();
+
+			callback(nullptr, nullptr, -1000, nullptr);
+
 		}
 
 		deplacementTotal_  += (end - start);
@@ -156,6 +160,8 @@ void ModeleEtatDeplacement::mouseUpL()
 	if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
 	{
 		sendToServer();
+		TransformEventCallback callback = ModeleEtatJeu::obtenirInstance()->getTransformEventCallback();
+		callback(nullptr, nullptr, 1000, nullptr);
 	}
 
 
@@ -189,9 +195,10 @@ void ModeleEtatDeplacement::escape()
 
 void ModeleEtatDeplacement::sendToServer()
 {
+	TransformEventCallback callback = ModeleEtatJeu::obtenirInstance()->getTransformEventCallback();
+
 	for (NoeudAbstrait* node : visiteurDeplacement_.getSelectedNodes())
 	{
-		TransformEventCallback callback = ModeleEtatJeu::obtenirInstance()->getTransformEventCallback();
 
 		if (callback)
 		{

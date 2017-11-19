@@ -210,5 +210,30 @@ namespace AirHockeyServer.Repositories
             }
         }
 
+        public async Task UpdateAchievements(int userId, List<AchivementType> achievementTypes)
+        {
+            try
+            {
+                List<string> stringTypes = new List<string>();
+                achievementTypes.ForEach(x => stringTypes.Add(x.ToString()));
+
+                using (MyDataContext DC = new MyDataContext())
+                {
+                    var pocos = DC.GetTable<AchievementPoco>()
+                        .Where(x => userId == x.UserId &&
+                            stringTypes.Contains(x.AchievementType))
+                        .ToList();
+
+                    pocos.ForEach(x => x.IsEnabled = true);
+
+                    await Task.Run(() => DC.SubmitChanges());
+                }
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("[PlayerStatsRepository.UpdateAchievements] " + e.ToString());
+            }
+        }
+
     }
 }

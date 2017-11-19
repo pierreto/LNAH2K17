@@ -36,10 +36,13 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
         protected MasterGameState MasterGameState { get; set; }
 
-        public TournamentWaitingRoomHub(SlaveGameState slaveGameState, MasterGameState masterGameState)
+        public GameManager GameManager { get; set; }
+
+        public TournamentWaitingRoomHub(SlaveGameState slaveGameState, MasterGameState masterGameState, GameManager gameManager)
         {
             SlaveGameState = slaveGameState;
             MasterGameState = masterGameState;
+            GameManager = gameManager;
         }
 
         public void InitializeHub(HubConnection connection)
@@ -154,8 +157,11 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
         private void SetGame(GameEntity game,  bool isMaster)
         {
-            Program.OnlineTournament.Invoke(new MethodInvoker(() =>
+            Program.OnlineTournament.Invoke(new MethodInvoker(async () =>
             {
+                GameManager.CurrentOnlineGame = game;
+                await GameManager.SetTextures();
+
                 if (isMaster)
                 {
                     this.MasterGameState.InitializeGameState(game);

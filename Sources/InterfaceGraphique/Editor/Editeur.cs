@@ -31,7 +31,7 @@ namespace InterfaceGraphique {
         public static MapManager mapManager; // Initialized in Program.cs
 
         private OfflineEditorState offlineState;
-        private OnlineEditorState onlineState;
+        public OnlineEditorState onlineState;
         private MODELE_ETAT outilCourrant = MODELE_ETAT.AUCUN;
 
         public MODELE_ETAT OutilCourrant
@@ -388,10 +388,10 @@ namespace InterfaceGraphique {
 
         public async Task JoinEdition(MapEntity map)
         {
-            await mapManager.OpenOnlineMap(map);
+            await this.CurrentState.LeaveEdition();
 
+            await mapManager.OpenOnlineMap(map);
             this.CurrentState = this.onlineState;
-            //await this.CurrentState.LeaveEdition();
             this.CurrentState.JoinEdition(map);
         }
 
