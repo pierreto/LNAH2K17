@@ -123,6 +123,7 @@ namespace AirHockeyServer.Hubs
             if (friendConnection != null)
             {
                 Clients.Client(friendConnection).GameRequest(gameRequest);
+                Cache.AddPlayer(gameRequest.Sender);
                 return true;
             }
 
@@ -132,24 +133,24 @@ namespace AirHockeyServer.Hubs
 
         public void AcceptGameRequest(GameRequestEntity gameRequest)
         {
-            string friendConnection = ConnectionMapper.GetConnection(gameRequest.Sender.Id);
-            if (friendConnection != null)
+            string senderConnection = ConnectionMapper.GetConnection(gameRequest.Sender.Id);
+            if (senderConnection != null)
             {
-                Cache.AddPlayer(gameRequest.Sender);
                 Cache.AddPlayer(gameRequest.Recipient);
 
                 GameService.CreateGame(gameRequest);
 
-                Clients.Client(friendConnection).AcceptGameRequest(gameRequest);
+                Clients.Client(senderConnection).AcceptGameRequest(gameRequest);
             }
         }
 
         public void DeclineGameRequest(GameRequestEntity gameRequest)
         {
-            string friendConnection = ConnectionMapper.GetConnection(gameRequest.Sender.Id);
-            if (friendConnection != null)
+            string senderConnection = ConnectionMapper.GetConnection(gameRequest.Sender.Id);
+            if (senderConnection != null)
             {
-                Clients.Client(friendConnection).DeclineGameRequest(gameRequest);
+                Cache.RemovePlayer(gameRequest.Sender);
+                Clients.Client(senderConnection).DeclineGameRequest(gameRequest);
             }
         }
     }

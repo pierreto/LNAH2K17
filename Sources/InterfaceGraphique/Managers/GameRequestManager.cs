@@ -53,9 +53,7 @@ namespace InterfaceGraphique.Managers
         {
             //
         }
-
-
-
+        
         public async Task SendGameRequest(int recipientId)
         {
             var users = await UserService.GetAllUsers();
