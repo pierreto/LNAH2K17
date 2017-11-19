@@ -23,7 +23,7 @@ class FriendRequestsTableViewController: UITableViewController {
     static var instance = FriendRequestsTableViewController()
     
     @IBOutlet weak var pendingRequests: UITableView!
-
+    
     private var friendsHub: FriendsHub?
     private var pendingRequestsData = [FriendRequestEntity]()
     
@@ -34,10 +34,18 @@ class FriendRequestsTableViewController: UITableViewController {
         
         self.pendingRequests.delegate = self
         self.pendingRequests.dataSource = self
+        
+        friendsHub = HubManager.sharedConnection.getFriendsHub()
+        friendsHub?.getAllPendingRequest()
     }
     
-    func updatePendingRequestsEntries(pendingRequests: [FriendRequestEntity]) {
+    func updatePendingRequestsEntries(pendingRequests:  [FriendRequestEntity]) {
         self.pendingRequestsData = pendingRequests
+        
+        DispatchQueue.main.async(execute: { () -> Void in
+            // Reload tableView
+            self.pendingRequests.reloadData()
+        })
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -45,7 +53,12 @@ class FriendRequestsTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return self.pendingRequests.dequeueReusableCell(withIdentifier: "Request", for: indexPath)
+        let cell = self.pendingRequests.dequeueReusableCell(withIdentifier: "Request", for: indexPath)
+        
+        let nameLabel = cell.viewWithTag(1) as! UILabel
+        nameLabel.text = self.pendingRequestsData[indexPath.row].getRequestor().getName()
+        
+        return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
