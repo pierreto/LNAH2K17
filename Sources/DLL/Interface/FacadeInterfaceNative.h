@@ -133,7 +133,6 @@ extern "C" {
 	__declspec(dllexport) void setOpponentPlayerSkinToDefault();
 
 	__declspec(dllexport) void setGameEnded();
-	__declspec(dllexport) void setCanSendPreviewToServer(bool canSendPreviewToServer);
 }
 
 #endif // __FACADE_INTERFACE_NATIVE_H__
