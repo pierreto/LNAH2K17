@@ -14,5 +14,7 @@ namespace AirHockeyServer.Entities
 
         public string Created { get; set; }
 
+        public string Profile { get; set; }
+    
     }
 }
