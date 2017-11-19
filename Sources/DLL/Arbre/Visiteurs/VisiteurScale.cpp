@@ -9,7 +9,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "VisiteurScale.h"
-#include "ModeleEtatJeu.h"
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -63,8 +62,9 @@ void VisiteurScale::visiterAccelerateur(NoeudAccelerateur* noeud) {
 		if (scale.x <= 1)
 			scale = glm::vec3(1, 1, 1);
 
+
 		noeud->scale(scale);
-		sendTransform(noeud);
+		selectedNodes_.push_back(noeud);
 
 	}
 }
@@ -132,9 +132,8 @@ void VisiteurScale::visiterMur(NoeudMur* noeud) {
 		glm::vec3 scale = noeud->obtenirScale() + scale_;
 		if (scale.z <= 1)
 			scale.z = 1;
-
 		noeud->scale(glm::vec3(1,1,scale.z));
-		sendTransform(noeud);
+		selectedNodes_.push_back(noeud);
 
 	}
 }
@@ -160,7 +159,8 @@ void VisiteurScale::visiterPortail(NoeudPortail* noeud) {
 			scale = glm::vec3(1, 1, 1);
 
 		noeud->scale(scale);
-		sendTransform(noeud);
+		selectedNodes_.push_back(noeud);
+
 	}
 }
 
@@ -168,17 +168,6 @@ void VisiteurScale::visiterRondelle(NoeudRondelle * noeud)
 {
 }
 
-void VisiteurScale::sendTransform(NoeudAbstrait* node)
-{
-	if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
-	{
-		TransformEventCallback callback = ModeleEtatJeu::obtenirInstance()->getTransformEventCallback();
-		if (callback)
-		{
-			callback(node->getUUID(), glm::value_ptr(node->obtenirPositionRelative()),node->obtenirRotation().y, glm::value_ptr(node->obtenirScale()));
-		}
-	}
-}
 
 ////////////////////////////////////////////////////////////////////////
 ///
