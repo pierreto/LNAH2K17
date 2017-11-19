@@ -16,7 +16,6 @@
 #include "Vue.h"
 #include "ModeleEtatJeu.h"
 
-
 /// Pointeur vers l'instance unique de la classe.
 ModeleEtatDeplacement* ModeleEtatDeplacement::instance_{ nullptr };
 
@@ -125,14 +124,18 @@ void ModeleEtatDeplacement::playerMouseMove(int x, int y) {
 
 		visiteurDeplacement_ = VisiteurDeplacement(end - start);
 		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(&visiteurDeplacement_);
-		if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION
-			&& ModeleEtatJeu::obtenirInstance()->getCanSendPreviewToServer())
+
+		
+		if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
 		{
-			sendToServer();
-			TransformEventCallback callback = ModeleEtatJeu::obtenirInstance()->getTransformEventCallback();
 
-			callback(nullptr, nullptr, -1000, nullptr);
-
+			SYSTEMTIME st;
+			GetSystemTime(&st);
+			 accTime += st.wMilliseconds;
+			if (accTime>500) {
+				sendToServer();
+				accTime = 0;
+			}
 		}
 
 		deplacementTotal_  += (end - start);
@@ -161,7 +164,6 @@ void ModeleEtatDeplacement::mouseUpL()
 	{
 		sendToServer();
 		TransformEventCallback callback = ModeleEtatJeu::obtenirInstance()->getTransformEventCallback();
-		callback(nullptr, nullptr, 1000, nullptr);
 	}
 
 
