@@ -171,6 +171,8 @@
 		8F764A4D1FAFBA7F00198FA4 /* BoostCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F764A4C1FAFBA7F00198FA4 /* BoostCommand.swift */; };
 		8F76FC0F1F9CF990001BBC99 /* SCNNodeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F76FC0E1F9CF990001BBC99 /* SCNNodeHelper.swift */; };
 		8F7F0BC81FA6CFDB00C4F022 /* ObjectPropertiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F0BC71FA6CFDA00C4F022 /* ObjectPropertiesView.swift */; };
+		8F829B411FC206C000FC027B /* ItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F829B401FC206C000FC027B /* ItemCollectionViewCell.swift */; };
+		8F829B431FC2071200FC027B /* MagasinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F829B421FC2071200FC027B /* MagasinViewController.swift */; };
 		8F8706B91F7892BB000E6824 /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8706B81F7892BB000E6824 /* Entity.swift */; };
 		8F8706BB1F7892F2000E6824 /* ChatMessageEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8706BA1F7892F2000E6824 /* ChatMessageEntity.swift */; };
 		8F97A3851FA2C8BD00421FDC /* GeneralPropertiesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F97A3831FA2C8BD00421FDC /* GeneralPropertiesViewModel.swift */; };
@@ -379,6 +381,8 @@
 		8F764A4C1FAFBA7F00198FA4 /* BoostCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BoostCommand.swift; path = Noyau/Editor/Commands/BoostCommand.swift; sourceTree = "<group>"; };
 		8F76FC0E1F9CF990001BBC99 /* SCNNodeHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SCNNodeHelper.swift; path = Noyau/Helper/SCNNodeHelper.swift; sourceTree = "<group>"; };
 		8F7F0BC71FA6CFDA00C4F022 /* ObjectPropertiesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ObjectPropertiesView.swift; path = InterfaceGraphique/Editor/ObjectPropertiesView.swift; sourceTree = "<group>"; };
+		8F829B401FC206C000FC027B /* ItemCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ItemCollectionViewCell.swift; path = InterfaceGraphique/View/Magasin/ItemCollectionViewCell.swift; sourceTree = "<group>"; };
+		8F829B421FC2071200FC027B /* MagasinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MagasinViewController.swift; path = InterfaceGraphique/View/Magasin/MagasinViewController.swift; sourceTree = "<group>"; };
 		8F8706B81F7892BB000E6824 /* Entity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Entity.swift; path = Noyau/Entities/Entity.swift; sourceTree = "<group>"; };
 		8F8706BA1F7892F2000E6824 /* ChatMessageEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatMessageEntity.swift; path = Noyau/Entities/ChatMessageEntity.swift; sourceTree = "<group>"; };
 		8F97A3831FA2C8BD00421FDC /* GeneralPropertiesViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GeneralPropertiesViewModel.swift; path = InterfaceGraphique/ViewModel/GeneralProperties/GeneralPropertiesViewModel.swift; sourceTree = "<group>"; };
@@ -446,13 +450,14 @@
 		1D019A311F911EDC004D79B2 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				1DC31A521FC0D05F0000B7DE /* Profile */,
 				1D4F01501FB13B2B00F4A302 /* VerticalSplitViewController.swift */,
 				8F0FFED71F6EB8C500366D8E /* Chat */,
 				8FB6A9931F81B9AA00FAFFCF /* Editor */,
 				2509B8921FB8E8B9002DEE9A /* Friends */,
+				8F829B3D1FC2062800FC027B /* Magasin */,
 				25FDE4391FA80C620089D9FE /* Map */,
 				8F0FFED91F6EB96900366D8E /* Menus */,
+				1DC31A521FC0D05F0000B7DE /* Profile */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -880,6 +885,15 @@
 			path = AirHockeyLightClient;
 			sourceTree = "<group>";
 		};
+		8F829B3D1FC2062800FC027B /* Magasin */ = {
+			isa = PBXGroup;
+			children = (
+				8F829B401FC206C000FC027B /* ItemCollectionViewCell.swift */,
+				8F829B421FC2071200FC027B /* MagasinViewController.swift */,
+			);
+			name = Magasin;
+			sourceTree = "<group>";
+		};
 		8F8706B71F789266000E6824 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
@@ -1274,6 +1288,7 @@
 				8F764A4D1FAFBA7F00198FA4 /* BoostCommand.swift in Sources */,
 				1DC31A581FC0D5890000B7DE /* ProfileViewController.swift in Sources */,
 				8F7F0BC81FA6CFDB00C4F022 /* ObjectPropertiesView.swift in Sources */,
+				8F829B411FC206C000FC027B /* ItemCollectionViewCell.swift in Sources */,
 				1DC31A541FC0D0B70000B7DE /* AchievementCollectionViewCell.swift in Sources */,
 				8F65B2981FAF6F0200D8EE20 /* OnlineMenuViewController.swift in Sources */,
 				8FCDF61A1FA1BEDF00631551 /* EditorNotificationScene.swift in Sources */,
@@ -1310,6 +1325,7 @@
 				8F65B2921FAE603300D8EE20 /* EditorState.swift in Sources */,
 				1D019A2D1F911E49004D79B2 /* SignupViewModel.swift in Sources */,
 				1D863DB11F9848E70025B89D /* OfflineMenuViewController.swift in Sources */,
+				8F829B431FC2071200FC027B /* MagasinViewController.swift in Sources */,
 				8FB0E29C1FAFF2B100672057 /* WallCommand.swift in Sources */,
 				25EFB2A01FB7505100FFD66F /* MapService.swift in Sources */,
 				8F0B94B21F8D4BCE007F0E82 /* ModeleEtat.swift in Sources */,
