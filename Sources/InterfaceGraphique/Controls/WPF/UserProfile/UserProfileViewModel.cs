@@ -59,7 +59,8 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
                 UserName = User.Instance.UserEntity.Username;
                 Name = User.Instance.UserEntity.Name;
                 Email = User.Instance.UserEntity.Email;
-                //TODO : GET USER BY ID for name,email,date of account creation, profile pic
+                //Date = User.Instance.UserEntity.Date;
+                ProfilePicture = User.Instance.UserEntity.Profile;
                 var items = await StoreService.GetUserStoreItems(User.Instance.UserEntity.Id);
 
                 Items = new List<ItemViewModel>();
