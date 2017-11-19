@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using AirHockeyServer.Events;
 using System.Diagnostics;
 using AirHockeyServer.Services.Interfaces;
+using AirHockeyServer.Core;
 
 namespace AirHockeyServer.Hubs
 {
@@ -50,8 +51,8 @@ namespace AirHockeyServer.Hubs
         ////////////////////////////////////////////////////////////////////////
         public void JoinGame(UserEntity user)
         {
-            // TO REMOVE, WAITING FOR AUTHENTIFICATION
             ConnectionMapper.AddConnection(user.Id, Context.ConnectionId);
+            Cache.AddPlayer(user);
 
             GameService.JoinGame(user);
         }
@@ -93,6 +94,7 @@ namespace AirHockeyServer.Hubs
             Groups.Remove(ConnectionMapper.GetConnection(user.Id), gameId.ToString());
             GameService.LeaveGame(user);
             ConnectionMapper.DeleteConnection(user.Id);
+            Cache.RemovePlayer(user);
         }
 
         public void SendGameData(Guid gameId, GameDataMessage gameData)
@@ -126,6 +128,8 @@ namespace AirHockeyServer.Hubs
         {
             string gameID = ConnectionMapper.GetGameId(Context.ConnectionId).ToString();
             Clients.Group(gameID, Context.ConnectionId).DisconnectedOpponent();
+
+            // TODO HAVE TO GET USERID
 
             return base.OnDisconnected(stopCalled);
         }

@@ -27,6 +27,7 @@ using InterfaceGraphique.Controls.WPF.UserProfile;
 using InterfaceGraphique.Controls.WPF.Store;
 using InterfaceGraphique.Controls.WPF.Tutorial;
 using InterfaceGraphique.Game.GameState;
+using InterfaceGraphique.Managers;
 
 namespace InterfaceGraphique
 {
@@ -173,8 +174,9 @@ namespace InterfaceGraphique
         {
             unityContainer = new UnityContainer();
 
-            // Service
+            // Managers
             unityContainer.RegisterType<GameManager>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<GameRequestManager>(new ContainerControlledLifetimeManager());
 
             //Hub instantiations
             unityContainer.RegisterType<IBaseHub, ChatHub>(new ContainerControlledLifetimeManager());

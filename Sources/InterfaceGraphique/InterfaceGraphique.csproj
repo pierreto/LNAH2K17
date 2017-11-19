@@ -322,6 +322,7 @@
     <Compile Include="Entities\Editor\OnlineUser.cs" />
     <Compile Include="Entities\GameDataMessage.cs" />
     <Compile Include="Entities\GameEntity.cs" />
+    <Compile Include="Entities\GameRequestEntity.cs" />
     <Compile Include="Entities\GoalMessage.cs" />
     <Compile Include="Entities\LoginEntity.cs" />
     <Compile Include="Entities\LoginMessage.cs" />
@@ -337,6 +338,7 @@
     <Compile Include="Entities\SignupEntity.cs" />
     <Compile Include="Entities\UserEntity.cs" />
     <Compile Include="Exceptions\ConnectServerException.cs" />
+    <Compile Include="Exceptions\FriendBusyException.cs" />
     <Compile Include="Exceptions\LoginException.cs" />
     <Compile Include="Exceptions\SignupException.cs" />
     <Compile Include="ListMaps.cs">
@@ -349,6 +351,7 @@
     <Compile Include="Game\GameState\MasterGameState.cs" />
     <Compile Include="Game\GameState\OfflineGameState.cs" />
     <Compile Include="Game\GameState\SlaveGameState.cs" />
+    <Compile Include="Managers\GameRequestManager.cs" />
     <Compile Include="Menus\HomeMenu.cs">
       <SubType>Form</SubType>
     </Compile>
