@@ -27,6 +27,8 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     @IBOutlet weak var tournamentsWonLabel: UILabel!
     @IBOutlet weak var tournamentsPlayedLabel: UILabel!
 
+    @IBOutlet weak var scrollLeft: UILabel!
+    @IBOutlet weak var scrollRight: UILabel!
     
     
     override func viewDidLoad() {
@@ -34,6 +36,8 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         achievementCollectionView.delegate = self
         achievementCollectionView.dataSource = self
         // Do any additional setup after loading the view.
+        scrollLeft.text = "\u{f101}"
+        scrollRight.text = "\u{f100}"
     }
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
