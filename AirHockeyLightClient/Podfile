@@ -15,6 +15,7 @@ target 'AirHockeyLightClient' do
   pod 'iCarousel'
   pod 'PromiseKit', '~> 4.4'
   pod 'RealmSwift'
+  pod 'SearchTextField'
   pod 'SwiftyJSON'
   pod 'SwiftR'
 end
