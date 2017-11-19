@@ -7,12 +7,25 @@
              xmlns:local="clr-namespace:InterfaceGraphique.Controls.WPF.UserProfile"
              xmlns:fa="http://schemas.fontawesome.io/icons/"
              mc:Ignorable="d" 
+             xmlns:convert="clr-namespace:InterfaceGraphique.Controls.WPF.Converters"
             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
              xmlns:t="http://schemas.telerik.com/2008/xaml/presentation" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="600" d:DesignWidth="600">
     <UserControl.Resources>
         <ResourceDictionary>
             <wpf:ViewModelLocator x:Key="VMLocator" d:IsDataSource="True" />
+            <Style x:Key="NoHover" TargetType="Button">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Grid Background="{TemplateBinding Background}">
+                                <ContentPresenter />
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
@@ -57,7 +70,9 @@
                     <ColumnDefinition Width="40*"></ColumnDefinition>
                     <ColumnDefinition Width="60*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Image Grid.Column="0" Source="{Binding ProfilePictureUrl}"></Image>
+                <Button Style="{StaticResource NoHover}" Grid.Column="0" Command="{Binding ChangeProfilePictureCommand}">
+                    <Image Source="{Binding ProfilePicture, Converter={convert:Base64ImageConverter}}" Cursor="Hand"></Image>
+                </Button>
                 <StackPanel Grid.Column="1">
                     <TextBlock Text="Pseudonyme" FontSize="16" Foreground="White" FontWeight="Bold"></TextBlock>
                     <TextBlock Text="{Binding UserName}" FontSize="12" Foreground="SkyBlue" Margin="0,5,0,0"></TextBlock>
