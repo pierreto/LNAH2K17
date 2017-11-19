@@ -20,6 +20,7 @@
 		1D3D77B71F981BCA0012EF12 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3D77B61F981BCA0012EF12 /* MainViewController.swift */; };
 		1D4F014F1FB130BE00F4A302 /* ChatSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4F014E1FB130BE00F4A302 /* ChatSplitViewController.swift */; };
 		1D4F01511FB13B2B00F4A302 /* VerticalSplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D4F01501FB13B2B00F4A302 /* VerticalSplitViewController.swift */; };
+		1D7041AF1FC1261600899418 /* default_profile_picture.png in Resources */ = {isa = PBXBuildFile; fileRef = 1D7041AE1FC1261500899418 /* default_profile_picture.png */; };
 		1D863DB11F9848E70025B89D /* OfflineMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D863DB01F9848E70025B89D /* OfflineMenuViewController.swift */; };
 		1D90AAFB1F98205A003E0764 /* ConnectServerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D90AAFA1F98205A003E0764 /* ConnectServerViewController.swift */; };
 		1D90AAFE1F98228E003E0764 /* IConnectServerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D90AAFD1F98228E003E0764 /* IConnectServerViewModel.swift */; };
@@ -222,6 +223,7 @@
 		1D3D77B61F981BCA0012EF12 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainViewController.swift; path = InterfaceGraphique/Menus/MainViewController.swift; sourceTree = "<group>"; };
 		1D4F014E1FB130BE00F4A302 /* ChatSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChatSplitViewController.swift; path = InterfaceGraphique/Chat/ChatSplitViewController.swift; sourceTree = "<group>"; };
 		1D4F01501FB13B2B00F4A302 /* VerticalSplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VerticalSplitViewController.swift; path = InterfaceGraphique/VerticalSplitViewController.swift; sourceTree = "<group>"; };
+		1D7041AE1FC1261500899418 /* default_profile_picture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = default_profile_picture.png; path = ../../Exe/media/image/default_profile_picture.png; sourceTree = "<group>"; };
 		1D863DB01F9848E70025B89D /* OfflineMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OfflineMenuViewController.swift; path = InterfaceGraphique/Menus/OfflineMenuViewController.swift; sourceTree = "<group>"; };
 		1D90AAFA1F98205A003E0764 /* ConnectServerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ConnectServerViewController.swift; path = InterfaceGraphique/Menus/ConnectServerViewController.swift; sourceTree = "<group>"; };
 		1D90AAFD1F98228E003E0764 /* IConnectServerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IConnectServerViewModel.swift; sourceTree = "<group>"; };
@@ -909,6 +911,7 @@
 		8FB6A9C31F81DCA000FAFFCF /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				1D7041AE1FC1261500899418 /* default_profile_picture.png */,
 				1DC31A591FC0DAFF0000B7DE /* Achievements */,
 				8FF4B59B1FBD602500BB2941 /* Skybox */,
 				8F4B40771FB944E700DFDA2F /* Sounds */,
@@ -1125,6 +1128,7 @@
 				8FF4B5CA1FBD70CE00BB2941 /* upImage.png in Resources */,
 				8F4B40A51FB9685F00DFDA2F /* Transform.wav in Resources */,
 				8F6AE2C01F6592EB00A29E8B /* Actions.sks in Resources */,
+				1D7041AF1FC1261600899418 /* default_profile_picture.png in Resources */,
 				344A6E1E1F9908F500CFFBEB /* Cancel.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

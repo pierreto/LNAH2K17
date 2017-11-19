@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ffT-iX-5Zl">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="vvr-1d-tU6">
     <device id="ipad9_7" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -390,7 +390,7 @@
                                     <constraint firstAttribute="height" constant="150" id="Ctw-f3-uBl"/>
                                     <constraint firstAttribute="width" constant="800" id="DEX-TF-KGO"/>
                                 </constraints>
-                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="100" minimumInteritemSpacing="30" id="ZuT-U6-18Y">
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="60" minimumInteritemSpacing="30" id="ZuT-U6-18Y">
                                     <size key="itemSize" width="110" height="130"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -436,35 +436,19 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qZv-P4-3rZ">
-                                <rect key="frame" x="50" y="471" width="42" height="17"/>
-                                <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="17"/>
-                                <color key="textColor" white="1" alpha="0.34811108732876711" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XJN-QY-qHa">
-                                <rect key="frame" x="932" y="471" width="42" height="17"/>
-                                <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="17"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="0.34999999999999998" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.24313725490196078" green="0.24313725490196078" blue="0.24313725490196078" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="YKK-j6-Y3j" firstAttribute="centerX" secondItem="07B-QL-mDl" secondAttribute="centerX" id="APf-l4-jQB"/>
                             <constraint firstAttribute="trailing" secondItem="d9P-3g-CZd" secondAttribute="trailing" constant="30" id="FaY-h0-WZn"/>
-                            <constraint firstItem="gP6-pZ-PyV" firstAttribute="top" secondItem="XJN-QY-qHa" secondAttribute="bottom" constant="280" id="Iix-rM-TYp"/>
                             <constraint firstItem="YKK-j6-Y3j" firstAttribute="top" secondItem="7q9-LS-0yo" secondAttribute="bottom" constant="10" id="LO5-Bl-pw7"/>
                             <constraint firstItem="d9P-3g-CZd" firstAttribute="top" secondItem="FiD-6v-leD" secondAttribute="bottom" constant="100" id="NrZ-AX-zi8"/>
-                            <constraint firstItem="XJN-QY-qHa" firstAttribute="leading" secondItem="YKK-j6-Y3j" secondAttribute="trailing" constant="20" id="QMr-ME-Eua"/>
                             <constraint firstItem="YKK-j6-Y3j" firstAttribute="top" secondItem="m7C-8b-wve" secondAttribute="bottom" constant="54" id="TcA-ID-atT"/>
                             <constraint firstItem="e6u-ac-xGt" firstAttribute="leading" secondItem="07B-QL-mDl" secondAttribute="leadingMargin" constant="30" id="Xl0-te-hLq"/>
                             <constraint firstItem="m7C-8b-wve" firstAttribute="leading" secondItem="e6u-ac-xGt" secondAttribute="trailing" constant="35" id="bFZ-qf-1Tc"/>
-                            <constraint firstItem="YKK-j6-Y3j" firstAttribute="leading" secondItem="qZv-P4-3rZ" secondAttribute="trailing" constant="20" id="dJA-MG-xEl"/>
                             <constraint firstItem="m7C-8b-wve" firstAttribute="top" secondItem="FiD-6v-leD" secondAttribute="bottom" constant="80" id="hB0-dC-ucE"/>
                             <constraint firstItem="7q9-LS-0yo" firstAttribute="centerX" secondItem="07B-QL-mDl" secondAttribute="centerX" id="hb5-ex-roq"/>
                             <constraint firstItem="e6u-ac-xGt" firstAttribute="top" secondItem="FiD-6v-leD" secondAttribute="bottom" constant="80" id="iGl-o5-hTz"/>
-                            <constraint firstItem="gP6-pZ-PyV" firstAttribute="top" secondItem="qZv-P4-3rZ" secondAttribute="bottom" constant="280" id="yDN-St-cDG"/>
                         </constraints>
                     </view>
                     <connections>
@@ -476,8 +460,6 @@
                         <outlet property="nameLabel" destination="HMI-da-qJS" id="YXs-Ve-xEY"/>
                         <outlet property="pointsLabel" destination="O0A-c8-Z7D" id="g1N-5X-um4"/>
                         <outlet property="profileImage" destination="e6u-ac-xGt" id="glc-oh-W4w"/>
-                        <outlet property="scrollLeft" destination="XJN-QY-qHa" id="c4M-nn-s4L"/>
-                        <outlet property="scrollRight" destination="qZv-P4-3rZ" id="Bbp-Ml-LmU"/>
                         <outlet property="tournamentsPlayedLabel" destination="vSc-f4-Fp8" id="fxz-nj-Jie"/>
                         <outlet property="tournamentsWonLabel" destination="kSX-S1-iDu" id="die-TL-25n"/>
                         <outlet property="usernameLabel" destination="ezy-1H-R0s" id="xlX-vi-xhl"/>
@@ -1758,7 +1740,7 @@
                                                 </connections>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error Messages" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VWk-Fn-IOU" userLabel="iPaddressErrorLabel">
-                                                <rect key="frame" x="0.0" y="68" width="119.5" height="20.5"/>
+                                                <rect key="frame" x="0.0" y="68" width="0.0" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
