@@ -42,17 +42,13 @@ namespace InterfaceGraphique.Editor
         public MapManager(MapService mapService)
         {
             this.mapService = mapService;
-            this.currentMapInfo = new MapMetaData();// { LastBackup = DateTime.Now };
+            this.currentMapInfo = new MapMetaData();
         }
 
         public void resetMapInfo()
         {
             string creator = User.Instance.UserEntity?.Username;
-            this.currentMapInfo = new MapMetaData
-            {
-                Creator = creator
-                //LastBackup = DateTime.Now
-            };
+            this.currentMapInfo = new MapMetaData{ Creator = creator };
         }
 
         private void LoadJSON(string json)
@@ -77,7 +73,6 @@ namespace InterfaceGraphique.Editor
                     savedOnce = true,
                     Creator = creator,
                     Name = ofd.FileName
-                    //LastBackup = DateTime.Now
                 };
             }
         }
@@ -117,7 +112,6 @@ namespace InterfaceGraphique.Editor
                 Name = mapMetaData.MapName,
                 Private = mapMetaData.Private,
                 Password = mapMetaData.Password
-                //LastBackup = DateTime.Now
             };
         }
 
@@ -125,6 +119,8 @@ namespace InterfaceGraphique.Editor
         {
             StringBuilder filePath = new StringBuilder(this.currentMapInfo.Name);
             FonctionsNatives.enregistrerSous(filePath, Program.GeneralProperties.GetCoefficientValues());
+            byte[] bytes = new byte[128*128*3];
+            FonctionsNatives.getMapIcon(bytes);
 
             // We have to update the properties of the current map:
             this.currentMapInfo.savedOnce = true;
@@ -202,6 +198,7 @@ namespace InterfaceGraphique.Editor
                 int? savedMapId = await this.mapService.SaveNewMap(map.Value);
                 if (savedMapId != null)
                 {
+                    map.Value.Id = savedMapId; // needed to join the online edition mode
                     this.currentMapInfo.Id = savedMapId;
                     saved.Value = true;
                 }
@@ -216,6 +213,14 @@ namespace InterfaceGraphique.Editor
             }
             else
             {
+                // we just saved the map for the first time so
+                // we have to join the online edition mode:
+                if (!this.currentMapInfo.savedOnce)
+                {
+                    Program.Editeur.CurrentState = Program.Editeur.onlineState;
+                    Program.Editeur.CurrentState.JoinEdition(map.Value);
+                }
+
                 // we have to update the properties of the current map:
                 this.currentMapInfo.savedOnce = true;
                 this.currentMapInfo.savedOnline = true;

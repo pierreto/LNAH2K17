@@ -788,7 +788,7 @@ void FacadeModele::chargerCarte(std::string json, float coefficients[])
 		coefficients[1] = docJSON_["Coefficients"][1].GetDouble();
 		coefficients[2] = docJSON_["Coefficients"][2].GetDouble();
 
-		std::cout << "Project succesfully loaded!" << std::endl;
+		//std::cout << "Project succesfully loaded!" << std::endl;
 	}
 }
 

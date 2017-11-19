@@ -4,7 +4,7 @@ using System.Windows;
 
 namespace InterfaceGraphique.Controls.WPF.Converters
 {
-    class BooleanToVisibilityConverter : BaseValueConverter<BooleanToVisibilityConverter>
+    public class BooleanToVisibilityConverter : BaseValueConverter<BooleanToVisibilityConverter>
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

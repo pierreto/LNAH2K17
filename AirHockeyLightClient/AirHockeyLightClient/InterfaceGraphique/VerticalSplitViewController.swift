@@ -47,6 +47,8 @@ class VerticalSplitViewController: UIViewController {
         VerticalSplitViewController.sharedVerticalSplitViewController = self;
         let screenSize = UIScreen.main.bounds
         self.screenHeight = screenSize.height
+        chatButton.setTitle("\u{f075}", for: .normal)
+        friendsButton.setTitle("\u{f007}", for: .normal)
     }
 
     fileprivate func subscribeToNotifications() {

@@ -114,28 +114,31 @@
             </Grid>
         </Grid>
         <Border Grid.Column="1" Grid.Row="0" BorderBrush="white" BorderThickness="2 0 0 0">
-            <ListView ItemsSource="{Binding Items}" x:Name="storeItems">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal" Margin="5 0 0 0">
-                            <CheckBox IsChecked="{Binding Path=IsGameEnabled, Mode=TwoWay}">
-                                <i:Interaction.Triggers>
-                                    <i:EventTrigger EventName="Checked">
-                                        <i:InvokeCommandAction Command="{Binding ElementName=storeItems, Path=DataContext.SelectCommand}"
+            <StackPanel>
+                <TextBlock Text="Inventaire" Foreground="White" FontSize="15" Margin="0 0 0 10"></TextBlock>
+                <ListView ItemsSource="{Binding Items}" x:Name="storeItems">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" Margin="5 0 0 0">
+                                <CheckBox IsChecked="{Binding Path=IsGameEnabled, Mode=TwoWay}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="Checked">
+                                            <i:InvokeCommandAction Command="{Binding ElementName=storeItems, Path=DataContext.SelectCommand}"
                                                        CommandParameter="{Binding}"/>
-                                    </i:EventTrigger>
-                                    <i:EventTrigger EventName="Unchecked">
-                                        <i:InvokeCommandAction Command="{Binding ElementName=storeItems, Path=DataContext.SelectCommand}"
+                                        </i:EventTrigger>
+                                        <i:EventTrigger EventName="Unchecked">
+                                            <i:InvokeCommandAction Command="{Binding ElementName=storeItems, Path=DataContext.SelectCommand}"
                                                        CommandParameter="{Binding}"/>
-                                    </i:EventTrigger>
-                                </i:Interaction.Triggers>
-                            </CheckBox>
-                            <Image Source="{Binding Path=ImageUrl}" Margin="10 0 0 0" Height="20" Width="20"></Image>
-                            <TextBlock Text="{Binding Path=Name}" Margin="5 0 0 0" Foreground="White" FontSize="15"></TextBlock>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </CheckBox>
+                                <Image Source="{Binding Path=ImageUrl}" Margin="10 0 0 0" Height="20" Width="20"></Image>
+                                <TextBlock Text="{Binding Path=Name}" Margin="5 0 0 0" Foreground="White" FontSize="15"></TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackPanel>
         </Border>
     </Grid>
 </UserControl>

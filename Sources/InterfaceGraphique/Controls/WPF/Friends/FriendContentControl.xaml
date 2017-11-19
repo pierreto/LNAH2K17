@@ -19,7 +19,7 @@
             <DataTemplate x:Name="AddUserView" DataType="{x:Type local:AddUserViewModel}">
                 <local:AddUserView DataContext="{Binding}"/>
             </DataTemplate>
-            <local:SizePercentageConverter x:Key="PercentageConverter" d:IsDataSource="True" />
+            <converters:SizePercentageConverter x:Key="PercentageConverter" d:IsDataSource="True" />
 
             <wpf:ViewModelLocator x:Key="VMLocator" d:IsDataSource="True" />
             <Style TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource MaterialDesignTabablzControlStyle}" />

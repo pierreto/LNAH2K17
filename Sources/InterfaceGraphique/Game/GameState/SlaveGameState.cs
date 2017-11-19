@@ -129,7 +129,7 @@ namespace InterfaceGraphique.Game.GameState
         public override void EndGame()
         {
             gameHasEnded = true;
-            Program.QuickPlay.EndGame();
+            Program.QuickPlay.EndGame(true);
             Program.QuickPlay.UnsuscribeEventHandlers();
             FonctionsNatives.setGameEnded();
 

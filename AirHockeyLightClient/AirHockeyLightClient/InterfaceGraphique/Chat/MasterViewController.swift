@@ -16,23 +16,32 @@ protocol ChannelSelectionDelegate: class {
     func toggleAddChannelView()
 }
 
-var channels = [ChannelEntity]()
-
 class MasterViewController: UITableViewController {
     let clientConnection = HubManager.sharedConnection
     static var sharedMasterViewController = MasterViewController()
+    var channels = [ChannelEntity]()
     
     weak var delegate: ChannelSelectionDelegate?
+    @IBOutlet weak var toggleChannelButton: UIButton!
+    @IBOutlet weak var addChannelButton: UIButton!
     @IBOutlet var channelTableView: UITableView!
     @IBAction func toggleJoinChannelMenu(_ sender: Any) {
         if delegate?.cJoinChannelConstraint == 1 {
+            self.toggleChannelButton.setTitle("\u{f061}", for: .normal)
             delegate?.cJoinChannelConstraint = -241
         } else {
+            self.toggleChannelButton.setTitle("\u{f060}", for: .normal)
             delegate?.cJoinChannelConstraint = 1
+        }
+        
+        //Hide the add channel popup if we open the join channel view
+        if !ChatAreaViewController.sharedChatAreaViewController.addChannelView.isHidden {
+            ChatAreaViewController.sharedChatAreaViewController.addChannelView.isHidden = true
         }
     }
 
     @IBAction func addChannel(_ sender: Any) {
+        self.toggleChannelButton.setTitle("\u{f061}", for: .normal)
         self.delegate?.toggleAddChannelView()
     }
     
@@ -50,6 +59,8 @@ class MasterViewController: UITableViewController {
         self.channelTableView.selectRow(at: indexPath, animated: true, scrollPosition: .bottom)
         self.channelTableView.delegate?.tableView!(self.channelTableView, didSelectRowAt: indexPath)
         
+        self.toggleChannelButton.setTitle("\u{f061}", for: .normal)
+        self.addChannelButton.setTitle("\u{f067}", for: .normal)
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -96,8 +107,10 @@ class MasterViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedChannel = channels[indexPath.row]
-        selectedChannel.hasUnreadMessage = false
         self.delegate?.channelSelected(newChannel: selectedChannel)
+        selectedChannel.hasUnreadMessage = false
+        let currentCell = channelTableView.cellForRow(at: indexPath) as! UITableViewCell
+        currentCell.textLabel?.textColor = UIColor .white
     }
 
     // Override to support conditional editing of the table view.
@@ -161,12 +174,12 @@ extension MasterViewController: AddChannelDelegate {
         let chatHub = clientConnection.getChatHub()
         chatHub.CreateChannel(channelName: channelName) { res in
             if res == "" {
-                channels.append(ChannelEntity(name: channelName))
+                MasterViewController.sharedMasterViewController.channels.append(ChannelEntity(name: channelName))
                 self.delegate?.sChannelNameErrMsg = ""
                 self.delegate?.sChannelName = ""
                 self.delegate?.toggleAddChannelView()
                 self.channelTableView.reloadData()
-                let indexPath = IndexPath(row: channels.count - 1, section: 0);
+                let indexPath = IndexPath(row: MasterViewController.sharedMasterViewController.channels.count - 1, section: 0);
                 self.channelTableView.selectRow(at: indexPath, animated: true, scrollPosition: .bottom)
                 self.channelTableView.delegate?.tableView!(self.channelTableView, didSelectRowAt: indexPath)
             } else {

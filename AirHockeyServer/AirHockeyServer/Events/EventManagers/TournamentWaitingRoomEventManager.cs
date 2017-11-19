@@ -47,10 +47,14 @@ namespace AirHockeyServer.Events.EventManagers
 
         public void RemoveUser(int id)
         {
-            GlobalHost.ConnectionManager.GetHubContext<TournamentWaitingRoomHub>().Groups.Remove(ConnectionMapper.GetConnection(id), Tournament.Id.ToString());
-
-            var user = Tournament.Players.Find(x => x.Id == id);
-            Tournament.Players.Remove(user);
+            string connection = ConnectionMapper.GetConnection(id);
+            if(connection != null && !string.IsNullOrEmpty(connection) && Tournament != null)
+            {
+                GlobalHost.ConnectionManager.GetHubContext<TournamentWaitingRoomHub>().Groups.Remove(connection, Tournament?.Id.ToString());
+                
+                var user = Tournament?.Players?.Find(x => x.Id == id);
+                Tournament?.Players?.Remove(user);
+            }
         }
 
         protected  void OnOpponentFound(object sender, UserEntity user)
@@ -144,11 +148,18 @@ namespace AirHockeyServer.Events.EventManagers
             {
                 timer.Stop();
 
+                int mapId = 0;
                 if (Tournaments[tournamentId].SelectedMap == null)
                 {
-                    IEnumerable<MapEntity> maps = await MapService.GetMaps();
-                    Tournaments[tournamentId].SelectedMap = await MapService.GetMap(maps.First().Id.Value);
+                    var maps = await MapService.GetMaps();
+                    mapId = maps.First().Id.Value;
                 }
+                else
+                {
+                    mapId = Tournaments[tournamentId].SelectedMap.Id.Value;
+                }
+
+                Tournaments[tournamentId].SelectedMap = await MapService.GetMap(mapId);
 
                 Tournaments[tournamentId].SemiFinals[0].SelectedMap = Tournaments[tournamentId].SelectedMap;
                 Tournaments[tournamentId].SemiFinals[1].SelectedMap = Tournaments[tournamentId].SelectedMap;

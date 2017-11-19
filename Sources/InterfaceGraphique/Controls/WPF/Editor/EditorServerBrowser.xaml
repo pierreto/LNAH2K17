@@ -5,7 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:wpf="clr-namespace:InterfaceGraphique.Controls.WPF"
              xmlns:mockObject="clr-namespace:InterfaceGraphique.Entities.MockObject"
+             xmlns:friends="clr-namespace:InterfaceGraphique.Controls.WPF.Friends"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
              mc:Ignorable="d" 
+             
+             xmlns:convert="clr-namespace:InterfaceGraphique.Controls.WPF.Converters"
+
              d:DesignHeight="400" d:DesignWidth="600">
     <UserControl.Resources>
         <ResourceDictionary>
@@ -17,9 +22,12 @@
                 <ResourceDictionary Source="/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Blue.xaml" />
                 <ResourceDictionary Source="/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Green.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            
-            
-            <wpf:ViewModelLocator x:Key="VMLocator" d:IsDataSource="True" />
+            <convert:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"></convert:BooleanToVisibilityConverter>
+            <convert:BytesToImageConverter x:Key="BytesToImageConverter"></convert:BytesToImageConverter>
+
+   
+
+                <wpf:ViewModelLocator x:Key="VMLocator" d:IsDataSource="True" />
             <!--<x:Array   x:Key="SampleServerList" x:Name="OnlineEditedMapInfos" Type="model:OnlineEditedMapInfo"
                      xmlns:sys="clr-namespace:System;assembly=mscorlib">
                 <model:OnlineEditedMapInfo MapName="MapName" NumberOfPlayer="123"/>
@@ -46,11 +54,11 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <TextBlock HorizontalAlignment="Center" Grid.Column="0" Text="IsPublic" Foreground="#DDFFFFFF" />
-                <TextBlock HorizontalAlignment="Center" Grid.Column="1" Text="MapName" Foreground="#DDFFFFFF" Margin="0,0,7,0" />
-                <TextBlock HorizontalAlignment="Center" Grid.Column="2" Text="Number Of Player" Foreground="#DDFFFFFF" />
-                <TextBlock HorizontalAlignment="Center" Grid.Column="3" Text="Creator" Foreground="#DDFFFFFF" />
-                <TextBlock HorizontalAlignment="Center" Grid.Column="4" Text="Id" Foreground="#DDFFFFFF" />
+                <!--<TextBlock HorizontalAlignment="Center" Grid.Column="0" Text="Icône" Foreground="#DDFFFFFF" />-->
+                <TextBlock HorizontalAlignment="Center" Grid.Column="1" Text="Privacité" Foreground="#DDFFFFFF" />
+                <TextBlock HorizontalAlignment="Center" Grid.Column="2" Text="Nom" Foreground="#DDFFFFFF" Margin="0,0,7,0" />
+                <TextBlock HorizontalAlignment="Center" Grid.Column="3" Text="Nombre de joueurs" Foreground="#DDFFFFFF" />
+                <TextBlock HorizontalAlignment="Center" Grid.Column="4" Text="Créateur" Foreground="#DDFFFFFF" />
 
             </Grid>
             <ListBox ItemsSource="{Binding OnlineEditedMapInfos}" 
@@ -72,13 +80,13 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <!--<Image Source="{Binding Icon}" Stretch="UniformToFill"/>-->
-                            <TextBlock HorizontalAlignment="Center" Grid.Column="0" Text="{Binding Private}" Foreground="#DDFFFFFF" />
-                            <TextBlock HorizontalAlignment="Center" Grid.Column="1" Text="{Binding MapName}" Foreground="#DDFFFFFF" Margin="0,0,0,0" />
-                            <TextBlock HorizontalAlignment="Center" Grid.Column="2" Text="{Binding CurrentNumberOfPlayer, StringFormat= ' {0}/4'}" Foreground="#DDFFFFFF" />
-                            <TextBlock HorizontalAlignment="Center" Grid.Column="3" Text="{Binding Creator}" Foreground="#DDFFFFFF" />
-                            <TextBlock HorizontalAlignment="Center" Grid.Column="4" Text="{Binding Id}" Foreground="#DDFFFFFF" />
+                            <!--<Image Grid.Column="0" Source="{Binding Icon, Converter={StaticResource BytesToImageConverter}}"/> -->
 
+                            <fa:FontAwesome HorizontalAlignment="Center" Grid.Column="1" Icon="Lock"  fa:Awesome.Content="Lock" Foreground="#DDFFFFFF"    Visibility="{Binding Private, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}" />
+                            <fa:FontAwesome HorizontalAlignment="Center" Grid.Column="1" Icon="Unlock" fa:Awesome.Content="Unlock" Foreground="#DDFFFFFF"    Visibility="{Binding Private, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                            <TextBlock HorizontalAlignment="Center" Grid.Column="2" Text="{Binding MapName}" Foreground="#DDFFFFFF" Margin="0,0,0,0" />
+                            <TextBlock HorizontalAlignment="Center" Grid.Column="3" Text="{Binding CurrentNumberOfPlayer, StringFormat= ' {0}/4'}" Foreground="#DDFFFFFF" />
+                            <TextBlock HorizontalAlignment="Center" Grid.Column="4" Text="{Binding Creator}" Foreground="#DDFFFFFF" />
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
