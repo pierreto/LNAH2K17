@@ -11,16 +11,14 @@ using System.Net.Http;
 using InterfaceGraphique.Services;
 using System.Collections.ObjectModel;
 using Microsoft.Practices.Unity;
+using InterfaceGraphique.Controls.WPF.Chat.Channel;
 
 namespace InterfaceGraphique.Controls.WPF.Friends
 {
     public class FriendListViewModel : MinimizableViewModelBase
     {
         private FriendsHub friendsHub;
-        private List<UserEntity> friendList;
-
-
-        private ICommand removeFriendCommand;
+        private ObservableCollection<FriendListItemViewModel> friendList;
 
         public UserEntity SelectedFriend { get; set; }
 
@@ -29,7 +27,7 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             this.friendsHub = friendsHub;
         }
 
-        public List<UserEntity> FriendList
+        public ObservableCollection<FriendListItemViewModel> FriendList
         {
             get => this.friendList;
             set
@@ -39,18 +37,18 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             }
         }
 
-  
-
         public override async void InitializeViewModel()
         {
             Minimize();
-
-            FriendList = await this.friendsHub.GetAllFriends();
+            var friends = await friendsHub.GetAllFriends();
+            FriendList = new ObservableCollection<FriendListItemViewModel>();
+            foreach(var friend in friends)
+            {
+                FriendList.Add(new FriendListItemViewModel(new UserEntity { Id = friend.Id, Username = friend.Username, IsSelected = false }));
+            }
             //List<UserEntity> userEntities = await userService.GetAllUsers();
             this.friendsHub.NewFriendEvent += NewFriendEvent;
             this.friendsHub.RemovedFriendEvent += RemovedFriendEvent;
-
-
         }
 
         public override void Minimize()
@@ -69,48 +67,34 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             }
             Program.unityContainer.Resolve<AddUserViewModel>().Collapsed = Collapsed;
             Program.unityContainer.Resolve<AddUserViewModel>().TabIcon = TabIcon;
-
-
         }
 
 
-        public ICommand RemoveFriendCommand
-        {
-            get
-            {
-                return removeFriendCommand ??
-                       (removeFriendCommand = new RelayCommandAsync(RemoveFriend));
-            }
-        }
 
 
-  
 
-        private async Task RemoveFriend()
-        {
-            if (SelectedFriend != null)
-            {
-                await this.friendsHub.RemoveFriend(SelectedFriend);
-            }
-        }
-
-        private void updateLists()
+        private void UpdateLists()
         {
             Task.Run(async () =>
-                FriendList = await this.friendsHub.GetAllFriends()
+            {
+                var friends = await friendsHub.GetAllFriends();
+                FriendList = new ObservableCollection<FriendListItemViewModel>();
+                foreach (var friend in friends)
+                {
+                    FriendList.Add(new FriendListItemViewModel(new UserEntity { Username = friend.Username, IsSelected = false }));
+                }
+            }
             );
         }
 
         private void NewFriendEvent(UserEntity friend)
         {
-            updateLists();
+            UpdateLists();
         }
-
-
 
         private void RemovedFriendEvent(UserEntity ex_friend)
         {
-            updateLists();
+            UpdateLists();
         }
 
     }

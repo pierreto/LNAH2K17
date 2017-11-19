@@ -202,6 +202,7 @@ namespace InterfaceGraphique
             unityContainer.RegisterType<HomeViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<EditorViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<FriendListViewModel>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<FriendListItemViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<UserProfileViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<StoreViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<AddUserViewModel>(new ContainerControlledLifetimeManager());

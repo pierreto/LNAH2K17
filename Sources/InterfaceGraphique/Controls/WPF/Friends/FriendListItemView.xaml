@@ -1,0 +1,121 @@
+﻿<UserControl x:Class="InterfaceGraphique.Controls.WPF.Friends.FriendListItemView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:InterfaceGraphique.Controls.WPF.Friends"
+             xmlns:convert="clr-namespace:InterfaceGraphique.Controls.WPF.Converters"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
+             xmlns:wpf="clr-namespace:InterfaceGraphique.Controls.WPF"
+             mc:Ignorable="d" 
+             d:DesignWidth="300">
+    <UserControl.Resources>
+
+        <ResourceDictionary>
+            <wpf:ViewModelLocator x:Key="VMLocator" d:IsDataSource="True" />
+            <Style x:Key="ContentStyle" TargetType="{x:Type ContentControl}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ContentControl}">
+
+                            <!-- Content -->
+                            <Border x:Name="background" Background="{StaticResource DarkGrayBrush}" BorderBrush="{StaticResource VeryDarkGrayBrush}" BorderThickness="0,0,0,2">
+
+                                <!-- Click to open message -->
+                                <Border.InputBindings>
+                                    <MouseBinding MouseAction="LeftClick" Command="{Binding ClickFriendCommand}" />
+                                    <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding GoToProfileCommand}"/>
+                                </Border.InputBindings>
+
+                                <Grid x:Name="container" Background="Transparent">
+                                    <Grid.ColumnDefinitions>
+                                        <!-- New Message Indicator Bar -->
+                                        <!-- Profile picture -->
+                                        <ColumnDefinition Width="Auto" />
+                                        <!-- Main content -->
+                                        <ColumnDefinition Width="2*" />
+                                        <ColumnDefinition Width="3*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- Profile picture padding -->
+                                    <Border Grid.Column="0" 
+                                    Padding="8 15"
+                                    >
+                                        <!-- Profile picture background -->
+                                        <Border Background="{StaticResource UltraDarkGrayBrush}" 
+                                        Height="40"
+                                                BorderThickness="2"
+                                                BorderBrush="{StaticResource TextColorBrush}"
+                                        Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
+                                        CornerRadius="8">
+                                            <!-- Profile picture initials -->
+                                            <TextBlock Text="{Binding DataContext.Initials, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Center"
+                                               Foreground="{StaticResource TextColorBrush}"
+                                               FontWeight="Medium"
+                                               FontSize="18"
+                                               />
+                                        </Border>
+                                    </Border>
+
+                                    <!-- Main content -->
+                                    <Border Grid.Column="1" Padding="15 0 15 0">
+                                        <StackPanel VerticalAlignment="Center">
+                                            <!-- Name-->
+                                            <TextBlock Text="{Binding DataContext.Username, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
+                                                Padding="0 0 0 2"
+                                                Foreground="{StaticResource TextColorBrush}"
+                                                FontWeight="Medium"
+                                                FontSize="18"
+                                                TextTrimming="CharacterEllipsis"
+                                                />
+                                        </StackPanel>
+                                    </Border>
+                                    <!-- Tous les ptits boutons-->
+                                    <StackPanel Grid.Column="2" Orientation="Horizontal" Margin="3px" HorizontalAlignment="Center" Visibility="{Binding DataContext.IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Converter={convert:BooleanToVisibilityConverter}, ConverterParameter=True}">
+                                        <Button fa:Awesome.Content="Gamepad" Margin="0 0 5 0" BorderThickness="0" Command="{Binding PlayGameCommand}"></Button>
+                                        <Button fa:Awesome.Content="Comment" Margin="0 0 5 0" BorderThickness="0" Background="{StaticResource UltraDarkGrayBrush}" Command="{Binding ChatWithCommand}"></Button>
+                                        <Button fa:Awesome.Content="Trash" Margin="0 0 0 0" BorderThickness="0" Background="{StaticResource DeleteBrush}" Command="{Binding RemoveFriendCommand}"></Button>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                            <!-- Hover effect -->
+                            <ControlTemplate.Triggers>
+
+                                <DataTrigger Binding="{Binding DataContext.IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Value="True">
+                                    <Setter Property="Background" TargetName="background" Value="{StaticResource VeryDarkGrayBrush}"/>
+                                </DataTrigger>
+
+                                <EventTrigger RoutedEvent="MouseEnter">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation To="{StaticResource VeryDarkGrayColor}" From="{StaticResource DarkGrayColor}" Duration="0:0:0.3" Storyboard.TargetName="container" Storyboard.TargetProperty="Background.Color" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                                <EventTrigger RoutedEvent="MouseLeave">
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation From="{StaticResource VeryDarkGrayColor}" To="Transparent" Duration="0:0:0.0" Storyboard.TargetName="container" Storyboard.TargetProperty="Background.Color" />
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </EventTrigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Background" TargetName="container" Value="Green"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/InterfaceGraphique;component/Resource/appresources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <ContentControl Style="{StaticResource ContentStyle}">
+    </ContentControl>
+
+</UserControl>
