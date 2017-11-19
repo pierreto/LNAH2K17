@@ -9,6 +9,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 import SwiftR
+import SwiftyJSON
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class FriendsHub
@@ -78,10 +79,18 @@ class FriendsHub: BaseHub {
             let user = HubManager.sharedConnection.getUser().toDictionary()
             try self.hubProxy?.invoke("GetAllPendingRequests", arguments: [user]) { (result, error) in
                 if let e = error {
-                    print("Error GetAllFriends FriendsHub: \(e)")
+                    print("Error GetAllPendingRequests FriendsHub: \(e)")
                 }
                 else {
-                    let pendingRequests = result as! [FriendRequestEntity]
+                    let requests = result as! [Dictionary<String, Any>]
+                    let requestsJson = JSON(requests)
+                    var pendingRequests = [FriendRequestEntity]()
+                    let friendsService = FriendsService()
+                    
+                    for request in requestsJson {
+                        pendingRequests.append(friendsService.buildFriendRequestEntity(json: request.1))
+                    }
+                    
                     FriendRequestsTableViewController.instance.updatePendingRequestsEntries(pendingRequests: pendingRequests)
                 }
             }
