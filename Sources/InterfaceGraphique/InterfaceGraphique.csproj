@@ -196,6 +196,7 @@
     <Compile Include="Controls\WPF\Chat\TestChatView.xaml.cs">
       <DependentUpon>TestChatView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\WPF\Converters\Base64ImageConverter.cs" />
     <Compile Include="Controls\WPF\Converters\BaseValueConverter.cs" />
     <Compile Include="Controls\WPF\Converters\BooleanToCollapsedConverter.cs" />
     <Compile Include="Controls\WPF\Converters\BooleanToVisibilityConverter.cs" />

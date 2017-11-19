@@ -13,6 +13,7 @@ import { Observable } from 'rxjs/Observable';
 })
 export class ProfileComponent implements OnInit, AfterViewInit {
   profile: any;
+  id: number;
   constructor(private profileService: ProfileService, private route: ActivatedRoute, private appService: AppService) {
   }
 
@@ -34,8 +35,8 @@ export class ProfileComponent implements OnInit, AfterViewInit {
   }
 
   private getProfile() {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.profileService.getProfile(id).subscribe(
+    this.id = Number(this.route.snapshot.paramMap.get('id'));
+    this.profileService.getProfile(this.id).subscribe(
       (res) => {
         // tslint:disable-next-line:forin
         for (const achivement of res.AchievementEntities) {
@@ -55,5 +56,23 @@ export class ProfileComponent implements OnInit, AfterViewInit {
         console.log(err);
       }
     );
+  }
+
+  private onFileChange(event): void {
+    const reader = new FileReader();
+    if (event.target.files && event.target.files.length > 0) {
+      const file = event.target.files[0];
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        if (reader.result.split(',')[1].length > 65535) {
+          alert('L\'image dépasse la taille maximale');
+        } else {
+          this.profileService.updateProfilePicture(this.appService.id, reader.result.split(',')[1]).subscribe(
+            (res) => this.profile.UserEntity.Profile = reader.result.split(',')[1],
+            (err) => console.log(err)
+          );
+        }
+      };
+    }
   }
 }
