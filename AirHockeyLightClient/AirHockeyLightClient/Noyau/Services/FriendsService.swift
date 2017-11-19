@@ -42,10 +42,12 @@ class FriendsService {
                 switch response.result {
                 case .success(let value):
                     let usersJson = JSON(value)
-                    let users = [UserEntity]()
+                    var users = [UserEntity]()
+                    
                     for user in usersJson {
-                        
+                        users.append(self.buildUserEntity(json: user.1))
                     }
+                    
                     completionHandler(users, nil)
                 case .failure(let error):
                     completionHandler(nil, error)
