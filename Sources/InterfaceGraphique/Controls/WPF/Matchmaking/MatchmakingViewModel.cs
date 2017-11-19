@@ -32,6 +32,11 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
         }
         public override void InitializeViewModel()
         {
+            
+        }
+
+        public void Initialize(bool isGameRequest = false)
+        {
             SetDefaultValues();
             LoadData();
             InitializeEvents();

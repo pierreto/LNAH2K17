@@ -22,7 +22,11 @@ namespace InterfaceGraphique.CommunicationInterface
         public event Action<UserEntity> RemovedFriendEvent;
         public event Action<FriendRequestEntity> CanceledFriendRequestEvent;
 
-       public void InitializeHub(HubConnection connection)
+        public event Action<GameRequestEntity> GameRequestEvent;
+        public event Action<GameRequestEntity> DeclinedGameRequestEvent;
+        public event Action<GameRequestEntity> AcceptedGameRequestEvent;
+
+        public void InitializeHub(HubConnection connection)
         {
             Connection = connection;
             FriendsProxy = Connection.CreateHubProxy("FriendsHub");
@@ -56,6 +60,21 @@ namespace InterfaceGraphique.CommunicationInterface
             {
                 CanceledFriendRequestEvent?.Invoke(request);
             });
+
+            FriendsProxy.On<GameRequestEntity>("GameRequest", request =>
+            {
+                GameRequestEvent?.Invoke(request);
+            });
+
+            FriendsProxy.On<GameRequestEntity>("DeclinedGameRequest", request =>
+            {
+                DeclinedGameRequestEvent?.Invoke(request);
+            });
+
+            FriendsProxy.On<GameRequestEntity>("AcceptedGameRequest", request =>
+            {
+                AcceptedGameRequestEvent?.Invoke(request);
+            });
         }
 
         public async Task<List<UserEntity>> GetAllFriends()
@@ -87,6 +106,21 @@ namespace InterfaceGraphique.CommunicationInterface
         public async Task<bool> RemoveFriend(UserEntity ex_friend)
         {
             return await FriendsProxy.Invoke<bool>("RemoveFriend", this.user, ex_friend);
+        }
+
+        public async Task AcceptGameRequest(GameRequestEntity gameRequest)
+        {
+            await FriendsProxy.Invoke("AcceptGameRequest", gameRequest);
+        }
+
+        public async Task DeclineGameRequest(GameRequestEntity gameRequest)
+        {
+            await FriendsProxy.Invoke("DeclineGameRequest", gameRequest);
+        }
+
+        public async Task<bool> SendGameRequest(GameRequestEntity gameRequest)
+        {
+            return await FriendsProxy.Invoke<bool>("SendGameRequest", gameRequest);
         }
 
         public async Task Logout()
