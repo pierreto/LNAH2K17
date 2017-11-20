@@ -145,7 +145,7 @@ void ModeleEtatRotation::playerMouseMove(int x, int y) {
 			SYSTEMTIME st;
 			GetSystemTime(&st);
 			accTime_ += st.wMilliseconds;
-			if (accTime_>500) {
+			if (accTime_>1000) {
 				canSendToServer = true;
 				accTime_ = 0;
 			}
