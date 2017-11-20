@@ -35,25 +35,16 @@
                 <!-- Include the Dragablz Material Design style -->
                 <ResourceDictionary Source="pack://application:,,,/Dragablz;component/Themes/materialdesign.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-
- 
-           
         </ResourceDictionary>
 
 
     </UserControl.Resources>
     <Grid >
-  
-
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
         <dragablz:TabablzControl Grid.Row="0" ItemContainerStyle ="{StaticResource mdTabHeader}" BorderBrush="#FF8C8C8C" Grid.ColumnSpan="2"  FixedHeaderCount="2">
-            <!--
-            <dragablz:TabablzControl.InterTabController>
-                <dragablz:InterTabController />
-            </dragablz:TabablzControl.InterTabController>-->
             <TabItem  Header="Liste d'amis" Grid.Column="0">
                 <ContentControl Content="{Binding Source={StaticResource VMLocator}, Path=FriendListViewModel}"  />
             </TabItem>

@@ -54,6 +54,7 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
         #region Constructor
         public ChatListItemViewModel(ChannelEntity channelEntity)
         {
+            System.Diagnostics.Debug.WriteLine(channelEntity.Name);
             ChannelEntity = channelEntity;
         }
         #endregion
@@ -118,6 +119,7 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
                 NewContentAvailable = false;
                 Program.unityContainer.Resolve<ChannelViewModel>().OnPropertyChanged("ChannelSelected");
             }
+            System.Diagnostics.Debug.WriteLine(ChannelEntity.Name);
             IsSelected = true;
         }
 

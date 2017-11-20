@@ -16,9 +16,10 @@ namespace InterfaceGraphique.Entities
 
         public string Email { get; set; }
 
-        // OU STRING? je sais pas =(
-        public DateTime Date { get; set; }
+        public string Date { get; set; }
 
         public string Profile { get; set; }
+
+        public bool IsSelected { get; set; }
     }
 }
