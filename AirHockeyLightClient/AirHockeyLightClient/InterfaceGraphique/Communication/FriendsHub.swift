@@ -48,7 +48,11 @@ class FriendsHub: BaseHub {
         }
         
         self.hubProxy?.on("RemovedFriendEvent") { args in
-            print("RemovedFriendEvent")
+            let friendsService = FriendsService()
+            let exFriendJson = JSON(args?[0] as! Dictionary<String, Any>)
+            let exFriend = friendsService.buildUserEntity(json: exFriendJson)
+            
+            FriendsTableViewController.instance.removeFriend(exFriend: exFriend)
         }
         
         self.hubProxy?.on("CanceledFriendRequestEvent") { args in
@@ -64,8 +68,15 @@ class FriendsHub: BaseHub {
                     print("Error GetAllFriends FriendsHub: \(e)")
                 }
                 else {
-                    let friends = result as! [UserEntity]
-                    FriendsTableViewController.instance.updateFriendsEntries(friends: friends)
+                    let friendsJson = JSON(result as! [Dictionary<String, Any>])
+                    var friends = [UserEntity]()
+                    let friendsService = FriendsService()
+                    
+                    for friend in friendsJson {
+                        friends.append(friendsService.buildUserEntity(json: friend.1))
+                    }
+                    
+                    FriendsTableViewController.instance.updateAllFriends(friends: friends)
                 }
             }
         }
@@ -82,8 +93,7 @@ class FriendsHub: BaseHub {
                     print("Error GetAllPendingRequests FriendsHub: \(e)")
                 }
                 else {
-                    let requests = result as! [Dictionary<String, Any>]
-                    let requestsJson = JSON(requests)
+                    let requestsJson = JSON(result as! [Dictionary<String, Any>])
                     var pendingRequests = [FriendRequestEntity]()
                     let friendsService = FriendsService()
                     

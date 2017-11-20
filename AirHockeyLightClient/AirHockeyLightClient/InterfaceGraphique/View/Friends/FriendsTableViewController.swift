@@ -22,9 +22,10 @@ class FriendsTableViewController: UITableViewController {
     /// Instance singleton
     static var instance = FriendsTableViewController()
     
+    private let CHAT_BUTTON_ICON = "\u{f075}"
+    
     @IBOutlet weak var friends: UITableView!
 
-    private var friendsHub: FriendsHub?
     private var friendsData = [UserEntity]()
     
     override func viewDidLoad() {
@@ -34,16 +35,27 @@ class FriendsTableViewController: UITableViewController {
         
         self.friends.delegate = self
         self.friends.dataSource = self
-        
-        /*
-        self.friendsHub = HubManager.sharedConnection.getFriendsHub()
-        self.friendsHub?.initialize()
-        self.friendsHub?.getAllFriends()
-         */
     }
     
-    func updateFriendsEntries(friends: [UserEntity]) {
+    func updateAllFriends(friends: [UserEntity]) {
         self.friendsData = friends
+    
+        DispatchQueue.main.async(execute: { () -> Void in
+            // Reload tableView
+            self.friends.reloadData()
+        })
+    }
+    
+    func removeFriend(exFriend: UserEntity) {
+        var index = -1
+        for friend in self.friendsData {
+            index = index + 1
+            if (friend.getId() == exFriend.getId()) {
+                break
+            }
+        }
+        
+        self.friendsData.remove(at: index)
         
         DispatchQueue.main.async(execute: { () -> Void in
             // Reload tableView
@@ -56,21 +68,41 @@ class FriendsTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return self.friends.dequeueReusableCell(withIdentifier: "Friend", for: indexPath)
+        let cell = self.friends.dequeueReusableCell(withIdentifier: "Friend", for: indexPath)
+        
+        let usernameLabel = cell.viewWithTag(2) as! UILabel
+        usernameLabel.text = self.friendsData[indexPath.row].getUsername()
+        
+        let chatButton = cell.viewWithTag(3) as! UIButton
+        chatButton.setTitle(CHAT_BUTTON_ICON, for: .normal)
+        chatButton.isHidden = true
+        
+        return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // TODO: handle table selection
+        for cell in self.tableView.visibleCells {
+            let chatButton = cell.viewWithTag(3) as! UIButton
+            chatButton.isHidden = true
+        }
+        
+        let currentCell = tableView.cellForRow(at: indexPath)!
+        let chatButton = currentCell.viewWithTag(3) as! UIButton
+        chatButton.setTitle(CHAT_BUTTON_ICON, for: .normal)
+        chatButton.isHidden = false
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        
         if editingStyle == .delete {
+            let exFriend = self.friendsData[indexPath.row]
+            
             // remove the item from the data model
             self.friendsData.remove(at: indexPath.row)
             
             // delete the table view row
             tableView.deleteRows(at: [indexPath], with: .fade)
+            
+            HubManager.sharedConnection.getFriendsHub().removeFriend(exFriend: exFriend)
         }
     }
     
