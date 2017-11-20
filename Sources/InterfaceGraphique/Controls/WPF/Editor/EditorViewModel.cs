@@ -33,9 +33,10 @@ namespace InterfaceGraphique.Controls.WPF.Editor
         {
             this.onlineEditedMapInfos.Clear();
             //TODO:Not optimized should use a list here but for testing purpose i'll leave it this way
-            List<MapEntity> list = await this.mapService.GetMaps(); 
             try
             {
+                List<MapEntity> list = await this.mapService.GetMaps();
+
                 if (list != null)
                 {
                     list.ForEach(map => this.onlineEditedMapInfos.Add(map));

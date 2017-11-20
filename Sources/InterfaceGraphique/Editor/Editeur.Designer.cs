@@ -53,6 +53,8 @@ namespace InterfaceGraphique
             this.Menu_Fichier = new System.Windows.Forms.ToolStripMenuItem();
             this.Fichier_Nouveau = new System.Windows.Forms.ToolStripMenuItem();
             this.Fichier_Ouvrir = new System.Windows.Forms.ToolStripMenuItem();
+            this.Fichier_OuvrirLocalement = new System.Windows.Forms.ToolStripMenuItem();
+            this.Fichier_OuvrirEnLigne = new System.Windows.Forms.ToolStripMenuItem();
             this.Fichier_Enregistrer = new System.Windows.Forms.ToolStripMenuItem();
             this.Fichier_EnregistrerSous = new System.Windows.Forms.ToolStripMenuItem();
             this.Fichier_EnregistrerSous_Ordinateur = new System.Windows.Forms.ToolStripMenuItem();
@@ -94,9 +96,10 @@ namespace InterfaceGraphique
             this.Toolbar_Portal = new System.Windows.Forms.ToolStripButton();
             this.Toolbar_SeparatorBottom = new System.Windows.Forms.ToolStripSeparator();
             this.Edition = new System.Windows.Forms.Panel();
+            this.userPanel = new System.Windows.Forms.Panel();
+            this.userLists = new System.Windows.Forms.Integration.ElementHost();
             this.Panel_PropertiesBack = new System.Windows.Forms.Panel();
-            this.Fichier_OuvrirLocalement = new System.Windows.Forms.ToolStripMenuItem();
-            this.Fichier_OuvrirEnLigne = new System.Windows.Forms.ToolStripMenuItem();
+            this.button1 = new System.Windows.Forms.Button();
             this.PropertiesEditPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ScaleZText)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ScaleXText)).BeginInit();
@@ -110,6 +113,7 @@ namespace InterfaceGraphique
             this.MenuBar.SuspendLayout();
             this.Toolbar.SuspendLayout();
             this.Edition.SuspendLayout();
+            this.userPanel.SuspendLayout();
             this.Panel_PropertiesBack.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -142,10 +146,10 @@ namespace InterfaceGraphique
             this.PropertiesEditPanel.Controls.Add(this.ScaleXLabel);
             this.PropertiesEditPanel.Controls.Add(this.ScaleLabel);
             this.PropertiesEditPanel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.PropertiesEditPanel.Location = new System.Drawing.Point(4, 4);
+            this.PropertiesEditPanel.Location = new System.Drawing.Point(3, 3);
             this.PropertiesEditPanel.Margin = new System.Windows.Forms.Padding(0);
             this.PropertiesEditPanel.Name = "PropertiesEditPanel";
-            this.PropertiesEditPanel.Size = new System.Drawing.Size(333, 308);
+            this.PropertiesEditPanel.Size = new System.Drawing.Size(250, 250);
             this.PropertiesEditPanel.TabIndex = 20;
             // 
             // ScaleZText
@@ -160,8 +164,7 @@ namespace InterfaceGraphique
             0,
             0,
             131072});
-            this.ScaleZText.Location = new System.Drawing.Point(247, 206);
-            this.ScaleZText.Margin = new System.Windows.Forms.Padding(4);
+            this.ScaleZText.Location = new System.Drawing.Point(185, 167);
             this.ScaleZText.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -173,7 +176,7 @@ namespace InterfaceGraphique
             0,
             0});
             this.ScaleZText.Name = "ScaleZText";
-            this.ScaleZText.Size = new System.Drawing.Size(80, 27);
+            this.ScaleZText.Size = new System.Drawing.Size(60, 23);
             this.ScaleZText.TabIndex = 35;
             this.ScaleZText.Value = new decimal(new int[] {
             1,
@@ -194,8 +197,7 @@ namespace InterfaceGraphique
             0,
             0,
             131072});
-            this.ScaleXText.Location = new System.Drawing.Point(33, 206);
-            this.ScaleXText.Margin = new System.Windows.Forms.Padding(4);
+            this.ScaleXText.Location = new System.Drawing.Point(25, 167);
             this.ScaleXText.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -207,7 +209,7 @@ namespace InterfaceGraphique
             0,
             0});
             this.ScaleXText.Name = "ScaleXText";
-            this.ScaleXText.Size = new System.Drawing.Size(80, 27);
+            this.ScaleXText.Size = new System.Drawing.Size(60, 23);
             this.ScaleXText.TabIndex = 33;
             this.ScaleXText.Value = new decimal(new int[] {
             1,
@@ -228,8 +230,7 @@ namespace InterfaceGraphique
             0,
             0,
             131072});
-            this.ScaleYText.Location = new System.Drawing.Point(140, 206);
-            this.ScaleYText.Margin = new System.Windows.Forms.Padding(4);
+            this.ScaleYText.Location = new System.Drawing.Point(105, 167);
             this.ScaleYText.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -241,7 +242,7 @@ namespace InterfaceGraphique
             0,
             0});
             this.ScaleYText.Name = "ScaleYText";
-            this.ScaleYText.Size = new System.Drawing.Size(80, 27);
+            this.ScaleYText.Size = new System.Drawing.Size(60, 23);
             this.ScaleYText.TabIndex = 36;
             this.ScaleYText.Value = new decimal(new int[] {
             1,
@@ -262,8 +263,7 @@ namespace InterfaceGraphique
             0,
             0,
             131072});
-            this.RotationZText.Location = new System.Drawing.Point(247, 144);
-            this.RotationZText.Margin = new System.Windows.Forms.Padding(4);
+            this.RotationZText.Location = new System.Drawing.Point(185, 117);
             this.RotationZText.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -275,7 +275,7 @@ namespace InterfaceGraphique
             0,
             -2147483648});
             this.RotationZText.Name = "RotationZText";
-            this.RotationZText.Size = new System.Drawing.Size(80, 27);
+            this.RotationZText.Size = new System.Drawing.Size(60, 23);
             this.RotationZText.TabIndex = 34;
             // 
             // RotationYText
@@ -290,8 +290,7 @@ namespace InterfaceGraphique
             0,
             0,
             131072});
-            this.RotationYText.Location = new System.Drawing.Point(140, 144);
-            this.RotationYText.Margin = new System.Windows.Forms.Padding(4);
+            this.RotationYText.Location = new System.Drawing.Point(105, 117);
             this.RotationYText.Maximum = new decimal(new int[] {
             360,
             0,
@@ -303,7 +302,7 @@ namespace InterfaceGraphique
             0,
             -2147483648});
             this.RotationYText.Name = "RotationYText";
-            this.RotationYText.Size = new System.Drawing.Size(80, 27);
+            this.RotationYText.Size = new System.Drawing.Size(60, 23);
             this.RotationYText.TabIndex = 33;
             // 
             // RotationXText
@@ -319,8 +318,7 @@ namespace InterfaceGraphique
             0,
             0,
             131072});
-            this.RotationXText.Location = new System.Drawing.Point(33, 144);
-            this.RotationXText.Margin = new System.Windows.Forms.Padding(4);
+            this.RotationXText.Location = new System.Drawing.Point(25, 117);
             this.RotationXText.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -332,7 +330,7 @@ namespace InterfaceGraphique
             0,
             -2147483648});
             this.RotationXText.Name = "RotationXText";
-            this.RotationXText.Size = new System.Drawing.Size(80, 27);
+            this.RotationXText.Size = new System.Drawing.Size(60, 23);
             this.RotationXText.TabIndex = 32;
             // 
             // PositionZText
@@ -347,8 +345,7 @@ namespace InterfaceGraphique
             0,
             0,
             131072});
-            this.PositionZText.Location = new System.Drawing.Point(247, 82);
-            this.PositionZText.Margin = new System.Windows.Forms.Padding(4);
+            this.PositionZText.Location = new System.Drawing.Point(185, 67);
             this.PositionZText.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -360,7 +357,7 @@ namespace InterfaceGraphique
             0,
             -2147483648});
             this.PositionZText.Name = "PositionZText";
-            this.PositionZText.Size = new System.Drawing.Size(80, 27);
+            this.PositionZText.Size = new System.Drawing.Size(60, 23);
             this.PositionZText.TabIndex = 31;
             // 
             // PositionYText
@@ -376,8 +373,7 @@ namespace InterfaceGraphique
             0,
             0,
             131072});
-            this.PositionYText.Location = new System.Drawing.Point(140, 82);
-            this.PositionYText.Margin = new System.Windows.Forms.Padding(4);
+            this.PositionYText.Location = new System.Drawing.Point(105, 67);
             this.PositionYText.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -389,7 +385,7 @@ namespace InterfaceGraphique
             0,
             -2147483648});
             this.PositionYText.Name = "PositionYText";
-            this.PositionYText.Size = new System.Drawing.Size(80, 27);
+            this.PositionYText.Size = new System.Drawing.Size(60, 23);
             this.PositionYText.TabIndex = 30;
             // 
             // PositionXText
@@ -404,8 +400,7 @@ namespace InterfaceGraphique
             0,
             0,
             131072});
-            this.PositionXText.Location = new System.Drawing.Point(33, 82);
-            this.PositionXText.Margin = new System.Windows.Forms.Padding(4);
+            this.PositionXText.Location = new System.Drawing.Point(25, 67);
             this.PositionXText.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -417,17 +412,17 @@ namespace InterfaceGraphique
             0,
             -2147483648});
             this.PositionXText.Name = "PositionXText";
-            this.PositionXText.Size = new System.Drawing.Size(80, 27);
+            this.PositionXText.Size = new System.Drawing.Size(60, 23);
             this.PositionXText.TabIndex = 3;
             // 
             // ResetButton
             // 
             this.ResetButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ResetButton.ForeColor = System.Drawing.Color.White;
-            this.ResetButton.Location = new System.Drawing.Point(180, 265);
+            this.ResetButton.Location = new System.Drawing.Point(135, 215);
             this.ResetButton.Margin = new System.Windows.Forms.Padding(0);
             this.ResetButton.Name = "ResetButton";
-            this.ResetButton.Size = new System.Drawing.Size(133, 31);
+            this.ResetButton.Size = new System.Drawing.Size(100, 25);
             this.ResetButton.TabIndex = 29;
             this.ResetButton.TabStop = false;
             this.ResetButton.Text = " Réinitialiser";
@@ -437,10 +432,10 @@ namespace InterfaceGraphique
             // 
             this.ApplyButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ApplyButton.ForeColor = System.Drawing.Color.White;
-            this.ApplyButton.Location = new System.Drawing.Point(20, 265);
+            this.ApplyButton.Location = new System.Drawing.Point(15, 215);
             this.ApplyButton.Margin = new System.Windows.Forms.Padding(0);
             this.ApplyButton.Name = "ApplyButton";
-            this.ApplyButton.Size = new System.Drawing.Size(133, 31);
+            this.ApplyButton.Size = new System.Drawing.Size(100, 25);
             this.ApplyButton.TabIndex = 28;
             this.ApplyButton.TabStop = false;
             this.ApplyButton.Text = "Appliquer";
@@ -451,10 +446,9 @@ namespace InterfaceGraphique
             this.PropertiesTitle.AutoSize = true;
             this.PropertiesTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.PropertiesTitle.ForeColor = System.Drawing.Color.White;
-            this.PropertiesTitle.Location = new System.Drawing.Point(95, 6);
-            this.PropertiesTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.PropertiesTitle.Location = new System.Drawing.Point(71, 5);
             this.PropertiesTitle.Name = "PropertiesTitle";
-            this.PropertiesTitle.Size = new System.Drawing.Size(135, 29);
+            this.PropertiesTitle.Size = new System.Drawing.Size(105, 24);
             this.PropertiesTitle.TabIndex = 27;
             this.PropertiesTitle.Text = "Propriétés";
             this.PropertiesTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -464,10 +458,9 @@ namespace InterfaceGraphique
             this.PositionZLabel.AutoSize = true;
             this.PositionZLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.PositionZLabel.ForeColor = System.Drawing.Color.White;
-            this.PositionZLabel.Location = new System.Drawing.Point(220, 86);
-            this.PositionZLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.PositionZLabel.Location = new System.Drawing.Point(165, 70);
             this.PositionZLabel.Name = "PositionZLabel";
-            this.PositionZLabel.Size = new System.Drawing.Size(24, 20);
+            this.PositionZLabel.Size = new System.Drawing.Size(19, 15);
             this.PositionZLabel.TabIndex = 26;
             this.PositionZLabel.Text = "z :";
             this.PositionZLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -477,10 +470,9 @@ namespace InterfaceGraphique
             this.PositionYLabel.AutoSize = true;
             this.PositionYLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.PositionYLabel.ForeColor = System.Drawing.Color.White;
-            this.PositionYLabel.Location = new System.Drawing.Point(113, 86);
-            this.PositionYLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.PositionYLabel.Location = new System.Drawing.Point(85, 70);
             this.PositionYLabel.Name = "PositionYLabel";
-            this.PositionYLabel.Size = new System.Drawing.Size(25, 20);
+            this.PositionYLabel.Size = new System.Drawing.Size(19, 15);
             this.PositionYLabel.TabIndex = 25;
             this.PositionYLabel.Text = "y :";
             this.PositionYLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -490,10 +482,9 @@ namespace InterfaceGraphique
             this.PositionXLabel.AutoSize = true;
             this.PositionXLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.PositionXLabel.ForeColor = System.Drawing.Color.White;
-            this.PositionXLabel.Location = new System.Drawing.Point(7, 86);
-            this.PositionXLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.PositionXLabel.Location = new System.Drawing.Point(5, 70);
             this.PositionXLabel.Name = "PositionXLabel";
-            this.PositionXLabel.Size = new System.Drawing.Size(25, 20);
+            this.PositionXLabel.Size = new System.Drawing.Size(20, 15);
             this.PositionXLabel.TabIndex = 24;
             this.PositionXLabel.Text = "x :";
             this.PositionXLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -503,10 +494,9 @@ namespace InterfaceGraphique
             this.PositionLabel.AutoSize = true;
             this.PositionLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.PositionLabel.ForeColor = System.Drawing.Color.White;
-            this.PositionLabel.Location = new System.Drawing.Point(7, 58);
-            this.PositionLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.PositionLabel.Location = new System.Drawing.Point(5, 47);
             this.PositionLabel.Name = "PositionLabel";
-            this.PositionLabel.Size = new System.Drawing.Size(66, 20);
+            this.PositionLabel.Size = new System.Drawing.Size(51, 15);
             this.PositionLabel.TabIndex = 23;
             this.PositionLabel.Text = "Position";
             this.PositionLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -516,10 +506,9 @@ namespace InterfaceGraphique
             this.RotationZLabel.AutoSize = true;
             this.RotationZLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RotationZLabel.ForeColor = System.Drawing.Color.White;
-            this.RotationZLabel.Location = new System.Drawing.Point(220, 148);
-            this.RotationZLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.RotationZLabel.Location = new System.Drawing.Point(165, 120);
             this.RotationZLabel.Name = "RotationZLabel";
-            this.RotationZLabel.Size = new System.Drawing.Size(24, 20);
+            this.RotationZLabel.Size = new System.Drawing.Size(19, 15);
             this.RotationZLabel.TabIndex = 19;
             this.RotationZLabel.Text = "z :";
             this.RotationZLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -529,10 +518,9 @@ namespace InterfaceGraphique
             this.RotationYLabel.AutoSize = true;
             this.RotationYLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RotationYLabel.ForeColor = System.Drawing.Color.White;
-            this.RotationYLabel.Location = new System.Drawing.Point(113, 148);
-            this.RotationYLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.RotationYLabel.Location = new System.Drawing.Point(85, 120);
             this.RotationYLabel.Name = "RotationYLabel";
-            this.RotationYLabel.Size = new System.Drawing.Size(25, 20);
+            this.RotationYLabel.Size = new System.Drawing.Size(19, 15);
             this.RotationYLabel.TabIndex = 18;
             this.RotationYLabel.Text = "y :";
             this.RotationYLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -542,10 +530,9 @@ namespace InterfaceGraphique
             this.RotationXLabel.AutoSize = true;
             this.RotationXLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RotationXLabel.ForeColor = System.Drawing.Color.White;
-            this.RotationXLabel.Location = new System.Drawing.Point(7, 148);
-            this.RotationXLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.RotationXLabel.Location = new System.Drawing.Point(5, 120);
             this.RotationXLabel.Name = "RotationXLabel";
-            this.RotationXLabel.Size = new System.Drawing.Size(25, 20);
+            this.RotationXLabel.Size = new System.Drawing.Size(20, 15);
             this.RotationXLabel.TabIndex = 17;
             this.RotationXLabel.Text = "x :";
             this.RotationXLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -555,10 +542,9 @@ namespace InterfaceGraphique
             this.RotationLabel.AutoSize = true;
             this.RotationLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.RotationLabel.ForeColor = System.Drawing.Color.White;
-            this.RotationLabel.Location = new System.Drawing.Point(7, 119);
-            this.RotationLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.RotationLabel.Location = new System.Drawing.Point(5, 97);
             this.RotationLabel.Name = "RotationLabel";
-            this.RotationLabel.Size = new System.Drawing.Size(70, 20);
+            this.RotationLabel.Size = new System.Drawing.Size(55, 15);
             this.RotationLabel.TabIndex = 16;
             this.RotationLabel.Text = "Rotation";
             this.RotationLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -568,10 +554,9 @@ namespace InterfaceGraphique
             this.ScaleZLabel.AutoSize = true;
             this.ScaleZLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ScaleZLabel.ForeColor = System.Drawing.Color.White;
-            this.ScaleZLabel.Location = new System.Drawing.Point(220, 209);
-            this.ScaleZLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.ScaleZLabel.Location = new System.Drawing.Point(165, 170);
             this.ScaleZLabel.Name = "ScaleZLabel";
-            this.ScaleZLabel.Size = new System.Drawing.Size(24, 20);
+            this.ScaleZLabel.Size = new System.Drawing.Size(19, 15);
             this.ScaleZLabel.TabIndex = 12;
             this.ScaleZLabel.Text = "z :";
             this.ScaleZLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -581,10 +566,9 @@ namespace InterfaceGraphique
             this.ScaleYLabel.AutoSize = true;
             this.ScaleYLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ScaleYLabel.ForeColor = System.Drawing.Color.White;
-            this.ScaleYLabel.Location = new System.Drawing.Point(113, 209);
-            this.ScaleYLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.ScaleYLabel.Location = new System.Drawing.Point(85, 170);
             this.ScaleYLabel.Name = "ScaleYLabel";
-            this.ScaleYLabel.Size = new System.Drawing.Size(25, 20);
+            this.ScaleYLabel.Size = new System.Drawing.Size(19, 15);
             this.ScaleYLabel.TabIndex = 11;
             this.ScaleYLabel.Text = "y :";
             this.ScaleYLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -594,10 +578,9 @@ namespace InterfaceGraphique
             this.ScaleXLabel.AutoSize = true;
             this.ScaleXLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ScaleXLabel.ForeColor = System.Drawing.Color.White;
-            this.ScaleXLabel.Location = new System.Drawing.Point(7, 209);
-            this.ScaleXLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.ScaleXLabel.Location = new System.Drawing.Point(5, 170);
             this.ScaleXLabel.Name = "ScaleXLabel";
-            this.ScaleXLabel.Size = new System.Drawing.Size(25, 20);
+            this.ScaleXLabel.Size = new System.Drawing.Size(20, 15);
             this.ScaleXLabel.TabIndex = 10;
             this.ScaleXLabel.Text = "x :";
             this.ScaleXLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -607,10 +590,9 @@ namespace InterfaceGraphique
             this.ScaleLabel.AutoSize = true;
             this.ScaleLabel.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ScaleLabel.ForeColor = System.Drawing.Color.White;
-            this.ScaleLabel.Location = new System.Drawing.Point(7, 181);
-            this.ScaleLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.ScaleLabel.Location = new System.Drawing.Point(5, 147);
             this.ScaleLabel.Name = "ScaleLabel";
-            this.ScaleLabel.Size = new System.Drawing.Size(126, 20);
+            this.ScaleLabel.Size = new System.Drawing.Size(103, 15);
             this.ScaleLabel.TabIndex = 9;
             this.ScaleLabel.Text = "Facteur d\'échelle";
             this.ScaleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -627,9 +609,8 @@ namespace InterfaceGraphique
             this.Menu_Informations});
             this.MenuBar.Location = new System.Drawing.Point(0, 0);
             this.MenuBar.Name = "MenuBar";
-            this.MenuBar.Padding = new System.Windows.Forms.Padding(8, 2, 0, 2);
             this.MenuBar.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.MenuBar.Size = new System.Drawing.Size(1259, 28);
+            this.MenuBar.Size = new System.Drawing.Size(944, 24);
             this.MenuBar.TabIndex = 0;
             this.MenuBar.Text = "menuStrip1";
             // 
@@ -645,7 +626,7 @@ namespace InterfaceGraphique
             this.Fichier_MenuPrincipal});
             this.Menu_Fichier.ForeColor = System.Drawing.Color.White;
             this.Menu_Fichier.Name = "Menu_Fichier";
-            this.Menu_Fichier.Size = new System.Drawing.Size(64, 24);
+            this.Menu_Fichier.Size = new System.Drawing.Size(54, 20);
             this.Menu_Fichier.Text = "Fichier";
             // 
             // Fichier_Nouveau
@@ -653,7 +634,7 @@ namespace InterfaceGraphique
             this.Fichier_Nouveau.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.Fichier_Nouveau.ForeColor = System.Drawing.Color.White;
             this.Fichier_Nouveau.Name = "Fichier_Nouveau";
-            this.Fichier_Nouveau.Size = new System.Drawing.Size(197, 26);
+            this.Fichier_Nouveau.Size = new System.Drawing.Size(166, 22);
             this.Fichier_Nouveau.Text = "Nouveau";
             // 
             // Fichier_Ouvrir
@@ -664,15 +645,27 @@ namespace InterfaceGraphique
             this.Fichier_OuvrirEnLigne});
             this.Fichier_Ouvrir.ForeColor = System.Drawing.Color.White;
             this.Fichier_Ouvrir.Name = "Fichier_Ouvrir";
-            this.Fichier_Ouvrir.Size = new System.Drawing.Size(197, 26);
+            this.Fichier_Ouvrir.Size = new System.Drawing.Size(166, 22);
             this.Fichier_Ouvrir.Text = "Ouvrir";
+            // 
+            // Fichier_OuvrirLocalement
+            // 
+            this.Fichier_OuvrirLocalement.Name = "Fichier_OuvrirLocalement";
+            this.Fichier_OuvrirLocalement.Size = new System.Drawing.Size(136, 22);
+            this.Fichier_OuvrirLocalement.Text = "Localement";
+            // 
+            // Fichier_OuvrirEnLigne
+            // 
+            this.Fichier_OuvrirEnLigne.Name = "Fichier_OuvrirEnLigne";
+            this.Fichier_OuvrirEnLigne.Size = new System.Drawing.Size(136, 22);
+            this.Fichier_OuvrirEnLigne.Text = "En ligne";
             // 
             // Fichier_Enregistrer
             // 
             this.Fichier_Enregistrer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.Fichier_Enregistrer.ForeColor = System.Drawing.Color.White;
             this.Fichier_Enregistrer.Name = "Fichier_Enregistrer";
-            this.Fichier_Enregistrer.Size = new System.Drawing.Size(197, 26);
+            this.Fichier_Enregistrer.Size = new System.Drawing.Size(166, 22);
             this.Fichier_Enregistrer.Text = "Enregistrer";
             // 
             // Fichier_EnregistrerSous
@@ -683,19 +676,19 @@ namespace InterfaceGraphique
             this.Fichier_EnregistrerSous_Serveur});
             this.Fichier_EnregistrerSous.ForeColor = System.Drawing.Color.White;
             this.Fichier_EnregistrerSous.Name = "Fichier_EnregistrerSous";
-            this.Fichier_EnregistrerSous.Size = new System.Drawing.Size(197, 26);
+            this.Fichier_EnregistrerSous.Size = new System.Drawing.Size(166, 22);
             this.Fichier_EnregistrerSous.Text = "Enregistrer sous...";
             // 
             // Fichier_EnregistrerSous_Ordinateur
             // 
             this.Fichier_EnregistrerSous_Ordinateur.Name = "Fichier_EnregistrerSous_Ordinateur";
-            this.Fichier_EnregistrerSous_Ordinateur.Size = new System.Drawing.Size(181, 26);
+            this.Fichier_EnregistrerSous_Ordinateur.Size = new System.Drawing.Size(131, 22);
             this.Fichier_EnregistrerSous_Ordinateur.Text = "Ordinateur";
             // 
             // Fichier_EnregistrerSous_Serveur
             // 
             this.Fichier_EnregistrerSous_Serveur.Name = "Fichier_EnregistrerSous_Serveur";
-            this.Fichier_EnregistrerSous_Serveur.Size = new System.Drawing.Size(181, 26);
+            this.Fichier_EnregistrerSous_Serveur.Size = new System.Drawing.Size(131, 22);
             this.Fichier_EnregistrerSous_Serveur.Text = "Serveur";
             // 
             // Fichier_Propriete
@@ -703,7 +696,7 @@ namespace InterfaceGraphique
             this.Fichier_Propriete.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.Fichier_Propriete.ForeColor = System.Drawing.Color.White;
             this.Fichier_Propriete.Name = "Fichier_Propriete";
-            this.Fichier_Propriete.Size = new System.Drawing.Size(197, 26);
+            this.Fichier_Propriete.Size = new System.Drawing.Size(166, 22);
             this.Fichier_Propriete.Text = "Propriétés";
             // 
             // Fichier_ModeTest
@@ -711,7 +704,7 @@ namespace InterfaceGraphique
             this.Fichier_ModeTest.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.Fichier_ModeTest.ForeColor = System.Drawing.Color.White;
             this.Fichier_ModeTest.Name = "Fichier_ModeTest";
-            this.Fichier_ModeTest.Size = new System.Drawing.Size(197, 26);
+            this.Fichier_ModeTest.Size = new System.Drawing.Size(166, 22);
             this.Fichier_ModeTest.Text = "Mode test";
             // 
             // Fichier_MenuPrincipal
@@ -719,7 +712,7 @@ namespace InterfaceGraphique
             this.Fichier_MenuPrincipal.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.Fichier_MenuPrincipal.ForeColor = System.Drawing.Color.White;
             this.Fichier_MenuPrincipal.Name = "Fichier_MenuPrincipal";
-            this.Fichier_MenuPrincipal.Size = new System.Drawing.Size(197, 26);
+            this.Fichier_MenuPrincipal.Size = new System.Drawing.Size(166, 22);
             this.Fichier_MenuPrincipal.Text = "Menu principal";
             // 
             // Menu_Edition
@@ -728,7 +721,7 @@ namespace InterfaceGraphique
             this.Edition_Supprimer});
             this.Menu_Edition.ForeColor = System.Drawing.Color.White;
             this.Menu_Edition.Name = "Menu_Edition";
-            this.Menu_Edition.Size = new System.Drawing.Size(68, 24);
+            this.Menu_Edition.Size = new System.Drawing.Size(56, 20);
             this.Menu_Edition.Text = "Édition";
             // 
             // Edition_Supprimer
@@ -737,7 +730,7 @@ namespace InterfaceGraphique
             this.Edition_Supprimer.Enabled = false;
             this.Edition_Supprimer.ForeColor = System.Drawing.Color.White;
             this.Edition_Supprimer.Name = "Edition_Supprimer";
-            this.Edition_Supprimer.Size = new System.Drawing.Size(153, 26);
+            this.Edition_Supprimer.Size = new System.Drawing.Size(129, 22);
             this.Edition_Supprimer.Text = "Supprimer";
             // 
             // Menu_Outils
@@ -753,7 +746,7 @@ namespace InterfaceGraphique
             this.Outils_PointsControles});
             this.Menu_Outils.ForeColor = System.Drawing.Color.White;
             this.Menu_Outils.Name = "Menu_Outils";
-            this.Menu_Outils.Size = new System.Drawing.Size(59, 24);
+            this.Menu_Outils.Size = new System.Drawing.Size(50, 20);
             this.Menu_Outils.Text = "Outils";
             // 
             // Outils_Selection
@@ -761,7 +754,7 @@ namespace InterfaceGraphique
             this.Outils_Selection.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.Outils_Selection.ForeColor = System.Drawing.Color.White;
             this.Outils_Selection.Name = "Outils_Selection";
-            this.Outils_Selection.Size = new System.Drawing.Size(286, 26);
+            this.Outils_Selection.Size = new System.Drawing.Size(234, 22);
             this.Outils_Selection.Text = "Sélection";
             // 
             // Outils_Deplacement
@@ -769,7 +762,7 @@ namespace InterfaceGraphique
             this.Outils_Deplacement.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.Outils_Deplacement.ForeColor = System.Drawing.Color.White;
             this.Outils_Deplacement.Name = "Outils_Deplacement";
-            this.Outils_Deplacement.Size = new System.Drawing.Size(286, 26);
+            this.Outils_Deplacement.Size = new System.Drawing.Size(234, 22);
             this.Outils_Deplacement.Text = "Déplacement";
             // 
             // Outils_Rotation
@@ -777,7 +770,7 @@ namespace InterfaceGraphique
             this.Outils_Rotation.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.Outils_Rotation.ForeColor = System.Drawing.Color.White;
             this.Outils_Rotation.Name = "Outils_Rotation";
-            this.Outils_Rotation.Size = new System.Drawing.Size(286, 26);
+            this.Outils_Rotation.Size = new System.Drawing.Size(234, 22);
             this.Outils_Rotation.Text = "Rotation";
             // 
             // Outils_Echelle
@@ -785,7 +778,7 @@ namespace InterfaceGraphique
             this.Outils_Echelle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.Outils_Echelle.ForeColor = System.Drawing.Color.White;
             this.Outils_Echelle.Name = "Outils_Echelle";
-            this.Outils_Echelle.Size = new System.Drawing.Size(286, 26);
+            this.Outils_Echelle.Size = new System.Drawing.Size(234, 22);
             this.Outils_Echelle.Text = "Mise à l\'échelle";
             // 
             // Outils_Duplication
@@ -793,7 +786,7 @@ namespace InterfaceGraphique
             this.Outils_Duplication.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.Outils_Duplication.ForeColor = System.Drawing.Color.White;
             this.Outils_Duplication.Name = "Outils_Duplication";
-            this.Outils_Duplication.Size = new System.Drawing.Size(286, 26);
+            this.Outils_Duplication.Size = new System.Drawing.Size(234, 22);
             this.Outils_Duplication.Text = "Duplication";
             // 
             // Outils_Zoom
@@ -801,7 +794,7 @@ namespace InterfaceGraphique
             this.Outils_Zoom.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.Outils_Zoom.ForeColor = System.Drawing.Color.White;
             this.Outils_Zoom.Name = "Outils_Zoom";
-            this.Outils_Zoom.Size = new System.Drawing.Size(286, 26);
+            this.Outils_Zoom.Size = new System.Drawing.Size(234, 22);
             this.Outils_Zoom.Text = "Zoom";
             // 
             // Outils_Creation
@@ -813,7 +806,7 @@ namespace InterfaceGraphique
             this.Outils_Creation_Portail});
             this.Outils_Creation.ForeColor = System.Drawing.Color.White;
             this.Outils_Creation.Name = "Outils_Creation";
-            this.Outils_Creation.Size = new System.Drawing.Size(286, 26);
+            this.Outils_Creation.Size = new System.Drawing.Size(234, 22);
             this.Outils_Creation.Text = "Création";
             // 
             // Outils_Creation_Accelerateur
@@ -821,7 +814,7 @@ namespace InterfaceGraphique
             this.Outils_Creation_Accelerateur.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.Outils_Creation_Accelerateur.ForeColor = System.Drawing.Color.White;
             this.Outils_Creation_Accelerateur.Name = "Outils_Creation_Accelerateur";
-            this.Outils_Creation_Accelerateur.Size = new System.Drawing.Size(167, 26);
+            this.Outils_Creation_Accelerateur.Size = new System.Drawing.Size(140, 22);
             this.Outils_Creation_Accelerateur.Text = "Accélérateur";
             // 
             // Outils_Creation_Muret
@@ -829,7 +822,7 @@ namespace InterfaceGraphique
             this.Outils_Creation_Muret.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.Outils_Creation_Muret.ForeColor = System.Drawing.Color.White;
             this.Outils_Creation_Muret.Name = "Outils_Creation_Muret";
-            this.Outils_Creation_Muret.Size = new System.Drawing.Size(167, 26);
+            this.Outils_Creation_Muret.Size = new System.Drawing.Size(140, 22);
             this.Outils_Creation_Muret.Text = "Muret";
             // 
             // Outils_Creation_Portail
@@ -837,7 +830,7 @@ namespace InterfaceGraphique
             this.Outils_Creation_Portail.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.Outils_Creation_Portail.ForeColor = System.Drawing.Color.White;
             this.Outils_Creation_Portail.Name = "Outils_Creation_Portail";
-            this.Outils_Creation_Portail.Size = new System.Drawing.Size(167, 26);
+            this.Outils_Creation_Portail.Size = new System.Drawing.Size(140, 22);
             this.Outils_Creation_Portail.Text = "Portail";
             // 
             // Outils_PointsControles
@@ -845,7 +838,7 @@ namespace InterfaceGraphique
             this.Outils_PointsControles.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.Outils_PointsControles.ForeColor = System.Drawing.Color.White;
             this.Outils_PointsControles.Name = "Outils_PointsControles";
-            this.Outils_PointsControles.Size = new System.Drawing.Size(286, 26);
+            this.Outils_PointsControles.Size = new System.Drawing.Size(234, 22);
             this.Outils_PointsControles.Text = "Gestion des points de contrôle";
             // 
             // Menu_Vues
@@ -855,7 +848,7 @@ namespace InterfaceGraphique
             this.Vue_Orbite});
             this.Menu_Vues.ForeColor = System.Drawing.Color.White;
             this.Menu_Vues.Name = "Menu_Vues";
-            this.Menu_Vues.Size = new System.Drawing.Size(52, 24);
+            this.Menu_Vues.Size = new System.Drawing.Size(44, 20);
             this.Menu_Vues.Text = "Vues";
             // 
             // Vues_Orthographique
@@ -864,7 +857,7 @@ namespace InterfaceGraphique
             this.Vues_Orthographique.Enabled = false;
             this.Vues_Orthographique.ForeColor = System.Drawing.Color.White;
             this.Vues_Orthographique.Name = "Vues_Orthographique";
-            this.Vues_Orthographique.Size = new System.Drawing.Size(190, 26);
+            this.Vues_Orthographique.Size = new System.Drawing.Size(159, 22);
             this.Vues_Orthographique.Text = "Orthographique";
             // 
             // Vue_Orbite
@@ -872,7 +865,7 @@ namespace InterfaceGraphique
             this.Vue_Orbite.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.Vue_Orbite.ForeColor = System.Drawing.Color.White;
             this.Vue_Orbite.Name = "Vue_Orbite";
-            this.Vue_Orbite.Size = new System.Drawing.Size(190, 26);
+            this.Vue_Orbite.Size = new System.Drawing.Size(159, 22);
             this.Vue_Orbite.Text = "Orbite";
             // 
             // Menu_Informations
@@ -881,7 +874,7 @@ namespace InterfaceGraphique
             this.Informations_Aide});
             this.Menu_Informations.ForeColor = System.Drawing.Color.White;
             this.Menu_Informations.Name = "Menu_Informations";
-            this.Menu_Informations.Size = new System.Drawing.Size(105, 24);
+            this.Menu_Informations.Size = new System.Drawing.Size(87, 20);
             this.Menu_Informations.Text = "Informations";
             // 
             // Informations_Aide
@@ -889,7 +882,7 @@ namespace InterfaceGraphique
             this.Informations_Aide.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.Informations_Aide.ForeColor = System.Drawing.Color.White;
             this.Informations_Aide.Name = "Informations_Aide";
-            this.Informations_Aide.Size = new System.Drawing.Size(115, 26);
+            this.Informations_Aide.Size = new System.Drawing.Size(98, 22);
             this.Informations_Aide.Text = "Aide";
             // 
             // Toolbar
@@ -915,17 +908,17 @@ namespace InterfaceGraphique
             this.Toolbar_Wall,
             this.Toolbar_Portal,
             this.Toolbar_SeparatorBottom});
-            this.Toolbar.Location = new System.Drawing.Point(0, 28);
+            this.Toolbar.Location = new System.Drawing.Point(0, 24);
             this.Toolbar.Name = "Toolbar";
             this.Toolbar.Padding = new System.Windows.Forms.Padding(0);
             this.Toolbar.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.Toolbar.Size = new System.Drawing.Size(67, 810);
+            this.Toolbar.Size = new System.Drawing.Size(50, 657);
             this.Toolbar.TabIndex = 1;
             // 
             // Toolbar_SeparatorTop
             // 
             this.Toolbar_SeparatorTop.Name = "Toolbar_SeparatorTop";
-            this.Toolbar_SeparatorTop.Size = new System.Drawing.Size(66, 6);
+            this.Toolbar_SeparatorTop.Size = new System.Drawing.Size(49, 6);
             // 
             // Toolbar_Select
             // 
@@ -1021,7 +1014,7 @@ namespace InterfaceGraphique
             // 
             this.Toolbar_SeparatorMiddle.ForeColor = System.Drawing.Color.White;
             this.Toolbar_SeparatorMiddle.Name = "Toolbar_SeparatorMiddle";
-            this.Toolbar_SeparatorMiddle.Size = new System.Drawing.Size(66, 6);
+            this.Toolbar_SeparatorMiddle.Size = new System.Drawing.Size(49, 6);
             // 
             // Toolbar_Booster
             // 
@@ -1059,54 +1052,71 @@ namespace InterfaceGraphique
             // Toolbar_SeparatorBottom
             // 
             this.Toolbar_SeparatorBottom.Name = "Toolbar_SeparatorBottom";
-            this.Toolbar_SeparatorBottom.Size = new System.Drawing.Size(66, 6);
+            this.Toolbar_SeparatorBottom.Size = new System.Drawing.Size(49, 6);
             // 
             // Edition
             // 
             this.Edition.BackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.Edition.Controls.Add(this.button1);
+            this.Edition.Controls.Add(this.userPanel);
             this.Edition.Controls.Add(this.Panel_PropertiesBack);
             this.Edition.Controls.Add(this.Toolbar);
             this.Edition.Controls.Add(this.MenuBar);
             this.Edition.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Edition.Location = new System.Drawing.Point(0, 0);
-            this.Edition.Margin = new System.Windows.Forms.Padding(4);
             this.Edition.Name = "Edition";
-            this.Edition.Size = new System.Drawing.Size(1259, 838);
+            this.Edition.Size = new System.Drawing.Size(944, 681);
             this.Edition.TabIndex = 6;
             this.Edition.Visible = false;
+            this.Edition.Paint += new System.Windows.Forms.PaintEventHandler(this.Edition_Paint);
+            // 
+            // userPanel
+            // 
+            this.userPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.userPanel.BackColor = System.Drawing.Color.Blue;
+            this.userPanel.Controls.Add(this.userLists);
+            this.userPanel.Location = new System.Drawing.Point(688, 24);
+            this.userPanel.Name = "userPanel";
+            this.userPanel.Size = new System.Drawing.Size(256, 232);
+            this.userPanel.TabIndex = 23;
+            // 
+            // userLists
+            // 
+            this.userLists.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.userLists.Location = new System.Drawing.Point(4, 3);
+            this.userLists.Name = "userLists";
+            this.userLists.Size = new System.Drawing.Size(249, 250);
+            this.userLists.TabIndex = 22;
+            this.userLists.Text = "elementHost1";
+            this.userLists.Child = null;
             // 
             // Panel_PropertiesBack
             // 
             this.Panel_PropertiesBack.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Panel_PropertiesBack.BackColor = System.Drawing.Color.Blue;
             this.Panel_PropertiesBack.Controls.Add(this.PropertiesEditPanel);
-            this.Panel_PropertiesBack.Location = new System.Drawing.Point(917, 523);
-            this.Panel_PropertiesBack.Margin = new System.Windows.Forms.Padding(4);
+            this.Panel_PropertiesBack.Location = new System.Drawing.Point(688, 425);
             this.Panel_PropertiesBack.Name = "Panel_PropertiesBack";
-            this.Panel_PropertiesBack.Size = new System.Drawing.Size(341, 315);
+            this.Panel_PropertiesBack.Size = new System.Drawing.Size(256, 256);
             this.Panel_PropertiesBack.TabIndex = 21;
             this.Panel_PropertiesBack.Visible = false;
             // 
-            // Fichier_OuvrirLocalement
+            // button1
             // 
-            this.Fichier_OuvrirLocalement.Name = "Fichier_OuvrirLocalement";
-            this.Fichier_OuvrirLocalement.Size = new System.Drawing.Size(181, 26);
-            this.Fichier_OuvrirLocalement.Text = "Localement";
-            // 
-            // Fichier_OuvrirEnLigne
-            // 
-            this.Fichier_OuvrirEnLigne.Name = "Fichier_OuvrirEnLigne";
-            this.Fichier_OuvrirEnLigne.Size = new System.Drawing.Size(181, 26);
-            this.Fichier_OuvrirEnLigne.Text = "En ligne";
+            this.button1.Location = new System.Drawing.Point(376, 251);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 24;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
             // 
             // Editeur
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1259, 838);
+            this.ClientSize = new System.Drawing.Size(944, 681);
             this.Controls.Add(this.Edition);
             this.MainMenuStrip = this.MenuBar;
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Editeur";
             this.Text = "Jeu";
             this.PropertiesEditPanel.ResumeLayout(false);
@@ -1126,6 +1136,7 @@ namespace InterfaceGraphique
             this.Toolbar.PerformLayout();
             this.Edition.ResumeLayout(false);
             this.Edition.PerformLayout();
+            this.userPanel.ResumeLayout(false);
             this.Panel_PropertiesBack.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -1206,5 +1217,8 @@ namespace InterfaceGraphique
         private System.Windows.Forms.ToolStripMenuItem Fichier_EnregistrerSous_Serveur;
         private System.Windows.Forms.ToolStripMenuItem Fichier_OuvrirLocalement;
         private System.Windows.Forms.ToolStripMenuItem Fichier_OuvrirEnLigne;
+        private System.Windows.Forms.Panel userPanel;
+        private System.Windows.Forms.Integration.ElementHost userLists;
+        private System.Windows.Forms.Button button1;
     }
 }

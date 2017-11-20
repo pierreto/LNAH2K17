@@ -4,9 +4,48 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:InterfaceGraphique.Controls.WPF.Editor"
+             xmlns:wpf="clr-namespace:InterfaceGraphique.Controls.WPF"
+             xmlns:mockObject="clr-namespace:InterfaceGraphique.Entities.MockObject"
+             xmlns:converters="clr-namespace:InterfaceGraphique.Controls.WPF.Converters"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-            
+             d:DesignHeight="100" d:DesignWidth="100" Background="#FF404040">
+    <UserControl.Resources>
+        <ResourceDictionary>
+
+
+            <ResourceDictionary.MergedDictionaries >
+                <ResourceDictionary Source="/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                <ResourceDictionary Source="/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                <ResourceDictionary Source="/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Blue.xaml" />
+                <ResourceDictionary Source="/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Green.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <wpf:ViewModelLocator x:Key="VMLocator" d:IsDataSource="True" />
+
+            <mockObject:OnlineUsersMock
+                x:Key="DesignViewModel"/>
+        </ResourceDictionary>
+
+    </UserControl.Resources>
+    <Grid  d:DataContext="{Binding Source={StaticResource DesignViewModel}}"  DataContext="{Binding Source={StaticResource VMLocator}, Path=EditorUsersViewModel}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="17*"/>
+            <RowDefinition Height="84*"/>
+        </Grid.RowDefinitions>
+        <TextBlock HorizontalAlignment="Center" Foreground="White" Grid.Row="0"> Joueurs</TextBlock>
+        <ItemsControl Grid.Row="1"  ItemsSource="{Binding Users}" Background="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" Grid.RowSpan="2" >
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="0,0,0,5">
+                        <Grid.ColumnDefinitions> 
+                            <ColumnDefinition Width="3*" />
+                            <ColumnDefinition Width="7*" />
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="0" Source="{Binding ProfilePicture, Converter={converters:Base64ImageConverter}}" Cursor="Hand"/>
+
+                        <TextBlock Grid.Column="1" Text="{Binding Username}"   Foreground="{Binding HexColor}"/>
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </Grid>
 </UserControl>

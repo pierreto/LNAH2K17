@@ -14,9 +14,11 @@ using System.Runtime.InteropServices;
 using System.IO;
 using InterfaceGraphique.Entities;
 using InterfaceGraphique.CommunicationInterface.RestInterface;
+using InterfaceGraphique.Controls.WPF.Editor;
 using InterfaceGraphique.Editor.EditorState;
 using InterfaceGraphique.Services;
 using InterfaceGraphique.Editor;
+using Microsoft.Practices.Unity;
 
 namespace InterfaceGraphique {
 
@@ -29,7 +31,6 @@ namespace InterfaceGraphique {
     public partial class Editeur : Form
     {
         public static MapManager mapManager; // Initialized in Program.cs
-
         private OfflineEditorState offlineState;
         public OnlineEditorState onlineState;
         private MODELE_ETAT outilCourrant = MODELE_ETAT.AUCUN;
@@ -50,6 +51,8 @@ namespace InterfaceGraphique {
         ////////////////////////////////////////////////////////////////////////
         public Editeur(OfflineEditorState offlineState, OnlineEditorState onlineState) {
             InitializeComponent();
+            userLists.Child = Program.unityContainer.Resolve<EditorUsers>();
+
             InitializeEvents();
 
             this.offlineState = offlineState;
@@ -73,6 +76,7 @@ namespace InterfaceGraphique {
             Program.OpenGLPanel.Controls.Add(this.Toolbar);
             Program.OpenGLPanel.Controls.Add(this.MenuBar);
             Program.OpenGLPanel.Controls.Add(this.Panel_PropertiesBack);
+            Program.OpenGLPanel.Controls.Add(this.userPanel);
             this.Controls.Add(Program.OpenGLPanel);
 
             Program.OpenGLPanel.MouseDown += new MouseEventHandler(mouseDown);
@@ -82,7 +86,9 @@ namespace InterfaceGraphique {
             Program.FormManager.SizeChanged += new EventHandler(sizeChanged);
             Program.FormManager.LocationChanged += new EventHandler(DessinerOpenGL);
 
-            this.Panel_PropertiesBack.Location = new Point(Program.OpenGLPanel.Width - this.Panel_PropertiesBack.Width, Program.OpenGLPanel.Height - this.Panel_PropertiesBack.Height);
+            this.Panel_PropertiesBack.Location = new Point(Program.OpenGLPanel.Width - this.Panel_PropertiesBack.Width, Program.OpenGLPanel.Height - this.Panel_PropertiesBack.Height - 40);
+            this.userPanel.Location = new Point(Program.OpenGLPanel.Width - this.userPanel.Width, 24);
+
             this.MenuBar.Renderer = new Renderer_MenuBar();
 
             ToggleOrbit(false);
@@ -352,6 +358,7 @@ namespace InterfaceGraphique {
             }
             else {
                 this.Panel_PropertiesBack.Visible = false;
+
             }
         }
 
@@ -634,6 +641,11 @@ namespace InterfaceGraphique {
         public void HandleCoefficientChanges(float coefficientFriction, float coefficientAcceleration, float coefficientRebond)
         {
             this.CurrentState.HandleCoefficientChanges(coefficientFriction, coefficientAcceleration, coefficientRebond);
+        }
+
+        private void Edition_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
