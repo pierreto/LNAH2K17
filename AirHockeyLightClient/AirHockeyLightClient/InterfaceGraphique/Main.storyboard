@@ -178,7 +178,7 @@
             </objects>
             <point key="canvasLocation" x="-747" y="-316"/>
         </scene>
-        <!--Profile View Controller-->
+        <!--Profil-->
         <scene sceneID="nt8-2S-3J3">
             <objects>
                 <viewController storyboardIdentifier="ProfileViewController" id="ffT-iX-5Zl" customClass="ProfileViewController" customModule="AirHockeyLightClient" customModuleProvider="target" sceneMemberID="viewController">
@@ -402,7 +402,7 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" indicatorStyle="white" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="YKK-j6-Y3j">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" indicatorStyle="white" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="YKK-j6-Y3j">
                                 <rect key="frame" x="112" y="400" width="800" height="150"/>
                                 <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -470,7 +470,9 @@
                             <constraint firstItem="e6u-ac-xGt" firstAttribute="top" secondItem="FiD-6v-leD" secondAttribute="bottom" constant="80" id="iGl-o5-hTz"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="hUe-H4-vmt"/>
+                    <navigationItem key="navigationItem" title="Profil" id="hUe-H4-vmt">
+                        <barButtonItem key="backBarButtonItem" title="Profil" id="Bub-qO-unW"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="achievementCollectionView" destination="YKK-j6-Y3j" id="bce-vU-ZvJ"/>
                         <outlet property="dateJoinedLabel" destination="bBR-7x-r3B" id="MuO-jP-evJ"/>
