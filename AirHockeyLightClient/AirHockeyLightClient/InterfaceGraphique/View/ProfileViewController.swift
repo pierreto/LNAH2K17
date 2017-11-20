@@ -76,7 +76,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
             
             let imageData : Data = UIImagePNGRepresentation(pickedImage)! as Data
             let strBase64 = imageData.base64EncodedString(options: Data.Base64EncodingOptions.init(rawValue: 0))
-            if strBase64.count > 65535 {
+            if strBase64.characters.count > 65535 {
                 // error dialog
                 profileImage.image = pickedImage
 

@@ -1797,6 +1797,7 @@
                         <barButtonItem key="backBarButtonItem" title="Se Connecter" id="M8b-4y-vwp"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="connectServerButton" destination="g5E-VN-eRW" id="KMd-YU-11F"/>
                         <outlet property="ipAddressErrorLabel" destination="VWk-Fn-IOU" id="9zt-6Y-2M5"/>
                         <outlet property="ipAddressInput" destination="hhw-I4-KJN" id="0LB-4F-VVx"/>
                         <outlet property="loadingSpinner" destination="QVw-yN-6Ky" id="Qnx-WQ-ZdS"/>
@@ -2074,9 +2075,11 @@
                     </navigationItem>
                     <connections>
                         <outlet property="loadingSpinner" destination="hyr-YX-cKZ" id="a2H-6n-jRM"/>
+                        <outlet property="loginButton" destination="dS2-vz-kID" id="2DO-Cq-Meb"/>
                         <outlet property="passwordErrorLabel" destination="MI0-tE-apg" id="Mw7-1O-ufU"/>
                         <outlet property="passwordInput" destination="kZ7-IX-vjq" id="dgq-CB-EKK"/>
                         <outlet property="scrollView" destination="brK-5P-ttK" id="57n-nV-HtO"/>
+                        <outlet property="signupButton" destination="aPb-LQ-zVe" id="lo8-TG-DCX"/>
                         <outlet property="usernameErrorLabel" destination="tLu-bb-zBI" id="iol-Ul-o9G"/>
                         <outlet property="usernameInput" destination="Tue-6k-iTD" id="0tU-b5-Ppq"/>
                         <segue destination="H5p-E5-hIj" kind="show" identifier="loginSuccess" id="siQ-V2-je8"/>
@@ -2284,6 +2287,7 @@
                         <outlet property="passwordErrorLabel" destination="TQd-0H-WDW" id="hbi-hu-WrH"/>
                         <outlet property="passwordInput" destination="vrI-FR-UF7" id="CiK-LE-zbO"/>
                         <outlet property="scrollView" destination="nKB-RF-B2k" id="2WD-mb-EVD"/>
+                        <outlet property="signupButton" destination="gnS-Nm-lfa" id="mIE-vd-UQK"/>
                         <outlet property="stackView" destination="S2W-lR-zPF" id="gnn-Me-I6U"/>
                         <outlet property="usernameErrorLabel" destination="1Z6-h2-oiz" id="qVB-rw-FIM"/>
                         <outlet property="usernameInput" destination="Kwn-mD-qor" id="D3O-qd-9xf"/>
@@ -2509,7 +2513,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="6DQ-jn-lmH"/>
+        <segue reference="nja-Df-3RZ"/>
         <segue reference="dvs-2S-kMa"/>
         <segue reference="D9p-zm-qef"/>
     </inferredMetricsTieBreakers>
