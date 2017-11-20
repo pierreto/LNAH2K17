@@ -83,16 +83,7 @@ void VisiteurDeplacement::visiterPointControl(NoeudPointControl * noeud)
 
 		// Deplacer son opposé
 		noeud->obtenirNoeudOppose()->deplacer(pos * glm::dvec3(noeud->obtenirSymmetrie()));
-		if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
-		{
-			ControlPointEventCallback callback = ModeleEtatPointControl::obtenirInstance()->getControlPointEventCallback();
-			if(callback)
-			{
-				callback(noeud->getUUID(), glm::value_ptr(noeud->obtenirPositionRelative()));
-
-				callback(noeud->obtenirNoeudOppose()->getUUID(), glm::value_ptr(noeud->obtenirNoeudOppose()->obtenirPositionRelative()));
-			}
-		}
+		selectedNodes_.push_back(noeud);
 	}
 }
 

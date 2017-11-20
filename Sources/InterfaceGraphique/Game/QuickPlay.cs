@@ -96,20 +96,6 @@ namespace InterfaceGraphique
             if (User.Instance.IsConnected)
             {
                 this.CurrentGameState.gameHub.EndOfGameStatsEvent += OnEndOfGameStats;
-                var gameManager = Program.unityContainer.Resolve<GameManager>();
-                var textures = gameManager.Textures;
-
-                if (textures != null)
-                {
-                    if (textures[0] != null)
-                    {
-                        FonctionsNatives.setLocalPlayerSkin(textures[0]);
-                    }
-                    if (textures[1] != null)
-                    {
-                        FonctionsNatives.setOpponentPlayerSkin(textures[1]);
-                    }
-                }
             }
 
             Program.QuickPlay.CurrentGameState.GameInitialized = true;
