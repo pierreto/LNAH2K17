@@ -50,7 +50,7 @@
             <TabItem  Header="&#xf234;" Grid.Column="0" HorizontalAlignment="center" Cursor="Hand">
                 <ContentControl Content="{Binding Source={StaticResource VMLocator}, Path=FriendListViewModel}"/>
             </TabItem>
-            <TabItem x:Name="tbFontAwesome" Header="&#xf234;"  Grid.Column="1" HorizontalAlignment="center" Cursor="Hand">
+            <TabItem  Header="&#xf234;"  Grid.Column="1" HorizontalAlignment="center" Cursor="Hand">
                 <ContentControl Content="{Binding Source={StaticResource VMLocator}, Path=AddUserViewModel}" />
             </TabItem>
         </dragablz:TabablzControl>
