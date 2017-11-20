@@ -110,5 +110,10 @@ namespace AirHockeyServer.Services
         {
             await GameRepository.CreateGame(game);
         }
-}
+
+        public void CreateGame(GameRequestEntity gameRequest)
+        {
+            GameMatchMakerService.Instance().CreateMatch(gameRequest.Recipient, gameRequest.Sender);
+        }
+    }
 }

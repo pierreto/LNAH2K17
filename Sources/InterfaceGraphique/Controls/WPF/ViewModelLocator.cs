@@ -90,6 +90,8 @@ namespace InterfaceGraphique.Controls.WPF
 
         public FriendListViewModel FriendListViewModel => container.Resolve<FriendListViewModel>();
 
+        public FriendListItemViewModel FriendListItemViewModel => container.Resolve<FriendListItemViewModel>();
+
         public UserProfileViewModel UserProfileViewModel => container.Resolve<UserProfileViewModel>();
 
         public StoreViewModel StoreViewModel => container.Resolve<StoreViewModel>();

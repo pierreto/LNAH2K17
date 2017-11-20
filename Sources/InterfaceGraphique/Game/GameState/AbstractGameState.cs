@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using InterfaceGraphique.Entities;
 using InterfaceGraphique.CommunicationInterface;
+using InterfaceGraphique.CommunicationInterface.WaitingRooms;
+using Microsoft.Practices.Unity;
 
 namespace InterfaceGraphique.Game.GameState
 {
@@ -128,6 +130,27 @@ namespace InterfaceGraphique.Game.GameState
                 @"Votre adversaire n'est plus en ligne et vient d'être remplacé par un joueur virtuel. Vous pouvez reprendre la partie en appuyant sur Esc.",
                 @"Information",
                 MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        public virtual void ApplyTextures()
+        {
+            if (User.Instance.IsConnected)
+            {
+                var gameManager = Program.unityContainer.Resolve<GameManager>();
+                var textures = gameManager.Textures;
+
+                if (textures != null)
+                {
+                    if (textures[0] != null)
+                    {
+                        FonctionsNatives.setLocalPlayerSkin(textures[0]);
+                    }
+                    if (textures[1] != null)
+                    {
+                        FonctionsNatives.setOpponentPlayerSkin(textures[1]);
+                    }
+                }
+            }
         }
     }
 }

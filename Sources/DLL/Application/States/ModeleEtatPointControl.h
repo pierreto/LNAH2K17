@@ -36,6 +36,7 @@ public:
 	virtual void mouseDownL();
 	/// Évènement appelé lorsque la souris bouge
 	virtual void playerMouseMove(int x, int y);
+	void sendToServer();
 	/// Évènement appelé lorsque le bouton gauche de la souris est levé
 	virtual void mouseUpL();
 	/// Évènement appelé lorsque la touche escape est enfoncée
@@ -70,6 +71,8 @@ private:
 	ControlPointEventCallback controlPointEventCallback_;
 
 	SelectionEventCallback selectionCallback_;
+	VisiteurDeplacement visiteurDeplacement_;
+	long accTime = 0;
 
 };
 

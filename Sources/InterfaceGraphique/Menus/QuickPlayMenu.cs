@@ -150,8 +150,39 @@ namespace InterfaceGraphique
             {
                 Program.FormManager.CurrentForm = Program.LobbyHost;
                 var vm = Program.unityContainer.Resolve<Controls.WPF.Matchmaking.MatchmakingViewModel>();
-                vm.InitializeViewModel();
+                vm.Initialize();
             }
+        }
+
+        public void LoadOnlineGameSettings()
+        {
+            string mapFilePath = null;
+
+            if (this.Button_DefaultMap.Enabled)
+                mapFilePath = fileDialog.FileName;
+
+            this.Close();
+            Program.QuickPlay.CurrentGameState.IsTournementMode = false;
+            Program.QuickPlay.CurrentGameState.MapFilePath = mapFilePath;
+
+            StringBuilder player1Name = new StringBuilder(DefaultValues.playerLeftName.Length);
+            StringBuilder player2Name = new StringBuilder(DefaultValues.playerRightName.Length);
+            player1Name.Append(DefaultValues.playerLeftName);
+            player2Name.Append(DefaultValues.playerRightName);
+            FonctionsNatives.setPlayerNames(player1Name, player2Name);
+
+            float[] playerColor = new float[4] { Color.White.R, Color.White.G, Color.White.B, Color.White.A };
+            FonctionsNatives.setPlayerColors(playerColor, playerColor);
+
+            PlayerProfile selectedProfile = Program.ConfigurationMenu.GetProfile(this.List_VirtualProfile.Text);
+            FonctionsNatives.aiActiveProfile(selectedProfile.Speed, selectedProfile.Passivity);
+
+            OpponentType opponentType = opponentType = OpponentType.ONLINE_PLAYER;
+            FonctionsNatives.setCurrentOpponentType((int)opponentType);
+
+            Program.FormManager.CurrentForm = Program.LobbyHost;
+            var vm = Program.unityContainer.Resolve<Controls.WPF.Matchmaking.MatchmakingViewModel>();
+            vm.Initialize(true);
         }
 
 
