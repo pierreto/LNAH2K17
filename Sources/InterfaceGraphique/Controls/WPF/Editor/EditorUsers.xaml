@@ -40,7 +40,7 @@
                             <ColumnDefinition Width="3*" />
                             <ColumnDefinition Width="7*" />
                         </Grid.ColumnDefinitions>
-                        <Image MaxWidth="32" MaxHeight="32" Grid.Column="0" Source="{Binding ProfilePicture, Converter={converters:Base64ImageConverter}}" Cursor="Hand"/>
+                        <Image MaxWidth="32" MaxHeight="32" Grid.Column="0" Source="{Binding ProfilePicture, Converter={converters:Base64ImageConverter}}" />
 
                         <TextBlock FontWeight="Bold" FontSize="24"  Grid.Column="1" Text="{Binding Username}" HorizontalAlignment="Center" VerticalAlignment="Center"   Foreground="{Binding HexColor}"/>
                     </Grid>
