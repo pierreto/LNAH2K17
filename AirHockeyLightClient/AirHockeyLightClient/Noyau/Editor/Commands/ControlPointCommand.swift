@@ -8,7 +8,6 @@
 /// @{
 ///////////////////////////////////////////////////////////////////////////////
 
-import GLKit
 import SwiftyJSON
 
 ///////////////////////////////////////////////////////////////////////////
@@ -34,8 +33,8 @@ class ControlPointCommand: EditionCommand {
     }
     
     override func executeCommand() {
-        let position = GLKVector3.init(v: (self.position[0], self.position[1], self.position[2]))
-        FacadeModele.instance.setControlPointPosition(uuid: self.objectUuid, username: self.username, pos: position)    }
+        FacadeModele.instance.setControlPointPosition(uuid: self.objectUuid, username: self.username, pos: self.position)
+    }
     
     override func toJSON() -> JSON? {
         let type = JSON(["$type": EDITION_COMMAND.CONTROLPOINT_COMMAND.rawValue]).rawString()
