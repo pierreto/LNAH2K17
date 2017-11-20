@@ -32,9 +32,8 @@ class AddFriendViewController: UIViewController {
             for user in users! {
                 self.filterStrings.append(user.getUsername())
             }
-            
+
             self.search.filterStrings(self.filterStrings)
-    
             return
         }
     }

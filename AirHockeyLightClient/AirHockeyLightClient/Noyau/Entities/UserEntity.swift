@@ -22,14 +22,6 @@ class UserEntity : Entity {
     private var name : String = ""
     private var email : String = ""
     private var profile: String = ""
-
-    func getProfile() -> String {
-        return self.profile
-    }
-    
-    func setProfile(profile: String) {
-        self.profile = profile
-    }
     
     func getId() -> Int {
         return self.id
@@ -61,6 +53,14 @@ class UserEntity : Entity {
     
     func setEmail(email: String) {
         self.email = email
+    }
+    
+    func getProfile() -> String {
+        return self.profile
+    }
+    
+    func setProfile(profile: String) {
+        self.profile = profile
     }
     
     func toDictionary() -> [String: Any] {

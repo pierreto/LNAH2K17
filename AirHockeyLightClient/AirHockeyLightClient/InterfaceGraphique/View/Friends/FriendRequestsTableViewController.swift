@@ -76,6 +76,17 @@ class FriendRequestsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.pendingRequests.dequeueReusableCell(withIdentifier: "Request", for: indexPath)
         
+        let imageView = cell.viewWithTag(1) as! UIImageView
+        let profile = self.pendingRequestsData[indexPath.row].getRequestor().getProfile()
+        var image: UIImage?
+        if profile != "" {
+            let imageData = NSData(base64Encoded: profile)
+            image = UIImage(data: imageData! as Data)
+        } else {
+            image = UIImage(named: "default_profile_picture.png")
+        }
+        imageView.image = image
+        
         let usernameLabel = cell.viewWithTag(2) as! UILabel
         usernameLabel.text = self.pendingRequestsData[indexPath.row].getRequestor().getUsername()
         
