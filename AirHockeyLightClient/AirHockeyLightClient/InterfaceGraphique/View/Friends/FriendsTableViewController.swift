@@ -46,6 +46,15 @@ class FriendsTableViewController: UITableViewController {
         })
     }
     
+    func addFriend(newFriend: UserEntity) {
+        self.friendsData.append(newFriend)
+        
+        DispatchQueue.main.async(execute: { () -> Void in
+            // Reload tableView
+            self.friends.reloadData()
+        })
+    }
+    
     func removeFriend(exFriend: UserEntity) {
         var index = -1
         for friend in self.friendsData {
@@ -92,15 +101,16 @@ class FriendsTableViewController: UITableViewController {
         chatButton.isHidden = false
     }
     
+    override func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
+        return "Supprimer"
+    }
+    
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let exFriend = self.friendsData[indexPath.row]
             
-            // remove the item from the data model
-            self.friendsData.remove(at: indexPath.row)
-            
-            // delete the table view row
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            self.friendsData.remove(at: indexPath.row) // remove the item from the data model
+            tableView.deleteRows(at: [indexPath], with: .fade) // delete the table view row
             
             HubManager.sharedConnection.getFriendsHub().removeFriend(exFriend: exFriend)
         }
