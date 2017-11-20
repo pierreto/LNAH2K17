@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
 class ProfileViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, CALayerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -56,6 +58,28 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         profileImage.layer.masksToBounds = true
         profileImage.layer.cornerRadius = 20.0
         imagePicker.delegate = self
+        
+        loadUserProfile()
+    }
+    
+    func loadUserProfile() {
+        Alamofire.request("http://" + HubManager.sharedConnection.getIpAddress()! + ":63056/api/profile/" + ((HubManager.sharedConnection.getId())?.description)!)
+            .responseJSON { response in
+                if let jsonValue = response.result.value {
+                    let json = JSON(jsonValue)
+                    
+                    // Start String to image
+                    let profile = json["UserEntity"]["Profile"].string
+                    let imageData = NSData(base64Encoded: profile!)
+                    let image = UIImage(data: imageData! as Data)
+                    self.profileImage.image = image
+                    // End String to image
+                    
+                    var id = json["UserEntity"]["Id"]
+                    print("id: ", id)
+                    
+                }
+        }
     }
     
     func imageTapped(gesture: UIGestureRecognizer) {
