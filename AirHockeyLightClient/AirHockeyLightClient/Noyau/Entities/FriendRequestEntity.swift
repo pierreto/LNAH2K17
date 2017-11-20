@@ -61,7 +61,7 @@ class FriendRequestEntity : Entity {
         let request = [
             "Requestor": self.requestor.toDictionary(),
             "Friend": self.friend.toDictionary(),
-            "Status": self.status
+            "Status": self.status.rawValue
             ] as [String : Any]
         
         return request

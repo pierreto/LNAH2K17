@@ -34,7 +34,7 @@ class AddFriendViewController: UIViewController {
             }
             
             self.search.filterStrings(self.filterStrings)
-            
+            t
             return
         }
     }
