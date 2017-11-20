@@ -89,6 +89,10 @@ class FacadeModele {
     /// La couleur de l'utilisateur courant (ex. lors de la sélection)
     private var currentUserColor: UIColor = MathHelper.hexToUIColor(hex: "007BC2")
     
+    private let POSITION_THRESHOLD: Float = 0.1
+    private let ROTATION_THRESHOLD: Float = 0.2
+    private let SCALE_THRESHOLD: Float = 0.5
+    
     /// Gesture recognizer
     var tapGestureRecognizer: UITapGestureRecognizer?
     var panGestureRecognizer: ImmediatePanGestureRecognizer?
@@ -300,26 +304,50 @@ class FacadeModele {
     }
     
     /// Cette fonction effectue la transformation d'un noeud en mode en ligne
-    func setTransformByUUID(uuid: String, username: String, position: GLKVector3, rotation: Float, scale: GLKVector3) {
+    func setTransformByUUID(uuid: String, username: String, position: [Float], rotation: Float, scale: [Float]) {
         let node = self.userManager?.getUser(username: username).findNode(uuid: uuid)
         
         if node != nil {
-            node?.assignerPositionRelative(positionRelative: position)
+            let posX = position[0]
+            let posZ = position[2]
             
-            //print("rotation appliquée")
-            //print(rotation)
+            if (abs((node?.position.x)! - posX) > POSITION_THRESHOLD || abs((node?.position.z)! - posZ) > POSITION_THRESHOLD) {
+                node?.position.x = posX
+                node?.position.z = posZ
+            }
             
-            node?.rotation = SCNVector4(0.0, 1.0, 0.0, rotation)
-            node?.scale = SCNVector3FromGLKVector3(scale)
+            if (abs((node?.rotation.w)! - rotation) > ROTATION_THRESHOLD) {
+                node?.rotation.y = 1.0
+                node?.rotation.w = rotation
+            }
+            
+            let scaleZ = scale[2]
+            if (abs((node?.scale.z)! - scaleZ) > SCALE_THRESHOLD) {
+                node?.scale = SCNVector3.init(scale[0], scale[1], scaleZ)
+            }
         }
         // Find in the entire tree if it's not in the player's selected nodes
         else {
             let nodeInTree = self.findNodeInTree(uuid: uuid)
             
             if nodeInTree != nil {
-                nodeInTree?.assignerPositionRelative(positionRelative: position)
-                nodeInTree?.rotation = SCNVector4(0.0, 1.0, 0.0, rotation)
-                nodeInTree?.scale = SCNVector3FromGLKVector3(scale)
+                let posX = position[0]
+                let posZ = position[2]
+                
+                if (abs((nodeInTree?.position.x)! - posX) > POSITION_THRESHOLD || abs((nodeInTree?.position.z)! - posZ) > POSITION_THRESHOLD) {
+                    nodeInTree?.position.x = posX
+                    nodeInTree?.position.z = posZ
+                }
+                
+                if (abs((node?.rotation.w)! - rotation) > ROTATION_THRESHOLD) {
+                    nodeInTree?.rotation.y = 1.0
+                    nodeInTree?.rotation.w = rotation
+                }
+                
+                let scaleZ = scale[2]
+                if (abs((nodeInTree?.scale.z)! - scaleZ) > SCALE_THRESHOLD) {
+                    nodeInTree?.scale = SCNVector3.init(scale[0], scale[1], scaleZ)
+                }
             }
         }
     }
@@ -338,11 +366,17 @@ class FacadeModele {
     }
     
     /// Cette fonction modifie la position du point de contrôle en mode en ligne
-    func setControlPointPosition(uuid: String, username: String, pos: GLKVector3) {
+    func setControlPointPosition(uuid: String, username: String, pos: [Float]) {
         let node = self.userManager?.getUser(username: username).findNode(uuid: uuid)
         
         if node != nil {
-            node?.assignerPositionRelative(positionRelative: pos)
+            let posX = pos[0]
+            let posZ = pos[2]
+            
+            if (abs((node?.position.x)! - posX) > POSITION_THRESHOLD || abs((node?.position.z)! - posZ) > POSITION_THRESHOLD) {
+                let position = GLKVector3.init(v: (posX, pos[1], posZ))
+                node?.assignerPositionRelative(positionRelative: position)
+            }
             
             // Changer la géométrie de la table
             let table = self.arbre?.childNode(withName: (self.arbre?.NOM_TABLE)!, recursively: true) as! NoeudTable
@@ -353,7 +387,13 @@ class FacadeModele {
             let nodeInTree = self.findNodeInTree(uuid: uuid)
             
             if nodeInTree != nil {
-                nodeInTree?.assignerPositionRelative(positionRelative: pos)
+                let posX = pos[0]
+                let posZ = pos[2]
+                
+                if (abs((nodeInTree?.position.x)! - posX) > POSITION_THRESHOLD || abs((nodeInTree?.position.z)! - posZ) > POSITION_THRESHOLD) {
+                    let position = GLKVector3.init(v: (posX, pos[1], posZ))
+                    nodeInTree?.assignerPositionRelative(positionRelative: position)
+                }
                 
                 // Changer la géométrie de la table
                 let table = self.arbre?.childNode(withName: (self.arbre?.NOM_TABLE)!, recursively: true) as! NoeudTable

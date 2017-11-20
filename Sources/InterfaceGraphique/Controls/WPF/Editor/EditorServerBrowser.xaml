@@ -23,7 +23,6 @@
                 <ResourceDictionary Source="/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Green.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <convert:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"></convert:BooleanToVisibilityConverter>
-            <convert:BytesToImageConverter x:Key="BytesToImageConverter"></convert:BytesToImageConverter>
 
    
 
@@ -54,11 +53,11 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <!--<TextBlock HorizontalAlignment="Center" Grid.Column="0" Text="Icône" Foreground="#DDFFFFFF" />-->
-                <TextBlock HorizontalAlignment="Center" Grid.Column="1" Text="Privacité" Foreground="#DDFFFFFF" />
-                <TextBlock HorizontalAlignment="Center" Grid.Column="2" Text="Nom" Foreground="#DDFFFFFF" Margin="0,0,7,0" />
-                <TextBlock HorizontalAlignment="Center" Grid.Column="3" Text="Nombre de joueurs" Foreground="#DDFFFFFF" />
-                <TextBlock HorizontalAlignment="Center" Grid.Column="4" Text="Créateur" Foreground="#DDFFFFFF" />
+                <TextBlock HorizontalAlignment="Center" Grid.Column="0" Text="Icône" Foreground="#DDFFFFFF" FontSize="24"/>
+                <TextBlock HorizontalAlignment="Center" Grid.Column="1" Text="Privacité" Foreground="#DDFFFFFF" FontSize="24"/>
+                <TextBlock HorizontalAlignment="Center" Grid.Column="2" Text="Nom" Foreground="#DDFFFFFF" Margin="0,0,7,0" FontSize="24" />
+                <TextBlock HorizontalAlignment="Center" Grid.Column="3" Text="Nombre de joueurs" Foreground="#DDFFFFFF" FontSize="24" />
+                <TextBlock HorizontalAlignment="Center" Grid.Column="4" Text="Créateur" Foreground="#DDFFFFFF" FontSize="24" />
 
             </Grid>
             <ListBox ItemsSource="{Binding OnlineEditedMapInfos}" 
@@ -80,13 +79,12 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <!--<Image Grid.Column="0" Source="{Binding Icon, Converter={StaticResource BytesToImageConverter}}"/> -->
-
-                            <fa:FontAwesome HorizontalAlignment="Center" Grid.Column="1" Icon="Lock"  fa:Awesome.Content="Lock" Foreground="#DDFFFFFF"    Visibility="{Binding Private, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}" />
-                            <fa:FontAwesome HorizontalAlignment="Center" Grid.Column="1" Icon="Unlock" fa:Awesome.Content="Unlock" Foreground="#DDFFFFFF"    Visibility="{Binding Private, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                            <TextBlock HorizontalAlignment="Center" Grid.Column="2" Text="{Binding MapName}" Foreground="#DDFFFFFF" Margin="0,0,0,0" />
-                            <TextBlock HorizontalAlignment="Center" Grid.Column="3" Text="{Binding CurrentNumberOfPlayer, StringFormat= ' {0}/4'}" Foreground="#DDFFFFFF" />
-                            <TextBlock HorizontalAlignment="Center" Grid.Column="4" Text="{Binding Creator}" Foreground="#DDFFFFFF" />
+                            <Image MaxWidth="128" MaxHeight="128" Grid.Column="0" Source="{Binding Icon, Converter={convert:Base64ImageConverter}}" Cursor="Hand"/>
+                            <fa:FontAwesome HorizontalAlignment="Center"  VerticalAlignment="Center" Grid.Column="1" Icon="Lock"  fa:Awesome.Content="Lock" Foreground="#DDF31010"  FontSize="48"  Visibility="{Binding Private, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}" />
+                            <fa:FontAwesome HorizontalAlignment="Center"  VerticalAlignment="Center" Grid.Column="1" Icon="Unlock" fa:Awesome.Content="Unlock" Foreground="#DD3EFF34"  FontSize="48"  Visibility="{Binding Private, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2" Text="{Binding MapName}" Foreground="#DDFFFFFF" FontSize="24" />
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Column="3" Text="{Binding CurrentNumberOfPlayer, StringFormat= ' {0}/4'}" Foreground="#DDFFFFFF" FontSize="24"  />
+                            <TextBlock HorizontalAlignment="Center"  VerticalAlignment="Center"  Grid.Column="4" Text="{Binding Creator}" Foreground="#DDFFFFFF" FontSize="24" />
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

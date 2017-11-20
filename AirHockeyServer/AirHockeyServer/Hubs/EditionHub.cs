@@ -6,6 +6,7 @@ using AirHockeyServer.Entities.Edition.EditionCommand;
 using AirHockeyServer.Entities.EditionCommand;
 using AirHockeyServer.Entities.Messages;
 using AirHockeyServer.Entities.Messages.Edition;
+using AirHockeyServer.Services;
 using Microsoft.AspNet.SignalR;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -15,17 +16,21 @@ namespace AirHockeyServer.Hubs
     public class EditionHub : Hub
     {
         private EditionService editionService;
+        private UserService userService;
         private JsonSerializerSettings serializer;
 
         public ConnectionMapper ConnectionMapper { get; set; }
 
-        public EditionHub(EditionService editionService, ConnectionMapper connectionMapper)
+        public EditionHub(EditionService editionService, ConnectionMapper connectionMapper, UserService userService)
         {
             this.editionService = editionService;
             ConnectionMapper = connectionMapper;
             this.serializer = new JsonSerializerSettings
             {
-                TypeNameHandling = TypeNameHandling.Objects             };
+                TypeNameHandling = TypeNameHandling.Objects
+                
+            };
+            this.userService = userService;
 
         }
 
@@ -44,10 +49,13 @@ namespace AirHockeyServer.Hubs
                 List<OnlineUser> newEditionGroup = new List<OnlineUser>();
                 editionService.UsersPerGame.Add(mapGroupId, newEditionGroup);
             }
+            UserEntity user = await this.userService.GetUserByUsername(username);
             OnlineUser newUser = new OnlineUser()
             {
                 Username = username,
-                HexColor = this.editionService.Colors[editionService.UsersPerGame[mapGroupId].Count]
+                HexColor = this.editionService.Colors[editionService.UsersPerGame[mapGroupId].Count],
+                ProfilePicture = user.Profile
+
             };
             //This shouldnt be managed here... He should be managed at the login point at least
             //But i have no choice for now

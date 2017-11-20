@@ -33,15 +33,11 @@ namespace InterfaceGraphique.Controls.WPF.Editor
         {
             this.onlineEditedMapInfos.Clear();
             //TODO:Not optimized should use a list here but for testing purpose i'll leave it this way
-            List<MapEntity> list = await this.mapService.GetMaps(); 
             try
             {
-                if (list != null)
-                {
-                    list.ForEach(map => this.onlineEditedMapInfos.Add(map));
+                List<MapEntity> list = await this.mapService.GetMaps();
 
-                }
-
+                list?.ForEach(map => this.onlineEditedMapInfos.Add(map));
             }
             catch (Exception e)
             {
@@ -100,7 +96,7 @@ namespace InterfaceGraphique.Controls.WPF.Editor
 
         private bool CanJoinEdition()
         {
-            return this.selectedMap!=null;
+            return this.selectedMap!=null && this.selectedMap.CurrentNumberOfPlayer<4;
         }
 
         public MapEntity SelectedMap

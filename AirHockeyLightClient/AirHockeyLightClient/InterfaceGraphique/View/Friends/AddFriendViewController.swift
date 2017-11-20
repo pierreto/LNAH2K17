@@ -19,13 +19,29 @@ import UIKit
 ///////////////////////////////////////////////////////////////////////////
 class AddFriendViewController: UIViewController {
     
+    @IBOutlet weak var search: SearchTextField!
+    
+    private var filterStrings = [String]()
+    private let friendsService = FriendsService()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let friendsService = FriendsService()
         friendsService.getAllUsers() { users, error in
+            for user in users! {
+                self.filterStrings.append(user.getUsername())
+            }
+            
+            self.search.filterStrings(self.filterStrings)
+            
             return
         }
+    }
+    
+    @IBAction func addFriend(_ sender: Any) {
+        self.friendsService.sendFriendRequest(friendUsername: self.search.text!)
+        self.search.text = ""
     }
     
     override var shouldAutorotate: Bool {

@@ -209,6 +209,7 @@ namespace InterfaceGraphique
             unityContainer.RegisterType<TutorialViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<MasterGameState>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<SlaveGameState>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<EditorUsersViewModel>(new ContainerControlledLifetimeManager());
 
             //Rest services instantiations
             unityContainer.RegisterType<MapService>();
