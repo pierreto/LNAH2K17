@@ -44,7 +44,7 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             FriendList = new ObservableCollection<FriendListItemViewModel>();
             foreach(var friend in friends)
             {
-                FriendList.Add(new FriendListItemViewModel(new UserEntity { Id = friend.Id, Username = friend.Username, IsSelected = false }));
+                FriendList.Add(new FriendListItemViewModel(new UserEntity { Id = friend.Id, Username = friend.Username, Profile = friend.Profile, IsSelected = false }));
             }
             //List<UserEntity> userEntities = await userService.GetAllUsers();
             this.friendsHub.NewFriendEvent += NewFriendEvent;
@@ -81,7 +81,7 @@ namespace InterfaceGraphique.Controls.WPF.Friends
                 FriendList = new ObservableCollection<FriendListItemViewModel>();
                 foreach (var friend in friends)
                 {
-                    FriendList.Add(new FriendListItemViewModel(new UserEntity { Username = friend.Username, IsSelected = false }));
+                    FriendList.Add(new FriendListItemViewModel(new UserEntity { Id = friend.Id, Username = friend.Username, Profile = friend.Profile, IsSelected = false }));
                 }
             }
             );

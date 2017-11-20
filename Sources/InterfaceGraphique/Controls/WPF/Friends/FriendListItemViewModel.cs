@@ -41,6 +41,16 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             }
         }
 
+        public string ProfilePicture
+        {
+            get => UserEntity.Profile;
+            set
+            {
+                UserEntity.Profile = value;
+                this.OnPropertyChanged();
+            }
+        }
+
         public bool IsSelected
         {
             get => UserEntity.IsSelected;

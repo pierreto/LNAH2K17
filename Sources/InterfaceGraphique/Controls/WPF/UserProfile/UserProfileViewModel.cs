@@ -44,7 +44,7 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
             PointsNb = 0;
             GameWon = 0;
             TournamentWon = 0;
-            ProfilePictureUrl = Directory.GetCurrentDirectory() + "\\media\\image\\default_profile_picture.png";
+            ProfilePicture = null;
         }
 
         public async Task Initialize(int userId = 0)
@@ -104,17 +104,6 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
             set
             {
                 achievements = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string profilePictureUrl;
-        public string ProfilePictureUrl
-        {
-            get => profilePictureUrl;
-            set
-            {
-                profilePictureUrl = value;
                 OnPropertyChanged();
             }
         }
