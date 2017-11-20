@@ -183,10 +183,14 @@ namespace InterfaceGraphique {
                 ResetDefaultTable();
                 this.CurrentState = this.offlineState;
                 this.CurrentState.JoinEdition(null);
+                this.userPanel.Visible = false;
+
             };
             this.Fichier_MenuPrincipal.Click += async (sender, e) =>
             {
                 await CurrentState.LeaveEdition();
+                this.userPanel.Visible = false;
+
                 ResetDefaultTable();
                 Program.FormManager.CurrentForm = Program.MainMenu;
             };
@@ -400,6 +404,7 @@ namespace InterfaceGraphique {
             await mapManager.OpenOnlineMap(map);
             this.CurrentState = this.onlineState;
             this.CurrentState.JoinEdition(map);
+            this.userPanel.Visible = true;
         }
 
         private void OpenOnlineMap()

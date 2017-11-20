@@ -4,22 +4,49 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 using InterfaceGraphique.Entities.Editor;
 
 namespace InterfaceGraphique.Controls.WPF.Editor
 {
     public class EditorUsersViewModel : ViewModelBase
     {
-        private ObservableCollection<OnlineUser> users;
 
+        private ObservableCollection<OnlineUser> users;
+        private readonly Dispatcher _dispatcher;
+        protected Dispatcher Dispatcher
+        {
+            get
+            {
+                return _dispatcher;
+            }
+        }
+        protected void Execute(Action action)
+        {
+            if (this.Dispatcher.CheckAccess())
+            {
+                action.Invoke();
+            }
+            else
+            {
+                this.Dispatcher.Invoke(DispatcherPriority.DataBind, action);
+            }
+        }
         public EditorUsersViewModel()
         {
+            _dispatcher = Dispatcher.CurrentDispatcher;
+
             users = new ObservableCollection<OnlineUser>();
         }
 
         public override void InitializeViewModel()
         {
-            users = new ObservableCollection<OnlineUser>();
+            this.Execute(
+                () =>
+                {
+                    users.Clear();
+                }
+            );
 
         }
 
@@ -34,18 +61,32 @@ namespace InterfaceGraphique.Controls.WPF.Editor
         }
         public void AddUser(OnlineUser user)
         {
-            Users.Add(user);
+            this.Execute(
+                () =>
+                {
+                    user.HexColor = "#" + user.HexColor;
+                    Users.Add(user);
+                }
+            );
+
+     
         }
         public void RemoveByUsername(string username)
         {
-
-            foreach (var user in Users)
-            {
-                if (user.Username.Equals(username))
+            this.Execute(
+                () =>
                 {
-                    Users.Remove(user);
+                    foreach (var user in Users)
+                    {
+                        if (user.Username.Equals(username))
+                        {
+                            Users.Remove(user);
+                            break;
+                        }
+                    }
                 }
-            }
+            );
+        
         }
     }
 }

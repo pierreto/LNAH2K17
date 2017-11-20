@@ -24,31 +24,6 @@ namespace InterfaceGraphique
         /// </summary>
         private void InitializeComponent() {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Editeur));
-            this.PropertiesEditPanel = new System.Windows.Forms.Panel();
-            this.ScaleZText = new System.Windows.Forms.NumericUpDown();
-            this.ScaleXText = new System.Windows.Forms.NumericUpDown();
-            this.ScaleYText = new System.Windows.Forms.NumericUpDown();
-            this.RotationZText = new System.Windows.Forms.NumericUpDown();
-            this.RotationYText = new System.Windows.Forms.NumericUpDown();
-            this.RotationXText = new System.Windows.Forms.NumericUpDown();
-            this.PositionZText = new System.Windows.Forms.NumericUpDown();
-            this.PositionYText = new System.Windows.Forms.NumericUpDown();
-            this.PositionXText = new System.Windows.Forms.NumericUpDown();
-            this.ResetButton = new System.Windows.Forms.Button();
-            this.ApplyButton = new System.Windows.Forms.Button();
-            this.PropertiesTitle = new System.Windows.Forms.Label();
-            this.PositionZLabel = new System.Windows.Forms.Label();
-            this.PositionYLabel = new System.Windows.Forms.Label();
-            this.PositionXLabel = new System.Windows.Forms.Label();
-            this.PositionLabel = new System.Windows.Forms.Label();
-            this.RotationZLabel = new System.Windows.Forms.Label();
-            this.RotationYLabel = new System.Windows.Forms.Label();
-            this.RotationXLabel = new System.Windows.Forms.Label();
-            this.RotationLabel = new System.Windows.Forms.Label();
-            this.ScaleZLabel = new System.Windows.Forms.Label();
-            this.ScaleYLabel = new System.Windows.Forms.Label();
-            this.ScaleXLabel = new System.Windows.Forms.Label();
-            this.ScaleLabel = new System.Windows.Forms.Label();
             this.MenuBar = new System.Windows.Forms.MenuStrip();
             this.Menu_Fichier = new System.Windows.Forms.ToolStripMenuItem();
             this.Fichier_Nouveau = new System.Windows.Forms.ToolStripMenuItem();
@@ -99,7 +74,36 @@ namespace InterfaceGraphique
             this.userPanel = new System.Windows.Forms.Panel();
             this.userLists = new System.Windows.Forms.Integration.ElementHost();
             this.Panel_PropertiesBack = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
+            this.PropertiesEditPanel = new System.Windows.Forms.Panel();
+            this.ScaleZText = new System.Windows.Forms.NumericUpDown();
+            this.ScaleXText = new System.Windows.Forms.NumericUpDown();
+            this.ScaleYText = new System.Windows.Forms.NumericUpDown();
+            this.RotationZText = new System.Windows.Forms.NumericUpDown();
+            this.RotationYText = new System.Windows.Forms.NumericUpDown();
+            this.RotationXText = new System.Windows.Forms.NumericUpDown();
+            this.PositionZText = new System.Windows.Forms.NumericUpDown();
+            this.PositionYText = new System.Windows.Forms.NumericUpDown();
+            this.PositionXText = new System.Windows.Forms.NumericUpDown();
+            this.ResetButton = new System.Windows.Forms.Button();
+            this.ApplyButton = new System.Windows.Forms.Button();
+            this.PropertiesTitle = new System.Windows.Forms.Label();
+            this.PositionZLabel = new System.Windows.Forms.Label();
+            this.PositionYLabel = new System.Windows.Forms.Label();
+            this.PositionXLabel = new System.Windows.Forms.Label();
+            this.PositionLabel = new System.Windows.Forms.Label();
+            this.RotationZLabel = new System.Windows.Forms.Label();
+            this.RotationYLabel = new System.Windows.Forms.Label();
+            this.RotationXLabel = new System.Windows.Forms.Label();
+            this.RotationLabel = new System.Windows.Forms.Label();
+            this.ScaleZLabel = new System.Windows.Forms.Label();
+            this.ScaleYLabel = new System.Windows.Forms.Label();
+            this.ScaleXLabel = new System.Windows.Forms.Label();
+            this.ScaleLabel = new System.Windows.Forms.Label();
+            this.MenuBar.SuspendLayout();
+            this.Toolbar.SuspendLayout();
+            this.Edition.SuspendLayout();
+            this.userPanel.SuspendLayout();
+            this.Panel_PropertiesBack.SuspendLayout();
             this.PropertiesEditPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ScaleZText)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ScaleXText)).BeginInit();
@@ -110,12 +114,511 @@ namespace InterfaceGraphique
             ((System.ComponentModel.ISupportInitialize)(this.PositionZText)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PositionYText)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PositionXText)).BeginInit();
-            this.MenuBar.SuspendLayout();
-            this.Toolbar.SuspendLayout();
-            this.Edition.SuspendLayout();
-            this.userPanel.SuspendLayout();
-            this.Panel_PropertiesBack.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // MenuBar
+            // 
+            this.MenuBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.MenuBar.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.MenuBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Menu_Fichier,
+            this.Menu_Edition,
+            this.Menu_Outils,
+            this.Menu_Vues,
+            this.Menu_Informations});
+            this.MenuBar.Location = new System.Drawing.Point(0, 0);
+            this.MenuBar.Name = "MenuBar";
+            this.MenuBar.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            this.MenuBar.Size = new System.Drawing.Size(944, 24);
+            this.MenuBar.TabIndex = 0;
+            this.MenuBar.Text = "menuStrip1";
+            // 
+            // Menu_Fichier
+            // 
+            this.Menu_Fichier.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Fichier_Nouveau,
+            this.Fichier_Ouvrir,
+            this.Fichier_Enregistrer,
+            this.Fichier_EnregistrerSous,
+            this.Fichier_Propriete,
+            this.Fichier_ModeTest,
+            this.Fichier_MenuPrincipal});
+            this.Menu_Fichier.ForeColor = System.Drawing.Color.White;
+            this.Menu_Fichier.Name = "Menu_Fichier";
+            this.Menu_Fichier.Size = new System.Drawing.Size(54, 20);
+            this.Menu_Fichier.Text = "Fichier";
+            // 
+            // Fichier_Nouveau
+            // 
+            this.Fichier_Nouveau.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Fichier_Nouveau.ForeColor = System.Drawing.Color.White;
+            this.Fichier_Nouveau.Name = "Fichier_Nouveau";
+            this.Fichier_Nouveau.Size = new System.Drawing.Size(166, 22);
+            this.Fichier_Nouveau.Text = "Nouveau";
+            // 
+            // Fichier_Ouvrir
+            // 
+            this.Fichier_Ouvrir.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Fichier_Ouvrir.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Fichier_OuvrirLocalement,
+            this.Fichier_OuvrirEnLigne});
+            this.Fichier_Ouvrir.ForeColor = System.Drawing.Color.White;
+            this.Fichier_Ouvrir.Name = "Fichier_Ouvrir";
+            this.Fichier_Ouvrir.Size = new System.Drawing.Size(166, 22);
+            this.Fichier_Ouvrir.Text = "Ouvrir";
+            // 
+            // Fichier_OuvrirLocalement
+            // 
+            this.Fichier_OuvrirLocalement.Name = "Fichier_OuvrirLocalement";
+            this.Fichier_OuvrirLocalement.Size = new System.Drawing.Size(136, 22);
+            this.Fichier_OuvrirLocalement.Text = "Localement";
+            // 
+            // Fichier_OuvrirEnLigne
+            // 
+            this.Fichier_OuvrirEnLigne.Name = "Fichier_OuvrirEnLigne";
+            this.Fichier_OuvrirEnLigne.Size = new System.Drawing.Size(136, 22);
+            this.Fichier_OuvrirEnLigne.Text = "En ligne";
+            // 
+            // Fichier_Enregistrer
+            // 
+            this.Fichier_Enregistrer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Fichier_Enregistrer.ForeColor = System.Drawing.Color.White;
+            this.Fichier_Enregistrer.Name = "Fichier_Enregistrer";
+            this.Fichier_Enregistrer.Size = new System.Drawing.Size(166, 22);
+            this.Fichier_Enregistrer.Text = "Enregistrer";
+            // 
+            // Fichier_EnregistrerSous
+            // 
+            this.Fichier_EnregistrerSous.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Fichier_EnregistrerSous.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Fichier_EnregistrerSous_Ordinateur,
+            this.Fichier_EnregistrerSous_Serveur});
+            this.Fichier_EnregistrerSous.ForeColor = System.Drawing.Color.White;
+            this.Fichier_EnregistrerSous.Name = "Fichier_EnregistrerSous";
+            this.Fichier_EnregistrerSous.Size = new System.Drawing.Size(166, 22);
+            this.Fichier_EnregistrerSous.Text = "Enregistrer sous...";
+            // 
+            // Fichier_EnregistrerSous_Ordinateur
+            // 
+            this.Fichier_EnregistrerSous_Ordinateur.Name = "Fichier_EnregistrerSous_Ordinateur";
+            this.Fichier_EnregistrerSous_Ordinateur.Size = new System.Drawing.Size(131, 22);
+            this.Fichier_EnregistrerSous_Ordinateur.Text = "Ordinateur";
+            // 
+            // Fichier_EnregistrerSous_Serveur
+            // 
+            this.Fichier_EnregistrerSous_Serveur.Name = "Fichier_EnregistrerSous_Serveur";
+            this.Fichier_EnregistrerSous_Serveur.Size = new System.Drawing.Size(131, 22);
+            this.Fichier_EnregistrerSous_Serveur.Text = "Serveur";
+            // 
+            // Fichier_Propriete
+            // 
+            this.Fichier_Propriete.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Fichier_Propriete.ForeColor = System.Drawing.Color.White;
+            this.Fichier_Propriete.Name = "Fichier_Propriete";
+            this.Fichier_Propriete.Size = new System.Drawing.Size(166, 22);
+            this.Fichier_Propriete.Text = "Propriétés";
+            // 
+            // Fichier_ModeTest
+            // 
+            this.Fichier_ModeTest.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Fichier_ModeTest.ForeColor = System.Drawing.Color.White;
+            this.Fichier_ModeTest.Name = "Fichier_ModeTest";
+            this.Fichier_ModeTest.Size = new System.Drawing.Size(166, 22);
+            this.Fichier_ModeTest.Text = "Mode test";
+            // 
+            // Fichier_MenuPrincipal
+            // 
+            this.Fichier_MenuPrincipal.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Fichier_MenuPrincipal.ForeColor = System.Drawing.Color.White;
+            this.Fichier_MenuPrincipal.Name = "Fichier_MenuPrincipal";
+            this.Fichier_MenuPrincipal.Size = new System.Drawing.Size(166, 22);
+            this.Fichier_MenuPrincipal.Text = "Menu principal";
+            // 
+            // Menu_Edition
+            // 
+            this.Menu_Edition.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Edition_Supprimer});
+            this.Menu_Edition.ForeColor = System.Drawing.Color.White;
+            this.Menu_Edition.Name = "Menu_Edition";
+            this.Menu_Edition.Size = new System.Drawing.Size(56, 20);
+            this.Menu_Edition.Text = "Édition";
+            // 
+            // Edition_Supprimer
+            // 
+            this.Edition_Supprimer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Edition_Supprimer.Enabled = false;
+            this.Edition_Supprimer.ForeColor = System.Drawing.Color.White;
+            this.Edition_Supprimer.Name = "Edition_Supprimer";
+            this.Edition_Supprimer.Size = new System.Drawing.Size(129, 22);
+            this.Edition_Supprimer.Text = "Supprimer";
+            // 
+            // Menu_Outils
+            // 
+            this.Menu_Outils.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Outils_Selection,
+            this.Outils_Deplacement,
+            this.Outils_Rotation,
+            this.Outils_Echelle,
+            this.Outils_Duplication,
+            this.Outils_Zoom,
+            this.Outils_Creation,
+            this.Outils_PointsControles});
+            this.Menu_Outils.ForeColor = System.Drawing.Color.White;
+            this.Menu_Outils.Name = "Menu_Outils";
+            this.Menu_Outils.Size = new System.Drawing.Size(50, 20);
+            this.Menu_Outils.Text = "Outils";
+            // 
+            // Outils_Selection
+            // 
+            this.Outils_Selection.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Outils_Selection.ForeColor = System.Drawing.Color.White;
+            this.Outils_Selection.Name = "Outils_Selection";
+            this.Outils_Selection.Size = new System.Drawing.Size(234, 22);
+            this.Outils_Selection.Text = "Sélection";
+            // 
+            // Outils_Deplacement
+            // 
+            this.Outils_Deplacement.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Outils_Deplacement.ForeColor = System.Drawing.Color.White;
+            this.Outils_Deplacement.Name = "Outils_Deplacement";
+            this.Outils_Deplacement.Size = new System.Drawing.Size(234, 22);
+            this.Outils_Deplacement.Text = "Déplacement";
+            // 
+            // Outils_Rotation
+            // 
+            this.Outils_Rotation.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Outils_Rotation.ForeColor = System.Drawing.Color.White;
+            this.Outils_Rotation.Name = "Outils_Rotation";
+            this.Outils_Rotation.Size = new System.Drawing.Size(234, 22);
+            this.Outils_Rotation.Text = "Rotation";
+            // 
+            // Outils_Echelle
+            // 
+            this.Outils_Echelle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Outils_Echelle.ForeColor = System.Drawing.Color.White;
+            this.Outils_Echelle.Name = "Outils_Echelle";
+            this.Outils_Echelle.Size = new System.Drawing.Size(234, 22);
+            this.Outils_Echelle.Text = "Mise à l\'échelle";
+            // 
+            // Outils_Duplication
+            // 
+            this.Outils_Duplication.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Outils_Duplication.ForeColor = System.Drawing.Color.White;
+            this.Outils_Duplication.Name = "Outils_Duplication";
+            this.Outils_Duplication.Size = new System.Drawing.Size(234, 22);
+            this.Outils_Duplication.Text = "Duplication";
+            // 
+            // Outils_Zoom
+            // 
+            this.Outils_Zoom.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Outils_Zoom.ForeColor = System.Drawing.Color.White;
+            this.Outils_Zoom.Name = "Outils_Zoom";
+            this.Outils_Zoom.Size = new System.Drawing.Size(234, 22);
+            this.Outils_Zoom.Text = "Zoom";
+            // 
+            // Outils_Creation
+            // 
+            this.Outils_Creation.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Outils_Creation.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Outils_Creation_Accelerateur,
+            this.Outils_Creation_Muret,
+            this.Outils_Creation_Portail});
+            this.Outils_Creation.ForeColor = System.Drawing.Color.White;
+            this.Outils_Creation.Name = "Outils_Creation";
+            this.Outils_Creation.Size = new System.Drawing.Size(234, 22);
+            this.Outils_Creation.Text = "Création";
+            // 
+            // Outils_Creation_Accelerateur
+            // 
+            this.Outils_Creation_Accelerateur.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Outils_Creation_Accelerateur.ForeColor = System.Drawing.Color.White;
+            this.Outils_Creation_Accelerateur.Name = "Outils_Creation_Accelerateur";
+            this.Outils_Creation_Accelerateur.Size = new System.Drawing.Size(140, 22);
+            this.Outils_Creation_Accelerateur.Text = "Accélérateur";
+            // 
+            // Outils_Creation_Muret
+            // 
+            this.Outils_Creation_Muret.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Outils_Creation_Muret.ForeColor = System.Drawing.Color.White;
+            this.Outils_Creation_Muret.Name = "Outils_Creation_Muret";
+            this.Outils_Creation_Muret.Size = new System.Drawing.Size(140, 22);
+            this.Outils_Creation_Muret.Text = "Muret";
+            // 
+            // Outils_Creation_Portail
+            // 
+            this.Outils_Creation_Portail.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Outils_Creation_Portail.ForeColor = System.Drawing.Color.White;
+            this.Outils_Creation_Portail.Name = "Outils_Creation_Portail";
+            this.Outils_Creation_Portail.Size = new System.Drawing.Size(140, 22);
+            this.Outils_Creation_Portail.Text = "Portail";
+            // 
+            // Outils_PointsControles
+            // 
+            this.Outils_PointsControles.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Outils_PointsControles.ForeColor = System.Drawing.Color.White;
+            this.Outils_PointsControles.Name = "Outils_PointsControles";
+            this.Outils_PointsControles.Size = new System.Drawing.Size(234, 22);
+            this.Outils_PointsControles.Text = "Gestion des points de contrôle";
+            // 
+            // Menu_Vues
+            // 
+            this.Menu_Vues.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Vues_Orthographique,
+            this.Vue_Orbite});
+            this.Menu_Vues.ForeColor = System.Drawing.Color.White;
+            this.Menu_Vues.Name = "Menu_Vues";
+            this.Menu_Vues.Size = new System.Drawing.Size(44, 20);
+            this.Menu_Vues.Text = "Vues";
+            // 
+            // Vues_Orthographique
+            // 
+            this.Vues_Orthographique.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Vues_Orthographique.Enabled = false;
+            this.Vues_Orthographique.ForeColor = System.Drawing.Color.White;
+            this.Vues_Orthographique.Name = "Vues_Orthographique";
+            this.Vues_Orthographique.Size = new System.Drawing.Size(159, 22);
+            this.Vues_Orthographique.Text = "Orthographique";
+            // 
+            // Vue_Orbite
+            // 
+            this.Vue_Orbite.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Vue_Orbite.ForeColor = System.Drawing.Color.White;
+            this.Vue_Orbite.Name = "Vue_Orbite";
+            this.Vue_Orbite.Size = new System.Drawing.Size(159, 22);
+            this.Vue_Orbite.Text = "Orbite";
+            // 
+            // Menu_Informations
+            // 
+            this.Menu_Informations.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Informations_Aide});
+            this.Menu_Informations.ForeColor = System.Drawing.Color.White;
+            this.Menu_Informations.Name = "Menu_Informations";
+            this.Menu_Informations.Size = new System.Drawing.Size(87, 20);
+            this.Menu_Informations.Text = "Informations";
+            // 
+            // Informations_Aide
+            // 
+            this.Informations_Aide.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Informations_Aide.ForeColor = System.Drawing.Color.White;
+            this.Informations_Aide.Name = "Informations_Aide";
+            this.Informations_Aide.Size = new System.Drawing.Size(98, 22);
+            this.Informations_Aide.Text = "Aide";
+            // 
+            // Toolbar
+            // 
+            this.Toolbar.AutoSize = false;
+            this.Toolbar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Toolbar.Dock = System.Windows.Forms.DockStyle.Left;
+            this.Toolbar.GripMargin = new System.Windows.Forms.Padding(0);
+            this.Toolbar.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.Toolbar.ImageScalingSize = new System.Drawing.Size(30, 30);
+            this.Toolbar.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.Toolbar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Toolbar_SeparatorTop,
+            this.Toolbar_Select,
+            this.Toolbar_Move,
+            this.Toolbar_Rotate,
+            this.Toolbar_Scale,
+            this.Toolbar_Duplicate,
+            this.Toolbar_Zoom,
+            this.Toolbar_ControlPoint,
+            this.Toolbar_SeparatorMiddle,
+            this.Toolbar_Booster,
+            this.Toolbar_Wall,
+            this.Toolbar_Portal,
+            this.Toolbar_SeparatorBottom});
+            this.Toolbar.Location = new System.Drawing.Point(0, 24);
+            this.Toolbar.Name = "Toolbar";
+            this.Toolbar.Padding = new System.Windows.Forms.Padding(0);
+            this.Toolbar.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            this.Toolbar.Size = new System.Drawing.Size(50, 657);
+            this.Toolbar.TabIndex = 1;
+            // 
+            // Toolbar_SeparatorTop
+            // 
+            this.Toolbar_SeparatorTop.Name = "Toolbar_SeparatorTop";
+            this.Toolbar_SeparatorTop.Size = new System.Drawing.Size(49, 6);
+            // 
+            // Toolbar_Select
+            // 
+            this.Toolbar_Select.AutoSize = false;
+            this.Toolbar_Select.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Toolbar_Select.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.Toolbar_Select.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.Toolbar_Select.Image = ((System.Drawing.Image)(resources.GetObject("Toolbar_Select.Image")));
+            this.Toolbar_Select.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.Toolbar_Select.Margin = new System.Windows.Forms.Padding(0);
+            this.Toolbar_Select.Name = "Toolbar_Select";
+            this.Toolbar_Select.Size = new System.Drawing.Size(50, 50);
+            this.Toolbar_Select.Text = "Sélection";
+            this.Toolbar_Select.ToolTipText = "Sélection";
+            // 
+            // Toolbar_Move
+            // 
+            this.Toolbar_Move.AutoSize = false;
+            this.Toolbar_Move.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Toolbar_Move.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.Toolbar_Move.Image = ((System.Drawing.Image)(resources.GetObject("Toolbar_Move.Image")));
+            this.Toolbar_Move.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.Toolbar_Move.Margin = new System.Windows.Forms.Padding(0);
+            this.Toolbar_Move.Name = "Toolbar_Move";
+            this.Toolbar_Move.Size = new System.Drawing.Size(50, 50);
+            this.Toolbar_Move.Text = "Déplacement";
+            this.Toolbar_Move.ToolTipText = "Déplacement";
+            // 
+            // Toolbar_Rotate
+            // 
+            this.Toolbar_Rotate.AutoSize = false;
+            this.Toolbar_Rotate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Toolbar_Rotate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.Toolbar_Rotate.Image = ((System.Drawing.Image)(resources.GetObject("Toolbar_Rotate.Image")));
+            this.Toolbar_Rotate.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.Toolbar_Rotate.Margin = new System.Windows.Forms.Padding(0);
+            this.Toolbar_Rotate.Name = "Toolbar_Rotate";
+            this.Toolbar_Rotate.Size = new System.Drawing.Size(50, 50);
+            this.Toolbar_Rotate.Text = "Rotation";
+            this.Toolbar_Rotate.ToolTipText = "Rotation";
+            // 
+            // Toolbar_Scale
+            // 
+            this.Toolbar_Scale.AutoSize = false;
+            this.Toolbar_Scale.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Toolbar_Scale.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.Toolbar_Scale.Image = ((System.Drawing.Image)(resources.GetObject("Toolbar_Scale.Image")));
+            this.Toolbar_Scale.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.Toolbar_Scale.Margin = new System.Windows.Forms.Padding(0);
+            this.Toolbar_Scale.Name = "Toolbar_Scale";
+            this.Toolbar_Scale.Size = new System.Drawing.Size(50, 50);
+            this.Toolbar_Scale.Text = "Mise à l\'échelle";
+            this.Toolbar_Scale.ToolTipText = "Mise à l\'échelle";
+            // 
+            // Toolbar_Duplicate
+            // 
+            this.Toolbar_Duplicate.AutoSize = false;
+            this.Toolbar_Duplicate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Toolbar_Duplicate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.Toolbar_Duplicate.Image = ((System.Drawing.Image)(resources.GetObject("Toolbar_Duplicate.Image")));
+            this.Toolbar_Duplicate.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.Toolbar_Duplicate.Margin = new System.Windows.Forms.Padding(0);
+            this.Toolbar_Duplicate.Name = "Toolbar_Duplicate";
+            this.Toolbar_Duplicate.Size = new System.Drawing.Size(50, 50);
+            this.Toolbar_Duplicate.Text = "Duplication";
+            this.Toolbar_Duplicate.ToolTipText = "Duplication";
+            // 
+            // Toolbar_Zoom
+            // 
+            this.Toolbar_Zoom.AutoSize = false;
+            this.Toolbar_Zoom.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Toolbar_Zoom.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.Toolbar_Zoom.Image = ((System.Drawing.Image)(resources.GetObject("Toolbar_Zoom.Image")));
+            this.Toolbar_Zoom.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.Toolbar_Zoom.Margin = new System.Windows.Forms.Padding(0);
+            this.Toolbar_Zoom.Name = "Toolbar_Zoom";
+            this.Toolbar_Zoom.Size = new System.Drawing.Size(50, 50);
+            this.Toolbar_Zoom.Text = "Zoom";
+            // 
+            // Toolbar_ControlPoint
+            // 
+            this.Toolbar_ControlPoint.AutoSize = false;
+            this.Toolbar_ControlPoint.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.Toolbar_ControlPoint.Image = ((System.Drawing.Image)(resources.GetObject("Toolbar_ControlPoint.Image")));
+            this.Toolbar_ControlPoint.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.Toolbar_ControlPoint.Margin = new System.Windows.Forms.Padding(0);
+            this.Toolbar_ControlPoint.Name = "Toolbar_ControlPoint";
+            this.Toolbar_ControlPoint.Size = new System.Drawing.Size(50, 50);
+            this.Toolbar_ControlPoint.Text = "Toolbar_ControlPoint";
+            this.Toolbar_ControlPoint.ToolTipText = "Gestion des points de contrôle";
+            // 
+            // Toolbar_SeparatorMiddle
+            // 
+            this.Toolbar_SeparatorMiddle.ForeColor = System.Drawing.Color.White;
+            this.Toolbar_SeparatorMiddle.Name = "Toolbar_SeparatorMiddle";
+            this.Toolbar_SeparatorMiddle.Size = new System.Drawing.Size(49, 6);
+            // 
+            // Toolbar_Booster
+            // 
+            this.Toolbar_Booster.AutoSize = false;
+            this.Toolbar_Booster.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.Toolbar_Booster.Image = ((System.Drawing.Image)(resources.GetObject("Toolbar_Booster.Image")));
+            this.Toolbar_Booster.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.Toolbar_Booster.Margin = new System.Windows.Forms.Padding(0);
+            this.Toolbar_Booster.Name = "Toolbar_Booster";
+            this.Toolbar_Booster.Size = new System.Drawing.Size(50, 50);
+            this.Toolbar_Booster.Text = "Accélérateur";
+            // 
+            // Toolbar_Wall
+            // 
+            this.Toolbar_Wall.AutoSize = false;
+            this.Toolbar_Wall.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.Toolbar_Wall.Image = ((System.Drawing.Image)(resources.GetObject("Toolbar_Wall.Image")));
+            this.Toolbar_Wall.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.Toolbar_Wall.Margin = new System.Windows.Forms.Padding(0);
+            this.Toolbar_Wall.Name = "Toolbar_Wall";
+            this.Toolbar_Wall.Size = new System.Drawing.Size(50, 50);
+            this.Toolbar_Wall.Text = "Muret";
+            // 
+            // Toolbar_Portal
+            // 
+            this.Toolbar_Portal.AutoSize = false;
+            this.Toolbar_Portal.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.Toolbar_Portal.Image = ((System.Drawing.Image)(resources.GetObject("Toolbar_Portal.Image")));
+            this.Toolbar_Portal.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.Toolbar_Portal.Margin = new System.Windows.Forms.Padding(0);
+            this.Toolbar_Portal.Name = "Toolbar_Portal";
+            this.Toolbar_Portal.Size = new System.Drawing.Size(50, 50);
+            this.Toolbar_Portal.Text = "Portail";
+            // 
+            // Toolbar_SeparatorBottom
+            // 
+            this.Toolbar_SeparatorBottom.Name = "Toolbar_SeparatorBottom";
+            this.Toolbar_SeparatorBottom.Size = new System.Drawing.Size(49, 6);
+            // 
+            // Edition
+            // 
+            this.Edition.BackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.Edition.Controls.Add(this.userPanel);
+            this.Edition.Controls.Add(this.Panel_PropertiesBack);
+            this.Edition.Controls.Add(this.Toolbar);
+            this.Edition.Controls.Add(this.MenuBar);
+            this.Edition.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Edition.Location = new System.Drawing.Point(0, 0);
+            this.Edition.Name = "Edition";
+            this.Edition.Size = new System.Drawing.Size(944, 681);
+            this.Edition.TabIndex = 6;
+            this.Edition.Visible = false;
+            this.Edition.Paint += new System.Windows.Forms.PaintEventHandler(this.Edition_Paint);
+            // 
+            // userPanel
+            // 
+            this.userPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.userPanel.BackColor = System.Drawing.Color.Blue;
+            this.userPanel.Controls.Add(this.userLists);
+            this.userPanel.Location = new System.Drawing.Point(688, 24);
+            this.userPanel.Name = "userPanel";
+            this.userPanel.Size = new System.Drawing.Size(256, 186);
+            this.userPanel.TabIndex = 23;
+            this.userPanel.Visible = false;
+            // 
+            // userLists
+            // 
+            this.userLists.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.userLists.Location = new System.Drawing.Point(4, 3);
+            this.userLists.Name = "userLists";
+            this.userLists.Size = new System.Drawing.Size(249, 180);
+            this.userLists.TabIndex = 22;
+            this.userLists.Text = "elementHost1";
+            this.userLists.Child = null;
+            // 
+            // Panel_PropertiesBack
+            // 
+            this.Panel_PropertiesBack.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.Panel_PropertiesBack.BackColor = System.Drawing.Color.Blue;
+            this.Panel_PropertiesBack.Controls.Add(this.PropertiesEditPanel);
+            this.Panel_PropertiesBack.Location = new System.Drawing.Point(688, 425);
+            this.Panel_PropertiesBack.Name = "Panel_PropertiesBack";
+            this.Panel_PropertiesBack.Size = new System.Drawing.Size(256, 256);
+            this.Panel_PropertiesBack.TabIndex = 21;
+            this.Panel_PropertiesBack.Visible = false;
             // 
             // PropertiesEditPanel
             // 
@@ -597,519 +1100,6 @@ namespace InterfaceGraphique
             this.ScaleLabel.Text = "Facteur d\'échelle";
             this.ScaleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // MenuBar
-            // 
-            this.MenuBar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.MenuBar.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.MenuBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Menu_Fichier,
-            this.Menu_Edition,
-            this.Menu_Outils,
-            this.Menu_Vues,
-            this.Menu_Informations});
-            this.MenuBar.Location = new System.Drawing.Point(0, 0);
-            this.MenuBar.Name = "MenuBar";
-            this.MenuBar.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.MenuBar.Size = new System.Drawing.Size(944, 24);
-            this.MenuBar.TabIndex = 0;
-            this.MenuBar.Text = "menuStrip1";
-            // 
-            // Menu_Fichier
-            // 
-            this.Menu_Fichier.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Fichier_Nouveau,
-            this.Fichier_Ouvrir,
-            this.Fichier_Enregistrer,
-            this.Fichier_EnregistrerSous,
-            this.Fichier_Propriete,
-            this.Fichier_ModeTest,
-            this.Fichier_MenuPrincipal});
-            this.Menu_Fichier.ForeColor = System.Drawing.Color.White;
-            this.Menu_Fichier.Name = "Menu_Fichier";
-            this.Menu_Fichier.Size = new System.Drawing.Size(54, 20);
-            this.Menu_Fichier.Text = "Fichier";
-            // 
-            // Fichier_Nouveau
-            // 
-            this.Fichier_Nouveau.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Fichier_Nouveau.ForeColor = System.Drawing.Color.White;
-            this.Fichier_Nouveau.Name = "Fichier_Nouveau";
-            this.Fichier_Nouveau.Size = new System.Drawing.Size(166, 22);
-            this.Fichier_Nouveau.Text = "Nouveau";
-            // 
-            // Fichier_Ouvrir
-            // 
-            this.Fichier_Ouvrir.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Fichier_Ouvrir.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Fichier_OuvrirLocalement,
-            this.Fichier_OuvrirEnLigne});
-            this.Fichier_Ouvrir.ForeColor = System.Drawing.Color.White;
-            this.Fichier_Ouvrir.Name = "Fichier_Ouvrir";
-            this.Fichier_Ouvrir.Size = new System.Drawing.Size(166, 22);
-            this.Fichier_Ouvrir.Text = "Ouvrir";
-            // 
-            // Fichier_OuvrirLocalement
-            // 
-            this.Fichier_OuvrirLocalement.Name = "Fichier_OuvrirLocalement";
-            this.Fichier_OuvrirLocalement.Size = new System.Drawing.Size(136, 22);
-            this.Fichier_OuvrirLocalement.Text = "Localement";
-            // 
-            // Fichier_OuvrirEnLigne
-            // 
-            this.Fichier_OuvrirEnLigne.Name = "Fichier_OuvrirEnLigne";
-            this.Fichier_OuvrirEnLigne.Size = new System.Drawing.Size(136, 22);
-            this.Fichier_OuvrirEnLigne.Text = "En ligne";
-            // 
-            // Fichier_Enregistrer
-            // 
-            this.Fichier_Enregistrer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Fichier_Enregistrer.ForeColor = System.Drawing.Color.White;
-            this.Fichier_Enregistrer.Name = "Fichier_Enregistrer";
-            this.Fichier_Enregistrer.Size = new System.Drawing.Size(166, 22);
-            this.Fichier_Enregistrer.Text = "Enregistrer";
-            // 
-            // Fichier_EnregistrerSous
-            // 
-            this.Fichier_EnregistrerSous.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Fichier_EnregistrerSous.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Fichier_EnregistrerSous_Ordinateur,
-            this.Fichier_EnregistrerSous_Serveur});
-            this.Fichier_EnregistrerSous.ForeColor = System.Drawing.Color.White;
-            this.Fichier_EnregistrerSous.Name = "Fichier_EnregistrerSous";
-            this.Fichier_EnregistrerSous.Size = new System.Drawing.Size(166, 22);
-            this.Fichier_EnregistrerSous.Text = "Enregistrer sous...";
-            // 
-            // Fichier_EnregistrerSous_Ordinateur
-            // 
-            this.Fichier_EnregistrerSous_Ordinateur.Name = "Fichier_EnregistrerSous_Ordinateur";
-            this.Fichier_EnregistrerSous_Ordinateur.Size = new System.Drawing.Size(131, 22);
-            this.Fichier_EnregistrerSous_Ordinateur.Text = "Ordinateur";
-            // 
-            // Fichier_EnregistrerSous_Serveur
-            // 
-            this.Fichier_EnregistrerSous_Serveur.Name = "Fichier_EnregistrerSous_Serveur";
-            this.Fichier_EnregistrerSous_Serveur.Size = new System.Drawing.Size(131, 22);
-            this.Fichier_EnregistrerSous_Serveur.Text = "Serveur";
-            // 
-            // Fichier_Propriete
-            // 
-            this.Fichier_Propriete.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Fichier_Propriete.ForeColor = System.Drawing.Color.White;
-            this.Fichier_Propriete.Name = "Fichier_Propriete";
-            this.Fichier_Propriete.Size = new System.Drawing.Size(166, 22);
-            this.Fichier_Propriete.Text = "Propriétés";
-            // 
-            // Fichier_ModeTest
-            // 
-            this.Fichier_ModeTest.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Fichier_ModeTest.ForeColor = System.Drawing.Color.White;
-            this.Fichier_ModeTest.Name = "Fichier_ModeTest";
-            this.Fichier_ModeTest.Size = new System.Drawing.Size(166, 22);
-            this.Fichier_ModeTest.Text = "Mode test";
-            // 
-            // Fichier_MenuPrincipal
-            // 
-            this.Fichier_MenuPrincipal.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Fichier_MenuPrincipal.ForeColor = System.Drawing.Color.White;
-            this.Fichier_MenuPrincipal.Name = "Fichier_MenuPrincipal";
-            this.Fichier_MenuPrincipal.Size = new System.Drawing.Size(166, 22);
-            this.Fichier_MenuPrincipal.Text = "Menu principal";
-            // 
-            // Menu_Edition
-            // 
-            this.Menu_Edition.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Edition_Supprimer});
-            this.Menu_Edition.ForeColor = System.Drawing.Color.White;
-            this.Menu_Edition.Name = "Menu_Edition";
-            this.Menu_Edition.Size = new System.Drawing.Size(56, 20);
-            this.Menu_Edition.Text = "Édition";
-            // 
-            // Edition_Supprimer
-            // 
-            this.Edition_Supprimer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Edition_Supprimer.Enabled = false;
-            this.Edition_Supprimer.ForeColor = System.Drawing.Color.White;
-            this.Edition_Supprimer.Name = "Edition_Supprimer";
-            this.Edition_Supprimer.Size = new System.Drawing.Size(129, 22);
-            this.Edition_Supprimer.Text = "Supprimer";
-            // 
-            // Menu_Outils
-            // 
-            this.Menu_Outils.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Outils_Selection,
-            this.Outils_Deplacement,
-            this.Outils_Rotation,
-            this.Outils_Echelle,
-            this.Outils_Duplication,
-            this.Outils_Zoom,
-            this.Outils_Creation,
-            this.Outils_PointsControles});
-            this.Menu_Outils.ForeColor = System.Drawing.Color.White;
-            this.Menu_Outils.Name = "Menu_Outils";
-            this.Menu_Outils.Size = new System.Drawing.Size(50, 20);
-            this.Menu_Outils.Text = "Outils";
-            // 
-            // Outils_Selection
-            // 
-            this.Outils_Selection.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Outils_Selection.ForeColor = System.Drawing.Color.White;
-            this.Outils_Selection.Name = "Outils_Selection";
-            this.Outils_Selection.Size = new System.Drawing.Size(234, 22);
-            this.Outils_Selection.Text = "Sélection";
-            // 
-            // Outils_Deplacement
-            // 
-            this.Outils_Deplacement.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Outils_Deplacement.ForeColor = System.Drawing.Color.White;
-            this.Outils_Deplacement.Name = "Outils_Deplacement";
-            this.Outils_Deplacement.Size = new System.Drawing.Size(234, 22);
-            this.Outils_Deplacement.Text = "Déplacement";
-            // 
-            // Outils_Rotation
-            // 
-            this.Outils_Rotation.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Outils_Rotation.ForeColor = System.Drawing.Color.White;
-            this.Outils_Rotation.Name = "Outils_Rotation";
-            this.Outils_Rotation.Size = new System.Drawing.Size(234, 22);
-            this.Outils_Rotation.Text = "Rotation";
-            // 
-            // Outils_Echelle
-            // 
-            this.Outils_Echelle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Outils_Echelle.ForeColor = System.Drawing.Color.White;
-            this.Outils_Echelle.Name = "Outils_Echelle";
-            this.Outils_Echelle.Size = new System.Drawing.Size(234, 22);
-            this.Outils_Echelle.Text = "Mise à l\'échelle";
-            // 
-            // Outils_Duplication
-            // 
-            this.Outils_Duplication.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Outils_Duplication.ForeColor = System.Drawing.Color.White;
-            this.Outils_Duplication.Name = "Outils_Duplication";
-            this.Outils_Duplication.Size = new System.Drawing.Size(234, 22);
-            this.Outils_Duplication.Text = "Duplication";
-            // 
-            // Outils_Zoom
-            // 
-            this.Outils_Zoom.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Outils_Zoom.ForeColor = System.Drawing.Color.White;
-            this.Outils_Zoom.Name = "Outils_Zoom";
-            this.Outils_Zoom.Size = new System.Drawing.Size(234, 22);
-            this.Outils_Zoom.Text = "Zoom";
-            // 
-            // Outils_Creation
-            // 
-            this.Outils_Creation.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Outils_Creation.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Outils_Creation_Accelerateur,
-            this.Outils_Creation_Muret,
-            this.Outils_Creation_Portail});
-            this.Outils_Creation.ForeColor = System.Drawing.Color.White;
-            this.Outils_Creation.Name = "Outils_Creation";
-            this.Outils_Creation.Size = new System.Drawing.Size(234, 22);
-            this.Outils_Creation.Text = "Création";
-            // 
-            // Outils_Creation_Accelerateur
-            // 
-            this.Outils_Creation_Accelerateur.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Outils_Creation_Accelerateur.ForeColor = System.Drawing.Color.White;
-            this.Outils_Creation_Accelerateur.Name = "Outils_Creation_Accelerateur";
-            this.Outils_Creation_Accelerateur.Size = new System.Drawing.Size(140, 22);
-            this.Outils_Creation_Accelerateur.Text = "Accélérateur";
-            // 
-            // Outils_Creation_Muret
-            // 
-            this.Outils_Creation_Muret.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Outils_Creation_Muret.ForeColor = System.Drawing.Color.White;
-            this.Outils_Creation_Muret.Name = "Outils_Creation_Muret";
-            this.Outils_Creation_Muret.Size = new System.Drawing.Size(140, 22);
-            this.Outils_Creation_Muret.Text = "Muret";
-            // 
-            // Outils_Creation_Portail
-            // 
-            this.Outils_Creation_Portail.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Outils_Creation_Portail.ForeColor = System.Drawing.Color.White;
-            this.Outils_Creation_Portail.Name = "Outils_Creation_Portail";
-            this.Outils_Creation_Portail.Size = new System.Drawing.Size(140, 22);
-            this.Outils_Creation_Portail.Text = "Portail";
-            // 
-            // Outils_PointsControles
-            // 
-            this.Outils_PointsControles.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Outils_PointsControles.ForeColor = System.Drawing.Color.White;
-            this.Outils_PointsControles.Name = "Outils_PointsControles";
-            this.Outils_PointsControles.Size = new System.Drawing.Size(234, 22);
-            this.Outils_PointsControles.Text = "Gestion des points de contrôle";
-            // 
-            // Menu_Vues
-            // 
-            this.Menu_Vues.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Vues_Orthographique,
-            this.Vue_Orbite});
-            this.Menu_Vues.ForeColor = System.Drawing.Color.White;
-            this.Menu_Vues.Name = "Menu_Vues";
-            this.Menu_Vues.Size = new System.Drawing.Size(44, 20);
-            this.Menu_Vues.Text = "Vues";
-            // 
-            // Vues_Orthographique
-            // 
-            this.Vues_Orthographique.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Vues_Orthographique.Enabled = false;
-            this.Vues_Orthographique.ForeColor = System.Drawing.Color.White;
-            this.Vues_Orthographique.Name = "Vues_Orthographique";
-            this.Vues_Orthographique.Size = new System.Drawing.Size(159, 22);
-            this.Vues_Orthographique.Text = "Orthographique";
-            // 
-            // Vue_Orbite
-            // 
-            this.Vue_Orbite.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Vue_Orbite.ForeColor = System.Drawing.Color.White;
-            this.Vue_Orbite.Name = "Vue_Orbite";
-            this.Vue_Orbite.Size = new System.Drawing.Size(159, 22);
-            this.Vue_Orbite.Text = "Orbite";
-            // 
-            // Menu_Informations
-            // 
-            this.Menu_Informations.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Informations_Aide});
-            this.Menu_Informations.ForeColor = System.Drawing.Color.White;
-            this.Menu_Informations.Name = "Menu_Informations";
-            this.Menu_Informations.Size = new System.Drawing.Size(87, 20);
-            this.Menu_Informations.Text = "Informations";
-            // 
-            // Informations_Aide
-            // 
-            this.Informations_Aide.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Informations_Aide.ForeColor = System.Drawing.Color.White;
-            this.Informations_Aide.Name = "Informations_Aide";
-            this.Informations_Aide.Size = new System.Drawing.Size(98, 22);
-            this.Informations_Aide.Text = "Aide";
-            // 
-            // Toolbar
-            // 
-            this.Toolbar.AutoSize = false;
-            this.Toolbar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Toolbar.Dock = System.Windows.Forms.DockStyle.Left;
-            this.Toolbar.GripMargin = new System.Windows.Forms.Padding(0);
-            this.Toolbar.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.Toolbar.ImageScalingSize = new System.Drawing.Size(30, 30);
-            this.Toolbar.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.Toolbar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Toolbar_SeparatorTop,
-            this.Toolbar_Select,
-            this.Toolbar_Move,
-            this.Toolbar_Rotate,
-            this.Toolbar_Scale,
-            this.Toolbar_Duplicate,
-            this.Toolbar_Zoom,
-            this.Toolbar_ControlPoint,
-            this.Toolbar_SeparatorMiddle,
-            this.Toolbar_Booster,
-            this.Toolbar_Wall,
-            this.Toolbar_Portal,
-            this.Toolbar_SeparatorBottom});
-            this.Toolbar.Location = new System.Drawing.Point(0, 24);
-            this.Toolbar.Name = "Toolbar";
-            this.Toolbar.Padding = new System.Windows.Forms.Padding(0);
-            this.Toolbar.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.Toolbar.Size = new System.Drawing.Size(50, 657);
-            this.Toolbar.TabIndex = 1;
-            // 
-            // Toolbar_SeparatorTop
-            // 
-            this.Toolbar_SeparatorTop.Name = "Toolbar_SeparatorTop";
-            this.Toolbar_SeparatorTop.Size = new System.Drawing.Size(49, 6);
-            // 
-            // Toolbar_Select
-            // 
-            this.Toolbar_Select.AutoSize = false;
-            this.Toolbar_Select.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Toolbar_Select.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.Toolbar_Select.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.Toolbar_Select.Image = ((System.Drawing.Image)(resources.GetObject("Toolbar_Select.Image")));
-            this.Toolbar_Select.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.Toolbar_Select.Margin = new System.Windows.Forms.Padding(0);
-            this.Toolbar_Select.Name = "Toolbar_Select";
-            this.Toolbar_Select.Size = new System.Drawing.Size(50, 50);
-            this.Toolbar_Select.Text = "Sélection";
-            this.Toolbar_Select.ToolTipText = "Sélection";
-            // 
-            // Toolbar_Move
-            // 
-            this.Toolbar_Move.AutoSize = false;
-            this.Toolbar_Move.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Toolbar_Move.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.Toolbar_Move.Image = ((System.Drawing.Image)(resources.GetObject("Toolbar_Move.Image")));
-            this.Toolbar_Move.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.Toolbar_Move.Margin = new System.Windows.Forms.Padding(0);
-            this.Toolbar_Move.Name = "Toolbar_Move";
-            this.Toolbar_Move.Size = new System.Drawing.Size(50, 50);
-            this.Toolbar_Move.Text = "Déplacement";
-            this.Toolbar_Move.ToolTipText = "Déplacement";
-            // 
-            // Toolbar_Rotate
-            // 
-            this.Toolbar_Rotate.AutoSize = false;
-            this.Toolbar_Rotate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Toolbar_Rotate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.Toolbar_Rotate.Image = ((System.Drawing.Image)(resources.GetObject("Toolbar_Rotate.Image")));
-            this.Toolbar_Rotate.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.Toolbar_Rotate.Margin = new System.Windows.Forms.Padding(0);
-            this.Toolbar_Rotate.Name = "Toolbar_Rotate";
-            this.Toolbar_Rotate.Size = new System.Drawing.Size(50, 50);
-            this.Toolbar_Rotate.Text = "Rotation";
-            this.Toolbar_Rotate.ToolTipText = "Rotation";
-            // 
-            // Toolbar_Scale
-            // 
-            this.Toolbar_Scale.AutoSize = false;
-            this.Toolbar_Scale.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Toolbar_Scale.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.Toolbar_Scale.Image = ((System.Drawing.Image)(resources.GetObject("Toolbar_Scale.Image")));
-            this.Toolbar_Scale.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.Toolbar_Scale.Margin = new System.Windows.Forms.Padding(0);
-            this.Toolbar_Scale.Name = "Toolbar_Scale";
-            this.Toolbar_Scale.Size = new System.Drawing.Size(50, 50);
-            this.Toolbar_Scale.Text = "Mise à l\'échelle";
-            this.Toolbar_Scale.ToolTipText = "Mise à l\'échelle";
-            // 
-            // Toolbar_Duplicate
-            // 
-            this.Toolbar_Duplicate.AutoSize = false;
-            this.Toolbar_Duplicate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Toolbar_Duplicate.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.Toolbar_Duplicate.Image = ((System.Drawing.Image)(resources.GetObject("Toolbar_Duplicate.Image")));
-            this.Toolbar_Duplicate.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.Toolbar_Duplicate.Margin = new System.Windows.Forms.Padding(0);
-            this.Toolbar_Duplicate.Name = "Toolbar_Duplicate";
-            this.Toolbar_Duplicate.Size = new System.Drawing.Size(50, 50);
-            this.Toolbar_Duplicate.Text = "Duplication";
-            this.Toolbar_Duplicate.ToolTipText = "Duplication";
-            // 
-            // Toolbar_Zoom
-            // 
-            this.Toolbar_Zoom.AutoSize = false;
-            this.Toolbar_Zoom.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Toolbar_Zoom.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.Toolbar_Zoom.Image = ((System.Drawing.Image)(resources.GetObject("Toolbar_Zoom.Image")));
-            this.Toolbar_Zoom.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.Toolbar_Zoom.Margin = new System.Windows.Forms.Padding(0);
-            this.Toolbar_Zoom.Name = "Toolbar_Zoom";
-            this.Toolbar_Zoom.Size = new System.Drawing.Size(50, 50);
-            this.Toolbar_Zoom.Text = "Zoom";
-            // 
-            // Toolbar_ControlPoint
-            // 
-            this.Toolbar_ControlPoint.AutoSize = false;
-            this.Toolbar_ControlPoint.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.Toolbar_ControlPoint.Image = ((System.Drawing.Image)(resources.GetObject("Toolbar_ControlPoint.Image")));
-            this.Toolbar_ControlPoint.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.Toolbar_ControlPoint.Margin = new System.Windows.Forms.Padding(0);
-            this.Toolbar_ControlPoint.Name = "Toolbar_ControlPoint";
-            this.Toolbar_ControlPoint.Size = new System.Drawing.Size(50, 50);
-            this.Toolbar_ControlPoint.Text = "Toolbar_ControlPoint";
-            this.Toolbar_ControlPoint.ToolTipText = "Gestion des points de contrôle";
-            // 
-            // Toolbar_SeparatorMiddle
-            // 
-            this.Toolbar_SeparatorMiddle.ForeColor = System.Drawing.Color.White;
-            this.Toolbar_SeparatorMiddle.Name = "Toolbar_SeparatorMiddle";
-            this.Toolbar_SeparatorMiddle.Size = new System.Drawing.Size(49, 6);
-            // 
-            // Toolbar_Booster
-            // 
-            this.Toolbar_Booster.AutoSize = false;
-            this.Toolbar_Booster.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.Toolbar_Booster.Image = ((System.Drawing.Image)(resources.GetObject("Toolbar_Booster.Image")));
-            this.Toolbar_Booster.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.Toolbar_Booster.Margin = new System.Windows.Forms.Padding(0);
-            this.Toolbar_Booster.Name = "Toolbar_Booster";
-            this.Toolbar_Booster.Size = new System.Drawing.Size(50, 50);
-            this.Toolbar_Booster.Text = "Accélérateur";
-            // 
-            // Toolbar_Wall
-            // 
-            this.Toolbar_Wall.AutoSize = false;
-            this.Toolbar_Wall.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.Toolbar_Wall.Image = ((System.Drawing.Image)(resources.GetObject("Toolbar_Wall.Image")));
-            this.Toolbar_Wall.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.Toolbar_Wall.Margin = new System.Windows.Forms.Padding(0);
-            this.Toolbar_Wall.Name = "Toolbar_Wall";
-            this.Toolbar_Wall.Size = new System.Drawing.Size(50, 50);
-            this.Toolbar_Wall.Text = "Muret";
-            // 
-            // Toolbar_Portal
-            // 
-            this.Toolbar_Portal.AutoSize = false;
-            this.Toolbar_Portal.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.Toolbar_Portal.Image = ((System.Drawing.Image)(resources.GetObject("Toolbar_Portal.Image")));
-            this.Toolbar_Portal.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.Toolbar_Portal.Margin = new System.Windows.Forms.Padding(0);
-            this.Toolbar_Portal.Name = "Toolbar_Portal";
-            this.Toolbar_Portal.Size = new System.Drawing.Size(50, 50);
-            this.Toolbar_Portal.Text = "Portail";
-            // 
-            // Toolbar_SeparatorBottom
-            // 
-            this.Toolbar_SeparatorBottom.Name = "Toolbar_SeparatorBottom";
-            this.Toolbar_SeparatorBottom.Size = new System.Drawing.Size(49, 6);
-            // 
-            // Edition
-            // 
-            this.Edition.BackColor = System.Drawing.SystemColors.ButtonShadow;
-            this.Edition.Controls.Add(this.button1);
-            this.Edition.Controls.Add(this.userPanel);
-            this.Edition.Controls.Add(this.Panel_PropertiesBack);
-            this.Edition.Controls.Add(this.Toolbar);
-            this.Edition.Controls.Add(this.MenuBar);
-            this.Edition.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Edition.Location = new System.Drawing.Point(0, 0);
-            this.Edition.Name = "Edition";
-            this.Edition.Size = new System.Drawing.Size(944, 681);
-            this.Edition.TabIndex = 6;
-            this.Edition.Visible = false;
-            this.Edition.Paint += new System.Windows.Forms.PaintEventHandler(this.Edition_Paint);
-            // 
-            // userPanel
-            // 
-            this.userPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.userPanel.BackColor = System.Drawing.Color.Blue;
-            this.userPanel.Controls.Add(this.userLists);
-            this.userPanel.Location = new System.Drawing.Point(688, 24);
-            this.userPanel.Name = "userPanel";
-            this.userPanel.Size = new System.Drawing.Size(256, 232);
-            this.userPanel.TabIndex = 23;
-            // 
-            // userLists
-            // 
-            this.userLists.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.userLists.Location = new System.Drawing.Point(4, 3);
-            this.userLists.Name = "userLists";
-            this.userLists.Size = new System.Drawing.Size(249, 250);
-            this.userLists.TabIndex = 22;
-            this.userLists.Text = "elementHost1";
-            this.userLists.Child = null;
-            // 
-            // Panel_PropertiesBack
-            // 
-            this.Panel_PropertiesBack.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.Panel_PropertiesBack.BackColor = System.Drawing.Color.Blue;
-            this.Panel_PropertiesBack.Controls.Add(this.PropertiesEditPanel);
-            this.Panel_PropertiesBack.Location = new System.Drawing.Point(688, 425);
-            this.Panel_PropertiesBack.Name = "Panel_PropertiesBack";
-            this.Panel_PropertiesBack.Size = new System.Drawing.Size(256, 256);
-            this.Panel_PropertiesBack.TabIndex = 21;
-            this.Panel_PropertiesBack.Visible = false;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(376, 251);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 24;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
             // Editeur
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1119,6 +1109,14 @@ namespace InterfaceGraphique
             this.MainMenuStrip = this.MenuBar;
             this.Name = "Editeur";
             this.Text = "Jeu";
+            this.MenuBar.ResumeLayout(false);
+            this.MenuBar.PerformLayout();
+            this.Toolbar.ResumeLayout(false);
+            this.Toolbar.PerformLayout();
+            this.Edition.ResumeLayout(false);
+            this.Edition.PerformLayout();
+            this.userPanel.ResumeLayout(false);
+            this.Panel_PropertiesBack.ResumeLayout(false);
             this.PropertiesEditPanel.ResumeLayout(false);
             this.PropertiesEditPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ScaleZText)).EndInit();
@@ -1130,40 +1128,11 @@ namespace InterfaceGraphique
             ((System.ComponentModel.ISupportInitialize)(this.PositionZText)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PositionYText)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PositionXText)).EndInit();
-            this.MenuBar.ResumeLayout(false);
-            this.MenuBar.PerformLayout();
-            this.Toolbar.ResumeLayout(false);
-            this.Toolbar.PerformLayout();
-            this.Edition.ResumeLayout(false);
-            this.Edition.PerformLayout();
-            this.userPanel.ResumeLayout(false);
-            this.Panel_PropertiesBack.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Panel PropertiesEditPanel;
-        private System.Windows.Forms.NumericUpDown RotationXText;
-        private System.Windows.Forms.NumericUpDown PositionZText;
-        private System.Windows.Forms.NumericUpDown PositionYText;
-        private System.Windows.Forms.NumericUpDown PositionXText;
-        private System.Windows.Forms.Button ResetButton;
-        private System.Windows.Forms.Button ApplyButton;
-        private System.Windows.Forms.Label PropertiesTitle;
-        private System.Windows.Forms.Label PositionZLabel;
-        private System.Windows.Forms.Label PositionYLabel;
-        private System.Windows.Forms.Label PositionXLabel;
-        private System.Windows.Forms.Label PositionLabel;
-        private System.Windows.Forms.Label RotationZLabel;
-        private System.Windows.Forms.Label RotationYLabel;
-        private System.Windows.Forms.Label RotationXLabel;
-        private System.Windows.Forms.Label RotationLabel;
-        private System.Windows.Forms.Label ScaleZLabel;
-        private System.Windows.Forms.Label ScaleYLabel;
-        private System.Windows.Forms.Label ScaleXLabel;
-        private System.Windows.Forms.Label ScaleLabel;
         private System.Windows.Forms.MenuStrip MenuBar;
         private System.Windows.Forms.ToolStripMenuItem Menu_Fichier;
         private System.Windows.Forms.ToolStripMenuItem Fichier_Nouveau;
@@ -1207,18 +1176,37 @@ namespace InterfaceGraphique
         private System.Windows.Forms.ToolStripButton Toolbar_Portal;
         private System.Windows.Forms.ToolStripSeparator Toolbar_SeparatorBottom;
         private System.Windows.Forms.Panel Edition;
-        private System.Windows.Forms.Panel Panel_PropertiesBack;
-        private System.Windows.Forms.NumericUpDown ScaleZText;
-        private System.Windows.Forms.NumericUpDown ScaleXText;
-        private System.Windows.Forms.NumericUpDown ScaleYText;
-        private System.Windows.Forms.NumericUpDown RotationZText;
-        private System.Windows.Forms.NumericUpDown RotationYText;
         private System.Windows.Forms.ToolStripMenuItem Fichier_EnregistrerSous_Ordinateur;
         private System.Windows.Forms.ToolStripMenuItem Fichier_EnregistrerSous_Serveur;
         private System.Windows.Forms.ToolStripMenuItem Fichier_OuvrirLocalement;
         private System.Windows.Forms.ToolStripMenuItem Fichier_OuvrirEnLigne;
         private System.Windows.Forms.Panel userPanel;
         private System.Windows.Forms.Integration.ElementHost userLists;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Panel Panel_PropertiesBack;
+        private System.Windows.Forms.Panel PropertiesEditPanel;
+        private System.Windows.Forms.NumericUpDown ScaleZText;
+        private System.Windows.Forms.NumericUpDown ScaleXText;
+        private System.Windows.Forms.NumericUpDown ScaleYText;
+        private System.Windows.Forms.NumericUpDown RotationZText;
+        private System.Windows.Forms.NumericUpDown RotationYText;
+        private System.Windows.Forms.NumericUpDown RotationXText;
+        private System.Windows.Forms.NumericUpDown PositionZText;
+        private System.Windows.Forms.NumericUpDown PositionYText;
+        private System.Windows.Forms.NumericUpDown PositionXText;
+        private System.Windows.Forms.Button ResetButton;
+        private System.Windows.Forms.Button ApplyButton;
+        private System.Windows.Forms.Label PropertiesTitle;
+        private System.Windows.Forms.Label PositionZLabel;
+        private System.Windows.Forms.Label PositionYLabel;
+        private System.Windows.Forms.Label PositionXLabel;
+        private System.Windows.Forms.Label PositionLabel;
+        private System.Windows.Forms.Label RotationZLabel;
+        private System.Windows.Forms.Label RotationYLabel;
+        private System.Windows.Forms.Label RotationXLabel;
+        private System.Windows.Forms.Label RotationLabel;
+        private System.Windows.Forms.Label ScaleZLabel;
+        private System.Windows.Forms.Label ScaleYLabel;
+        private System.Windows.Forms.Label ScaleXLabel;
+        private System.Windows.Forms.Label ScaleLabel;
     }
 }

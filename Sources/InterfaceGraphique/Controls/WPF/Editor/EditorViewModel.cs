@@ -37,12 +37,7 @@ namespace InterfaceGraphique.Controls.WPF.Editor
             {
                 List<MapEntity> list = await this.mapService.GetMaps();
 
-                if (list != null)
-                {
-                    list.ForEach(map => this.onlineEditedMapInfos.Add(map));
-
-                }
-
+                list?.ForEach(map => this.onlineEditedMapInfos.Add(map));
             }
             catch (Exception e)
             {
@@ -101,7 +96,7 @@ namespace InterfaceGraphique.Controls.WPF.Editor
 
         private bool CanJoinEdition()
         {
-            return this.selectedMap!=null;
+            return this.selectedMap!=null && this.selectedMap.CurrentNumberOfPlayer<4;
         }
 
         public MapEntity SelectedMap

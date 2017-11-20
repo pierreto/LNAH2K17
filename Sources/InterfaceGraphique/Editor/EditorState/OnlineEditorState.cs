@@ -120,6 +120,9 @@ namespace InterfaceGraphique.Editor.EditorState
             FonctionsNatives.setDeleteEventCallback(this.deleteEventCallback);
 
             List<OnlineUser> usersInTheGame = await this.editionHub.JoinPublicRoom(mapEntity);
+
+            editorUsersViewModel.InitializeViewModel();
+
             foreach (OnlineUser user in usersInTheGame)
             {
                 if (user.Username.Equals(User.Instance.UserEntity.Username))

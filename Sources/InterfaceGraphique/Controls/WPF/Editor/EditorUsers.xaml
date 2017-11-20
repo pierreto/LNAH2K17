@@ -8,7 +8,7 @@
              xmlns:mockObject="clr-namespace:InterfaceGraphique.Entities.MockObject"
              xmlns:converters="clr-namespace:InterfaceGraphique.Controls.WPF.Converters"
              mc:Ignorable="d" 
-             d:DesignHeight="100" d:DesignWidth="100" Background="#FF404040">
+             d:DesignHeight="150" d:DesignWidth="150" Background="#FF404040">
     <UserControl.Resources>
         <ResourceDictionary>
 
@@ -28,21 +28,21 @@
     </UserControl.Resources>
     <Grid  d:DataContext="{Binding Source={StaticResource DesignViewModel}}"  DataContext="{Binding Source={StaticResource VMLocator}, Path=EditorUsersViewModel}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="17*"/>
-            <RowDefinition Height="84*"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="9*"/>
         </Grid.RowDefinitions>
-        <TextBlock HorizontalAlignment="Center" Foreground="White" Grid.Row="0"> Joueurs</TextBlock>
-        <ItemsControl Grid.Row="1"  ItemsSource="{Binding Users}" Background="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" Grid.RowSpan="2" >
+        <TextBlock FontSize="24" HorizontalAlignment="Center" Foreground="White" Grid.Row="0"  > Joueurs</TextBlock>
+        <ItemsControl Grid.Row="1"  ItemsSource="{Binding Users}" Background="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" >
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Grid Margin="0,0,0,5">
-                        <Grid.ColumnDefinitions> 
+                        <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="3*" />
                             <ColumnDefinition Width="7*" />
                         </Grid.ColumnDefinitions>
-                        <Image Grid.Column="0" Source="{Binding ProfilePicture, Converter={converters:Base64ImageConverter}}" Cursor="Hand"/>
+                        <Image MaxWidth="32" MaxHeight="32" Grid.Column="0" Source="{Binding ProfilePicture, Converter={converters:Base64ImageConverter}}" Cursor="Hand"/>
 
-                        <TextBlock Grid.Column="1" Text="{Binding Username}"   Foreground="{Binding HexColor}"/>
+                        <TextBlock FontWeight="Bold" FontSize="24"  Grid.Column="1" Text="{Binding Username}" HorizontalAlignment="Center" VerticalAlignment="Center"   Foreground="{Binding HexColor}"/>
                     </Grid>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
