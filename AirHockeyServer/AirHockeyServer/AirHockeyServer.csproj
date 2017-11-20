@@ -256,6 +256,7 @@
     <Compile Include="Entities\Edition\OnlineUser.cs" />
     <Compile Include="Entities\Edition\EditionCommand\PortalCommand.cs" />
     <Compile Include="Entities\Edition\EditionCommand\WallCommand.cs" />
+    <Compile Include="Entities\GameRequestEntity.cs" />
     <Compile Include="Entities\OnlineEditedMapInfo.cs" />
     <Compile Include="Entities\PasswordEntity.cs" />
     <Compile Include="Entities\Entity.cs" />

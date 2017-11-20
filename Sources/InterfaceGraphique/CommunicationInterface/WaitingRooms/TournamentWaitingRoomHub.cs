@@ -180,6 +180,8 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
                     FonctionsNatives.rotateCamera(180);
 
                 }
+
+                Program.QuickPlay.CurrentGameState.ApplyTextures();
             }));
         }
     }

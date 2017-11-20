@@ -8,6 +8,8 @@ using InterfaceGraphique.CommunicationInterface;
 using InterfaceGraphique.Entities;
 using InterfaceGraphique.Services;
 using System.Drawing;
+using Microsoft.Practices.Unity;
+using InterfaceGraphique.CommunicationInterface.WaitingRooms;
 
 namespace InterfaceGraphique.Game.GameState
 {
@@ -151,6 +153,27 @@ namespace InterfaceGraphique.Game.GameState
             if (Program.QuickPlay.CurrentGameState.GameInitialized && !gameHasEnded && gameData.MasterPosition != null && gameData.SlavePosition != null && gameData.PuckPosition != null)
             {
                 FonctionsNatives.setSlaveGameElementPositions(gameData.SlavePosition, gameData.MasterPosition, gameData.PuckPosition);
+            }
+        }
+
+        public override void ApplyTextures()
+        {
+            if (User.Instance.IsConnected)
+            {
+                var gameManager = Program.unityContainer.Resolve<GameManager>();
+                var textures = gameManager.Textures;
+
+                if (textures != null)
+                {
+                    if (textures[0] != null)
+                    {
+                        FonctionsNatives.setOpponentPlayerSkin(textures[0]);
+                    }
+                    if (textures[1] != null)
+                    {
+                        FonctionsNatives.setLocalPlayerSkin(textures[1]);
+                    }
+                }
             }
         }
 

@@ -34,6 +34,7 @@ public:
 	virtual void mouseDownL();
 	/// Évènement appelé lorsque la souris bouge
 	virtual void playerMouseMove(int x, int y);
+	void sendToServer();
 	/// Évènement appelé lorsque le bouton gauche de la souris est levé
 	virtual void mouseUpL();
 	/// Évènement appelé lorsque la touche escape est enfoncée
@@ -54,10 +55,14 @@ private:
 	/// Fonction qui sauve la valeur du scale des noeuds
 	void saveScale();
 	/// Fcontion qui réinitialise la valeur du scale des noeuds avec la valeur sauvée
-	void revertScale();
+	void revertScale(bool sendToServer);
 
 	/// Pointeur vers l'instance unique de la classe.
 	static ModeleEtatScale* instance_;
+
+	long accTime_ = 0;
+	VisiteurScale visiteurScale_;
+
 };
 
 

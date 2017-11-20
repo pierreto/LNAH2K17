@@ -42,16 +42,19 @@ public:
 	virtual void visiterPortail(NoeudPortail* noeud);
 
 	virtual void visiterRondelle(NoeudRondelle* noeud);
-	void sendTransform(NoeudAbstrait* node);
 
 	/// Assigne au noeud le facteur de redimenssionnement
 	void assignerScale(const glm::vec3& scale);
+
+	std::vector<NoeudAbstrait*> getSelectedNodes() { return selectedNodes_; }
 
 private:
 	/// Vecteur trois dimensions pour le redimensionnement
 	glm::vec3 scale_;
 	/// Bool d'ajustement pour le redimensionnement
 	bool ajusterScaling_;
+
+	std::vector<NoeudAbstrait*> selectedNodes_;
 };
 
 

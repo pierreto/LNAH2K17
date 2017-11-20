@@ -16,7 +16,7 @@ namespace InterfaceGraphique.Controls.WPF.Converters
         {
             string s = value as string;
 
-            if (s == null)
+            if (s == null || s == "")
                 return Directory.GetCurrentDirectory() + "\\media\\image\\default_profile_picture.png";
 
             BitmapImage bi = new BitmapImage();
