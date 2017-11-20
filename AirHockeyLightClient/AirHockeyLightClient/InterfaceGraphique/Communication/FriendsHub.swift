@@ -64,7 +64,14 @@ class FriendsHub: BaseHub {
                     print("Error GetAllFriends FriendsHub: \(e)")
                 }
                 else {
-                    let friends = result as! [UserEntity]
+                    let friendsJson = JSON(result as! [Dictionary<String, Any>])
+                    var friends = [UserEntity]()
+                    let friendsService = FriendsService()
+                    
+                    for friend in friendsJson {
+                        friends.append(friendsService.buildUserEntity(json: friend.1))
+                    }
+                    
                     FriendsTableViewController.instance.updateFriendsEntries(friends: friends)
                 }
             }
@@ -82,8 +89,7 @@ class FriendsHub: BaseHub {
                     print("Error GetAllPendingRequests FriendsHub: \(e)")
                 }
                 else {
-                    let requests = result as! [Dictionary<String, Any>]
-                    let requestsJson = JSON(requests)
+                    let requestsJson = JSON(result as! [Dictionary<String, Any>])
                     var pendingRequests = [FriendRequestEntity]()
                     let friendsService = FriendsService()
                     

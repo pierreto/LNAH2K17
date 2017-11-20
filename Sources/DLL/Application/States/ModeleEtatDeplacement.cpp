@@ -130,7 +130,7 @@ void ModeleEtatDeplacement::playerMouseMove(int x, int y) {
 			SYSTEMTIME st;
 			GetSystemTime(&st);
 			 accTime += st.wMilliseconds;
-			if (accTime>500) {
+			if (accTime>1000) {
 				sendToServer();
 				accTime = 0;
 			}
