@@ -17,6 +17,8 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var usernameErrorLabel: UILabel!
     @IBOutlet weak var passwordErrorLabel: UILabel!
     
+    @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var signupButton: UIButton!
     @IBOutlet weak var loadingSpinner: UIActivityIndicatorView!
     
     @IBOutlet weak var scrollView: UIScrollView!
@@ -141,11 +143,15 @@ class LoginViewController: UIViewController {
     private func disableInputs() {
         self.usernameInput.isEnabled = false
         self.passwordInput.isEnabled = false
+        self.loginButton.isEnabled = false
+        self.signupButton.isEnabled = false
     }
     
     private func enableInputs() {
         self.usernameInput.isEnabled = true
         self.passwordInput.isEnabled = true
+        self.loginButton.isEnabled = true
+        self.signupButton.isEnabled = true
     }
 
     private func resetStyle(textField: UITextField) {

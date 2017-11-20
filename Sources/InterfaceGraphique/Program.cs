@@ -26,6 +26,7 @@ using InterfaceGraphique.Editor;
 using InterfaceGraphique.Controls.WPF.UserProfile;
 using InterfaceGraphique.Controls.WPF.Store;
 using InterfaceGraphique.Controls.WPF.Tutorial;
+using InterfaceGraphique.Editor.EditorState;
 using InterfaceGraphique.Game.GameState;
 using InterfaceGraphique.Managers;
 
@@ -157,7 +158,6 @@ namespace InterfaceGraphique
             {
              client.PostAsJsonAsync(client.BaseAddress + "api/logout", User.Instance.UserEntity);
             }
-            Application.Exit();
         }
 
 
@@ -209,6 +209,16 @@ namespace InterfaceGraphique
             unityContainer.RegisterType<TutorialViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<MasterGameState>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<SlaveGameState>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<EditorUsersViewModel>(new ContainerControlledLifetimeManager());
+
+
+            unityContainer.RegisterType<OnlineEditorState>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<OfflineEditorState>(new ContainerControlledLifetimeManager());
+
+            unityContainer.RegisterType<SlaveGameState>(new ContainerControlledLifetimeManager());
+
+            unityContainer.RegisterType<EditorViewModel>(new ContainerControlledLifetimeManager());
+
 
             //Rest services instantiations
             unityContainer.RegisterType<MapService>();
