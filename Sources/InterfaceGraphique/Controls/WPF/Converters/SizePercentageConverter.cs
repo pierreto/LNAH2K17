@@ -9,7 +9,7 @@ namespace InterfaceGraphique.Controls.WPF.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (parameter == null)
-                if (value != null) return 0.5 * (double) value;
+                if (value != null) return 1.0/3.0 * (double) value;
 
             string[] split = parameter.ToString().Split('.');
             double parameterDouble = double.Parse(split[0]) + double.Parse(split[1]) / (Math.Pow(10, split[1].Length));

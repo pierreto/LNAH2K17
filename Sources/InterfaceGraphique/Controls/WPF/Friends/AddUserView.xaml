@@ -12,8 +12,6 @@
 
     <UserControl.Resources>
         <ResourceDictionary>
-
-
             <ResourceDictionary.MergedDictionaries >
                 <ResourceDictionary Source="/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
                 <ResourceDictionary Source="/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
@@ -28,7 +26,30 @@
 
     </UserControl.Resources>
     <Grid DataContext="{Binding Source={StaticResource VMLocator}, Path=AddUserViewModel}">
-        <Grid.ColumnDefinitions>
+        <Grid Background="DarkGray">
+            <Border>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="80"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Background="{StaticResource UltraDarkGrayBrush}" Grid.Row="0" Panel.ZIndex="1">
+                        <Label Content="Joindre un canal" HorizontalAlignment="Center" FontSize="18" Foreground="{StaticResource TextColorBrush}"/>
+                        <Grid Margin="0,0,0,0">
+                            <Border Grid.Row="0"  Grid.Column="1" Padding="5" CornerRadius="5" BorderThickness="1" BorderBrush="LightGray" SnapsToDevicePixels="True" Background="{StaticResource TextColorBrush}" Width="150" VerticalAlignment="Center">
+                                <TextBox x:Name="ChannelName" Text="{Binding ChannelName, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding InputsEnabled}" Background="Transparent" BorderThickness="0" MaxLength="16" FontSize="14" FontWeight="Bold"/>
+                            </Border>
+                        </Grid>
+                    </StackPanel>
+                    <channel:JoinChannelListView Grid.Row="1">
+                        <channel:JoinChannelListView.DataContext>
+                            <Binding Path="JoinChannelListViewModel" Source="{StaticResource VMLocator}"/>
+                        </channel:JoinChannelListView.DataContext>
+                    </channel:JoinChannelListView>
+                </Grid>
+            </Border>
+        </Grid>
+        <!--<Grid.ColumnDefinitions>
             <ColumnDefinition Width="5*"/>
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
@@ -72,6 +93,6 @@
         <Button Command="{Binding AcceptFriendRequestCommand}"
                 Content="Accepter"  Margin="10,7,10,13" Grid.Row="5" Height="Auto"  Background="#FF5387C5" FontSize="12"  />
         <Button Command="{Binding RefuseFriendRequestCommand}"
-                Content="Refuser" Margin="10,7,10,13" Grid.Row="5" Grid.Column="1" Height="Auto" Background="#FFC3423C" FontSize="12" />
+                Content="Refuser" Margin="10,7,10,13" Grid.Row="5" Grid.Column="1" Height="Auto" Background="#FFC3423C" FontSize="12" />-->
     </Grid>
 </UserControl>
