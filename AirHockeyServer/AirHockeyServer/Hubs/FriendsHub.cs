@@ -7,6 +7,7 @@ using AirHockeyServer.Services;
 using AirHockeyServer.Entities;
 using System.Threading.Tasks;
 using AirHockeyServer.Events;
+using AirHockeyServer.Core;
 
 namespace AirHockeyServer.Hubs
 {
@@ -14,11 +15,13 @@ namespace AirHockeyServer.Hubs
     {
         protected IFriendService FriendService { get; }
         public ConnectionMapper ConnectionMapper { get; }
+        public GameService GameService { get; }
 
-        public FriendsHub(IFriendService friendService, ConnectionMapper connectionMapper)
+        public FriendsHub(IFriendService friendService, ConnectionMapper connectionMapper, GameService gameService)       
         {
             FriendService = friendService;
             ConnectionMapper = connectionMapper;
+            GameService = gameService;
         }
 
         public void JoinHub(UserEntity user)
@@ -105,6 +108,50 @@ namespace AirHockeyServer.Hubs
             }
 
             return removed_friend;
+        }
+
+        public bool SendGameRequest(GameRequestEntity gameRequest)
+        {
+            if(Cache.PlayingPlayers.Exists(x => x.Id == gameRequest.Recipient.Id))
+            {
+                // player is playing
+                return false;
+            }
+
+            string friendConnection = ConnectionMapper.GetConnection(gameRequest.Recipient.Id);
+
+            if (friendConnection != null)
+            {
+                Clients.Client(friendConnection).GameRequest(gameRequest);
+                Cache.AddPlayer(gameRequest.Sender);
+                return true;
+            }
+
+            // something wrong appended
+            return false;
+        }
+
+        public void AcceptGameRequest(GameRequestEntity gameRequest)
+        {
+            string senderConnection = ConnectionMapper.GetConnection(gameRequest.Sender.Id);
+            if (senderConnection != null)
+            {
+                Cache.AddPlayer(gameRequest.Recipient);
+
+                GameService.CreateGame(gameRequest);
+
+                Clients.Client(senderConnection).AcceptGameRequest(gameRequest);
+            }
+        }
+
+        public void DeclineGameRequest(GameRequestEntity gameRequest)
+        {
+            string senderConnection = ConnectionMapper.GetConnection(gameRequest.Sender.Id);
+            if (senderConnection != null)
+            {
+                Cache.RemovePlayer(gameRequest.Sender);
+                Clients.Client(senderConnection).DeclineGameRequest(gameRequest);
+            }
         }
     }
 }

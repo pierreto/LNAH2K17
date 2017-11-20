@@ -27,6 +27,7 @@ using InterfaceGraphique.Controls.WPF.UserProfile;
 using InterfaceGraphique.Controls.WPF.Store;
 using InterfaceGraphique.Controls.WPF.Tutorial;
 using InterfaceGraphique.Game.GameState;
+using InterfaceGraphique.Managers;
 
 namespace InterfaceGraphique
 {
@@ -173,8 +174,9 @@ namespace InterfaceGraphique
         {
             unityContainer = new UnityContainer();
 
-            // Service
+            // Managers
             unityContainer.RegisterType<GameManager>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<GameRequestManager>(new ContainerControlledLifetimeManager());
 
             //Hub instantiations
             unityContainer.RegisterType<IBaseHub, ChatHub>(new ContainerControlledLifetimeManager());
@@ -200,6 +202,7 @@ namespace InterfaceGraphique
             unityContainer.RegisterType<HomeViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<EditorViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<FriendListViewModel>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<FriendListItemViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<UserProfileViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<StoreViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<AddUserViewModel>(new ContainerControlledLifetimeManager());

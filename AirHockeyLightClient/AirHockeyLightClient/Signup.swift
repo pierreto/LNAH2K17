@@ -60,6 +60,7 @@ class Signup: NSObject {
                                 self.clientConnection.setId(id: id)
                             }
                             HubManager.sharedConnection.getChatHub().subscribe()
+                            HubManager.sharedConnection.getFriendsHub().getAllFriends()
                             fullfil(true)
                         } else {
                             if let data = response.data {

@@ -204,6 +204,9 @@
     <Compile Include="Controls\WPF\Converters\SentByMeToAlignmentConverter.cs" />
     <Compile Include="Controls\WPF\Converters\StringToVisibilityConverter.cs" />
     <Compile Include="Controls\WPF\DraggablePopup.cs" />
+    <Compile Include="Controls\WPF\Editor\EditorUsers.xaml.cs">
+      <DependentUpon>EditorUsers.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\WPF\Friends\AddUserView.xaml.cs">
       <DependentUpon>AddUserView.xaml</DependentUpon>
     </Compile>
@@ -212,6 +215,10 @@
       <DependentUpon>FriendContentControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\WPF\Converters\SizePercentageConverter.cs" />
+    <Compile Include="Controls\WPF\Friends\FriendListItemView.xaml.cs">
+      <DependentUpon>FriendListItemView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WPF\Friends\FriendListItemViewModel.cs" />
     <Compile Include="Controls\WPF\MinimizableViewModelBase.cs" />
     <Compile Include="Controls\WPF\Navigation\NavigationView.xaml.cs">
       <DependentUpon>NavigationView.xaml</DependentUpon>
@@ -322,6 +329,7 @@
     <Compile Include="Entities\Editor\OnlineUser.cs" />
     <Compile Include="Entities\GameDataMessage.cs" />
     <Compile Include="Entities\GameEntity.cs" />
+    <Compile Include="Entities\GameRequestEntity.cs" />
     <Compile Include="Entities\GoalMessage.cs" />
     <Compile Include="Entities\LoginEntity.cs" />
     <Compile Include="Entities\LoginMessage.cs" />
@@ -337,6 +345,7 @@
     <Compile Include="Entities\SignupEntity.cs" />
     <Compile Include="Entities\UserEntity.cs" />
     <Compile Include="Exceptions\ConnectServerException.cs" />
+    <Compile Include="Exceptions\FriendBusyException.cs" />
     <Compile Include="Exceptions\LoginException.cs" />
     <Compile Include="Exceptions\SignupException.cs" />
     <Compile Include="ListMaps.cs">
@@ -349,6 +358,7 @@
     <Compile Include="Game\GameState\MasterGameState.cs" />
     <Compile Include="Game\GameState\OfflineGameState.cs" />
     <Compile Include="Game\GameState\SlaveGameState.cs" />
+    <Compile Include="Managers\GameRequestManager.cs" />
     <Compile Include="Menus\HomeMenu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -557,7 +567,7 @@
     </Compile>
     <None Include="app.manifest" />
     <Content Include="fonts\fontawesome-webfont.eot" />
-    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Resource Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.woff2" />
     <Content Include="fonts\FontAwesome.otf" />
@@ -644,6 +654,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\WPF\Editor\EditorUsers.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\WPF\Friends\AddUserView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -663,6 +677,10 @@
     <Page Include="Controls\WPF\ConnectServer\ConnectServerView.xaml">
       <SubType>Designer</SubType>
       <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="Controls\WPF\Friends\FriendListItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\WPF\Home\HomeView.xaml">
       <SubType>Designer</SubType>

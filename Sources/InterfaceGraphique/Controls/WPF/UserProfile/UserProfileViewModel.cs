@@ -44,7 +44,7 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
             PointsNb = 0;
             GameWon = 0;
             TournamentWon = 0;
-            ProfilePictureUrl = Directory.GetCurrentDirectory() + "\\media\\image\\default_profile_picture.png";
+            ProfilePicture = null;
         }
 
         public async Task Initialize(int userId = 0)
@@ -59,7 +59,7 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
                 UserName = User.Instance.UserEntity.Username;
                 Name = User.Instance.UserEntity.Name;
                 Email = User.Instance.UserEntity.Email;
-                //Date = User.Instance.UserEntity.Date;
+                CreationDate = User.Instance.UserEntity.Date;
                 ProfilePicture = User.Instance.UserEntity.Profile;
                 var items = await StoreService.GetUserStoreItems(User.Instance.UserEntity.Id);
 
@@ -80,6 +80,7 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
                 UserName = friend.Username;
                 Name = friend.Name;
                 Email = friend.Email;
+                CreationDate = friend.Date;
                 ProfilePicture = friend.Profile;
             }
 
@@ -103,17 +104,6 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
             set
             {
                 achievements = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string profilePictureUrl;
-        public string ProfilePictureUrl
-        {
-            get => profilePictureUrl;
-            set
-            {
-                profilePictureUrl = value;
                 OnPropertyChanged();
             }
         }

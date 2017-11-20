@@ -125,14 +125,12 @@ void ModeleEtatDeplacement::playerMouseMove(int x, int y) {
 		visiteurDeplacement_ = VisiteurDeplacement(end - start);
 		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(&visiteurDeplacement_);
 
-		
 		if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
 		{
-
 			SYSTEMTIME st;
 			GetSystemTime(&st);
 			 accTime += st.wMilliseconds;
-			if (accTime>500) {
+			if (accTime>1000) {
 				sendToServer();
 				accTime = 0;
 			}
@@ -163,7 +161,6 @@ void ModeleEtatDeplacement::mouseUpL()
 	if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
 	{
 		sendToServer();
-		TransformEventCallback callback = ModeleEtatJeu::obtenirInstance()->getTransformEventCallback();
 	}
 
 
