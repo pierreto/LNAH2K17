@@ -13,7 +13,6 @@ class ConnectServerViewController: UIViewController {
     @IBOutlet weak var ipAddressErrorLabel: UILabel!
     @IBOutlet weak var loadingSpinner: UIActivityIndicatorView!
     
-    @IBOutlet weak var connectServerButton: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
     private let clientConnection = HubManager.sharedConnection
     
@@ -112,12 +111,10 @@ class ConnectServerViewController: UIViewController {
     
     private func disableInputs() {
         self.ipAddressInput.isEnabled = false
-        self.connectServerButton.isEnabled = false
     }
     
     private func enableInputs() {
         self.ipAddressInput.isEnabled = true
-        self.connectServerButton.isEnabled = true
     }
     
     private func notifyErrorInput(textField: UITextField) {

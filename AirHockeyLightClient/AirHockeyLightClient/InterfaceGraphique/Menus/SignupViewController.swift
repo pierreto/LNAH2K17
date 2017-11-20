@@ -22,7 +22,6 @@ class SignupViewController: UIViewController {
     @IBOutlet weak var passwordErrorLabel: UILabel!
     @IBOutlet weak var confirmPasswordErrorLabel: UILabel!
     
-    @IBOutlet weak var signupButton: UIButton!
     @IBOutlet weak var loadingSpinner: UIActivityIndicatorView!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var stackView: UIStackView!
@@ -209,7 +208,6 @@ class SignupViewController: UIViewController {
         self.emailInput.isEnabled = false
         self.passwordInput.isEnabled = false
         self.confirmPasswordInput.isEnabled = false
-        self.signupButton.isEnabled = false
     }
     
     private func enableInputs() {
@@ -218,7 +216,6 @@ class SignupViewController: UIViewController {
         self.emailInput.isEnabled = true
         self.passwordInput.isEnabled = true
         self.confirmPasswordInput.isEnabled = true
-        self.signupButton.isEnabled = true
     }
     
     private func connectionError() {
