@@ -5,5 +5,5 @@ using AirHockeyServer.Entities.EditionCommand;
 public interface IEditionService
 {
     List<OnlineEditedMapInfo> AvailableMapInfos { get; set; }
-    Dictionary<string, List<OnlineUser>> UsersPerGame { get; set; }
+    Dictionary<string, EditionGroup> UsersPerGame { get; set; }
 }

@@ -30,6 +30,11 @@ namespace InterfaceGraphique.Controls.WPF.Editor
             this.onlineEditedMapInfos = new ObservableCollection<MapEntity>();
 
         }
+
+        public void ClearCurrentMap()
+        {
+            currentMap = null;
+        }
         public override async void  InitializeViewModel()
         {
             this.onlineEditedMapInfos.Clear();
