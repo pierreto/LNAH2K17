@@ -40,7 +40,10 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
             SetDefaultValues();
             LoadData();
             InitializeEvents();
-            this.WaitingRoomHub.Join();
+            if(!isGameRequest)
+            {
+                this.WaitingRoomHub.Join();
+            }
         }
 
         public void SetDefaultValues()

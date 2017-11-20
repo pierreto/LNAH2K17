@@ -79,15 +79,20 @@ namespace AirHockeyServer.Services.MatchMaking
             }
         }
 
-        public void CreateMatch(UserEntity recipient, UserEntity sender)
+        protected void ExecuteMatch(List<UserEntity> players)
         {
-            List<UserEntity> opponents = new List<UserEntity>() { recipient, sender };
             PlayersMatchEntity match = new PlayersMatchEntity()
             {
-                PlayersMatch = opponents
+                PlayersMatch = players
             };
-
             InvokeMatchFound(match);
+        }
+
+        public void CreateMatch(UserEntity recipient, UserEntity sender)
+        {
+            var users = new List<UserEntity> { recipient, sender };
+            Thread myThread = new Thread(new ThreadStart(() => ExecuteMatch(users)));
+            myThread.Start();
         }
     }
 }

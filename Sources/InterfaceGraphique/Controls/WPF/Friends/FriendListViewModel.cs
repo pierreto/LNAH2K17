@@ -12,6 +12,7 @@ using InterfaceGraphique.Services;
 using System.Collections.ObjectModel;
 using Microsoft.Practices.Unity;
 using InterfaceGraphique.Controls.WPF.Chat.Channel;
+using InterfaceGraphique.Managers;
 
 namespace InterfaceGraphique.Controls.WPF.Friends
 {
@@ -22,9 +23,10 @@ namespace InterfaceGraphique.Controls.WPF.Friends
 
         public UserEntity SelectedFriend { get; set; }
 
-        public FriendListViewModel(FriendsHub friendsHub)
+        public FriendListViewModel(FriendsHub friendsHub, GameRequestManager gameRequestManager)
         {
             this.friendsHub = friendsHub;
+            GameRequestManager = gameRequestManager;
         }
 
         public ObservableCollection<FriendListItemViewModel> FriendList
@@ -37,6 +39,8 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             }
         }
 
+        public GameRequestManager GameRequestManager { get; }
+
         public override async void InitializeViewModel()
         {
             Minimize();
@@ -44,7 +48,7 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             FriendList = new ObservableCollection<FriendListItemViewModel>();
             foreach(var friend in friends)
             {
-                FriendList.Add(new FriendListItemViewModel(new UserEntity { Id = friend.Id, Username = friend.Username, Profile = friend.Profile, IsSelected = false }));
+                FriendList.Add(new FriendListItemViewModel(new UserEntity { Id = friend.Id, Username = friend.Username, Profile = friend.Profile, IsSelected = false }, GameRequestManager));
             }
             //List<UserEntity> userEntities = await userService.GetAllUsers();
             this.friendsHub.NewFriendEvent += NewFriendEvent;
@@ -81,7 +85,7 @@ namespace InterfaceGraphique.Controls.WPF.Friends
                 FriendList = new ObservableCollection<FriendListItemViewModel>();
                 foreach (var friend in friends)
                 {
-                    FriendList.Add(new FriendListItemViewModel(new UserEntity { Id = friend.Id, Username = friend.Username, Profile = friend.Profile, IsSelected = false }));
+                    FriendList.Add(new FriendListItemViewModel(new UserEntity { Id = friend.Id, Username = friend.Username, Profile = friend.Profile, IsSelected = false }, GameRequestManager));
                 }
             }
             );
