@@ -5,6 +5,7 @@ using Microsoft.Practices.Unity;
 using InterfaceGraphique.Controls.WPF.Friends;
 using System.Linq;
 using InterfaceGraphique.CommunicationInterface;
+using InterfaceGraphique.Managers;
 
 namespace InterfaceGraphique.Controls.WPF.Friends
 {
@@ -20,6 +21,8 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             get { return userEntity; }
             set { userEntity = value; }
         }
+
+        public GameRequestManager GameRequestManager { get; }
 
         public int Id
         {
@@ -63,9 +66,10 @@ namespace InterfaceGraphique.Controls.WPF.Friends
         #endregion
 
         #region Constructor
-        public FriendListItemViewModel(UserEntity userEntity)
+        public FriendListItemViewModel(UserEntity userEntity, GameRequestManager gameRequestManager)
         {
             UserEntity = userEntity;
+            GameRequestManager = gameRequestManager;
         }
         #endregion
 
@@ -150,6 +154,7 @@ namespace InterfaceGraphique.Controls.WPF.Friends
 
         public async Task PlayGame()
         {
+            await GameRequestManager.SendGameRequest(Id);
             System.Diagnostics.Debug.WriteLine("Play against: " + Username + " with id: " + Id);
         }
 

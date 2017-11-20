@@ -33,6 +33,7 @@ namespace InterfaceGraphique {
         public static MapManager mapManager; // Initialized in Program.cs
         private OfflineEditorState offlineState;
         public OnlineEditorState onlineState;
+        public EditorViewModel editorViewModel;
         private MODELE_ETAT outilCourrant = MODELE_ETAT.AUCUN;
 
         public MODELE_ETAT OutilCourrant
@@ -49,7 +50,7 @@ namespace InterfaceGraphique {
         /// @return Void
         ///
         ////////////////////////////////////////////////////////////////////////
-        public Editeur(OfflineEditorState offlineState, OnlineEditorState onlineState) {
+        public Editeur(OfflineEditorState offlineState, OnlineEditorState onlineState, EditorViewModel editorViewModel) {
             InitializeComponent();
             userLists.Child = Program.unityContainer.Resolve<EditorUsers>();
 
@@ -58,6 +59,8 @@ namespace InterfaceGraphique {
             this.offlineState = offlineState;
             this.onlineState = onlineState;
             CurrentState = offlineState;
+
+            this.editorViewModel = editorViewModel;
         }
 
 
@@ -175,7 +178,11 @@ namespace InterfaceGraphique {
             this.Fichier_Enregistrer.Click += async (sender, e) => await mapManager.SaveMap();
             this.Fichier_EnregistrerSous_Ordinateur.Click += (sender, e) => mapManager.ManageSavingLocalMap();
             this.Fichier_EnregistrerSous_Serveur.Click += async (sender, e) => await mapManager.ManageSavingOnlineMap(); 
-            this.Fichier_OuvrirLocalement.Click += (sender, e) => mapManager.OpenLocalMap();
+            this.Fichier_OuvrirLocalement.Click += (sender, e) =>
+            {
+                this.editorViewModel.ClearCurrentMap();
+                mapManager.OpenLocalMap();
+            };
             this.Fichier_OuvrirEnLigne.Click += (sender, e) => OpenOnlineMap();
             this.Fichier_Nouveau.Click += async (sender, e) =>
             { 
@@ -184,12 +191,13 @@ namespace InterfaceGraphique {
                 this.CurrentState = this.offlineState;
                 this.CurrentState.JoinEdition(null);
                 this.userPanel.Visible = false;
-
+                this.editorViewModel.ClearCurrentMap();
             };
             this.Fichier_MenuPrincipal.Click += async (sender, e) =>
             {
                 await CurrentState.LeaveEdition();
                 this.userPanel.Visible = false;
+                this.editorViewModel.ClearCurrentMap();
 
                 ResetDefaultTable();
                 Program.FormManager.CurrentForm = Program.MainMenu;

@@ -21,6 +21,7 @@ namespace InterfaceGraphique.Controls.WPF.Editor
         private ICommand modeViewCommand;
         private ICommand joinEditionCommand;
 
+        private MapEntity currentMap;
         private MapEntity selectedMap;
 
         public EditorViewModel(MapService mapService)
@@ -28,6 +29,11 @@ namespace InterfaceGraphique.Controls.WPF.Editor
             this.mapService = mapService;
             this.onlineEditedMapInfos = new ObservableCollection<MapEntity>();
 
+        }
+
+        public void ClearCurrentMap()
+        {
+            currentMap = null;
         }
         public override async void  InitializeViewModel()
         {
@@ -91,12 +97,14 @@ namespace InterfaceGraphique.Controls.WPF.Editor
         private async Task JoinEdition()
         {
             await Program.Editeur.JoinEdition(this.selectedMap);
+            currentMap =this.selectedMap;
             Program.EditorHost.Close();
         }
 
         private bool CanJoinEdition()
         {
-            return this.selectedMap!=null && this.selectedMap.CurrentNumberOfPlayer<4;
+
+            return this.selectedMap!=null && this.selectedMap.CurrentNumberOfPlayer<4 && (currentMap==null || currentMap.Id!=this.selectedMap.Id);
         }
 
         public MapEntity SelectedMap

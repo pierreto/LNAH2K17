@@ -21,6 +21,8 @@ import SwiftyJSON
 ///////////////////////////////////////////////////////////////////////////
 class FriendsHub: BaseHub {
     
+    private let friendsService = FriendsService()
+    
     init(connection: SignalR?) {
         super.init()
         self.hubProxy = connection?.createHubProxy("FriendsHub")
@@ -40,23 +42,28 @@ class FriendsHub: BaseHub {
     
     private func InitializeEvents() {
         self.hubProxy?.on("FriendRequestEvent") { args in
-            print("FriendRequestEvent")
-        }
-        
-        self.hubProxy?.on("NewFriendEvent") { args in
-            print("NewFriendEvent")
-        }
-        
-        self.hubProxy?.on("RemovedFriendEvent") { args in
-            let friendsService = FriendsService()
-            let exFriendJson = JSON(args?[0] as! Dictionary<String, Any>)
-            let exFriend = friendsService.buildUserEntity(json: exFriendJson)
+            let newRequestJson = JSON(args?[0] as! Dictionary<String, Any>)
+            let newRequest = self.friendsService.buildFriendRequestEntity(json: newRequestJson)
             
-            FriendsTableViewController.instance.removeFriend(exFriend: exFriend)
+            FriendRequestsTableViewController.instance.addRequest(newRequest: newRequest)
         }
         
         self.hubProxy?.on("CanceledFriendRequestEvent") { args in
             print("CanceledFriendRequestEvent")
+        }
+        
+        self.hubProxy?.on("NewFriendEvent") { args in
+            let newFriendJson = JSON(args?[0] as! Dictionary<String, Any>)
+            let newFriend = self.friendsService.buildUserEntity(json: newFriendJson)
+            
+            FriendsTableViewController.instance.addFriend(newFriend: newFriend)
+        }
+        
+        self.hubProxy?.on("RemovedFriendEvent") { args in
+            let exFriendJson = JSON(args?[0] as! Dictionary<String, Any>)
+            let exFriend = self.friendsService.buildUserEntity(json: exFriendJson)
+            
+            FriendsTableViewController.instance.removeFriend(exFriend: exFriend)
         }
     }
     
@@ -70,10 +77,9 @@ class FriendsHub: BaseHub {
                 else {
                     let friendsJson = JSON(result as! [Dictionary<String, Any>])
                     var friends = [UserEntity]()
-                    let friendsService = FriendsService()
                     
                     for friend in friendsJson {
-                        friends.append(friendsService.buildUserEntity(json: friend.1))
+                        friends.append(self.friendsService.buildUserEntity(json: friend.1))
                     }
                     
                     FriendsTableViewController.instance.updateAllFriends(friends: friends)
@@ -95,10 +101,9 @@ class FriendsHub: BaseHub {
                 else {
                     let requestsJson = JSON(result as! [Dictionary<String, Any>])
                     var pendingRequests = [FriendRequestEntity]()
-                    let friendsService = FriendsService()
                     
                     for request in requestsJson {
-                        pendingRequests.append(friendsService.buildFriendRequestEntity(json: request.1))
+                        pendingRequests.append(self.friendsService.buildFriendRequestEntity(json: request.1))
                     }
                     
                     FriendRequestsTableViewController.instance.updatePendingRequestsEntries(pendingRequests: pendingRequests)
@@ -127,7 +132,11 @@ class FriendsHub: BaseHub {
     
     func acceptFriendRequest(request : FriendRequestEntity) {
         do {
-            try self.hubProxy?.invoke("AcceptFriendRequest", arguments: [request.toDictionary()])
+            try self.hubProxy?.invoke("AcceptFriendRequest", arguments: [request.toDictionary()]) { (result, error) in
+                if let e = error {
+                    print("Error AcceptFriendRequest FriendsHub: \(e)")
+                }
+            }
         }
         catch {
             print("Error AcceptFriendRequest")
@@ -136,7 +145,11 @@ class FriendsHub: BaseHub {
     
     func refuseFriendRequest(request : FriendRequestEntity) {
         do {
-            try self.hubProxy?.invoke("RefuseFriendRequest", arguments: [request.toDictionary()])
+            try self.hubProxy?.invoke("RefuseFriendRequest", arguments: [request.toDictionary()]) { (result, error) in
+                if let e = error {
+                    print("Error RefuseFriendRequest FriendsHub: \(e)")
+                }
+            }
         }
         catch {
             print("Error RefuseFriendRequest")

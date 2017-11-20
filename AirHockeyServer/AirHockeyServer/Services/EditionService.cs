@@ -5,13 +5,12 @@ using AirHockeyServer.Services;
 
 public class EditionService : IEditionService
 {
-    public readonly string[] Colors = { "007bc2", "c2009e", "c25700", "6bc200" };
     private List<OnlineEditedMapInfo> _availableMapInfos;
-    private Dictionary<string, List<OnlineUser>> usersPerGame;
+    private Dictionary<string, EditionGroup> usersPerGame;
 
     public EditionService()
     {
-            usersPerGame = new Dictionary<string, List<OnlineUser>>();
+            usersPerGame = new Dictionary<string, EditionGroup>();
     }
 
     public List<OnlineEditedMapInfo> AvailableMapInfos
@@ -20,7 +19,7 @@ public class EditionService : IEditionService
         set => _availableMapInfos = value;
     }
 
-    public Dictionary<string, List<OnlineUser>> UsersPerGame
+    public Dictionary<string, EditionGroup> UsersPerGame
     {
         get => usersPerGame;
         set => usersPerGame = value;

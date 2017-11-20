@@ -110,7 +110,7 @@ namespace AirHockeyServer.Hubs
             return removed_friend;
         }
 
-        public bool SendGameRequest(GameRequestEntity gameRequest)
+        public async Task<bool> SendGameRequest(GameRequestEntity gameRequest)
         {
             if(Cache.PlayingPlayers.Exists(x => x.Id == gameRequest.Recipient.Id))
             {
@@ -120,9 +120,18 @@ namespace AirHockeyServer.Hubs
 
             string friendConnection = ConnectionMapper.GetConnection(gameRequest.Recipient.Id);
 
-            if (friendConnection != null)
+            if (!String.IsNullOrEmpty(friendConnection))
             {
-                Clients.Client(friendConnection).GameRequest(gameRequest);
+                try
+                {
+                    Clients.Client(friendConnection).GameRequest(gameRequest);
+                }
+                catch (Exception e)
+                {
+                    DeclineGameRequest(gameRequest);
+                    return false;
+                }
+
                 Cache.AddPlayer(gameRequest.Sender);
                 return true;
             }
@@ -140,17 +149,17 @@ namespace AirHockeyServer.Hubs
 
                 GameService.CreateGame(gameRequest);
 
-                Clients.Client(senderConnection).AcceptGameRequest(gameRequest);
+                Clients.Client(senderConnection).AcceptedGameRequest(gameRequest);
             }
         }
 
         public void DeclineGameRequest(GameRequestEntity gameRequest)
         {
             string senderConnection = ConnectionMapper.GetConnection(gameRequest.Sender.Id);
-            if (senderConnection != null)
+            if (!string.IsNullOrEmpty(senderConnection))
             {
                 Cache.RemovePlayer(gameRequest.Sender);
-                Clients.Client(senderConnection).DeclineGameRequest(gameRequest);
+                Clients.Client(senderConnection).DeclinedGameRequest(gameRequest);
             }
         }
     }

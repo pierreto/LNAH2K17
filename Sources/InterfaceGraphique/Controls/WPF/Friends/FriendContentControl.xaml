@@ -13,9 +13,7 @@
              d:DesignHeight="546" d:DesignWidth="200" Background="#FF32373C" >
     <UserControl.Resources>
         <ResourceDictionary>
-            <Style x:Key="FontAwesomeStyle" TargetType="TabItem">
-                <Setter Property="FontFamily"  Value="pack://application:,,,/fonts/#FontAwesome" />
-            </Style>
+
             <DataTemplate x:Name="FriendList" DataType="{x:Type local:FriendListViewModel}">
                 <local:FriendList DataContext="{Binding}"/>
             </DataTemplate>
@@ -28,6 +26,7 @@
             <Style TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource MaterialDesignTabablzControlStyle}" />
             <Style x:Key="mdTabHeader" TargetType="{x:Type dragablz:DragablzItem}" BasedOn="{StaticResource MaterialDesignDragableTabItemStyle}">
                 <Setter Property="Width" Value="{Binding Converter={StaticResource PercentageConverter}, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type dragablz:TabablzControl}},Path=ActualWidth}" />
+                <Setter Property="FontFamily"  Value="pack://application:,,,/fonts/#FontAwesome" />
             </Style>
             <ResourceDictionary.MergedDictionaries >
                 <ResourceDictionary Source="/InterfaceGraphique;component/Resource/appresources.xaml"/>
@@ -48,10 +47,10 @@
             <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
         <dragablz:TabablzControl Grid.Row="0" ItemContainerStyle ="{StaticResource mdTabHeader}" BorderBrush="#FF8C8C8C" Grid.ColumnSpan="2"  FixedHeaderCount="2" Cursor="Hand">
-            <TabItem Header="&#xf234;" Grid.Column="0" HorizontalAlignment="center" Cursor="Hand">
+            <TabItem  Header="&#xf234;" Grid.Column="0" HorizontalAlignment="center" Cursor="Hand">
                 <ContentControl Content="{Binding Source={StaticResource VMLocator}, Path=FriendListViewModel}"/>
             </TabItem>
-            <TabItem Header="&#xf234;" FontFamily="{StaticResource FontAwesome}" Grid.Column="1" HorizontalAlignment="center" Cursor="Hand">
+            <TabItem  Header="&#xf234;"  Grid.Column="1" HorizontalAlignment="center" Cursor="Hand">
                 <ContentControl Content="{Binding Source={StaticResource VMLocator}, Path=AddUserViewModel}" />
             </TabItem>
         </dragablz:TabablzControl>

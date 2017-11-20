@@ -24,9 +24,9 @@
             </ResourceDictionary.MergedDictionaries>
             <convert:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"></convert:BooleanToVisibilityConverter>
 
-   
 
-                <wpf:ViewModelLocator x:Key="VMLocator" d:IsDataSource="True" />
+
+            <wpf:ViewModelLocator x:Key="VMLocator" d:IsDataSource="True" />
             <!--<x:Array   x:Key="SampleServerList" x:Name="OnlineEditedMapInfos" Type="model:OnlineEditedMapInfo"
                      xmlns:sys="clr-namespace:System;assembly=mscorlib">
                 <model:OnlineEditedMapInfo MapName="MapName" NumberOfPlayer="123"/>
@@ -38,58 +38,59 @@
         </ResourceDictionary>
 
     </UserControl.Resources>
-    <Grid Background="#FF373A3E" DataContext="{Binding Source={StaticResource VMLocator}, Path=EditorViewModel}" >
+    <Grid  DataContext="{Binding Source={StaticResource VMLocator}, Path=EditorViewModel}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="359*"/>
-            <RowDefinition Height="41*"/>
+            <RowDefinition Height="42"/>
+            <RowDefinition Height="36"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="46"/>
         </Grid.RowDefinitions>
-        <TextBlock HorizontalAlignment="Center" Margin="144,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="46" FontWeight="Bold" FontSize="32" Foreground="White" Text="Rejoindre une carte :" Width="312"/>
-        <Grid Margin="0,0,0,40" Grid.RowSpan="2">
-            <Grid Margin="5,57,5,272">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <TextBlock HorizontalAlignment="Center" Grid.Column="0" Text="Icône" Foreground="#DDFFFFFF" FontSize="24"/>
-                <TextBlock HorizontalAlignment="Center" Grid.Column="1" Text="Privacité" Foreground="#DDFFFFFF" FontSize="24"/>
-                <TextBlock HorizontalAlignment="Center" Grid.Column="2" Text="Nom" Foreground="#DDFFFFFF" Margin="0,0,7,0" FontSize="24" />
-                <TextBlock HorizontalAlignment="Center" Grid.Column="3" Text="Nombre de joueurs" Foreground="#DDFFFFFF" FontSize="24" />
-                <TextBlock HorizontalAlignment="Center" Grid.Column="4" Text="Créateur" Foreground="#DDFFFFFF" FontSize="24" />
 
-            </Grid>
-            <ListBox ItemsSource="{Binding OnlineEditedMapInfos}" 
-                 Margin="0,78,0,0" Foreground="#DD000000" d:DataContext="{Binding Source={StaticResource DesignViewModel}}" SelectedItem="{Binding SelectedMap}" >
-                <ListBox.ItemContainerStyle>
-                    <Style TargetType="{x:Type ListBoxItem}">
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                    </Style>
-                </ListBox.ItemContainerStyle>
-                <ListBox.ItemTemplate >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
 
-                    <DataTemplate>
+        <TextBlock HorizontalAlignment="Center" Margin="48,0,0,0" TextWrapping="Wrap" FontWeight="Bold" FontSize="32" Foreground="White" Text="Rejoindre une carte :" Width="312" Grid.ColumnSpan="3" Height="46" VerticalAlignment="Top" Grid.Column="1"/>
 
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <Image MaxWidth="128" MaxHeight="128" Grid.Column="0" Source="{Binding Icon, Converter={convert:Base64ImageConverter}}" Cursor="Hand"/>
-                            <fa:FontAwesome HorizontalAlignment="Center"  VerticalAlignment="Center" Grid.Column="1" Icon="Lock"  fa:Awesome.Content="Lock" Foreground="#DDF31010"  FontSize="48"  Visibility="{Binding Private, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}" />
-                            <fa:FontAwesome HorizontalAlignment="Center"  VerticalAlignment="Center" Grid.Column="1" Icon="Unlock" fa:Awesome.Content="Unlock" Foreground="#DD3EFF34"  FontSize="48"  Visibility="{Binding Private, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2" Text="{Binding MapName}" Foreground="#DDFFFFFF" FontSize="24" />
-                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Column="3" Text="{Binding CurrentNumberOfPlayer, StringFormat= ' {0}/4'}" Foreground="#DDFFFFFF" FontSize="24"  />
-                            <TextBlock HorizontalAlignment="Center"  VerticalAlignment="Center"  Grid.Column="4" Text="{Binding Creator}" Foreground="#DDFFFFFF" FontSize="24" />
-                        </Grid>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </Grid>
-        <Button Command="{Binding JoinEditionCommand}" Content="Participer à l'édition" HorizontalAlignment="Center" Margin="219,6,217,0" VerticalAlignment="Top" Width="164" Height="30" Grid.Row="1"/>
+        <TextBlock Grid.Column="1" Text="Privacité" Foreground="#DDFFFFFF" FontSize="24" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <TextBlock Grid.Column="2" Text="Nom" Foreground="#DDFFFFFF" FontSize="24" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <TextBlock Grid.Column="3" Text="Nombre de joueurs" Foreground="#DDFFFFFF" FontSize="24" Grid.Row="1"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <TextBlock Grid.Column="4" Text="Créateur" Foreground="#DDFFFFFF" FontSize="24" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
+
+        <ListBox  ItemsSource="{Binding OnlineEditedMapInfos}" Foreground="#DD000000" d:DataContext="{Binding Source={StaticResource DesignViewModel}}" SelectedItem="{Binding SelectedMap}" Grid.ColumnSpan="5"
+                  Grid.Column="0" Grid.Row="2" >
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="{x:Type ListBoxItem}">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                </Style>
+            </ListBox.ItemContainerStyle>
+            <ListBox.ItemTemplate >
+
+                <DataTemplate>
+                
+                    <Grid x:Name="item" Cursor="Hand">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Image MaxWidth="128" MaxHeight="128" Grid.Column="0" Source="{Binding Icon, Converter={convert:Base64ImageConverter}}" Cursor="Hand"/>
+                        <fa:FontAwesome HorizontalAlignment="Center"  VerticalAlignment="Center" Grid.Column="1" Icon="Lock"  fa:Awesome.Content="Lock" Foreground="#DDF31010"  FontSize="48"  Visibility="{Binding Private, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}" />
+                        <fa:FontAwesome HorizontalAlignment="Center"  VerticalAlignment="Center" Grid.Column="1" Icon="Unlock" fa:Awesome.Content="Unlock" Foreground="#DD3EFF34"  FontSize="48"  Visibility="{Binding Private, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2" Text="{Binding MapName}" Foreground="#DDFFFFFF" FontSize="24" />
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Column="3" Text="{Binding CurrentNumberOfPlayer, StringFormat= ' {0}/4'}" Foreground="#DDFFFFFF" FontSize="24"  />
+                        <TextBlock HorizontalAlignment="Center"  VerticalAlignment="Center"  Grid.Column="4" Text="{Binding Creator}" Foreground="#DDFFFFFF" FontSize="24" />
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <Button Command="{Binding JoinEditionCommand}" Content="Participer à l'édition" HorizontalAlignment="Center"  VerticalAlignment="Center" Width="164" Height="30" Grid.ColumnSpan="3" Grid.Column="1" Grid.Row="3"/>
     </Grid>
 </UserControl>

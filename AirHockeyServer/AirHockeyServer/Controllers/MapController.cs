@@ -41,7 +41,7 @@ namespace AirHockeyServer.Controllers
                     string gameId = EditionHub.ObtainEditionGroupIdentifier((int)action.Id);
                     if (editionService.UsersPerGame.ContainsKey(gameId))
                     {
-                        action.CurrentNumberOfPlayer = editionService.UsersPerGame[gameId].Count;
+                        action.CurrentNumberOfPlayer = editionService.UsersPerGame[gameId].users.Count;
 
                     }
                     else
