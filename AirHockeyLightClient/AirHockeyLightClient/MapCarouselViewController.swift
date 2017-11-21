@@ -21,25 +21,27 @@ class MapCarouselViewController: UIViewController, iCarouselDataSource, iCarouse
     
     @IBOutlet var carouselView: iCarousel!
     
-    var items: [Int] = []
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        for i in 0 ... 5 {
-            items.append(i)
-        }
-    }
+    var maps = [MapEntity]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         carouselView.type = .cylinder
+        
+        self.maps = DBManager.instance.recupererCartes()
+        
+        DispatchQueue.main.async(execute: { () -> Void in
+            // Reload tableView
+            self.carouselView.reloadData()
+        })
     }
     
     func numberOfItems(in carousel: iCarousel) -> Int {
-        return items.count
+        return maps.count
     }
     
     func carousel(_ carousel: iCarousel, viewForItemAt index: Int, reusing view: UIView?) -> UIView {
+        let map = self.maps[index]
+        
         let tempView = UIView(frame: CGRect(x: 0, y: 0, width: 400, height: 200))
         tempView.isUserInteractionEnabled = true
 
@@ -49,7 +51,7 @@ class MapCarouselViewController: UIViewController, iCarouselDataSource, iCarouse
         let mapInfo = UIView(frame: CGRect(x: 200, y: 0, width: 200, height: 200))
         
         let isPublicLabel = UILabel()
-        isPublicLabel.text = "public"
+        isPublicLabel.text = map.privacy.value == true ? "false" : "true"
         isPublicLabel.font = UIFont(name:"HelveticaNeue-Bold", size: 15.0)
         isPublicLabel.textAlignment = NSTextAlignment.right
         isPublicLabel.numberOfLines = 1
@@ -57,7 +59,7 @@ class MapCarouselViewController: UIViewController, iCarouselDataSource, iCarouse
         isPublicLabel.translatesAutoresizingMaskIntoConstraints = false
         
         let mapNameLabel = UILabel()
-        mapNameLabel.text = "batmap"
+        mapNameLabel.text = map.mapName
         mapNameLabel.font = UIFont.boldSystemFont(ofSize: 30)
         mapNameLabel.textAlignment = NSTextAlignment.right
         mapNameLabel.numberOfLines = 1
@@ -65,7 +67,7 @@ class MapCarouselViewController: UIViewController, iCarouselDataSource, iCarouse
         mapNameLabel.translatesAutoresizingMaskIntoConstraints = false
         
         let numberOfPlayersLabel = UILabel()
-        numberOfPlayersLabel.text = "0/4"
+        numberOfPlayersLabel.text = (map.currentNumberOfPlayer.value?.description)! + "/4"
         numberOfPlayersLabel.font = UIFont(name:"HelveticaNeue-Bold", size: 15.0)
         numberOfPlayersLabel.textAlignment = NSTextAlignment.right
         numberOfPlayersLabel.numberOfLines = 1
@@ -73,7 +75,7 @@ class MapCarouselViewController: UIViewController, iCarouselDataSource, iCarouse
         numberOfPlayersLabel.translatesAutoresizingMaskIntoConstraints = false
         
         let creatorLabel = UILabel()
-        creatorLabel.text = "mik"
+        creatorLabel.text = map.creator
         creatorLabel.font = UIFont(name:"HelveticaNeue-Bold", size: 15.0)
         creatorLabel.textAlignment = NSTextAlignment.right
         creatorLabel.numberOfLines = 1
@@ -81,7 +83,11 @@ class MapCarouselViewController: UIViewController, iCarouselDataSource, iCarouse
         creatorLabel.translatesAutoresizingMaskIntoConstraints = false
         
         let idLabel = UILabel()
-        idLabel.text = "(17)"
+        if map.id == nil {
+            idLabel.text = "(N/A)"
+        } else {
+            idLabel.text = "(" + map.id! + ")"
+        }
         idLabel.font = UIFont(name:"HelveticaNeue-Bold", size: 10.0)
         idLabel.textAlignment = NSTextAlignment.right
         idLabel.numberOfLines = 1
