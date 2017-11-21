@@ -8,6 +8,8 @@
 /// @{
 ///////////////////////////////////////////////////////////////////////////////
 
+import SwiftyJSON
+
 ///////////////////////////////////////////////////////////////////////////
 /// @class StoreItemEntity
 /// @brief Classe pour encapsuler les attributs d'un item du magasin
@@ -24,6 +26,16 @@ class StoreItemEntity : Entity {
     private var imageUrl: String = ""
     private var id: Int = 0
     private var isGameEnabled: Bool = false
+    
+    func fromJSON(json: JSON) {
+        self.name = json["Name"].string!
+        self.price = json["Price"].int!
+        self.description = json["Description"].string!
+        self.textureName = json["TextureName"].string!
+        self.imageUrl = json["ImageUrl"].string!
+        self.id = json["Id"].int!
+        self.isGameEnabled = json["IsGameEnabled"].bool!
+    }
     
     func getName() -> String {
         return self.name

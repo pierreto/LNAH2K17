@@ -9,6 +9,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 import UIKit
+import Alamofire
+import SwiftyJSON
+import PromiseKit
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class MagasinViewController
@@ -19,7 +22,9 @@ import UIKit
 ///////////////////////////////////////////////////////////////////////////
 class MagasinViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, CALayerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    private var shopItems = [StoreItemEntity]()
+    private var storeService = StoreService()
+    
+    private var storeItems = [StoreItemEntity]()
     @IBOutlet weak var itemCollectionView: UICollectionView!
     
     @IBOutlet weak var usernameLabel: UILabel!
@@ -27,6 +32,12 @@ class MagasinViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     @IBOutlet weak var totalSelected: UILabel!
     @IBOutlet weak var totalPoints: UILabel!
+    
+    @IBOutlet weak var profileButton: UIButton!
+    @IBOutlet weak var resetCartButton: UIButton!
+    @IBOutlet weak var buyElementsButton: UIButton!
+    
+    @IBOutlet weak var loadingSpinner: UIActivityIndicatorView!
     
     let gradient = CAGradientLayer()
     
@@ -38,7 +49,7 @@ class MagasinViewController: UIViewController, UICollectionViewDelegate, UIColle
         // Makes the scroll view fade at the sides to indicate it is scrollable
         gradient.frame = itemCollectionView.bounds
         gradient.colors = [UIColor.clear.cgColor, UIColor.black.cgColor, UIColor.black.cgColor, UIColor.clear.cgColor]
-        gradient.locations = [0.0, 0.2, 0.8, 1.0]
+        gradient.locations = [0.0, 0.1, 0.9, 1.0]
         gradient.startPoint = CGPoint(x: 0.0, y: 0.5)
         gradient.endPoint = CGPoint(x: 1.0, y: 0.5)
         itemCollectionView.layer.mask = gradient
@@ -51,30 +62,68 @@ class MagasinViewController: UIViewController, UICollectionViewDelegate, UIColle
         itemCollectionView.delegate = self
         itemCollectionView.dataSource = self
         
-        // Dummy shop item
-        for _ in 0..<15 {
-            let item = StoreItemEntity()
-            item.setName(name: "Maillet rouge")
-            item.setPrice(price: 5)
-            item.setImageUrl(url: "fire_texture.png")
-            item.setDescription(description: "Change la couleur du maillet en rouge")
-            shopItems.append(item)
-        }
+        // Définir les items dans le magasin
+        self.loadStoreItems()
+
+        // Réinitialiser toutes les informations
+        self.resetUserInfo()
         
-        self.usernameLabel.text = HubManager.sharedConnection.getUsername()
+        // Définir les informations de l'usager courant
+        self.loadUserInfo()
     }
     
+    private func loadStoreItems() {
+        self.storeService.getStoreItems().then { items -> Void in
+            self.storeItems = items
+            
+            DispatchQueue.main.async(execute: { () -> Void in
+                // Reload table
+                self.itemCollectionView.reloadData()
+            })
+        }
+    }
+
+    private func resetUserInfo() {
+        self.usernameLabel.text = ""
+        self.userPointsLabel.text = ""
+    }
+    
+    private func loadUserInfo() {
+        self.loading()
+        Alamofire.request("http://" + HubManager.sharedConnection.getIpAddress()! + ":63056/api/profile/" + ((HubManager.sharedConnection.getId())?.description)!)
+            .responseJSON { response in
+                if let jsonValue = response.result.value {
+                    let json = JSON(jsonValue)
+                    //print("JSON: \(jsonValue)")
+                    // Username
+                    let username = json["UserEntity"]["Username"].string
+                    self.usernameLabel.text = username
+                    
+                    // Points
+                    let stats = json["StatsEntity"]
+                    if stats["Points"].description != "" && stats["Points"].description != "null" {
+                        let points = json["StatsEntity"]["Points"].description
+                        self.userPointsLabel.text = points
+                    } else {
+                        self.userPointsLabel.text = "0"
+                    }
+                }
+                self.loadingDone()
+        }
+    }
+
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return shopItems.count
+        return storeItems.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = itemCollectionView.dequeueReusableCell(withReuseIdentifier: "itemCell", for: indexPath) as! ItemCollectionViewCell
-        let shopItem = shopItems[indexPath.item]
-        cell.itemImage.image = UIImage.init(named: shopItem.getImageUrl())
-        cell.itemName.text = shopItem.getName()
-        cell.itemPrice.text = shopItem.getPrice().description
-        cell.itemDescription.text = shopItem.getDescription()
+        let storeItem = storeItems[indexPath.item]
+        cell.itemImage.image = UIImage.init(named: storeItem.getTextureName())
+        cell.itemName.text = storeItem.getName()
+        cell.itemPrice.text = storeItem.getPrice().description
+        cell.itemDescription.text = storeItem.getDescription()
         
         let selectedBgItem = UIView()
         // let unavailableBgItem = UIView()
@@ -87,16 +136,16 @@ class MagasinViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("Select item")
-        let shopItem = shopItems[indexPath.item]
+        let storeItem = storeItems[indexPath.item]
         self.totalSelected.text = (Int.init(self.totalSelected.text!)! + 1).description
-        self.totalPoints.text = (Int.init(self.totalPoints.text!)! + shopItem.getPrice()).description
+        self.totalPoints.text = (Int.init(self.totalPoints.text!)! + storeItem.getPrice()).description
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         print("Deselect item")
-        let shopItem = shopItems[indexPath.item]
+        let storeItem = storeItems[indexPath.item]
         self.totalSelected.text = (Int.init(self.totalSelected.text!)! - 1).description
-        self.totalPoints.text = (Int.init(self.totalPoints.text!)! - shopItem.getPrice()).description
+        self.totalPoints.text = (Int.init(self.totalPoints.text!)! - storeItem.getPrice()).description
     }
 
     @IBAction func buyElements(_ sender: Any) {
@@ -108,6 +157,30 @@ class MagasinViewController: UIViewController, UICollectionViewDelegate, UIColle
             self.totalSelected.text = "0"
             self.totalPoints.text = "0"
         }
+    }
+    
+    private func loading() {
+        self.loadingSpinner.startAnimating()
+        self.view.alpha = 0.7
+        self.disableInputs()
+    }
+    
+    private func loadingDone() {
+        self.loadingSpinner.stopAnimating()
+        self.view.alpha = 1.0
+        self.enableInputs()
+    }
+    
+    private func disableInputs() {
+        self.profileButton.isEnabled = false
+        self.resetCartButton.isEnabled = false
+        self.buyElementsButton.isEnabled = false
+    }
+    
+    private func enableInputs() {
+        self.profileButton.isEnabled = true
+        self.resetCartButton.isEnabled = true
+        self.buyElementsButton.isEnabled = true
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
