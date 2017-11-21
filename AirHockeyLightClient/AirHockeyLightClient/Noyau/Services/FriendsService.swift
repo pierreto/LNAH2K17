@@ -35,6 +35,7 @@ class FriendsService {
             }
         }
     }
+
     
     func getAllUsers(completionHandler: @escaping ([UserEntity]?, Error?) -> ()) {
         if self.clientConnection.getConnection() != nil && self.clientConnection.connected! {
@@ -63,6 +64,7 @@ class FriendsService {
         userEntity.setUsername(username: json["Username"].rawString()!)
         userEntity.setName(name: json["Name"].rawString()!)
         userEntity.setEmail(email: json["Email"].rawString()!)
+        userEntity.setProfile(profile: json["Profile"].rawString()!)
         
         return userEntity
     }
