@@ -29,7 +29,7 @@ namespace InterfaceGraphique.Controls.WPF.Editor
 
         private void Local_Click(object sender, RoutedEventArgs e)
         {
-            Program.EditorHost.CloseThreadSafe();
+            Program.EditorHost.LocalSaveAndCloseThreadSafe();
         }
 
         private void Online_Click(object sender, RoutedEventArgs e)

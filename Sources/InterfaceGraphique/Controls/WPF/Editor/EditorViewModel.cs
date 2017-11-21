@@ -62,7 +62,8 @@ namespace InterfaceGraphique.Controls.WPF.Editor
         {
             currentMap = null;
         }
-        public override async void  InitializeViewModel()
+
+        public async Task InitializeViewModelAsync()
         {
             this.onlineEditedMapInfos.Clear();
             //TODO:Not optimized should use a list here but for testing purpose i'll leave it this way
@@ -74,7 +75,7 @@ namespace InterfaceGraphique.Controls.WPF.Editor
             }
             catch (Exception e)
             {
-                
+
             }
         }
 
@@ -105,6 +106,7 @@ namespace InterfaceGraphique.Controls.WPF.Editor
         {
             Program.EditorHost.SwitchViewToMapModeView();
         }
+
         public ObservableCollection<MapEntity> OnlineEditedMapInfos
         {
             get => onlineEditedMapInfos;
@@ -142,12 +144,14 @@ namespace InterfaceGraphique.Controls.WPF.Editor
 
 
         public ICommand checkPrivatePasswordCommand;
+
         public ICommand CheckPrivatePasswordCommand
         {
             get
             {
                 return checkPrivatePasswordCommand ??
-                       (checkPrivatePasswordCommand = new RelayCommandAsync(CheckPrivatePassword, (o) => CanCheckPrivatePassword()));
+                       (checkPrivatePasswordCommand =
+                           new RelayCommandAsync(CheckPrivatePassword, (o) => CanCheckPrivatePassword()));
             }
 
 
@@ -187,7 +191,8 @@ namespace InterfaceGraphique.Controls.WPF.Editor
         private bool CanJoinEdition()
         {
 
-            return this.selectedMap!=null && this.selectedMap.CurrentNumberOfPlayer<4 && (currentMap==null || currentMap.Id!=this.selectedMap.Id);
+            return this.selectedMap != null && this.selectedMap.CurrentNumberOfPlayer < 4 &&
+                   (currentMap == null || currentMap.Id != this.selectedMap.Id);
         }
 
         public MapEntity SelectedMap
@@ -198,6 +203,10 @@ namespace InterfaceGraphique.Controls.WPF.Editor
                 selectedMap = value;
                 OnPropertyChanged();
             }
+        }
+
+        public override void InitializeViewModel()
+        {
         }
     }
 

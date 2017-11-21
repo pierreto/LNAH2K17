@@ -183,7 +183,7 @@ namespace InterfaceGraphique {
                 this.editorViewModel.ClearCurrentMap();
                 mapManager.OpenLocalMap();
             };
-            this.Fichier_OuvrirEnLigne.Click += (sender, e) => OpenOnlineMap();
+            this.Fichier_OuvrirEnLigne.Click += async (sender, e) => await OpenOnlineMap();
             this.Fichier_Nouveau.Click += async (sender, e) =>
             { 
                 await CurrentState.LeaveEdition();
@@ -413,23 +413,26 @@ namespace InterfaceGraphique {
 
         public async Task JoinEdition(MapEntity map)
         {
-
-            this.BeginInvoke(new MethodInvoker(async delegate
+            await Task.Run(() =>
             {
-                await this.CurrentState.LeaveEdition();
+                this.BeginInvoke(new MethodInvoker(async delegate
+                {
+                    await this.CurrentState.LeaveEdition();
 
-                await mapManager.OpenOnlineMap(map);
-                mapManager.SaveIcon();
-                this.CurrentState = this.onlineState;
-                this.CurrentState.JoinEdition(map);
-                this.userPanel.Visible = true;
-            }));
+                    await mapManager.OpenOnlineMap(map);
+                    mapManager.SaveIcon();
+                    this.CurrentState = this.onlineState;
+                    this.CurrentState.JoinEdition(map);
+                    this.userPanel.Visible = true;
+                }));
+            });
+      
  
         }
 
-        private void OpenOnlineMap()
+        private async Task OpenOnlineMap()
         {
-            Program.EditorHost.SwitchViewToServerBrowser();
+            await Program.EditorHost.SwitchViewToServerBrowser();
             Program.EditorHost.ShowDialog();
         }
 

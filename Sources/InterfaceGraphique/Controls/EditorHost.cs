@@ -29,13 +29,13 @@ namespace InterfaceGraphique.Controls.WPF
             offlineOrOnlineView = new OfflineOrOnlineView();
         }
 
-        public void SwitchViewToServerBrowser()
+        public async Task SwitchViewToServerBrowser()
         {
             this.WindowState = FormWindowState.Normal;
             this.Width = 1100;
             this.Height = 800;
             this.elementHost1.Child = serverBrowser;
-            Program.unityContainer.Resolve<EditorViewModel>().InitializeViewModel();
+            await Program.unityContainer.Resolve<EditorViewModel>().InitializeViewModelAsync();
         }
         public void SwitchViewToMapModeView()
         {
@@ -118,7 +118,7 @@ namespace InterfaceGraphique.Controls.WPF
             set => passwordDialog = value;
         }
 
-        public void CloseThreadSafe()
+        public void LocalSaveAndCloseThreadSafe()
         {
             this.BeginInvoke(new MethodInvoker(delegate
             {
