@@ -20,6 +20,7 @@ namespace InterfaceGraphique.Controls.WPF.Friends
         private UserService userService;
         private TaskFactory ctxTaskFactory;
         private ObservableCollection<FriendListItemViewModel> items;
+        private AddUserViewModel addUserViewModel;
 
         #endregion
 
@@ -44,9 +45,10 @@ namespace InterfaceGraphique.Controls.WPF.Friends
         #endregion
 
         #region Constructor
-        public AddFriendListViewModel(FriendsHub friendsHub, UserService userService)
+        public AddFriendListViewModel(FriendsHub friendsHub, UserService userService, AddUserViewModel addUserViewModel)
         {
             this.friendsHub = friendsHub;
+            this.addUserViewModel = addUserViewModel;
             this.userService = userService;
             this.friendsHub.FriendRequestEvent += FriendRequestEvent;
             ctxTaskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
@@ -58,7 +60,7 @@ namespace InterfaceGraphique.Controls.WPF.Friends
         #region Private Methods
         private bool Filter(FriendListItemViewModel flivm)
         {
-            string username = Program.unityContainer.Resolve<AddUserViewModel>().FriendUsername;
+            string username = addUserViewModel.FriendUsername;
             return username == null || username == "" || flivm.Username.IndexOf(username) != -1;
         }
 
@@ -81,16 +83,21 @@ namespace InterfaceGraphique.Controls.WPF.Friends
         #endregion
 
         #region Overwritten Methods
-        public override async void InitializeViewModel()
+        public async Task InitAddFriends()
         {
             List<UserEntity> users = await this.userService.GetAllUsers();
             //Don't add yourself or friends you already have
-            foreach (UserEntity user in users.Where(x => x.Username != User.Instance.UserEntity.Username))
-            //foreach (UserEntity user in users.Where(x => x.Username != User.Instance.UserEntity.Username && !Program.unityContainer.Resolve<FriendListViewModel>().FriendList.Any(y => x.Username == y.Username)))
+            //foreach (UserEntity user in users.Where(x => x.Username != User.Instance.UserEntity.Username))
+            foreach (UserEntity user in users.Where(x => x.Username != User.Instance.UserEntity.Username && !Program.unityContainer.Resolve<FriendListViewModel>().FriendList.Any(y => x.Username == y.Username)))
             {
                 Items.Add(new FriendListItemViewModel(new UserEntity { Id = user.Id, Username = user.Username, Profile = user.Profile, IsSelected = false }, null) { AddingFriend = true });
             }
             OnPropertyChanged(nameof(Items));
+        }
+
+        public override void InitializeViewModel()
+        {
+            //Rien
         }
         #endregion
     }

@@ -36,7 +36,7 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             set
             {
                 UserEntity.Id = value;
-                this.OnPropertyChanged();
+                //this.OnPropertyChanged();
             }
         }
 
@@ -46,7 +46,7 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             set
             {
                 UserEntity.Username = value;
-                this.OnPropertyChanged();
+                //this.OnPropertyChanged();
             }
         }
 
@@ -56,7 +56,7 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             set
             {
                 UserEntity.Profile = value;
-                this.OnPropertyChanged();
+               // this.OnPropertyChanged();
             }
         }
         
@@ -66,7 +66,7 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             set
             {
                 UserEntity.IsSelected = value;
-                this.OnPropertyChanged();
+                //this.OnPropertyChanged();
                 this.OnPropertyChanged(nameof(CurrentFriend));
                 this.OnPropertyChanged(nameof(AddingFriend));
                 this.OnPropertyChanged(nameof(RequestedFriend));
@@ -79,7 +79,7 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             set
             {
                 currentFriend = value;
-                this.OnPropertyChanged();
+                //this.OnPropertyChanged();
             }
         }
 
@@ -89,7 +89,7 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             set
             {
                 addingFriend = value;
-                this.OnPropertyChanged();
+                //this.OnPropertyChanged();
             }
         }
 
@@ -99,7 +99,7 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             set
             {
                 requestedFriend = value;
-                this.OnPropertyChanged();
+                //this.OnPropertyChanged();
             }
         }
         #endregion
