@@ -205,13 +205,13 @@
     <Compile Include="Controls\WPF\Converters\StringToVisibilityConverter.cs" />
     <Compile Include="Controls\WPF\DraggablePopup.cs" />
     <Compile Include="Controls\WPF\Editor\CreateMapViewModel.cs" />
-    <Compile Include="Controls\WPF\Editor\EditorJoinOrCreateView.xaml.cs">
-      <DependentUpon>EditorJoinOrCreateView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\WPF\Editor\EditorUsers.xaml.cs">
       <DependentUpon>EditorUsers.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\WPF\Editor\EditorUsersViewModel.cs" />
+    <Compile Include="Controls\WPF\Editor\OfflineOrOnlineView.xaml.cs">
+      <DependentUpon>OfflineOrOnlineView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\WPF\Editor\PasswordDialog.xaml.cs">
       <DependentUpon>PasswordDialog.xaml</DependentUpon>
     </Compile>
@@ -660,11 +660,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\WPF\Editor\EditorJoinOrCreateView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Controls\WPF\Editor\EditorUsers.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\WPF\Editor\OfflineOrOnlineView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

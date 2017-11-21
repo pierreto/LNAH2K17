@@ -32,18 +32,21 @@
             <RowDefinition Height="9*"/>
         </Grid.RowDefinitions>
         <TextBlock FontSize="24" HorizontalAlignment="Center" Foreground="White" Grid.Row="0"  > Joueurs</TextBlock>
-        <ItemsControl Grid.Row="1"  ItemsSource="{Binding Users}" Background="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" >
+        <ItemsControl Margin="0,0" Grid.Row="1"  ItemsSource="{Binding Users}" Background="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" >
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Grid Margin="0,1">
+                    <Grid Margin="0,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="3*" />
                             <ColumnDefinition Width="7*" />
                         </Grid.ColumnDefinitions>
                         <Image MaxWidth="32" MaxHeight="32" Grid.Column="0" Source="{Binding ProfilePicture, Converter={converters:Base64ImageConverter}}" />
 
-                        <TextBlock FontWeight="Bold" FontSize="24"  Grid.Column="1" Text="{Binding Username}" HorizontalAlignment="Left" VerticalAlignment="Center"   Foreground="{Binding HexColor}" Opacity=".5" Margin="5,0,0,0"/>
+                        <TextBlock FontWeight="Bold" FontSize="24"  Grid.Column="1" Text="{Binding Username}" HorizontalAlignment="Left" VerticalAlignment="Center"   Foreground="{Binding HexColor}" Margin="2,0,0,0"/>
+                        <Separator Grid.ColumnSpan="2" Grid.Column="0" VerticalAlignment="Bottom"  Margin="0,0,0,0"/>
+
                     </Grid>
+                    
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>

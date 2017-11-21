@@ -12,17 +12,29 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using InterfaceGraphique.Editor;
+using Microsoft.Practices.Unity;
 
 namespace InterfaceGraphique.Controls.WPF.Editor
 {
     /// <summary>
-    /// Interaction logic for EditorJoinOrCreateView.xaml
+    /// Logique d'interaction pour OfflineOrOnlineView.xaml
     /// </summary>
-    public partial class EditorJoinOrCreate : UserControl
+    public partial class OfflineOrOnlineView : UserControl
     {
-        public EditorJoinOrCreate()
+        public OfflineOrOnlineView()
         {
             InitializeComponent();
+        }
+
+        private void Local_Click(object sender, RoutedEventArgs e)
+        {
+            Program.EditorHost.CloseThreadSafe();
+        }
+
+        private void Online_Click(object sender, RoutedEventArgs e)
+        {
+            Program.EditorHost.SwitchViewToMapModeView();
         }
     }
 }

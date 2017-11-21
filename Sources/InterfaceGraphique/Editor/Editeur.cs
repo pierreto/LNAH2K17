@@ -177,11 +177,7 @@ namespace InterfaceGraphique {
             // Menu dropdown options events
             this.Fichier_Enregistrer.Click += async (sender, e) => await mapManager.SaveMap();
             this.Fichier_EnregistrerSous_Ordinateur.Click += (sender, e) => mapManager.ManageSavingLocalMap();
-            this.Fichier_EnregistrerSous_Serveur.Click += async (sender, e) =>
-            {
-                Program.EditorHost.SwitchViewToMapModeView();
-                Program.EditorHost.ShowDialog();
-            }; 
+            this.Fichier_EnregistrerSous_Serveur.Click += OpenLocalMap;
             this.Fichier_OuvrirLocalement.Click += (sender, e) =>
             {
                 this.editorViewModel.ClearCurrentMap();
@@ -230,6 +226,12 @@ namespace InterfaceGraphique {
             // Properties panel events
             this.ResetButton.Click += new EventHandler(resetProprietesPanel);
             this.ApplyButton.Click += new EventHandler(applyProprietesPanel);
+        }
+
+        public void OpenLocalMap(object sender=null, EventArgs e=null)
+        {
+            Program.EditorHost.SwitchViewToMapModeView();
+            Program.EditorHost.ShowDialog();
         }
 
 

@@ -223,12 +223,12 @@ namespace InterfaceGraphique
 
 
             //Rest services instantiations
-            unityContainer.RegisterType<MapService>();
-            unityContainer.RegisterType<UserService>();
+            unityContainer.RegisterType<MapService>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<UserService>(new ContainerControlledLifetimeManager());
 
             //Other services
-            unityContainer.RegisterType<MapManager>();
-            unityContainer.RegisterType<StoreService>();
+            unityContainer.RegisterType<MapManager>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<StoreService>(new ContainerControlledLifetimeManager());
         }
 
         static void ExecuterQuandInactif(object sender, EventArgs e)
