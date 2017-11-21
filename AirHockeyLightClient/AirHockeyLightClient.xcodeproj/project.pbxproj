@@ -175,6 +175,8 @@
 		8F7F0BC81FA6CFDB00C4F022 /* ObjectPropertiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F7F0BC71FA6CFDA00C4F022 /* ObjectPropertiesView.swift */; };
 		8F829B411FC206C000FC027B /* ItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F829B401FC206C000FC027B /* ItemCollectionViewCell.swift */; };
 		8F829B431FC2071200FC027B /* MagasinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F829B421FC2071200FC027B /* MagasinViewController.swift */; };
+		8F829B451FC2834800FC027B /* StoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F829B441FC2834800FC027B /* StoreService.swift */; };
+		8F829B471FC2848800FC027B /* StoreItemEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F829B461FC2848800FC027B /* StoreItemEntity.swift */; };
 		8F8706B91F7892BB000E6824 /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8706B81F7892BB000E6824 /* Entity.swift */; };
 		8F8706BB1F7892F2000E6824 /* ChatMessageEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8706BA1F7892F2000E6824 /* ChatMessageEntity.swift */; };
 		8F97A3851FA2C8BD00421FDC /* GeneralPropertiesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F97A3831FA2C8BD00421FDC /* GeneralPropertiesViewModel.swift */; };
@@ -387,6 +389,8 @@
 		8F7F0BC71FA6CFDA00C4F022 /* ObjectPropertiesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ObjectPropertiesView.swift; path = InterfaceGraphique/Editor/ObjectPropertiesView.swift; sourceTree = "<group>"; };
 		8F829B401FC206C000FC027B /* ItemCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ItemCollectionViewCell.swift; path = InterfaceGraphique/View/Magasin/ItemCollectionViewCell.swift; sourceTree = "<group>"; };
 		8F829B421FC2071200FC027B /* MagasinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MagasinViewController.swift; path = InterfaceGraphique/View/Magasin/MagasinViewController.swift; sourceTree = "<group>"; };
+		8F829B441FC2834800FC027B /* StoreService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StoreService.swift; path = Noyau/Services/StoreService.swift; sourceTree = "<group>"; };
+		8F829B461FC2848800FC027B /* StoreItemEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StoreItemEntity.swift; path = Noyau/Entities/StoreItemEntity.swift; sourceTree = "<group>"; };
 		8F8706B81F7892BB000E6824 /* Entity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Entity.swift; path = Noyau/Entities/Entity.swift; sourceTree = "<group>"; };
 		8F8706BA1F7892F2000E6824 /* ChatMessageEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatMessageEntity.swift; path = Noyau/Entities/ChatMessageEntity.swift; sourceTree = "<group>"; };
 		8F97A3831FA2C8BD00421FDC /* GeneralPropertiesViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GeneralPropertiesViewModel.swift; path = InterfaceGraphique/ViewModel/GeneralProperties/GeneralPropertiesViewModel.swift; sourceTree = "<group>"; };
@@ -604,9 +608,10 @@
 		25EFB29E1FB74FDD00FFD66F /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				25EFB29F1FB7505100FFD66F /* MapService.swift */,
-				2509B8A01FB93631002DEE9A /* FriendsService.swift */,
 				8F4B407C1FB9460100DFDA2F /* AudioService.swift */,
+				2509B8A01FB93631002DEE9A /* FriendsService.swift */,
+				25EFB29F1FB7505100FFD66F /* MapService.swift */,
+				8F829B441FC2834800FC027B /* StoreService.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -910,6 +915,7 @@
 				256539A81F9D643A00D81E2C /* MapEntity.swift */,
 				2509B88C1FB8CBDE002DEE9A /* UserEntity.swift */,
 				2509B88E1FB8D159002DEE9A /* FriendRequestEntity.swift */,
+				8F829B461FC2848800FC027B /* StoreItemEntity.swift */,
 			);
 			name = Entities;
 			sourceTree = "<group>";
@@ -1231,6 +1237,7 @@
 				25FDE43D1FA80DA60089D9FE /* BaseHub.swift in Sources */,
 				25628B9D1FA79B940010B58D /* IMapViewModel.swift in Sources */,
 				344A6E2C1F994E0D00CFFBEB /* CollisionHelper.swift in Sources */,
+				8F829B451FC2834800FC027B /* StoreService.swift in Sources */,
 				25CF7B8D1FBA760600B536DB /* FriendRequestsTableViewController.swift in Sources */,
 				8F0B94BE1F8DC0F1007F0E82 /* VisiteurSelection.swift in Sources */,
 				25628B9F1FA79C070010B58D /* MapViewModel.swift in Sources */,
@@ -1314,6 +1321,7 @@
 				34B965CE1FA26EDE00BD17CC /* GeneralPropertiesViewController.swift in Sources */,
 				253E088E1F818DD2009F301B /* JsonHelper.swift in Sources */,
 				344A6E2A1F994E0100CFFBEB /* VisiteurSurTable.swift in Sources */,
+				8F829B471FC2848800FC027B /* StoreItemEntity.swift in Sources */,
 				256E41F81FB7D8DF00843E53 /* MapTableViewController.swift in Sources */,
 				8F0B94AC1F8D3EEE007F0E82 /* VisiteurAbstrait.swift in Sources */,
 				2509B88F1FB8D159002DEE9A /* FriendRequestEntity.swift in Sources */,
