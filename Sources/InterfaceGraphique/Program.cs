@@ -41,6 +41,7 @@ namespace InterfaceGraphique
         public static MainMenu MainMenu { get { return mainMenu; } }
         public static HomeMenu HomeMenu { get { return homeMenu; } }
         public static Editeur Editeur { get { return editeur; } }
+        public static Controls.WebBrowser Browser { get { return browser; } }
         public static ConfigurationMenu ConfigurationMenu { get { return configurationMenu; } }
         public static QuickPlay QuickPlay { get { return quickPlay; } }
         public static TestMode TestMode { get { return testMode; } }
@@ -62,6 +63,7 @@ namespace InterfaceGraphique
         private static MainMenu mainMenu;
         private static HomeMenu homeMenu;
         private static Editeur editeur;
+        private static Controls.WebBrowser browser;
         private static ConfigurationMenu configurationMenu;
         private static QuickPlay quickPlay;
         private static TestMode testMode;
@@ -138,6 +140,7 @@ namespace InterfaceGraphique
             editorHost = new EditorHost();
             userProfileMenu = new UserProfileMenu();
             storeMenu = new StoreMenu();
+            browser = new Controls.WebBrowser();
 
             FonctionsNatives.loadSounds();
 

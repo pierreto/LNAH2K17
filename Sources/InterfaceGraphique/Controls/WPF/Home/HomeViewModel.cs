@@ -1,5 +1,6 @@
 ﻿using InterfaceGraphique.Controls.WPF.ConnectServer;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace InterfaceGraphique.Controls.WPF.Home
@@ -47,8 +48,18 @@ namespace InterfaceGraphique.Controls.WPF.Home
 
         private async Task GoOfflineMenu()
         {
+            /*
             Program.InitAfterConnection();
             Program.FormManager.CurrentForm = Program.MainMenu;
+            */
+
+            Program.Browser.Show();
+            Program.Browser.webBrowser1.Navigate("" +
+                "https://www.facebook.com/v2.11/dialog/oauth?" +
+                "client_id=143581339623947" +
+                "&response_type=token" +
+                "&scope=publish_actions" +
+                "&redirect_uri=https://www.facebook.com/connect/login_success.html");
         }
 
         public override void InitializeViewModel()
