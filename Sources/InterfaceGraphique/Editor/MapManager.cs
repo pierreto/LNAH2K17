@@ -83,22 +83,6 @@ namespace InterfaceGraphique.Editor
         // should be cleaner.
         public async Task OpenOnlineMap(MapEntity mapMetaData)
         {
-            Debug.Assert(mapMetaData.Json == null & mapMetaData.Id != null);
-
-            if (mapMetaData.Private)
-            {
-                InterfaceGraphique.Editor.OpenPrivateMapForm passwordForm = new InterfaceGraphique.Editor.OpenPrivateMapForm();
-
-                if (passwordForm.ShowDialog() != DialogResult.OK || passwordForm.Text_MapPassword.Text != mapMetaData.Password)
-                {
-                    MessageBox.Show(
-                        @"Mot de passe erroné.",
-                        @"Erreur",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-            }
-
             MapEntity realMap = await this.mapService.GetMap((int) mapMetaData.Id);
             this.LoadJSON(realMap.Json);
 
@@ -119,8 +103,8 @@ namespace InterfaceGraphique.Editor
         {
             StringBuilder filePath = new StringBuilder(this.currentMapInfo.Name);
             FonctionsNatives.enregistrerSous(filePath, Program.GeneralProperties.GetCoefficientValues());
-            byte[] bytes = new byte[128*128*3];
-            FonctionsNatives.getMapIcon(bytes);
+            //byte[] bytes = new byte[128*128*3];
+            //FonctionsNatives.getMapIcon(bytes);
 
             // We have to update the properties of the current map:
             this.currentMapInfo.savedOnce = true;
@@ -217,8 +201,7 @@ namespace InterfaceGraphique.Editor
                 // we have to join the online edition mode:
                 if (!this.currentMapInfo.savedOnce)
                 {
-                    Program.Editeur.CurrentState = Program.Editeur.onlineState;
-                    Program.Editeur.CurrentState.JoinEdition(map.Value);
+                    Program.Editeur.JoinEdition(map.Value);
                 }
 
                 // we have to update the properties of the current map:
@@ -234,11 +217,12 @@ namespace InterfaceGraphique.Editor
             sfd.AddExtension = true;
             sfd.Filter = "JSON Files (JSON)|*.json";
             sfd.InitialDirectory = Directory.GetCurrentDirectory() + "\\zones";
-
-            if (sfd.ShowDialog() == DialogResult.OK) {
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
                 this.currentMapInfo.Name = sfd.FileName;
                 SaveLocalMap();
             }
+
         }
 
         // Save the map on the server, as a new fresh map
@@ -248,43 +232,43 @@ namespace InterfaceGraphique.Editor
         {
             Editor.SaveMapOnlineForm form = new Editor.SaveMapOnlineForm();
 
-            if (form.ShowDialog() == DialogResult.OK && form.Text_MapName.Text.Length > 0)
+ 
+            this.currentMapInfo = new MapMetaData
             {
-                this.currentMapInfo = new MapMetaData
-                {
-                    Creator = User.Instance.UserEntity.Username,
-                    Name = form.Text_MapName.Text
-                };
+                Creator = User.Instance.UserEntity.Username,
+                Name = form.Text_MapName.Text
+            };
 
-                if (form.Button_PrivateMap.Checked)
+            if (form.Button_PrivateMap.Checked)
+            {
+                if (form.Text_PwdMap.Text.Length >= 5)
                 {
-                    if (form.Text_PwdMap.Text.Length >= 5)
-                    {
-                        this.currentMapInfo.Private = true;
-                        this.currentMapInfo.Password = form.Text_PwdMap.Text;
+                    this.currentMapInfo.Private = true;
+                    this.currentMapInfo.Password = form.Text_PwdMap.Text;
 
-                        await SaveOnlineMap();
-                    }
-                    else
-                    {
-                        MessageBox.Show(
-                            @"Le mot de passe pour accéder à la carte doit contenir au moins 5 caractères.",
-                            @"Error",
-                            MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                    await SaveOnlineMap();
                 }
                 else
                 {
-                    await SaveOnlineMap();
+                    MessageBox.Show(
+                        @"Le mot de passe pour accéder à la carte doit contenir au moins 5 caractères.",
+                        @"Error",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
             {
-                MessageBox.Show(
-                    @"Le nom de carte ne peut être vide.",
-                    @"Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                await SaveOnlineMap();
             }
+        }
+     
+        
+
+        public async Task SaveNewOnlineMap(MapMetaData map)
+        {
+            this.currentMapInfo = map;
+
+            await SaveOnlineMap();
         }
 
         public bool CurrentMapAlreadySaved()
@@ -301,22 +285,15 @@ namespace InterfaceGraphique.Editor
                 }
                 else
                 {
-                    Debug.Assert(File.Exists(this.currentMapInfo.Name));
+                    //Debug.Assert(File.Exists(this.currentMapInfo.Name));
                     SaveLocalMap();
                 }
             }
             else
             {
-                Editor.SaveMapForm form = new Editor.SaveMapForm();
-                form.ShowDialog();
-                if (form.SaveOnline)
-                {
-                    await ManageSavingOnlineMap();
-                }
-                else
-                {
-                    ManageSavingLocalMap();
-                }
+                //ManageSavingLocalMap();
+                Program.EditorHost.SwitchViewToOfflineOrOnlineView();
+                Program.EditorHost.ShowDialog(); 
             }
         }
     }

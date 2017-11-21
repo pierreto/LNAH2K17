@@ -204,10 +204,17 @@
     <Compile Include="Controls\WPF\Converters\SentByMeToAlignmentConverter.cs" />
     <Compile Include="Controls\WPF\Converters\StringToVisibilityConverter.cs" />
     <Compile Include="Controls\WPF\DraggablePopup.cs" />
+    <Compile Include="Controls\WPF\Editor\CreateMapViewModel.cs" />
     <Compile Include="Controls\WPF\Editor\EditorUsers.xaml.cs">
       <DependentUpon>EditorUsers.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\WPF\Editor\EditorUsersViewModel.cs" />
+    <Compile Include="Controls\WPF\Editor\OfflineOrOnlineView.xaml.cs">
+      <DependentUpon>OfflineOrOnlineView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WPF\Editor\PasswordDialog.xaml.cs">
+      <DependentUpon>PasswordDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\WPF\Friends\AddUserView.xaml.cs">
       <DependentUpon>AddUserView.xaml</DependentUpon>
     </Compile>
@@ -233,6 +240,7 @@
       <DependentUpon>NavigationView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\WPF\Navigation\NavigationViewModel.cs" />
+    <Compile Include="Controls\WPF\PasswordBoxUtil.cs" />
     <Compile Include="Controls\WPF\PasswordHelper.cs" />
     <Compile Include="Controls\WPF\Authenticate\AuthenticateView.xaml.cs">
       <DependentUpon>AuthenticateView.xaml</DependentUpon>
@@ -260,9 +268,6 @@
     </Compile>
     <Compile Include="Controls\EditorHost.Designer.cs">
       <DependentUpon>EditorHost.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\WPF\Editor\EditorJoinOrCreateView.xaml.cs">
-      <DependentUpon>EditorJoinOrCreateView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\WPF\Editor\EditorModeView.xaml.cs">
       <DependentUpon>EditorModeView.xaml</DependentUpon>
@@ -667,6 +672,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\WPF\Editor\OfflineOrOnlineView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\WPF\Editor\PasswordDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\WPF\Friends\AddUserView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -700,10 +713,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\WPF\Home\HomeView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\WPF\Editor\EditorJoinOrCreateView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

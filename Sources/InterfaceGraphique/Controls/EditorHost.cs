@@ -9,33 +9,50 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.Integration;
 using InterfaceGraphique.Controls.WPF.Editor;
+using InterfaceGraphique.Editor;
 using Microsoft.Practices.Unity;
 
 namespace InterfaceGraphique.Controls.WPF
 {
     public partial class EditorHost : Form
     {
+        private OfflineOrOnlineView offlineOrOnlineView;
         private EditorServerBrowser serverBrowser;
-        private EditorJoinOrCreate joinOrCreate;
         private EditorModeView modeView;
+        private PasswordDialog passwordDialog;
         public EditorHost()
         {
-            serverBrowser= new EditorServerBrowser();
-            joinOrCreate = new EditorJoinOrCreate();
-            modeView = new EditorModeView();
-            
-
             InitializeComponent();
+            serverBrowser = new EditorServerBrowser();
+            modeView = new EditorModeView();
+            passwordDialog= new PasswordDialog();
+            offlineOrOnlineView = new OfflineOrOnlineView();
         }
 
-        public void SwitchViewToServerBrowser()
+        public async Task SwitchViewToServerBrowser()
         {
+            this.WindowState = FormWindowState.Normal;
+            this.Width = 1100;
+            this.Height = 800;
             this.elementHost1.Child = serverBrowser;
-            Program.unityContainer.Resolve<EditorViewModel>().InitializeViewModel();
+            await Program.unityContainer.Resolve<EditorViewModel>().InitializeViewModelAsync();
         }
         public void SwitchViewToMapModeView()
         {
+            this.WindowState = FormWindowState.Normal;
+            this.Width = 640;
+            this.Height = 325;
             this.elementHost1.Child = modeView;
+            Program.unityContainer.Resolve<CreateMapViewModel>().InitializeViewModel();
+
+        }
+        public void SwitchViewToOfflineOrOnlineView()
+        {
+            this.WindowState = FormWindowState.Normal;
+            this.Width = 440;
+            this.Height = 180;
+            this.elementHost1.Child = offlineOrOnlineView;
+
         }
         ////////////////////////////////////////////////////////////////////////
         ///
@@ -95,5 +112,20 @@ namespace InterfaceGraphique.Controls.WPF
             Program.FormManager.SizeChanged -= new EventHandler(WindowSizeChanged);
         }
 
+        public PasswordDialog PasswordDialog
+        {
+            get => passwordDialog;
+            set => passwordDialog = value;
+        }
+
+        public void LocalSaveAndCloseThreadSafe()
+        {
+            this.BeginInvoke(new MethodInvoker(delegate
+            {
+                Program.unityContainer.Resolve<MapManager>().ManageSavingLocalMap();
+
+                this.Close();
+            }));
+        }
     }
 }

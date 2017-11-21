@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "E523C78D9C50B75D997B6739A178CA7A"
+               BlueprintIdentifier = "A23FE04BE95781D0842F860AE7D0BD28"
                BuildableName = "Pods_AirHockeyLightClient.framework"
                BlueprintName = "Pods-AirHockeyLightClient"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "E523C78D9C50B75D997B6739A178CA7A"
+            BlueprintIdentifier = "A23FE04BE95781D0842F860AE7D0BD28"
             BuildableName = "Pods_AirHockeyLightClient.framework"
             BlueprintName = "Pods-AirHockeyLightClient"
             ReferencedContainer = "container:Pods.xcodeproj">

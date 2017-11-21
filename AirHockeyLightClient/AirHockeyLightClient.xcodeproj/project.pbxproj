@@ -77,8 +77,12 @@
 		256539A91F9D643A00D81E2C /* MapEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256539A81F9D643A00D81E2C /* MapEntity.swift */; };
 		256E41F81FB7D8DF00843E53 /* MapTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256E41F71FB7D8DF00843E53 /* MapTableViewController.swift */; };
 		258A73B71FB3E5D3003725E6 /* UnlockMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258A73B61FB3E5D3003725E6 /* UnlockMapViewController.swift */; };
+		258EED9A1FC3A2B80096115B /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = 258EED991FC3A2B80096115B /* iCarousel.m */; };
+		258EED9C1FC3A3130096115B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 258EED9B1FC3A3130096115B /* QuartzCore.framework */; };
+		258EED9E1FC3A3B00096115B /* MapCarouselViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258EED9D1FC3A3B00096115B /* MapCarouselViewController.swift */; };
 		25A1BEF71FC23C180017C058 /* AddFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A1BEF61FC23C180017C058 /* AddFriendViewController.swift */; };
 		25A1BEF91FC242720017C058 /* SearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A1BEF81FC242720017C058 /* SearchTextField.swift */; };
+		25B0DBFD1FC3C4B4002B364B /* map.png in Resources */ = {isa = PBXBuildFile; fileRef = 25B0DBFC1FC3C4B4002B364B /* map.png */; };
 		25CF7B8B1FBA759800B536DB /* FriendRequestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF7B8A1FBA759800B536DB /* FriendRequestsViewController.swift */; };
 		25CF7B8D1FBA760600B536DB /* FriendRequestsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF7B8C1FBA760600B536DB /* FriendRequestsTableViewController.swift */; };
 		25EFB2A01FB7505100FFD66F /* MapService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EFB29F1FB7505100FFD66F /* MapService.swift */; };
@@ -286,8 +290,14 @@
 		256539A81F9D643A00D81E2C /* MapEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapEntity.swift; sourceTree = "<group>"; };
 		256E41F71FB7D8DF00843E53 /* MapTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapTableViewController.swift; path = InterfaceGraphique/MapTableViewController.swift; sourceTree = "<group>"; };
 		258A73B61FB3E5D3003725E6 /* UnlockMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UnlockMapViewController.swift; path = InterfaceGraphique/UnlockMapViewController.swift; sourceTree = "<group>"; };
+		258EED971FC3A2B70096115B /* AirHockeyLightClient-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AirHockeyLightClient-Bridging-Header.h"; sourceTree = "<group>"; };
+		258EED981FC3A2B80096115B /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
+		258EED991FC3A2B80096115B /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
+		258EED9B1FC3A3130096115B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		258EED9D1FC3A3B00096115B /* MapCarouselViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapCarouselViewController.swift; sourceTree = "<group>"; };
 		25A1BEF61FC23C180017C058 /* AddFriendViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddFriendViewController.swift; path = InterfaceGraphique/View/Friends/AddFriendViewController.swift; sourceTree = "<group>"; };
 		25A1BEF81FC242720017C058 /* SearchTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchTextField.swift; path = InterfaceGraphique/View/Friends/SearchTextField.swift; sourceTree = "<group>"; };
+		25B0DBFC1FC3C4B4002B364B /* map.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map.png; sourceTree = "<group>"; };
 		25CF7B8A1FBA759800B536DB /* FriendRequestsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FriendRequestsViewController.swift; path = InterfaceGraphique/View/Friends/FriendRequestsViewController.swift; sourceTree = "<group>"; };
 		25CF7B8C1FBA760600B536DB /* FriendRequestsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FriendRequestsTableViewController.swift; path = InterfaceGraphique/View/Friends/FriendRequestsTableViewController.swift; sourceTree = "<group>"; };
 		25EFB29F1FB7505100FFD66F /* MapService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapService.swift; path = Noyau/Services/MapService.swift; sourceTree = "<group>"; };
@@ -422,6 +432,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				258EED9C1FC3A3130096115B /* QuartzCore.framework in Frameworks */,
 				E7B7E3DDFEF5DC14C25C5EF5 /* Pods_AirHockeyLightClient.framework in Frameworks */,
 				AD70F2A7B1A422D1D23DCBA7 /* Pods_AirHockeyLightClient.framework in Frameworks */,
 			);
@@ -605,6 +616,16 @@
 			name = Map;
 			sourceTree = "<group>";
 		};
+		258EED961FC3A2840096115B /* iCarousel */ = {
+			isa = PBXGroup;
+			children = (
+				258EED981FC3A2B80096115B /* iCarousel.h */,
+				258EED991FC3A2B80096115B /* iCarousel.m */,
+				258EED971FC3A2B70096115B /* AirHockeyLightClient-Bridging-Header.h */,
+			);
+			name = iCarousel;
+			sourceTree = "<group>";
+		};
 		25EFB29E1FB74FDD00FFD66F /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -623,6 +644,7 @@
 				25F809241FA6AB680008F048 /* CreateMapViewController.swift */,
 				25F809221FA6A2680008F048 /* MapDisplayViewController.swift */,
 				258A73B61FB3E5D3003725E6 /* UnlockMapViewController.swift */,
+				258EED9D1FC3A3B00096115B /* MapCarouselViewController.swift */,
 			);
 			name = Map;
 			sourceTree = "<group>";
@@ -696,6 +718,7 @@
 		53D74FA4727193B7D79ECA59 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				258EED9B1FC3A3130096115B /* QuartzCore.framework */,
 				EBD8D3E12409ADBFAB65FC7F /* Pods_AirHockeyLightClient.framework */,
 			);
 			name = Frameworks;
@@ -868,6 +891,7 @@
 				8F6AE2B91F6592EB00A29E8B /* Products */,
 				03F3FD091B8B970713D9CB72 /* Pods */,
 				53D74FA4727193B7D79ECA59 /* Frameworks */,
+				258EED961FC3A2840096115B /* iCarousel */,
 			);
 			sourceTree = "<group>";
 		};
@@ -938,6 +962,7 @@
 			isa = PBXGroup;
 			children = (
 				1D7041AE1FC1261500899418 /* default_profile_picture.png */,
+				25B0DBFC1FC3C4B4002B364B /* map.png */,
 				1DC31A591FC0DAFF0000B7DE /* Achievements */,
 				8FF4B59B1FBD602500BB2941 /* Skybox */,
 				8F4B40771FB944E700DFDA2F /* Sounds */,
@@ -1058,6 +1083,7 @@
 					8F6AE2B71F6592EB00A29E8B = {
 						CreatedOnToolsVersion = 8.3.3;
 						DevelopmentTeam = BG3AZJL2HA;
+						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -1085,6 +1111,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25B0DBFD1FC3C4B4002B364B /* map.png in Resources */,
 				1DC31A751FC0DC0C0000B7DE /* coin_5_disabled.png in Resources */,
 				1DC31A761FC0DC0C0000B7DE /* coin_5_enabled.png in Resources */,
 				1DC31A771FC0DC0C0000B7DE /* coin_30_disabled.png in Resources */,
@@ -1175,7 +1202,6 @@
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftR/SwiftR.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
-				"${BUILT_PRODUCTS_DIR}/iCarousel/iCarousel.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -1185,7 +1211,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftR.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/iCarousel.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1236,6 +1261,7 @@
 				2509B88D1FB8CBDE002DEE9A /* UserEntity.swift in Sources */,
 				25FDE43D1FA80DA60089D9FE /* BaseHub.swift in Sources */,
 				25628B9D1FA79B940010B58D /* IMapViewModel.swift in Sources */,
+				258EED9A1FC3A2B80096115B /* iCarousel.m in Sources */,
 				344A6E2C1F994E0D00CFFBEB /* CollisionHelper.swift in Sources */,
 				8F829B451FC2834800FC027B /* StoreService.swift in Sources */,
 				25CF7B8D1FBA760600B536DB /* FriendRequestsTableViewController.swift in Sources */,
@@ -1246,6 +1272,7 @@
 				8F0B94B81F8D7F11007F0E82 /* ModeleEtatPointControl.swift in Sources */,
 				25F809231FA6A2680008F048 /* MapDisplayViewController.swift in Sources */,
 				25A1BEF71FC23C180017C058 /* AddFriendViewController.swift in Sources */,
+				258EED9E1FC3A3B00096115B /* MapCarouselViewController.swift in Sources */,
 				256539A91F9D643A00D81E2C /* MapEntity.swift in Sources */,
 				8FB6A9951F81B9C800FAFFCF /* EditorViewController.swift in Sources */,
 				1D90AAFB1F98205A003E0764 /* ConnectServerViewController.swift in Sources */,
@@ -1458,6 +1485,7 @@
 			baseConfigurationReference = 628E0B24C7327005FBC765AC /* Pods-AirHockeyLightClient.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = BG3AZJL2HA;
 				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = YES;
@@ -1471,6 +1499,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "ca.polymtl.A17-LOG3900-03.AirHockeyLightClient";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "AirHockeyLightClient-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1481,6 +1511,7 @@
 			baseConfigurationReference = 4BC65514BAA095CA955FDC5C /* Pods-AirHockeyLightClient.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = BG3AZJL2HA;
 				EMBED_ASSET_PACKS_IN_PRODUCT_BUNDLE = YES;
@@ -1494,6 +1525,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "ca.polymtl.A17-LOG3900-03.AirHockeyLightClient";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "AirHockeyLightClient-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

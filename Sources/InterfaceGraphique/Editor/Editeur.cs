@@ -177,13 +177,13 @@ namespace InterfaceGraphique {
             // Menu dropdown options events
             this.Fichier_Enregistrer.Click += async (sender, e) => await mapManager.SaveMap();
             this.Fichier_EnregistrerSous_Ordinateur.Click += (sender, e) => mapManager.ManageSavingLocalMap();
-            this.Fichier_EnregistrerSous_Serveur.Click += async (sender, e) => await mapManager.ManageSavingOnlineMap(); 
+            this.Fichier_EnregistrerSous_Serveur.Click += OpenLocalMap;
             this.Fichier_OuvrirLocalement.Click += (sender, e) =>
             {
                 this.editorViewModel.ClearCurrentMap();
                 mapManager.OpenLocalMap();
             };
-            this.Fichier_OuvrirEnLigne.Click += (sender, e) => OpenOnlineMap();
+            this.Fichier_OuvrirEnLigne.Click += async (sender, e) => await OpenOnlineMap();
             this.Fichier_Nouveau.Click += async (sender, e) =>
             { 
                 await CurrentState.LeaveEdition();
@@ -226,6 +226,12 @@ namespace InterfaceGraphique {
             // Properties panel events
             this.ResetButton.Click += new EventHandler(resetProprietesPanel);
             this.ApplyButton.Click += new EventHandler(applyProprietesPanel);
+        }
+
+        public void OpenLocalMap(object sender=null, EventArgs e=null)
+        {
+            Program.EditorHost.SwitchViewToMapModeView();
+            Program.EditorHost.ShowDialog();
         }
 
 
@@ -407,17 +413,26 @@ namespace InterfaceGraphique {
 
         public async Task JoinEdition(MapEntity map)
         {
-            await this.CurrentState.LeaveEdition();
+            await Task.Run(() =>
+            {
+                this.BeginInvoke(new MethodInvoker(async delegate
+                {
+                    await this.CurrentState.LeaveEdition();
 
-            await mapManager.OpenOnlineMap(map);
-            this.CurrentState = this.onlineState;
-            this.CurrentState.JoinEdition(map);
-            this.userPanel.Visible = true;
+                    await mapManager.OpenOnlineMap(map);
+                    mapManager.SaveIcon();
+                    this.CurrentState = this.onlineState;
+                    this.CurrentState.JoinEdition(map);
+                    this.userPanel.Visible = true;
+                }));
+            });
+      
+ 
         }
 
-        private void OpenOnlineMap()
+        private async Task OpenOnlineMap()
         {
-            Program.EditorHost.SwitchViewToServerBrowser();
+            await Program.EditorHost.SwitchViewToServerBrowser();
             Program.EditorHost.ShowDialog();
         }
 

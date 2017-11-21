@@ -78,7 +78,6 @@ namespace AirHockeyServer.Hubs
         }
         
         public async Task<bool> CancelFriendRequest(FriendRequestEntity request)
-
         {
             var canceled_request = await FriendService.CancelFriendRequest(request);
 
