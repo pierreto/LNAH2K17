@@ -13,9 +13,7 @@
              d:DesignHeight="546" d:DesignWidth="200" Background="#FF32373C" >
     <UserControl.Resources>
         <ResourceDictionary>
-            <Style x:Key="FontAwesomeStyle" TargetType="TabItem">
-                <Setter Property="FontFamily"  Value="pack://application:,,,/fonts/#FontAwesome" />
-            </Style>
+
             <DataTemplate x:Name="FriendList" DataType="{x:Type local:FriendListViewModel}">
                 <local:FriendList DataContext="{Binding}"/>
             </DataTemplate>
@@ -28,6 +26,7 @@
             <Style TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource MaterialDesignTabablzControlStyle}" />
             <Style x:Key="mdTabHeader" TargetType="{x:Type dragablz:DragablzItem}" BasedOn="{StaticResource MaterialDesignDragableTabItemStyle}">
                 <Setter Property="Width" Value="{Binding Converter={StaticResource PercentageConverter}, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type dragablz:TabablzControl}},Path=ActualWidth}" />
+                <Setter Property="FontFamily"  Value="pack://application:,,,/fonts/#FontAwesome" />
             </Style>
             <ResourceDictionary.MergedDictionaries >
                 <ResourceDictionary Source="/InterfaceGraphique;component/Resource/appresources.xaml"/>
@@ -48,17 +47,17 @@
             <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
         <dragablz:TabablzControl Grid.Row="0" ItemContainerStyle ="{StaticResource mdTabHeader}" BorderBrush="#FF8C8C8C" Cursor="Hand">
-            <TabItem Header="1" Grid.Column="0" HorizontalAlignment="center" Cursor="Hand">
+            <TabItem  Header="&#xf234;" Grid.Column="0" HorizontalAlignment="center" Cursor="Hand">
                 <ContentControl Content="{Binding Source={StaticResource VMLocator}, Path=FriendListViewModel}"/>
             </TabItem>
-            <TabItem Header="2" FontFamily="{StaticResource FontAwesome}" Grid.Column="1" HorizontalAlignment="center" Cursor="Hand">
+            <TabItem  Header="&#xf234;"  Grid.Column="1" HorizontalAlignment="center" Cursor="Hand">
                 <ContentControl Content="{Binding Source={StaticResource VMLocator}, Path=AddUserViewModel}" />
             </TabItem>
-            <TabItem Header="3" FontFamily="{StaticResource FontAwesome}" Grid.Column="2" HorizontalAlignment="center" Cursor="Hand">
+            <TabItem  Header="&#xf234;"  Grid.Column="1" HorizontalAlignment="center" Cursor="Hand">
                 <ContentControl Content="{Binding Source={StaticResource VMLocator}, Path=AddUserViewModel}" />
             </TabItem>
         </dragablz:TabablzControl>
-        <DockPanel Background="{StaticResource VeryDarkGrayBrush}" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" LastChildFill="True" Height="Auto" Visibility="{Binding Docked, Converter={converters:BooleanToVisibilityConverter}, ConverterParameter=False}" Grid.ColumnSpan="3">
+        <DockPanel Background="{StaticResource VeryDarkGrayBrush}" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" LastChildFill="True" Height="Auto" Visibility="{Binding Docked, Converter={converters:BooleanToVisibilityConverter}, ConverterParameter=False}" Grid.ColumnSpan="2">
             <Button Foreground="White" Height="Auto"  fa:Awesome.Content="{Binding TabIcon }" Background="Transparent" Command="{Binding MinimizeCommand}" BorderThickness="0" Focusable="False" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Center" VerticalAlignment="Center"/>
         </DockPanel>
     </Grid>

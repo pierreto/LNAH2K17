@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using InterfaceGraphique.Entities.Editor;
 
 namespace InterfaceGraphique.Entities.MockObject
 {
@@ -33,6 +34,20 @@ namespace InterfaceGraphique.Entities.MockObject
             };
         }
         public List<UserEntity> FriendList { get; set; }
+    }
+
+    public class OnlineUsersMock
+    {
+        public OnlineUsersMock()
+        {
+            Users = new ObservableCollection<OnlineUser>
+            {
+                new OnlineUser() {Username = "abstr",HexColor = "#0000FF"},
+                new OnlineUser() {Username = "test text ",HexColor = "#00FF00"},
+                new OnlineUser() {Username = "test text 3",HexColor = "#FF0000"}
+            };
+        }
+        public ObservableCollection<OnlineUser> Users { get; set; }
     }
 }
 

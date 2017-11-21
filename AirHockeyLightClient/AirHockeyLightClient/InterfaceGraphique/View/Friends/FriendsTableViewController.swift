@@ -26,7 +26,6 @@ class FriendsTableViewController: UITableViewController {
     
     @IBOutlet weak var friends: UITableView!
 
-    private var friendsHub: FriendsHub?
     private var friendsData = [UserEntity]()
     
     override func viewDidLoad() {
@@ -38,8 +37,34 @@ class FriendsTableViewController: UITableViewController {
         self.friends.dataSource = self
     }
     
-    func updateFriendsEntries(friends: [UserEntity]) {
+    func updateAllFriends(friends: [UserEntity]) {
         self.friendsData = friends
+    
+        DispatchQueue.main.async(execute: { () -> Void in
+            // Reload tableView
+            self.friends.reloadData()
+        })
+    }
+    
+    func addFriend(newFriend: UserEntity) {
+        self.friendsData.append(newFriend)
+        
+        DispatchQueue.main.async(execute: { () -> Void in
+            // Reload tableView
+            self.friends.reloadData()
+        })
+    }
+    
+    func removeFriend(exFriend: UserEntity) {
+        var index = -1
+        for friend in self.friendsData {
+            index = index + 1
+            if (friend.getId() == exFriend.getId()) {
+                break
+            }
+        }
+        
+        self.friendsData.remove(at: index)
         
         DispatchQueue.main.async(execute: { () -> Void in
             // Reload tableView
@@ -76,13 +101,18 @@ class FriendsTableViewController: UITableViewController {
         chatButton.isHidden = false
     }
     
+    override func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
+        return "Supprimer"
+    }
+    
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // remove the item from the data model
-            self.friendsData.remove(at: indexPath.row)
+            let exFriend = self.friendsData[indexPath.row]
             
-            // delete the table view row
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            self.friendsData.remove(at: indexPath.row) // remove the item from the data model
+            tableView.deleteRows(at: [indexPath], with: .fade) // delete the table view row
+            
+            HubManager.sharedConnection.getFriendsHub().removeFriend(exFriend: exFriend)
         }
     }
     

@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using InterfaceGraphique.CommunicationInterface;
+using InterfaceGraphique.Controls.WPF.Editor;
 using InterfaceGraphique.Entities;
 using InterfaceGraphique.Entities.EditonCommand;
 using InterfaceGraphique.Entities.Editor;
@@ -14,6 +15,7 @@ namespace InterfaceGraphique.Editor.EditorState
 {
     public class OnlineEditorState : AbstractEditorState
     {
+        private EditorUsersViewModel editorUsersViewModel;
         private EditionHub editionHub;
         private FonctionsNatives.PortalCreationCallback portalCreationCallback;
         private FonctionsNatives.WallCreationCallback wallCreationCallback;
@@ -25,7 +27,7 @@ namespace InterfaceGraphique.Editor.EditorState
 
         private bool inTransformation;
 
-        public OnlineEditorState(EditionHub editionHub)
+        public OnlineEditorState(EditionHub editionHub, EditorUsersViewModel editorUsersViewModel)
         {
             this.editionHub = editionHub;
 
@@ -40,6 +42,8 @@ namespace InterfaceGraphique.Editor.EditorState
             this.selectionEventCallback = CurrentUserSelectedObject;
             this.controlPoinEventCallback = CurrentUserChangedControlPoint;
             this.deleteEventCallback = CurrentUserDeletedNode;
+
+            this.editorUsersViewModel = editorUsersViewModel;
         }
 
         public override void frameUpdate(double tempsInterAffichage)
@@ -52,11 +56,15 @@ namespace InterfaceGraphique.Editor.EditorState
         private void OnUserLeft(string username)
         {
             FonctionsNatives.removeUser(username);
+
+            editorUsersViewModel.RemoveByUsername(username);
+
         }
 
         private void OnNewUser(OnlineUser user)
         {
             FonctionsNatives.addNewUser(user.Username,user.HexColor);
+            editorUsersViewModel.AddUser(user);
         }
 
         public override void Escape()
@@ -112,6 +120,9 @@ namespace InterfaceGraphique.Editor.EditorState
             FonctionsNatives.setDeleteEventCallback(this.deleteEventCallback);
 
             List<OnlineUser> usersInTheGame = await this.editionHub.JoinPublicRoom(mapEntity);
+
+            editorUsersViewModel.InitializeViewModel();
+
             foreach (OnlineUser user in usersInTheGame)
             {
                 if (user.Username.Equals(User.Instance.UserEntity.Username))
@@ -126,10 +137,13 @@ namespace InterfaceGraphique.Editor.EditorState
                         foreach (string uuidSelected in user.UuidsSelected)
                         {
                             FonctionsNatives.setElementSelection(user.Username, uuidSelected, true, false);
+
                         }
                     }
                    
                 }
+                editorUsersViewModel.AddUser(user);
+
             }
         }
 

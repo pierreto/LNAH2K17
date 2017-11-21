@@ -33,19 +33,19 @@
                         <RowDefinition Height="80"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <StackPanel Background="{StaticResource UltraDarkGrayBrush}" Grid.Row="0" Panel.ZIndex="1">
-                        <Label Content="Joindre un canal" HorizontalAlignment="Center" FontSize="18" Foreground="{StaticResource TextColorBrush}"/>
+                    <StackPanel Background="{StaticResource UltraDarkGrayBrush}" Grid.Row="0">
+                        <Label Content="Ajouter un ami" HorizontalAlignment="Center" FontSize="18" Foreground="{StaticResource TextColorBrush}"/>
                         <Grid Margin="0,0,0,0">
                             <Border Grid.Row="0"  Grid.Column="1" Padding="5" CornerRadius="5" BorderThickness="1" BorderBrush="LightGray" SnapsToDevicePixels="True" Background="{StaticResource TextColorBrush}" Width="150" VerticalAlignment="Center">
                                 <TextBox x:Name="ChannelName" Text="{Binding ChannelName, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding InputsEnabled}" Background="Transparent" BorderThickness="0" MaxLength="16" FontSize="14" FontWeight="Bold"/>
                             </Border>
                         </Grid>
                     </StackPanel>
-                    <channel:JoinChannelListView Grid.Row="1">
+                    <!--<channel:JoinChannelListView Grid.Row="1">
                         <channel:JoinChannelListView.DataContext>
                             <Binding Path="JoinChannelListViewModel" Source="{StaticResource VMLocator}"/>
                         </channel:JoinChannelListView.DataContext>
-                    </channel:JoinChannelListView>
+                    </channel:JoinChannelListView>-->
                 </Grid>
             </Border>
         </Grid>

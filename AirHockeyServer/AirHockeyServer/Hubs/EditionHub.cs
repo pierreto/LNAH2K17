@@ -6,6 +6,7 @@ using AirHockeyServer.Entities.Edition.EditionCommand;
 using AirHockeyServer.Entities.EditionCommand;
 using AirHockeyServer.Entities.Messages;
 using AirHockeyServer.Entities.Messages.Edition;
+using AirHockeyServer.Services;
 using Microsoft.AspNet.SignalR;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -15,17 +16,21 @@ namespace AirHockeyServer.Hubs
     public class EditionHub : Hub
     {
         private EditionService editionService;
+        private UserService userService;
         private JsonSerializerSettings serializer;
 
         public ConnectionMapper ConnectionMapper { get; set; }
 
-        public EditionHub(EditionService editionService, ConnectionMapper connectionMapper)
+        public EditionHub(EditionService editionService, ConnectionMapper connectionMapper, UserService userService)
         {
             this.editionService = editionService;
             ConnectionMapper = connectionMapper;
             this.serializer = new JsonSerializerSettings
             {
-                TypeNameHandling = TypeNameHandling.Objects             };
+                TypeNameHandling = TypeNameHandling.Objects
+                
+            };
+            this.userService = userService;
 
         }
 
@@ -38,22 +43,30 @@ namespace AirHockeyServer.Hubs
         {
             string mapGroupId = ObtainEditionGroupIdentifier((int)map.Id);
 
-
+            EditionGroup editionGroup;
             if (!editionService.UsersPerGame.ContainsKey(mapGroupId))
             {
-                List<OnlineUser> newEditionGroup = new List<OnlineUser>();
-                editionService.UsersPerGame.Add(mapGroupId, newEditionGroup);
+                editionGroup = new EditionGroup();
+                editionService.UsersPerGame.Add(mapGroupId, editionGroup);
             }
+            else
+            {
+                editionGroup = editionService.UsersPerGame[mapGroupId];
+            }
+            UserEntity user = await this.userService.GetUserByUsername(username);
+            
             OnlineUser newUser = new OnlineUser()
             {
                 Username = username,
-                HexColor = this.editionService.Colors[editionService.UsersPerGame[mapGroupId].Count]
+                HexColor = editionGroup.lockNextColor(),
+                ProfilePicture = user.Profile
+
             };
             //This shouldnt be managed here... He should be managed at the login point at least
             //But i have no choice for now
             ConnectionMapper.AddUserConnection(Context.ConnectionId, newUser);
 
-            editionService.UsersPerGame[mapGroupId].Add(newUser);
+            editionGroup.AddUser(newUser);
 
             //Add the connection id to the map group
             await Groups.Add(Context.ConnectionId, mapGroupId);
@@ -61,7 +74,7 @@ namespace AirHockeyServer.Hubs
             //Broadcast to others users of the group that a new user arrived 
             Clients.Group(mapGroupId, Context.ConnectionId).NewUser(newUser);
 
-            return editionService.UsersPerGame[ObtainEditionGroupIdentifier((int)map.Id)];
+            return editionGroup.users;
 
         }
         public async Task<List<OnlineUser>> JoinPrivateRoom(string username, MapEntity map, string password)
@@ -114,7 +127,7 @@ namespace AirHockeyServer.Hubs
             await Groups.Remove(Context.ConnectionId, ObtainEditionGroupIdentifier(gameId) );
 
             OnlineUser userThatLeft = ConnectionMapper.GetUserFromConnectionId(Context.ConnectionId);
-            editionService.UsersPerGame[ObtainEditionGroupIdentifier(gameId)].Remove(userThatLeft);
+            editionService.UsersPerGame[ObtainEditionGroupIdentifier(gameId)].RemoveUser(userThatLeft);
             Clients.Group(ObtainEditionGroupIdentifier(gameId), Context.ConnectionId).UserLeaved(userThatLeft.Username);
 
             //For now we do this, but the should be done in another 

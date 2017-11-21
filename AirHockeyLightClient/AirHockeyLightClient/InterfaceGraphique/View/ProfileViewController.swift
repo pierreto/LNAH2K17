@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
 class ProfileViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, CALayerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -29,6 +31,9 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     @IBOutlet weak var tournamentsPlayedLabel: UILabel!
     
     let gradient = CAGradientLayer()
+    var achievementUrls = [String]()
+    var achievementLabels = [String]()
+    var achievementEnabled = [Bool]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,6 +61,117 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         profileImage.layer.masksToBounds = true
         profileImage.layer.cornerRadius = 20.0
         imagePicker.delegate = self
+        
+        self.usernameLabel.text = "..."
+        self.nameLabel.text = "..."
+        self.emailLabel.text = "..."
+        self.dateJoinedLabel.text = "..."
+        self.pointsLabel.text = "0"
+        self.gamesWonLabel.text = "0"
+        self.gamesPlayedLabel.text = "0"
+        self.tournamentsWonLabel.text = "0"
+        self.tournamentsPlayedLabel.text = "0"
+        
+        loadUserProfile()
+    }
+    
+    func loadUserProfile() {
+        self.loading()
+        Alamofire.request("http://" + HubManager.sharedConnection.getIpAddress()! + ":63056/api/profile/" + ((HubManager.sharedConnection.getId())?.description)!)
+            .responseJSON { response in
+                if let jsonValue = response.result.value {
+                    let json = JSON(jsonValue)
+                    //print("JSON: \(jsonValue)")
+                    // Image
+                    let profile = json["UserEntity"]["Profile"].string
+                    if profile != "" && profile != nil {
+                        let imageData = NSData(base64Encoded: profile!)
+                        let image = UIImage(data: imageData! as Data)
+                        self.profileImage.image = image
+                    }
+
+                    // Username
+                    let username = json["UserEntity"]["Username"].string
+                    self.usernameLabel.text = username
+                    
+                    // Name
+                    let name = json["UserEntity"]["Name"].string
+                    if name != "" && name != nil {
+                       self.nameLabel.text = name
+                    }
+                    
+                    // Email
+                    let email = json["UserEntity"]["Email"].string
+                    if email != "" && email != nil {
+                        self.emailLabel.text = email
+                    }
+                    
+                    // Created
+                    let created = json["UserEntity"]["Created"].string
+                    self.dateJoinedLabel.text = self.convertDate(dateString: created!)
+                    
+                    let stats = json["StatsEntity"]
+                    
+                    // Points
+                    if stats["Points"].description != "" && stats["Points"].description != "null" {
+                        let points = json["StatsEntity"]["Points"].description
+                        self.pointsLabel.text = points
+                    }
+                    
+                    // GamesWon
+                    if stats["GamesWon"].description != "" && stats["GamesWon"].description != "null" {
+                        let gamesWon = json["StatsEntity"]["GamesWon"].description
+                        self.gamesWonLabel.text = gamesWon
+                    }
+                    
+                    // GamesPlayed
+                    if json["GamesPlayed"].description != "" && json["GamesPlayed"].description != "null"{
+                        let gamesPlayed = json["GamesPlayed"].description
+                        self.gamesPlayedLabel.text = gamesPlayed
+                    }
+                    
+                    // TournamentsWon
+                    if stats["TournamentsWon"].description != "" && stats["TournamentsWon"].description != "null" {
+                        let tournamentsWon = json["StatsEntity"]["TournamentsWon"].description
+                        self.tournamentsWonLabel.text = tournamentsWon
+                    }
+                    
+                    // TournamentsPlayed
+                    if json["TournamentsPlayed"].description != "" && json["TournamentsPlayed"].description != "null"{
+                        let tournamentsPlayed = json["TournamentsPlayed"].description
+                        self.tournamentsPlayedLabel.text = tournamentsPlayed
+                    }
+                    
+                    //Achievements
+                    let achievements = json["AchievementEntities"].array
+                    for var achievement in achievements! {
+                        if achievement["IsEnabled"].description == "true" {
+                            self.achievementEnabled.append(true)
+                            self.achievementUrls.append(achievement["EnabledImageUrl"].description.replacingOccurrences(of: "\\media\\image\\", with: "", options: .literal, range: nil))
+                            print(self.achievementUrls[self.achievementUrls.count - 1])
+                        } else {
+                            self.achievementEnabled.append(false)
+                            self.achievementUrls.append(achievement["DisabledImageUrl"].description.replacingOccurrences(of: "\\media\\image\\", with: "", options: .literal, range: nil))
+                        }
+                        self.achievementLabels.append(achievement["Name"].description)
+                    }
+                    self.achievementCollectionView.reloadData()
+                    let indexPath = IndexPath(row: Int(INT_MAX)/200, section: 0);
+                    self.achievementCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally , animated: false)
+                }
+                self.loadingDone()
+        }
+    }
+    
+    func convertDate(dateString: String) -> String {
+         let dateFormatter = DateFormatter()
+         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss a"
+         let date = dateFormatter.date(from: dateString)
+         
+         dateFormatter.dateFormat = "d MMM yyyy"
+         let dateString = dateFormatter.string(from: date!)
+        
+        return dateString
     }
     
     func imageTapped(gesture: UIGestureRecognizer) {
@@ -95,16 +211,18 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 15
+        return achievementUrls.count > 0 ? Int(INT_MAX)/100 : 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = achievementCollectionView.dequeueReusableCell(withReuseIdentifier: "achievementCell", for: indexPath) as! AchievementCollectionViewCell
-        cell.imageView.image = UIImage(named: "coin_5_enabled.png")
-        cell.imageLabel.text = "testing1212 sfdsdffs sdfsd"
-//        cell.alpha = 0
-//
-//        UIView.animate(withDuration: 0.1, animations: { cell.alpha = 1 })
+        cell.imageView.image = UIImage(named: achievementUrls[indexPath.row % achievementUrls.count])
+        cell.imageLabel.text = achievementLabels[indexPath.row % achievementUrls.count]
+        if self.achievementEnabled[indexPath.row % achievementUrls.count] {
+            cell.imageLabel.textColor = UIColor.green
+        } else {
+            cell.imageLabel.textColor = UIColor.white
+        }
         return cell
     }
     
@@ -116,6 +234,13 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         return NSNull()
     }
     
+    func loading() {
+        
+    }
+    
+    func loadingDone() {
+        
+    }
     /*
     // MARK: - Navigation
 

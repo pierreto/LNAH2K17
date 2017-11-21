@@ -21,7 +21,16 @@ class UserEntity : Entity {
     private var username : String = ""
     private var name : String = ""
     private var email : String = ""
+    private var profile: String = ""
 
+    func getProfile() -> String {
+        return self.profile
+    }
+    
+    func setProfile(profile: String) {
+        self.profile = profile
+    }
+    
     func getId() -> Int {
         return self.id
     }
@@ -59,7 +68,8 @@ class UserEntity : Entity {
             "Id": self.id,
             "Username": self.username,
             "Name": self.name,
-            "Email": self.email
+            "Email": self.email,
+            "Profile": self.profile
         ] as [String : Any]
         
         return user

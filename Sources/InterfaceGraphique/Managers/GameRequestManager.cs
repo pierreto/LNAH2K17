@@ -34,15 +34,20 @@ namespace InterfaceGraphique.Managers
             FriendsHub.GameRequestEvent += OnGameRequest;
         }
 
-        private void OnGameRequest(GameRequestEntity obj)
+        private void OnGameRequest(GameRequestEntity request)
         {
-            //
+            PendingRequest = request;
+            Program.FormManager.ShowGameRequestPopup();
         }
 
-        private void OnGameRequestDeclined(GameRequestEntity obj)
+        private void OnGameRequestDeclined(GameRequestEntity request)
         {
             PendingRequest = null;
-            Program.FormManager.CurrentForm = Program.MainMenu;
+            Program.FormManager.Invoke(new MethodInvoker(() =>
+            {
+                Program.FormManager.CurrentForm = Program.MainMenu;
+            }));
+
             System.Windows.Forms.MessageBox.Show(
                 @"Votre ami a refusé votre demande de partie",
                 @"Information",
@@ -65,27 +70,26 @@ namespace InterfaceGraphique.Managers
 
             bool isAvailable = await FriendsHub.SendGameRequest(gameRequest);
 
-            if (!isAvailable)
-            {
-                throw new FriendBusyException("");
-            }
-
             PendingRequest = gameRequest;
             Program.QuickPlayMenu.LoadOnlineGameSettings();
         }
 
-        public async Task AcceptGameRequest(GameRequestEntity gameRequest)
+        public async Task AcceptGameRequest()
         {
-            gameRequest.IsAccept = true;
-            await FriendsHub.AcceptGameRequest(gameRequest);
+            PendingRequest.IsAccept = true;
+            await FriendsHub.AcceptGameRequest(PendingRequest);
 
+            PendingRequest = null;
+            
             Program.QuickPlayMenu.LoadOnlineGameSettings();
         }
 
-        public async Task DeclineGameRequest(GameRequestEntity gameRequest)
+        public async Task DeclineGameRequest()
         {
-            gameRequest.IsAccept = false;
-            await FriendsHub.DeclineGameRequest(gameRequest);
+            PendingRequest.IsAccept = false;
+            await FriendsHub.DeclineGameRequest(PendingRequest);
+
+            PendingRequest = null;
         }
     }
 }
