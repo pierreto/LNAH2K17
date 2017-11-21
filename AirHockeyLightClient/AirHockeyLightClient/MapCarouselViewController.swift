@@ -40,38 +40,80 @@ class MapCarouselViewController: UIViewController, iCarouselDataSource, iCarouse
     }
     
     func carousel(_ carousel: iCarousel, viewForItemAt index: Int, reusing view: UIView?) -> UIView {
-        var label: UILabel
-        var itemView: UIImageView
+        let tempView = UIImageView(frame: CGRect(x: 0, y: 0, width: 400, height: 200))
+
+        let isPublicLabel = UILabel()
+        isPublicLabel.text = "isPublicLabel"
+        isPublicLabel.font = UIFont(name:"HelveticaNeue-Bold", size: 15.0)
+        isPublicLabel.textAlignment = NSTextAlignment.right
+        isPublicLabel.numberOfLines = 1
+        isPublicLabel.textColor = UIColor.black
+        isPublicLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        //reuse view if available, otherwise create a new view
-        if let view = view as? UIImageView {
-            itemView = view
-            //get a reference to the label in the recycled view
-            label = itemView.viewWithTag(1) as! UILabel
-        } else {
-            //don't do anything specific to the index within
-            //this `if ... else` statement because the view will be
-            //recycled and used with other index values later
-            itemView = UIImageView(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
-            itemView.image = UIImage()
-            itemView.contentMode = .center
-            
-            label = UILabel(frame: itemView.bounds)
-            label.backgroundColor = .clear
-            label.textAlignment = .center
-            label.font = label.font.withSize(50)
-            label.tag = 1
-            itemView.addSubview(label)
-        }
+        let mapNameLabel = UILabel()
+        mapNameLabel.text = "mapNameLabel"
+        mapNameLabel.font = UIFont(name:"HelveticaNeue-Bold", size: 15.0)
+        mapNameLabel.textAlignment = NSTextAlignment.right
+        mapNameLabel.numberOfLines = 1
+        mapNameLabel.textColor = UIColor.black
+        mapNameLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        //set item label
-        //remember to always set any properties of your carousel item
-        //views outside of the `if (view == nil) {...}` check otherwise
-        //you'll get weird issues with carousel item content appearing
-        //in the wrong place in the carousel
-        label.text = "\(items[index])"
+        let numberOfPlayersLabel = UILabel()
+        numberOfPlayersLabel.text = "numberOfPlayersLabel"
+        numberOfPlayersLabel.font = UIFont(name:"HelveticaNeue-Bold", size: 15.0)
+        numberOfPlayersLabel.textAlignment = NSTextAlignment.right
+        numberOfPlayersLabel.numberOfLines = 1
+        numberOfPlayersLabel.textColor = UIColor.black
+        numberOfPlayersLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        return itemView
+        let creatorLabel = UILabel()
+        creatorLabel.text = "creatorLabel"
+        creatorLabel.font = UIFont(name:"HelveticaNeue-Bold", size: 15.0)
+        creatorLabel.textAlignment = NSTextAlignment.right
+        creatorLabel.numberOfLines = 1
+        creatorLabel.textColor = UIColor.black
+        creatorLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        let idLabel = UILabel()
+        idLabel.text = "idLabel"
+        idLabel.font = UIFont(name:"HelveticaNeue-Bold", size: 15.0)
+        idLabel.textAlignment = NSTextAlignment.right
+        idLabel.numberOfLines = 1
+        idLabel.textColor = UIColor.black
+        idLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 400, height: 200))
+        button.backgroundColor = UIColor.lightGray
+        button.addTarget(self, action:#selector(handleRegister(sender:)), for: .touchUpInside)
+        
+        tempView.addSubview(button)
+        tempView.addSubview(isPublicLabel)
+        tempView.addSubview(mapNameLabel)
+        tempView.addSubview(numberOfPlayersLabel)
+        tempView.addSubview(creatorLabel)
+        tempView.addSubview(idLabel)
+        
+        isPublicLabel.centerXAnchor.constraint(equalTo: tempView.centerXAnchor).isActive = true
+        isPublicLabel.topAnchor.constraint(equalTo: tempView.topAnchor, constant: 15).isActive = true
+        
+        mapNameLabel.centerXAnchor.constraint(equalTo: tempView.centerXAnchor).isActive = true
+        mapNameLabel.topAnchor.constraint(equalTo: tempView.topAnchor, constant: 50).isActive = true
+        
+        numberOfPlayersLabel.centerXAnchor.constraint(equalTo: tempView.centerXAnchor).isActive = true
+        numberOfPlayersLabel.topAnchor.constraint(equalTo: tempView.topAnchor, constant: 90).isActive = true
+        
+        creatorLabel.centerXAnchor.constraint(equalTo: tempView.centerXAnchor).isActive = true
+        creatorLabel.topAnchor.constraint(equalTo: tempView.topAnchor, constant: 130).isActive = true
+        
+        idLabel.centerXAnchor.constraint(equalTo: tempView.centerXAnchor).isActive = true
+        idLabel.topAnchor.constraint(equalTo: tempView.topAnchor, constant: 170).isActive = true
+        
+        tempView.isUserInteractionEnabled = true
+        return tempView
+    }
+    
+    func handleRegister(sender: UIButton){
+        print("open map")
     }
     
     func carousel(_ carousel: iCarousel, valueFor option: iCarouselOption, withDefault value: CGFloat) -> CGFloat {
@@ -81,56 +123,6 @@ class MapCarouselViewController: UIViewController, iCarouselDataSource, iCarouse
         return value
     }
     
-    /*
-    private var maps = [MapEntity]()
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        let map1 = MapEntity()
-        map1.id = "300"
-        let map2 = MapEntity()
-        map2.id = "400"
-        
-        self.maps.append(map1)
-        self.maps.append(map2)
-        
-        DispatchQueue.main.async(execute: { () -> Void in
-            self.carouselView.reloadData()
-        })
-    }
-    
-    func numberOfItems(in carousel: iCarousel) -> Int {
-        return self.maps.count
-    }
-    
-    func carousel(_ carousel: iCarousel, viewForItemAt index: Int, reusing view: UIView?) -> UIView {
-        var label: UILabel
-        var itemView: UIImageView
-        
-        itemView = UIImageView(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
-        itemView.image = UIImage(named: "default_profile_picture.png")
-        itemView.contentMode = .center
-            
-        label = UILabel(frame: itemView.bounds)
-        label.backgroundColor = .clear
-        label.textAlignment = .center
-        label.font = label.font.withSize(50)
-        label.tag = 1
-        itemView.addSubview(label)
-        
-        label.text = "test"
-        
-        return itemView
-    }
-    
-    func carousel(_ carousel: iCarousel, valueFor option: iCarouselOption, withDefault value: CGFloat) -> CGFloat {
-        if (option == .spacing) {
-            return value * 1.2
-        }
-        return value
-    }
-    */
 }
 
 ///////////////////////////////////////////////////////////////////////////////
