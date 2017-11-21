@@ -124,7 +124,9 @@ namespace InterfaceGraphique
 
             InitializeUnityDependencyInjection();
 
-            //tutorialHost = new TutorialHost();
+            tutorialHost = new TutorialHost();
+            editorHost = new EditorHost();
+
             openGLPanel = new Panel();
             formManager = new FormManager();
             homeMenu = new HomeMenu();
@@ -137,7 +139,6 @@ namespace InterfaceGraphique
             creditsMenu = new CreditsMenu();
             lobbyHost = new LobbyHost();
             onlineTournament = new OnlineTournament();
-            editorHost = new EditorHost();
             userProfileMenu = new UserProfileMenu();
             storeMenu = new StoreMenu();
 
@@ -210,6 +211,7 @@ namespace InterfaceGraphique
             unityContainer.RegisterType<MasterGameState>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<SlaveGameState>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<EditorUsersViewModel>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<CreateMapViewModel>(new ContainerControlledLifetimeManager());
 
 
             unityContainer.RegisterType<OnlineEditorState>(new ContainerControlledLifetimeManager());

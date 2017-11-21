@@ -99,6 +99,7 @@ namespace InterfaceGraphique.Controls.WPF
         public AddUserViewModel AddUserViewModel => container.Resolve<AddUserViewModel>();
         public TutorialViewModel TutorialViewModel => container.Resolve<TutorialViewModel>();
         public EditorUsersViewModel EditorUsersViewModel => container.Resolve<EditorUsersViewModel>();
+        public CreateMapViewModel CreateMapViewModel => container.Resolve<CreateMapViewModel>();
 
 
     }

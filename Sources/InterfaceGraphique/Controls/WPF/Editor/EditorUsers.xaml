@@ -35,14 +35,14 @@
         <ItemsControl Grid.Row="1"  ItemsSource="{Binding Users}" Background="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" >
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Grid Margin="0,0,0,5">
+                    <Grid Margin="0,1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="3*" />
                             <ColumnDefinition Width="7*" />
                         </Grid.ColumnDefinitions>
                         <Image MaxWidth="32" MaxHeight="32" Grid.Column="0" Source="{Binding ProfilePicture, Converter={converters:Base64ImageConverter}}" />
 
-                        <TextBlock FontWeight="Bold" FontSize="24"  Grid.Column="1" Text="{Binding Username}" HorizontalAlignment="Center" VerticalAlignment="Center"   Foreground="{Binding HexColor}"/>
+                        <TextBlock FontWeight="Bold" FontSize="24"  Grid.Column="1" Text="{Binding Username}" HorizontalAlignment="Left" VerticalAlignment="Center"   Foreground="{Binding HexColor}" Opacity=".5" Margin="5,0,0,0"/>
                     </Grid>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>

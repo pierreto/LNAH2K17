@@ -177,7 +177,11 @@ namespace InterfaceGraphique {
             // Menu dropdown options events
             this.Fichier_Enregistrer.Click += async (sender, e) => await mapManager.SaveMap();
             this.Fichier_EnregistrerSous_Ordinateur.Click += (sender, e) => mapManager.ManageSavingLocalMap();
-            this.Fichier_EnregistrerSous_Serveur.Click += async (sender, e) => await mapManager.ManageSavingOnlineMap(); 
+            this.Fichier_EnregistrerSous_Serveur.Click += async (sender, e) =>
+            {
+                Program.EditorHost.SwitchViewToMapModeView();
+                Program.EditorHost.ShowDialog();
+            }; 
             this.Fichier_OuvrirLocalement.Click += (sender, e) =>
             {
                 this.editorViewModel.ClearCurrentMap();
@@ -407,12 +411,18 @@ namespace InterfaceGraphique {
 
         public async Task JoinEdition(MapEntity map)
         {
-            await this.CurrentState.LeaveEdition();
 
-            await mapManager.OpenOnlineMap(map);
-            this.CurrentState = this.onlineState;
-            this.CurrentState.JoinEdition(map);
-            this.userPanel.Visible = true;
+            this.BeginInvoke(new MethodInvoker(async delegate
+            {
+                await this.CurrentState.LeaveEdition();
+
+                await mapManager.OpenOnlineMap(map);
+                mapManager.SaveIcon();
+                this.CurrentState = this.onlineState;
+                this.CurrentState.JoinEdition(map);
+                this.userPanel.Visible = true;
+            }));
+ 
         }
 
         private void OpenOnlineMap()

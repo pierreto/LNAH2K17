@@ -16,26 +16,32 @@ namespace InterfaceGraphique.Controls.WPF
     public partial class EditorHost : Form
     {
         private EditorServerBrowser serverBrowser;
-        private EditorJoinOrCreate joinOrCreate;
         private EditorModeView modeView;
+        private PasswordDialog passwordDialog;
         public EditorHost()
         {
-            serverBrowser= new EditorServerBrowser();
-            joinOrCreate = new EditorJoinOrCreate();
-            modeView = new EditorModeView();
-            
-
             InitializeComponent();
+            serverBrowser = new EditorServerBrowser();
+            modeView = new EditorModeView();
+            passwordDialog= new PasswordDialog();
         }
 
         public void SwitchViewToServerBrowser()
         {
+            this.WindowState = FormWindowState.Normal;
+            this.Width = 1100;
+            this.Height = 800;
             this.elementHost1.Child = serverBrowser;
             Program.unityContainer.Resolve<EditorViewModel>().InitializeViewModel();
         }
         public void SwitchViewToMapModeView()
         {
+            this.WindowState = FormWindowState.Normal;
+            this.Width = 640;
+            this.Height = 350;
             this.elementHost1.Child = modeView;
+            Program.unityContainer.Resolve<CreateMapViewModel>().InitializeViewModel();
+
         }
         ////////////////////////////////////////////////////////////////////////
         ///
@@ -95,5 +101,10 @@ namespace InterfaceGraphique.Controls.WPF
             Program.FormManager.SizeChanged -= new EventHandler(WindowSizeChanged);
         }
 
+        public PasswordDialog PasswordDialog
+        {
+            get => passwordDialog;
+            set => passwordDialog = value;
+        }
     }
 }

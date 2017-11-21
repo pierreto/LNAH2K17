@@ -83,22 +83,6 @@ namespace InterfaceGraphique.Editor
         // should be cleaner.
         public async Task OpenOnlineMap(MapEntity mapMetaData)
         {
-            Debug.Assert(mapMetaData.Json == null & mapMetaData.Id != null);
-
-            if (mapMetaData.Private)
-            {
-                InterfaceGraphique.Editor.OpenPrivateMapForm passwordForm = new InterfaceGraphique.Editor.OpenPrivateMapForm();
-
-                if (passwordForm.ShowDialog() != DialogResult.OK || passwordForm.Text_MapPassword.Text != mapMetaData.Password)
-                {
-                    MessageBox.Show(
-                        @"Mot de passe erroné.",
-                        @"Erreur",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-            }
-
             MapEntity realMap = await this.mapService.GetMap((int) mapMetaData.Id);
             this.LoadJSON(realMap.Json);
 
@@ -217,8 +201,7 @@ namespace InterfaceGraphique.Editor
                 // we have to join the online edition mode:
                 if (!this.currentMapInfo.savedOnce)
                 {
-                    Program.Editeur.CurrentState = Program.Editeur.onlineState;
-                    Program.Editeur.CurrentState.JoinEdition(map.Value);
+                    Program.Editeur.JoinEdition(map.Value);
                 }
 
                 // we have to update the properties of the current map:
@@ -285,6 +268,13 @@ namespace InterfaceGraphique.Editor
                     @"Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        public async Task SaveNewOnlineMap(MapMetaData map)
+        {
+            this.currentMapInfo = map;
+
+            await SaveOnlineMap();
         }
 
         public bool CurrentMapAlreadySaved()
