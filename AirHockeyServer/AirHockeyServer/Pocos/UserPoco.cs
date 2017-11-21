@@ -27,5 +27,13 @@ namespace AirHockeyServer.Pocos
         [Column(Name = "profile", CanBeNull = true, UpdateCheck = UpdateCheck.Never)]
         public string Profile { get; set; }
 
+        [Column(Name = "alreadyPlayedGame")]
+        public bool AlreadyPlayedGame { get; set; }
+
+        [Column(Name = "alreadyUsedFatEditor")]
+        public bool AlreadyUsedFatEditor { get; set; }
+
+        [Column(Name = "alreadyUsedLightEditor")]
+        public bool AlreadyUsedLightEditor { get; set; }
     }
 }

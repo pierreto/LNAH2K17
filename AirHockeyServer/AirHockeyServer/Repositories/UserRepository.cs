@@ -139,6 +139,9 @@ namespace AirHockeyServer.Repositories
                     var results = query.ToArray();
                     UserPoco userPoco = results.First();
                     userPoco.Profile = userEntity.Profile;
+                    userPoco.AlreadyPlayedGame = userEntity.AlreadyPlayedGame;
+                    userPoco.AlreadyUsedFatEditor = userEntity.AlreadyUsedFatEditor;
+                    userPoco.AlreadyUsedLightEditor = userEntity.AlreadyUsedLightEditor;
                     await Task.Run(() => DC.SubmitChanges());
                 }
             }

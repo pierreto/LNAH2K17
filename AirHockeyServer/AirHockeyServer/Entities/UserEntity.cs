@@ -16,5 +16,10 @@ namespace AirHockeyServer.Entities
 
         public string Profile { get; set; }
     
+        public bool AlreadyPlayedGame { get; set; }
+
+        public bool AlreadyUsedFatEditor { get; set; }
+
+        public bool AlreadyUsedLightEditor { get; set; }
     }
 }
