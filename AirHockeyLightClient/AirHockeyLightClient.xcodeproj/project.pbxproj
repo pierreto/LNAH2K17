@@ -82,6 +82,7 @@
 		258EED9E1FC3A3B00096115B /* MapCarouselViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258EED9D1FC3A3B00096115B /* MapCarouselViewController.swift */; };
 		25A1BEF71FC23C180017C058 /* AddFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A1BEF61FC23C180017C058 /* AddFriendViewController.swift */; };
 		25A1BEF91FC242720017C058 /* SearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A1BEF81FC242720017C058 /* SearchTextField.swift */; };
+		25B0DBFD1FC3C4B4002B364B /* map.png in Resources */ = {isa = PBXBuildFile; fileRef = 25B0DBFC1FC3C4B4002B364B /* map.png */; };
 		25CF7B8B1FBA759800B536DB /* FriendRequestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF7B8A1FBA759800B536DB /* FriendRequestsViewController.swift */; };
 		25CF7B8D1FBA760600B536DB /* FriendRequestsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF7B8C1FBA760600B536DB /* FriendRequestsTableViewController.swift */; };
 		25EFB2A01FB7505100FFD66F /* MapService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25EFB29F1FB7505100FFD66F /* MapService.swift */; };
@@ -296,6 +297,7 @@
 		258EED9D1FC3A3B00096115B /* MapCarouselViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapCarouselViewController.swift; sourceTree = "<group>"; };
 		25A1BEF61FC23C180017C058 /* AddFriendViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddFriendViewController.swift; path = InterfaceGraphique/View/Friends/AddFriendViewController.swift; sourceTree = "<group>"; };
 		25A1BEF81FC242720017C058 /* SearchTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchTextField.swift; path = InterfaceGraphique/View/Friends/SearchTextField.swift; sourceTree = "<group>"; };
+		25B0DBFC1FC3C4B4002B364B /* map.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map.png; sourceTree = "<group>"; };
 		25CF7B8A1FBA759800B536DB /* FriendRequestsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FriendRequestsViewController.swift; path = InterfaceGraphique/View/Friends/FriendRequestsViewController.swift; sourceTree = "<group>"; };
 		25CF7B8C1FBA760600B536DB /* FriendRequestsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FriendRequestsTableViewController.swift; path = InterfaceGraphique/View/Friends/FriendRequestsTableViewController.swift; sourceTree = "<group>"; };
 		25EFB29F1FB7505100FFD66F /* MapService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapService.swift; path = Noyau/Services/MapService.swift; sourceTree = "<group>"; };
@@ -960,6 +962,7 @@
 			isa = PBXGroup;
 			children = (
 				1D7041AE1FC1261500899418 /* default_profile_picture.png */,
+				25B0DBFC1FC3C4B4002B364B /* map.png */,
 				1DC31A591FC0DAFF0000B7DE /* Achievements */,
 				8FF4B59B1FBD602500BB2941 /* Skybox */,
 				8F4B40771FB944E700DFDA2F /* Sounds */,
@@ -1108,6 +1111,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25B0DBFD1FC3C4B4002B364B /* map.png in Resources */,
 				1DC31A751FC0DC0C0000B7DE /* coin_5_disabled.png in Resources */,
 				1DC31A761FC0DC0C0000B7DE /* coin_5_enabled.png in Resources */,
 				1DC31A771FC0DC0C0000B7DE /* coin_30_disabled.png in Resources */,
