@@ -9,6 +9,7 @@ using System.Windows.Input;
 using Microsoft.Practices.Unity;
 using InterfaceGraphique.Exceptions;
 using InterfaceGraphique.CommunicationInterface.RestInterface;
+using InterfaceGraphique.Controls.WPF.Friends;
 
 namespace InterfaceGraphique.Controls.WPF.Signup
 {
@@ -243,6 +244,12 @@ namespace InterfaceGraphique.Controls.WPF.Signup
                         //On initie tous les formes qui on besoin de savoir si on est en mode en ligne
                         Program.InitAfterConnection();
                         Program.FormManager.CurrentForm = Program.MainMenu;
+
+                        await Program.unityContainer.Resolve<FriendsHub>().InitializeFriendsHub();
+                        Program.unityContainer.Resolve<FriendListViewModel>().InitializeViewModel();
+                        Program.unityContainer.Resolve<AddUserViewModel>().InitializeViewModel();
+                        Program.unityContainer.Resolve<FriendRequestListViewModel>().InitializeViewModel();
+                        Program.unityContainer.Resolve<AddFriendListViewModel>().InitializeViewModel();
                     }
                     else
                     {

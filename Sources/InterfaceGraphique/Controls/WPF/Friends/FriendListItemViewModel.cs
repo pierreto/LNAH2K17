@@ -6,12 +6,18 @@ using InterfaceGraphique.Controls.WPF.Friends;
 using System.Linq;
 using InterfaceGraphique.CommunicationInterface;
 using InterfaceGraphique.Managers;
+using System.Net.Http;
+using InterfaceGraphique.CommunicationInterface.RestInterface;
+using System.Collections.ObjectModel;
 
 namespace InterfaceGraphique.Controls.WPF.Friends
 {
     public class FriendListItemViewModel : ViewModelBase
     {
         #region Private Properties
+        private bool currentFriend;
+        private bool addingFriend;
+        private bool requestedFriend;
         private UserEntity userEntity;
         #endregion
 
@@ -53,13 +59,46 @@ namespace InterfaceGraphique.Controls.WPF.Friends
                 this.OnPropertyChanged();
             }
         }
-
+        
         public bool IsSelected
         {
             get => UserEntity.IsSelected;
             set
             {
                 UserEntity.IsSelected = value;
+                this.OnPropertyChanged();
+                this.OnPropertyChanged(nameof(CurrentFriend));
+                this.OnPropertyChanged(nameof(AddingFriend));
+                this.OnPropertyChanged(nameof(RequestedFriend));
+            }
+        }
+
+        public bool CurrentFriend
+        {
+            get => (UserEntity.IsSelected && currentFriend);
+            set
+            {
+                currentFriend = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        public bool AddingFriend
+        {
+            get => (UserEntity.IsSelected && addingFriend);
+            set
+            {
+                addingFriend = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        public bool RequestedFriend
+        {
+            get => (UserEntity.IsSelected && requestedFriend);
+            set
+            {
+                requestedFriend = value;
                 this.OnPropertyChanged();
             }
         }
@@ -135,6 +174,36 @@ namespace InterfaceGraphique.Controls.WPF.Friends
                        (removeFriendCommand = new RelayCommandAsync(RemoveFriend));
             }
         }
+
+        private ICommand sendFriendRequestCommand;
+        public ICommand SendFriendRequestCommand
+        {
+            get
+            {
+                return sendFriendRequestCommand ??
+                       (sendFriendRequestCommand = new RelayCommandAsync(SendFriendRequest));
+            }
+        }
+
+        private ICommand acceptFriendRequestCommand;
+        public ICommand AcceptFriendRequestCommand
+        {
+            get
+            {
+                return acceptFriendRequestCommand ??
+                       (acceptFriendRequestCommand = new RelayCommandAsync(AcceptFriendRequest));
+            }
+        }
+
+        private ICommand refuseFriendRequestCommand;
+        public ICommand RefuseFriendRequestCommand
+        {
+            get
+            {
+                return refuseFriendRequestCommand ??
+                       (refuseFriendRequestCommand = new RelayCommandAsync(RefuseFriendRequest));
+            }
+        }
         #endregion
 
         #region Command Methods
@@ -143,6 +212,14 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             foreach (var friend in Program.unityContainer.Resolve<FriendListViewModel>().FriendList)
             {
                 friend.IsSelected = false;
+            }
+            foreach (var friendToAdd in Program.unityContainer.Resolve<AddFriendListViewModel>().Items)
+            {
+                friendToAdd.IsSelected = false;
+            }
+            foreach (var friendToAdd in Program.unityContainer.Resolve<FriendRequestListViewModel>().Items)
+            {
+                friendToAdd.IsSelected = false;
             }
             IsSelected = true;
         }
@@ -167,6 +244,35 @@ namespace InterfaceGraphique.Controls.WPF.Friends
         {
             UserEntity uE = Program.unityContainer.Resolve<FriendListViewModel>().FriendList.Where(x => x.Username == Username).First().UserEntity;
             await Program.unityContainer.Resolve<FriendsHub>().RemoveFriend(uE);
+        }
+
+        private async Task SendFriendRequest()
+        {
+            HttpResponseMessage response = await Program.client.GetAsync("api/user/u/" + Username);
+            UserEntity friend = await HttpResponseParser.ParseResponse<UserEntity>(response);
+            await Program.unityContainer.Resolve<FriendsHub>().SendFriendRequest(friend);
+            var item = Program.unityContainer.Resolve<AddFriendListViewModel>().Items;
+            //Retire de notre liste de personnes ajoutables la personne qu'on vien d'envoyer une demande d'amis
+            item.Remove(item.Single(x => x.Id == friend.Id));
+        }
+
+        private async Task AcceptFriendRequest()
+        {
+            await Program.unityContainer.Resolve<FriendsHub>().AcceptFriendRequest(new FriendRequestEntity { Requestor = new UserEntity { Id = Id }, Friend = new UserEntity { Id = User.Instance.UserEntity.Id } });
+            var item = Program.unityContainer.Resolve<FriendRequestListViewModel>().Items;
+            item.Remove(item.Single(x => x.Id == Id));
+        }
+
+        private async Task RefuseFriendRequest()
+        {
+            if (await Program.unityContainer.Resolve<FriendsHub>().RefuseFriendRequest(new FriendRequestEntity { Requestor = new UserEntity { Id = Id }, Friend = new UserEntity { Id = User.Instance.UserEntity.Id } }))
+            {
+                var item = Program.unityContainer.Resolve<FriendRequestListViewModel>().Items;
+                item.Remove(item.Single(x => x.Id == Id));
+                var friendsToAdd = Program.unityContainer.Resolve<AddFriendListViewModel>().Items;
+                friendsToAdd.Add(new FriendListItemViewModel(new UserEntity { Id = Id, Username = Username, Profile = ProfilePicture, IsSelected = false }, null) { AddingFriend = true });
+                Program.unityContainer.Resolve<AddFriendListViewModel>().OnPropertyChanged("Items");
+            }
         }
         #endregion
 

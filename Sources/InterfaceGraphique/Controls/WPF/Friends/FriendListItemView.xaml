@@ -40,7 +40,7 @@
                                     <!-- Profile picture padding -->
                                     <Border Grid.Column="0" 
                                     Padding="8 15"
-                                            BorderBrush="{Binding TextColorBrush}"
+                                            BorderBrush="White"
                                             CornerRadius="8"
                                     >
 
@@ -62,7 +62,7 @@
                                             <!-- Name-->
                                             <TextBlock Text="{Binding DataContext.Username, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
                                                 Padding="0 0 0 2"
-                                                Foreground="{StaticResource TextColorBrush}"
+                                                Foreground="White"
                                                 FontWeight="Medium"
                                                 FontSize="18"
                                                 TextTrimming="CharacterEllipsis"
@@ -70,10 +70,17 @@
                                         </StackPanel>
                                     </Border>
                                     <!-- Tous les ptits boutons-->
-                                    <StackPanel Grid.Column="2" Orientation="Horizontal" Margin="3px" HorizontalAlignment="Right" Visibility="{Binding DataContext.IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Converter={convert:BooleanToVisibilityConverter}, ConverterParameter=True}">
+                                    <StackPanel Grid.Column="2" Orientation="Horizontal" Margin="3px" HorizontalAlignment="Right" Visibility="{Binding DataContext.CurrentFriend, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Converter={convert:BooleanToVisibilityConverter}, ConverterParameter=True}">
                                         <Button fa:Awesome.Content="Gamepad" Margin="0 0 5 0" BorderThickness="0" Command="{Binding PlayGameCommand}"></Button>
                                         <Button fa:Awesome.Content="Comment" Margin="0 0 5 0" BorderThickness="0" Background="{StaticResource UltraDarkGrayBrush}" Command="{Binding ChatWithCommand}"></Button>
-                                        <Button fa:Awesome.Content="Trash" Margin="0 0 0 0" BorderThickness="0" Background="{StaticResource DeleteBrush}" Command="{Binding RemoveFriendCommand}"></Button>
+                                        <Button fa:Awesome.Content="Trash" Margin="0 0 5 0" BorderThickness="0" Background="{StaticResource DeleteBrush}" Command="{Binding RemoveFriendCommand}"></Button>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="2" Orientation="Horizontal" Margin="3px" HorizontalAlignment="Right" Visibility="{Binding DataContext.AddingFriend, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Converter={convert:BooleanToVisibilityConverter}, ConverterParameter=True}">
+                                        <Button fa:Awesome.Content="Plus" Margin="0 0 5 0" BorderThickness="0" Background="{StaticResource AddBrush}" Command="{Binding SendFriendRequestCommand}"></Button>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="2" Orientation="Horizontal" Margin="3px" HorizontalAlignment="Right" Visibility="{Binding DataContext.RequestedFriend, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Converter={convert:BooleanToVisibilityConverter}, ConverterParameter=True}">
+                                        <Button fa:Awesome.Content="Check" Margin="0 0 5 0" BorderThickness="0" Background="{StaticResource AddBrush}" Command="{Binding AcceptFriendRequestCommand}"></Button>
+                                        <Button fa:Awesome.Content="Times" Margin="0 0 5 0" BorderThickness="0" Background="{StaticResource DeleteBrush}" Command="{Binding RefuseFriendRequestCommand}"></Button>
                                     </StackPanel>
                                 </Grid>
                             </Border>

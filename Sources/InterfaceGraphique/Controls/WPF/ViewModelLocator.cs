@@ -88,15 +88,20 @@ namespace InterfaceGraphique.Controls.WPF
 
         public EditorViewModel EditorViewModel => container.Resolve<EditorViewModel>();
 
+        public AddFriendListViewModel AddFriendListViewModel => container.Resolve<AddFriendListViewModel>();
+
         public FriendListViewModel FriendListViewModel => container.Resolve<FriendListViewModel>();
 
         public FriendListItemViewModel FriendListItemViewModel => container.Resolve<FriendListItemViewModel>();
+
+        public FriendRequestListViewModel FriendRequestListViewModel => container.Resolve<FriendRequestListViewModel>();
 
         public UserProfileViewModel UserProfileViewModel => container.Resolve<UserProfileViewModel>();
 
         public StoreViewModel StoreViewModel => container.Resolve<StoreViewModel>();
 
         public AddUserViewModel AddUserViewModel => container.Resolve<AddUserViewModel>();
+
         public TutorialViewModel TutorialViewModel => container.Resolve<TutorialViewModel>();
         //public EditorUsersViewModel EditorUsersViewModel => container.Resolve<EditorUsersViewModel>();
 

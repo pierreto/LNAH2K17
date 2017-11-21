@@ -74,6 +74,7 @@ namespace AirHockeyServer.Hubs
         public async Task<FriendRequestEntity> RefuseFriendRequest(FriendRequestEntity request)
         {
             return await FriendService.RefuseFriendRequest(request);
+            // TODO ? envoyer un event pour pouvoir ajouter a la liste d'amis a ajouter quand on refuse qqn
         }
         
         public async Task<bool> CancelFriendRequest(FriendRequestEntity request)

@@ -80,7 +80,6 @@ namespace InterfaceGraphique
         private static TutorialHost tutorialHost;
 
         private static Panel openGLPanel;
-        //private static Login login;
         private static TimeSpan dernierTemps;
         private static TimeSpan tempsAccumule;
         private static Stopwatch chrono = Stopwatch.StartNew();
@@ -202,6 +201,8 @@ namespace InterfaceGraphique
             unityContainer.RegisterType<HomeViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<EditorViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<FriendListViewModel>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<AddFriendListViewModel>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<FriendRequestListViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<FriendListItemViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<UserProfileViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<StoreViewModel>(new ContainerControlledLifetimeManager());

@@ -207,6 +207,7 @@
     <Compile Include="Controls\WPF\Editor\EditorUsers.xaml.cs">
       <DependentUpon>EditorUsers.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\WPF\Editor\EditorUsersViewModel.cs" />
     <Compile Include="Controls\WPF\Friends\AddUserView.xaml.cs">
       <DependentUpon>AddUserView.xaml</DependentUpon>
     </Compile>
@@ -219,6 +220,14 @@
       <DependentUpon>FriendListItemView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\WPF\Friends\FriendListItemViewModel.cs" />
+    <Compile Include="Controls\WPF\Friends\AddFriendListView.xaml.cs">
+      <DependentUpon>AddFriendListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WPF\Friends\AddFriendListViewModel.cs" />
+    <Compile Include="Controls\WPF\Friends\FriendRequestListView.xaml.cs">
+      <DependentUpon>FriendRequestListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WPF\Friends\FriendRequestListViewModel.cs" />
     <Compile Include="Controls\WPF\MinimizableViewModelBase.cs" />
     <Compile Include="Controls\WPF\Navigation\NavigationView.xaml.cs">
       <DependentUpon>NavigationView.xaml</DependentUpon>
@@ -682,6 +691,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\WPF\Friends\AddFriendListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\WPF\Friends\FriendRequestListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\WPF\Home\HomeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -735,9 +752,7 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controls\WPF\Friends\FriendsToAdd\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />

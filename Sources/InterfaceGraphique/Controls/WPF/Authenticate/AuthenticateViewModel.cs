@@ -178,6 +178,8 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
                         await Program.unityContainer.Resolve<FriendsHub>().InitializeFriendsHub();
                         Program.unityContainer.Resolve<FriendListViewModel>().InitializeViewModel();
                         Program.unityContainer.Resolve<AddUserViewModel>().InitializeViewModel();
+                        Program.unityContainer.Resolve<FriendRequestListViewModel>().InitializeViewModel();
+                        Program.unityContainer.Resolve<AddFriendListViewModel>().InitializeViewModel();
                     }
                     else
                     {
