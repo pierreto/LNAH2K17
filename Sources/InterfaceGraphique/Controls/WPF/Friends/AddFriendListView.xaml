@@ -22,7 +22,7 @@
         </Grid.DataContext>
 
         <ScrollViewer VerticalScrollBarVisibility="Hidden">
-            <ItemsControl ItemsSource="{Binding ItemsView}">
+            <ItemsControl ItemsSource="{Binding Items}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <friend:FriendListItemView />
