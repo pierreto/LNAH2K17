@@ -81,6 +81,7 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
         chatTableView.delegate = self
         chatTableView.dataSource = self
         chatTableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        chatTableView.estimatedRowHeight = 90
         
         //Les canals joignables (initialement plus a gauche -- hidden --)
         joinChannelConstraint.constant = -241

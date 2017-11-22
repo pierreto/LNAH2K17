@@ -88,5 +88,20 @@ namespace AirHockeyServer.Controllers
                 return Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }
+
+        [HttpGet]
+        [Route("api/maps/remove/{id}")]
+        public async Task<HttpResponseMessage> RemoveMap(int id)
+        {
+            try
+            {
+                bool result = await MapService.RemoveMap(id);
+                return HttpResponseGenerator.CreateSuccesResponseMessage(HttpStatusCode.OK, result);
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
+        }
     }
 }

@@ -18,6 +18,7 @@ namespace AirHockeyServer.Repositories.Interfaces
 
         Task<MapEntity> GetMap(int idMap);
 
+        Task<bool> RemoveMap(int id);
 
     }
 }
