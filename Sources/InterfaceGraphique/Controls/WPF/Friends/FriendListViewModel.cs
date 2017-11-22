@@ -70,6 +70,7 @@ namespace InterfaceGraphique.Controls.WPF.Friends
 
         private void NewFriendEvent(UserEntity friend)
         {
+            System.Diagnostics.Debug.WriteLine("Je viens d'ajouter " + friend.Username + " a mes amis.");
             ctxTaskFactory.StartNew(() =>
             {
                 FriendList.Add(new FriendListItemViewModel(new UserEntity { Id = friend.Id, Username = friend.Username, Profile = friend.Profile, IsSelected = false }, null) { CurrentFriend = true });

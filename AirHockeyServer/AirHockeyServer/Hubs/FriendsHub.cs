@@ -55,17 +55,19 @@ namespace AirHockeyServer.Hubs
         
         public async Task<FriendRequestEntity> AcceptFriendRequest(FriendRequestEntity request)
         {
-            var relation = await FriendService.AcceptFriendRequest(request);
+            FriendRequestEntity relation = await FriendService.AcceptFriendRequest(request);
 
             // Si la demande d'ami a été acceptée avec succès, on notifie les deux
             // nouveaux amis (requestor et friend) :
-            string friendConnection = ConnectionMapper.GetConnection(relation.Friend.Id);
+            string friendConnection = ConnectionMapper.GetConnection(relation.Requestor.Id);
+            string myConnection = ConnectionMapper.GetConnection(relation.Friend.Id);
             if (relation != null)
             {
-                Clients.Client(ConnectionMapper.GetConnection(relation.Requestor.Id)).NewFriendEvent(relation.Friend);
-
                 if (friendConnection.Length > 0)
-                    Clients.Client(friendConnection).NewFriendEvent(relation.Requestor);
+                {
+                    Clients.Client(friendConnection).NewFriendEvent(relation.Friend);
+                }
+                Clients.Client(myConnection).NewFriendEvent(relation.Requestor);
             }
 
             return relation;
