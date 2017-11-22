@@ -7,6 +7,7 @@
              xmlns:convert="clr-namespace:InterfaceGraphique.Controls.WPF.Converters"
              xmlns:fa="http://schemas.fontawesome.io/icons/"
              xmlns:wpf="clr-namespace:InterfaceGraphique.Controls.WPF"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
              d:DesignWidth="300">
     <UserControl.Resources>
@@ -23,10 +24,19 @@
 
                                 <!-- Click to open message -->
                                 <Border.InputBindings>
-                                    <MouseBinding MouseAction="LeftClick" Command="{Binding ClickFriendCommand}" />
+                                    <!--  <MouseBinding MouseAction="LeftClick" Command="{Binding ClickFriendCommand}" />-->
                                     <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding GoToProfileCommand}"/>
                                 </Border.InputBindings>
+                                <i:Interaction.Triggers>
 
+                                    <i:EventTrigger EventName="MouseEnter">
+                                        <i:InvokeCommandAction Command="{Binding ClickFriendCommand}"/>
+                                    </i:EventTrigger>
+                                    <i:EventTrigger EventName="MouseLeave">
+                                        <i:InvokeCommandAction Command="{Binding MouseOverCommand}"/>
+                                    </i:EventTrigger>
+
+                                </i:Interaction.Triggers>
                                 <Grid x:Name="container" Background="Transparent">
                                     <Grid.ColumnDefinitions>
                                         <!-- New Message Indicator Bar -->
@@ -70,7 +80,8 @@
                                         </StackPanel>
                                     </Border>
                                     <!-- Tous les ptits boutons-->
-                                    <StackPanel Grid.Column="2" Orientation="Horizontal" Margin="3px" HorizontalAlignment="Right" Visibility="{Binding DataContext.CurrentFriend, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Converter={convert:BooleanToVisibilityConverter}, ConverterParameter=True}">
+                                    <StackPanel  Grid.Column="2" Orientation="Horizontal" Margin="3px" HorizontalAlignment="Right" Visibility="{Binding DataContext.CurrentFriend, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Converter={convert:BooleanToVisibilityConverter}, ConverterParameter=True}">
+                        
                                         <Button fa:Awesome.Content="Gamepad" Margin="0 0 5 0" BorderThickness="0" Command="{Binding PlayGameCommand}"></Button>
                                         <Button fa:Awesome.Content="Comment" Margin="0 0 5 0" BorderThickness="0" Background="{StaticResource UltraDarkGrayBrush}" Command="{Binding ChatWithCommand}"></Button>
                                         <Button fa:Awesome.Content="Trash" Margin="0 0 5 0" BorderThickness="0" Background="{StaticResource DeleteBrush}" Command="{Binding RemoveFriendCommand}"></Button>

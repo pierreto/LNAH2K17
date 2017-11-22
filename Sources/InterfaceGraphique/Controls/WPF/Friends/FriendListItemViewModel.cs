@@ -204,6 +204,19 @@ namespace InterfaceGraphique.Controls.WPF.Friends
                        (refuseFriendRequestCommand = new RelayCommandAsync(RefuseFriendRequest));
             }
         }
+
+        private ICommand mouseOverCommand;
+        public ICommand MouseOverCommand
+        {
+            get
+            {
+                if (mouseOverCommand == null)
+                {
+                    mouseOverCommand = new RelayCommand(MouseOverFriend);
+                }
+                return mouseOverCommand;
+            }
+        }
         #endregion
 
         #region Command Methods
@@ -223,7 +236,10 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             }
             IsSelected = true;
         }
-
+        public void MouseOverFriend()
+        {
+            IsSelected = false;
+        }
         public async Task GoToProfile()
         {
             System.Diagnostics.Debug.WriteLine("Go to profile of : " + Username + " with id: " + Id);
@@ -270,7 +286,7 @@ namespace InterfaceGraphique.Controls.WPF.Friends
                 var item = Program.unityContainer.Resolve<FriendRequestListViewModel>().Items;
                 item.Remove(item.Single(x => x.Id == Id));
                 var friendsToAdd = Program.unityContainer.Resolve<AddFriendListViewModel>().Items;
-                friendsToAdd.Add(new FriendListItemViewModel(new UserEntity { Id = Id, Username = Username, Profile = ProfilePicture, IsSelected = false }, null) { AddingFriend = true });
+                friendsToAdd.Add(new UserEntity { Id = Id, Username = Username, Profile = ProfilePicture, IsSelected = false });
                 Program.unityContainer.Resolve<AddFriendListViewModel>().OnPropertyChanged("Items");
             }
         }

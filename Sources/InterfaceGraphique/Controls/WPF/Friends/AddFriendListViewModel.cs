@@ -19,13 +19,13 @@ namespace InterfaceGraphique.Controls.WPF.Friends
         private FriendsHub friendsHub;
         private UserService userService;
         private TaskFactory ctxTaskFactory;
-        private ObservableCollection<FriendListItemViewModel> items;
+        private ObservableCollection<UserEntity> items;
         private AddUserViewModel addUserViewModel;
 
         #endregion
 
         #region Public Properties
-        public ObservableCollection<FriendListItemViewModel> Items
+        public ObservableCollection<UserEntity> Items
         {
             get
             {
@@ -52,13 +52,13 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             this.userService = userService;
             this.friendsHub.FriendRequestEvent += FriendRequestEvent;
             ctxTaskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
-            Items = new ObservableCollection<FriendListItemViewModel>();
-            ItemsView.Filter = new Predicate<object>(o => Filter(o as FriendListItemViewModel));
+            Items = new ObservableCollection<UserEntity>();
+            ItemsView.Filter = new Predicate<object>(o => Filter(o as UserEntity));
         }
         #endregion
 
         #region Private Methods
-        private bool Filter(FriendListItemViewModel flivm)
+        private bool Filter(UserEntity flivm)
         {
             string username = addUserViewModel.FriendUsername;
             return username == null || username == "" || flivm.Username.IndexOf(username) != -1;
@@ -90,7 +90,7 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             //foreach (UserEntity user in users.Where(x => x.Username != User.Instance.UserEntity.Username))
             foreach (UserEntity user in users.Where(x => x.Username != User.Instance.UserEntity.Username && !Program.unityContainer.Resolve<FriendListViewModel>().FriendList.Any(y => x.Username == y.Username)))
             {
-                Items.Add(new FriendListItemViewModel(new UserEntity { Id = user.Id, Username = user.Username, Profile = user.Profile, IsSelected = false }, null) { AddingFriend = true });
+                Items.Add(user);
             }
             OnPropertyChanged(nameof(Items));
         }
