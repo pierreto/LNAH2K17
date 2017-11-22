@@ -76,6 +76,21 @@ namespace AirHockeyServer.Services
 
         ////////////////////////////////////////////////////////////////////////
         ///
+        /// @fn Task SaveMap(MapEntity map)
+        ///
+        /// Cette fonction asynchrone crée une nouvelle entrée dans la db pour map.
+        /// Retourne la MapEntity qui contient l'ID auto-généré par la db.
+        /// 
+        /// @return Task<MapEntity>
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        public async Task<bool> RemoveMap(int id)
+        {
+            return await MapRepository.RemoveMap(id);
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
         /// @fn IEnumerable<MapEntity> GetMaps()
         ///
         /// Cette fonction récupere les cartes de jeu dans la bd
