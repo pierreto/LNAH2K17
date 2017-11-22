@@ -141,5 +141,26 @@ namespace AirHockeyServer.Repositories
                 return false;
             }
         }
+
+        public async Task<bool> RemoveMap(int id)
+        {
+            try
+            {
+                using (MyDataContext DC = new MyDataContext())
+                {
+                    var query = from map in DC.MapsTable where map.Id == id select map;
+                    var results = query.ToArray();
+                    var _map = results.First();
+                    DC.MapsTable.DeleteOnSubmit(_map);
+                    await Task.Run(() => DC.SubmitChanges());
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("[MapRepository.RemoveMap] " + e.ToString());
+                return false;
+            }
+        }
     }
 }

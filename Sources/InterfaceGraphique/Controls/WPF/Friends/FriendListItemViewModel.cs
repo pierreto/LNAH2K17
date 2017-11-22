@@ -9,6 +9,7 @@ using InterfaceGraphique.Managers;
 using System.Net.Http;
 using InterfaceGraphique.CommunicationInterface.RestInterface;
 using System.Collections.ObjectModel;
+using InterfaceGraphique.Controls.WPF.Chat.Channel;
 
 namespace InterfaceGraphique.Controls.WPF.Friends
 {
@@ -253,6 +254,7 @@ namespace InterfaceGraphique.Controls.WPF.Friends
 
         public async Task ChatWith()
         {
+            await Program.unityContainer.Resolve<ChannelViewModel>().CreatePrivateChannel(Username, Id);
             System.Diagnostics.Debug.WriteLine("Chat with: " + Username + " with id: " + Id);
         }
 

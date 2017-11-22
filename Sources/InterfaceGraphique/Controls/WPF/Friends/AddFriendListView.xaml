@@ -27,7 +27,7 @@
         </Grid.DataContext>
 
         <ScrollViewer VerticalScrollBarVisibility="Hidden">
-            <ItemsControl ItemsSource="{Binding Items}">
+            <ItemsControl ItemsSource="{Binding ItemsView}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
 

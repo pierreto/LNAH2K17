@@ -35,5 +35,11 @@ namespace InterfaceGraphique.Services
             HttpResponseMessage response = await Program.client.PostAsJsonAsync("api/maps/save", map);
             return response.IsSuccessStatusCode;
         }
+
+        public async Task<bool> RemoveMap(int id)
+        {
+            HttpResponseMessage response = await Program.client.GetAsync("api/maps/remove/" + id.ToString());
+            return response.IsSuccessStatusCode;
+        }
     }
 }

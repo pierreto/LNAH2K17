@@ -46,11 +46,14 @@ namespace AirHockeyServer.Services.ChatServiceServer
             await Clients.Group(channelName).ChatMessageReceivedChannel(message, channelName);
         }
 
-        public void SendPrivateMessage(int userId, ChatMessageEntity message)
+        public void SendPrivateMessage(ChatMessageEntity message, int senderId, int receptorId)
         {
-            if(ConnectionsMapping.ContainsKey(userId))
+            //Envoi le message au destinataire
+            if(ConnectionsMapping.ContainsKey(receptorId))
             {
-                Clients.Client(ConnectionsMapping[userId]).ChatMessageReceived(message);
+                Clients.Client(ConnectionsMapping[receptorId]).ChatMessageReceivedPrivate(message, receptorId);
+                //Envoi le message a l'emetteur
+                Clients.Client(ConnectionsMapping[senderId]).ChatMessageReceivedPrivate(message, receptorId);
             }
         }
 
@@ -69,6 +72,19 @@ namespace AirHockeyServer.Services.ChatServiceServer
                 //BroadCastChannelToAll
                 Clients.Others.NewJoinableChannel(channelName);
                 return true;
+            }
+        }
+
+        public async Task<bool> CreatePrivateChannel(string name, int othersId)
+        {
+            if (ConnectionsMapping.ContainsKey(othersId))
+            {
+                await Clients.Client(ConnectionsMapping[othersId]).PrivateChannelCreated(name);
+                return true;
+            } 
+            else
+            {
+                return false;
             }
         }
 
