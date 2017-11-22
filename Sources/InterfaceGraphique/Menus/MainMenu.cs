@@ -100,6 +100,7 @@ namespace InterfaceGraphique
             HubManager.Instance.Logout();
             User.Instance.UserEntity = null;
             User.Instance.IsConnected = false;
+            //TODO: KILL HUB CONNECTIONS
             Program.FormManager.CurrentForm = Program.HomeMenu;
             Program.InitializeUnityDependencyInjection(); 
             Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<HomeViewModel>());
