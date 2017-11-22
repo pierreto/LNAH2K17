@@ -308,7 +308,10 @@ namespace InterfaceGraphique.Controls.WPF.Chat
                 {
                     var clivmList = Program.unityContainer.Resolve<ChatListViewModel>().Items;
                     var clivm = clivmList.Where(s => s.ChannelEntity == cE).First();
+                    var idx = clivmList.IndexOf(clivm);
                     clivm.NewContentAvailable = true;
+                    Program.unityContainer.Resolve<ChatListViewModel>().Items.Move(idx, 1);
+                    Program.unityContainer.Resolve<ChatListViewModel>().OnPropertyChanged("Items");
                     Program.unityContainer.Resolve<ChatListItemViewModel>().OnPropertyChanged("ChannelSelected");
                 }
                 cE.Messages.Add(message);
@@ -326,7 +329,10 @@ namespace InterfaceGraphique.Controls.WPF.Chat
                 {
                     var clivmList = Program.unityContainer.Resolve<ChatListViewModel>().Items;
                     var clivm = clivmList.Where(s => s.ChannelEntity == cE).First();
+                    var idx = clivmList.IndexOf(clivm);
                     clivm.NewContentAvailable = true;
+                    Program.unityContainer.Resolve<ChatListViewModel>().Items.Move(idx, 1);
+                    Program.unityContainer.Resolve<ChatListViewModel>().OnPropertyChanged("Items");
                     Program.unityContainer.Resolve<ChatListItemViewModel>().OnPropertyChanged("ChannelSelected");
                 }
                 cE.Messages.Add(message);

@@ -3,6 +3,8 @@ using System.Collections.ObjectModel;
 using Microsoft.Practices.Unity;
 using InterfaceGraphique.CommunicationInterface;
 using System.Threading.Tasks;
+using System.ComponentModel;
+using System.Windows.Data;
 
 namespace InterfaceGraphique.Controls.WPF.Chat.Channel
 {

@@ -218,6 +218,7 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
             {
                 ChatListItemViewModel clivm = new ChatListItemViewModel(cE);
                 Program.unityContainer.Resolve<ChatListViewModel>().Items.Add(clivm);
+                Program.unityContainer.Resolve<ChatListViewModel>().Items.Move(Program.unityContainer.Resolve<ChatListViewModel>().Items.Count - 1, 1);
                 OnPropertyChanged("Items");
                 ToggleAddPopup();
                 Name = "";
@@ -297,6 +298,7 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
                     ChannelEntity cE = new ChannelEntity() { Name = username, PrivateUserId = othersId, IsPrivate = true };
                     ChatListItemViewModel clivm = new ChatListItemViewModel(cE);
                     Program.unityContainer.Resolve<ChatListViewModel>().Items.Add(clivm);
+                    Program.unityContainer.Resolve<ChatListViewModel>().Items.Move(Program.unityContainer.Resolve<ChatListViewModel>().Items.Count - 1, 1);
                     OnPropertyChanged("Items");
                     SetAsCurrentChannel(cE);
                 }
