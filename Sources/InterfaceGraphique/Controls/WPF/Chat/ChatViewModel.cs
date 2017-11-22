@@ -213,6 +213,7 @@ namespace InterfaceGraphique.Controls.WPF.Chat
             }
             else
             {
+                System.Diagnostics.Debug.WriteLine("\nSend message from : " + User.Instance.UserEntity.Id + " to " + CurrentChannel.PrivateUserId + "\n");
                 this.chatHub.SendPrivateMessage(new ChatMessage()
                 {
                     MessageValue = MessageTextBox,

@@ -84,7 +84,8 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             ctxTaskFactory.StartNew(() =>
             {
                 FriendList.Remove(FriendList.Single(x => x.Username == ex_friend.Username));
-                Program.unityContainer.Resolve<AddFriendListViewModel>().Items.Add(new UserEntity { Id = ex_friend.Id, Username = ex_friend.Username, Profile = ex_friend.Profile, IsSelected = false });
+                //TODO add to lapins list
+                //Program.unityContainer.Resolve<AddFriendListViewModel>().Items.Add(new UserEntity { Id = ex_friend.Id, Username = ex_friend.Username, Profile = ex_friend.Profile, IsSelected = false });
             }).Wait();
         }
     }

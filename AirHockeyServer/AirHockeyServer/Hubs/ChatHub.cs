@@ -49,9 +49,9 @@ namespace AirHockeyServer.Services.ChatServiceServer
         public void SendPrivateMessage(ChatMessageEntity message, int senderId, int receptorId)
         {
             //Envoi le message au destinataire
-            if(ConnectionsMapping.ContainsKey(receptorId))
+            if(ConnectionsMapping.ContainsKey(receptorId) && ConnectionsMapping.ContainsKey(senderId))
             {
-                Clients.Client(ConnectionsMapping[receptorId]).ChatMessageReceivedPrivate(message, receptorId);
+                Clients.Client(ConnectionsMapping[receptorId]).ChatMessageReceivedPrivate(message, senderId);
                 //Envoi le message a l'emetteur
                 Clients.Client(ConnectionsMapping[senderId]).ChatMessageReceivedPrivate(message, receptorId);
             }
@@ -75,11 +75,11 @@ namespace AirHockeyServer.Services.ChatServiceServer
             }
         }
 
-        public async Task<bool> CreatePrivateChannel(string name, int othersId)
+        public async Task<bool> CreatePrivateChannel(string name, int myId, int othersId)
         {
             if (ConnectionsMapping.ContainsKey(othersId))
             {
-                await Clients.Client(ConnectionsMapping[othersId]).PrivateChannelCreated(name);
+                await Clients.Client(ConnectionsMapping[othersId]).PrivateChannelCreated(name, myId);
                 return true;
             } 
             else
