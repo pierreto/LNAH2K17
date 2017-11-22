@@ -37,6 +37,7 @@ class MagasinViewController: UIViewController, UICollectionViewDelegate, UIColle
     @IBOutlet weak var resetCartButton: UIButton!
     @IBOutlet weak var buyElementsButton: UIButton!
     
+    @IBOutlet weak var errorMessage: UILabel!
     @IBOutlet weak var loadingSpinner: UIActivityIndicatorView!
     
     let gradient = CAGradientLayer()
@@ -70,6 +71,7 @@ class MagasinViewController: UIViewController, UICollectionViewDelegate, UIColle
         
         // Définir les informations de l'usager courant
         self.loadUserInfo()
+        self.loadUserStoreItems()
     }
     
     private func loadStoreItems() {
@@ -111,8 +113,21 @@ class MagasinViewController: UIViewController, UICollectionViewDelegate, UIColle
                 self.loadingDone()
         }
     }
-
     
+    private func loadUserStoreItems() {
+        self.storeService.getUserStoreItems().then { items -> Void in
+            // Mettre à jour les items achetés par l'utilisateur
+            for item in items {
+                self.storeItems.first(where: { $0.getId() == item.getId() })?.setIsBoughtByUser(isBoughtByUser: true)
+            }
+            
+            DispatchQueue.main.async(execute: { () -> Void in
+                // Reload table
+                self.itemCollectionView.reloadData()
+            })
+        }
+    }
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return storeItems.count
     }
@@ -120,15 +135,16 @@ class MagasinViewController: UIViewController, UICollectionViewDelegate, UIColle
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = itemCollectionView.dequeueReusableCell(withReuseIdentifier: "itemCell", for: indexPath) as! ItemCollectionViewCell
         let storeItem = storeItems[indexPath.item]
+        
         cell.itemImage.image = UIImage.init(named: storeItem.getTextureName())
         cell.itemName.text = storeItem.getName()
         cell.itemPrice.text = storeItem.getPrice().description
         cell.itemDescription.text = storeItem.getDescription()
+        cell.isUserInteractionEnabled = !storeItem.getIsBoughtByUser()
+        cell.itemAchete.isHidden = !storeItem.getIsBoughtByUser()
         
         let selectedBgItem = UIView()
-        // let unavailableBgItem = UIView()
-        selectedBgItem.backgroundColor = UIColor(red: 102.0/255.0, green: 178.0/255.0, blue: 255.0/255.0, alpha: 0.5)
-        // unavailableBgItem.backgroundColor = UIColor(red: 102.0/255.0, green: 178.0/255.0, blue: 255.0/255.0, alpha: 1)
+        selectedBgItem.backgroundColor = UIColor(red: 99.0/255.0, green: 205.0/255.0, blue: 251.0/255.0, alpha: 0.5)
         cell.selectedBackgroundView = selectedBgItem
         
         return cell

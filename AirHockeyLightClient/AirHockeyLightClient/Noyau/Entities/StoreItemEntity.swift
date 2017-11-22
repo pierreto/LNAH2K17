@@ -26,6 +26,7 @@ class StoreItemEntity : Entity {
     private var imageUrl: String = ""
     private var id: Int = 0
     private var isGameEnabled: Bool = false
+    private var isBougthByUser: Bool = false
     
     func fromJSON(json: JSON) {
         self.name = json["Name"].string!
@@ -92,6 +93,15 @@ class StoreItemEntity : Entity {
     func setIsGameEnabled(isGameEnabled: Bool) {
         self.isGameEnabled = isGameEnabled
     }
+    
+    func getIsBoughtByUser() -> Bool {
+        return self.isBougthByUser
+    }
+    
+    func setIsBoughtByUser(isBoughtByUser: Bool) {
+        self.isBougthByUser = isBoughtByUser
+    }
+    
     
 }
 

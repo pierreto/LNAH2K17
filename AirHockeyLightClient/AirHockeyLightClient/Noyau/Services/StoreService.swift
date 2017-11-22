@@ -35,7 +35,7 @@ class StoreService {
                             let json = JSON(jsonValue)
                             
                             for jsonItem in json.array! {
-                                var storeItem = StoreItemEntity()
+                                let storeItem = StoreItemEntity()
                                 storeItem.fromJSON(json: jsonItem)
                                 storeItems.append(storeItem)
                             }
@@ -44,6 +44,39 @@ class StoreService {
                         }
                         else {
                             print("Error: fetch store items element failed.")
+                            fullfil(storeItems)
+                        }
+                }
+            }
+        }
+        else {
+            return Promise(value: storeItems)
+        }
+    }
+    
+    func getUserStoreItems() -> Promise<[StoreItemEntity]> {
+        var storeItems = [StoreItemEntity]()
+        
+        if self.clientConnection.getConnection() != nil && self.clientConnection.connected! {
+            return Promise { fullfil, error in
+                Alamofire.request("http://" + self.clientConnection.getIpAddress()! + ":63056/api/store/"
+                    + self.clientConnection.getId()!.description, method: .get)
+                    .responseJSON { response in
+                        if let jsonValue = response.result.value {
+                            print("Success: fetch user store items success.")
+                            let json = JSON(jsonValue)
+                            
+                            for jsonItem in json.array! {
+                                let storeItem = StoreItemEntity()
+                                storeItem.fromJSON(json: jsonItem)
+                                storeItem.setIsBoughtByUser(isBoughtByUser: true)
+                                storeItems.append(storeItem)
+                            }
+                            
+                            fullfil(storeItems)
+                        }
+                        else {
+                            print("Error: fetch user store items element failed.")
                             fullfil(storeItems)
                         }
                 }

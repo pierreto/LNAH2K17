@@ -164,14 +164,17 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     func convertDate(dateString: String) -> String {
-         let dateFormatter = DateFormatter()
-         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss a"
-         let date = dateFormatter.date(from: dateString)
-         
-         dateFormatter.dateFormat = "d MMM yyyy"
-         let dateString = dateFormatter.string(from: date!)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss a"
+        let date = dateFormatter.date(from: dateString)
         
-        return dateString
+        dateFormatter.dateFormat = "d MMM yyyy"
+        if date != nil {
+            return dateFormatter.string(from: date!)
+        }
+        else {
+            return dateString
+        }
     }
     
     func imageTapped(gesture: UIGestureRecognizer) {
