@@ -10,7 +10,6 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
         #region Private Properties
         private ChannelEntity channelEntity;
         private string profile;
-        private bool isPrivateChannel;
         private bool newContentAvailable;
         #endregion
 
@@ -37,16 +36,6 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
             set
             {
                 ChannelEntity.IsSelected = value;
-                this.OnPropertyChanged();
-            }
-        }
-
-        public bool IsPrivateChannel
-        {
-            get => isPrivateChannel;
-            set
-            {
-                isPrivateChannel = value;
                 this.OnPropertyChanged();
             }
         }

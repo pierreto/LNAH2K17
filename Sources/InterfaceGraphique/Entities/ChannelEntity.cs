@@ -19,6 +19,10 @@ namespace InterfaceGraphique.Entities
 
         public bool IsSelected { get; set; }
 
+        public bool IsPrivate { get; set; }
+
+        public int PrivateUserId { get; set; }
+
         public ChannelEntity()
         {
             this.Members = new List<MemberEntity>();

@@ -52,7 +52,7 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
         {
             ctxTaskFactory.StartNew(() =>
             {
-                this.Items.Add(new ChatListItemViewModel(new ChannelEntity { Name = channelName }) { IsPrivateChannel = true });
+                this.Items.Add(new ChatListItemViewModel(new ChannelEntity { Name = channelName, IsPrivate = true }));
             }).Wait();
         }
 

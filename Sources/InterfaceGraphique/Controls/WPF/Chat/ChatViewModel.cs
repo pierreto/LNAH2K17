@@ -203,13 +203,21 @@ namespace InterfaceGraphique.Controls.WPF.Chat
                     SentByMe = false
                 });
             }
-            else
+            else if (CurrentChannel != MainChannel && !CurrentChannel.IsPrivate)
             {
                 this.chatHub.SendChannel(new ChatMessage()
                 {
                     MessageValue = MessageTextBox,
                     SentByMe = false
                 }, CurrentChannel.Name);
+            }
+            else
+            {
+                this.chatHub.SendPrivateMessage(new ChatMessage()
+                {
+                    MessageValue = MessageTextBox,
+                    SentByMe = false
+                }, User.Instance.UserEntity.Id, CurrentChannel.PrivateUserId);
             }
             MessageTextBox = "";
         }
@@ -308,7 +316,20 @@ namespace InterfaceGraphique.Controls.WPF.Chat
 
         private void NewPrivateMessage(ChatMessage message, int senderId)
         {
-
+            var items = Program.unityContainer.Resolve<ChatListViewModel>().Items;
+            ChannelEntity cE = items.Where(s => s.ChannelEntity.PrivateUserId == senderId).First().ChannelEntity;
+            ctxTaskFactory.StartNew(() =>
+            {
+                //If you are not currently on the channel where the message is being sent, you receive a notification
+                if (CurrentChannel != cE)
+                {
+                    var clivmList = Program.unityContainer.Resolve<ChatListViewModel>().Items;
+                    var clivm = clivmList.Where(s => s.ChannelEntity == cE).First();
+                    clivm.NewContentAvailable = true;
+                    Program.unityContainer.Resolve<ChatListItemViewModel>().OnPropertyChanged("ChannelSelected");
+                }
+                cE.Messages.Add(message);
+            }).Wait();
         }
         #endregion
 

@@ -94,7 +94,7 @@ namespace InterfaceGraphique.CommunicationInterface
             await chatHubProxy.Invoke<String>("JoinChannel", channelName);
         }
 
-        public async Task SendPrivateMessage(ChatMessage message, int senderId, int receptorId)
+        public async void SendPrivateMessage(ChatMessage message, int senderId, int receptorId)
         {
             message.Sender = User.Instance.UserEntity.Username;
             message.TimeStamp = DateTime.Now;
