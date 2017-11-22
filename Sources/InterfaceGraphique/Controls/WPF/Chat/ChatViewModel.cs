@@ -141,6 +141,7 @@ namespace InterfaceGraphique.Controls.WPF.Chat
             tabIcon = "AngleDown";
             chatHub.NewMessage += NewMessage;
             chatHub.NewMessageFromChannel += NewMessageFromChannel;
+            chatHub.NewPrivateMessage += NewPrivateMessage;
             ctxTaskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
             currentChannel = CurrentChannel;
             ChatTabHeight = CHAT_TAB_HEIGHT;
@@ -303,6 +304,11 @@ namespace InterfaceGraphique.Controls.WPF.Chat
                 }
                 cE.Messages.Add(message);
             }).Wait();
+        }
+
+        private void NewPrivateMessage(ChatMessage message, int senderId)
+        {
+
         }
         #endregion
 
