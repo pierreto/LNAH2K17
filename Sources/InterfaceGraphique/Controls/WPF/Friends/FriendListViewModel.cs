@@ -36,7 +36,7 @@ namespace InterfaceGraphique.Controls.WPF.Friends
 
         public GameRequestManager GameRequestManager { get; }
 
-        public override async void InitializeViewModel()
+        public async Task Init()
         {
             Minimize();
             var friends = await friendsHub.GetAllFriends();
@@ -87,6 +87,11 @@ namespace InterfaceGraphique.Controls.WPF.Friends
                 //TODO add to lapins list
                 //Program.unityContainer.Resolve<AddFriendListViewModel>().Items.Add(new UserEntity { Id = ex_friend.Id, Username = ex_friend.Username, Profile = ex_friend.Profile, IsSelected = false });
             }).Wait();
+        }
+
+        public override void InitializeViewModel()
+        {
+            //Rien
         }
     }
 }

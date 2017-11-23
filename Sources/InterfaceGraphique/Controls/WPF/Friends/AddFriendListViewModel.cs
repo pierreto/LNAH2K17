@@ -88,7 +88,7 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             List<UserEntity> users = await this.userService.GetAllUsers();
             //Don't add yourself or friends you already have
             //foreach (UserEntity user in users.Where(x => x.Username != User.Instance.UserEntity.Username))
-            foreach (UserEntity user in users.Where(x => x.Username != User.Instance.UserEntity.Username && !Program.unityContainer.Resolve<FriendListViewModel>().FriendList.Any(y => x.Username == y.Username)))
+            foreach (UserEntity user in users.Where(x => x.Username != User.Instance.UserEntity.Username && Program.unityContainer.Resolve<FriendListViewModel>().FriendList.All(y =>x.Username != y.Username)))
             {
                 Items.Add(user);
             }
