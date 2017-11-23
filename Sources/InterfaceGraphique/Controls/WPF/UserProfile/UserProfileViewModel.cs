@@ -53,6 +53,19 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
             OnPropertyChanged("IsFriendProfile");
 
             int profileId = isFriendProfile ? userId : User.Instance.UserEntity.Id;
+            var allUsers = await UserService.GetAllUsers();
+            Users = new List<UserViewModel>();
+            completeUserList = new List<UserViewModel>();
+
+
+            foreach (var user in allUsers)
+            {
+                if(user != null && user.Id > 0)
+                {
+                    Users.Add(new UserViewModel(user));
+                    completeUserList.Add(new UserViewModel(user));
+                }
+            }
 
             if (!isFriendProfile)
             {
@@ -74,8 +87,8 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
             }
             else
             {
-                var users = await UserService.GetAllUsers();
-                var friend = users.Find(x => x.Id == userId);
+                
+                var friend = allUsers.Find(x => x.Id == userId);
 
                 UserName = friend.Username;
                 Name = friend.Name;
@@ -261,34 +274,87 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
             User.Instance.Inventory = await StoreService.GetUserStoreItems(User.Instance.UserEntity.Id);
         }
 
-        private int friendId;
-        public int FriendId
+        private string friendSearchRequest;
+        public string FriendSearchRequest
         {
-            get => friendId;
+            get => friendSearchRequest;
             set
             {
-                friendId = value;
+                friendSearchRequest = value;
+                SearchLetterAction();
                 OnPropertyChanged();
             }
         }
 
-        private ICommand searchFriend;
-        public ICommand SearchFriend
+        private List<UserViewModel> completeUserList;
+        private List<UserViewModel> users;
+        public List<UserViewModel> Users
+        {
+            get => users;
+            set
+            {
+                users = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool autocompleteEnable;
+        public String AutocompleteVisibility
+        {
+            get => autocompleteEnable ? "Visible" : "Hidden";
+        }
+
+        private void SearchLetterAction()
+        {
+            autocompleteEnable = string.IsNullOrEmpty(FriendSearchRequest) ? false : true;
+            OnPropertyChanged("AutocompleteVisibility");
+            Users = completeUserList.Where(x => x.Name.ToLower().Contains(FriendSearchRequest) || x.UserName.ToLower().Contains(FriendSearchRequest)).ToList();
+        }
+
+        private int friendId;
+        private ICommand autocomplete;
+        public ICommand UserSelectionFromAutocomplete
         {
             get
             {
-                return searchFriend ??
-                                       (searchFriend = new RelayCommandAsync(SearchFriendAction, (o) => true));
+                return autocomplete ??
+                                       (autocomplete = new DelegateCommand<UserViewModel>(AutocompleteAction, (o) => true));
             }
+        }
+
+        private async void AutocompleteAction(UserViewModel user)
+        {
+            FriendSearchRequest = user.UserName;
+            FriendSearchRequest = "";
+            autocompleteEnable = false;
+            OnPropertyChanged("AutocompleteVisibility");
+            friendId = user.Id;
+            await SearchFriendAction();
         }
 
         private async Task SearchFriendAction()
         {
-            if (friendId > -1)
+            if (friendId != 0)
             {
                 Reset();
                 await Initialize(friendId);
             }
+        }
+
+        private ICommand lostFocus;
+        public ICommand LostFocus
+        {
+            get
+            {
+                return lostFocus ??
+                    (lostFocus = new RelayCommand(AutocompleteLostFocus));
+            }
+        }
+
+        private void AutocompleteLostFocus()
+        {
+            autocompleteEnable = false;
+            OnPropertyChanged("AutocompleteVisibility");
         }
 
         private ICommand backProfile;
@@ -303,6 +369,7 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
 
         public async Task BackToUserProfile()
         {
+            FriendSearchRequest = "";
             Reset();
             await Initialize();
         }

@@ -53,17 +53,6 @@
                         <fa:FontAwesome Icon="ArrowLeft"></fa:FontAwesome>
                     </Button.Content>
                 </Button>
-                <StackPanel Grid.Column="1" Orientation="Horizontal">
-                    <TextBox Width="100" Text="{Binding FriendId}"></TextBox>
-                    <Button Command="{Binding SearchFriend}">
-                        <Button.Content>
-                            <fa:FontAwesome Icon="Search"></fa:FontAwesome>
-                        </Button.Content>
-                    </Button>
-                    <Button Command="{Binding BackProfile}" Visibility="{Binding IsFriendProfile}">
-                        <TextBlock Text="Back To My Profile"></TextBlock>
-                    </Button>
-                </StackPanel>
             </Grid>
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
@@ -73,16 +62,68 @@
                 <Button Style="{StaticResource NoHover}" Grid.Column="0" Command="{Binding ChangeProfilePictureCommand}">
                     <Image Source="{Binding ProfilePicture, Converter={convert:Base64ImageConverter}}" Cursor="Hand"></Image>
                 </Button>
-                <StackPanel Grid.Column="1">
-                    <TextBlock Text="Pseudonyme" FontSize="16" Foreground="White" FontWeight="Bold"></TextBlock>
-                    <TextBlock Text="{Binding UserName}" FontSize="12" Foreground="SkyBlue" Margin="0,5,0,0"></TextBlock>
+                <Grid Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Column="0">
 
-                    <TextBlock Text="Nom" FontSize="16" Foreground="White" FontWeight="Bold" Margin="0,30,0,0"></TextBlock>
-                    <TextBlock Text="{Binding Name}" FontSize="12" Foreground="SkyBlue" Margin="0,5,0,0"></TextBlock>
+                        <TextBlock Text="Pseudonyme" FontSize="16" Foreground="White" FontWeight="Bold"></TextBlock>
+                        <TextBlock Text="{Binding UserName}" FontSize="12" Foreground="SkyBlue" Margin="0,5,0,0"></TextBlock>
 
-                    <TextBlock Text="Adresse Courriel" FontSize="16" Foreground="White" FontWeight="Bold" Margin="0,30,0,0"></TextBlock>
-                    <TextBlock Text="{Binding Email}" FontSize="12" Foreground="SkyBlue" Margin="0,5,0,0"></TextBlock>
-                </StackPanel>
+                        <TextBlock Text="Nom" FontSize="16" Foreground="White" FontWeight="Bold" Margin="0,30,0,0"></TextBlock>
+                        <TextBlock Text="{Binding Name}" FontSize="12" Foreground="SkyBlue" Margin="0,5,0,0"></TextBlock>
+
+                        <TextBlock Text="Adresse Courriel" FontSize="16" Foreground="White" FontWeight="Bold" Margin="0,30,0,0"></TextBlock>
+                        <TextBlock Text="{Binding Email}" FontSize="12" Foreground="SkyBlue" Margin="0,5,0,0"></TextBlock>
+                    </StackPanel>
+                    <Grid Grid.Column="1" HorizontalAlignment="Right">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="20*"></RowDefinition>
+                            <RowDefinition Height="80*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0" Orientation="Horizontal">
+                                <TextBox Grid.Column="0" Width="100" Text="{Binding FriendSearchRequest, UpdateSourceTrigger=PropertyChanged}"
+                                         Foreground="White" FontSize="14">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="LostFocus">
+                                            <i:InvokeCommandAction Command="{Binding LostFocus}"></i:InvokeCommandAction>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </TextBox>
+                                <TextBlock Foreground="White" FontSize="14">
+                                    <fa:FontAwesome Icon="Search"></fa:FontAwesome>
+                                </TextBlock>
+                            </StackPanel>
+                            <Button Grid.Column="1" Command="{Binding BackProfile}" Visibility="{Binding IsFriendProfile}">
+                                <TextBlock Text="Back To My Profile"></TextBlock>
+                            </Button>
+                        </Grid>
+                        <ListView Grid.Row="1" ItemsSource="{Binding Users}" Visibility="{Binding AutocompleteVisibility}"
+                                  Background="LightGray">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding UserName}" Foreground="White" FontSize="12"></TextBlock>
+                                        <TextBlock Text="{Binding Path=Name, StringFormat='{}({0})'}" Foreground="White" FontSize="12" Margin="5 0 0 0"></TextBlock>
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext.UserSelectionFromAutocomplete}" 
+                                                           CommandParameter="{Binding}"></i:InvokeCommandAction>
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
+                </Grid>
             </Grid>
             <Grid Grid.Row="2" Margin="0,20,0,0">
                 <Grid.ColumnDefinitions>
@@ -129,13 +170,16 @@
             </Grid>
         </Grid>
         <Border Grid.Column="1" Grid.Row="0" BorderBrush="white" BorderThickness="2 0 0 0">
-            <StackPanel>
-                <TextBlock Text="Inventaire" Foreground="White" FontSize="15" Margin="0 0 0 10"></TextBlock>
+            <StackPanel Margin="10 25 0 0">
+                <TextBlock Text="Inventaire" Foreground="White" FontSize="25" Margin="0 0 0 10" HorizontalAlignment="Stretch" TextAlignment="Center"></TextBlock>
                 <ListView ItemsSource="{Binding Items}" x:Name="storeItems">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" Margin="5 0 0 0">
                                 <CheckBox IsChecked="{Binding Path=IsGameEnabled, Mode=TwoWay}">
+                                    <CheckBox.LayoutTransform>
+                                        <ScaleTransform ScaleX="1.5" ScaleY="1.5" />
+                                    </CheckBox.LayoutTransform>
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="Checked">
                                             <i:InvokeCommandAction Command="{Binding ElementName=storeItems, Path=DataContext.SelectCommand}"
@@ -147,8 +191,8 @@
                                         </i:EventTrigger>
                                     </i:Interaction.Triggers>
                                 </CheckBox>
-                                <Image Source="{Binding Path=ImageUrl}" Margin="10 0 0 0" Height="20" Width="20"></Image>
-                                <TextBlock Text="{Binding Path=Name}" Margin="5 0 0 0" Foreground="White" FontSize="15"></TextBlock>
+                                <Image Source="{Binding Path=ImageUrl}" Margin="10 0 0 0" Height="40" Width="40"></Image>
+                                <TextBlock Text="{Binding Path=Name}" Margin="5 0 0 0" Foreground="White" FontSize="20" VerticalAlignment="Center"></TextBlock>
                             </StackPanel>
                         </DataTemplate>
                     </ListView.ItemTemplate>
