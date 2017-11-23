@@ -71,6 +71,26 @@ namespace AirHockeyServer.Repositories
             }
         }
 
+        public async Task<IEnumerable<MapEntity>> GetFullMaps()
+        {
+            try
+            {
+                using (MyDataContext DC = new MyDataContext())
+                {
+                    var query = from map in DC.MapsTable select map;
+                    var maps = await Task<List<MapPoco>>.Run(
+                        () => query.ToList());
+
+                    return MapperManager.Map<List<MapPoco>, List<MapEntity>>(maps);
+                }
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("[MapRepository.GetFullMaps] " + e.ToString());
+                return null;
+            }
+        }
+
         public async Task<int?> CreateNewMap(MapEntity map)
         {
             try
