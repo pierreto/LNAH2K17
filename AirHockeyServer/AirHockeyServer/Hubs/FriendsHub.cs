@@ -72,9 +72,9 @@ namespace AirHockeyServer.Hubs
             string friendConnection = ConnectionMapper.GetConnection(friend.Id);
             if (friendRequest != null && friendConnection.Length > 0) 
             {
-                Clients.Client(friendConnection).FriendRequestEvent(friendRequest);
                 SetIsConnected(friendRequest.Friend);
                 SetIsConnected(friendRequest.Requestor);
+                Clients.Client(friendConnection).FriendRequestEvent(friendRequest);
             }
 
             return friendRequest;
@@ -90,13 +90,15 @@ namespace AirHockeyServer.Hubs
             string myConnection = ConnectionMapper.GetConnection(request.Friend.Id);
             if (relation != null)
             {
+                SetIsConnected(request.Friend);
+                SetIsConnected(request.Requestor);
                 if (friendConnection.Length > 0)
                 {
                     Clients.Client(friendConnection).NewFriendEvent(request.Friend);
                 }
+              
                 Clients.Client(myConnection).NewFriendEvent(request.Requestor);
-                SetIsConnected(relation.Friend);
-                SetIsConnected(relation.Requestor);
+
             }
 
             return relation;
@@ -119,6 +121,8 @@ namespace AirHockeyServer.Hubs
             string friendConnection = ConnectionMapper.GetConnection(request.Friend.Id);
             if (canceled_request && friendConnection.Length > 0)
             {
+                SetIsConnected(request.Friend);
+                SetIsConnected(request.Requestor);
                 Clients.Client(friendConnection).CanceledFriendRequestEvent(request);
             }
 
@@ -135,9 +139,12 @@ namespace AirHockeyServer.Hubs
             if (removed_friend)
             {
                 Clients.Client(ConnectionMapper.GetConnection(user.Id)).RemovedFriendEvent(ex_friend);
-               
+
                 if (ex_friendConnection.Length > 0)
+                {
+                    SetIsConnected(user);
                     Clients.Client(ex_friendConnection).RemovedFriendEvent(user);
+                }
             }
 
             return removed_friend;
