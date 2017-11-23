@@ -35,14 +35,28 @@ namespace AirHockeyServer.Hubs
         public async Task<List<UserEntity>> GetAllFriends(UserEntity user)
         {
             List<UserEntity> allFriend = await FriendService.GetAllFriends(user);
-            allFriend.ForEach((friend =>
+            return SetIsConnected(allFriend);
+        }
+         
+        private List<UserEntity> SetIsConnected(List<UserEntity> users)
+        {
+            users.ForEach((friend =>
             {
                 if (this.FriendService.UsersIdConnected.Contains(friend.Id))
                 {
                     friend.IsConnected = true;
                 }
             }));
-            return allFriend;
+            return users;
+        }
+        private UserEntity SetIsConnected(UserEntity user)
+        {
+
+            if (user !=null && this.FriendService.UsersIdConnected.Contains(user.Id))
+            {
+                user.IsConnected = true;
+            }
+            return user;
         }
 
         public async Task<List<FriendRequestEntity>> GetAllPendingRequests(UserEntity user)
@@ -60,6 +74,8 @@ namespace AirHockeyServer.Hubs
             if (friendRequest != null && friendConnection.Length > 0) 
             {
                 Clients.Client(friendConnection).FriendRequestEvent(friendRequest);
+                SetIsConnected(friendRequest.Friend);
+                SetIsConnected(friendRequest.Requestor);
             }
 
             return friendRequest;
@@ -80,6 +96,8 @@ namespace AirHockeyServer.Hubs
                     Clients.Client(friendConnection).NewFriendEvent(request.Friend);
                 }
                 Clients.Client(myConnection).NewFriendEvent(request.Requestor);
+                SetIsConnected(relation.Friend);
+                SetIsConnected(relation.Requestor);
             }
 
             return relation;
@@ -87,6 +105,8 @@ namespace AirHockeyServer.Hubs
 
         public async Task<FriendRequestEntity> RefuseFriendRequest(FriendRequestEntity request)
         {
+            SetIsConnected(request.Friend);
+            SetIsConnected(request.Requestor);
             return await FriendService.RefuseFriendRequest(request);
             // TODO ? envoyer un event pour pouvoir ajouter a la liste d'amis a ajouter quand on refuse qqn
         }

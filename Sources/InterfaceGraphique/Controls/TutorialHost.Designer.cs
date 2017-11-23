@@ -29,17 +29,17 @@
         private void InitializeComponent()
         {
             this.elementHost1 = new System.Windows.Forms.Integration.ElementHost();
-            this.tutorialView1 = new InterfaceGraphique.Controls.WPF.Tutorial.TutorialView();
             this.SuspendLayout();
             // 
             // elementHost1
             // 
+            this.elementHost1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.elementHost1.Location = new System.Drawing.Point(0, 0);
             this.elementHost1.Name = "elementHost1";
             this.elementHost1.Size = new System.Drawing.Size(1178, 727);
             this.elementHost1.TabIndex = 0;
             this.elementHost1.Text = "elementHost1";
-            this.elementHost1.Child = this.tutorialView1;
+            this.elementHost1.Child = null;
             // 
             // TutorialHost
             // 
