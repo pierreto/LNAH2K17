@@ -123,7 +123,7 @@ namespace InterfaceGraphique.CommunicationInterface
 
         public async Task Logout()
         {
-            await gameHubProxy.Invoke("LeaveRoom", gameGuid);
+            //await gameHubProxy.Invoke("LeaveRoom", gameGuid);
 
             //gameHubProxy?.Invoke("Disconnect", User.Instance.UserEntity.Username).Wait();
         }

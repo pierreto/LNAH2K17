@@ -312,7 +312,15 @@ void ModeleEtatJeu::moveMaillet() {
 			float Z = jv_.zSpeed(position, rondelle_->obtenirPositionRelative(), pMidRight_, testCase, aiSpeed_, aiPassivity_);
 
 			position += glm::vec3(copysign(sqrt(pow(X, 2.0f) / 2.0f), X), 0, copysign(sqrt(pow(Z, 2.0f) / 2.0f), Z));
-			tryNewPosition(maillet2_, position, segmentsRight_);
+
+			NoeudMaillet* mailletToMove = maillet2_;
+			if (onlineClientType_ != ModeleEtatJeu::OFFLINE_GAME)
+			{
+				if (currentOpponentType_ == ModeleEtatJeu::SLAVE) {
+					mailletToMove = maillet1_;
+				}
+			}
+			tryNewPosition(mailletToMove, position, segmentsRight_);
 		}
 	}
 }

@@ -47,6 +47,7 @@ namespace InterfaceGraphique.Game.GameState
             this.gameHub.NewPositions += OnNewGamePositions;
             this.gameHub.NewGoal += OnNewGoal;
             this.gameHub.GameOver += EndGame;
+            this.gameHub.DisconnectedEvent += OnDisconnexion;
 
             this.gameHub.InitialiseGame(gameEntity.GameId);
             selectedMap = gameEntity.SelectedMap;
