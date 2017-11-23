@@ -6,10 +6,13 @@ using Prism.Commands;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Windows.Input;
 
 namespace InterfaceGraphique.Controls.WPF.UserProfile
@@ -41,7 +44,7 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
             PointsNb = 0;
             GameWon = 0;
             TournamentWon = 0;
-            ProfilePictureUrl = Directory.GetCurrentDirectory() + "\\media\\image\\default_profile_picture.png";
+            ProfilePicture = null;
         }
 
         public async Task Initialize(int userId = 0)
@@ -56,7 +59,8 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
                 UserName = User.Instance.UserEntity.Username;
                 Name = User.Instance.UserEntity.Name;
                 Email = User.Instance.UserEntity.Email;
-
+                CreationDate = User.Instance.UserEntity.Date;
+                ProfilePicture = User.Instance.UserEntity.Profile;
                 var items = await StoreService.GetUserStoreItems(User.Instance.UserEntity.Id);
 
                 Items = new List<ItemViewModel>();
@@ -76,6 +80,8 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
                 UserName = friend.Username;
                 Name = friend.Name;
                 Email = friend.Email;
+                CreationDate = friend.Date;
+                ProfilePicture = friend.Profile;
             }
 
             var achievements = await PlayerStatsService.GetPlayerAchivements(profileId);
@@ -98,17 +104,6 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
             set
             {
                 achievements = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private string profilePictureUrl;
-        public string ProfilePictureUrl
-        {
-            get => profilePictureUrl;
-            set
-            {
-                profilePictureUrl = value;
                 OnPropertyChanged();
             }
         }
@@ -175,6 +170,17 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
             set
             {
                 gameWon = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string profilePicture;
+        public string ProfilePicture
+        {
+            get => profilePicture;
+            set
+            {
+                profilePicture = value;
                 OnPropertyChanged();
             }
         }
@@ -307,5 +313,49 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
             get => isFriendProfile ? "Visible" : "Hidden";
         }
 
+        private ICommand changeProfilePictureCommand;
+        public ICommand ChangeProfilePictureCommand
+        {
+            get
+            {
+                return changeProfilePictureCommand ?? (changeProfilePictureCommand = new RelayCommandAsync(ChangeProfilePicture));
+            }
+        }
+
+        private async Task ChangeProfilePicture()
+        {
+            using (OpenFileDialog dlg = new OpenFileDialog())
+            {
+                dlg.Title = "Open Image";
+                dlg.Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png";
+
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    System.Diagnostics.Debug.WriteLine(dlg.FileName);
+                    Image img = Image.FromFile(dlg.FileName);
+                    using (MemoryStream m = new MemoryStream())
+                    {
+                        img.Save(m, img.RawFormat);
+                        byte[] imageBytes = m.ToArray();
+
+                        // Convert byte[] to Base64 String
+                        string base64String = Convert.ToBase64String(imageBytes);
+                        if (base64String.Length <= 65535)
+                        {
+                            UserEntity uE = new UserEntity { Profile = base64String };
+                            var response = await Program.client.PutAsJsonAsync(Program.client.BaseAddress + "api/user/" + User.Instance.UserEntity.Id.ToString(), uE);
+                            if (response.IsSuccessStatusCode)
+                            {
+                                ProfilePicture = base64String;
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("La taille maximale de l'image est dépassée!", "Image", MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk);
+                        }
+                    }
+                }
+            }
+        }
     }
 }

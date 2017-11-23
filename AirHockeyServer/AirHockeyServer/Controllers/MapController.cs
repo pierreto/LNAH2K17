@@ -41,7 +41,7 @@ namespace AirHockeyServer.Controllers
                     string gameId = EditionHub.ObtainEditionGroupIdentifier((int)action.Id);
                     if (editionService.UsersPerGame.ContainsKey(gameId))
                     {
-                        action.CurrentNumberOfPlayer = editionService.UsersPerGame[gameId].Count;
+                        action.CurrentNumberOfPlayer = editionService.UsersPerGame[gameId].users.Count;
 
                     }
                     else
@@ -82,6 +82,21 @@ namespace AirHockeyServer.Controllers
             {
                 MapEntity map = await MapService.GetMap(id);
                 return HttpResponseGenerator.CreateSuccesResponseMessage(HttpStatusCode.OK, map);
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
+        }
+
+        [HttpGet]
+        [Route("api/maps/remove/{id}")]
+        public async Task<HttpResponseMessage> RemoveMap(int id)
+        {
+            try
+            {
+                bool result = await MapService.RemoveMap(id);
+                return HttpResponseGenerator.CreateSuccesResponseMessage(HttpStatusCode.OK, result);
             }
             catch
             {

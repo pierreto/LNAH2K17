@@ -12,7 +12,7 @@ namespace AirHockeyServer.Pocos
         public int UserId { get; set; }
 
         [System.Data.Linq.Mapping.Column(Name = "password")]
-        public string Password { get; private set; }
+        public string Password { get; set; }
 
         public UserPoco User { get; set; }
     }

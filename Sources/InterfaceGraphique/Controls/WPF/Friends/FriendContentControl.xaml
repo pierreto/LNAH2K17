@@ -8,16 +8,20 @@
              xmlns:converters="clr-namespace:InterfaceGraphique.Controls.WPF.Converters"
              xmlns:fa="http://schemas.fontawesome.io/icons/"
              xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
-
              mc:Ignorable="d" 
              d:DesignHeight="546" d:DesignWidth="200" Background="#FF32373C" >
+    
     <UserControl.Resources>
         <ResourceDictionary>
+
             <DataTemplate x:Name="FriendList" DataType="{x:Type local:FriendListViewModel}">
                 <local:FriendList DataContext="{Binding}"/>
             </DataTemplate>
             <DataTemplate x:Name="AddUserView" DataType="{x:Type local:AddUserViewModel}">
                 <local:AddUserView DataContext="{Binding}"/>
+            </DataTemplate>
+            <DataTemplate x:Name="FriendRequestListView" DataType="{x:Type local:FriendRequestListViewModel}">
+                <local:FriendRequestListView DataContext="{Binding}"/>
             </DataTemplate>
             <converters:SizePercentageConverter x:Key="PercentageConverter" d:IsDataSource="True" />
 
@@ -25,40 +29,34 @@
             <Style TargetType="{x:Type dragablz:TabablzControl}" BasedOn="{StaticResource MaterialDesignTabablzControlStyle}" />
             <Style x:Key="mdTabHeader" TargetType="{x:Type dragablz:DragablzItem}" BasedOn="{StaticResource MaterialDesignDragableTabItemStyle}">
                 <Setter Property="Width" Value="{Binding Converter={StaticResource PercentageConverter}, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type dragablz:TabablzControl}},Path=ActualWidth}" />
+                <Setter Property="FontFamily"  Value="pack://application:,,,/fonts/#FontAwesome" />
             </Style>
             <ResourceDictionary.MergedDictionaries >
+                <ResourceDictionary Source="/InterfaceGraphique;component/Resource/appresources.xaml"/>
                 <ResourceDictionary Source="/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
                 <ResourceDictionary Source="/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
                 <ResourceDictionary Source="/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Blue.xaml" />
                 <ResourceDictionary Source="/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Green.xaml" />
-
                 <!-- Include the Dragablz Material Design style -->
                 <ResourceDictionary Source="pack://application:,,,/Dragablz;component/Themes/materialdesign.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-
- 
-           
         </ResourceDictionary>
-
-
     </UserControl.Resources>
+    
     <Grid >
-  
-
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
-        <dragablz:TabablzControl Grid.Row="0" ItemContainerStyle ="{StaticResource mdTabHeader}" BorderBrush="#FF8C8C8C" Grid.ColumnSpan="2"  FixedHeaderCount="2">
-            <!--
-            <dragablz:TabablzControl.InterTabController>
-                <dragablz:InterTabController />
-            </dragablz:TabablzControl.InterTabController>-->
-            <TabItem  Header="Liste d'amis" Grid.Column="0">
-                <ContentControl Content="{Binding Source={StaticResource VMLocator}, Path=FriendListViewModel}"  />
+        <dragablz:TabablzControl Grid.Row="0" ItemContainerStyle ="{StaticResource mdTabHeader}" BorderBrush="#FF8C8C8C" Cursor="Hand">
+            <TabItem  Header="&#xf0c0;" Grid.Column="0" HorizontalAlignment="center">
+                <ContentControl Content="{Binding Source={StaticResource VMLocator}, Path=FriendListViewModel}"/>
             </TabItem>
-            <TabItem Header="Requête d'amis" Grid.Column="1" >
+            <TabItem  Header="&#xf234;"  Grid.Column="1" HorizontalAlignment="center">
                 <ContentControl Content="{Binding Source={StaticResource VMLocator}, Path=AddUserViewModel}" />
+            </TabItem>
+            <TabItem  Header="&#xf0f3;"  Grid.Column="1" HorizontalAlignment="center">
+                <ContentControl Content="{Binding Source={StaticResource VMLocator}, Path=FriendRequestListViewModel}" />
             </TabItem>
         </dragablz:TabablzControl>
         <DockPanel Background="{StaticResource VeryDarkGrayBrush}" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" LastChildFill="True" Height="Auto" Visibility="{Binding Docked, Converter={converters:BooleanToVisibilityConverter}, ConverterParameter=False}" Grid.ColumnSpan="2">

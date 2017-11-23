@@ -3,13 +3,15 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Threading;
 using InterfaceGraphique.CommunicationInterface;
 using InterfaceGraphique.Controls;
 using InterfaceGraphique.Controls.WPF;
 using InterfaceGraphique.Controls.WPF.Chat;
 using InterfaceGraphique.Controls.WPF.Editor;
 using InterfaceGraphique.Controls.WPF.Friends;
-using InterfaceGraphique.Entities;
 using InterfaceGraphique.Menus;
 using Microsoft.Practices.Unity;
 using Application = System.Windows.Forms.Application;
@@ -26,7 +28,9 @@ using InterfaceGraphique.Editor;
 using InterfaceGraphique.Controls.WPF.UserProfile;
 using InterfaceGraphique.Controls.WPF.Store;
 using InterfaceGraphique.Controls.WPF.Tutorial;
+using InterfaceGraphique.Editor.EditorState;
 using InterfaceGraphique.Game.GameState;
+using InterfaceGraphique.Managers;
 
 namespace InterfaceGraphique
 {
@@ -80,7 +84,6 @@ namespace InterfaceGraphique
         private static TutorialHost tutorialHost;
 
         private static Panel openGLPanel;
-        //private static Login login;
         private static TimeSpan dernierTemps;
         private static TimeSpan tempsAccumule;
         private static Stopwatch chrono = Stopwatch.StartNew();
@@ -111,20 +114,26 @@ namespace InterfaceGraphique
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+
+
+
             // When the app exits
             Application.ApplicationExit += AppExit;
+
             // Unhandled exceptions for our Application Domain
-            AppDomain.CurrentDomain.UnhandledException += new System.UnhandledExceptionEventHandler(AppExit);
+            AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionHandler;
+            TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
 
             // Unhandled exceptions for the executing UI thread
-            Application.ThreadException += new System.Threading.ThreadExceptionEventHandler(AppExit);
-
+            Application.ThreadException += ThreadExceptionHandler;
 
             WPFApplication.Start();
 
             InitializeUnityDependencyInjection();
 
-            //tutorialHost = new TutorialHost();
+            tutorialHost = new TutorialHost();
+            editorHost = new EditorHost();
+
             openGLPanel = new Panel();
             formManager = new FormManager();
             homeMenu = new HomeMenu();
@@ -137,7 +146,6 @@ namespace InterfaceGraphique
             creditsMenu = new CreditsMenu();
             lobbyHost = new LobbyHost();
             onlineTournament = new OnlineTournament();
-            editorHost = new EditorHost();
             userProfileMenu = new UserProfileMenu();
             storeMenu = new StoreMenu();
             browser = new Controls.WebBrowser();
@@ -149,19 +157,45 @@ namespace InterfaceGraphique
             Application.Run(formManager);
 
 
-
         }
 
+        private static void ThreadExceptionHandler(object sender, ThreadExceptionEventArgs e)
+        {
+            Debug.Print("Thread exception");
+
+            Debug.Print(e.ToString());
+        }
+
+        private static void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
+        {
+            Debug.Print("TaskScheduler_UnobservedTaskException exception");
+
+            Debug.Print(e.ToString());
+        }
+
+        private static void UnhandledExceptionHandler(object sender, UnhandledExceptionEventArgs e)
+        {
+            Debug.Print("UnhandledExceptionEventArgs exception");
+
+            Debug.Print(e.ToString());
+        }
+        private static void UnhandledDispatcherException(Object sender, DispatcherUnhandledExceptionEventArgs e)
+        {
+            e.Handled = true;
+            Debug.Print(e.ToString());
+
+        }
         private static void AppExit(object sender, EventArgs e)
         {
+            Debug.Print(e.ToString());
+
             HubManager.Instance.Logout();
             if (client.BaseAddress != null)
             {
              client.PostAsJsonAsync(client.BaseAddress + "api/logout", User.Instance.UserEntity);
             }
-            Application.Exit();
         }
-
+     
 
         public static void InitAfterConnection()
         {
@@ -176,8 +210,9 @@ namespace InterfaceGraphique
         {
             unityContainer = new UnityContainer();
 
-            // Service
+            // Managers
             unityContainer.RegisterType<GameManager>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<GameRequestManager>(new ContainerControlledLifetimeManager());
 
             //Hub instantiations
             unityContainer.RegisterType<IBaseHub, ChatHub>(new ContainerControlledLifetimeManager());
@@ -203,20 +238,34 @@ namespace InterfaceGraphique
             unityContainer.RegisterType<HomeViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<EditorViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<FriendListViewModel>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<AddFriendListViewModel>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<FriendRequestListViewModel>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<FriendListItemViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<UserProfileViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<StoreViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<AddUserViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<TutorialViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<MasterGameState>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<SlaveGameState>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<EditorUsersViewModel>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<CreateMapViewModel>(new ContainerControlledLifetimeManager());
+
+
+            unityContainer.RegisterType<OnlineEditorState>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<OfflineEditorState>(new ContainerControlledLifetimeManager());
+
+            unityContainer.RegisterType<SlaveGameState>(new ContainerControlledLifetimeManager());
+
+            unityContainer.RegisterType<EditorViewModel>(new ContainerControlledLifetimeManager());
+
 
             //Rest services instantiations
-            unityContainer.RegisterType<MapService>();
-            unityContainer.RegisterType<UserService>();
+            unityContainer.RegisterType<MapService>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<UserService>(new ContainerControlledLifetimeManager());
 
             //Other services
-            unityContainer.RegisterType<MapManager>();
-            unityContainer.RegisterType<StoreService>();
+            unityContainer.RegisterType<MapManager>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<StoreService>(new ContainerControlledLifetimeManager());
         }
 
         static void ExecuterQuandInactif(object sender, EventArgs e)

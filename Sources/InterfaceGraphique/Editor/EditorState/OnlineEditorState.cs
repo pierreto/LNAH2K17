@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using InterfaceGraphique.CommunicationInterface;
+using InterfaceGraphique.Controls.WPF.Editor;
 using InterfaceGraphique.Entities;
 using InterfaceGraphique.Entities.EditonCommand;
 using InterfaceGraphique.Entities.Editor;
@@ -14,7 +15,7 @@ namespace InterfaceGraphique.Editor.EditorState
 {
     public class OnlineEditorState : AbstractEditorState
     {
-        private double accumTime;
+        private EditorUsersViewModel editorUsersViewModel;
         private EditionHub editionHub;
         private FonctionsNatives.PortalCreationCallback portalCreationCallback;
         private FonctionsNatives.WallCreationCallback wallCreationCallback;
@@ -26,7 +27,7 @@ namespace InterfaceGraphique.Editor.EditorState
 
         private bool inTransformation;
 
-        public OnlineEditorState(EditionHub editionHub)
+        public OnlineEditorState(EditionHub editionHub, EditorUsersViewModel editorUsersViewModel)
         {
             this.editionHub = editionHub;
 
@@ -41,29 +42,29 @@ namespace InterfaceGraphique.Editor.EditorState
             this.selectionEventCallback = CurrentUserSelectedObject;
             this.controlPoinEventCallback = CurrentUserChangedControlPoint;
             this.deleteEventCallback = CurrentUserDeletedNode;
-            this.accumTime = 0;
+
+            this.editorUsersViewModel = editorUsersViewModel;
         }
 
         public override void frameUpdate(double tempsInterAffichage)
         {
 
-            this.accumTime += tempsInterAffichage;
-            if (this.accumTime > 0.1)
-            {
-                FonctionsNatives.setCanSendPreviewToServer(true);
-                this.accumTime = 0;
-            }
+ 
       
         }
 
         private void OnUserLeft(string username)
         {
             FonctionsNatives.removeUser(username);
+
+            editorUsersViewModel.RemoveByUsername(username);
+
         }
 
         private void OnNewUser(OnlineUser user)
         {
             FonctionsNatives.addNewUser(user.Username,user.HexColor);
+            editorUsersViewModel.AddUser(user);
         }
 
         public override void Escape()
@@ -119,6 +120,9 @@ namespace InterfaceGraphique.Editor.EditorState
             FonctionsNatives.setDeleteEventCallback(this.deleteEventCallback);
 
             List<OnlineUser> usersInTheGame = await this.editionHub.JoinPublicRoom(mapEntity);
+
+            editorUsersViewModel.InitializeViewModel();
+
             foreach (OnlineUser user in usersInTheGame)
             {
                 if (user.Username.Equals(User.Instance.UserEntity.Username))
@@ -133,10 +137,13 @@ namespace InterfaceGraphique.Editor.EditorState
                         foreach (string uuidSelected in user.UuidsSelected)
                         {
                             FonctionsNatives.setElementSelection(user.Username, uuidSelected, true, false);
+
                         }
                     }
                    
                 }
+                editorUsersViewModel.AddUser(user);
+
             }
         }
 
@@ -214,30 +221,17 @@ namespace InterfaceGraphique.Editor.EditorState
 
         private void CurrentUserObjectTransformChanged(string uuid, IntPtr pos, float rotation, IntPtr scale)
         {
-            if (rotation == 1000)
+            float[] posVec = getVec3FromIntptr(pos);
+            float[] scaleVec = getVec3FromIntptr(scale);
+
+            this.editionHub.SendEditorCommand(new TransformCommand(uuid)
             {
-
-                
-            }else if (rotation == -1000)
-            {
-                FonctionsNatives.setCanSendPreviewToServer(true);
-            }
-            else
-            {
-                float[] posVec = getVec3FromIntptr(pos);
-                float[] scaleVec = getVec3FromIntptr(scale);
-
-                this.editionHub.SendEditorCommand(new TransformCommand(uuid)
-                {
-                    Username = User.Instance.UserEntity.Username,
-                    Position = posVec,
-                    Rotation = rotation,
-                    Scale = scaleVec
-                });
-                this.inTransformation = true;
-
-            }
-
+                Username = User.Instance.UserEntity.Username,
+                Position = posVec,
+                Rotation = rotation,
+                Scale = scaleVec
+            });
+            this.inTransformation = true;
         }
 
         private void CurrentUserSelectedObject(string uuidselected, bool isSelected, bool deselectAll)

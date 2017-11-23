@@ -23,24 +23,14 @@ enum RequestStatus : Int {
 ///////////////////////////////////////////////////////////////////////////
 class FriendRequestEntity : Entity {
     
-    private var id : Int
     private var requestor : UserEntity
     private var friend : UserEntity
     private var status : RequestStatus
     
-    init(id: Int, requestor: UserEntity, friend: UserEntity, status: RequestStatus) {
-        self.id = id
+    init(requestor: UserEntity, friend: UserEntity, status: RequestStatus) {
         self.requestor = requestor
         self.friend = friend
         self.status = status
-    }
-    
-    func getId() -> Int {
-        return self.id
-    }
-    
-    func setId(id: Int) {
-        self.id = id
     }
     
     func getRequestor() -> UserEntity {
@@ -69,10 +59,9 @@ class FriendRequestEntity : Entity {
     
     func toDictionary() -> [String: Any] {
         let request = [
-            "Id": self.id,
             "Requestor": self.requestor.toDictionary(),
             "Friend": self.friend.toDictionary(),
-            "Status": self.status
+            "Status": self.status.rawValue
             ] as [String : Any]
         
         return request

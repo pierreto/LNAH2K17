@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace InterfaceGraphique.Controls.WPF.Editor
+namespace InterfaceGraphique.Controls.WPF.Friends
 {
     /// <summary>
-    /// Interaction logic for EditorJoinOrCreateView.xaml
+    /// Interaction logic for NewFriendsListView.xaml
     /// </summary>
-    public partial class EditorJoinOrCreate : UserControl
+    public partial class AddFriendListView : UserControl
     {
-        public EditorJoinOrCreate()
+        public AddFriendListView()
         {
             InitializeComponent();
         }

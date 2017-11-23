@@ -67,7 +67,7 @@ void ModeleEtatScale::libererInstance() {
 ///
 ////////////////////////////////////////////////////////////////////////
 ModeleEtatScale::ModeleEtatScale()
-	: ModeleEtat()
+	: ModeleEtat(), visiteurScale_()
 {
 }
 
@@ -125,16 +125,40 @@ void ModeleEtatScale::playerMouseMove(int x, int y) {
 	if (mouseDownL_)
 	{
 		// Remove last scale
-		this->revertScale();
+		this->revertScale(false);
 
 		// Calcul du nouveau scale
 		float ajoutScale = float( initMousePosY_ - mousePosY_) / 10;
 
 		// Apply nouveau scale
-		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(&VisiteurScale(glm::vec3(ajoutScale), true));
+		this->visiteurScale_ = VisiteurScale(glm::vec3(ajoutScale), true);
+		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(&visiteurScale_);
+
+		if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
+		{
+			SYSTEMTIME st;
+			GetSystemTime(&st);
+			accTime_ += st.wMilliseconds;
+			if (accTime_>1000) {
+				sendToServer();
+				accTime_ = 0;
+			}
+		}
 	}
 }
+void ModeleEtatScale::sendToServer()
+{
+	TransformEventCallback callback = ModeleEtatJeu::obtenirInstance()->getTransformEventCallback();
 
+	for (NoeudAbstrait* node : visiteurScale_.getSelectedNodes())
+	{
+
+		if (callback)
+		{
+			callback(node->getUUID(), glm::value_ptr(node->obtenirPositionRelative()), node->obtenirRotation().y, glm::value_ptr(node->obtenirScale()));
+		}
+	}
+}
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn void ModeleEtatScale::mouseUpL()
@@ -149,6 +173,8 @@ void ModeleEtatScale::playerMouseMove(int x, int y) {
 ////////////////////////////////////////////////////////////////////////
 void ModeleEtatScale::mouseUpL()
 {
+	sendToServer();
+
 	ModeleEtat::mouseUpL();
 	if (!noeudsSurLaTable()){
 		escape();
@@ -167,7 +193,7 @@ void ModeleEtatScale::mouseUpL()
 ////////////////////////////////////////////////////////////////////////
 void ModeleEtatScale::escape()
 {
-	this->revertScale();
+	this->revertScale(true);
 	mouseUpL();
 }
 
@@ -202,7 +228,7 @@ void ModeleEtatScale::saveScale()
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void ModeleEtatScale::revertScale()
+void ModeleEtatScale::revertScale(bool sendToServer)
 {
 	// Revert scale on matrice
 	VisiteurObtenirSelection visiteur;
@@ -211,7 +237,8 @@ void ModeleEtatScale::revertScale()
 
 	for (auto noeud : noeuds) {
 		noeud->revertScale();
-		if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
+		if (sendToServer &&
+			ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
 		{
 			TransformEventCallback callback = ModeleEtatJeu::obtenirInstance()->getTransformEventCallback();
 			if (callback)

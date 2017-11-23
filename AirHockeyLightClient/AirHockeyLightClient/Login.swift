@@ -49,6 +49,7 @@ class Login: NSObject {
                                 self.clientConnection.setId(id: id)
                             }
                             HubManager.sharedConnection.getChatHub().subscribe()
+                            HubManager.sharedConnection.getFriendsHub().getAllFriends()
                             fullfil(true)
                         } else {
                             //Getting error message from server

@@ -10,6 +10,7 @@ using InterfaceGraphique.Controls.WPF.ConnectServer;
 using InterfaceGraphique.Controls.WPF.Friends;
 using InterfaceGraphique.Exceptions;
 using InterfaceGraphique.Services;
+using InterfaceGraphique.CommunicationInterface.RestInterface;
 
 namespace InterfaceGraphique.Controls.WPF.Authenticate
 {
@@ -156,7 +157,8 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
                         int userId = response.Content.ReadAsAsync<int>().Result;
                     
                         //On set l'instance statique du user.
-                        User.Instance.UserEntity = new UserEntity { Id = userId, Username = loginEntity.Username };
+                        HttpResponseMessage uEResponse = await Program.client.GetAsync(Program.client.BaseAddress + "api/user/" + userId);
+                        User.Instance.UserEntity = await HttpResponseParser.ParseResponse<UserEntity>(uEResponse);
                         User.Instance.IsConnected = true;
 
                         User.Instance.Inventory = await StoreService.GetUserStoreItems(User.Instance.UserEntity.Id);
@@ -176,6 +178,8 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
                         await Program.unityContainer.Resolve<FriendsHub>().InitializeFriendsHub();
                         Program.unityContainer.Resolve<FriendListViewModel>().InitializeViewModel();
                         Program.unityContainer.Resolve<AddUserViewModel>().InitializeViewModel();
+                        Program.unityContainer.Resolve<FriendRequestListViewModel>().InitializeViewModel();
+                        await Program.unityContainer.Resolve<AddFriendListViewModel>().InitAddFriends();
 
                         Program.Browser.Show();
                         Program.Browser.webBrowser1.Navigate("" +

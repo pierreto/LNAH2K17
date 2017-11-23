@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Microsoft.Practices.Unity;
 using InterfaceGraphique.Exceptions;
+using InterfaceGraphique.CommunicationInterface.RestInterface;
+using InterfaceGraphique.Controls.WPF.Friends;
 
 namespace InterfaceGraphique.Controls.WPF.Signup
 {
@@ -231,8 +233,8 @@ namespace InterfaceGraphique.Controls.WPF.Signup
                         int userId = response.Content.ReadAsAsync<int>().Result;
 
                         //On set l'instance statique du user.
-                        User.Instance.UserEntity = new UserEntity { Id = userId, Username = signupEntity.Username, Name = signupEntity.Name, Email = signupEntity.Email};
-                        User.Instance.IsConnected = true;
+                        HttpResponseMessage uEResponse = await Program.client.GetAsync(Program.client.BaseAddress + "api/user/" + userId);
+                        User.Instance.UserEntity = await HttpResponseParser.ParseResponse<UserEntity>(uEResponse); User.Instance.IsConnected = true;
 
                         await chatHub.InitializeChat();
 
@@ -242,6 +244,12 @@ namespace InterfaceGraphique.Controls.WPF.Signup
                         //On initie tous les formes qui on besoin de savoir si on est en mode en ligne
                         Program.InitAfterConnection();
                         Program.FormManager.CurrentForm = Program.MainMenu;
+
+                        await Program.unityContainer.Resolve<FriendsHub>().InitializeFriendsHub();
+                        Program.unityContainer.Resolve<FriendListViewModel>().InitializeViewModel();
+                        Program.unityContainer.Resolve<AddUserViewModel>().InitializeViewModel();
+                        Program.unityContainer.Resolve<FriendRequestListViewModel>().InitializeViewModel();
+                        Program.unityContainer.Resolve<AddFriendListViewModel>().InitializeViewModel();
                     }
                     else
                     {

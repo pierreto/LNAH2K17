@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ using System.Windows.Input;
 using InterfaceGraphique.CommunicationInterface.RestInterface;
 using InterfaceGraphique.Entities;
 using InterfaceGraphique.Services;
+using MaterialDesignThemes.Wpf;
 using Microsoft.Practices.ObjectBuilder2;
 
 namespace InterfaceGraphique.Controls.WPF.Editor
@@ -21,7 +23,33 @@ namespace InterfaceGraphique.Controls.WPF.Editor
         private ICommand modeViewCommand;
         private ICommand joinEditionCommand;
 
+        private MapEntity currentMap;
         private MapEntity selectedMap;
+
+        private string password;
+        private bool passwordFailed = false;
+
+        public bool PasswordFailed
+        {
+            get => passwordFailed;
+            set
+            {
+                passwordFailed = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Password
+        {
+            get => password;
+            set
+            {
+                password = value;
+                PasswordFailed = false;
+
+                OnPropertyChanged();
+            }
+        }
 
         public EditorViewModel(MapService mapService)
         {
@@ -29,23 +57,25 @@ namespace InterfaceGraphique.Controls.WPF.Editor
             this.onlineEditedMapInfos = new ObservableCollection<MapEntity>();
 
         }
-        public override async void  InitializeViewModel()
+
+        public void ClearCurrentMap()
+        {
+            currentMap = null;
+        }
+
+        public async Task InitializeViewModelAsync()
         {
             this.onlineEditedMapInfos.Clear();
             //TODO:Not optimized should use a list here but for testing purpose i'll leave it this way
-            List<MapEntity> list = await this.mapService.GetMaps(); 
             try
             {
-                if (list != null)
-                {
-                    list.ForEach(map => this.onlineEditedMapInfos.Add(map));
+                List<MapEntity> list = await this.mapService.GetMaps();
 
-                }
-
+                list?.ForEach(map => this.onlineEditedMapInfos.Add(map));
             }
             catch (Exception e)
             {
-                
+
             }
         }
 
@@ -76,6 +106,7 @@ namespace InterfaceGraphique.Controls.WPF.Editor
         {
             Program.EditorHost.SwitchViewToMapModeView();
         }
+
         public ObservableCollection<MapEntity> OnlineEditedMapInfos
         {
             get => onlineEditedMapInfos;
@@ -90,23 +121,93 @@ namespace InterfaceGraphique.Controls.WPF.Editor
                        (joinEditionCommand = new RelayCommandAsync(JoinEdition, (o) => CanJoinEdition()));
             }
 
+
         }
 
         private async Task JoinEdition()
         {
-            await Program.Editeur.JoinEdition(this.selectedMap);
-            Program.EditorHost.Close();
+            if (selectedMap.Private)
+            {
+
+                //show the dialog
+                await DialogHost.Show(Program.EditorHost.PasswordDialog, "RootDialog", ExtendedOpenedEventHandler,
+                    ExtendedClosingEventHandler);
+            }
+            else
+            {
+                await Program.Editeur.JoinEdition(this.selectedMap);
+                currentMap = this.selectedMap;
+                Program.EditorHost.Close();
+            }
+
         }
+
+
+        public ICommand checkPrivatePasswordCommand;
+
+        public ICommand CheckPrivatePasswordCommand
+        {
+            get
+            {
+                return checkPrivatePasswordCommand ??
+                       (checkPrivatePasswordCommand =
+                           new RelayCommandAsync(CheckPrivatePassword, (o) => CanCheckPrivatePassword()));
+            }
+
+
+        }
+
+        private bool CanCheckPrivatePassword()
+        {
+            return Password?.Length >= 5;
+        }
+
+        private async Task CheckPrivatePassword()
+        {
+            if (selectedMap.Password.Equals(Password))
+            {
+                await Program.Editeur.JoinEdition(this.selectedMap);
+                currentMap = this.selectedMap;
+                Program.EditorHost.Close();
+            }
+            else
+            {
+                PasswordFailed = true;
+            }
+        }
+
+        private void ExtendedClosingEventHandler(object sender, DialogClosingEventArgs eventargs)
+        {
+
+        }
+
+        private void ExtendedOpenedEventHandler(object sender, DialogOpenedEventArgs eventargs)
+        {
+            PasswordFailed = false;
+            Password = "";
+        }
+
 
         private bool CanJoinEdition()
         {
-            return this.selectedMap!=null;
+
+            return this.selectedMap != null && this.selectedMap.CurrentNumberOfPlayer < 4 &&
+                   (currentMap == null || currentMap.Id != this.selectedMap.Id);
         }
 
         public MapEntity SelectedMap
         {
             get => selectedMap;
-            set => selectedMap = value;
+            set
+            {
+                selectedMap = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public override void InitializeViewModel()
+        {
         }
     }
+
 }

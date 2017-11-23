@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Linq;
 using AirHockeyServer.Services;
 using AirHockeyServer.Repositories.Interfaces;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace AirHockeyServer.Repositories
 {
@@ -95,6 +97,11 @@ namespace AirHockeyServer.Repositories
                 using (MyDataContext DC = new MyDataContext())
                 {
                     PasswordPoco pP = MapperManager.Mapper.Map<PasswordEntity, PasswordPoco>(passwordEntity);
+                    var sha1 = new SHA1CryptoServiceProvider();
+                    pP.Password =
+                            Convert.ToBase64String(
+                                sha1.ComputeHash(
+                                    Encoding.UTF8.GetBytes(pP.Password)));
                     DC.GetTable<PasswordPoco>().InsertOnSubmit(pP);
                     await Task.Run(() => DC.SubmitChanges());
                 }

@@ -43,7 +43,7 @@ class ChatHub: BaseHub {
                 else {
                     let channelNames = result as! [String]
                     for channelName in channelNames {
-                        channelsToJoin.append(ChannelEntity(name: channelName))
+                        ChatAreaViewController.sharedChatAreaViewController.channelsToJoin.append(ChannelEntity(name: channelName))
                     }
                     ChatAreaViewController.sharedChatAreaViewController.joinChannelTableView.reloadData()
                 }
@@ -61,14 +61,14 @@ class ChatHub: BaseHub {
                     print("Error JoinChannel ChatHub: \(e)")
                 }
                 else {
-                    channels.append(ChannelEntity(name: channelName))
+                    MasterViewController.sharedMasterViewController.channels.append(ChannelEntity(name: channelName))
                     MasterViewController.sharedMasterViewController.channelTableView.reloadData()
                     //Set joined channel as selected
-                    let indexPath = IndexPath(row: channels.count - 1, section: 0);
+                    let indexPath = IndexPath(row: MasterViewController.sharedMasterViewController.channels.count - 1, section: 0);
                     MasterViewController.sharedMasterViewController.channelTableView.selectRow(at: indexPath, animated: true, scrollPosition: .bottom)
                     MasterViewController.sharedMasterViewController.channelTableView.delegate?.tableView!(MasterViewController.sharedMasterViewController.channelTableView, didSelectRowAt: indexPath)
-                    if let index = channelsToJoin.index(where: { $0.name == channelName }) {
-                        channelsToJoin.remove(at: index)
+                    if let index = ChatAreaViewController.sharedChatAreaViewController.channelsToJoin.index(where: { $0.name == channelName }) {
+                        ChatAreaViewController.sharedChatAreaViewController.channelsToJoin.remove(at: index)
                         ChatAreaViewController.sharedChatAreaViewController.joinChannelTableView.reloadData()
                     }
                 }
@@ -100,7 +100,7 @@ class ChatHub: BaseHub {
     ////////////////////////////////////////////////////////////////////////
     public override func logout() {
         do {
-            var roomNames = channels.map({ (cE: ChannelEntity) -> String in
+            var roomNames = MasterViewController.sharedMasterViewController.channels.map({ (cE: ChannelEntity) -> String in
                 cE.getName()
             })
             //Principal ne pas quitter

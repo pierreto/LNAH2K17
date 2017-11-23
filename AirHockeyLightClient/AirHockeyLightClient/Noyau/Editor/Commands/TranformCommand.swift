@@ -8,7 +8,6 @@
 /// @{
 ///////////////////////////////////////////////////////////////////////////////
 
-import GLKit
 import SwiftyJSON
 
 ///////////////////////////////////////////////////////////////////////////
@@ -38,8 +37,6 @@ class TransformCommand: EditionCommand {
     }
     
     override func executeCommand() {
-        let position = GLKVector3.init(v: (self.position[0], self.position[1], self.position[2]))
-        let scale = GLKVector3.init(v: (self.scale[0], self.scale[1], self.scale[2]))
         FacadeModele.instance.setTransformByUUID(uuid: self.objectUuid, username: self.username,
                                                  position: position, rotation: self.rotation, scale: scale)
     }

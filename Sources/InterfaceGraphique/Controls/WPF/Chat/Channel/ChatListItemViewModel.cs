@@ -9,7 +9,6 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
     {
         #region Private Properties
         private ChannelEntity channelEntity;
-
         private bool newContentAvailable;
         #endregion
 
@@ -40,6 +39,26 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
             }
         }
 
+        public bool IsPrivate
+        {
+            get => ChannelEntity.IsPrivate;
+            set
+            {
+                ChannelEntity.IsPrivate = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        public string Profile
+        {
+            get => ChannelEntity.Profile;
+            set
+            {
+                ChannelEntity.Profile = value;
+                this.OnPropertyChanged();
+            }
+        }
+
         public bool NewContentAvailable
         {
             get { return newContentAvailable; }
@@ -54,6 +73,7 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
         #region Constructor
         public ChatListItemViewModel(ChannelEntity channelEntity)
         {
+            System.Diagnostics.Debug.WriteLine(channelEntity.Name);
             ChannelEntity = channelEntity;
         }
         #endregion
@@ -118,6 +138,7 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
                 NewContentAvailable = false;
                 Program.unityContainer.Resolve<ChannelViewModel>().OnPropertyChanged("ChannelSelected");
             }
+            System.Diagnostics.Debug.WriteLine(ChannelEntity.Name);
             IsSelected = true;
         }
 

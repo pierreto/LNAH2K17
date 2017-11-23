@@ -1,35 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using System.Threading.Tasks;
 using InterfaceGraphique.CommunicationInterface;
 using InterfaceGraphique.Entities;
-using InterfaceGraphique.CommunicationInterface.RestInterface;
-using System.Net.Http;
-using InterfaceGraphique.Services;
 using System.Collections.ObjectModel;
 using Microsoft.Practices.Unity;
+using InterfaceGraphique.Managers;
+using System.Linq;
+using System.Windows;
 
 namespace InterfaceGraphique.Controls.WPF.Friends
 {
     public class FriendListViewModel : MinimizableViewModelBase
     {
         private FriendsHub friendsHub;
-        private List<UserEntity> friendList;
-
-
-        private ICommand removeFriendCommand;
+        private TaskFactory ctxTaskFactory;
+        private ObservableCollection<FriendListItemViewModel> friendList;
 
         public UserEntity SelectedFriend { get; set; }
 
-        public FriendListViewModel(FriendsHub friendsHub)
+        public FriendListViewModel(FriendsHub friendsHub, GameRequestManager gameRequestManager)
         {
             this.friendsHub = friendsHub;
+            ctxTaskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
+            GameRequestManager = gameRequestManager;
         }
 
-        public List<UserEntity> FriendList
+        public ObservableCollection<FriendListItemViewModel> FriendList
         {
             get => this.friendList;
             set
@@ -39,18 +34,20 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             }
         }
 
-  
+        public GameRequestManager GameRequestManager { get; }
 
         public override async void InitializeViewModel()
         {
             Minimize();
-
-            FriendList = await this.friendsHub.GetAllFriends();
+            var friends = await friendsHub.GetAllFriends();
+            FriendList = new ObservableCollection<FriendListItemViewModel>();
+            foreach(var friend in friends)
+            {
+                FriendList.Add(new FriendListItemViewModel(new UserEntity { Id = friend.Id, Username = friend.Username, Profile = friend.Profile, IsSelected = false }, GameRequestManager) { CurrentFriend = true });
+            }
             //List<UserEntity> userEntities = await userService.GetAllUsers();
             this.friendsHub.NewFriendEvent += NewFriendEvent;
             this.friendsHub.RemovedFriendEvent += RemovedFriendEvent;
-
-
         }
 
         public override void Minimize()
@@ -69,49 +66,27 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             }
             Program.unityContainer.Resolve<AddUserViewModel>().Collapsed = Collapsed;
             Program.unityContainer.Resolve<AddUserViewModel>().TabIcon = TabIcon;
-
-
-        }
-
-
-        public ICommand RemoveFriendCommand
-        {
-            get
-            {
-                return removeFriendCommand ??
-                       (removeFriendCommand = new RelayCommandAsync(RemoveFriend));
-            }
-        }
-
-
-  
-
-        private async Task RemoveFriend()
-        {
-            if (SelectedFriend != null)
-            {
-                await this.friendsHub.RemoveFriend(SelectedFriend);
-            }
-        }
-
-        private void updateLists()
-        {
-            Task.Run(async () =>
-                FriendList = await this.friendsHub.GetAllFriends()
-            );
         }
 
         private void NewFriendEvent(UserEntity friend)
         {
-            updateLists();
+            System.Diagnostics.Debug.WriteLine("Je viens d'ajouter " + friend.Username + " a mes amis.");
+            ctxTaskFactory.StartNew(() =>
+            {
+                FriendList.Add(new FriendListItemViewModel(new UserEntity { Id = friend.Id, Username = friend.Username, Profile = friend.Profile, IsSelected = false }, null) { CurrentFriend = true });
+                //var items = Program.unityContainer.Resolve<AddFriendListViewModel>().Items;
+                //items.Remove(items.Single(x => x.Id == friend.Id));
+            }).Wait();
         }
-
-
 
         private void RemovedFriendEvent(UserEntity ex_friend)
         {
-            updateLists();
+            ctxTaskFactory.StartNew(() =>
+            {
+                FriendList.Remove(FriendList.Single(x => x.Username == ex_friend.Username));
+                //TODO add to lapins list
+                //Program.unityContainer.Resolve<AddFriendListViewModel>().Items.Add(new UserEntity { Id = ex_friend.Id, Username = ex_friend.Username, Profile = ex_friend.Profile, IsSelected = false });
+            }).Wait();
         }
-
     }
 }

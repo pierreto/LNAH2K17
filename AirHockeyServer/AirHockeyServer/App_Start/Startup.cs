@@ -26,7 +26,7 @@ namespace AirHockeyServer.App_Start
 
             GlobalHost.DependencyResolver.Register(
                 typeof(FriendsHub),
-                () => new FriendsHub(WebApiApplication.UnityContainer.Resolve<Services.FriendService>(), WebApiApplication.UnityContainer.Resolve<Hubs.ConnectionMapper>()));
+                () => new FriendsHub(WebApiApplication.UnityContainer.Resolve<Services.FriendService>(), WebApiApplication.UnityContainer.Resolve<Hubs.ConnectionMapper>(), WebApiApplication.UnityContainer.Resolve<GameService>()));
 
             GlobalHost.DependencyResolver.Register(
                  typeof(GameWaitingRoomHub),
@@ -38,7 +38,7 @@ namespace AirHockeyServer.App_Start
 
               GlobalHost.DependencyResolver.Register(
                  typeof(EditionHub),
-                 () => new EditionHub(WebApiApplication.UnityContainer.Resolve<EditionService>(), WebApiApplication.UnityContainer.Resolve<Hubs.ConnectionMapper>())); 
+                 () => new EditionHub(WebApiApplication.UnityContainer.Resolve<EditionService>(), WebApiApplication.UnityContainer.Resolve<Hubs.ConnectionMapper>(), WebApiApplication.UnityContainer.Resolve<UserService>())); 
 
             app.MapSignalR("/signalr", new HubConfiguration());
         }

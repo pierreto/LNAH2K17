@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using Microsoft.Practices.Unity;
 using InterfaceGraphique.Controls.WPF.Chat;
 using InterfaceGraphique.Controls.WPF.Friends;
+using InterfaceGraphique.Managers;
 
 namespace InterfaceGraphique {
 
@@ -77,13 +78,15 @@ namespace InterfaceGraphique {
             chatHeight = elementHost1.Height;
             firstTimeMaximizeChat = false;
 
+            this.gameRequestPopup.Hide();
+
             InitializeScreenSize();
             InitializeOpenGLPanel();
             InitializeEvents();
 
-            elementHost1.Size = new Size(this.ClientSize.Width * 3 / 4 + 1, COLLAPSED_CHAT_HEIGHT);
+            elementHost1.Size = new Size(this.ClientSize.Width * 2 / 3 + 1, COLLAPSED_CHAT_HEIGHT);
             elementHost1.Location = new Point(0, this.ClientSize.Height - chatHeight);
-            elementHost2.Size = new Size(this.ClientSize.Width * 1 / 4, COLLAPSED_CHAT_HEIGHT);
+            elementHost2.Size = new Size(this.ClientSize.Width * 1 / 3, COLLAPSED_CHAT_HEIGHT);
             elementHost2.Location = new Point(this.ClientSize.Width - elementHost2.Width,  this.ClientSize.Height - friendHeight);
         }
 
@@ -96,7 +99,28 @@ namespace InterfaceGraphique {
         ////////////////////////////////////////////////////////////////////////
         public void InitializeEvents()
         {
+            this.buttonAccept.Click += (sender, e) => OnAcceptGameRequest();
+            this.buttonRefus.Click += (sender, e) => OnDeclineGameRequest();
+        }
 
+        private async void OnDeclineGameRequest()
+        {
+            this.gameRequestPopup.Hide();
+            await Program.unityContainer.Resolve<GameRequestManager>().DeclineGameRequest();
+        }
+
+        private async void OnAcceptGameRequest()
+        {
+            this.gameRequestPopup.Hide();
+            await Program.unityContainer.Resolve<GameRequestManager>().AcceptGameRequest();
+        }
+
+        public void ShowGameRequestPopup()
+        {
+            this.BeginInvoke(new MethodInvoker(delegate
+            {
+                this.gameRequestPopup.Show();
+            }));
         }
 
 

@@ -19,8 +19,7 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress>
-    </Use64BitIISExpress>
+    <Use64BitIISExpress>true</Use64BitIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication>
     </IISExpressAnonymousAuthentication>
@@ -245,6 +244,7 @@
     <Compile Include="Entities\ChannelEntity.cs" />
     <Compile Include="Entities\ChatMessageEntity.cs" />
     <Compile Include="Entities\ConfigurationEntity.cs" />
+    <Compile Include="Entities\EditionGroup.cs" />
     <Compile Include="Entities\Edition\EditionCommand\CoefficientCommand.cs" />
     <Compile Include="Entities\Edition\EditionCommand\ControlPointCommand.cs" />
     <Compile Include="Entities\Edition\EditionCommand\DeleteCommand.cs" />
@@ -256,6 +256,7 @@
     <Compile Include="Entities\Edition\OnlineUser.cs" />
     <Compile Include="Entities\Edition\EditionCommand\PortalCommand.cs" />
     <Compile Include="Entities\Edition\EditionCommand\WallCommand.cs" />
+    <Compile Include="Entities\GameRequestEntity.cs" />
     <Compile Include="Entities\OnlineEditedMapInfo.cs" />
     <Compile Include="Entities\PasswordEntity.cs" />
     <Compile Include="Entities\Entity.cs" />

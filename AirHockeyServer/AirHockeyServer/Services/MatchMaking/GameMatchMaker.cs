@@ -43,7 +43,7 @@ namespace AirHockeyServer.Services.MatchMaking
                     WaitingPlayers.Dequeue(),
                     WaitingPlayers.Dequeue()
                 };
-                
+
                 WaitingPlayersMutex.ReleaseMutex();
 
                 return users;
@@ -77,6 +77,22 @@ namespace AirHockeyServer.Services.MatchMaking
 
                 InvokeMatchFound(match);
             }
+        }
+
+        protected void ExecuteMatch(List<UserEntity> players)
+        {
+            PlayersMatchEntity match = new PlayersMatchEntity()
+            {
+                PlayersMatch = players
+            };
+            InvokeMatchFound(match);
+        }
+
+        public void CreateMatch(UserEntity recipient, UserEntity sender)
+        {
+            var users = new List<UserEntity> { recipient, sender };
+            Thread myThread = new Thread(new ThreadStart(() => ExecuteMatch(users)));
+            myThread.Start();
         }
     }
 }

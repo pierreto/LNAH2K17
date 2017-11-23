@@ -88,6 +88,24 @@ namespace AirHockeyServer.Services
                 throw e;
             }
         }
+
+        public async Task UpdateUser(int id, UserEntity userEntity)
+        {
+            try
+            {
+                await UserRepository.UpdateUser(id, userEntity);
+            }
+            catch (UserException e)
+            {
+                System.Diagnostics.Debug.WriteLine("[UserService.UpdateUser] " + e.ToString());
+                throw e;
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("[UserService.UpdateUser] " + e.ToString());
+                throw e;
+            }
+        }
     }
 
     public class UserException : Exception

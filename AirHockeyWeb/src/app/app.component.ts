@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AppService } from './app.service';
+import { User } from './user';
 
 @Component({
   selector: 'app-root',
@@ -10,5 +11,6 @@ export class AppComponent {
   title = 'LNAH';
   year = '2K17';
 
-  constructor(private appService: AppService) {}
+  constructor(private appService: AppService) {
+  }
 }

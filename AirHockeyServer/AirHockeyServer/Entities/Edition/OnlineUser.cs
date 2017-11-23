@@ -10,7 +10,7 @@ namespace AirHockeyServer.Entities.EditionCommand
     {
         public string Username { get; set; }
         public string HexColor { get; set; }
-
+        public string ProfilePicture { get; set; }
         public List<string> UuidsSelected { get; set; }
 
         public OnlineUser()

@@ -45,11 +45,7 @@
                         <Border Grid.Row="0"  Grid.Column="1" Padding="5" CornerRadius="5" BorderThickness="1" BorderBrush="LightGray" SnapsToDevicePixels="True" Background="{StaticResource TextColorBrush}" Width="150" VerticalAlignment="Center">
                             <TextBox x:Name="ChannelName" Text="{Binding ChannelName, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding InputsEnabled}" Background="Transparent" BorderThickness="0" MaxLength="16" FontSize="14" FontWeight="Bold"/>
                         </Border>
-                        </Grid>
-                        <!--<Border Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type StackPanel}}, Path=ActualHeight}" Height="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type StackPanel}}, Path=ActualHeight}" Margin="0,0,-15,0">
-                            <Button fa:Awesome.Content="Search" Style="{StaticResource NoHover}" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
-                        </Border>-->
-                    <!--<Button Content="Joindre" Background="{StaticResource AddBrush}" BorderThickness="0" Margin="0,5,0,0" HorizontalAlignment="Center" Command="{Binding JoinChannelCommand}"/>-->
+                    </Grid>
                 </StackPanel>
                 <channel:JoinChannelListView Grid.Row="1">
                     <channel:JoinChannelListView.DataContext>

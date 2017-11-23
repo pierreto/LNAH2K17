@@ -34,6 +34,7 @@ public:
 	virtual void mouseDownL();
 	/// Évènement appelé lorsque la souris bouge
 	virtual void playerMouseMove(int x, int y);
+	void applyRotation(float angle, bool canSendToServer);
 	/// Évènement appelé lorsque le bouton gauche de la souris est levé
 	virtual void mouseUpL();
 	/// Évènement appelé lorsque la touche escape est enfoncée
@@ -62,6 +63,8 @@ private:
 
 	/// Noeuds sélectionnés
 	std::vector<NoeudAbstrait*> noeuds_;
+
+	long accTime_=0;
 };
 
 

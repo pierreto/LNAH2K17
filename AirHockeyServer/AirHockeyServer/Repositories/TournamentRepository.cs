@@ -13,8 +13,6 @@ namespace AirHockeyServer.Repositories
 {
     public class TournamentRepository : Repository, ITournamentRepository
     {
-        private Table<TournamentPoco> TournamentTable;
-
         protected IMapRepository MapRepository { get; private set; }
 
         public TournamentRepository(MapperManager mapperManager, IMapRepository mapRepository)
@@ -39,7 +37,7 @@ namespace AirHockeyServer.Repositories
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine("[GameRepository.CreateGame] " + e.ToString());
+                System.Diagnostics.Debug.WriteLine("[TournamentRepository.CreateTournament] " + e.ToString());
                 return null;
             }
         }
@@ -48,46 +46,49 @@ namespace AirHockeyServer.Repositories
         {
             try
             {
-                IQueryable<TournamentPoco> queryable =
-                    from tournaments in this.TournamentTable where tournaments.Id == tournamentId select tournaments;
+                using (MyDataContext DC = new MyDataContext())
+                {
+                    IQueryable<TournamentPoco> queryable =
+                    from tournaments in DC.GetTable<TournamentPoco>() where tournaments.Id == tournamentId select tournaments;
 
-                var results = await Task<IEnumerable<TournamentPoco>>.Run(
-                    () => queryable.ToArray());
+                    var results = await Task<IEnumerable<TournamentPoco>>.Run(
+                        () => queryable.ToArray());
 
-                TournamentPoco poco = results.Length > 0 ? results.First() : null;
-                
-                TournamentEntity result = new TournamentEntity();
-                IEnumerable<MapEntity> maps = await MapRepository.GetMaps();
-                // TODO : UPDATE WHEN MAP DONE
-                result.SelectedMap = maps.First();
-                // TODO GET USER
-                result.Winner = new UserEntity
-                {
-                    Id = poco.Winner
-                };
-                result.Players[0] = new UserEntity
-                {
-                    Id = poco.Player1
-                };
-                result.Players[1] = new UserEntity
-                {
-                    Id = poco.Player2
-                };
-                result.Players[2] = new UserEntity
-                {
-                    Id = poco.Player3
-                };
-                result.Players[3] = new UserEntity
-                {
-                    Id = poco.Player4
-                };
+                    TournamentPoco poco = results.Length > 0 ? results.First() : null;
 
-                result.Id = poco.Id;
-                return result;
+                    TournamentEntity result = new TournamentEntity();
+                    IEnumerable<MapEntity> maps = await MapRepository.GetMaps();
+                    // TODO : UPDATE WHEN MAP DONE
+                    result.SelectedMap = maps.First();
+                    // TODO GET USER
+                    result.Winner = new UserEntity
+                    {
+                        Id = poco.Winner
+                    };
+                    result.Players[0] = new UserEntity
+                    {
+                        Id = poco.Player1
+                    };
+                    result.Players[1] = new UserEntity
+                    {
+                        Id = poco.Player2
+                    };
+                    result.Players[2] = new UserEntity
+                    {
+                        Id = poco.Player3
+                    };
+                    result.Players[3] = new UserEntity
+                    {
+                        Id = poco.Player4
+                    };
+
+                    result.Id = poco.Id;
+                    return result;
+                }
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine("[GameRepository.GetGame] " + e.ToString());
+                System.Diagnostics.Debug.WriteLine("[TournamentRepository.GetTournament] " + e.ToString());
                 return null;
             }
         }
@@ -96,22 +97,27 @@ namespace AirHockeyServer.Repositories
         {
             try
             {
-                IQueryable<TournamentPoco> queryable =
-                    from tournaments in this.TournamentTable where 
-                    tournaments.Player1 == userId || 
-                    tournaments.Player2 == userId ||
-                    tournaments.Player3 == userId || 
-                    tournaments.Player4 == userId select tournaments;
+                using (MyDataContext DC = new MyDataContext())
+                {
+                    IQueryable<TournamentPoco> queryable =
+                    from tournaments in DC.GetTable<TournamentPoco>()
+                    where
+                        tournaments.Player1 == userId ||
+                        tournaments.Player2 == userId ||
+                        tournaments.Player3 == userId ||
+                        tournaments.Player4 == userId
+                    select tournaments;
 
-                var results = await Task<IEnumerable<TournamentPoco>>.Run(
-                    () => queryable.ToArray());
+                    var results = await Task<IEnumerable<TournamentPoco>>.Run(
+                        () => queryable.ToArray());
 
-                return results.Length;
+                    return results.Length;
+                }
                 
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine("[GameRepository.GetGame] " + e.ToString());
+                System.Diagnostics.Debug.WriteLine("[TournamentRepository.GetUserTournamentsNb] " + e.ToString());
                 return 0;
             }
         }

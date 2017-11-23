@@ -105,7 +105,7 @@ void ModeleEtatPointControl::initialiser()
 ///
 ////////////////////////////////////////////////////////////////////////
 ModeleEtatPointControl::ModeleEtatPointControl()
-	: ModeleEtat()
+	: ModeleEtat(), visiteurDeplacement_(glm::vec3(), false)
 {
 }
 
@@ -170,11 +170,35 @@ void ModeleEtatPointControl::playerMouseMove(int x, int y) {
 		FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(lastMousePosX_, lastMousePosY_, start);
 		FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(mousePosX_, mousePosY_, end);
 
-		VisiteurDeplacement visiteur = VisiteurDeplacement(end - start);
-		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(&visiteur);
+		visiteurDeplacement_ = VisiteurDeplacement(end - start);
+		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(&visiteurDeplacement_);
+
+		if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
+		{
+			SYSTEMTIME st;
+			GetSystemTime(&st);
+			accTime += st.wMilliseconds;
+			if (accTime>500) {
+				sendToServer();
+				accTime = 0;
+			}
+		}
+
 	}
 }
+void ModeleEtatPointControl::sendToServer()
+{
 
+	for (NoeudAbstrait* node : visiteurDeplacement_.getSelectedNodes())
+	{
+		NoeudPointControl* noeudPointControl = dynamic_cast<NoeudPointControl*>(node);
+		if (controlPointEventCallback_)
+		{
+			controlPointEventCallback_(noeudPointControl->getUUID(), glm::value_ptr(node->obtenirPositionRelative()));
+			controlPointEventCallback_(noeudPointControl->obtenirNoeudOppose()->getUUID(), glm::value_ptr(noeudPointControl->obtenirNoeudOppose()->obtenirPositionRelative()));
+		}
+	}
+}
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn void ModeleEtatPointControl::mouseUpL()
@@ -192,6 +216,10 @@ void ModeleEtatPointControl::mouseUpL() {
 	if (!noeudsSurLaTable())
 		escape();
 
+	if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
+	{
+		sendToServer();
+	}
 	// Reinitialiser l'etat
 	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->deselectionnerTout();
 	if(ModeleEtatJeu::obtenirInstance()->currentOnlineClientType()==ModeleEtatJeu::ONLINE_EDITION)

@@ -7,6 +7,7 @@ using AirHockeyServer.Services;
 using AirHockeyServer.Entities;
 using System.Threading.Tasks;
 using AirHockeyServer.Events;
+using AirHockeyServer.Core;
 
 namespace AirHockeyServer.Hubs
 {
@@ -14,11 +15,13 @@ namespace AirHockeyServer.Hubs
     {
         protected IFriendService FriendService { get; }
         public ConnectionMapper ConnectionMapper { get; }
+        public GameService GameService { get; }
 
-        public FriendsHub(IFriendService friendService, ConnectionMapper connectionMapper)
+        public FriendsHub(IFriendService friendService, ConnectionMapper connectionMapper, GameService gameService)       
         {
             FriendService = friendService;
             ConnectionMapper = connectionMapper;
+            GameService = gameService;
         }
 
         public void JoinHub(UserEntity user)
@@ -52,17 +55,19 @@ namespace AirHockeyServer.Hubs
         
         public async Task<FriendRequestEntity> AcceptFriendRequest(FriendRequestEntity request)
         {
-            var relation = await FriendService.AcceptFriendRequest(request);
+            FriendRequestEntity relation = await FriendService.AcceptFriendRequest(request);
 
             // Si la demande d'ami a été acceptée avec succès, on notifie les deux
             // nouveaux amis (requestor et friend) :
-            string friendConnection = ConnectionMapper.GetConnection(relation.Friend.Id);
+            string friendConnection = ConnectionMapper.GetConnection(relation.Requestor.Id);
+            string myConnection = ConnectionMapper.GetConnection(relation.Friend.Id);
             if (relation != null)
             {
-                Clients.Client(ConnectionMapper.GetConnection(relation.Requestor.Id)).NewFriendEvent(relation.Friend);
-
                 if (friendConnection.Length > 0)
-                    Clients.Client(friendConnection).NewFriendEvent(relation.Requestor);
+                {
+                    Clients.Client(friendConnection).NewFriendEvent(relation.Friend);
+                }
+                Clients.Client(myConnection).NewFriendEvent(relation.Requestor);
             }
 
             return relation;
@@ -71,10 +76,10 @@ namespace AirHockeyServer.Hubs
         public async Task<FriendRequestEntity> RefuseFriendRequest(FriendRequestEntity request)
         {
             return await FriendService.RefuseFriendRequest(request);
+            // TODO ? envoyer un event pour pouvoir ajouter a la liste d'amis a ajouter quand on refuse qqn
         }
         
         public async Task<bool> CancelFriendRequest(FriendRequestEntity request)
-
         {
             var canceled_request = await FriendService.CancelFriendRequest(request);
 
@@ -105,6 +110,59 @@ namespace AirHockeyServer.Hubs
             }
 
             return removed_friend;
+        }
+
+        public async Task<bool> SendGameRequest(GameRequestEntity gameRequest)
+        {
+            if(Cache.PlayingPlayers.Exists(x => x.Id == gameRequest.Recipient.Id))
+            {
+                // player is playing
+                return false;
+            }
+
+            string friendConnection = ConnectionMapper.GetConnection(gameRequest.Recipient.Id);
+
+            if (!String.IsNullOrEmpty(friendConnection))
+            {
+                try
+                {
+                    Clients.Client(friendConnection).GameRequest(gameRequest);
+                }
+                catch (Exception e)
+                {
+                    DeclineGameRequest(gameRequest);
+                    return false;
+                }
+
+                Cache.AddPlayer(gameRequest.Sender);
+                return true;
+            }
+
+            // something wrong appended
+            return false;
+        }
+
+        public void AcceptGameRequest(GameRequestEntity gameRequest)
+        {
+            string senderConnection = ConnectionMapper.GetConnection(gameRequest.Sender.Id);
+            if (senderConnection != null)
+            {
+                Cache.AddPlayer(gameRequest.Recipient);
+
+                GameService.CreateGame(gameRequest);
+
+                Clients.Client(senderConnection).AcceptedGameRequest(gameRequest);
+            }
+        }
+
+        public void DeclineGameRequest(GameRequestEntity gameRequest)
+        {
+            string senderConnection = ConnectionMapper.GetConnection(gameRequest.Sender.Id);
+            if (!string.IsNullOrEmpty(senderConnection))
+            {
+                Cache.RemovePlayer(gameRequest.Sender);
+                Clients.Client(senderConnection).DeclinedGameRequest(gameRequest);
+            }
         }
     }
 }

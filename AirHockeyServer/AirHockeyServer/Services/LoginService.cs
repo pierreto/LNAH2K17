@@ -4,6 +4,8 @@ using AirHockeyServer.Entities;
 using AirHockeyServer.Repositories;
 using System.Threading.Tasks;
 using AirHockeyServer.Services.Interfaces;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace AirHockeyServer.Services
 {
@@ -29,7 +31,13 @@ namespace AirHockeyServer.Services
                     PasswordEntity pE = await PasswordService.GetPasswordByUserId(uE.Id);
                     if (pE != null)
                     {
-                        if (uE.Username != loginEntity.Username || pE.Password != loginEntity.Password)
+                        var sha1 = new SHA1CryptoServiceProvider();
+                        string providedPassword =
+                            Convert.ToBase64String(
+                                sha1.ComputeHash(
+                                    Encoding.UTF8.GetBytes(loginEntity.Password)));
+
+                        if (uE.Username != loginEntity.Username || pE.Password != providedPassword)
                         {
                             throw new LoginException("Nom d'usager ou mot de passe invalide");
                         }
