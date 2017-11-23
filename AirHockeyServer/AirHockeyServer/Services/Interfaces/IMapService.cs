@@ -14,5 +14,6 @@ namespace AirHockeyServer.Services.Interfaces
         Task<int?> SaveNewMap(MapEntity map);
         Task<bool> SaveMap(MapEntity map);
         Task<bool> RemoveMap(int id);
+        Task<bool> SyncMap(MapEntity map);
     }
 }
