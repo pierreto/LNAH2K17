@@ -23,6 +23,8 @@ namespace InterfaceGraphique.Entities
 
         public int PrivateUserId { get; set; }
 
+        public string Profile { get; set; }
+
         public ChannelEntity()
         {
             this.Members = new List<MemberEntity>();

@@ -17,7 +17,7 @@ namespace InterfaceGraphique.CommunicationInterface
         public event Action<ChatMessage, String> NewMessageFromChannel;
         public event Action<ChatMessage, int> NewPrivateMessage;
         public event Action<string> NewJoinableChannel;
-        public event Action<string, int> NewPrivateChannel;
+        public event Action<string, int, string> NewPrivateChannel;
         public event Action<string> ChannelDeleted;
         private IHubProxy chatHubProxy;
 
@@ -49,9 +49,9 @@ namespace InterfaceGraphique.CommunicationInterface
             {
                 NewPrivateMessage?.Invoke(message, senderId);
             });
-            chatHubProxy.On<string, int>("PrivateChannelCreated", (privateName, othersId) =>
+            chatHubProxy.On<string, int, string>("PrivateChannelCreated", (privateName, othersId, othersProfile) =>
             {
-                NewPrivateChannel?.Invoke(privateName, othersId);
+                NewPrivateChannel?.Invoke(privateName, othersId, othersProfile);
             });
             //Reception de l'evenement de la creation d'un nouveau canal
             chatHubProxy.On<string>("NewJoinableChannel", (channelName) =>
@@ -83,9 +83,9 @@ namespace InterfaceGraphique.CommunicationInterface
             }
         }
 
-        public async Task<bool> CreatePrivateChannel(string othersName, int myId, int othersId)
+        public async Task<bool> CreatePrivateChannel(string othersName, int myId, int othersId, string othersProfile)
         {
-            bool res = await chatHubProxy.Invoke<Boolean>("CreatePrivateChannel", othersName, User.Instance.UserEntity.Id, othersId);
+            bool res = await chatHubProxy.Invoke<Boolean>("CreatePrivateChannel", othersName, User.Instance.UserEntity.Id, othersId, othersProfile);
             return res;
         }
 

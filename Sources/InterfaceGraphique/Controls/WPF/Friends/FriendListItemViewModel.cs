@@ -254,7 +254,7 @@ namespace InterfaceGraphique.Controls.WPF.Friends
 
         public async Task ChatWith()
         {
-            await Program.unityContainer.Resolve<ChannelViewModel>().CreatePrivateChannel(Username, Id);
+            await Program.unityContainer.Resolve<ChannelViewModel>().CreatePrivateChannel(Username, Id, ProfilePicture);
             System.Diagnostics.Debug.WriteLine("Chat with: " + Username + " with id: " + Id);
         }
 
