@@ -585,6 +585,7 @@
                         <outlet property="itemCollectionView" destination="0Fm-mG-i9z" id="9Qg-Ub-q07"/>
                         <outlet property="loadingSpinner" destination="trd-8M-cLh" id="STD-86-fTQ"/>
                         <outlet property="nameLabel" destination="HMI-da-qJS" id="YXs-Ve-xEY"/>
+                        <outlet property="navigationBar" destination="hUe-H4-vmt" id="Bwi-ES-zyk"/>
                         <outlet property="pointsLabel" destination="O0A-c8-Z7D" id="g1N-5X-um4"/>
                         <outlet property="profileImage" destination="e6u-ac-xGt" id="glc-oh-W4w"/>
                         <outlet property="tournamentsPlayedLabel" destination="vSc-f4-Fp8" id="fxz-nj-Jie"/>
@@ -966,7 +967,7 @@
                                 <rect key="frame" x="0.0" y="28" width="268" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="K66-tY-rh8" id="ney-VF-590">
-                                    <rect key="frame" x="0.0" y="0.0" width="268" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="268" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Slx-Pf-2XI" userLabel="username">
@@ -1707,7 +1708,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1lr-0t-fPh">
-                                <rect key="frame" x="20" y="0.0" width="663.5" height="712"/>
+                                <rect key="frame" x="20" y="0.0" width="663" height="712"/>
                                 <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Message" id="ikA-gx-hh9" customClass="MessageViewCell" customModule="AirHockeyLightClient" customModuleProvider="target">
@@ -1793,7 +1794,7 @@
                                 </prototypes>
                             </tableView>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Entrez un message ..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6c7-wi-h1e">
-                                <rect key="frame" x="20" y="720" width="565.5" height="40"/>
+                                <rect key="frame" x="20" y="720" width="565" height="40"/>
                                 <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="MTS-FN-hob"/>
@@ -1811,7 +1812,7 @@
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eEe-Oz-ati">
-                                <rect key="frame" x="593.5" y="720" width="90" height="40"/>
+                                <rect key="frame" x="593" y="720" width="90" height="40"/>
                                 <color key="backgroundColor" red="0.23529411764705882" green="0.80000000000000004" blue="0.44313725490196076" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="90" id="8HR-eH-PFR"/>
@@ -2044,7 +2045,7 @@
                                 <rect key="frame" x="0.0" y="28" width="268" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="VUe-Tv-OSM" id="dNH-Ec-PDG">
-                                    <rect key="frame" x="0.0" y="0.0" width="268" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="268" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" tag="2" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bqh-1n-HbD">

@@ -33,6 +33,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     @IBOutlet weak var tournamentsPlayedLabel: UILabel!
     
     @IBOutlet weak var loadingSpinner: UIActivityIndicatorView!
+    @IBOutlet weak var navigationBar: UINavigationItem!
     
     let gradientAchievements = CAGradientLayer()
     let gradientItems = CAGradientLayer()
@@ -302,20 +303,43 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
             if selectedIndex != nil {
                 previousSelectedItem = self.userStoreItems[selectedIndex!]
                 previousSelectedItem?.setIsGameEnabled(isGameEnabled: false)
+                
+                // Send Update Item Enable
+                self.loading()
+                self.navigationBar.hidesBackButton = true
+                self.storeService.updateItemEnable(userId: HubManager.sharedConnection.getId()!, item: previousSelectedItem!).then(execute: {_ -> Void in
+                    
+                    self.loadingDone()
+                    self.navigationBar.hidesBackButton = false
+                    
+                    DispatchQueue.main.async(execute: { () -> Void in
+                        // Reload table
+                        self.itemCollectionView.reloadData()
+                    })
+                })
+
             }
             
+            // Select new item
             print("Select user item")
-            let userStoreItem = self.userStoreItems[indexPath.item]
-            if selectedIndex == nil || previousSelectedItem?.getId() != userStoreItem.getId() {
-                    userStoreItem.setIsGameEnabled(isGameEnabled: true)
+            let currentSelectedItem = self.userStoreItems[indexPath.item]
+            if selectedIndex == nil || previousSelectedItem?.getId() != currentSelectedItem.getId() {
+                currentSelectedItem.setIsGameEnabled(isGameEnabled: true)
+                
+                // Send Update Item Enable
+                self.loading()
+                self.navigationBar.hidesBackButton = true
+                self.storeService.updateItemEnable(userId: HubManager.sharedConnection.getId()!, item: currentSelectedItem).then(execute: {_ -> Void in
+                    
+                    self.loadingDone()
+                    self.navigationBar.hidesBackButton = false
+                    
+                    DispatchQueue.main.async(execute: { () -> Void in
+                        // Reload table
+                        self.itemCollectionView.reloadData()
+                    })
+                })
             }
-        
-            // TODO Send Update Item Enable
-        
-            DispatchQueue.main.async(execute: { () -> Void in
-                // Reload table
-                self.itemCollectionView.reloadData()
-            })
         }
     }
     

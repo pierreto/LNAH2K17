@@ -117,6 +117,36 @@ class StoreService {
         }
     }
     
+    func updateItemEnable(userId: Int, item: StoreItemEntity) -> Promise<Bool> {
+        if self.clientConnection.getConnection() != nil && self.clientConnection.connected! {
+            return Promise { fullfil, error in
+                let storeItem = item.toDictionary()
+                
+                let url = "http://" + self.clientConnection.getIpAddress()! + ":63056/api/store/" + String.init(userId) + "/" + String.init(item.getId())
+                var request = URLRequest(url: URL.init(string: url)!)
+                request.httpMethod = "PUT"
+                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                
+                request.httpBody = try! JSONSerialization.data(withJSONObject: storeItem)
+                
+                Alamofire.request(request)
+                    .responseJSON { response in
+                        if response.response?.statusCode == 200 {
+                            print("Success: update item enable success.")
+                            fullfil(true)
+                        }
+                        else {
+                            print("Error: update item enable failed.")
+                            fullfil(false)
+                        }
+                }
+            }
+        }
+        else {
+            return Promise(value: false)
+        }
+    }
+    
     func convertStoreItemEntity(items: [StoreItemEntity]) -> [[String: Any]] {
         var storeItems = [[String: Any]]()
 
