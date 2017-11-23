@@ -50,7 +50,19 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             {
                 UserEntity.IsConnected = value;
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(CanShowOnline));
+                OnPropertyChanged(nameof(CanShowOffline));
+
             }
+        }
+
+        public bool CanShowOnline
+        {
+            get => IsConnected && currentFriend;
+        }
+        public bool CanShowOffline
+        {
+            get => !IsConnected && currentFriend;
         }
 
         public string Username
