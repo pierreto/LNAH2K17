@@ -14,6 +14,8 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     @IBOutlet weak var achievementCollectionView: UICollectionView!
     
+    @IBOutlet weak var itemCollectionView: UICollectionView!
+    
     @IBOutlet weak var profileImage: UIImageView!
     let imagePicker = UIImagePickerController()
     
@@ -30,11 +32,16 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     @IBOutlet weak var tournamentsWonLabel: UILabel!
     @IBOutlet weak var tournamentsPlayedLabel: UILabel!
     
-    let gradient = CAGradientLayer()
+    let gradientAchievements = CAGradientLayer()
+    let gradientItems = CAGradientLayer()
+    
+    var itemsUrl = [String]()
+    var itemsLabel = [String]()
+    var itemsEnable = [Bool]()
     var achievementUrls = [String]()
     var achievementLabels = [String]()
     var achievementEnabled = [Bool]()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         achievementCollectionView.delegate = self
@@ -43,13 +50,22 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         profileImage.image = UIImage(named: "default_profile_picture.png")
         
         // Makes the scroll view fade at the sides to indicate it is scrollable
-        gradient.frame = achievementCollectionView.bounds
-        gradient.colors = [UIColor.clear.cgColor, UIColor.black.cgColor, UIColor.black.cgColor, UIColor.clear.cgColor]
-        gradient.locations = [0.0, 0.2, 0.8, 1.0]
-        gradient.startPoint = CGPoint(x: 0.0, y: 0.5)
-        gradient.endPoint = CGPoint(x: 1.0, y: 0.5)
-        achievementCollectionView.layer.mask = gradient
-        gradient.delegate = self
+        gradientAchievements.frame = achievementCollectionView.bounds
+        gradientAchievements.colors = [UIColor.clear.cgColor, UIColor.black.cgColor, UIColor.black.cgColor, UIColor.clear.cgColor]
+        gradientAchievements.locations = [0.0, 0.2, 0.8, 1.0]
+        gradientAchievements.startPoint = CGPoint(x: 0.0, y: 0.5)
+        gradientAchievements.endPoint = CGPoint(x: 1.0, y: 0.5)
+        achievementCollectionView.layer.mask = gradientAchievements
+        gradientAchievements.delegate = self
+        
+                // Makes the scroll view fade at the sides to indicate it is scrollable
+        gradientItems.frame = itemCollectionView.bounds
+        gradientItems.colors = [UIColor.clear.cgColor, UIColor.black.cgColor, UIColor.black.cgColor, UIColor.clear.cgColor]
+        gradientItems.locations = [0.0, 0.2, 0.8, 1.0]
+        gradientItems.startPoint = CGPoint(x: 0.0, y: 0.5)
+        gradientItems.endPoint = CGPoint(x: 1.0, y: 0.5)
+        itemCollectionView.layer.mask = gradientItems
+        gradientItems.delegate = self
         
         // create tap gesture recognizer
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageTapped(gesture:)))
@@ -214,23 +230,43 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return achievementUrls.count > 0 ? Int(INT_MAX)/100 : 0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = achievementCollectionView.dequeueReusableCell(withReuseIdentifier: "achievementCell", for: indexPath) as! AchievementCollectionViewCell
-        cell.imageView.image = UIImage(named: achievementUrls[indexPath.row % achievementUrls.count])
-        cell.imageLabel.text = achievementLabels[indexPath.row % achievementUrls.count]
-        if self.achievementEnabled[indexPath.row % achievementUrls.count] {
-            cell.imageLabel.textColor = UIColor.green
-        } else {
-            cell.imageLabel.textColor = UIColor.white
+        var count:Int?
+        if collectionView == self.achievementCollectionView {
+            count = achievementUrls.count > 0 ? Int(INT_MAX)/100 : 0
         }
-        return cell
+        if collectionView == self.itemCollectionView {
+            count = itemsUrl.count > 0 ? Int(INT_MAX)/100 : 0
+        }
+        return count!
+
     }
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        var cell:AchievementCollectionViewCell?
+        if collectionView == self.achievementCollectionView {
+            cell = achievementCollectionView.dequeueReusableCell(withReuseIdentifier: "achievementCell", for: indexPath) as? AchievementCollectionViewCell
+            cell?.imageView.image = UIImage(named: achievementUrls[indexPath.row % achievementUrls.count])
+            cell?.imageLabel.text = achievementLabels[indexPath.row % achievementUrls.count]
+            if self.achievementEnabled[indexPath.row % achievementUrls.count] {
+                cell?.imageLabel.textColor = UIColor.green
+            } else {
+                cell?.imageLabel.textColor = UIColor.white
+            }
+        } else if collectionView == self.itemCollectionView {
+            cell = itemCollectionView.dequeueReusableCell(withReuseIdentifier: "itemCell", for: indexPath) as? AchievementCollectionViewCell
+            cell?.imageView.image = UIImage(named: itemsUrl[indexPath.row % itemsUrl.count])
+            cell?.imageLabel.text = itemsLabel[indexPath.row % itemsUrl.count]
+            if self.achievementEnabled[indexPath.row % itemsUrl.count] {
+                cell?.imageLabel.textColor = UIColor.green
+            } else {
+                cell?.imageLabel.textColor = UIColor.white
+            }
+            }
+            return cell!
+      }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        gradient.frame = achievementCollectionView.bounds
+        gradientItems.frame = itemCollectionView.bounds
+        gradientAchievements.frame = achievementCollectionView.bounds
     }
 
     func action(for layer: CALayer, forKey event: String) -> CAAction? {
