@@ -10,6 +10,6 @@ import UIKit
 
 class AchievementCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
-    
     @IBOutlet weak var imageLabel: UILabel!
+    @IBOutlet weak var imageBackground: UIView?
 }

@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:InterfaceGraphique.Controls.WPF.Chat.Channel"
              xmlns:convert="clr-namespace:InterfaceGraphique.Controls.WPF.Converters"
              xmlns:wpf="clr-namespace:InterfaceGraphique.Controls.WPF"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
              mc:Ignorable="d" 
              d:DesignWidth="300">
     <UserControl.Resources>
@@ -87,7 +88,6 @@
                                                 FontSize="18"
                                                 TextTrimming="CharacterEllipsis"
                                                 />
-
                                         </StackPanel>
                                     </Border>
 

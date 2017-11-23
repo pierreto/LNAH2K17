@@ -61,7 +61,8 @@ namespace AirHockeyServer.Hubs
 
         public async Task<List<FriendRequestEntity>> GetAllPendingRequests(UserEntity user)
         {
-            return await FriendService.GetAllPendingRequests(user);
+            var requests = await FriendService.GetAllPendingRequests(user);
+            return requests;
         }
 
         public async Task<FriendRequestEntity> SendFriendRequest(UserEntity user, UserEntity friend)

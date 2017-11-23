@@ -24,12 +24,11 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
     /// Instance singleton
     static var instance = EditorViewController()
     
-    public var currentMap: MapEntity?
-    
     @IBOutlet weak var editorView: SCNView!
     public var editorScene: SCNScene!
     public var editorNotificationScene: EditorNotificationScene?
     public var cameraNode: SCNNode!
+    public var cameraOrbit: SCNNode!
     
     @IBOutlet weak var hudView: SCNView!
     public var hudScene: SCNScene!
@@ -37,6 +36,10 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
     
     @IBOutlet weak var navigationBar: UINavigationItem!
     @IBOutlet weak var objectPropertiesView: ObjectPropertiesView!
+    
+    public var currentMap: MapEntity?
+    var lastWidthRatio: Float = 0
+    var lastHeightRatio: Float = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -101,15 +104,36 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     func initCamera() {
+        // Setup camera node
         self.cameraNode = SCNNode()
         self.cameraNode.camera = SCNCamera()
         self.cameraNode.camera?.zNear = 0.1
         self.cameraNode.camera?.zFar = 1000
         
-        self.editorScene.rootNode.addChildNode(cameraNode)
+        // Setup camera orbit
+        self.cameraOrbit = SCNNode()
+        self.cameraOrbit.addChildNode(self.cameraNode)
+        self.cameraOrbit.position = SCNVector3Make(20, 200, 0)
+        self.cameraOrbit.eulerAngles = SCNVector3Make((-Float.pi/2), (-Float.pi/2), 0)
         
-        self.cameraNode.position = SCNVector3Make(20, 200, 0);
-        self.cameraNode.eulerAngles = SCNVector3Make((-Float.pi/2), (-Float.pi/2), 0);
+        self.editorScene.rootNode.addChildNode(cameraOrbit)
+        
+        // Add pan gesture recognizer
+        // let gesture = UIPanGestureRecognizer(target: self, action: #selector(self.panDetected))
+        // self.editorView.addGestureRecognizer(gesture);
+    }
+    
+    func panDetected(sender: UIPanGestureRecognizer) {
+        let translation = sender.translation(in: sender.view!)
+        let widthRatio = Float(translation.x) / Float(sender.view!.frame.size.width) + self.lastWidthRatio
+        let heightRatio = Float(translation.y) / Float(sender.view!.frame.size.height) + self.lastHeightRatio
+        self.cameraOrbit.eulerAngles.y = -2 * Float.pi * widthRatio
+        self.cameraOrbit.eulerAngles.x = -Float.pi * heightRatio
+        
+        if (sender.state == .ended) {
+            self.lastWidthRatio = widthRatio.truncatingRemainder(dividingBy: 1)
+            self.lastHeightRatio = heightRatio.truncatingRemainder(dividingBy: 1)
+        }
     }
     
     func initFacadeModele() {

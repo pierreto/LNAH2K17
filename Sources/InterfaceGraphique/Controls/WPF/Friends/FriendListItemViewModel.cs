@@ -290,8 +290,9 @@ namespace InterfaceGraphique.Controls.WPF.Friends
 
         private async Task SendFriendRequest()
         {
-            HttpResponseMessage response = await Program.client.GetAsync("api/user/u/" + Username);
-            UserEntity friend = await HttpResponseParser.ParseResponse<UserEntity>(response);
+            //HttpResponseMessage response = await Program.client.GetAsync("api/user/u/" + Username);
+            //UserEntity friend = await HttpResponseParser.ParseResponse<UserEntity>(response);
+            UserEntity friend = new UserEntity { Id = Id, Username = Username, Profile = ProfilePicture };
             await Program.unityContainer.Resolve<FriendsHub>().SendFriendRequest(friend);
             var item = Program.unityContainer.Resolve<AddFriendListViewModel>().Items;
             //Retire de notre liste de personnes ajoutables la personne qu'on vien d'envoyer une demande d'amis

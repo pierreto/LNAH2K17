@@ -19,7 +19,6 @@ namespace InterfaceGraphique.Controls.WPF.Friends
         #region Private Properties
         private string friendUsername;
         private FriendsHub friendsHub;
-        private List<FriendRequestEntity> friendRequestList;
         private ObservableCollection<FriendListItemViewModel> friendsToAddList;
         private UserService userService;
         #endregion
@@ -45,16 +44,6 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             this.FriendsToAddList = new ObservableCollection<FriendListItemViewModel>();
         }
         #endregion
-
-        //public List<FriendRequestEntity> FriendRequestList
-        //{
-        //    get => this.friendRequestList;
-        //    set
-        //    {
-        //        this.friendRequestList = value;
-        //        this.OnPropertyChanged();
-        //    }
-        //}
 
         public ObservableCollection<FriendListItemViewModel> FriendsToAddList
         {
@@ -97,18 +86,6 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             Program.unityContainer.Resolve<FriendListViewModel>().Collapsed = Collapsed;
             Program.unityContainer.Resolve<FriendListViewModel>().TabIcon = TabIcon;
 
-        }
-
-        private void updateLists()
-        {
-            //Task.Run(async () =>
-            //    FriendRequestList = await this.friendsHub.GetAllPendingRequests()
-            //);
-        }
-
-        private void CanceledFriendRequestEvent(FriendRequestEntity request)
-        {
-            updateLists();
         }
 
         public override void InitializeViewModel()
