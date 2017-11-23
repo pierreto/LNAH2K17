@@ -16,6 +16,7 @@ using InterfaceGraphique.CommunicationInterface.WaitingRooms;
 using InterfaceGraphique.Entities;
 using InterfaceGraphique.CommunicationInterface;
 using System.IO;
+using InterfaceGraphique.Controls.WPF.Tutorial;
 
 namespace InterfaceGraphique
 {
@@ -117,6 +118,11 @@ namespace InterfaceGraphique
             this.MenuItem_OrthoView.Click += (sender, e) => ToggleOrbit(false);
             this.Button_MainMenu.Click += (sender, e) => OnMainMenuClicked(sender, e);
             this.Button_PlayAgain.Click += (sender, e) => { ResetDefaultTable(); Program.FormManager.CurrentForm = Program.QuickPlay; };
+            this.Informations_Tutoriel.Click += async (sender, e) =>
+            {
+                await Program.unityContainer.Resolve<TutorialViewModel>().SwitchToMatchSlides();
+                Program.TutorialHost.ShowDialog();
+            };
             this.KeyDown += new KeyEventHandler(currentGameState.KeyDownEvent);
             this.KeyUp += new KeyEventHandler(currentGameState.KeyUpEvent);
 
