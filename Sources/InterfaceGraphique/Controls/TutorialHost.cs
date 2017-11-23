@@ -9,7 +9,7 @@ namespace InterfaceGraphique.Controls
         public TutorialHost()
         {
             InitializeComponent();
-            //this.elementHost1.Child = Program.unityContainer.Resolve<TutorialView>();
+            this.elementHost1.Child = Program.unityContainer.Resolve<TutorialView>();
         }
     }
 }

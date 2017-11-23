@@ -22,7 +22,7 @@ namespace InterfaceGraphique.Controls.WPF.Store
             Id = item.Id;
             IsGameEnabled = item.IsGameEnabled;
         }
-
+        
         public StoreItemEntity StoreItem { get; set; }
 
         private string name;

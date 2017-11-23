@@ -19,13 +19,37 @@ import UIKit
 ///////////////////////////////////////////////////////////////////////////
 class MapCarouselViewController: UIViewController, iCarouselDataSource, iCarouselDelegate {
     
+    /// Instance singleton
+    static var instance = MapCarouselViewController()
+    
     @IBOutlet var carouselView: iCarousel!
     
-    var maps = [MapEntity]()
+    private let LOCK_BUTTON_ICON = "\u{f023}"
+    private var maps = [MapEntity]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        carouselView.type = .cylinder
+        
+        MapCarouselViewController.instance = self
+        self.carouselView.type = .coverFlow
+        self.updateEntries()
+    }
+    
+    func updateEntries() {
+        // Fetch server maps
+        let mapService = MapService()
+        mapService.getMaps() { maps, error in
+            for map in maps! {
+                self.maps.append(mapService.buildMapEntity(json: map.1))
+            }
+            
+            DispatchQueue.main.async(execute: { () -> Void in
+                // Reload tableView
+                self.carouselView.reloadData()
+            })
+            
+            return
+        }
         
         self.maps = DBManager.instance.recupererCartes()
         
@@ -43,7 +67,7 @@ class MapCarouselViewController: UIViewController, iCarouselDataSource, iCarouse
         let map = self.maps[index]
         
         let tempView = UIView(frame: CGRect(x: 0, y: 0, width: 400, height: 200))
-        tempView.isUserInteractionEnabled = true
+        tempView.backgroundColor = UIColor.init(red: 232, green: 232, blue: 232, alpha: 1)
 
         let mapImage = UIImageView(frame: CGRect(x: 10, y: 10, width: 180, height: 180))
         mapImage.image = UIImage(named: "map.png")
@@ -51,12 +75,15 @@ class MapCarouselViewController: UIViewController, iCarouselDataSource, iCarouse
         let mapInfo = UIView(frame: CGRect(x: 200, y: 0, width: 200, height: 200))
         
         let isPublicLabel = UILabel()
-        isPublicLabel.text = map.privacy.value == true ? "false" : "true"
-        isPublicLabel.font = UIFont(name:"HelveticaNeue-Bold", size: 15.0)
-        isPublicLabel.textAlignment = NSTextAlignment.right
-        isPublicLabel.numberOfLines = 1
-        isPublicLabel.textColor = UIColor.black
-        isPublicLabel.translatesAutoresizingMaskIntoConstraints = false
+        if map.privacy.value == true {
+            isPublicLabel.text = self.LOCK_BUTTON_ICON
+            isPublicLabel.font = UIFont(name:"FontAwesome", size: 15.0)
+            isPublicLabel.textAlignment = NSTextAlignment.right
+            isPublicLabel.numberOfLines = 1
+            isPublicLabel.textColor = UIColor.black
+            isPublicLabel.translatesAutoresizingMaskIntoConstraints = false
+            
+        }
         
         let mapNameLabel = UILabel()
         mapNameLabel.text = map.mapName
@@ -101,14 +128,16 @@ class MapCarouselViewController: UIViewController, iCarouselDataSource, iCarouse
         tempView.addSubview(button)
         tempView.addSubview(mapImage)
         tempView.addSubview(mapInfo)
-        tempView.addSubview(isPublicLabel)
         tempView.addSubview(mapNameLabel)
         tempView.addSubview(numberOfPlayersLabel)
         tempView.addSubview(creatorLabel)
         tempView.addSubview(idLabel)
         
-        isPublicLabel.bottomAnchor.constraint(equalTo: mapInfo.bottomAnchor, constant: -15).isActive = true
-        isPublicLabel.rightAnchor.constraint(equalTo: mapInfo.rightAnchor, constant: -15).isActive = true
+        if map.privacy.value == true {
+            tempView.addSubview(isPublicLabel)
+            isPublicLabel.bottomAnchor.constraint(equalTo: mapInfo.bottomAnchor, constant: -15).isActive = true
+            isPublicLabel.rightAnchor.constraint(equalTo: mapInfo.rightAnchor, constant: -15).isActive = true
+        }
         
         mapNameLabel.centerXAnchor.constraint(equalTo: mapInfo.centerXAnchor).isActive = true
         mapNameLabel.centerYAnchor.constraint(equalTo: mapInfo.centerYAnchor).isActive = true
@@ -125,8 +154,10 @@ class MapCarouselViewController: UIViewController, iCarouselDataSource, iCarouse
         return tempView
     }
     
-    func handleRegister(sender: UIButton){
-        print("open map")
+    func handleRegister(sender: UIButton) {
+        print(self.carouselView.currentItemIndex)
+        let parent = self.parent as! MapDisplayViewController
+        parent.handleTableSelection(map: self.maps[self.carouselView.currentItemIndex])
     }
     
     func carousel(_ carousel: iCarousel, valueFor option: iCarouselOption, withDefault value: CGFloat) -> CGFloat {
@@ -134,6 +165,24 @@ class MapCarouselViewController: UIViewController, iCarouselDataSource, iCarouse
             return value * 1.1
         }
         return value
+    }
+    
+    func deleteCurrentMap() {
+        if self.maps.count > 0 {
+            let mapService = MapService()
+            mapService.deleteMap(map: self.maps[self.carouselView.currentItemIndex], completionHandler: { success, error in
+                if success! {
+                    self.maps.remove(at: self.carouselView.currentItemIndex) // remove the item from the data model
+                    
+                    DispatchQueue.main.async(execute: { () -> Void in
+                        // Reload tableView
+                        self.carouselView.reloadData()
+                    })
+                }
+                
+                return
+            })
+        }
     }
     
 }

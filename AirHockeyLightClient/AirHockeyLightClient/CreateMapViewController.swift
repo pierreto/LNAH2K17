@@ -100,7 +100,7 @@ class CreateMapViewController: UIViewController {
             password: self.password.text!,
             passwordConfirmation: self.passwordConfirmation.text!)  )! {
             
-            MapTableViewController.instance.updateEntries()
+            MapCarouselViewController.instance.updateEntries()
             /// Fermer la fenêtre
             self.removeAnimate()
         }

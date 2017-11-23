@@ -28,6 +28,18 @@ class StoreItemEntity : Entity {
     private var isGameEnabled: Bool = false
     private var isBougthByUser: Bool = false
     
+    func toDictionary() -> [String: Any] {
+        return [
+            "Name": self.name,
+            "Price": self.price,
+            "Description": self.description,
+            "TextureName": self.textureName,
+            "ImageUrl": self.imageUrl,
+            "Id": self.id,
+            "IsGameEnabled": self.isGameEnabled
+        ] as [String : Any]
+    }
+    
     func fromJSON(json: JSON) {
         self.name = json["Name"].string!
         self.price = json["Price"].int!

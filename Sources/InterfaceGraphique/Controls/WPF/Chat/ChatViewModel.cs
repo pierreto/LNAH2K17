@@ -141,6 +141,7 @@ namespace InterfaceGraphique.Controls.WPF.Chat
             tabIcon = "AngleDown";
             chatHub.NewMessage += NewMessage;
             chatHub.NewMessageFromChannel += NewMessageFromChannel;
+            chatHub.NewPrivateMessage += NewPrivateMessage;
             ctxTaskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
             currentChannel = CurrentChannel;
             ChatTabHeight = CHAT_TAB_HEIGHT;
@@ -202,13 +203,22 @@ namespace InterfaceGraphique.Controls.WPF.Chat
                     SentByMe = false
                 });
             }
-            else
+            else if (CurrentChannel != MainChannel && !CurrentChannel.IsPrivate)
             {
                 this.chatHub.SendChannel(new ChatMessage()
                 {
                     MessageValue = MessageTextBox,
                     SentByMe = false
                 }, CurrentChannel.Name);
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("\nSend message from : " + User.Instance.UserEntity.Id + " to " + CurrentChannel.PrivateUserId + "\n");
+                this.chatHub.SendPrivateMessage(new ChatMessage()
+                {
+                    MessageValue = MessageTextBox,
+                    SentByMe = false
+                }, User.Instance.UserEntity.Id, CurrentChannel.PrivateUserId);
             }
             MessageTextBox = "";
         }
@@ -298,7 +308,31 @@ namespace InterfaceGraphique.Controls.WPF.Chat
                 {
                     var clivmList = Program.unityContainer.Resolve<ChatListViewModel>().Items;
                     var clivm = clivmList.Where(s => s.ChannelEntity == cE).First();
+                    var idx = clivmList.IndexOf(clivm);
                     clivm.NewContentAvailable = true;
+                    Program.unityContainer.Resolve<ChatListViewModel>().Items.Move(idx, 1);
+                    Program.unityContainer.Resolve<ChatListViewModel>().OnPropertyChanged("Items");
+                    Program.unityContainer.Resolve<ChatListItemViewModel>().OnPropertyChanged("ChannelSelected");
+                }
+                cE.Messages.Add(message);
+            }).Wait();
+        }
+
+        private void NewPrivateMessage(ChatMessage message, int senderId)
+        {
+            var items = Program.unityContainer.Resolve<ChatListViewModel>().Items;
+            ChannelEntity cE = items.Where(s => s.ChannelEntity.PrivateUserId == senderId).First().ChannelEntity;
+            ctxTaskFactory.StartNew(() =>
+            {
+                //If you are not currently on the channel where the message is being sent, you receive a notification
+                if (CurrentChannel != cE)
+                {
+                    var clivmList = Program.unityContainer.Resolve<ChatListViewModel>().Items;
+                    var clivm = clivmList.Where(s => s.ChannelEntity == cE).First();
+                    var idx = clivmList.IndexOf(clivm);
+                    clivm.NewContentAvailable = true;
+                    Program.unityContainer.Resolve<ChatListViewModel>().Items.Move(idx, 1);
+                    Program.unityContainer.Resolve<ChatListViewModel>().OnPropertyChanged("Items");
                     Program.unityContainer.Resolve<ChatListItemViewModel>().OnPropertyChanged("ChannelSelected");
                 }
                 cE.Messages.Add(message);

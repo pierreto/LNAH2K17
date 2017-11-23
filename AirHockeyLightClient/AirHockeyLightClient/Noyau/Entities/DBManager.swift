@@ -26,6 +26,8 @@ class DBManager {
     // Base de données locale
     private var realm: Realm
     
+    private var timer: Timer?
+    
     init() {
         let config = Realm.Configuration(
             // Set the new schema version. This must be greater than the previously used
@@ -47,6 +49,16 @@ class DBManager {
         Realm.Configuration.defaultConfiguration = config
         
         self.realm = try! Realm()
+        
+        // Activer le timer pour la sauvegarde automatique de la carte
+        // self.scheduledTimerWithTimeInterval()
+    }
+    
+    func sauvegarderCarte(map: MapEntity) {
+        // Persist map in the realm
+        try! self.realm.write {
+            self.realm.add(map)
+        }
     }
     
     func sauvegarderCarte(map: MapEntity, json: String?) {
@@ -78,6 +90,30 @@ class DBManager {
     func isMapNameUnique(mapName: String) -> Bool {
         let maps = self.realm.objects(MapEntity.self).filter("mapName == %@", mapName)
         return maps.count == 0
+    }
+    
+    func updateCreatorOfLocalMaps(creator: String) {
+        try! self.realm.write {
+            for map in self.realm.objects(MapEntity.self) {
+                map.creator = creator
+            }
+        }
+    }
+    
+    // Empty method to force initialization of singleton instance
+    func startMapFetching() { }
+    
+    private func scheduledTimerWithTimeInterval() {
+        self.timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(self.importServerMaps), userInfo: nil, repeats: true)
+    }
+    
+    @objc private func importServerMaps() {
+        let mapService = MapService()
+        mapService.getMaps() { maps, error in
+            for map in maps! {
+                self.sauvegarderCarte(map: mapService.buildMapEntity(json: map.1))
+            }
+        }
     }
     
 }
