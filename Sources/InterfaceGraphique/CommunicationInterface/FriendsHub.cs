@@ -137,5 +137,11 @@ namespace InterfaceGraphique.CommunicationInterface
         {
             await FriendsProxy.Invoke("Logout", User.Instance.UserEntity);
         }
+
+        public async Task LeaveRoom()
+        {
+            // do nothing
+            return;
+        }
     }
 }
