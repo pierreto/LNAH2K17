@@ -35,19 +35,34 @@ namespace AirHockeyServer.Hubs
         public async Task<List<UserEntity>> GetAllFriends(UserEntity user)
         {
             List<UserEntity> allFriend = await FriendService.GetAllFriends(user);
-            allFriend.ForEach((friend =>
+            return SetIsConnected(allFriend);
+        }
+         
+        private List<UserEntity> SetIsConnected(List<UserEntity> users)
+        {
+            users.ForEach((friend =>
             {
                 if (this.FriendService.UsersIdConnected.Contains(friend.Id))
                 {
                     friend.IsConnected = true;
                 }
             }));
-            return allFriend;
+            return users;
+        }
+        private UserEntity SetIsConnected(UserEntity user)
+        {
+
+            if (user !=null && this.FriendService.UsersIdConnected.Contains(user.Id))
+            {
+                user.IsConnected = true;
+            }
+            return user;
         }
 
         public async Task<List<FriendRequestEntity>> GetAllPendingRequests(UserEntity user)
         {
-            return await FriendService.GetAllPendingRequests(user);
+            var requests = await FriendService.GetAllPendingRequests(user);
+            return requests;
         }
 
         public async Task<FriendRequestEntity> SendFriendRequest(UserEntity user, UserEntity friend)
@@ -58,6 +73,8 @@ namespace AirHockeyServer.Hubs
             string friendConnection = ConnectionMapper.GetConnection(friend.Id);
             if (friendRequest != null && friendConnection.Length > 0) 
             {
+                SetIsConnected(friendRequest.Friend);
+                SetIsConnected(friendRequest.Requestor);
                 Clients.Client(friendConnection).FriendRequestEvent(friendRequest);
             }
 
@@ -70,15 +87,19 @@ namespace AirHockeyServer.Hubs
 
             // Si la demande d'ami a été acceptée avec succès, on notifie les deux
             // nouveaux amis (requestor et friend) :
-            string friendConnection = ConnectionMapper.GetConnection(relation.Requestor.Id);
-            string myConnection = ConnectionMapper.GetConnection(relation.Friend.Id);
+            string friendConnection = ConnectionMapper.GetConnection(request.Requestor.Id);
+            string myConnection = ConnectionMapper.GetConnection(request.Friend.Id);
             if (relation != null)
             {
+                SetIsConnected(request.Friend);
+                SetIsConnected(request.Requestor);
                 if (friendConnection.Length > 0)
                 {
-                    Clients.Client(friendConnection).NewFriendEvent(relation.Friend);
+                    Clients.Client(friendConnection).NewFriendEvent(request.Friend);
                 }
-                Clients.Client(myConnection).NewFriendEvent(relation.Requestor);
+              
+                Clients.Client(myConnection).NewFriendEvent(request.Requestor);
+
             }
 
             return relation;
@@ -86,6 +107,8 @@ namespace AirHockeyServer.Hubs
 
         public async Task<FriendRequestEntity> RefuseFriendRequest(FriendRequestEntity request)
         {
+            SetIsConnected(request.Friend);
+            SetIsConnected(request.Requestor);
             return await FriendService.RefuseFriendRequest(request);
             // TODO ? envoyer un event pour pouvoir ajouter a la liste d'amis a ajouter quand on refuse qqn
         }
@@ -99,6 +122,8 @@ namespace AirHockeyServer.Hubs
             string friendConnection = ConnectionMapper.GetConnection(request.Friend.Id);
             if (canceled_request && friendConnection.Length > 0)
             {
+                SetIsConnected(request.Friend);
+                SetIsConnected(request.Requestor);
                 Clients.Client(friendConnection).CanceledFriendRequestEvent(request);
             }
 
@@ -115,9 +140,12 @@ namespace AirHockeyServer.Hubs
             if (removed_friend)
             {
                 Clients.Client(ConnectionMapper.GetConnection(user.Id)).RemovedFriendEvent(ex_friend);
-               
+
                 if (ex_friendConnection.Length > 0)
+                {
+                    SetIsConnected(user);
                     Clients.Client(ex_friendConnection).RemovedFriendEvent(user);
+                }
             }
 
             return removed_friend;

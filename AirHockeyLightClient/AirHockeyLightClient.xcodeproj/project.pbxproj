@@ -184,6 +184,22 @@
 		8F8706BB1F7892F2000E6824 /* ChatMessageEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8706BA1F7892F2000E6824 /* ChatMessageEntity.swift */; };
 		8F97A3851FA2C8BD00421FDC /* GeneralPropertiesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F97A3831FA2C8BD00421FDC /* GeneralPropertiesViewModel.swift */; };
 		8F97A3861FA2C8BD00421FDC /* IGeneralPropertiesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F97A3841FA2C8BD00421FDC /* IGeneralPropertiesViewModel.swift */; };
+		8FA618C31FC6B781003001E9 /* maillet_rouge.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FA618C21FC6B781003001E9 /* maillet_rouge.png */; };
+		8FA618D21FC6C4DC003001E9 /* maillet_vert.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FA618C41FC6C4DC003001E9 /* maillet_vert.png */; };
+		8FA618D31FC6C4DC003001E9 /* maillet_vache.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FA618C51FC6C4DC003001E9 /* maillet_vache.png */; };
+		8FA618D41FC6C4DC003001E9 /* maillet_rouge.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FA618C61FC6C4DC003001E9 /* maillet_rouge.png */; };
+		8FA618D51FC6C4DC003001E9 /* maillet_or.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FA618C71FC6C4DC003001E9 /* maillet_or.png */; };
+		8FA618D61FC6C4DC003001E9 /* maillet_mauve.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FA618C81FC6C4DC003001E9 /* maillet_mauve.png */; };
+		8FA618D71FC6C4DC003001E9 /* maillet_jaune.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FA618C91FC6C4DC003001E9 /* maillet_jaune.png */; };
+		8FA618D81FC6C4DC003001E9 /* maillet_herbe.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FA618CA1FC6C4DC003001E9 /* maillet_herbe.png */; };
+		8FA618D91FC6C4DC003001E9 /* maillet_gris.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FA618CB1FC6C4DC003001E9 /* maillet_gris.png */; };
+		8FA618DA1FC6C4DC003001E9 /* maillet_feu.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FA618CC1FC6C4DC003001E9 /* maillet_feu.png */; };
+		8FA618DB1FC6C4DC003001E9 /* maillet_eau.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FA618CD1FC6C4DC003001E9 /* maillet_eau.png */; };
+		8FA618DC1FC6C4DC003001E9 /* maillet_bronze.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FA618CE1FC6C4DC003001E9 /* maillet_bronze.png */; };
+		8FA618DD1FC6C4DC003001E9 /* maillet_brique.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FA618CF1FC6C4DC003001E9 /* maillet_brique.png */; };
+		8FA618DE1FC6C4DC003001E9 /* maillet_bleu.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FA618D01FC6C4DC003001E9 /* maillet_bleu.png */; };
+		8FA618DF1FC6C4DC003001E9 /* maillet_argent.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FA618D11FC6C4DC003001E9 /* maillet_argent.png */; };
+		8FA618E11FC6C4E7003001E9 /* maillet_orange.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FA618E01FC6C4E7003001E9 /* maillet_orange.png */; };
 		8FB0E29C1FAFF2B100672057 /* WallCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB0E29B1FAFF2B100672057 /* WallCommand.swift */; };
 		8FB0E29E1FB00DC700672057 /* SelectionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB0E29D1FB00DC700672057 /* SelectionCommand.swift */; };
 		8FB2F7761FB41CD80047FB53 /* CoefficientCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB2F7751FB41CD80047FB53 /* CoefficientCommand.swift */; };
@@ -403,6 +419,22 @@
 		8F8706BA1F7892F2000E6824 /* ChatMessageEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatMessageEntity.swift; path = Noyau/Entities/ChatMessageEntity.swift; sourceTree = "<group>"; };
 		8F97A3831FA2C8BD00421FDC /* GeneralPropertiesViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GeneralPropertiesViewModel.swift; path = InterfaceGraphique/ViewModel/GeneralProperties/GeneralPropertiesViewModel.swift; sourceTree = "<group>"; };
 		8F97A3841FA2C8BD00421FDC /* IGeneralPropertiesViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IGeneralPropertiesViewModel.swift; path = InterfaceGraphique/ViewModel/GeneralProperties/IGeneralPropertiesViewModel.swift; sourceTree = "<group>"; };
+		8FA618C21FC6B781003001E9 /* maillet_rouge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = maillet_rouge.png; path = ../../Exe/media/textures/maillet_rouge.png; sourceTree = "<group>"; };
+		8FA618C41FC6C4DC003001E9 /* maillet_vert.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = maillet_vert.png; path = ../../Exe/media/textures/maillet_vert.png; sourceTree = "<group>"; };
+		8FA618C51FC6C4DC003001E9 /* maillet_vache.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = maillet_vache.png; path = ../../Exe/media/textures/maillet_vache.png; sourceTree = "<group>"; };
+		8FA618C61FC6C4DC003001E9 /* maillet_rouge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = maillet_rouge.png; path = ../../Exe/media/textures/maillet_rouge.png; sourceTree = "<group>"; };
+		8FA618C71FC6C4DC003001E9 /* maillet_or.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = maillet_or.png; path = ../../Exe/media/textures/maillet_or.png; sourceTree = "<group>"; };
+		8FA618C81FC6C4DC003001E9 /* maillet_mauve.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = maillet_mauve.png; path = ../../Exe/media/textures/maillet_mauve.png; sourceTree = "<group>"; };
+		8FA618C91FC6C4DC003001E9 /* maillet_jaune.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = maillet_jaune.png; path = ../../Exe/media/textures/maillet_jaune.png; sourceTree = "<group>"; };
+		8FA618CA1FC6C4DC003001E9 /* maillet_herbe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = maillet_herbe.png; path = ../../Exe/media/textures/maillet_herbe.png; sourceTree = "<group>"; };
+		8FA618CB1FC6C4DC003001E9 /* maillet_gris.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = maillet_gris.png; path = ../../Exe/media/textures/maillet_gris.png; sourceTree = "<group>"; };
+		8FA618CC1FC6C4DC003001E9 /* maillet_feu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = maillet_feu.png; path = ../../Exe/media/textures/maillet_feu.png; sourceTree = "<group>"; };
+		8FA618CD1FC6C4DC003001E9 /* maillet_eau.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = maillet_eau.png; path = ../../Exe/media/textures/maillet_eau.png; sourceTree = "<group>"; };
+		8FA618CE1FC6C4DC003001E9 /* maillet_bronze.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = maillet_bronze.png; path = ../../Exe/media/textures/maillet_bronze.png; sourceTree = "<group>"; };
+		8FA618CF1FC6C4DC003001E9 /* maillet_brique.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = maillet_brique.png; path = ../../Exe/media/textures/maillet_brique.png; sourceTree = "<group>"; };
+		8FA618D01FC6C4DC003001E9 /* maillet_bleu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = maillet_bleu.png; path = ../../Exe/media/textures/maillet_bleu.png; sourceTree = "<group>"; };
+		8FA618D11FC6C4DC003001E9 /* maillet_argent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = maillet_argent.png; path = ../../Exe/media/textures/maillet_argent.png; sourceTree = "<group>"; };
+		8FA618E01FC6C4E7003001E9 /* maillet_orange.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = maillet_orange.png; path = ../../Exe/media/textures/maillet_orange.png; sourceTree = "<group>"; };
 		8FB0E29B1FAFF2B100672057 /* WallCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WallCommand.swift; path = Noyau/Editor/Commands/WallCommand.swift; sourceTree = "<group>"; };
 		8FB0E29D1FB00DC700672057 /* SelectionCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelectionCommand.swift; path = Noyau/Editor/Commands/SelectionCommand.swift; sourceTree = "<group>"; };
 		8FB2F7751FB41CD80047FB53 /* CoefficientCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoefficientCommand.swift; path = Noyau/Editor/Commands/CoefficientCommand.swift; sourceTree = "<group>"; };
@@ -696,6 +728,22 @@
 		34B66FDA1F843CC100A9CCB9 /* Textures */ = {
 			isa = PBXGroup;
 			children = (
+				8FA618C21FC6B781003001E9 /* maillet_rouge.png */,
+				8FA618C41FC6C4DC003001E9 /* maillet_vert.png */,
+				8FA618C51FC6C4DC003001E9 /* maillet_vache.png */,
+				8FA618C61FC6C4DC003001E9 /* maillet_rouge.png */,
+				8FA618C71FC6C4DC003001E9 /* maillet_or.png */,
+				8FA618C81FC6C4DC003001E9 /* maillet_mauve.png */,
+				8FA618C91FC6C4DC003001E9 /* maillet_jaune.png */,
+				8FA618CA1FC6C4DC003001E9 /* maillet_herbe.png */,
+				8FA618CB1FC6C4DC003001E9 /* maillet_gris.png */,
+				8FA618CC1FC6C4DC003001E9 /* maillet_feu.png */,
+				8FA618E01FC6C4E7003001E9 /* maillet_orange.png */,
+				8FA618CD1FC6C4DC003001E9 /* maillet_eau.png */,
+				8FA618CE1FC6C4DC003001E9 /* maillet_bronze.png */,
+				8FA618CF1FC6C4DC003001E9 /* maillet_brique.png */,
+				8FA618D01FC6C4DC003001E9 /* maillet_bleu.png */,
+				8FA618D11FC6C4DC003001E9 /* maillet_argent.png */,
 				34B66FDB1F843CD300A9CCB9 /* fire_texture.png */,
 				34B66FDF1F844C2100A9CCB9 /* table_texture.png */,
 			);
@@ -1109,10 +1157,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				25B0DBFD1FC3C4B4002B364B /* map.png in Resources */,
+				8FA618D81FC6C4DC003001E9 /* maillet_herbe.png in Resources */,
 				1DC31A751FC0DC0C0000B7DE /* coin_5_disabled.png in Resources */,
 				1DC31A761FC0DC0C0000B7DE /* coin_5_enabled.png in Resources */,
 				1DC31A771FC0DC0C0000B7DE /* coin_30_disabled.png in Resources */,
 				1DC31A781FC0DC0C0000B7DE /* coin_30_enabled.png in Resources */,
+				8FA618D31FC6C4DC003001E9 /* maillet_vache.png in Resources */,
 				1DC31A791FC0DC0C0000B7DE /* coin_80_disabled.png in Resources */,
 				1DC31A7A1FC0DC0C0000B7DE /* coin_80_enabled.png in Resources */,
 				1DC31A7B1FC0DC0C0000B7DE /* game_played_1_disabled.png in Resources */,
@@ -1124,6 +1174,7 @@
 				1DC31A811FC0DC0C0000B7DE /* game_won_5_disabled.png in Resources */,
 				1DC31A821FC0DC0C0000B7DE /* game_won_5_enabled.png in Resources */,
 				1DC31A831FC0DC0C0000B7DE /* game_won_10_disabled.png in Resources */,
+				8FA618D41FC6C4DC003001E9 /* maillet_rouge.png in Resources */,
 				1DC31A841FC0DC0C0000B7DE /* game_won_10_enabled.png in Resources */,
 				1DC31A851FC0DC0C0000B7DE /* tournament_played_1_disabled.png in Resources */,
 				1DC31A861FC0DC0C0000B7DE /* tournament_played_1_enabled.png in Resources */,
@@ -1131,10 +1182,16 @@
 				1DC31A881FC0DC0C0000B7DE /* tournament_played_5_enabled.png in Resources */,
 				1DC31A891FC0DC0C0000B7DE /* tournament_played_10_disabled.png in Resources */,
 				1DC31A8A1FC0DC0C0000B7DE /* tournament_played_10_enabled.png in Resources */,
+				8FA618D91FC6C4DC003001E9 /* maillet_gris.png in Resources */,
+				8FA618D21FC6C4DC003001E9 /* maillet_vert.png in Resources */,
 				1DC31A8B1FC0DC0C0000B7DE /* tournament_won_5_disabled.png in Resources */,
 				1DC31A8C1FC0DC0C0000B7DE /* tournament_won_5_enabled.png in Resources */,
 				1DC31A8D1FC0DC0C0000B7DE /* tournament_won_10_disabled.png in Resources */,
+				8FA618DD1FC6C4DC003001E9 /* maillet_brique.png in Resources */,
+				8FA618D61FC6C4DC003001E9 /* maillet_mauve.png in Resources */,
+				8FA618DF1FC6C4DC003001E9 /* maillet_argent.png in Resources */,
 				1DC31A8E1FC0DC0C0000B7DE /* tournament_won_10_enabled.png in Resources */,
+				8FA618DE1FC6C4DC003001E9 /* maillet_bleu.png in Resources */,
 				1DC31A511FBFB4EA0000B7DE /* fontawesome-webfont.ttf in Resources */,
 				3475C23B1F8FB9A100E8BF86 /* Move.png in Resources */,
 				8F27E8111FA1803400A8856D /* Tap.png in Resources */,
@@ -1151,12 +1208,16 @@
 				8FF4B5C91FBD70CE00BB2941 /* rightImage.png in Resources */,
 				344A6E201F990ECA00CFFBEB /* accelerateur.obj in Resources */,
 				8FCDF6191FA1BEDF00631551 /* EditorNotificationScene.sks in Resources */,
+				8FA618D51FC6C4DC003001E9 /* maillet_or.png in Resources */,
 				8F4B40941FB94FBB00DFDA2F /* Save.wav in Resources */,
 				3475C2401F8FB9A100E8BF86 /* Wall.png in Resources */,
 				3475C2411F8FB9A100E8BF86 /* Zoom.png in Resources */,
+				8FA618E11FC6C4E7003001E9 /* maillet_orange.png in Resources */,
 				342E7C561F985AD50062017A /* portail.obj in Resources */,
 				8F4B409B1FB956F900DFDA2F /* Selection2.wav in Resources */,
 				344A6E1C1F9908EB00CFFBEB /* Camera.png in Resources */,
+				8FA618DC1FC6C4DC003001E9 /* maillet_bronze.png in Resources */,
+				8FA618D71FC6C4DC003001E9 /* maillet_jaune.png in Resources */,
 				8F4B409F1FB962F000DFDA2F /* Duplicate.wav in Resources */,
 				8F4B40951FB94FBB00DFDA2F /* Selection1.wav in Resources */,
 				3475C23F1F8FB9A100E8BF86 /* Select.png in Resources */,
@@ -1167,11 +1228,14 @@
 				3475C23C1F8FB9A100E8BF86 /* Portal.png in Resources */,
 				8F64C0131F7754FD00F14AC7 /* LaunchScreen.storyboard in Resources */,
 				8F4B408D1FB94FBB00DFDA2F /* Delete.wav in Resources */,
+				8FA618DA1FC6C4DC003001E9 /* maillet_feu.png in Resources */,
 				3475C23E1F8FB9A100E8BF86 /* Rotate.png in Resources */,
 				8FF4B5CB1FBD70CE00BB2941 /* frontImage.png in Resources */,
 				8FF4B5C61FBD70CE00BB2941 /* leftImage.png in Resources */,
+				8FA618C31FC6B781003001E9 /* maillet_rouge.png in Resources */,
 				8F4B40A31FB9676200DFDA2F /* Object2.wav in Resources */,
 				3475C2391F8FB9A100E8BF86 /* ControlPoint.png in Resources */,
+				8FA618DB1FC6C4DC003001E9 /* maillet_eau.png in Resources */,
 				3475C2381F8FB9A100E8BF86 /* Booster.png in Resources */,
 				8FF4B5C81FBD70CE00BB2941 /* downImage.png in Resources */,
 				8F4B40A21FB9676200DFDA2F /* Object1.wav in Resources */,

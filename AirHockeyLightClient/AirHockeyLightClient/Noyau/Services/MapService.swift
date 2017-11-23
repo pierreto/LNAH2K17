@@ -54,18 +54,27 @@ class MapService {
         }
     }
     
-    func saveNewMap(map: MapEntity) {
-        let map = self.convertMapEntity(mapEntity: map) as! [String : Any]
-        
+    func deleteMap(map: MapEntity, completionHandler: @escaping (Bool?, Error?) -> ()) {
         if self.clientConnection.getConnection() != nil && self.clientConnection.connected! {
-            Alamofire.request("http://" + self.clientConnection.getIpAddress()! + ":63056/api/maps/save",
-                              method: .post, parameters: map, encoding: JSONEncoding.default)
+            Alamofire.request("http://" + self.clientConnection.getIpAddress()! + ":63056/api/maps/remove/" + map.id!,
+                              method: .get, parameters: nil, encoding: JSONEncoding.default)
                 .responseJSON { response in
-                    if(response.response?.statusCode != 200) {
-                        print("Error: saving the map has failed.")
-                    }
+                    completionHandler(response.response?.statusCode == 200, nil)
             }
+        } else {
+            DBManager.instance.effacerCarte(mapName: map.mapName!)
+            completionHandler(true, nil)
         }
+    }
+    
+    func exportLocalMapsToServer() {
+        DBManager.instance.updateCreatorOfLocalMaps(creator: self.clientConnection.getUsername()!)
+        
+        for map in DBManager.instance.recupererCartes() {
+            self.saveMap(map: map)
+        }
+        
+        DBManager.instance.effacerToutesCartes()
     }
     
     func convertMapEntity(mapEntity: MapEntity) -> Any {

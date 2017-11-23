@@ -50,7 +50,19 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             {
                 UserEntity.IsConnected = value;
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(CanShowOnline));
+                OnPropertyChanged(nameof(CanShowOffline));
+
             }
+        }
+
+        public bool CanShowOnline
+        {
+            get => IsConnected && currentFriend;
+        }
+        public bool CanShowOffline
+        {
+            get => !IsConnected && currentFriend;
         }
 
         public string Username
@@ -69,7 +81,7 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             set
             {
                 UserEntity.Profile = value;
-               // this.OnPropertyChanged();
+               this.OnPropertyChanged();
             }
         }
         
@@ -278,8 +290,9 @@ namespace InterfaceGraphique.Controls.WPF.Friends
 
         private async Task SendFriendRequest()
         {
-            HttpResponseMessage response = await Program.client.GetAsync("api/user/u/" + Username);
-            UserEntity friend = await HttpResponseParser.ParseResponse<UserEntity>(response);
+            //HttpResponseMessage response = await Program.client.GetAsync("api/user/u/" + Username);
+            //UserEntity friend = await HttpResponseParser.ParseResponse<UserEntity>(response);
+            UserEntity friend = new UserEntity { Id = Id, Username = Username, Profile = ProfilePicture };
             await Program.unityContainer.Resolve<FriendsHub>().SendFriendRequest(friend);
             var item = Program.unityContainer.Resolve<AddFriendListViewModel>().Items;
             //Retire de notre liste de personnes ajoutables la personne qu'on vien d'envoyer une demande d'amis
@@ -288,14 +301,14 @@ namespace InterfaceGraphique.Controls.WPF.Friends
 
         private async Task AcceptFriendRequest()
         {
-            await Program.unityContainer.Resolve<FriendsHub>().AcceptFriendRequest(new FriendRequestEntity { Requestor = new UserEntity { Id = Id }, Friend = new UserEntity { Id = User.Instance.UserEntity.Id } });
+            await Program.unityContainer.Resolve<FriendsHub>().AcceptFriendRequest(new FriendRequestEntity { Requestor = new UserEntity { Id = Id, Username = Username, Profile = ProfilePicture }, Friend = new UserEntity { Username = User.Instance.UserEntity.Username, Id = User.Instance.UserEntity.Id, Profile = User.Instance.UserEntity.Profile } });
             var item = Program.unityContainer.Resolve<FriendRequestListViewModel>().Items;
             item.Remove(item.Single(x => x.Id == Id));
         }
 
         private async Task RefuseFriendRequest()
         {
-            if (await Program.unityContainer.Resolve<FriendsHub>().RefuseFriendRequest(new FriendRequestEntity { Requestor = new UserEntity { Id = Id }, Friend = new UserEntity { Id = User.Instance.UserEntity.Id } }))
+            if (await Program.unityContainer.Resolve<FriendsHub>().RefuseFriendRequest(new FriendRequestEntity { Requestor = new UserEntity { Id = Id, Profile = ProfilePicture }, Friend = new UserEntity { Id = User.Instance.UserEntity.Id, Profile = User.Instance.UserEntity.Profile } }))
             {
                 var item = Program.unityContainer.Resolve<FriendRequestListViewModel>().Items;
                 item.Remove(item.Single(x => x.Id == Id));
