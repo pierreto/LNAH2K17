@@ -8,6 +8,7 @@
              xmlns:local="clr-namespace:InterfaceGraphique.Controls.WPF.Friends"
              xmlns:behaviors="clr-namespace:WPFTextBoxAutoComplete;assembly=WPFTextBoxAutoComplete"
              xmlns:mockObject="clr-namespace:InterfaceGraphique.Entities.MockObject"
+             xmlns:componentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
              mc:Ignorable="d" d:DesignHeight="500" d:DesignWidth="200">
 
     <UserControl.Resources>
@@ -19,6 +20,12 @@
                 <ResourceDictionary Source="/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Green.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <wpf:ViewModelLocator x:Key="VMLocator" d:IsDataSource="True" />
+
+            <CollectionViewSource Source="{Binding FriendList}" x:Key="cvs">
+                <CollectionViewSource.SortDescriptions>
+                    <componentModel:SortDescription PropertyName="IsConnected" Direction="Descending"/>
+                </CollectionViewSource.SortDescriptions>
+            </CollectionViewSource>
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -33,7 +40,7 @@
         <Label Content="Mes amis"  FontSize="24" Foreground="{StaticResource TextColorBrush}" HorizontalAlignment="Center" Margin="34,0" Width="Auto"/>
 
         <ScrollViewer VerticalScrollBarVisibility="Hidden" Grid.Row="1">
-            <ItemsControl ItemsSource="{Binding FriendList}">
+            <ItemsControl ItemsSource="{Binding Source={StaticResource cvs}}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <local:FriendListItemView />

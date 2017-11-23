@@ -2,10 +2,12 @@
 using InterfaceGraphique.CommunicationInterface;
 using InterfaceGraphique.Entities;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using Microsoft.Practices.Unity;
 using InterfaceGraphique.Managers;
 using System.Linq;
 using System.Windows;
+using System.Windows.Data;
 
 namespace InterfaceGraphique.Controls.WPF.Friends
 {
@@ -22,6 +24,9 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             this.friendsHub = friendsHub;
             ctxTaskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
             GameRequestManager = gameRequestManager;
+
+           // ItemsView.SortDescriptions.Add(new SortDescription("IsConnected", ListSortDirection.Descending));
+
         }
 
         public ObservableCollection<FriendListItemViewModel> FriendList
@@ -48,6 +53,8 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             //List<UserEntity> userEntities = await userService.GetAllUsers();
             this.friendsHub.NewFriendEvent += NewFriendEvent;
             this.friendsHub.RemovedFriendEvent += RemovedFriendEvent;
+            this.friendsHub.NewFriendHasConnectedEvent += NewFriendHasConnectedEvent;
+            this.friendsHub.NewFriendHasDisconnectedEvent += NewFriendHasDisconnectedEvent;
         }
 
         public override void Minimize()
@@ -85,6 +92,26 @@ namespace InterfaceGraphique.Controls.WPF.Friends
                 FriendList.Remove(FriendList.Single(x => x.Username == ex_friend.Username));
                 Program.unityContainer.Resolve<AddFriendListViewModel>().Items.Add(new UserEntity { Id = ex_friend.Id, Username = ex_friend.Username, Profile = ex_friend.Profile, IsSelected = false });
             }).Wait();
+        }
+        public ICollectionView ItemsView
+        {
+            get { return CollectionViewSource.GetDefaultView(FriendList); }
+        }
+        private void NewFriendHasConnectedEvent(UserEntity user)
+        {
+            FriendList.Add(new FriendListItemViewModel(new UserEntity { Id = user.Id, Username = user.Username, Profile = user.Profile, IsSelected = false }, null) { CurrentFriend = true });
+      
+
+        }
+        private void NewFriendHasDisconnectedEvent(int userId)
+        {
+            foreach (FriendListItemViewModel friendListItemViewModel in FriendList) {
+                if (friendListItemViewModel.Id.Equals(userId))
+                {
+                    FriendList.Remove(friendListItemViewModel);
+                    break;
+                }
+            }
         }
     }
 }
