@@ -99,10 +99,9 @@ namespace InterfaceGraphique
             }
             else if (!User.Instance.UserEntity.AlreadyUsedFatEditor)
             {
-                await Program.client.PutAsJsonAsync(Program.client.BaseAddress + "api/user/" + User.Instance.UserEntity.Id.ToString(), User.Instance.UserEntity);
                 await ShowTutorialEditor();
                 User.Instance.UserEntity.AlreadyUsedFatEditor = true;
-
+                await Program.client.PutAsJsonAsync(Program.client.BaseAddress + "api/user/" + User.Instance.UserEntity.Id.ToString(), User.Instance.UserEntity);
             }
         }
         private async void CheckIfNeedToShowMatchTutoriel()
@@ -112,15 +111,15 @@ namespace InterfaceGraphique
                 await ShowTutorialGame();
             }else if (!User.Instance.UserEntity.AlreadyPlayedGame)
             {
+                await ShowTutorialGame();
                 User.Instance.UserEntity.AlreadyPlayedGame = true;
                 await Program.client.PutAsJsonAsync(Program.client.BaseAddress + "api/user/" + User.Instance.UserEntity.Id.ToString(), User.Instance.UserEntity);
-                await ShowTutorialGame();
             }
         }
 
         public static async Task ShowTutorialEditor()
         {
-            await Program.unityContainer.Resolve<TutorialViewModel>().SwitchToMatchSlides();
+            await Program.unityContainer.Resolve<TutorialViewModel>().SwitchToEditorSlides();
             Form fc = Application.OpenForms["TutorialHost"];
             if (fc == null)
             {
@@ -129,7 +128,7 @@ namespace InterfaceGraphique
         }
         public static async Task ShowTutorialGame()
         {
-            await Program.unityContainer.Resolve<TutorialViewModel>().SwitchToEditorSlides();
+            await Program.unityContainer.Resolve<TutorialViewModel>().SwitchToMatchSlides();
 
             Form fc = Application.OpenForms["TutorialHost"];
             if (fc == null)
