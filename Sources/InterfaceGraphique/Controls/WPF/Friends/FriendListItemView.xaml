@@ -57,7 +57,20 @@
                                             HorizontalAlignment="Right"
                                             BorderThickness="5"
                                             BorderBrush="LimeGreen"
-                                            Visibility="{Binding DataContext.NewContentAvailable, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}},
+                                            Visibility="{Binding CanShowOnline,
+                                                        Converter={convert:BooleanToVisibilityConverter}, ConverterParameter=True}"
+                                    />
+                                    <Border Background="White"
+                                            Panel.ZIndex="1"
+                                            Margin="0,0,3,10"
+                                            Width="15"
+                                            Height="15"
+                                            CornerRadius="15"
+                                            VerticalAlignment="Bottom"
+                                            HorizontalAlignment="Right"
+                                            BorderThickness="5"
+                                            BorderBrush="#FF2C2B2B"
+                                            Visibility="{Binding CanShowOffline,
                                                         Converter={convert:BooleanToVisibilityConverter}, ConverterParameter=True}"
                                     />
                                     <!-- Profile picture padding -->
@@ -96,8 +109,10 @@
                                     <!-- Tous les ptits boutons-->
                                     <StackPanel  Grid.Column="2" Orientation="Horizontal" Margin="3px" HorizontalAlignment="Right" Visibility="{Binding DataContext.CurrentFriend, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Converter={convert:BooleanToVisibilityConverter}, ConverterParameter=True}">
 
-                                        <Button fa:Awesome.Content="Gamepad" Margin="0 0 5 0" BorderThickness="0" Command="{Binding PlayGameCommand}"></Button>
-                                        <Button fa:Awesome.Content="Comment" Margin="0 0 5 0" BorderThickness="0" Background="{StaticResource UltraDarkGrayBrush}" Command="{Binding ChatWithCommand}"></Button>
+                                        <Button fa:Awesome.Content="Gamepad" Margin="0 0 5 0" BorderThickness="0" Command="{Binding PlayGameCommand}"
+                                                Visibility="{Binding CanShowOnline, Converter={convert:BooleanToVisibilityConverter}, ConverterParameter=True}"></Button>
+                                        <Button fa:Awesome.Content="Comment" Margin="0 0 5 0" BorderThickness="0" Background="{StaticResource UltraDarkGrayBrush}" Command="{Binding ChatWithCommand}"
+                                                Visibility="{Binding CanShowOnline, Converter={convert:BooleanToVisibilityConverter}, ConverterParameter=True}"></Button>
                                         <Button fa:Awesome.Content="Trash" Margin="0 0 5 0" BorderThickness="0" Background="{StaticResource DeleteBrush}" Command="{Binding RemoveFriendCommand}"></Button>
                                     </StackPanel>
                                     <StackPanel Grid.Column="2" Orientation="Horizontal" Margin="3px" HorizontalAlignment="Right" Visibility="{Binding DataContext.AddingFriend, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Converter={convert:BooleanToVisibilityConverter}, ConverterParameter=True}">

@@ -27,6 +27,8 @@ namespace InterfaceGraphique.Entities
 
         public string Profile { get; set; }
 
+        public bool IsConnected { get; set; }
+
         public bool IsSelected { get; set; }
 
         public bool AlreadyPlayedGame { get; set; }

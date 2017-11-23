@@ -51,7 +51,7 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             List<FriendRequestEntity> users = await friendsHub.GetAllPendingRequests();
             foreach (FriendRequestEntity user in users)
             {
-                Items.Add(new FriendListItemViewModel(new UserEntity { Id = user.Requestor.Id, Username = user.Requestor.Username, Profile = user.Requestor.Profile, IsSelected = false }, null) { RequestedFriend = true });
+                Items.Add(new FriendListItemViewModel(new UserEntity { Id = user.Requestor.Id, Username = user.Requestor.Username, Profile = user.Requestor.Profile, IsSelected = false, IsConnected = user.Requestor.IsConnected }, null) { RequestedFriend = true });
             }
          }
 

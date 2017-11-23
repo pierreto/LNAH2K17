@@ -48,8 +48,17 @@ class Login: NSObject {
                                 let id = result as! Int
                                 self.clientConnection.setId(id: id)
                             }
+                            
+                            // Connect user to chat
                             HubManager.sharedConnection.getChatHub().subscribe()
+                            
+                            // Retrieve the users friends
                             HubManager.sharedConnection.getFriendsHub().getAllFriends()
+                            
+                            // Upload local maps to server (under users id)
+                            let mapService = MapService()
+                            mapService.exportLocalMapsToServer()
+                            
                             fullfil(true)
                         } else {
                             //Getting error message from server
