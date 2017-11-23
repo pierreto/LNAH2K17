@@ -92,8 +92,14 @@ class StoreService {
             return Promise { fullfil, error in
                 let storeItems = self.convertStoreItemEntity(items: items)
                 
-                Alamofire.request("http://" + self.clientConnection.getIpAddress()! + ":63056/api/store/" + String.init(userId), method: .post,
-                                  parameters: storeItems, encoding: JSONEncoding.default)
+                let url = "http://" + self.clientConnection.getIpAddress()! + ":63056/api/store/" + String.init(userId)
+                var request = URLRequest(url: URL.init(string: url)!)
+                request.httpMethod = "POST"
+                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                
+                request.httpBody = try! JSONSerialization.data(withJSONObject: storeItems)
+                
+                Alamofire.request(request)
                     .responseJSON { response in
                         if response.response?.statusCode == 200 {
                             print("Success: buy element success.")
@@ -111,7 +117,7 @@ class StoreService {
         }
     }
     
-    func convertStoreItemEntity(items: [StoreItemEntity]) -> [String: Any] {
+    func convertStoreItemEntity(items: [StoreItemEntity]) -> [[String: Any]] {
         var storeItems = [[String: Any]]()
 
         for item in items {
@@ -127,7 +133,7 @@ class StoreService {
             storeItems.append(storeItem)
         }
         
-        return JSON(storeItems).dictionary!
+        return storeItems
     }
     
 }
