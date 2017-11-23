@@ -25,7 +25,7 @@ namespace InterfaceGraphique.CommunicationInterface
         public event Action<GameRequestEntity> GameRequestEvent;
         public event Action<GameRequestEntity> DeclinedGameRequestEvent;
         public event Action<GameRequestEntity> AcceptedGameRequestEvent;
-        public event Action<UserEntity> NewFriendHasConnectedEvent;
+        public event Action<int> NewFriendHasConnectedEvent;
         public event Action<int> NewFriendHasDisconnectedEvent;
 
         public void InitializeHub(HubConnection connection)
@@ -77,7 +77,7 @@ namespace InterfaceGraphique.CommunicationInterface
             {
                 AcceptedGameRequestEvent?.Invoke(request);
             });
-            FriendsProxy.On<UserEntity>("NewFriendHasConnectedEvent", request =>
+            FriendsProxy.On<int>("NewFriendHasConnectedEvent", request =>
             {
                 NewFriendHasConnectedEvent?.Invoke(request);
             });
@@ -135,7 +135,7 @@ namespace InterfaceGraphique.CommunicationInterface
 
         public async Task Logout()
         {
-            await FriendsProxy.Invoke<int>("Logout", User.Instance.UserEntity.Id);
+            await FriendsProxy.Invoke("Logout", User.Instance.UserEntity);
         }
     }
 }

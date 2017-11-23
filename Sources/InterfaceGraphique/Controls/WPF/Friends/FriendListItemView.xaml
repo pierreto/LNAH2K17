@@ -57,8 +57,21 @@
                                             HorizontalAlignment="Right"
                                             BorderThickness="5"
                                             BorderBrush="LimeGreen"
-                                            Visibility="{Binding DataContext.NewContentAvailable, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}},
+                                            Visibility="{Binding IsConnected,
                                                         Converter={convert:BooleanToVisibilityConverter}, ConverterParameter=True}"
+                                    />
+                                    <Border Background="White"
+                                            Panel.ZIndex="1"
+                                            Margin="0,0,3,10"
+                                            Width="15"
+                                            Height="15"
+                                            CornerRadius="15"
+                                            VerticalAlignment="Bottom"
+                                            HorizontalAlignment="Right"
+                                            BorderThickness="5"
+                                            BorderBrush="#FF2C2B2B"
+                                            Visibility="{Binding IsConnected,
+                                                        Converter={convert:BooleanToVisibilityConverter}}"
                                     />
                                     <!-- Profile picture padding -->
                                     <Border Grid.Column="0" 

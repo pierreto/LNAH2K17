@@ -20,6 +20,8 @@ namespace InterfaceGraphique.Controls.WPF.Friends
         private bool addingFriend;
         private bool requestedFriend;
         private UserEntity userEntity;
+        public bool isConnected;
+
         #endregion
 
         #region Public Properties
@@ -38,6 +40,16 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             {
                 UserEntity.Id = value;
                 //this.OnPropertyChanged();
+            }
+        }
+
+        public bool IsConnected
+        {
+            get => UserEntity.IsConnected;
+            set
+            {
+                UserEntity.IsConnected = value;
+                OnPropertyChanged();
             }
         }
 

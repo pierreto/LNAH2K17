@@ -48,7 +48,7 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             FriendList = new ObservableCollection<FriendListItemViewModel>();
             foreach(var friend in friends)
             {
-                FriendList.Add(new FriendListItemViewModel(new UserEntity { Id = friend.Id, Username = friend.Username, Profile = friend.Profile, IsSelected = false }, GameRequestManager) { CurrentFriend = true });
+                FriendList.Add(new FriendListItemViewModel(new UserEntity { Id = friend.Id, Username = friend.Username, Profile = friend.Profile, IsSelected = false,IsConnected = friend.IsConnected}, GameRequestManager) { CurrentFriend = true });
             }
             //List<UserEntity> userEntities = await userService.GetAllUsers();
             this.friendsHub.NewFriendEvent += NewFriendEvent;
@@ -80,7 +80,7 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             System.Diagnostics.Debug.WriteLine("Je viens d'ajouter " + friend.Username + " a mes amis.");
             ctxTaskFactory.StartNew(() =>
             {
-                FriendList.Add(new FriendListItemViewModel(new UserEntity { Id = friend.Id, Username = friend.Username, Profile = friend.Profile, IsSelected = false }, null) { CurrentFriend = true });
+                FriendList.Add(new FriendListItemViewModel(new UserEntity { Id = friend.Id, Username = friend.Username, Profile = friend.Profile, IsSelected = false,IsConnected = friend.IsConnected}, null) { CurrentFriend = true });
                 //var items = Program.unityContainer.Resolve<AddFriendListViewModel>().Items;
                 //items.Remove(items.Single(x => x.Id == friend.Id));
             }).Wait();
@@ -99,19 +99,40 @@ namespace InterfaceGraphique.Controls.WPF.Friends
         {
             get { return CollectionViewSource.GetDefaultView(FriendList); }
         }
-        private void NewFriendHasConnectedEvent(UserEntity user)
+        private void NewFriendHasConnectedEvent(int userId)
         {
-            FriendList.Add(new FriendListItemViewModel(new UserEntity { Id = user.Id, Username = user.Username, Profile = user.Profile, IsSelected = false }, null) { CurrentFriend = true });
-      
+            for(int i = FriendList.Count - 1; i >= 0; i--)
+            {
+                if (FriendList[i].Id == userId)
+                {
+                    ctxTaskFactory.StartNew(() =>
+                    {
+                        FriendListItemViewModel vm = FriendList[i];
+                        FriendList.RemoveAt(i);
+                        vm.IsConnected = true;
+                        FriendList.Add(vm);
+                    }).Wait();
+                    break;
+
+                }
+            }
 
         }
         private void NewFriendHasDisconnectedEvent(int userId)
         {
-            foreach (FriendListItemViewModel friendListItemViewModel in FriendList) {
-                if (friendListItemViewModel.Id.Equals(userId))
+            for (int i = FriendList.Count - 1; i >= 0; i--)
+            {
+                if (FriendList[i].Id == userId)
                 {
-                    FriendList.Remove(friendListItemViewModel);
+                    ctxTaskFactory.StartNew(() =>
+                    {
+                        FriendListItemViewModel vm = FriendList[i];
+                        FriendList.RemoveAt(i);
+                        vm.IsConnected = false;
+                        FriendList.Add(vm);
+                    }).Wait();
                     break;
+
                 }
             }
         }

@@ -28,7 +28,7 @@ namespace AirHockeyServer.Hubs
         {
             ConnectionMapper.AddConnection(user.Id, Context.ConnectionId);
             FriendService.NewUserConnected(user.Id);
-            Clients.AllExcept(this.Context.ConnectionId).NewFriendHasConnectedEvent(user);
+            Clients.AllExcept(this.Context.ConnectionId).NewFriendHasConnectedEvent(user.Id);
 
         }
 
@@ -176,10 +176,10 @@ namespace AirHockeyServer.Hubs
             }
         }
 
-        public void Logout(int userId)
+        public async Task Logout(UserEntity userId)
         {
-            this.FriendService.NewUserDisconnected(userId);
-            Clients.AllExcept(this.Context.ConnectionId).NewFriendHasDisconnectedEvent(userId);
+            this.FriendService.NewUserDisconnected(userId.Id);
+            Clients.AllExcept(this.Context.ConnectionId).NewFriendHasDisconnectedEvent(userId.Id);
         }
     }
 }

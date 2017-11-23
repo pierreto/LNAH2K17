@@ -75,7 +75,7 @@ namespace InterfaceGraphique.Controls.WPF.Friends
                 Items.Remove(Items.Single(x => x.Username == request.Requestor.Username));
                 //TODO: Add it to notification side
                 var items = Program.unityContainer.Resolve<FriendRequestListViewModel>().Items;
-                items.Add(new FriendListItemViewModel(new UserEntity { Id = request.Requestor.Id, Username = request.Requestor.Username, Profile = request.Requestor.Profile, IsSelected = false }, null) { RequestedFriend = true });
+                items.Add(new FriendListItemViewModel(new UserEntity { Id = request.Requestor.Id, Username = request.Requestor.Username, Profile = request.Requestor.Profile, IsSelected = false ,IsConnected = request.Requestor.IsConnected}, null) { RequestedFriend = true });
                 Program.unityContainer.Resolve<FriendRequestListViewModel>().OnPropertyChanged("Items");
             }).Wait();
         }

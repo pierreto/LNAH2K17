@@ -21,9 +21,9 @@
             </ResourceDictionary.MergedDictionaries>
             <wpf:ViewModelLocator x:Key="VMLocator" d:IsDataSource="True" />
 
-            <CollectionViewSource Source="{Binding FriendList}" x:Key="cvs">
+            <CollectionViewSource  Source="{Binding FriendList}" x:Key="cvs">
                 <CollectionViewSource.SortDescriptions>
-                    <componentModel:SortDescription PropertyName="IsConnected" Direction="Descending"/>
+                    <componentModel:SortDescription  PropertyName="IsConnected" Direction="Descending"/>
                 </CollectionViewSource.SortDescriptions>
             </CollectionViewSource>
         </ResourceDictionary>
