@@ -287,15 +287,15 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
             return valid;
         }
 
-        public async Task CreatePrivateChannel(string username, int othersId)
+        public async Task CreatePrivateChannel(string username, int othersId, string profile)
         {
-            bool res = await chatHub.CreatePrivateChannel(User.Instance.UserEntity.Username, User.Instance.UserEntity.Id, othersId);
+            bool res = await chatHub.CreatePrivateChannel(User.Instance.UserEntity.Username, User.Instance.UserEntity.Id, othersId, profile);
             if (res)
             {
                 if (!Program.unityContainer.Resolve<ChatListViewModel>().Items.Any(x => x.Name == username && x.ChannelEntity.IsPrivate == true))
                 {
                     System.Diagnostics.Debug.WriteLine("Created private channel. Name: " + username + "  Id: " + othersId);
-                    ChannelEntity cE = new ChannelEntity() { Name = username, PrivateUserId = othersId, IsPrivate = true };
+                    ChannelEntity cE = new ChannelEntity() { Name = username, PrivateUserId = othersId, IsPrivate = true, Profile = profile };
                     ChatListItemViewModel clivm = new ChatListItemViewModel(cE);
                     Program.unityContainer.Resolve<ChatListViewModel>().Items.Add(clivm);
                     Program.unityContainer.Resolve<ChatListViewModel>().Items.Move(Program.unityContainer.Resolve<ChatListViewModel>().Items.Count - 1, 1);

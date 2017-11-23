@@ -54,6 +54,7 @@
                                     <Border Grid.Column="0" 
                                     Padding="8 15"
                                     >
+
                                         <!-- Profile picture background -->
                                         <Border Background="{StaticResource UltraDarkGrayBrush}" 
                                         Height="40"
@@ -61,14 +62,17 @@
                                                 BorderBrush="{StaticResource TextColorBrush}"
                                         Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
                                         CornerRadius="8">
-                                            <!-- Profile picture initials -->
-                                            <TextBlock Text="{Binding DataContext.Initials, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
-                                               VerticalAlignment="Center"
-                                               HorizontalAlignment="Center"
-                                               Foreground="{StaticResource TextColorBrush}"
-                                               FontWeight="Medium"
-                                               FontSize="18"
-                                               />
+                                            <!-- Profile picture background -->
+                                            <Rectangle 
+                                                Visibility="{Binding IsPrivate, Converter={convert:BooleanToVisibilityConverter}, ConverterParameter=True}"
+                                        Height="40"
+                                        Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
+                                        RadiusX="8" RadiusY="8">
+                                                <Rectangle.Fill>
+                                                    <!-- Profile picture -->
+                                                    <ImageBrush  RenderOptions.BitmapScalingMode="HighQuality" ImageSource="{Binding Profile, Converter={convert:Base64ImageConverter}}"/>
+                                                </Rectangle.Fill>
+                                            </Rectangle>
                                         </Border>
                                     </Border>
 

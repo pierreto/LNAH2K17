@@ -75,11 +75,11 @@ namespace AirHockeyServer.Services.ChatServiceServer
             }
         }
 
-        public async Task<bool> CreatePrivateChannel(string name, int myId, int othersId)
+        public async Task<bool> CreatePrivateChannel(string name, int myId, int othersId, string othersProfile)
         {
             if (ConnectionsMapping.ContainsKey(othersId))
             {
-                await Clients.Client(ConnectionsMapping[othersId]).PrivateChannelCreated(name, myId);
+                await Clients.Client(ConnectionsMapping[othersId]).PrivateChannelCreated(name, myId, othersProfile);
                 return true;
             } 
             else

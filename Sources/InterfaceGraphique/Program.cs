@@ -154,7 +154,6 @@ namespace InterfaceGraphique
             Application.Run(formManager);
 
 
-
         }
 
         private static void ThreadExceptionHandler(object sender, ThreadExceptionEventArgs e)

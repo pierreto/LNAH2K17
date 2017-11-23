@@ -50,11 +50,11 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
         }
         #endregion
 
-        private void NewPrivateChannel(string othersName, int othersId)
+        private void NewPrivateChannel(string othersName, int othersId, string othersProfile)
         {
             ctxTaskFactory.StartNew(() =>
             {
-                this.Items.Add(new ChatListItemViewModel(new ChannelEntity { Name = othersName, PrivateUserId = othersId, IsPrivate = true }));
+                this.Items.Add(new ChatListItemViewModel(new ChannelEntity { Name = othersName, PrivateUserId = othersId, IsPrivate = true, Profile = othersProfile }));
             }).Wait();
         }
 
