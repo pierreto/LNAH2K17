@@ -22,10 +22,10 @@ namespace InterfaceGraphique.Controls
         private void webBrowser1_Navigated(object sender, WebBrowserNavigatedEventArgs e)
         {
             System.Console.WriteLine(e.Url.ToString());
-            var parameters = HttpUtility.ParseQueryString(e.Url.Query);
-            if (parameters["access_token"] != null)
+            var parameters = HttpUtility.ParseQueryString(e.Url.Fragment);
+            if (parameters["#access_token"] != null)
             {
-                User.Instance.UserEntity.FacebookToken = parameters["access_token"];
+                User.Instance.UserEntity.FacebookToken = parameters["#access_token"];
             }
         }
     }
