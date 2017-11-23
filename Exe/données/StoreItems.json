@@ -4,8 +4,8 @@
   "Description": "Change la couleur de ton maillet en rouge.",
   "Id": 0,
   "Price": 5,
-  "ImageUrl": "\\media\\textures\\fire_texture.png",
-  "TextureName": "fire_texture.png"
+  "ImageUrl": "\\media\\textures\\maillet_rouge.png",
+  "TextureName": "maillet_rouge_texture.png"
 },
 {
   "Name": "Maillet Orange",

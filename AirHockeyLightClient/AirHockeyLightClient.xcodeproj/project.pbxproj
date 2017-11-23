@@ -184,6 +184,7 @@
 		8F8706BB1F7892F2000E6824 /* ChatMessageEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F8706BA1F7892F2000E6824 /* ChatMessageEntity.swift */; };
 		8F97A3851FA2C8BD00421FDC /* GeneralPropertiesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F97A3831FA2C8BD00421FDC /* GeneralPropertiesViewModel.swift */; };
 		8F97A3861FA2C8BD00421FDC /* IGeneralPropertiesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F97A3841FA2C8BD00421FDC /* IGeneralPropertiesViewModel.swift */; };
+		8FA618C31FC6B781003001E9 /* maillet_rouge.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FA618C21FC6B781003001E9 /* maillet_rouge.png */; };
 		8FB0E29C1FAFF2B100672057 /* WallCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB0E29B1FAFF2B100672057 /* WallCommand.swift */; };
 		8FB0E29E1FB00DC700672057 /* SelectionCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB0E29D1FB00DC700672057 /* SelectionCommand.swift */; };
 		8FB2F7761FB41CD80047FB53 /* CoefficientCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB2F7751FB41CD80047FB53 /* CoefficientCommand.swift */; };
@@ -403,6 +404,7 @@
 		8F8706BA1F7892F2000E6824 /* ChatMessageEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ChatMessageEntity.swift; path = Noyau/Entities/ChatMessageEntity.swift; sourceTree = "<group>"; };
 		8F97A3831FA2C8BD00421FDC /* GeneralPropertiesViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GeneralPropertiesViewModel.swift; path = InterfaceGraphique/ViewModel/GeneralProperties/GeneralPropertiesViewModel.swift; sourceTree = "<group>"; };
 		8F97A3841FA2C8BD00421FDC /* IGeneralPropertiesViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IGeneralPropertiesViewModel.swift; path = InterfaceGraphique/ViewModel/GeneralProperties/IGeneralPropertiesViewModel.swift; sourceTree = "<group>"; };
+		8FA618C21FC6B781003001E9 /* maillet_rouge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = maillet_rouge.png; path = ../../Exe/media/textures/maillet_rouge.png; sourceTree = "<group>"; };
 		8FB0E29B1FAFF2B100672057 /* WallCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WallCommand.swift; path = Noyau/Editor/Commands/WallCommand.swift; sourceTree = "<group>"; };
 		8FB0E29D1FB00DC700672057 /* SelectionCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SelectionCommand.swift; path = Noyau/Editor/Commands/SelectionCommand.swift; sourceTree = "<group>"; };
 		8FB2F7751FB41CD80047FB53 /* CoefficientCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoefficientCommand.swift; path = Noyau/Editor/Commands/CoefficientCommand.swift; sourceTree = "<group>"; };
@@ -696,6 +698,7 @@
 		34B66FDA1F843CC100A9CCB9 /* Textures */ = {
 			isa = PBXGroup;
 			children = (
+				8FA618C21FC6B781003001E9 /* maillet_rouge.png */,
 				34B66FDB1F843CD300A9CCB9 /* fire_texture.png */,
 				34B66FDF1F844C2100A9CCB9 /* table_texture.png */,
 			);
@@ -1170,6 +1173,7 @@
 				3475C23E1F8FB9A100E8BF86 /* Rotate.png in Resources */,
 				8FF4B5CB1FBD70CE00BB2941 /* frontImage.png in Resources */,
 				8FF4B5C61FBD70CE00BB2941 /* leftImage.png in Resources */,
+				8FA618C31FC6B781003001E9 /* maillet_rouge.png in Resources */,
 				8F4B40A31FB9676200DFDA2F /* Object2.wav in Resources */,
 				3475C2391F8FB9A100E8BF86 /* ControlPoint.png in Resources */,
 				3475C2381F8FB9A100E8BF86 /* Booster.png in Resources */,
