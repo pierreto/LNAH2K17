@@ -32,6 +32,8 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     @IBOutlet weak var tournamentsWonLabel: UILabel!
     @IBOutlet weak var tournamentsPlayedLabel: UILabel!
     
+    @IBOutlet weak var loadingSpinner: UIActivityIndicatorView!
+    
     let gradientAchievements = CAGradientLayer()
     let gradientItems = CAGradientLayer()
     
@@ -58,7 +60,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         achievementCollectionView.layer.mask = gradientAchievements
         gradientAchievements.delegate = self
         
-                // Makes the scroll view fade at the sides to indicate it is scrollable
+        // Makes the scroll view fade at the sides to indicate it is scrollable
         gradientItems.frame = itemCollectionView.bounds
         gradientItems.colors = [UIColor.clear.cgColor, UIColor.black.cgColor, UIColor.black.cgColor, UIColor.clear.cgColor]
         gradientItems.locations = [0.0, 0.2, 0.8, 1.0]
@@ -273,13 +275,28 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         return NSNull()
     }
     
-    func loading() {
-        
+    private func loading() {
+        self.loadingSpinner.startAnimating()
+        self.view.alpha = 0.7
+        self.disableInputs()
     }
     
-    func loadingDone() {
-        
+    private func loadingDone() {
+        self.loadingSpinner.stopAnimating()
+        self.view.alpha = 1.0
+        self.enableInputs()
     }
+    
+    private func disableInputs() {
+        self.profileImage.isUserInteractionEnabled = false
+        self.itemCollectionView.isUserInteractionEnabled = false
+    }
+    
+    private func enableInputs() {
+        self.profileImage.isUserInteractionEnabled = true
+        self.itemCollectionView.isUserInteractionEnabled = true
+    }
+    
     /*
     // MARK: - Navigation
 
