@@ -75,7 +75,6 @@
 		25628B9F1FA79C070010B58D /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25628B9E1FA79C070010B58D /* MapViewModel.swift */; };
 		25628BA11FA79CFF0010B58D /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25628BA01FA79CFF0010B58D /* Map.swift */; };
 		256539A91F9D643A00D81E2C /* MapEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256539A81F9D643A00D81E2C /* MapEntity.swift */; };
-		256E41F81FB7D8DF00843E53 /* MapTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256E41F71FB7D8DF00843E53 /* MapTableViewController.swift */; };
 		258A73B71FB3E5D3003725E6 /* UnlockMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258A73B61FB3E5D3003725E6 /* UnlockMapViewController.swift */; };
 		258EED9A1FC3A2B80096115B /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = 258EED991FC3A2B80096115B /* iCarousel.m */; };
 		258EED9C1FC3A3130096115B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 258EED9B1FC3A3130096115B /* QuartzCore.framework */; };
@@ -288,7 +287,6 @@
 		25628B9E1FA79C070010B58D /* MapViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		25628BA01FA79CFF0010B58D /* Map.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
 		256539A81F9D643A00D81E2C /* MapEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapEntity.swift; sourceTree = "<group>"; };
-		256E41F71FB7D8DF00843E53 /* MapTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapTableViewController.swift; path = InterfaceGraphique/MapTableViewController.swift; sourceTree = "<group>"; };
 		258A73B61FB3E5D3003725E6 /* UnlockMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UnlockMapViewController.swift; path = InterfaceGraphique/UnlockMapViewController.swift; sourceTree = "<group>"; };
 		258EED971FC3A2B70096115B /* AirHockeyLightClient-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AirHockeyLightClient-Bridging-Header.h"; sourceTree = "<group>"; };
 		258EED981FC3A2B80096115B /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
@@ -640,7 +638,6 @@
 		25FDE4391FA80C620089D9FE /* Map */ = {
 			isa = PBXGroup;
 			children = (
-				256E41F71FB7D8DF00843E53 /* MapTableViewController.swift */,
 				25F809241FA6AB680008F048 /* CreateMapViewController.swift */,
 				25F809221FA6A2680008F048 /* MapDisplayViewController.swift */,
 				258A73B61FB3E5D3003725E6 /* UnlockMapViewController.swift */,
@@ -1349,7 +1346,6 @@
 				253E088E1F818DD2009F301B /* JsonHelper.swift in Sources */,
 				344A6E2A1F994E0100CFFBEB /* VisiteurSurTable.swift in Sources */,
 				8F829B471FC2848800FC027B /* StoreItemEntity.swift in Sources */,
-				256E41F81FB7D8DF00843E53 /* MapTableViewController.swift in Sources */,
 				8F0B94AC1F8D3EEE007F0E82 /* VisiteurAbstrait.swift in Sources */,
 				2509B88F1FB8D159002DEE9A /* FriendRequestEntity.swift in Sources */,
 				8F65B28B1FAE55C200D8EE20 /* NodeCreator.swift in Sources */,
