@@ -94,7 +94,7 @@
   "Price": 20,
   "ImageUrl": "\\media\\textures\\fire_texture.png",
   "TextureName": "fire_texture.png"
-}
+},
 {
   "Name": "Maillet Bronze",
   "Description": "Un pied sur le podium!",
@@ -102,7 +102,7 @@
   "Price": 40,
   "ImageUrl": "\\media\\textures\\fire_texture.png",
   "TextureName": "fire_texture.png"
-}
+},
 {
   "Name": "Maillet Argent",
   "Description": "Être deuxième, c'est premier dans nos coeurs!",
@@ -110,7 +110,7 @@
   "Price": 60,
   "ImageUrl": "\\media\\textures\\fire_texture.png",
   "TextureName": "fire_texture.png"
-}
+},
 {
   "Name": "Maillet Or",
   "Description": "Le meilleur des meilleurs!",
