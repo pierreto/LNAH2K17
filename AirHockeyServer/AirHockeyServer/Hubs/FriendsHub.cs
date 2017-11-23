@@ -13,11 +13,11 @@ namespace AirHockeyServer.Hubs
 {
     public class FriendsHub : Hub 
     {
-        protected IFriendService FriendService { get; }
+        protected FriendService FriendService { get; }
         public ConnectionMapper ConnectionMapper { get; }
         public GameService GameService { get; }
 
-        public FriendsHub(IFriendService friendService, ConnectionMapper connectionMapper, GameService gameService)       
+        public FriendsHub(FriendService friendService, ConnectionMapper connectionMapper, GameService gameService)       
         {
             FriendService = friendService;
             ConnectionMapper = connectionMapper;
@@ -27,11 +27,22 @@ namespace AirHockeyServer.Hubs
         public void JoinHub(UserEntity user)
         {
             ConnectionMapper.AddConnection(user.Id, Context.ConnectionId);
+            FriendService.NewUserConnected(user.Id);
+            Clients.AllExcept(this.Context.ConnectionId).NewFriendHasConnectedEvent(user.Id);
+
         }
 
         public async Task<List<UserEntity>> GetAllFriends(UserEntity user)
         {
-            return await FriendService.GetAllFriends(user);
+            List<UserEntity> allFriend = await FriendService.GetAllFriends(user);
+            allFriend.ForEach((friend =>
+            {
+                if (this.FriendService.UsersIdConnected.Contains(friend.Id))
+                {
+                    friend.IsConnected = true;
+                }
+            }));
+            return allFriend;
         }
 
         public async Task<List<FriendRequestEntity>> GetAllPendingRequests(UserEntity user)
@@ -163,6 +174,12 @@ namespace AirHockeyServer.Hubs
                 Cache.RemovePlayer(gameRequest.Sender);
                 Clients.Client(senderConnection).DeclinedGameRequest(gameRequest);
             }
+        }
+
+        public async Task Logout(UserEntity userId)
+        {
+            this.FriendService.NewUserDisconnected(userId.Id);
+            Clients.AllExcept(this.Context.ConnectionId).NewFriendHasDisconnectedEvent(userId.Id);
         }
     }
 }
