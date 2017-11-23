@@ -66,7 +66,7 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             }
         }
 
-        public override void InitializeViewModel()
+        public async Task Init()
         {
             //this.FriendsToAddList.Clear();
             //List<UserEntity> users = await this.userService.GetAllUsers();
@@ -109,6 +109,11 @@ namespace InterfaceGraphique.Controls.WPF.Friends
         private void CanceledFriendRequestEvent(FriendRequestEntity request)
         {
             updateLists();
+        }
+
+        public override void InitializeViewModel()
+        {
+            //Rien
         }
     }
 }

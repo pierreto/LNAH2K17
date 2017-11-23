@@ -70,15 +70,15 @@ namespace AirHockeyServer.Hubs
 
             // Si la demande d'ami a été acceptée avec succès, on notifie les deux
             // nouveaux amis (requestor et friend) :
-            string friendConnection = ConnectionMapper.GetConnection(relation.Requestor.Id);
-            string myConnection = ConnectionMapper.GetConnection(relation.Friend.Id);
+            string friendConnection = ConnectionMapper.GetConnection(request.Requestor.Id);
+            string myConnection = ConnectionMapper.GetConnection(request.Friend.Id);
             if (relation != null)
             {
                 if (friendConnection.Length > 0)
                 {
-                    Clients.Client(friendConnection).NewFriendEvent(relation.Friend);
+                    Clients.Client(friendConnection).NewFriendEvent(request.Friend);
                 }
-                Clients.Client(myConnection).NewFriendEvent(relation.Requestor);
+                Clients.Client(myConnection).NewFriendEvent(request.Requestor);
             }
 
             return relation;

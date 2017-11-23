@@ -38,8 +38,6 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
     @IBOutlet weak var navigationBar: UINavigationItem!
     @IBOutlet weak var objectPropertiesView: ObjectPropertiesView!
     
-    private var timer: Timer?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -48,7 +46,7 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
         self.initView()
         self.initScene()
         self.initCamera()
-        
+
         self.initFacadeModele()
         
         // Load the SKScene from 'EditorHUDScene.sks'
@@ -73,9 +71,6 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
         self.showObjectPropertiesView(activer: false)
         self.objectPropertiesView.objectProperties.isHidden = true;
         self.objectPropertiesView.hideObjectPropertiesButtons()
-        
-        // Activer le timer pour la sauvegarde automatique de la carte
-        self.scheduledTimerWithTimeInterval()
     }
     
     override func viewWillDisappear(_ animated : Bool) {
@@ -85,8 +80,6 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
             FacadeModele.instance.obtenirEtat().nettoyerEtat()
             FacadeModele.instance.obtenirEtatEdition().leaveEdition()
         }
-        
-        self.timer?.invalidate()
     }
     
     func initView() {
@@ -110,6 +103,13 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
     func initCamera() {
         self.cameraNode = SCNNode()
         self.cameraNode.camera = SCNCamera()
+        self.cameraNode.camera?.zNear = 0.1
+        self.cameraNode.camera?.zFar = 1000
+        
+        self.editorScene.rootNode.addChildNode(cameraNode)
+        
+        self.cameraNode.position = SCNVector3Make(20, 200, 0);
+        self.cameraNode.eulerAngles = SCNVector3Make((-Float.pi/2), (-Float.pi/2), 0);
     }
     
     func initFacadeModele() {
@@ -148,14 +148,6 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
             // Charger les informations de l'objet sélectionné
             self.objectPropertiesView.loadObjectProperties()
         }
-    }
-    
-    func scheduledTimerWithTimeInterval() {
-        self.timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(self.sauvegarderCarteAutomatiquement), userInfo: nil, repeats: true)
-    }
-    
-    func sauvegarderCarteAutomatiquement() {
-        FacadeModele.instance.sauvegarderCarte(map: self.currentMap!)
     }
     
     @IBAction func sauvegarderCarteManuellement(_ sender: Any) {

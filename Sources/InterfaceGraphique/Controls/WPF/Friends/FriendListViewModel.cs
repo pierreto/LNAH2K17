@@ -41,7 +41,7 @@ namespace InterfaceGraphique.Controls.WPF.Friends
 
         public GameRequestManager GameRequestManager { get; }
 
-        public override async void InitializeViewModel()
+        public async Task Init()
         {
             Minimize();
             var friends = await friendsHub.GetAllFriends();
@@ -80,7 +80,7 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             System.Diagnostics.Debug.WriteLine("Je viens d'ajouter " + friend.Username + " a mes amis.");
             ctxTaskFactory.StartNew(() =>
             {
-                FriendList.Add(new FriendListItemViewModel(new UserEntity { Id = friend.Id, Username = friend.Username, Profile = friend.Profile, IsSelected = false,IsConnected = friend.IsConnected}, null) { CurrentFriend = true });
+                FriendList.Add(new FriendListItemViewModel(new UserEntity { Id = friend.Id, Username = friend.Username, Profile = friend.Profile, IsSelected = false, IsConnected = friend.IsConnected}, null) { CurrentFriend = true });
                 //var items = Program.unityContainer.Resolve<AddFriendListViewModel>().Items;
                 //items.Remove(items.Single(x => x.Id == friend.Id));
             }).Wait();
@@ -95,6 +95,7 @@ namespace InterfaceGraphique.Controls.WPF.Friends
                 Program.unityContainer.Resolve<AddFriendListViewModel>().Items.Add(new UserEntity { Id = ex_friend.Id, Username = ex_friend.Username, Profile = ex_friend.Profile, IsSelected = false,IsConnected = ex_friend.IsConnected});
             }).Wait();
         }
+
         public ICollectionView ItemsView
         {
             get { return CollectionViewSource.GetDefaultView(FriendList); }
@@ -135,6 +136,11 @@ namespace InterfaceGraphique.Controls.WPF.Friends
 
                 }
             }
+        }
+
+        public override void InitializeViewModel()
+        {
+            //Rien
         }
     }
 }
