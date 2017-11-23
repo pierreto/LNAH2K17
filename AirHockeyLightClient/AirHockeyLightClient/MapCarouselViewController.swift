@@ -115,12 +115,13 @@ class MapCarouselViewController: UIViewController, iCarouselDataSource, iCarouse
         button.backgroundColor = UIColor.lightGray
         button.addTarget(self, action:#selector(handleRegister(sender:)), for: .touchUpInside)
         
-        tempView.addSubview(button)
         tempView.addSubview(mapInfo)
+        tempView.addSubview(button)
         tempView.addSubview(mapNameLabel)
         tempView.addSubview(numberOfPlayersLabel)
         tempView.addSubview(creatorLabel)
         tempView.addSubview(idLabel)
+ 
         
         mapNameLabel.centerXAnchor.constraint(equalTo: mapInfo.centerXAnchor).isActive = true
         mapNameLabel.centerYAnchor.constraint(equalTo: mapInfo.centerYAnchor).isActive = true
@@ -133,6 +134,7 @@ class MapCarouselViewController: UIViewController, iCarouselDataSource, iCarouse
         
         idLabel.centerXAnchor.constraint(equalTo: mapInfo.centerXAnchor).isActive = true
         idLabel.topAnchor.constraint(equalTo: mapInfo.topAnchor, constant: 115).isActive = true
+ 
         
         if map.privacy.value == true {
             let isPublicLabel = UILabel()
