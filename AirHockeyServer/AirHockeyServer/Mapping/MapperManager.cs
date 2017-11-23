@@ -50,10 +50,10 @@ namespace AirHockeyServer.Mapping
                 cfg.CreateMap<FriendPoco, FriendRequestEntity>()
                 .ForMember(
                     dest => dest.Requestor,
-                    opt => opt.MapFrom(src => new UserEntity { Id = src.RequestorID, Username = src.Requestor.Username }))
+                    opt => opt.MapFrom(src => new UserEntity { Id = src.RequestorID, Username = src.Requestor.Username, Profile = src.Requestor.Profile }))
                 .ForMember(
                     dest => dest.Friend,
-                    opt => opt.MapFrom(src => new UserEntity { Id = src.FriendID, Username = src.Friend.Username }));
+                    opt => opt.MapFrom(src => new UserEntity { Id = src.FriendID, Username = src.Friend.Username, Profile = src.Friend.Profile }));
 
                 cfg.CreateMap<FriendRequestEntity, FriendPoco>()
                 .ForMember(

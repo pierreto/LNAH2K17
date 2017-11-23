@@ -54,6 +54,19 @@ class MapService {
         }
     }
     
+    func deleteMap(map: MapEntity, completionHandler: @escaping (Bool?, Error?) -> ()) {
+        if self.clientConnection.getConnection() != nil && self.clientConnection.connected! {
+            Alamofire.request("http://" + self.clientConnection.getIpAddress()! + ":63056/api/maps/remove/" + map.id!,
+                              method: .get, parameters: nil, encoding: JSONEncoding.default)
+                .responseJSON { response in
+                    completionHandler(response.response?.statusCode == 200, nil)
+            }
+        } else {
+            DBManager.instance.effacerCarte(mapName: map.mapName!)
+            completionHandler(true, nil)
+        }
+    }
+    
     func exportLocalMapsToServer() {
         DBManager.instance.updateCreatorOfLocalMaps(creator: self.clientConnection.getUsername()!)
         

@@ -162,5 +162,40 @@ namespace AirHockeyServer.Repositories
                 return false;
             }
         }
+
+        public async Task<bool> SyncMap(MapEntity map)
+        {
+            try
+            {
+                using (MyDataContext DC = new MyDataContext())
+                {
+                    var query = from _map in DC.MapsTable where _map.Id == map.Id select _map;
+                    var results = query.ToArray();
+                    var existingMap = results.First();
+
+                    var diff = map.LastBackup.CompareTo(existingMap.LastBackup);
+
+                    if (diff > 0) // map est plus à jour que celle dans la db : on met a jour la db 
+                    {
+                        if (map.Json != null)
+                            existingMap.Json = map.Json;
+                        if (map.Icon != null)
+                            existingMap.Icon = map.Icon;
+                        existingMap.LastBackup = map.LastBackup;
+                        await Task.Run(() => DC.SubmitChanges());
+                        return false; // client leger n'a pas a fetch la map, il a la derniere version a jour
+                    }
+                    else // on garde la version de la db
+                    {
+                        return true; // client leger doit fetch pour etre a jour
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("[MapRepository.SyncMap] " + e.ToString());
+                return false;
+            }
+        }
     }
 }
