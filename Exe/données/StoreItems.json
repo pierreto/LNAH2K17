@@ -1,23 +1,23 @@
 [
 {
   "Name": "Maillet Rouge",
-  "Description": "Change la couleur de ton maillet pour rouge",
+  "Description": "Change la couleur de ton maillet en rouge.",
   "Id": 0,
   "Price": 5,
   "ImageUrl": "\\media\\textures\\fire_texture.png",
   "TextureName": "fire_texture.png"
 },
 {
-  "Name": "Maillet Bleu",
-  "Description": "Change la couleur de ton maillet pour bleu",
+  "Name": "Maillet Orange",
+  "Description": "Change la couleur de ton maillet en orange.",
   "Id": 1,
   "Price": 5,
   "ImageUrl": "\\media\\textures\\fire_texture.png",
   "TextureName": "fire_texture.png"
 },
 {
-  "Name": "Maillet Orange",
-  "Description": "Change la couleur de ton maillet pour orange",
+  "Name": "Maillet Jaune",
+  "Description": "Change la couleur de ton maillet en jaune.",
   "Id": 2,
   "Price": 5,
   "ImageUrl": "\\media\\textures\\fire_texture.png",
@@ -25,23 +25,23 @@
 },
 {
   "Name": "Maillet Vert",
-  "Description": "Change la couleur de ton maillet pour vert",
+  "Description": "Change la couleur de ton maillet en vert.",
   "Id": 3,
   "Price": 5,
   "ImageUrl": "\\media\\textures\\fire_texture.png",
   "TextureName": "fire_texture.png"
 },
 {
-  "Name": "Maillet Mauve",
-  "Description": "Change la couleur de ton maillet pour mauve",
+  "Name": "Maillet Bleu",
+  "Description": "Change la couleur de ton maillet en bleu.",
   "Id": 4,
   "Price": 5,
   "ImageUrl": "\\media\\textures\\fire_texture.png",
   "TextureName": "fire_texture.png"
 },
 {
-  "Name": "Maillet Jaune",
-  "Description": "Change la couleur de ton maillet pour jaune",
+  "Name": "Maillet Mauve",
+  "Description": "Change la couleur de ton maillet en mauve.",
   "Id": 5,
   "Price": 5,
   "ImageUrl": "\\media\\textures\\fire_texture.png",
@@ -49,7 +49,7 @@
 },
 {
   "Name": "Maillet Gris",
-  "Description": "Change la couleur de ton maillet pour gris",
+  "Description": "Change la couleur de ton maillet en gris.",
   "Id": 6,
   "Price": 5,
   "ImageUrl": "\\media\\textures\\fire_texture.png",
@@ -57,41 +57,65 @@
 },
 {
   "Name": "Maillet Briqué",
-  "Description": "Change la couleur de ton maillet pour une texture brique",
+  "Description": "J'aime les briques.",
   "Id": 7,
   "Price": 10,
   "ImageUrl": "\\media\\textures\\fire_texture.png",
   "TextureName": "fire_texture.png"
 },
 {
-  "Name": "Maillet 2",
-  "Description": "Change la couleur de ton maillet pour 2",
+  "Name": "Maillet Vache",
+  "Description": "Je suis carnivore.",
   "Id": 8,
-  "Price": 15,
+  "Price": 10,
   "ImageUrl": "\\media\\textures\\fire_texture.png",
   "TextureName": "fire_texture.png"
 },
 {
-  "Name": "Maillet 3",
-  "Description": "Change la couleur de ton maillet pour 3",
+  "Name": "Maillet Herbe",
+  "Description": "Je suis herbivore.",
   "Id": 9,
+  "Price": 10,
+  "ImageUrl": "\\media\\textures\\fire_texture.png",
+  "TextureName": "fire_texture.png"
+},
+{
+  "Name": "Maillet Eau",
+  "Description": "Joue comme un poisson dans l'eau!",
+  "Id": 10,
   "Price": 20,
   "ImageUrl": "\\media\\textures\\fire_texture.png",
   "TextureName": "fire_texture.png"
 },
 {
-  "Name": "Maillet 4",
-  "Description": "Change la couleur de ton maillet pour 4",
-  "Id": 10,
-  "Price": 25,
+  "Name": "Maillet Feu",
+  "Description": "Fais fondre la glace!",
+  "Id": 11,
+  "Price": 20,
   "ImageUrl": "\\media\\textures\\fire_texture.png",
   "TextureName": "fire_texture.png"
-},
+}
 {
-  "Name": "Maillet 5",
-  "Description": "Change la couleur de ton maillet pour 5",
-  "Id": 11,
-  "Price": 30,
+  "Name": "Maillet Bronze",
+  "Description": "Un pied sur le podium!",
+  "Id": 12,
+  "Price": 40,
+  "ImageUrl": "\\media\\textures\\fire_texture.png",
+  "TextureName": "fire_texture.png"
+}
+{
+  "Name": "Maillet Argent",
+  "Description": "Être deuxième, c'est premier dans nos coeurs!",
+  "Id": 13,
+  "Price": 60,
+  "ImageUrl": "\\media\\textures\\fire_texture.png",
+  "TextureName": "fire_texture.png"
+}
+{
+  "Name": "Maillet Or",
+  "Description": "Le meilleur des meilleurs!",
+  "Id": 14,
+  "Price": 80,
   "ImageUrl": "\\media\\textures\\fire_texture.png",
   "TextureName": "fire_texture.png"
 }
