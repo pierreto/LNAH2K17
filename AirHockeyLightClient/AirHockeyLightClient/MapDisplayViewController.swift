@@ -27,6 +27,7 @@ class MapDisplayViewController: UIViewController {
     private let clientConnection = HubManager.sharedConnection
     
     public var currentMap: MapEntity?
+    public var isDeleting = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,25 +55,26 @@ class MapDisplayViewController: UIViewController {
     
     func deleteMapBtnClicked(sender: AnyObject)
     {
-        MapCarouselViewController.instance.deleteCurrentMap()
-    }
-    
-    func handleTableSelection(map: MapEntity) {
-        self.currentMap = map
+        self.currentMap = MapCarouselViewController.instance.getCurrentMap()
+        self.isDeleting = true
         
         // Ouvrir le pop-up pour déverrouiller une carte
         if self.currentMap?.privacy.value == true {
-            let unlockMapVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UnlockMapViewController") as! UnlockMapViewController
-            self.addChildViewController(unlockMapVC)
-            
-            unlockMapVC.view.frame = self.view.frame
-            self.view.addSubview(unlockMapVC.view)
-            unlockMapVC.didMove(toParentViewController: self)
-            
-            // Désactiver la barre de navigation
-            self.enableNavigationBar(activer: false)
+            self.openUnlockMapVC()
         } else {
-            openEditor()
+            MapCarouselViewController.instance.deleteCurrentMap()
+            self.isDeleting = false
+        }
+    }
+    
+    func handleTableSelection() {
+        self.currentMap = MapCarouselViewController.instance.getCurrentMap()
+        
+        // Ouvrir le pop-up pour déverrouiller une carte
+        if self.currentMap?.privacy.value == true {
+            self.openUnlockMapVC()
+        } else {
+            self.openEditor()
         }
     }
     
@@ -114,12 +116,33 @@ class MapDisplayViewController: UIViewController {
         }
     }
     
+    func closeUnlockMapVC() {
+        if isDeleting {
+            MapCarouselViewController.instance.deleteCurrentMap()
+            self.isDeleting = false
+        } else {
+            self.openEditor()
+        }
+    }
+    
     func enableNavigationBar(activer: Bool) {
         self.navigationItem.hidesBackButton = !activer
         
         for button in self.navigationItem.rightBarButtonItems! {
             button.isEnabled = activer
         }
+    }
+    
+    private func openUnlockMapVC() {
+        let unlockMapVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UnlockMapViewController") as! UnlockMapViewController
+        self.addChildViewController(unlockMapVC)
+        
+        unlockMapVC.view.frame = self.view.frame
+        self.view.addSubview(unlockMapVC.view)
+        unlockMapVC.didMove(toParentViewController: self)
+        
+        // Désactiver la barre de navigation
+        self.enableNavigationBar(activer: false)
     }
     
     override var shouldAutorotate: Bool {
