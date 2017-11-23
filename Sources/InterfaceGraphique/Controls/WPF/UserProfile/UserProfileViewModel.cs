@@ -37,9 +37,9 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
         {
             this.Achievements = new ObservableCollection<Achievement>();
             Items = new List<ItemViewModel>();
-            Name = "myName";
-            UserName = "myUsername";
-            Email = "email@love.com";
+            Name = "";
+            UserName = "";
+            Email = "";
             CreationDate = DateTime.Now.ToLongDateString();
             PointsNb = 0;
             GameWon = 0;
@@ -54,18 +54,6 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
 
             int profileId = isFriendProfile ? userId : User.Instance.UserEntity.Id;
             var allUsers = await UserService.GetAllUsers();
-            Users = new List<UserViewModel>();
-            completeUserList = new List<UserViewModel>();
-
-
-            foreach (var user in allUsers)
-            {
-                if(user != null && user.Id > 0)
-                {
-                    Users.Add(new UserViewModel(user));
-                    completeUserList.Add(new UserViewModel(user));
-                }
-            }
 
             if (!isFriendProfile)
             {
@@ -74,6 +62,7 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
                 Email = User.Instance.UserEntity.Email;
                 CreationDate = User.Instance.UserEntity.Date;
                 ProfilePicture = User.Instance.UserEntity.Profile;
+                DateCreation = User.Instance.UserEntity.Date;
                 var items = await StoreService.GetUserStoreItems(User.Instance.UserEntity.Id);
 
                 Items = new List<ItemViewModel>();
@@ -82,8 +71,6 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
                     Items.Add(new ItemViewModel(item, false));
                 }
                 OnPropertyChanged("Items");
-
-                //Items = await StoreService.GetUserStoreItems(User.Instance.UserEntity.Id);
             }
             else
             {
@@ -95,6 +82,7 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
                 Email = friend.Email;
                 CreationDate = friend.Date;
                 ProfilePicture = friend.Profile;
+                DateCreation = friend.Date;
             }
 
             var achievements = await PlayerStatsService.GetPlayerAchivements(profileId);
@@ -150,6 +138,17 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
             set
             {
                 email = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string dateCreation;
+        public string DateCreation
+        {
+            get => dateCreation;
+            set
+            {
+                dateCreation = value;
                 OnPropertyChanged();
             }
         }
@@ -274,104 +273,15 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
             User.Instance.Inventory = await StoreService.GetUserStoreItems(User.Instance.UserEntity.Id);
         }
 
-        private string friendSearchRequest;
-        public string FriendSearchRequest
+        private ICommand elementClicked;
+        public ICommand ElementClicked
         {
-            get => friendSearchRequest;
-            set
-            {
-                friendSearchRequest = value;
-                SearchLetterAction();
-                OnPropertyChanged();
-            }
+            get { return elementClicked ?? (elementClicked = new DelegateCommand<ItemViewModel>(SelectItem)); }
         }
 
-        private List<UserViewModel> completeUserList;
-        private List<UserViewModel> users;
-        public List<UserViewModel> Users
+        private void SelectItem(ItemViewModel item)
         {
-            get => users;
-            set
-            {
-                users = value;
-                OnPropertyChanged();
-            }
-        }
-
-        private bool autocompleteEnable;
-        public String AutocompleteVisibility
-        {
-            get => autocompleteEnable ? "Visible" : "Hidden";
-        }
-
-        private void SearchLetterAction()
-        {
-            autocompleteEnable = string.IsNullOrEmpty(FriendSearchRequest) ? false : true;
-            OnPropertyChanged("AutocompleteVisibility");
-            Users = completeUserList.Where(x => x.Name.ToLower().Contains(FriendSearchRequest) || x.UserName.ToLower().Contains(FriendSearchRequest)).ToList();
-        }
-
-        private int friendId;
-        private ICommand autocomplete;
-        public ICommand UserSelectionFromAutocomplete
-        {
-            get
-            {
-                return autocomplete ??
-                                       (autocomplete = new DelegateCommand<UserViewModel>(AutocompleteAction, (o) => true));
-            }
-        }
-
-        private async void AutocompleteAction(UserViewModel user)
-        {
-            FriendSearchRequest = user.UserName;
-            FriendSearchRequest = "";
-            autocompleteEnable = false;
-            OnPropertyChanged("AutocompleteVisibility");
-            friendId = user.Id;
-            await SearchFriendAction();
-        }
-
-        private async Task SearchFriendAction()
-        {
-            if (friendId != 0)
-            {
-                Reset();
-                await Initialize(friendId);
-            }
-        }
-
-        private ICommand lostFocus;
-        public ICommand LostFocus
-        {
-            get
-            {
-                return lostFocus ??
-                    (lostFocus = new RelayCommand(AutocompleteLostFocus));
-            }
-        }
-
-        private void AutocompleteLostFocus()
-        {
-            autocompleteEnable = false;
-            OnPropertyChanged("AutocompleteVisibility");
-        }
-
-        private ICommand backProfile;
-        public ICommand BackProfile
-        {
-            get
-            {
-                return backProfile ??
-                                       (backProfile = new RelayCommandAsync(BackToUserProfile, (o) => true));
-            }
-        }
-
-        public async Task BackToUserProfile()
-        {
-            FriendSearchRequest = "";
-            Reset();
-            await Initialize();
+            item.IsGameEnabled = !item.IsGameEnabled;
         }
 
         private bool isFriendProfile;
@@ -391,6 +301,11 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
 
         private async Task ChangeProfilePicture()
         {
+            if(isFriendProfile)
+            {
+                return;
+            }
+
             using (OpenFileDialog dlg = new OpenFileDialog())
             {
                 dlg.Title = "Open Image";

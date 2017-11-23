@@ -134,5 +134,9 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
             //TODO: IMPLEMENT THE LOGOUT MECANISM
         }
 
+        public async Task LeaveRoom()
+        {
+            await this.LeaveGame();
+        }
     }
 }

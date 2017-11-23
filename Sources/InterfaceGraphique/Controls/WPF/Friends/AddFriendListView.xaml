@@ -34,11 +34,10 @@
                         <!-- Content -->
                         <Border x:Name="background" Background="{StaticResource DarkGrayBrush}" BorderBrush="{StaticResource VeryDarkGrayBrush}" BorderThickness="0,0,0,2">
 
-                            <!-- Click to open message 
+
                             <Border.InputBindings>
-                                <MouseBinding MouseAction="LeftClick" Command="{Binding ClickFriendCommand}" />
-                                <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding GoToProfileCommand}"/>
-                            </Border.InputBindings>-->
+                                <MouseBinding MouseAction="LeftClick" Command="{Binding GoToProfileCommand}" />
+                            </Border.InputBindings>
 
                             <Grid x:Name="container" Background="Transparent">
                                 <Grid.ColumnDefinitions>
@@ -87,7 +86,7 @@
                                 <StackPanel  Name="AddUser"  Grid.Column="2" Orientation="Horizontal" Margin="3px" HorizontalAlignment="Right" Visibility="Hidden">
 
                                     <Button fa:Awesome.Content="Plus" Margin="0 0 5 0" BorderThickness="0" Background="{StaticResource AddBrush}" Command="{Binding SendFriendRequestCommand}">
-                          
+
                                     </Button>
                                 </StackPanel>
 
@@ -101,7 +100,7 @@
                             </DataTrigger>
 
                             <EventTrigger RoutedEvent="Mouse.MouseEnter">
-                                
+
                                 <BeginStoryboard>
                                     <Storyboard>
                                         <ColorAnimation To="{StaticResource VeryDarkGrayColor}" From="{StaticResource DarkGrayColor}" Duration="0:0:0.3" Storyboard.TargetName="container" Storyboard.TargetProperty="Background.Color" />

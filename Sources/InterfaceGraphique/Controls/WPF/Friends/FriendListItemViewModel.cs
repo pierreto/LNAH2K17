@@ -10,6 +10,8 @@ using System.Net.Http;
 using InterfaceGraphique.CommunicationInterface.RestInterface;
 using System.Collections.ObjectModel;
 using InterfaceGraphique.Controls.WPF.Chat.Channel;
+using InterfaceGraphique.Controls.WPF.Store;
+using InterfaceGraphique.Controls.WPF.UserProfile;
 
 namespace InterfaceGraphique.Controls.WPF.Friends
 {
@@ -267,7 +269,11 @@ namespace InterfaceGraphique.Controls.WPF.Friends
         }
         public async Task GoToProfile()
         {
-            System.Diagnostics.Debug.WriteLine("Go to profile of : " + Username + " with id: " + Id);
+            HubManager.Instance.LeaveHubs();
+
+            Program.FormManager.CurrentForm = Program.UserProfileMenu;
+            await Program.unityContainer.Resolve<UserProfileViewModel>().Initialize(Id);
+            //System.Diagnostics.Debug.WriteLine("Go to profile of : " + Username + " with id: " + Id);
         }
 
         public async Task PlayGame()
