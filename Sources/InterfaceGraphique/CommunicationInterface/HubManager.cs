@@ -70,6 +70,14 @@ namespace InterfaceGraphique.CommunicationInterface
             }
         }
 
+        public void LeaveHubs()
+        {
+            foreach(IBaseHub hub in this.hubs)
+            {
+                hub.LeaveRoom();
+            }
+        }
+
         public void Logout()
         {
             if (this.hubs != null)
@@ -82,5 +90,6 @@ namespace InterfaceGraphique.CommunicationInterface
             }
     
         }
+        
     }
 }

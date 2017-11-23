@@ -24,8 +24,8 @@
 
                                 <!-- Click to open message -->
                                 <Border.InputBindings>
+                                    <MouseBinding MouseAction="LeftClick" Command="{Binding GoToProfileCommand}"/>
                                     <!--  <MouseBinding MouseAction="LeftClick" Command="{Binding ClickFriendCommand}" />-->
-                                    <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding GoToProfileCommand}"/>
                                 </Border.InputBindings>
                                 <i:Interaction.Triggers>
 

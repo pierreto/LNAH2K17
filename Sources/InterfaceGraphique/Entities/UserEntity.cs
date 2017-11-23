@@ -10,6 +10,7 @@ using InterfaceGraphique.CommunicationInterface.RestInterface;
 using InterfaceGraphique.Controls.WPF;
 using InterfaceGraphique.Controls.WPF.Friends;
 using Microsoft.Practices.Unity;
+using InterfaceGraphique.Controls.WPF.UserProfile;
 
 namespace InterfaceGraphique.Entities
 {
@@ -54,6 +55,27 @@ namespace InterfaceGraphique.Entities
             var item = Program.unityContainer.Resolve<AddFriendListViewModel>().Items;
             //Retire de notre liste de personnes ajoutables la personne qu'on vien d'envoyer une demande d'amis
             item.Remove(item.Single(x => x.Id == friend.Id));
+        }
+
+        private ICommand goToProfileCommand;
+        public ICommand GoToProfileCommand
+        {
+            get
+            {
+                if (goToProfileCommand == null)
+                {
+                    goToProfileCommand = new RelayCommandAsync(GoToProfile);
+                }
+                return goToProfileCommand;
+            }
+        }
+
+        public async Task GoToProfile()
+        {
+            HubManager.Instance.LeaveHubs();
+            Program.FormManager.CurrentForm = Program.UserProfileMenu;
+            await Program.unityContainer.Resolve<UserProfileViewModel>().Initialize(Id);
+            //System.Diagnostics.Debug.WriteLine("Go to profile of : " + Username + " with id: " + Id);
         }
     }
 }

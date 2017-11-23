@@ -103,5 +103,6 @@ namespace InterfaceGraphique.CommunicationInterface
            /* hubProxy?.Invoke("Disconnect", this.username).Wait();
             this.map = null;*/
         }
+
     }
 }

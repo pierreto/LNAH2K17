@@ -184,5 +184,10 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
                 Program.QuickPlay.CurrentGameState.ApplyTextures();
             }));
         }
+
+        public async Task LeaveRoom()
+        {
+            await this.LeaveTournament();
+        }
     }
 }
