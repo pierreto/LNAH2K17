@@ -37,17 +37,21 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     let gradientAchievements = CAGradientLayer()
     let gradientItems = CAGradientLayer()
     
-    var itemsUrl = [String]()
-    var itemsLabel = [String]()
-    var itemsEnable = [Bool]()
     var achievementUrls = [String]()
     var achievementLabels = [String]()
     var achievementEnabled = [Bool]()
+    
+    var storeService = StoreService()
+    var userStoreItems = [StoreItemEntity]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         achievementCollectionView.delegate = self
         achievementCollectionView.dataSource = self
+        itemCollectionView.delegate = self
+        itemCollectionView.dataSource = self
+        itemCollectionView.allowsMultipleSelection = true
+        
         // Do any additional setup after loading the view.
         profileImage.image = UIImage(named: "default_profile_picture.png")
         
@@ -63,7 +67,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         // Makes the scroll view fade at the sides to indicate it is scrollable
         gradientItems.frame = itemCollectionView.bounds
         gradientItems.colors = [UIColor.clear.cgColor, UIColor.black.cgColor, UIColor.black.cgColor, UIColor.clear.cgColor]
-        gradientItems.locations = [0.0, 0.2, 0.8, 1.0]
+        gradientItems.locations = [0.0, 0.1, 0.9, 1.0]
         gradientItems.startPoint = CGPoint(x: 0.0, y: 0.5)
         gradientItems.endPoint = CGPoint(x: 1.0, y: 0.5)
         itemCollectionView.layer.mask = gradientItems
@@ -90,7 +94,9 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         self.tournamentsWonLabel.text = "0"
         self.tournamentsPlayedLabel.text = "0"
         
-        loadUserProfile()
+        // Définir les informations de l'usager courant
+        self.loadUserProfile()
+        self.loadUserStoreItems()
     }
     
     func loadUserProfile() {
@@ -195,6 +201,17 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         }
     }
     
+    private func loadUserStoreItems() {
+        self.storeService.getUserStoreItems().then { items -> Void in
+            self.userStoreItems = items
+            
+            DispatchQueue.main.async(execute: { () -> Void in
+                // Reload table
+                self.itemCollectionView.reloadData()
+            })
+        }
+    }
+
     func imageTapped(gesture: UIGestureRecognizer) {
         // if the tapped view is a UIImageView then set it to imageview
         if (gesture.view as? UIImageView) != nil {
@@ -237,34 +254,70 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
             count = achievementUrls.count > 0 ? Int(INT_MAX)/100 : 0
         }
         if collectionView == self.itemCollectionView {
-            count = itemsUrl.count > 0 ? Int(INT_MAX)/100 : 0
+            count = self.userStoreItems.count
         }
         return count!
 
     }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         var cell:AchievementCollectionViewCell?
+        
         if collectionView == self.achievementCollectionView {
             cell = achievementCollectionView.dequeueReusableCell(withReuseIdentifier: "achievementCell", for: indexPath) as? AchievementCollectionViewCell
             cell?.imageView.image = UIImage(named: achievementUrls[indexPath.row % achievementUrls.count])
             cell?.imageLabel.text = achievementLabels[indexPath.row % achievementUrls.count]
+            
             if self.achievementEnabled[indexPath.row % achievementUrls.count] {
                 cell?.imageLabel.textColor = UIColor.green
             } else {
                 cell?.imageLabel.textColor = UIColor.white
             }
-        } else if collectionView == self.itemCollectionView {
+        }
+        else if collectionView == self.itemCollectionView {
             cell = itemCollectionView.dequeueReusableCell(withReuseIdentifier: "itemCell", for: indexPath) as? AchievementCollectionViewCell
-            cell?.imageView.image = UIImage(named: itemsUrl[indexPath.row % itemsUrl.count])
-            cell?.imageLabel.text = itemsLabel[indexPath.row % itemsUrl.count]
-            if self.achievementEnabled[indexPath.row % itemsUrl.count] {
-                cell?.imageLabel.textColor = UIColor.green
+            
+            let userStoreItem = self.userStoreItems[indexPath.item]
+            cell?.imageView.image = UIImage(named: userStoreItem.getImageUrl().replacingOccurrences(of: "\\media\\textures\\", with: "", options: .literal, range: nil))
+            cell?.imageLabel.text = userStoreItem.getName()
+            
+            // Ajuster le style de l'item sélectionné (pris en compte en cours de jeu)
+            if userStoreItem.getIsGameEnabled() {
+                cell?.imageBackground?.isHidden = false
+                cell?.imageLabel.textColor = UIColor(red: 99.0/255.0, green: 205.0/255.0, blue: 251.0/255.0, alpha: 1.0)
             } else {
+                cell?.imageBackground?.isHidden = true
                 cell?.imageLabel.textColor = UIColor.white
             }
+        }
+        
+        return cell!
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView == self.itemCollectionView {
+            // Deselect other item
+            let selectedIndex = self.userStoreItems.index(where: { $0.getIsGameEnabled() })
+            var previousSelectedItem: StoreItemEntity?
+            if selectedIndex != nil {
+                previousSelectedItem = self.userStoreItems[selectedIndex!]
+                previousSelectedItem?.setIsGameEnabled(isGameEnabled: false)
             }
-            return cell!
-      }
+            
+            print("Select user item")
+            let userStoreItem = self.userStoreItems[indexPath.item]
+            if selectedIndex == nil || previousSelectedItem?.getId() != userStoreItem.getId() {
+                    userStoreItem.setIsGameEnabled(isGameEnabled: true)
+            }
+        
+            // TODO Send Update Item Enable
+        
+            DispatchQueue.main.async(execute: { () -> Void in
+                // Reload table
+                self.itemCollectionView.reloadData()
+            })
+        }
+    }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         gradientItems.frame = itemCollectionView.bounds

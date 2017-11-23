@@ -137,7 +137,7 @@ class MagasinViewController: UIViewController, UICollectionViewDelegate, UIColle
         let cell = itemCollectionView.dequeueReusableCell(withReuseIdentifier: "itemCell", for: indexPath) as! ItemCollectionViewCell
         let storeItem = storeItems[indexPath.item]
         
-        cell.itemImage.image = UIImage.init(named: storeItem.getTextureName())
+        cell.itemImage.image = UIImage.init(named: storeItem.getImageUrl().replacingOccurrences(of: "\\media\\textures\\", with: "", options: .literal, range: nil))
         cell.itemName.text = storeItem.getName()
         cell.itemPrice.text = storeItem.getPrice().description
         cell.itemDescription.text = storeItem.getDescription()
