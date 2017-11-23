@@ -64,8 +64,8 @@ export class ProfileComponent implements OnInit, AfterViewInit {
       const file = event.target.files[0];
       reader.readAsDataURL(file);
       reader.onload = () => {
-        if (reader.result.split(',')[1].length > 65535) {
-          alert('L\'image dépasse la taille maximale');
+        if (reader.result.split(',')[1].length > 2000000) {
+          alert('L\'image dépasse la taille maximale de 2Mo');
         } else {
           this.profileService.updateProfilePicture(this.appService.id, reader.result.split(',')[1]).subscribe(
             (res) => this.profile.UserEntity.Profile = reader.result.split(',')[1],
