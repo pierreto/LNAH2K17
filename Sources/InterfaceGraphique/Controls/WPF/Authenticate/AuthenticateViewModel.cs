@@ -174,17 +174,20 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
                         Program.FormManager.CurrentForm = Program.MainMenu;
 
                         Program.Browser.Show();
+                        /*
                         Program.Browser.webBrowser1.Navigate("" +
                             "https://www.facebook.com/v2.11/dialog/oauth?" +
                             "client_id=143581339623947" +
                             "&response_type=token" +
                             "&scope=publish_actions" +
                             "&redirect_uri=https://www.facebook.com/connect/login_success.html");
+                        */
+
                         Program.Browser.webBrowser1.Navigate("" +
                             "https://www.facebook.com/dialog/feed?" +
                             "app_id=143581339623947" +
                             "&display=popup" +
-                            "&ref=lnah");
+                            "&link=https://www.facebook.com/LNAH-2K17-1793471310724238/");
 
                         // Open the friend list windows:
                         //Program.FriendListHost.Show();
