@@ -38,8 +38,6 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
     @IBOutlet weak var navigationBar: UINavigationItem!
     @IBOutlet weak var objectPropertiesView: ObjectPropertiesView!
     
-    private var timer: Timer?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -73,9 +71,6 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
         self.showObjectPropertiesView(activer: false)
         self.objectPropertiesView.objectProperties.isHidden = true;
         self.objectPropertiesView.hideObjectPropertiesButtons()
-        
-        // Activer le timer pour la sauvegarde automatique de la carte
-        self.scheduledTimerWithTimeInterval()
     }
     
     override func viewWillDisappear(_ animated : Bool) {
@@ -85,8 +80,6 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
             FacadeModele.instance.obtenirEtat().nettoyerEtat()
             FacadeModele.instance.obtenirEtatEdition().leaveEdition()
         }
-        
-        self.timer?.invalidate()
     }
     
     func initView() {
@@ -148,14 +141,6 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
             // Charger les informations de l'objet sélectionné
             self.objectPropertiesView.loadObjectProperties()
         }
-    }
-    
-    func scheduledTimerWithTimeInterval() {
-        self.timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(self.sauvegarderCarteAutomatiquement), userInfo: nil, repeats: true)
-    }
-    
-    func sauvegarderCarteAutomatiquement() {
-        FacadeModele.instance.sauvegarderCarte(map: self.currentMap!)
     }
     
     @IBAction func sauvegarderCarteManuellement(_ sender: Any) {
