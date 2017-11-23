@@ -29,32 +29,46 @@
             <ColumnDefinition Width="5*"/>
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="9*"/>
-            <RowDefinition Height="91*"/>
-        </Grid.RowDefinitions>
+
         <Grid.DataContext>
             <Binding Path="TutorialViewModel" Source="{StaticResource VMLocator}"/>
         </Grid.DataContext>
-        <Button   HorizontalAlignment="Right"  Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"  fa:Awesome.Content="ArrowCircleRight" Command="{Binding NextCommand}" VerticalAlignment="Center"  Grid.Column="1" Grid.Row="1"  />
+        <Button Panel.ZIndex="1"  HorizontalAlignment="Right"  Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"  fa:Awesome.Content="ArrowCircleRight" FontSize="30"  Command="{Binding NextCommand}" VerticalAlignment="Center"  Grid.Column="1" Grid.Row="0"   MinHeight="60" MinWidth="60" Height="60" Margin="0,116,0,110" Width="60"  />
 
-        <Button Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"  fa:Awesome.Content="ArrowCircleLeft" Command="{Binding PreviousCommand}" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="1"  />
+        <Button  Panel.ZIndex="1" Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"  fa:Awesome.Content="ArrowCircleLeft" FontSize="30" Command="{Binding PreviousCommand}" VerticalAlignment="Center" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="0" MinHeight="60" MinWidth="60" Height="60" Margin="0,116,0,110" Width="60" />
 
         <materialDesign:Transitioner SelectedIndex="{Binding ActiveSlideIndex}" 
-                                     ItemsSource="{Binding CurrentSlides}"   
-                                     Grid.Row="1" Grid.ColumnSpan="2"
+                                     ItemsSource="{Binding CurrentSlides}"
+                                     Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="0"
                                      HorizontalContentAlignment="Stretch"
                                      >
 
-            <materialDesign:Transitioner.ItemContainerStyle>
+            <!--<materialDesign:Transitioner.ItemContainerStyle>
+
                 <Style TargetType="materialDesign:TransitionerSlide">
+
                     <Setter Property="ForwardWipe"  Value="{StaticResource SlideWipe}"/>
                     <Setter Property="BackwardWipe"  Value="{StaticResource BSlideWipe}"/>
 
                 </Style>
-            </materialDesign:Transitioner.ItemContainerStyle>
+                
+            </materialDesign:Transitioner.ItemContainerStyle>-->
+            <materialDesign:Transitioner.Resources>
+                <Style TargetType="Image">
+                    <Setter Property="Stretch"  Value="Fill"/>
+                    <Setter Property="HorizontalAlignment"  Value="Center"/>
+
+                </Style>
+                <Style TargetType="materialDesign:TransitionerSlide">
+
+                    <Setter Property="ForwardWipe"  Value="{StaticResource SlideWipe}"/>
+                    <Setter Property="BackwardWipe"  Value="{StaticResource BSlideWipe}"/>
+
+                </Style>
+             
+            </materialDesign:Transitioner.Resources>
         </materialDesign:Transitioner>
-        <Button Content="Editeur" Command="{Binding EditorSlideCommand}"  Height="Auto"/>
-        <Button Content="Partie rapide" Command="{Binding MatchSlideCommand}"  Height="Auto" Grid.Column="1"/>
+        <!--<Button Content="Editeur" Command="{Binding EditorSlideCommand}"  Height="Auto"/>
+        <Button Content="Partie rapide" Command="{Binding MatchSlideCommand}"  Height="Auto" Grid.Column="1"/>-->
     </Grid>
 </UserControl>

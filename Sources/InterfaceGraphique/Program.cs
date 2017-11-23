@@ -12,7 +12,6 @@ using InterfaceGraphique.Controls.WPF;
 using InterfaceGraphique.Controls.WPF.Chat;
 using InterfaceGraphique.Controls.WPF.Editor;
 using InterfaceGraphique.Controls.WPF.Friends;
-using InterfaceGraphique.Entities;
 using InterfaceGraphique.Menus;
 using Microsoft.Practices.Unity;
 using Application = System.Windows.Forms.Application;
@@ -153,7 +152,6 @@ namespace InterfaceGraphique
             formManager.CurrentForm = homeMenu;
 
             Application.Run(formManager);
-
 
 
         }

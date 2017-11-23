@@ -15,6 +15,8 @@ namespace AirHockeyServer.Entities
         public string Created { get; set; }
 
         public string Profile { get; set; }
+
+        public bool IsConnected { get; set; }
     
         public bool AlreadyPlayedGame { get; set; }
 

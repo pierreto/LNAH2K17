@@ -1,98 +1,122 @@
 [
 {
   "Name": "Maillet Rouge",
-  "Description": "Change la couleur de ton maillet pour rouge",
+  "Description": "Change la couleur de ton maillet en rouge.",
   "Id": 0,
   "Price": 5,
-  "ImageUrl": "\\media\\textures\\fire_texture.png",
-  "TextureName": "fire_texture.png"
-},
-{
-  "Name": "Maillet Bleu",
-  "Description": "Change la couleur de ton maillet pour bleu",
-  "Id": 1,
-  "Price": 5,
-  "ImageUrl": "\\media\\textures\\fire_texture.png",
-  "TextureName": "fire_texture.png"
+  "ImageUrl": "\\media\\textures\\maillet_rouge.png",
+  "TextureName": "maillet_rouge_texture.png"
 },
 {
   "Name": "Maillet Orange",
-  "Description": "Change la couleur de ton maillet pour orange",
-  "Id": 2,
+  "Description": "Change la couleur de ton maillet en orange.",
+  "Id": 1,
   "Price": 5,
-  "ImageUrl": "\\media\\textures\\fire_texture.png",
-  "TextureName": "fire_texture.png"
-},
-{
-  "Name": "Maillet Vert",
-  "Description": "Change la couleur de ton maillet pour vert",
-  "Id": 3,
-  "Price": 5,
-  "ImageUrl": "\\media\\textures\\fire_texture.png",
-  "TextureName": "fire_texture.png"
-},
-{
-  "Name": "Maillet Mauve",
-  "Description": "Change la couleur de ton maillet pour mauve",
-  "Id": 4,
-  "Price": 5,
-  "ImageUrl": "\\media\\textures\\fire_texture.png",
-  "TextureName": "fire_texture.png"
+  "ImageUrl": "\\media\\textures\\maillet_orange.png",
+  "TextureName": "maillet_orange_texture.png"
 },
 {
   "Name": "Maillet Jaune",
-  "Description": "Change la couleur de ton maillet pour jaune",
+  "Description": "Change la couleur de ton maillet en jaune.",
+  "Id": 2,
+  "Price": 5,
+  "ImageUrl": "\\media\\textures\\maillet_jaune.png",
+  "TextureName": "maillet_jaune_texture.png"
+},
+{
+  "Name": "Maillet Vert",
+  "Description": "Change la couleur de ton maillet en vert.",
+  "Id": 3,
+  "Price": 5,
+  "ImageUrl": "\\media\\textures\\maillet_vert.png",
+  "TextureName": "maillet_vert_texture.png"
+},
+{
+  "Name": "Maillet Bleu",
+  "Description": "Change la couleur de ton maillet en bleu.",
+  "Id": 4,
+  "Price": 5,
+  "ImageUrl": "\\media\\textures\\maillet_bleu.png",
+  "TextureName": "maillet_bleu_texture.png"
+},
+{
+  "Name": "Maillet Mauve",
+  "Description": "Change la couleur de ton maillet en mauve.",
   "Id": 5,
   "Price": 5,
-  "ImageUrl": "\\media\\textures\\fire_texture.png",
-  "TextureName": "fire_texture.png"
+  "ImageUrl": "\\media\\textures\\maillet_mauve.png",
+  "TextureName": "maillet_mauve_texture.png"
 },
 {
   "Name": "Maillet Gris",
-  "Description": "Change la couleur de ton maillet pour gris",
+  "Description": "Change la couleur de ton maillet en gris.",
   "Id": 6,
   "Price": 5,
-  "ImageUrl": "\\media\\textures\\fire_texture.png",
-  "TextureName": "fire_texture.png"
+  "ImageUrl": "\\media\\textures\\maillet_gris.png",
+  "TextureName": "maillet_gris_texture.png"
 },
 {
   "Name": "Maillet Briqué",
-  "Description": "Change la couleur de ton maillet pour une texture brique",
+  "Description": "J'aime les briques.",
   "Id": 7,
   "Price": 10,
-  "ImageUrl": "\\media\\textures\\fire_texture.png",
-  "TextureName": "fire_texture.png"
+  "ImageUrl": "\\media\\textures\\maillet_brique.png",
+  "TextureName": "maillet_brique_texture.png"
 },
 {
-  "Name": "Maillet 2",
-  "Description": "Change la couleur de ton maillet pour 2",
+  "Name": "Maillet Vache",
+  "Description": "Je suis carnivore.",
   "Id": 8,
-  "Price": 15,
-  "ImageUrl": "\\media\\textures\\fire_texture.png",
-  "TextureName": "fire_texture.png"
+  "Price": 10,
+  "ImageUrl": "\\media\\textures\\maillet_vache.png",
+  "TextureName": "maillet_vache_texture.png"
 },
 {
-  "Name": "Maillet 3",
-  "Description": "Change la couleur de ton maillet pour 3",
+  "Name": "Maillet Herbe",
+  "Description": "Je suis herbivore.",
   "Id": 9,
-  "Price": 20,
-  "ImageUrl": "\\media\\textures\\fire_texture.png",
-  "TextureName": "fire_texture.png"
+  "Price": 10,
+  "ImageUrl": "\\media\\textures\\maillet_herbe.png",
+  "TextureName": "maillet_herbe_texture.png"
 },
 {
-  "Name": "Maillet 4",
-  "Description": "Change la couleur de ton maillet pour 4",
+  "Name": "Maillet Eau",
+  "Description": "Joue comme un poisson dans l'eau!",
   "Id": 10,
-  "Price": 25,
-  "ImageUrl": "\\media\\textures\\fire_texture.png",
-  "TextureName": "fire_texture.png"
+  "Price": 20,
+  "ImageUrl": "\\media\\textures\\maillet_eau.png",
+  "TextureName": "maillet_eau_texture.png"
 },
 {
-  "Name": "Maillet 5",
-  "Description": "Change la couleur de ton maillet pour 5",
+  "Name": "Maillet Feu",
+  "Description": "Fais fondre la glace!",
   "Id": 11,
-  "Price": 30,
-  "ImageUrl": "\\media\\textures\\fire_texture.png",
-  "TextureName": "fire_texture.png"
+  "Price": 20,
+  "ImageUrl": "\\media\\textures\\maillet_feu.png",
+  "TextureName": "maillet_feu_texture.png"
+},
+{
+  "Name": "Maillet Bronze",
+  "Description": "Un pied sur le podium!",
+  "Id": 12,
+  "Price": 40,
+  "ImageUrl": "\\media\\textures\\maillet_bronze.png",
+  "TextureName": "maillet_bronze_texture.png"
+},
+{
+  "Name": "Maillet Argent",
+  "Description": "Être deuxième, c'est premier dans nos coeurs!",
+  "Id": 13,
+  "Price": 60,
+  "ImageUrl": "\\media\\textures\\maillet_argent.png",
+  "TextureName": "maillet_argent_texture.png"
+},
+{
+  "Name": "Maillet Or",
+  "Description": "Le meilleur des meilleurs!",
+  "Id": 14,
+  "Price": 80,
+  "ImageUrl": "\\media\\textures\\maillet_or.png",
+  "TextureName": "maillet_or_texture.png"
 }
 ]

@@ -13,6 +13,8 @@ using InterfaceGraphique.Controls.WPF.Chat.Channel;
 using InterfaceGraphique.Controls.WPF.Friends;
 using InterfaceGraphique.Controls.WPF.UserProfile;
 using InterfaceGraphique.Controls.WPF.Store;
+using InterfaceGraphique.Controls.WPF.Tutorial;
+using Application = System.Windows.Forms.Application;
 using Point = System.Drawing.Point;
 using Size = System.Drawing.Size;
 
@@ -55,7 +57,8 @@ namespace InterfaceGraphique
             //this.boutonPartieRapide.Click += (sender, e) => Program.FormManager.CurrentForm = Program.LobbyHost;
             this.boutonTournoi.Click += (sender, e) => Program.FormManager.CurrentForm = Program.TournementMenu;
             this.buttonConfiguration.Click += (sender, e) => Program.ConfigurationMenu.ShowDialog();
-            this.Tutoriel.Click += (sender, e) => Program.TutorialHost.Show();
+            this.TutorielEditeur.Click += async (sender, e) => await ShowTutorialEditor();
+            this.TutorielGame.Click += async (sender, e) => await ShowTutorialGame();
 
             this.buttonEditeur.Click += (sender, e) =>
             {
@@ -82,6 +85,26 @@ namespace InterfaceGraphique
             }
         }
 
+        private async Task ShowTutorialEditor()
+        {
+            await Program.unityContainer.Resolve<TutorialViewModel>().SwitchToMatchSlides();
+            Form fc = Application.OpenForms["TutorialHost"];
+            if (fc == null)
+            {
+                Program.TutorialHost.ShowDialog();
+            }
+        }
+        private async Task ShowTutorialGame()
+        {
+            await Program.unityContainer.Resolve<TutorialViewModel>().SwitchToEditorSlides();
+
+            Form fc = Application.OpenForms["TutorialHost"];
+            if (fc == null)
+            {
+                Program.TutorialHost.ShowDialog();
+            }
+        }
+
         private async Task OnStoreButtonClicked(object sender, EventArgs e)
         {
             Program.FormManager.CurrentForm = Program.StoreMenu;
@@ -100,6 +123,7 @@ namespace InterfaceGraphique
             HubManager.Instance.Logout();
             User.Instance.UserEntity = null;
             User.Instance.IsConnected = false;
+            //TODO: KILL HUB CONNECTIONS
             Program.FormManager.CurrentForm = Program.HomeMenu;
             Program.InitializeUnityDependencyInjection(); 
             Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<HomeViewModel>());

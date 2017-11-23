@@ -26,6 +26,19 @@ class StoreItemEntity : Entity {
     private var imageUrl: String = ""
     private var id: Int = 0
     private var isGameEnabled: Bool = false
+    private var isBougthByUser: Bool = false
+    
+    func toDictionary() -> [String: Any] {
+        return [
+            "Name": self.name,
+            "Price": self.price,
+            "Description": self.description,
+            "TextureName": self.textureName,
+            "ImageUrl": self.imageUrl,
+            "Id": self.id,
+            "IsGameEnabled": self.isGameEnabled
+        ] as [String : Any]
+    }
     
     func fromJSON(json: JSON) {
         self.name = json["Name"].string!
@@ -92,6 +105,15 @@ class StoreItemEntity : Entity {
     func setIsGameEnabled(isGameEnabled: Bool) {
         self.isGameEnabled = isGameEnabled
     }
+    
+    func getIsBoughtByUser() -> Bool {
+        return self.isBougthByUser
+    }
+    
+    func setIsBoughtByUser(isBoughtByUser: Bool) {
+        self.isBougthByUser = isBoughtByUser
+    }
+    
     
 }
 

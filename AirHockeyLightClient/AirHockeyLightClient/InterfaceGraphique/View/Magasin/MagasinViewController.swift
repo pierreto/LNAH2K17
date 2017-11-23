@@ -37,6 +37,8 @@ class MagasinViewController: UIViewController, UICollectionViewDelegate, UIColle
     @IBOutlet weak var resetCartButton: UIButton!
     @IBOutlet weak var buyElementsButton: UIButton!
     
+    @IBOutlet weak var errorView: UIView!
+    @IBOutlet weak var errorMessage: UILabel!
     @IBOutlet weak var loadingSpinner: UIActivityIndicatorView!
     
     let gradient = CAGradientLayer()
@@ -70,6 +72,7 @@ class MagasinViewController: UIViewController, UICollectionViewDelegate, UIColle
         
         // Définir les informations de l'usager courant
         self.loadUserInfo()
+        self.loadUserStoreItems()
     }
     
     private func loadStoreItems() {
@@ -111,8 +114,21 @@ class MagasinViewController: UIViewController, UICollectionViewDelegate, UIColle
                 self.loadingDone()
         }
     }
-
     
+    private func loadUserStoreItems() {
+        self.storeService.getUserStoreItems().then { items -> Void in
+            // Mettre à jour les items achetés par l'utilisateur
+            for item in items {
+                self.storeItems.first(where: { $0.getId() == item.getId() })?.setIsBoughtByUser(isBoughtByUser: true)
+            }
+            
+            DispatchQueue.main.async(execute: { () -> Void in
+                // Reload table
+                self.itemCollectionView.reloadData()
+            })
+        }
+    }
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return storeItems.count
     }
@@ -120,15 +136,16 @@ class MagasinViewController: UIViewController, UICollectionViewDelegate, UIColle
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = itemCollectionView.dequeueReusableCell(withReuseIdentifier: "itemCell", for: indexPath) as! ItemCollectionViewCell
         let storeItem = storeItems[indexPath.item]
-        cell.itemImage.image = UIImage.init(named: storeItem.getTextureName())
+        
+        cell.itemImage.image = UIImage.init(named: storeItem.getImageUrl().replacingOccurrences(of: "\\media\\textures\\", with: "", options: .literal, range: nil))
         cell.itemName.text = storeItem.getName()
         cell.itemPrice.text = storeItem.getPrice().description
         cell.itemDescription.text = storeItem.getDescription()
+        cell.isUserInteractionEnabled = !storeItem.getIsBoughtByUser()
+        cell.itemAchete.isHidden = !storeItem.getIsBoughtByUser()
         
         let selectedBgItem = UIView()
-        // let unavailableBgItem = UIView()
-        selectedBgItem.backgroundColor = UIColor(red: 102.0/255.0, green: 178.0/255.0, blue: 255.0/255.0, alpha: 0.5)
-        // unavailableBgItem.backgroundColor = UIColor(red: 102.0/255.0, green: 178.0/255.0, blue: 255.0/255.0, alpha: 1)
+        selectedBgItem.backgroundColor = UIColor(red: 99.0/255.0, green: 205.0/255.0, blue: 251.0/255.0, alpha: 0.5)
         cell.selectedBackgroundView = selectedBgItem
         
         return cell
@@ -137,26 +154,81 @@ class MagasinViewController: UIViewController, UICollectionViewDelegate, UIColle
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("Select item")
         let storeItem = storeItems[indexPath.item]
-        self.totalSelected.text = (Int.init(self.totalSelected.text!)! + 1).description
+        let numberOfItemsSelected = self.itemCollectionView.indexPathsForSelectedItems?.count
+        
+        self.totalSelected.text = numberOfItemsSelected?.description
         self.totalPoints.text = (Int.init(self.totalPoints.text!)! + storeItem.getPrice()).description
+        
+        // Check if user can buy
+        if Int.init(self.totalPoints.text!)! > Int.init(self.userPointsLabel.text!)! {
+            self.activateBuy(activate: false)
+            self.showError(show: true)
+        }
+        else {
+            self.activateBuy(activate: numberOfItemsSelected! > 0)
+            self.showError(show: false)
+        }
+        
+        // Check if user can clear cart
+        self.activateResetCart(activate: (self.itemCollectionView.indexPathsForSelectedItems?.count)! > 0)
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         print("Deselect item")
         let storeItem = storeItems[indexPath.item]
-        self.totalSelected.text = (Int.init(self.totalSelected.text!)! - 1).description
+        let numberOfItemsSelected = self.itemCollectionView.indexPathsForSelectedItems?.count
+        
+        self.totalSelected.text = numberOfItemsSelected?.description
         self.totalPoints.text = (Int.init(self.totalPoints.text!)! - storeItem.getPrice()).description
+        
+        // Check if user can buy
+        if Int.init(self.totalPoints.text!)! > Int.init(self.userPointsLabel.text!)! {
+            self.activateBuy(activate: false)
+        }
+        else {
+            self.activateBuy(activate: numberOfItemsSelected! > 0)
+            self.showError(show: false)
+        }
+        
+        // Check if user can clear cart
+        self.activateResetCart(activate: numberOfItemsSelected! > 0)
     }
 
     @IBAction func buyElements(_ sender: Any) {
+        // Buy all selected items
+        var selectedItems = [StoreItemEntity]()
+        
+        for index in self.itemCollectionView.indexPathsForSelectedItems! {
+            let storeItem = storeItems[index.item]
+            selectedItems.append(storeItem)
+            storeItem.setIsBoughtByUser(isBoughtByUser: true)
+            self.userPointsLabel.text = (Int.init(self.userPointsLabel.text!)! - storeItem.getPrice()).description
+        }
+        
+        // Envoyer la requête d'achat au serveur
+        print("Send buying http request")
+        self.storeService.buyElement(items: selectedItems, userId: HubManager.sharedConnection.getId()!)
+        
+        // Mettre à jour l'UI
+        self.resetCart((Any).self)
     }
     
     @IBAction func resetCart(_ sender: Any) {
+        // Deselect all items
         for index in self.itemCollectionView.indexPathsForSelectedItems! {
             self.itemCollectionView.deselectItem(at: index, animated: true)
-            self.totalSelected.text = "0"
-            self.totalPoints.text = "0"
         }
+        
+        self.totalSelected.text = "0"
+        self.totalPoints.text = "0"
+        self.showError(show: false)
+        self.activateBuy(activate: false)
+        self.activateResetCart(activate: false)
+        
+        DispatchQueue.main.async(execute: { () -> Void in
+            // Reload table
+            self.itemCollectionView.reloadData()
+        })
     }
     
     private func loading() {
@@ -171,16 +243,38 @@ class MagasinViewController: UIViewController, UICollectionViewDelegate, UIColle
         self.enableInputs()
     }
     
+    private func showError(show: Bool) {
+        if show {
+            self.errorView.isHidden = false
+            self.errorMessage.text = "Points insuffisants"
+            self.errorView.shake()
+            self.totalPoints.textColor = UIColor.init(red: 234.0/255.0, green: 74.0/255.0, blue: 76.0/255.0, alpha: 1.0)
+        }
+        else {
+            self.errorView.isHidden = true
+            self.errorMessage.text = "Erreur"
+            self.totalPoints.textColor = UIColor.white
+        }
+    }
+    
+    private func activateBuy(activate: Bool) {
+        self.buyElementsButton.isEnabled = activate
+    }
+    
+    private func activateResetCart(activate: Bool) {
+        self.resetCartButton.isEnabled = activate
+    }
+    
     private func disableInputs() {
         self.profileButton.isEnabled = false
         self.resetCartButton.isEnabled = false
         self.buyElementsButton.isEnabled = false
+        self.itemCollectionView.isUserInteractionEnabled = false
     }
     
     private func enableInputs() {
         self.profileButton.isEnabled = true
-        self.resetCartButton.isEnabled = true
-        self.buyElementsButton.isEnabled = true
+        self.itemCollectionView.isUserInteractionEnabled = true
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

@@ -46,14 +46,19 @@ namespace InterfaceGraphique.Controls.WPF.Friends
         #endregion
 
         #region Overwritten Methods
-        public override async void InitializeViewModel()
+        public async Task Init()
         {
             List<FriendRequestEntity> users = await friendsHub.GetAllPendingRequests();
             foreach (FriendRequestEntity user in users)
             {
-                Items.Add(new FriendListItemViewModel(new UserEntity { Id = user.Requestor.Id, Username = user.Requestor.Username, Profile = user.Requestor.Profile, IsSelected = false }, null) { RequestedFriend = true });
+                Items.Add(new FriendListItemViewModel(new UserEntity { Id = user.Requestor.Id, Username = user.Requestor.Username, Profile = user.Requestor.Profile, IsSelected = false, IsConnected = user.Requestor.IsConnected }, null) { RequestedFriend = true });
             }
          }
+
+        public override void InitializeViewModel()
+        {
+            //Rien
+        }
         #endregion
     }
 }

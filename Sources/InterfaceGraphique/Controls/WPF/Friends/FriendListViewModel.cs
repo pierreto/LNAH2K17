@@ -2,9 +2,12 @@
 using InterfaceGraphique.CommunicationInterface;
 using InterfaceGraphique.Entities;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using Microsoft.Practices.Unity;
 using InterfaceGraphique.Managers;
 using System.Linq;
+using System.Windows;
+using System.Windows.Data;
 
 namespace InterfaceGraphique.Controls.WPF.Friends
 {
@@ -21,6 +24,9 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             this.friendsHub = friendsHub;
             ctxTaskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
             GameRequestManager = gameRequestManager;
+
+           // ItemsView.SortDescriptions.Add(new SortDescription("IsConnected", ListSortDirection.Descending));
+
         }
 
         public ObservableCollection<FriendListItemViewModel> FriendList
@@ -35,18 +41,20 @@ namespace InterfaceGraphique.Controls.WPF.Friends
 
         public GameRequestManager GameRequestManager { get; }
 
-        public override async void InitializeViewModel()
+        public async Task Init()
         {
             Minimize();
             var friends = await friendsHub.GetAllFriends();
             FriendList = new ObservableCollection<FriendListItemViewModel>();
             foreach(var friend in friends)
             {
-                FriendList.Add(new FriendListItemViewModel(new UserEntity { Id = friend.Id, Username = friend.Username, Profile = friend.Profile, IsSelected = false }, GameRequestManager) { CurrentFriend = true });
+                FriendList.Add(new FriendListItemViewModel(new UserEntity { Id = friend.Id, Username = friend.Username, Profile = friend.Profile, IsSelected = false,IsConnected = friend.IsConnected}, GameRequestManager) { CurrentFriend = true });
             }
             //List<UserEntity> userEntities = await userService.GetAllUsers();
             this.friendsHub.NewFriendEvent += NewFriendEvent;
             this.friendsHub.RemovedFriendEvent += RemovedFriendEvent;
+            this.friendsHub.NewFriendHasConnectedEvent += NewFriendHasConnectedEvent;
+            this.friendsHub.NewFriendHasDisconnectedEvent += NewFriendHasDisconnectedEvent;
         }
 
         public override void Minimize()
@@ -69,11 +77,12 @@ namespace InterfaceGraphique.Controls.WPF.Friends
 
         private void NewFriendEvent(UserEntity friend)
         {
+            System.Diagnostics.Debug.WriteLine("Je viens d'ajouter " + friend.Username + " a mes amis.");
             ctxTaskFactory.StartNew(() =>
             {
-                FriendList.Add(new FriendListItemViewModel(new UserEntity { Id = friend.Id, Username = friend.Username, Profile = friend.Profile, IsSelected = false }, null) { CurrentFriend = true });
-                var items = Program.unityContainer.Resolve<AddFriendListViewModel>().Items;
-                items.Remove(items.Single(x => x.Id == friend.Id));
+                FriendList.Add(new FriendListItemViewModel(new UserEntity { Id = friend.Id, Username = friend.Username, Profile = friend.Profile, IsSelected = false, IsConnected = friend.IsConnected}, null) { CurrentFriend = true });
+                //var items = Program.unityContainer.Resolve<AddFriendListViewModel>().Items;
+                //items.Remove(items.Single(x => x.Id == friend.Id));
             }).Wait();
         }
 
@@ -82,8 +91,56 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             ctxTaskFactory.StartNew(() =>
             {
                 FriendList.Remove(FriendList.Single(x => x.Username == ex_friend.Username));
-                Program.unityContainer.Resolve<AddFriendListViewModel>().Items.Add(new FriendListItemViewModel(new UserEntity { Id = ex_friend.Id, Username = ex_friend.Username, Profile = ex_friend.Profile, IsSelected = false }, null) { AddingFriend = true });
+                //TODO add to lapins list
+                Program.unityContainer.Resolve<AddFriendListViewModel>().Items.Add(new UserEntity { Id = ex_friend.Id, Username = ex_friend.Username, Profile = ex_friend.Profile, IsSelected = false,IsConnected = ex_friend.IsConnected});
             }).Wait();
+        }
+
+        public ICollectionView ItemsView
+        {
+            get { return CollectionViewSource.GetDefaultView(FriendList); }
+        }
+        private void NewFriendHasConnectedEvent(int userId)
+        {
+            for(int i = FriendList.Count - 1; i >= 0; i--)
+            {
+                if (FriendList[i].Id == userId)
+                {
+                    ctxTaskFactory.StartNew(() =>
+                    {
+                        FriendListItemViewModel vm = FriendList[i];
+                        FriendList.RemoveAt(i);
+                        vm.IsConnected = true;
+                        FriendList.Add(vm);
+                    }).Wait();
+                    break;
+
+                }
+            }
+
+        }
+        private void NewFriendHasDisconnectedEvent(int userId)
+        {
+            for (int i = FriendList.Count - 1; i >= 0; i--)
+            {
+                if (FriendList[i].Id == userId)
+                {
+                    ctxTaskFactory.StartNew(() =>
+                    {
+                        FriendListItemViewModel vm = FriendList[i];
+                        FriendList.RemoveAt(i);
+                        vm.IsConnected = false;
+                        FriendList.Add(vm);
+                    }).Wait();
+                    break;
+
+                }
+            }
+        }
+
+        public override void InitializeViewModel()
+        {
+            //Rien
         }
     }
 }

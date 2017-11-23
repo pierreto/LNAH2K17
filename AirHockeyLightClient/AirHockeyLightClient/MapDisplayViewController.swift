@@ -34,7 +34,8 @@ class MapDisplayViewController: UIViewController {
         MapDisplayViewController.instance = self
         
         let addMapBtn = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addMapBtnClicked))
-        self.navigationItem.setRightBarButtonItems([addMapBtn], animated: true)
+        let deleteMapBtn = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteMapBtnClicked))
+        self.navigationItem.setRightBarButtonItems([addMapBtn, deleteMapBtn], animated: true)
     }
     
     // Ouvrir le pop-up pour la création de cartes
@@ -49,6 +50,11 @@ class MapDisplayViewController: UIViewController {
         
         // Désactiver la barre de navigation
         self.enableNavigationBar(activer: false)
+    }
+    
+    func deleteMapBtnClicked(sender: AnyObject)
+    {
+        MapCarouselViewController.instance.deleteCurrentMap()
     }
     
     func handleTableSelection(map: MapEntity) {
