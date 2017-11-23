@@ -50,7 +50,8 @@ namespace InterfaceGraphique.Controls.WPF.Store
             {
                 Points = stats.Points;
             }
-            
+
+            PlayerName = User.Instance.UserEntity.Username;
         }
 
         private ObservableCollection<ItemViewModel> storeItems;
@@ -151,6 +152,7 @@ namespace InterfaceGraphique.Controls.WPF.Store
                 item.IsChecked = false;
             }
             OnPropertyChanged("StoreItems");
+            TotalPrice = 0;
         }
 
         private ICommand leave;
@@ -177,18 +179,11 @@ namespace InterfaceGraphique.Controls.WPF.Store
 
         private void DoSelect(ItemViewModel item)
         {
-            FocusItem = item;
-        }
-
-        private ICommand checkItemCommand;
-        public ICommand CheckItemCommand
-        {
-            get { return checkItemCommand ?? (checkItemCommand = new DelegateCommand<ItemViewModel>(OnCheckbox)); }
-        }
-
-        private void OnCheckbox(ItemViewModel item)
-        {
-            TotalPrice = item.IsChecked ? TotalPrice + item.Price : TotalPrice - item.Price;
+            if(item.CanBuy)
+            {
+                item.IsChecked = item.IsChecked ? false : true;
+                TotalPrice = item.IsChecked ? TotalPrice + item.Price : TotalPrice - item.Price;
+            }
         }
 
         private bool notEnoughPoints;
@@ -204,6 +199,31 @@ namespace InterfaceGraphique.Controls.WPF.Store
             set
             {
                 totalPrice = value;
+                notEnoughPoints = TotalPrice > points ? true : false;
+                OnPropertyChanged("NotEnoughPointsError");
+                CartItemsNumber = storeItems.Count(x => x.IsChecked);
+                OnPropertyChanged();
+            }
+        }
+
+        private int cartItemsNumber;
+        public int CartItemsNumber
+        {
+            get => cartItemsNumber;
+            set
+            {
+                cartItemsNumber = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string playerName;
+        public string PlayerName
+        {
+            get => playerName;
+            set
+            {
+                playerName = value;
                 OnPropertyChanged();
             }
         }
