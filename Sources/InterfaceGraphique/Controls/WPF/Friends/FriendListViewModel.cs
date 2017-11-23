@@ -92,7 +92,7 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             {
                 FriendList.Remove(FriendList.Single(x => x.Username == ex_friend.Username));
                 //TODO add to lapins list
-                //Program.unityContainer.Resolve<AddFriendListViewModel>().Items.Add(new UserEntity { Id = ex_friend.Id, Username = ex_friend.Username, Profile = ex_friend.Profile, IsSelected = false });
+                Program.unityContainer.Resolve<AddFriendListViewModel>().Items.Add(new UserEntity { Id = ex_friend.Id, Username = ex_friend.Username, Profile = ex_friend.Profile, IsSelected = false,IsConnected = ex_friend.IsConnected});
             }).Wait();
         }
         public ICollectionView ItemsView
