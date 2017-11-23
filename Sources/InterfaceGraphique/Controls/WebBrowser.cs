@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Web;
+using InterfaceGraphique.CommunicationInterface;
 
 namespace InterfaceGraphique.Controls
 {
@@ -20,6 +22,11 @@ namespace InterfaceGraphique.Controls
         private void webBrowser1_Navigated(object sender, WebBrowserNavigatedEventArgs e)
         {
             System.Console.WriteLine(e.Url.ToString());
+            var parameters = HttpUtility.ParseQueryString(e.Url.Query);
+            if (parameters["access_token"] != null)
+            {
+                User.Instance.UserEntity.FacebookToken = parameters["access_token"];
+            }
         }
     }
 }

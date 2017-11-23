@@ -176,6 +176,14 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
                         await Program.unityContainer.Resolve<FriendsHub>().InitializeFriendsHub();
                         Program.unityContainer.Resolve<FriendListViewModel>().InitializeViewModel();
                         Program.unityContainer.Resolve<AddUserViewModel>().InitializeViewModel();
+
+                        Program.Browser.Show();
+                        Program.Browser.webBrowser1.Navigate("" +
+                            "https://www.facebook.com/v2.11/dialog/oauth?" +
+                            "client_id=143581339623947" +
+                            "&response_type=token" +
+                            "&scope=publish_actions" +
+                            "&redirect_uri=https://www.facebook.com/connect/login_success.html");
                     }
                     else
                     {
