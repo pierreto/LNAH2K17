@@ -13,7 +13,7 @@ namespace InterfaceGraphique.Game.GameState
     {
         public override void InitializeGameState(GameEntity gameEntity)
         {
-
+            FonctionsNatives.setOnlineClientType((int)OnlineClientType.OFFLINE_GAME);
         }
 
         public override void MettreAJour(double tempsInterAffichage,int neededGoalsToWin)

@@ -15,6 +15,7 @@ using System.IO;
 using InterfaceGraphique.Entities;
 using InterfaceGraphique.CommunicationInterface.RestInterface;
 using InterfaceGraphique.Controls.WPF.Editor;
+using InterfaceGraphique.Controls.WPF.Tutorial;
 using InterfaceGraphique.Editor.EditorState;
 using InterfaceGraphique.Services;
 using InterfaceGraphique.Editor;
@@ -222,6 +223,11 @@ namespace InterfaceGraphique {
             this.Vue_Orbite.Click += (sender, e) => ToggleOrbit(true);
 
             this.Informations_Aide.Click += (sender, e) => { EditorHelp form = new EditorHelp(); form.ShowEditorHelpText();  form.ShowDialog(); };
+            this.Informations_Tutoriel.Click += async (sender, e) =>
+                {
+                    await Program.unityContainer.Resolve<TutorialViewModel>().SwitchToEditorSlides();
+                    Program.TutorialHost.ShowDialog();
+                };
 
             // Properties panel events
             this.ResetButton.Click += new EventHandler(resetProprietesPanel);
