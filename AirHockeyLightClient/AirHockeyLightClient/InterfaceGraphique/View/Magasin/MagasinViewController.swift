@@ -199,11 +199,18 @@ class MagasinViewController: UIViewController, UICollectionViewDelegate, UIColle
         var selectedItems = [StoreItemEntity]()
         
         for index in self.itemCollectionView.indexPathsForSelectedItems! {
-            selectedItems.append(storeItems[index.item])
+            let storeItem = storeItems[index.item]
+            selectedItems.append(storeItem)
+            storeItem.setIsBoughtByUser(isBoughtByUser: true)
+            self.userPointsLabel.text = (Int.init(self.userPointsLabel.text!)! - storeItem.getPrice()).description
         }
         
-        print("Buying")
-        // self.storeService.buyElement(items: selectedItems, userId: HubManager.sharedConnection.getId()!)
+        // Envoyer la requête d'achat au serveur
+        print("Send buying http request")
+        self.storeService.buyElement(items: selectedItems, userId: HubManager.sharedConnection.getId()!)
+        
+        // Mettre à jour l'UI
+        self.resetCart((Any).self)
     }
     
     @IBAction func resetCart(_ sender: Any) {
@@ -262,10 +269,12 @@ class MagasinViewController: UIViewController, UICollectionViewDelegate, UIColle
         self.profileButton.isEnabled = false
         self.resetCartButton.isEnabled = false
         self.buyElementsButton.isEnabled = false
+        self.itemCollectionView.isUserInteractionEnabled = false
     }
     
     private func enableInputs() {
         self.profileButton.isEnabled = true
+        self.itemCollectionView.isUserInteractionEnabled = true
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
