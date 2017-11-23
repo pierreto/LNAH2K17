@@ -173,14 +173,6 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
 
                         Program.FormManager.CurrentForm = Program.MainMenu;
 
-                        // Open the friend list windows:
-                        //Program.FriendListHost.Show();
-                        await Program.unityContainer.Resolve<FriendsHub>().InitializeFriendsHub();
-                        Program.unityContainer.Resolve<FriendListViewModel>().InitializeViewModel();
-                        Program.unityContainer.Resolve<AddUserViewModel>().InitializeViewModel();
-                        Program.unityContainer.Resolve<FriendRequestListViewModel>().InitializeViewModel();
-                        await Program.unityContainer.Resolve<AddFriendListViewModel>().InitAddFriends();
-
                         Program.Browser.Show();
                         Program.Browser.webBrowser1.Navigate("" +
                             "https://www.facebook.com/v2.11/dialog/oauth?" +
@@ -188,6 +180,19 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
                             "&response_type=token" +
                             "&scope=publish_actions" +
                             "&redirect_uri=https://www.facebook.com/connect/login_success.html");
+                        Program.Browser.webBrowser1.Navigate("" +
+                            "https://www.facebook.com/dialog/feed?" +
+                            "app_id=143581339623947" +
+                            "&display=popup" +
+                            "&ref=lnah");
+
+                        // Open the friend list windows:
+                        //Program.FriendListHost.Show();
+                        await Program.unityContainer.Resolve<FriendsHub>().InitializeFriendsHub();
+                        Program.unityContainer.Resolve<FriendListViewModel>().InitializeViewModel();
+                        Program.unityContainer.Resolve<AddUserViewModel>().InitializeViewModel();
+                        Program.unityContainer.Resolve<FriendRequestListViewModel>().InitializeViewModel();
+                        await Program.unityContainer.Resolve<AddFriendListViewModel>().InitAddFriends();
                     }
                     else
                     {
