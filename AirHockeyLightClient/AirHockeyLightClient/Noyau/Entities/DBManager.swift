@@ -80,6 +80,14 @@ class DBManager {
         return maps.count == 0
     }
     
+    func updateCreatorOfLocalMaps(creator: String) {
+        try! self.realm.write {
+            for map in self.realm.objects(MapEntity.self) {
+                map.creator = creator
+            }
+        }
+    }
+    
 }
 
 ///////////////////////////////////////////////////////////////////////////////
