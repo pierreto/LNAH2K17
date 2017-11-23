@@ -59,6 +59,9 @@ class Login: NSObject {
                             let mapService = MapService()
                             mapService.exportLocalMapsToServer()
                             
+                            // Initialize instance of DBManager to start map fetching from server
+                            // DBManager.instance.startMapFetching()
+                            
                             fullfil(true)
                         } else {
                             //Getting error message from server
