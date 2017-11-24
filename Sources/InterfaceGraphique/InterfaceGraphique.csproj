@@ -348,6 +348,7 @@
     <Compile Include="Entities\Editor\OnlineUser.cs" />
     <Compile Include="Entities\GameDataMessage.cs" />
     <Compile Include="Entities\GameEntity.cs" />
+    <Compile Include="Entities\GamePlayerEntity.cs" />
     <Compile Include="Entities\GameRequestEntity.cs" />
     <Compile Include="Entities\GoalMessage.cs" />
     <Compile Include="Entities\LoginEntity.cs" />
@@ -445,6 +446,12 @@
     </Compile>
     <Compile Include="Menus\HelpDialog.Designer.cs">
       <DependentUpon>HelpDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Menus\OnlineTournementMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Menus\OnlineTournementMenu.Designer.cs">
+      <DependentUpon>OnlineTournementMenu.cs</DependentUpon>
     </Compile>
     <Compile Include="Menus\QuickPlayMenu.cs">
       <SubType>Form</SubType>
@@ -558,6 +565,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Menus\HelpDialog.resx">
       <DependentUpon>HelpDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Menus\OnlineTournementMenu.resx">
+      <DependentUpon>OnlineTournementMenu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Menus\QuickPlayMenu.resx">
       <DependentUpon>QuickPlayMenu.cs</DependentUpon>

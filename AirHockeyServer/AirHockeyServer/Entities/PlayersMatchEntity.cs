@@ -7,6 +7,6 @@ namespace AirHockeyServer.Entities
 {
     public class PlayersMatchEntity
     {
-        public List<UserEntity> PlayersMatch { get; set; }
+        public List<GamePlayerEntity> PlayersMatch { get; set; }
     }
 }

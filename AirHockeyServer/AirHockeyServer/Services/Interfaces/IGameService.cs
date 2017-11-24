@@ -11,7 +11,7 @@ namespace AirHockeyServer.Services.Interfaces
     {
         Task<GameEntity> CreateGame(GameEntity gameEntity);
 
-        void JoinGame(UserEntity userEntity);
+        void JoinGame(GamePlayerEntity gamePlayer);
 
         void UpdateGame(Guid gameId, MapEntity map);
 

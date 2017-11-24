@@ -9,7 +9,7 @@ namespace AirHockeyServer.Services.MatchMaking
 {
     public class TournamentMatchMaker : MatchMaker
     {
-        public event EventHandler<UserEntity> OpponentFound;
+        public event EventHandler<List<GamePlayerEntity>> OpponentFound;
 
         ///////////////////////////////////////////////////////////////////////
         ///
@@ -21,16 +21,17 @@ namespace AirHockeyServer.Services.MatchMaking
         /// @return un ensemble de joueurs
         ///
         ////////////////////////////////////////////////////////////////////////
-        public UserEntity GetTournamentOpponent()
+        public List<GamePlayerEntity> GetTournamentOpponent()
         {
             WaitingPlayersMutex.WaitOne();
-
+            List<GamePlayerEntity> opponents = new List<GamePlayerEntity>();
             if (WaitingPlayers.Count >= 1)
             {
                 var player = WaitingPlayers.Dequeue();
                 WaitingPlayersMutex.ReleaseMutex();
 
-                return player;
+                opponents.Add(player);
+                return opponents;
             }
             else
             {

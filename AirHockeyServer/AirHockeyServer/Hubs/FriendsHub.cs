@@ -27,7 +27,7 @@ namespace AirHockeyServer.Hubs
         public void JoinHub(UserEntity user)
         {
             ConnectionMapper.AddConnection(user.Id, Context.ConnectionId);
-            FriendService.NewUserConnected(user.Id);
+            FriendService.NewUserConnected(user);
             Clients.AllExcept(this.Context.ConnectionId).NewFriendHasConnectedEvent(user.Id);
 
         }
@@ -42,7 +42,7 @@ namespace AirHockeyServer.Hubs
         {
             users.ForEach((friend =>
             {
-                if (this.FriendService.UsersIdConnected.Contains(friend.Id))
+                if (this.FriendService.UsersIdConnected.Exists(x => friend.Id == x.Id))
                 {
                     friend.IsConnected = true;
                 }
@@ -52,7 +52,7 @@ namespace AirHockeyServer.Hubs
         private UserEntity SetIsConnected(UserEntity user)
         {
 
-            if (user !=null && this.FriendService.UsersIdConnected.Contains(user.Id))
+            if (user !=null && this.FriendService.UsersIdConnected.Exists(x => user.Id == x.Id))
             {
                 user.IsConnected = true;
             }
@@ -204,10 +204,10 @@ namespace AirHockeyServer.Hubs
             }
         }
 
-        public async Task Logout(UserEntity userId)
+        public async Task Logout(UserEntity user)
         {
-            this.FriendService.NewUserDisconnected(userId.Id);
-            Clients.AllExcept(this.Context.ConnectionId).NewFriendHasDisconnectedEvent(userId.Id);
+            this.FriendService.NewUserDisconnected(user);
+            Clients.AllExcept(this.Context.ConnectionId).NewFriendHasDisconnectedEvent(user.Id);
         }
     }
 }

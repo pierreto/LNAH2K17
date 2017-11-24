@@ -180,7 +180,7 @@ namespace AirHockeyServer.Manager
                         // do final
                         GameEntity finalGame = new GameEntity
                         {
-                            Players = new UserEntity[] { tournament.SemiFinals[0].Winner, tournament.SemiFinals[1].Winner },
+                            Players = new GamePlayerEntity[] { tournament.SemiFinals[0].Winner, tournament.SemiFinals[1].Winner },
                             GameState = GameState.InProgress,
                             GameId = Guid.NewGuid(),
                             CreationDate = DateTime.Now,

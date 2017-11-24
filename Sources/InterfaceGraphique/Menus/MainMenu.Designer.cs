@@ -41,6 +41,7 @@ namespace InterfaceGraphique
             this.storeButton = new System.Windows.Forms.Button();
             this.TutorielEditeur = new System.Windows.Forms.Button();
             this.TutorielGame = new System.Windows.Forms.Button();
+            this.onlineTournamentButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // boutonPartieRapide
@@ -50,9 +51,10 @@ namespace InterfaceGraphique
             this.boutonPartieRapide.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.boutonPartieRapide.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.boutonPartieRapide.ForeColor = System.Drawing.Color.Red;
-            this.boutonPartieRapide.Location = new System.Drawing.Point(49, 155);
+            this.boutonPartieRapide.Location = new System.Drawing.Point(98, 298);
+            this.boutonPartieRapide.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.boutonPartieRapide.Name = "boutonPartieRapide";
-            this.boutonPartieRapide.Size = new System.Drawing.Size(150, 50);
+            this.boutonPartieRapide.Size = new System.Drawing.Size(300, 96);
             this.boutonPartieRapide.TabIndex = 1;
             this.boutonPartieRapide.TabStop = false;
             this.boutonPartieRapide.Text = "Partie Rapide";
@@ -65,9 +67,10 @@ namespace InterfaceGraphique
             this.boutonTournoi.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.boutonTournoi.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.boutonTournoi.ForeColor = System.Drawing.Color.White;
-            this.boutonTournoi.Location = new System.Drawing.Point(205, 155);
+            this.boutonTournoi.Location = new System.Drawing.Point(410, 298);
+            this.boutonTournoi.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.boutonTournoi.Name = "boutonTournoi";
-            this.boutonTournoi.Size = new System.Drawing.Size(150, 50);
+            this.boutonTournoi.Size = new System.Drawing.Size(300, 96);
             this.boutonTournoi.TabIndex = 2;
             this.boutonTournoi.TabStop = false;
             this.boutonTournoi.Text = "Tournoi";
@@ -80,9 +83,10 @@ namespace InterfaceGraphique
             this.buttonConfiguration.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonConfiguration.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonConfiguration.ForeColor = System.Drawing.Color.Red;
-            this.buttonConfiguration.Location = new System.Drawing.Point(361, 155);
+            this.buttonConfiguration.Location = new System.Drawing.Point(722, 298);
+            this.buttonConfiguration.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.buttonConfiguration.Name = "buttonConfiguration";
-            this.buttonConfiguration.Size = new System.Drawing.Size(150, 50);
+            this.buttonConfiguration.Size = new System.Drawing.Size(300, 96);
             this.buttonConfiguration.TabIndex = 3;
             this.buttonConfiguration.TabStop = false;
             this.buttonConfiguration.Text = "Configuration";
@@ -96,9 +100,10 @@ namespace InterfaceGraphique
             this.buttonEditeur.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonEditeur.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonEditeur.ForeColor = System.Drawing.Color.White;
-            this.buttonEditeur.Location = new System.Drawing.Point(517, 155);
+            this.buttonEditeur.Location = new System.Drawing.Point(1034, 298);
+            this.buttonEditeur.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.buttonEditeur.Name = "buttonEditeur";
-            this.buttonEditeur.Size = new System.Drawing.Size(150, 50);
+            this.buttonEditeur.Size = new System.Drawing.Size(300, 96);
             this.buttonEditeur.TabIndex = 4;
             this.buttonEditeur.TabStop = false;
             this.buttonEditeur.Text = "Éditeur";
@@ -111,9 +116,10 @@ namespace InterfaceGraphique
             this.buttonQuitter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonQuitter.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonQuitter.ForeColor = System.Drawing.Color.Red;
-            this.buttonQuitter.Location = new System.Drawing.Point(985, 155);
+            this.buttonQuitter.Location = new System.Drawing.Point(1970, 298);
+            this.buttonQuitter.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.buttonQuitter.Name = "buttonQuitter";
-            this.buttonQuitter.Size = new System.Drawing.Size(150, 50);
+            this.buttonQuitter.Size = new System.Drawing.Size(300, 96);
             this.buttonQuitter.TabIndex = 5;
             this.buttonQuitter.TabStop = false;
             this.buttonQuitter.Text = "Quitter";
@@ -126,9 +132,10 @@ namespace InterfaceGraphique
             this.Button_Credits.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Button_Credits.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Button_Credits.ForeColor = System.Drawing.Color.Red;
-            this.Button_Credits.Location = new System.Drawing.Point(673, 155);
+            this.Button_Credits.Location = new System.Drawing.Point(1346, 298);
+            this.Button_Credits.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Button_Credits.Name = "Button_Credits";
-            this.Button_Credits.Size = new System.Drawing.Size(150, 50);
+            this.Button_Credits.Size = new System.Drawing.Size(300, 96);
             this.Button_Credits.TabIndex = 7;
             this.Button_Credits.TabStop = false;
             this.Button_Credits.Text = "Crédits";
@@ -141,9 +148,10 @@ namespace InterfaceGraphique
             this.buttonLogout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonLogout.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonLogout.ForeColor = System.Drawing.Color.White;
-            this.buttonLogout.Location = new System.Drawing.Point(829, 155);
+            this.buttonLogout.Location = new System.Drawing.Point(1658, 298);
+            this.buttonLogout.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.buttonLogout.Name = "buttonLogout";
-            this.buttonLogout.Size = new System.Drawing.Size(150, 50);
+            this.buttonLogout.Size = new System.Drawing.Size(300, 96);
             this.buttonLogout.TabIndex = 9;
             this.buttonLogout.TabStop = false;
             this.buttonLogout.Text = "Déconnexion";
@@ -157,9 +165,10 @@ namespace InterfaceGraphique
             this.profileButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.profileButton.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.profileButton.ForeColor = System.Drawing.Color.White;
-            this.profileButton.Location = new System.Drawing.Point(517, 50);
+            this.profileButton.Location = new System.Drawing.Point(1034, 96);
+            this.profileButton.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.profileButton.Name = "profileButton";
-            this.profileButton.Size = new System.Drawing.Size(150, 50);
+            this.profileButton.Size = new System.Drawing.Size(300, 96);
             this.profileButton.TabIndex = 4;
             this.profileButton.TabStop = false;
             this.profileButton.Text = "Profil";
@@ -173,9 +182,10 @@ namespace InterfaceGraphique
             this.storeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.storeButton.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.storeButton.ForeColor = System.Drawing.Color.White;
-            this.storeButton.Location = new System.Drawing.Point(985, 50);
+            this.storeButton.Location = new System.Drawing.Point(1970, 96);
+            this.storeButton.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.storeButton.Name = "storeButton";
-            this.storeButton.Size = new System.Drawing.Size(150, 50);
+            this.storeButton.Size = new System.Drawing.Size(300, 96);
             this.storeButton.TabIndex = 4;
             this.storeButton.TabStop = false;
             this.storeButton.Text = "Magasin";
@@ -189,9 +199,10 @@ namespace InterfaceGraphique
             this.TutorielEditeur.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.TutorielEditeur.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TutorielEditeur.ForeColor = System.Drawing.Color.White;
-            this.TutorielEditeur.Location = new System.Drawing.Point(497, 244);
+            this.TutorielEditeur.Location = new System.Drawing.Point(994, 469);
+            this.TutorielEditeur.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.TutorielEditeur.Name = "TutorielEditeur";
-            this.TutorielEditeur.Size = new System.Drawing.Size(201, 50);
+            this.TutorielEditeur.Size = new System.Drawing.Size(402, 96);
             this.TutorielEditeur.TabIndex = 10;
             this.TutorielEditeur.TabStop = false;
             this.TutorielEditeur.Text = "Tutoriel: Édition";
@@ -205,20 +216,39 @@ namespace InterfaceGraphique
             this.TutorielGame.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.TutorielGame.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TutorielGame.ForeColor = System.Drawing.Color.White;
-            this.TutorielGame.Location = new System.Drawing.Point(31, 244);
+            this.TutorielGame.Location = new System.Drawing.Point(62, 469);
+            this.TutorielGame.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.TutorielGame.Name = "TutorielGame";
-            this.TutorielGame.Size = new System.Drawing.Size(201, 50);
+            this.TutorielGame.Size = new System.Drawing.Size(402, 96);
             this.TutorielGame.TabIndex = 11;
             this.TutorielGame.TabStop = false;
             this.TutorielGame.Text = "Tutoriel: Partie en ligne";
             this.TutorielGame.UseVisualStyleBackColor = true;
             // 
+            // onlineTournamentButton
+            // 
+            this.onlineTournamentButton.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.onlineTournamentButton.AutoEllipsis = true;
+            this.onlineTournamentButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.onlineTournamentButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.onlineTournamentButton.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.onlineTournamentButton.ForeColor = System.Drawing.Color.White;
+            this.onlineTournamentButton.Location = new System.Drawing.Point(1571, 540);
+            this.onlineTournamentButton.Margin = new System.Windows.Forms.Padding(6);
+            this.onlineTournamentButton.Name = "onlineTournamentButton";
+            this.onlineTournamentButton.Size = new System.Drawing.Size(300, 96);
+            this.onlineTournamentButton.TabIndex = 12;
+            this.onlineTournamentButton.TabStop = false;
+            this.onlineTournamentButton.Text = "Tournoi En Ligne";
+            this.onlineTournamentButton.UseVisualStyleBackColor = true;
+            // 
             // MainMenu
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(49)))), ((int)(((byte)(54)))));
-            this.ClientSize = new System.Drawing.Size(1184, 648);
+            this.ClientSize = new System.Drawing.Size(2368, 1246);
+            this.Controls.Add(this.onlineTournamentButton);
             this.Controls.Add(this.TutorielGame);
             this.Controls.Add(this.TutorielEditeur);
             this.Controls.Add(this.buttonLogout);
@@ -230,6 +260,7 @@ namespace InterfaceGraphique
             this.Controls.Add(this.boutonPartieRapide);
             this.Controls.Add(this.profileButton);
             this.Controls.Add(this.storeButton);
+            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Name = "MainMenu";
             this.Text = "MainMenu";
             this.ResumeLayout(false);
@@ -250,5 +281,6 @@ namespace InterfaceGraphique
         private FriendContentControl hostedComponent1;
         private System.Windows.Forms.Button TutorielEditeur;
         private System.Windows.Forms.Button TutorielGame;
+        private System.Windows.Forms.Button onlineTournamentButton;
     }
 }

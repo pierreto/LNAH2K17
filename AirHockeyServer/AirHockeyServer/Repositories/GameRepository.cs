@@ -62,15 +62,15 @@ namespace AirHockeyServer.Repositories
                     // TODO : UPDATE WHEN MAP DONE
                     result.SelectedMap = maps.First();
                     // TODO GET USER
-                    result.Winner = new UserEntity
+                    result.Winner = new GamePlayerEntity
                     {
                         Id = gamePoco.Winner
                     };
-                    result.Players[0] = new UserEntity
+                    result.Players[0] = new GamePlayerEntity
                     {
                         Id = gamePoco.Player1
                     };
-                    result.Players[1] = new UserEntity
+                    result.Players[1] = new GamePlayerEntity
                     {
                         Id = gamePoco.Player2
                     };

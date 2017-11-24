@@ -32,13 +32,13 @@ namespace AirHockeyServer.Services.MatchMaking
         /// @return le joueur en attente trouvé
         ///
         ////////////////////////////////////////////////////////////////////////
-        public List<UserEntity> GetGameOpponents()
+        public List<GamePlayerEntity> GetGameOpponents()
         {
             WaitingPlayersMutex.WaitOne();
 
             if (WaitingPlayers.Count > 1)
             {
-                List<UserEntity> users = new List<UserEntity>()
+                List<GamePlayerEntity> users = new List<GamePlayerEntity>()
                 {
                     WaitingPlayers.Dequeue(),
                     WaitingPlayers.Dequeue()
@@ -79,7 +79,7 @@ namespace AirHockeyServer.Services.MatchMaking
             }
         }
 
-        protected void ExecuteMatch(List<UserEntity> players)
+        protected void ExecuteMatch(List<GamePlayerEntity> players)
         {
             PlayersMatchEntity match = new PlayersMatchEntity()
             {
@@ -90,7 +90,7 @@ namespace AirHockeyServer.Services.MatchMaking
 
         public void CreateMatch(UserEntity recipient, UserEntity sender)
         {
-            var users = new List<UserEntity> { recipient, sender };
+            var users = new List<GamePlayerEntity> { new GamePlayerEntity(recipient), new GamePlayerEntity(sender) };
             Thread myThread = new Thread(new ThreadStart(() => ExecuteMatch(users)));
             myThread.Start();
         }

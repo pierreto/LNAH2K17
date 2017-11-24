@@ -24,13 +24,22 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
         {
             this.WaitingRoomHub = waitingRoomHub;
             MapService = mapService;
-            this.Players = new List<UserEntity>();
+            this.Players = new List<GamePlayerEntity>();
         }
 
-        public void Initialize()
+        public void Initialize(List<GamePlayerEntity> players = null)
         {
             SetDefaultValues();
-            WaitingRoomHub.Join();
+
+            if (players == null)
+            {
+                WaitingRoomHub.Join();
+            }
+            else
+            {
+                WaitingRoomHub.CreateTournament(players);
+            }
+
             InitializeEvents();
             InitializeData();
         }
@@ -39,7 +48,7 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
         {
             MapsAvailable = new ObservableCollection<MapEntity>();
             RemainingTime = 30;
-            Players = new List<UserEntity>();
+            Players = new List<GamePlayerEntity>();
             Winner = string.Empty;
             SemiFinal1 = string.Empty;
             SemiFinal2 = string.Empty;
@@ -79,7 +88,7 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
 
             }
             SelectedMap = mapsAvailable[1];
-            
+
 
         }
 
@@ -116,13 +125,13 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
             }
         }
 
-        private void OnSemiFinalResult(object e, List<UserEntity> users)
+        private void OnSemiFinalResult(object e, List<GamePlayerEntity> users)
         {
             SemiFinal1 = users[0]?.Username;
             SemiFinal2 = users[1]?.Username;
         }
 
-        private void OnOpponentFount(object e, List<UserEntity> users)
+        private void OnOpponentFount(object e, List<GamePlayerEntity> users)
         {
             Players = users;
             for (int i = 0; i <= Players.Count; i++)
@@ -142,7 +151,7 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
             }
         }
 
-        private List<UserEntity> Players { get; set; }
+        private List<GamePlayerEntity> Players { get; set; }
 
         public string Player1
         {

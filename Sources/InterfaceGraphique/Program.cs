@@ -59,7 +59,9 @@ namespace InterfaceGraphique
         public static EditorHost EditorHost { get { return editorHost; } set { editorHost = value; } }
         public static UserProfileMenu UserProfileMenu { get { return userProfileMenu; } set { userProfileMenu = value; } }
         public static StoreMenu StoreMenu { get { return storeMenu; } set { storeMenu = value; } } 
-        public static TutorialHost TutorialHost { get { return tutorialHost; } set { tutorialHost = value; } } 
+        public static TutorialHost TutorialHost { get { return tutorialHost; } set { tutorialHost = value; } }
+
+        public static OnlineTournementMenu OnlineTournamentMenu { get { return onlineTournamentMenu; } set { onlineTournamentMenu = value; } }
 
         private static TestChatMenu testChatMenu;
         private static FormManager formManager;
@@ -80,6 +82,7 @@ namespace InterfaceGraphique
         private static UserProfileMenu userProfileMenu;
         private static StoreMenu storeMenu;
         private static TutorialHost tutorialHost;
+        private static OnlineTournementMenu onlineTournamentMenu;
 
         private static Panel openGLPanel;
         private static TimeSpan dernierTemps;
@@ -143,7 +146,6 @@ namespace InterfaceGraphique
             testChatMenu = new TestChatMenu();
             creditsMenu = new CreditsMenu();
             lobbyHost = new LobbyHost();
-            onlineTournament = new OnlineTournament();
             userProfileMenu = new UserProfileMenu();
             storeMenu = new StoreMenu();
 
@@ -199,6 +201,8 @@ namespace InterfaceGraphique
             quickPlayMenu = new QuickPlayMenu();
             tournementMenu = new TournementMenu();
             tournementTree = new TournementTree();
+            onlineTournamentMenu = new OnlineTournementMenu();
+            onlineTournament = new OnlineTournament();
         }
 
         public static void InitializeUnityDependencyInjection()

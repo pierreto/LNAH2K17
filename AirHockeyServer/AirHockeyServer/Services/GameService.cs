@@ -67,9 +67,9 @@ namespace AirHockeyServer.Services
         /// puisse trouver un (des) adversaire(s)
         ///
         ////////////////////////////////////////////////////////////////////////
-        public void JoinGame(UserEntity userEntity)
+        public void JoinGame(GamePlayerEntity gamePlayer)
         {
-            GameMatchMakerService.Instance().AddOpponent(userEntity);
+            GameMatchMakerService.Instance().AddOpponent(gamePlayer);
         }
 
         ////////////////////////////////////////////////////////////////////////

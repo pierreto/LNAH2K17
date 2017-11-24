@@ -20,5 +20,10 @@ namespace InterfaceGraphique.Entities
             Id = user.Id;
             IsAi = false;
         }
+
+        public GamePlayerEntity()
+        {
+
+        }
     }
 }
