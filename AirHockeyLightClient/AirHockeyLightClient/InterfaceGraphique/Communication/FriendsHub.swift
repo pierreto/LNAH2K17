@@ -26,6 +26,7 @@ class FriendsHub: BaseHub {
     init(connection: SignalR?) {
         super.init()
         self.hubProxy = connection?.createHubProxy("FriendsHub")
+        self.InitializeEvents()
     }
     
     func initialize() {
@@ -36,8 +37,6 @@ class FriendsHub: BaseHub {
         catch {
             print("Error JoinHub")
         }
-        
-        self.InitializeEvents()
     }
     
     private func InitializeEvents() {
@@ -46,10 +45,6 @@ class FriendsHub: BaseHub {
             let newRequest = self.friendsService.buildFriendRequestEntity(json: newRequestJson)
             
             FriendRequestsTableViewController.instance.addRequest(newRequest: newRequest)
-        }
-        
-        self.hubProxy?.on("CanceledFriendRequestEvent") { args in
-            print("CanceledFriendRequestEvent")
         }
         
         self.hubProxy?.on("NewFriendEvent") { args in
@@ -103,7 +98,10 @@ class FriendsHub: BaseHub {
                     var pendingRequests = [FriendRequestEntity]()
                     
                     for request in requestsJson {
-                        pendingRequests.append(self.friendsService.buildFriendRequestEntity(json: request.1))
+                        let req = self.friendsService.buildFriendRequestEntity(json: request.1)
+                        if req.getStatus() == RequestStatus.PENDING {
+                            pendingRequests.append(req)
+                        }
                     }
                     
                     FriendRequestsTableViewController.instance.updatePendingRequestsEntries(pendingRequests: pendingRequests)
