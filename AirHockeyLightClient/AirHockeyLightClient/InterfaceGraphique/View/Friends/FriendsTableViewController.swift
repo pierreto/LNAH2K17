@@ -60,11 +60,10 @@ class FriendsTableViewController: UITableViewController {
         for friend in self.friendsData {
             index = index + 1
             if (friend.getId() == exFriend.getId()) {
+                self.friendsData.remove(at: index)
                 break
             }
         }
-        
-        self.friendsData.remove(at: index)
         
         DispatchQueue.main.async(execute: { () -> Void in
             // Reload tableView

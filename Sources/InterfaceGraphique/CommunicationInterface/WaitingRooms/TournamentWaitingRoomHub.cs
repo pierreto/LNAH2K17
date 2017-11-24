@@ -173,8 +173,14 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
                     this.MasterGameState.InitializeGameState(game);
                     Program.QuickPlay.CurrentGameState = this.MasterGameState;
 
+                    if(game.Slave.IsAi)
+                    {
+                        FonctionsNatives.setCurrentOpponentType((int)OpponentType.VIRTUAL_PLAYER);
+                    }
+
                     Program.FormManager.CurrentForm = Program.QuickPlay;
                     Program.QuickPlay.CurrentGameState.IsOnlineTournementMode = true;
+                    
                 }
                 else
                 {

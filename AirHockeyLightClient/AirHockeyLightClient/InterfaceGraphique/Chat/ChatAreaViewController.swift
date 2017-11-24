@@ -7,11 +7,25 @@
 //
 
 import UIKit
-import SwiftyRSA
 
 protocol AddChannelDelegate: class {
     func addChannel(channelName: String)
     func newUnreadMessage()
+}
+
+extension String {
+    
+    func fromBase64() -> String? {
+        guard let data = Data(base64Encoded: self) else {
+            return nil
+        }
+        
+        return String(data: data, encoding: .utf8)
+    }
+    
+    func toBase64() -> String {
+        return Data(self.utf8).base64EncodedString()
+    }
 }
 
 class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchControllerDelegate {
@@ -25,9 +39,6 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var channelNameField: UITextField!
     @IBOutlet weak var channelNameErrMsg: UILabel!
     @IBOutlet weak var searchBar: UISearchBar!
-
-    private var publicKey: PublicKey?
-    private var privateKey: PrivateKey?
 
     var isSearching = false
     let joinChannelHiddenX = Float(-241)
@@ -44,6 +55,7 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
     @IBAction func sendButton(_ sender: Any) {
         sendMessage()
     }
+    
     //Utilisateur pese sur return lorsqu'il tappe un message
     @IBAction func messageInputReturn(_ sender: Any) {
         sendMessage()
@@ -97,19 +109,12 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
         
         //Search bar
         searchBar.delegate = self
-        
-        do {
-            self.publicKey = try PublicKey(pemNamed: "public")
-            self.privateKey = try PrivateKey(pemNamed: "private")
-        } catch {
-            print("Error loading public and/or private key.")
-        }
     }
 
     /// Enclenché lorsqu'un message est reçu dans le canal principal
     func receiveMessage(message: Dictionary<String, String>) {
         let sender = message["Sender"]
-        let messageValue = message["MessageValue"]
+        let messageValue = message["MessageValue"]?.fromBase64()
         let timestamp = message["TimeStamp"]
         
         let dateFormatter = DateFormatter()
@@ -143,7 +148,7 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
     /// Enclenché lorsqu'un message est reçu dans un autre canal
     func receiveMessageChannel(message: Dictionary<String, String>, channelName: String) {
         let sender = message["Sender"]
-        let messageValue = message["MessageValue"]
+        let messageValue = message["MessageValue"]?.fromBase64()
         let timestamp = message["TimeStamp"]
         
         let dateFormatter = DateFormatter()
@@ -199,9 +204,11 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
         if messageField.text != "" {
             let message = [
                 "Sender": clientConnection.getUsername()!,
-                "MessageValue": self.messageField.text!,
+                "MessageValue": self.messageField.text!.toBase64(),
                 "TimeStamp": dateString
                 ] as [String : Any]
+            
+            print(self.messageField.text!.toBase64())
             
             let chatHub = clientConnection.getChatHub()
             if (channel.name == "Principal") {
@@ -213,30 +220,6 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
             // Clear chat box
             self.messageField.text = ""
         }
-    }
-    
-    private func encryptMessage(msg: String) -> String {
-        do {
-            let clear = try ClearMessage(string: msg, using: .utf8)
-            let encrypted = try clear.encrypted(with: self.publicKey!, padding: .PKCS1)
-            return encrypted.base64String
-        } catch {
-            print("Error encrypting message.")
-        }
-        
-        return ""
-    }
-    
-    private func decryptMessage(msg: String) -> String {
-        do {
-            let encrypted = try EncryptedMessage(base64Encoded: msg)
-            let clear = try encrypted.decrypted(with: self.privateKey!, padding: .PKCS1)
-            return try clear.string(encoding: .utf8)
-        } catch {
-            print("Error decrypting message.")
-        }
-        
-        return ""
     }
     
     func joinChannel(channelName: String) {

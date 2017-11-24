@@ -72,8 +72,6 @@
 		253E088C1F81858E009F301B /* UIViewShake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253E088B1F81858E009F301B /* UIViewShake.swift */; };
 		253E088E1F818DD2009F301B /* JsonHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253E088D1F818DD2009F301B /* JsonHelper.swift */; };
 		253E08911F81913A009F301B /* ChannelEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 253E08901F81913A009F301B /* ChannelEntity.swift */; };
-		253F5AAC1FC7AE04004A3EBF /* private.pem in Resources */ = {isa = PBXBuildFile; fileRef = 253F5AAA1FC7AE03004A3EBF /* private.pem */; };
-		253F5AAD1FC7AE04004A3EBF /* public.pem in Resources */ = {isa = PBXBuildFile; fileRef = 253F5AAB1FC7AE03004A3EBF /* public.pem */; };
 		25628B9D1FA79B940010B58D /* IMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25628B9C1FA79B940010B58D /* IMapViewModel.swift */; };
 		25628B9F1FA79C070010B58D /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25628B9E1FA79C070010B58D /* MapViewModel.swift */; };
 		25628BA11FA79CFF0010B58D /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25628BA01FA79CFF0010B58D /* Map.swift */; };
@@ -303,8 +301,6 @@
 		253E088B1F81858E009F301B /* UIViewShake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIViewShake.swift; path = InterfaceGraphique/Effects/UIViewShake.swift; sourceTree = "<group>"; };
 		253E088D1F818DD2009F301B /* JsonHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = JsonHelper.swift; path = Noyau/Helper/JsonHelper.swift; sourceTree = "<group>"; };
 		253E08901F81913A009F301B /* ChannelEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChannelEntity.swift; path = Noyau/Entities/ChannelEntity.swift; sourceTree = "<group>"; };
-		253F5AAA1FC7AE03004A3EBF /* private.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = private.pem; sourceTree = "<group>"; };
-		253F5AAB1FC7AE03004A3EBF /* public.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = public.pem; sourceTree = "<group>"; };
 		25628B9C1FA79B940010B58D /* IMapViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMapViewModel.swift; sourceTree = "<group>"; };
 		25628B9E1FA79C070010B58D /* MapViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		25628BA01FA79CFF0010B58D /* Map.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
@@ -935,8 +931,6 @@
 		8F6AE2AF1F6592EB00A29E8B = {
 			isa = PBXGroup;
 			children = (
-				253F5AAA1FC7AE03004A3EBF /* private.pem */,
-				253F5AAB1FC7AE03004A3EBF /* public.pem */,
 				258EED971FC3A2B70096115B /* AirHockeyLightClient-Bridging-Header.h */,
 				8F6AE2BA1F6592EB00A29E8B /* AirHockeyLightClient */,
 				8F6AE2B91F6592EB00A29E8B /* Products */,
@@ -1171,7 +1165,6 @@
 				8FA618D31FC6C4DC003001E9 /* maillet_vache.png in Resources */,
 				1DC31A791FC0DC0C0000B7DE /* coin_80_disabled.png in Resources */,
 				1DC31A7A1FC0DC0C0000B7DE /* coin_80_enabled.png in Resources */,
-				253F5AAD1FC7AE04004A3EBF /* public.pem in Resources */,
 				1DC31A7B1FC0DC0C0000B7DE /* game_played_1_disabled.png in Resources */,
 				1DC31A7C1FC0DC0C0000B7DE /* game_played_1_enabled.png in Resources */,
 				1DC31A7D1FC0DC0C0000B7DE /* game_played_5_disabled.png in Resources */,
@@ -1244,7 +1237,6 @@
 				3475C2391F8FB9A100E8BF86 /* ControlPoint.png in Resources */,
 				8FA618DB1FC6C4DC003001E9 /* maillet_eau.png in Resources */,
 				3475C2381F8FB9A100E8BF86 /* Booster.png in Resources */,
-				253F5AAC1FC7AE04004A3EBF /* private.pem in Resources */,
 				8FF4B5C81FBD70CE00BB2941 /* downImage.png in Resources */,
 				8F4B40A21FB9676200DFDA2F /* Object1.wav in Resources */,
 				8FF4B5CA1FBD70CE00BB2941 /* upImage.png in Resources */,
@@ -1271,7 +1263,6 @@
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftR/SwiftR.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftyRSA/SwiftyRSA.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -1281,7 +1272,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftR.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyRSA.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

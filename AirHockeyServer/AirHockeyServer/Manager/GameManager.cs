@@ -44,6 +44,14 @@ namespace AirHockeyServer.Manager
             }
         }
 
+        public void AddTournament(TournamentEntity tournament)
+        {
+            if(tournament != null && !Cache.Tournaments.ContainsKey(tournament.Id))
+            {
+                Cache.Tournaments[tournament.Id] = tournament;
+            }
+        }
+
         public void GoalScored(Guid gameId, int playerId)
         {
             if (Cache.Games.ContainsKey(gameId))
@@ -161,7 +169,7 @@ namespace AirHockeyServer.Manager
                         await TournamentRepository.CreateTournament(tournament);
 
                         List<AchievementEntity> achievementsToUpdate = new List<AchievementEntity>();
-                        foreach(var player in tournament.Players)
+                        foreach (var player in tournament.Players)
                         {
                             achievementsToUpdate = await PlayerStatsService.GetAchievementsToUpdate(player.Id);
                             await PlayerStatsService.UpdateAchievements(player.Id, achievementsToUpdate.Select(x => x.AchivementType).ToList());
@@ -178,18 +186,20 @@ namespace AirHockeyServer.Manager
                     else
                     {
                         // do final
-                        GameEntity finalGame = new GameEntity
-                        {
-                            Players = new GamePlayerEntity[] { tournament.SemiFinals[0].Winner, tournament.SemiFinals[1].Winner },
-                            GameState = GameState.InProgress,
-                            GameId = Guid.NewGuid(),
-                            CreationDate = DateTime.Now,
-                            TournamentId = tournament.Id,
-                            SelectedMap = tournament.SelectedMap
-                        };
+                        //GameEntity finalGame = new GameEntity
+                        //{
+                        //    Players = new GamePlayerEntity[] { tournament.SemiFinals[0].Winner, tournament.SemiFinals[1].Winner },
+                        //    GameState = GameState.InProgress,
+                        //    GameId = Guid.NewGuid(),
+                        //    CreationDate = DateTime.Now,
+                        //    TournamentId = tournament.Id,
+                        //    SelectedMap = tournament.SelectedMap
+                        //};
 
-                        finalGame.Master = finalGame.Players[0];
-                        finalGame.Slave = finalGame.Players[1];
+                        //finalGame.Master = finalGame.Players[0];
+                        //finalGame.Slave = finalGame.Players[1];
+
+                        GameEntity finalGame = CreateTournamentGame(tournament.SemiFinals[0].Winner, tournament.SemiFinals[1].Winner, tournament);
 
                         tournament.State = TournamentState.Final;
                         tournament.Final = finalGame;
@@ -201,8 +211,13 @@ namespace AirHockeyServer.Manager
                         Cache.Tournaments[tournament.Id] = tournament;
 
                         var gameHub = GlobalHost.ConnectionManager.GetHubContext<GameWaitingRoomHub>();
-                        await gameHub.Groups.Add(ConnectionMapper.GetConnection(finalGame.Players[0].Id), finalGame.GameId.ToString());
-                        await gameHub.Groups.Add(ConnectionMapper.GetConnection(finalGame.Players[1].Id), finalGame.GameId.ToString());
+                        foreach(var player in finalGame.Players)
+                        {
+                            if(!player.IsAi)
+                            {
+                                await gameHub.Groups.Add(ConnectionMapper.GetConnection(player.Id), finalGame.GameId.ToString());
+                            }
+                        }
 
 
                         Timer timer = new Timer();
@@ -255,6 +270,44 @@ namespace AirHockeyServer.Manager
                 var hub = GlobalHost.ConnectionManager.GetHubContext<TournamentWaitingRoomHub>();
                 hub.Clients.Group(tournament.Id.ToString()).StartFinal(tournament);
             }
+        }
+
+        public GameEntity CreateTournamentGame(GamePlayerEntity player1, GamePlayerEntity player2, TournamentEntity tournament)
+        {
+            GameEntity game = new GameEntity()
+            {
+                GameId = Guid.NewGuid(),
+                CreationDate = DateTime.Now,
+                Players = new GamePlayerEntity[2] { player1, player2 },
+                Master = player1,
+                Slave = player2,
+                TournamentId = tournament.Id,
+            };
+
+            if(player1.IsAi && player2.IsAi)
+            {
+                game.Score = new int[2] { 2, 0 };
+            }
+            if(game.Players.Any(x => x.IsAi))
+            {
+                game.Master = game.Players[0].IsAi ? game.Players[1] : game.Players[0];
+                game.Slave = game.Players[0].IsAi ? game.Players[0] : game.Players[1];
+            }
+
+            else
+            {
+                var stringGameId = game.GameId.ToString();
+                foreach (var player in game.Players)
+                {
+                    if (!player.IsAi)
+                    {
+                        var connection = ConnectionMapper.GetConnection(player.Id);
+                        GlobalHost.ConnectionManager.GetHubContext<GameWaitingRoomHub>().Groups.Add(connection, stringGameId).Wait();
+                    }
+                }
+            }
+
+            return game;
         }
     }
 }

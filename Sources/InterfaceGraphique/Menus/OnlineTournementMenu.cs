@@ -41,7 +41,6 @@ namespace InterfaceGraphique.Menus
         {
             this.Button_Play.Click += new EventHandler(ValidateSettings);
             this.Button_MainMenu.Click += (sender, e) => Program.FormManager.CurrentForm = Program.MainMenu;
-            this.joinButton.Click += new EventHandler(JoinTournament);
 
             this.Button_Player1Human.Click += (sender, e) => { SwitchButtonsState(this.Button_Player1Human, this.Button_Player1Virtual); this.List_VirtualProfile1.Enabled = false; };
             this.Button_Player1Virtual.Click += (sender, e) => { SwitchButtonsState(this.Button_Player1Virtual, this.Button_Player1Human); this.List_VirtualProfile1.Enabled = true; };
@@ -148,28 +147,15 @@ namespace InterfaceGraphique.Menus
             List<GamePlayerEntity> players = new List<GamePlayerEntity>();
             List<bool> IsVirtualPlayers = new List<bool> { isPlayer1Virtual, isPlayer2Virtual, isPlayer3Virtual, isPlayer4Virtual };
 
-            IsVirtualPlayers.Where(x => x).ToList().ForEach(x => players.Add(new GamePlayerEntity { IsAi = true }));
+            IsVirtualPlayers.Where(x => x).ToList().ForEach(x => players.Add(new GamePlayerEntity { IsAi = true, Username = "AI" }));
 
             players.Add(new GamePlayerEntity(User.Instance.UserEntity));
-
-            while(players.Count < 4)
-            {
-                players.Add(new GamePlayerEntity() { IsAi = false });
-            }
 
             Program.QuickPlay.CurrentGameState.IsOnlineTournementMode = true;
             var vm = Program.unityContainer.Resolve<Controls.WPF.Tournament.TournamentViewModel>();
             vm.Initialize(players);
             Program.FormManager.CurrentForm = Program.OnlineTournament;
 
-        }
-
-        private void JoinTournament(object sender, EventArgs e)
-        {
-            Program.QuickPlay.CurrentGameState.IsTournementMode = true;
-            Program.FormManager.CurrentForm = Program.OnlineTournament;
-            var vm = Program.unityContainer.Resolve<Controls.WPF.Tournament.TournamentViewModel>();
-            vm.Initialize();
         }
 
         public void MettreAJour(double tempsInterAffichage)
