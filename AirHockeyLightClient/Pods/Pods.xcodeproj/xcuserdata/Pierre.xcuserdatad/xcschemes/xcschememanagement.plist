@@ -53,6 +53,11 @@
 			<key>orderHint</key>
 			<integer>7</integer>
 		</dict>
+		<key>SwiftyRSA.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>9</integer>
+		</dict>
 		<key>iCarousel.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -81,12 +86,27 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>2A9FD036FAD86F42F61F50EC04F231F9</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>2FD3B4E6C0F9D9006FA6FBD4C0BE5AEA</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>3C53B226A5898A186DD4ABAE35B9CF54</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>5C8811BE715CD3437F0AA0EFF6DCCB7A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>645205A833B396D71623A3E78FD9EDDD</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -116,6 +136,11 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>A98AFA930347517880D88BFCDD07347E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>B04393ABEB3AEE5606CA1B73A8A61F04</key>
 		<dict>
 			<key>primary</key>
@@ -126,7 +151,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>BEAE9804814ABC21639EF11C48F505D6</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D45464C115A43FC24A143E49CE3874A1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>E523C78D9C50B75D997B6739A178CA7A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F20999B1E98883594B7715898EC02AE2</key>
 		<dict>
 			<key>primary</key>
 			<true/>

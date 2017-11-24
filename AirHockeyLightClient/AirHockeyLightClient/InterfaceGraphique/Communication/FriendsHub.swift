@@ -166,8 +166,7 @@ class FriendsHub: BaseHub {
     }
     
     override func logout() {
-        // TODO
-        print("logout")
+        print("logout friends hub")
     }
     
 }

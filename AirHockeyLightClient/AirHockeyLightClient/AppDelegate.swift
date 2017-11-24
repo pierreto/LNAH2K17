@@ -10,6 +10,8 @@
 
 import UIKit
 import Alamofire
+import PromiseKit
+
 ///////////////////////////////////////////////////////////////////////////
 /// @class AppDelegate
 /// @brief Class permettant de gérer le comportement de l'application selon
@@ -50,9 +52,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
         
         // App does not support background running
-        if HubManager.sharedConnection.connected! {
+        /*if HubManager.sharedConnection.connected! {
                     deregisterUsername(ipAddress: HubManager.sharedConnection.getIpAddress()!, username: HubManager.sharedConnection.getUsername()!)
-        }
+        }*/
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
@@ -65,22 +67,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-        if HubManager.sharedConnection.connected! {
-            deregisterUsername(ipAddress: HubManager.sharedConnection.getIpAddress()!, username: HubManager.sharedConnection.getUsername()!)
-        }
-        //logout
-    }
-    
-    func deregisterUsername(ipAddress: String, username: String) {
-        let parameters: [String: Any] = [
-            "Username" : username
-        ]
-        Alamofire.request("http://" + HubManager.sharedConnection.getIpAddress()! + ":63056/api/logout", method: .post, parameters: parameters, encoding: JSONEncoding.default)
-            .responseJSON { response in
-                if (!(HubManager.sharedConnection.getIpAddress()?.isEmpty)!) {
-                    HubManager.sharedConnection.Logout()
-                }
-        }
+
+        _ = HubManager.sharedConnection.DisconnectUser().then(execute: { response -> Void in
+            _ = HubManager.sharedConnection.StopConnection().then(execute: { response -> Void in
+                print("applicationWillTerminate success")
+            })
+        })
     }
     
 }
