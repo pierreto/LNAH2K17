@@ -104,20 +104,7 @@ namespace InterfaceGraphique.Controls.WPF.Editor
             }
         }
 
-        public ICommand removeMapCommand;
-        public ICommand RemoveMapCommand
-        {
-            get
-            {
-                return removeMapCommand ??
-                       (removeMapCommand = new RelayCommandAsync(RemoveMap, (o) => true));
-            }
-        }
-        public async Task RemoveMap()
-        {
-                await Program.client.DeleteAsync(Program.client.BaseAddress + "api/maps/remove/" + User.Instance.UserEntity.Id.ToString());
-            
-        }
+  
         public async Task SwitchToCreationMode()
         {
             Program.EditorHost.SwitchViewToMapModeView();
@@ -170,6 +157,25 @@ namespace InterfaceGraphique.Controls.WPF.Editor
             }
 
 
+        }
+
+        public ICommand refreshCommand;
+
+        public ICommand RefreshCommand
+        {
+            get
+            {
+                return refreshCommand ??
+                       (refreshCommand =
+                           new RelayCommandAsync(RefreshMapList, (o) => true));
+            }
+
+
+        }
+
+        public async Task RefreshMapList()
+        {
+            await InitializeViewModelAsync();
         }
 
         private bool CanCheckPrivatePassword()

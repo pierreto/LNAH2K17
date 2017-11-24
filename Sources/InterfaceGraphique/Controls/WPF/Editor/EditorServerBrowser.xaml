@@ -16,11 +16,8 @@
              d:DesignHeight="400" d:DesignWidth="600">
     <UserControl.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries >
-                <ResourceDictionary Source="/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
-                <ResourceDictionary Source="/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
-                <ResourceDictionary Source="/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.Blue.xaml" />
-                <ResourceDictionary Source="/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Green.xaml" />
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/InterfaceGraphique;component/Resource/appresources.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <convert:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"></convert:BooleanToVisibilityConverter>
             <wpf:ViewModelLocator x:Key="VMLocator" d:IsDataSource="True" />
@@ -32,29 +29,35 @@
     <materialDesign:DialogHost Identifier="RootDialog"  CloseOnClickAwayParameter="true"  IsOpen="false" DataContext="{Binding Source={StaticResource VMLocator}, Path=EditorViewModel}">
         <Grid  DataContext="{Binding Source={StaticResource VMLocator}, Path=EditorViewModel}" >
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="42"/>
-            <RowDefinition Height="36"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="46"/>
-        </Grid.RowDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="42"/>
+                <RowDefinition Height="36"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="46"/>
+            </Grid.RowDefinitions>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="0.5*" />
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
 
             </Grid.ColumnDefinitions>
 
-        <TextBlock HorizontalAlignment="Center" Margin="48,0,0,0" TextWrapping="Wrap" FontWeight="Bold" FontSize="32" Foreground="White" Text="Rejoindre une carte :" Width="312" Grid.ColumnSpan="3" Height="46" VerticalAlignment="Top" Grid.Column="1"/>
+            <TextBlock HorizontalAlignment="Center" Margin="48,0,0,0" TextWrapping="Wrap" FontWeight="Bold" FontSize="32" Foreground="White" Text="Rejoindre une carte :" Width="312" Grid.ColumnSpan="3" Height="46" VerticalAlignment="Top" Grid.Column="1"/>
+            <Button HorizontalAlignment="Center"  BorderThickness="0"  
+                    Background="{StaticResource AddBrush}" Command="{Binding RefreshCommand}" Grid.Column="5"  VerticalAlignment="Center">
+                <fa:FontAwesome HorizontalAlignment="Center"  VerticalAlignment="Center"  Icon="Refresh" fa:Awesome.Content="Refresh"/>
+            </Button>
 
-        <TextBlock Grid.Column="1" Text="Privacité" Foreground="#DDFFFFFF" FontSize="24" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <TextBlock Grid.Column="2" Text="Nom" Foreground="#DDFFFFFF" FontSize="24" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <TextBlock Grid.Column="3" Text="Nombre de joueurs" Foreground="#DDFFFFFF" FontSize="24" Grid.Row="1"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <TextBlock Grid.Column="4" Text="Créateur" Foreground="#DDFFFFFF" FontSize="24" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
+
+
+                <TextBlock Grid.Column="1" Text="Privacité" Foreground="#DDFFFFFF" FontSize="24" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock Grid.Column="2" Text="Nom" Foreground="#DDFFFFFF" FontSize="24" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock Grid.Column="3" Text="Nombre de joueurs" Foreground="#DDFFFFFF" FontSize="24" Grid.Row="1"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock Grid.Column="4" Text="Créateur" Foreground="#DDFFFFFF" FontSize="24" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
 
             <ListBox  ItemsSource="{Binding OnlineEditedMapInfos}" Foreground="#DD000000" d:DataContext="{Binding Source={StaticResource DesignViewModel}}" SelectedItem="{Binding SelectedMap}" Grid.ColumnSpan="6"
                   Grid.Column="0" Grid.Row="2" >
@@ -74,21 +77,23 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width=".5*" />
+                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <Image MaxWidth="64" MaxHeight="64" Grid.Column="0" Source="{Binding Icon, Converter={convert:Base64ImageConverter}}" Cursor="Hand"/>
                             <fa:FontAwesome HorizontalAlignment="Center"  VerticalAlignment="Center" Grid.Column="1" Icon="Lock"  fa:Awesome.Content="Lock" Foreground="#DDF31010"  FontSize="48"  Visibility="{Binding Private, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}" />
-                            <fa:FontAwesome HorizontalAlignment="Center"  VerticalAlignment="Center" Grid.Column="1" Icon="Unlock" fa:Awesome.Content="Unlock" Foreground="#DD3EFF34"  FontSize="48"  Visibility="{Binding Private, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                            <fa:FontAwesome HorizontalAlignment="Center"  VerticalAlignment="Center" Grid.Column="1" Icon="UnlockAlt" fa:Awesome.Content="Unlock" Foreground="#DD3EFF34"  FontSize="48"  Visibility="{Binding Private, Converter={StaticResource BooleanToVisibilityConverter}}" />
                             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2" Text="{Binding MapName}" Foreground="#DDFFFFFF" FontSize="24" />
                             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Column="3" Text="{Binding CurrentNumberOfPlayer, StringFormat= ' {0}/4'}" Foreground="#DDFFFFFF" FontSize="24"  />
                             <TextBlock HorizontalAlignment="Center"  VerticalAlignment="Center"  Grid.Column="4" Text="{Binding Creator}" Foreground="#DDFFFFFF" FontSize="24" />
-                           <!-- <Button fa:Awesome.Content="Trash" BorderThickness="0" Background="{StaticResource DeleteBrush}" MaxWidth="32" MaxHeight="32"  Command="{Binding RemoveMapCommand}" Grid.Column="5"></Button>-->
+                            <Button  BorderThickness="0" Visibility="{Binding CanDeleteMap, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}"  Background="{StaticResource DeleteBrush}" Command="{Binding RemoveMapCommand}" Grid.Column="5">
+                                <fa:FontAwesome HorizontalAlignment="Center"  VerticalAlignment="Center"  Icon="Trash"  fa:Awesome.Content="Trash"/>
+                            </Button>
 
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <Button Command="{Binding JoinEditionCommand}" Content="Participer à l'édition" HorizontalAlignment="Center"  VerticalAlignment="Center" Width="164" Height="30" Grid.ColumnSpan="3" Grid.Column="1" Grid.Row="3" 
+            <Button Command="{Binding JoinEditionCommand}"  Content="Participer à l'édition" HorizontalAlignment="Center"  VerticalAlignment="Center" Width="164" Height="30" Grid.ColumnSpan="3" Grid.Column="1" Grid.Row="3" 
                     />
         </Grid>
     </materialDesign:DialogHost>

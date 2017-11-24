@@ -269,7 +269,7 @@ namespace InterfaceGraphique.Controls.WPF.Friends
         }
         public async Task GoToProfile()
         {
-            HubManager.Instance.LeaveHubs();
+            HubManager.Instance.LeaveEditorAndGameHubs();
 
             Program.FormManager.CurrentForm = Program.UserProfileMenu;
             await Program.unityContainer.Resolve<UserProfileViewModel>().Initialize(Id);

@@ -5,6 +5,10 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using InterfaceGraphique.CommunicationInterface;
+using InterfaceGraphique.Controls.WPF.Editor;
+using Microsoft.Practices.Unity;
 using Prism.Mvvm;
 
 namespace InterfaceGraphique.Entities
@@ -22,5 +26,30 @@ namespace InterfaceGraphique.Entities
         public int CurrentNumberOfPlayer { get; set; }
 
         public string Icon { get; set; }
+
+
+
+        public ICommand removeMapCommand;
+        public ICommand RemoveMapCommand
+        {
+            get
+            {
+                return removeMapCommand ??
+                       (removeMapCommand = new RelayCommandAsync(RemoveMap, (o) => true));
+            }
+        }
+        public async Task RemoveMap()
+        {
+            await Program.client.DeleteAsync(Program.client.BaseAddress + "api/maps/remove/" + Id);
+            await Program.unityContainer.Resolve<EditorViewModel>().RefreshMapList();
+
+        }
+        public bool CanDeleteMap
+        {
+            get
+            {
+                return this.Creator.Equals(User.Instance.UserEntity.Username) && CurrentNumberOfPlayer==0;
+            }
+        }
     }
 }
