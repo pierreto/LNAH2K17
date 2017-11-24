@@ -49,7 +49,8 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
         public async void Join()
         {
-            await WaitingRoomProxy.Invoke("Join", User.Instance.UserEntity);
+            GamePlayerEntity player = new GamePlayerEntity(User.Instance.UserEntity);
+            await WaitingRoomProxy.Invoke("Join", player);
         }
 
         public async Task LeaveGame()

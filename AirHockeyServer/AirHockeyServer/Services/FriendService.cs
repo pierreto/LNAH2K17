@@ -12,14 +12,14 @@ namespace AirHockeyServer.Services
 {
     public class FriendService : IFriendService
     {
-        public List<int> UsersIdConnected { get; set; }
+        public List<UserEntity> UsersIdConnected { get; set; }
 
         private IFriendRequestRepository FriendRepository { get; set; }
  
         public FriendService(IFriendRequestRepository friendRequestRepository)
         {
             FriendRepository = friendRequestRepository;
-            this.UsersIdConnected = new List<int>();
+            this.UsersIdConnected = new List<UserEntity>();
         }
 
         public async Task<List<UserEntity>> GetAllFriends(UserEntity user)
@@ -63,11 +63,11 @@ namespace AirHockeyServer.Services
             return await FriendRepository.RemoveFriend(user.Id, ex_friend.Id);
         }
 
-        public void NewUserConnected(int userid)
+        public void NewUserConnected(UserEntity userid)
         {
             UsersIdConnected.Add(userid);
         }
-        public void NewUserDisconnected(int userid)
+        public void NewUserDisconnected(UserEntity userid)
         {
             UsersIdConnected.Remove(userid);
         }

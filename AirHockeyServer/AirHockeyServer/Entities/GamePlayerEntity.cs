@@ -20,5 +20,10 @@ namespace AirHockeyServer.Entities
             IsAi = false;
         }
 
+        public GamePlayerEntity()
+        {
+
+        }
+
     }
 }

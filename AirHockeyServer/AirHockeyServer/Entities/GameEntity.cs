@@ -17,7 +17,7 @@ namespace AirHockeyServer.Entities
     {
         public GameEntity()
         {
-            this.Players = new UserEntity[2];
+            this.Players = new GamePlayerEntity[2];
             TournamentId = -1;
             Score = new int[2];
         }
@@ -30,17 +30,17 @@ namespace AirHockeyServer.Entities
 
         public int[] Score { get; set; }
 
-        public UserEntity[] Players { get; set; }
+        public GamePlayerEntity[] Players { get; set; }
 
-        public UserEntity Master { get; set; }
+        public GamePlayerEntity Master { get; set; }
 
-        public UserEntity Slave { get; set; }
+        public GamePlayerEntity Slave { get; set; }
 
         public GameState GameState { get; set; }
 
         public MapEntity SelectedMap { get; set; }
 
-        public UserEntity Winner { get; set; }
+        public GamePlayerEntity Winner { get; set; }
 
         public int TournamentId { get; set; }
     }

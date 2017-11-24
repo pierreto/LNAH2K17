@@ -57,7 +57,7 @@ namespace AirHockeyServer.Events.EventManagers
             }
         }
 
-        protected  void OnOpponentFound(object sender, UserEntity user)
+        protected  void OnOpponentFound(object sender, List<GamePlayerEntity> users)
         {
 
             if (Tournament == null)
@@ -69,15 +69,19 @@ namespace AirHockeyServer.Events.EventManagers
                 };
             }
 
+            foreach(var user in users)
+            {
+                if(!user.IsAi)
+                {
+                    var connection = ConnectionMapper.GetConnection(user.Id);
+                    string tournamentIdString = Tournament.Id.ToString();
+                    GlobalHost.ConnectionManager.GetHubContext<TournamentWaitingRoomHub>().Groups.Add(connection, tournamentIdString).Wait();
+                
+                    GlobalHost.ConnectionManager.GetHubContext<TournamentWaitingRoomHub>().Clients.Group(Tournament.Id.ToString()).OpponentFoundEvent(Tournament.Players);
+                }
 
-
-            var connection = ConnectionMapper.GetConnection(user.Id);
-            string tournamentIdString = Tournament.Id.ToString();
-            GlobalHost.ConnectionManager.GetHubContext<TournamentWaitingRoomHub>().Groups.Add(connection, tournamentIdString).Wait();
-
-            Tournament.Players.Add(user);
-
-            GlobalHost.ConnectionManager.GetHubContext<TournamentWaitingRoomHub>().Clients.Group(Tournament.Id.ToString()).OpponentFoundEvent(Tournament.Players);
+                Tournament.Players.Add(user);
+            }
 
             if (Tournament.Players.Count == 4)
             {
@@ -101,13 +105,13 @@ namespace AirHockeyServer.Events.EventManagers
 
         }
 
-        private GameEntity CreateGame(UserEntity player1, UserEntity player2)
+        private GameEntity CreateGame(GamePlayerEntity player1, GamePlayerEntity player2)
         {
             GameEntity game = new GameEntity()
             {
                 GameId = Guid.NewGuid(),
                 CreationDate = DateTime.Now,
-                Players = new UserEntity[2] { player1, player2 },
+                Players = new GamePlayerEntity[2] { player1, player2 },
                 Master = player1,
                 Slave = player2,
                 TournamentId = Tournament.Id

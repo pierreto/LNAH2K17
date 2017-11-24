@@ -14,14 +14,14 @@ namespace AirHockeyServer.Services.MatchMaking
 
         protected Mutex WaitingPlayersMutex = new Mutex();
 
-        protected Queue<UserEntity> _WaitingPlayers;
-        protected Queue<UserEntity> WaitingPlayers
+        protected Queue<GamePlayerEntity> _WaitingPlayers;
+        protected Queue<GamePlayerEntity> WaitingPlayers
         {
             get
             {
                 if (_WaitingPlayers == null)
                 {
-                    _WaitingPlayers = new Queue<UserEntity>();
+                    _WaitingPlayers = new Queue<GamePlayerEntity>();
                 }
                 return _WaitingPlayers;
             }
@@ -33,12 +33,12 @@ namespace AirHockeyServer.Services.MatchMaking
 
         public void RemoveUser(int userId)
         {
-            _WaitingPlayers = new Queue<UserEntity>(_WaitingPlayers.Where(x => x.Id != userId));
+            _WaitingPlayers = new Queue<GamePlayerEntity>(_WaitingPlayers.Where(x => x.Id != userId));
         }
 
         protected void InvokeMatchFound(PlayersMatchEntity match)
         {
-            MatchFoundEvent?.Invoke(new UserEntity(), new MatchFoundArgs { PlayersMatch = match });
+            MatchFoundEvent?.Invoke(new GamePlayerEntity(), new MatchFoundArgs { PlayersMatch = match });
         }
 
         ///////////////////////////////////////////////////////////////////////
@@ -48,11 +48,22 @@ namespace AirHockeyServer.Services.MatchMaking
         /// Cette fonction ajoute un utilisateur dans la file d'attente pour jouer
         ///
         ////////////////////////////////////////////////////////////////////////
-        public void AddOpponent(UserEntity user)
+        public void AddOpponent(List<GamePlayerEntity> players)
         {
             WaitingPlayersMutex.WaitOne();
 
-            WaitingPlayers.Enqueue(user);
+            players.ForEach(x => WaitingPlayers.Enqueue(x));
+
+            WaitingPlayersMutex.ReleaseMutex();
+
+            StartPlayersMatching();
+        }
+
+        public void AddOpponent(GamePlayerEntity player)
+        {
+            WaitingPlayersMutex.WaitOne();
+
+            WaitingPlayers.Enqueue(player);
 
             WaitingPlayersMutex.ReleaseMutex();
 
