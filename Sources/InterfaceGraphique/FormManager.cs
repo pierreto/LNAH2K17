@@ -26,8 +26,6 @@ namespace InterfaceGraphique {
         private readonly int COLLAPSED_CHAT_HEIGHT = 40;
         private int chatHeight;
 
-        private bool firstTimeMaximizeChat;
-
         public dynamic CurrentForm {
             get { return currentForm; }
             set {
@@ -76,7 +74,6 @@ namespace InterfaceGraphique {
 
             elementHost1.Child = Program.unityContainer.Resolve<TestChatView>();
             chatHeight = elementHost1.Height;
-            firstTimeMaximizeChat = false;
 
             this.gameRequestPopup.Hide();
 
@@ -235,15 +232,7 @@ namespace InterfaceGraphique {
         {
             HideChat();
             elementHost1.Size = new Size(elementHost1.Width, chatHeight);
-            if (firstTimeMaximizeChat)
-            {
-                elementHost1.Location = new Point(elementHost1.Location.X, elementHost1.Location.Y);
-                firstTimeMaximizeChat = false;
-            }
-            else
-            {
-                elementHost1.Location = new Point(elementHost1.Location.X, elementHost1.Location.Y - chatHeight + COLLAPSED_CHAT_HEIGHT);
-            }
+            elementHost1.Location = new Point(elementHost1.Location.X, elementHost1.Location.Y - chatHeight + COLLAPSED_CHAT_HEIGHT);
             ShowChat();
         }
 
