@@ -242,6 +242,10 @@ namespace InterfaceGraphique.Menus
         {
             this.Size = new Size(Program.FormManager.ClientSize.Width, Program.FormManager.ClientSize.Height);
         }
+        public void UnsuscribeEventHandlers()
+        {
+            Program.FormManager.SizeChanged -= new EventHandler(WindowSizeChanged);
+        }
 
         private void SaveGameSettings()
         {
