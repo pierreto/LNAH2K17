@@ -15,7 +15,7 @@ namespace InterfaceGraphique.Game.GameState
     {
         public GameHub gameHub;
         public MapEntity selectedMap;
-
+        public bool gameHasEnded = false;
         protected bool moveUpKeyDown = false;
         protected bool moveDownKeyDown = false;
         protected bool moveLeftKeyDown = false;
@@ -121,6 +121,11 @@ namespace InterfaceGraphique.Game.GameState
 
         protected void OnDisconnexion()
         {
+            if(gameHasEnded)
+            {
+                return;
+            }
+
             Program.QuickPlay.Invoke(new MethodInvoker(() =>
             {
                 Program.QuickPlay.ReplacePlayerByAI();

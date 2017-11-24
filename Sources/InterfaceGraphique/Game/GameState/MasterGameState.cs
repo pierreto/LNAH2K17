@@ -15,7 +15,7 @@ namespace InterfaceGraphique.Game.GameState
     {
 
         //private GameHub gameHub;
-        private bool gameHasEnded = false;
+        
         private FonctionsNatives.GoalCallback callback;
         private int ELapsedTime = 0;
         private const int SERVER_INTERVAL = 5;

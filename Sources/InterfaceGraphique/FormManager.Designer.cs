@@ -59,7 +59,7 @@
             this.gameRequestPopup.Controls.Add(this.textBox2);
             this.gameRequestPopup.Controls.Add(this.playerName);
             this.gameRequestPopup.ForeColor = System.Drawing.Color.White;
-            this.gameRequestPopup.Location = new System.Drawing.Point(402, 120);
+            this.gameRequestPopup.Location = new System.Drawing.Point(460, 173);
             this.gameRequestPopup.Margin = new System.Windows.Forms.Padding(2);
             this.gameRequestPopup.Name = "gameRequestPopup";
             this.gameRequestPopup.Size = new System.Drawing.Size(288, 217);

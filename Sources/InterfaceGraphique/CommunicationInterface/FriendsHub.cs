@@ -25,6 +25,7 @@ namespace InterfaceGraphique.CommunicationInterface
         public event Action<GameRequestEntity> GameRequestEvent;
         public event Action<GameRequestEntity> DeclinedGameRequestEvent;
         public event Action<GameRequestEntity> AcceptedGameRequestEvent;
+        public event Action<GameRequestEntity> GameRequestCanceledEvent;
         public event Action<int> NewFriendHasConnectedEvent;
         public event Action<int> NewFriendHasDisconnectedEvent;
 
@@ -77,14 +78,23 @@ namespace InterfaceGraphique.CommunicationInterface
             {
                 AcceptedGameRequestEvent?.Invoke(request);
             });
+
             FriendsProxy.On<int>("NewFriendHasConnectedEvent", request =>
             {
                 NewFriendHasConnectedEvent?.Invoke(request);
             });
+
             FriendsProxy.On<int>("NewFriendHasDisconnectedEvent", request =>
             {
                 NewFriendHasDisconnectedEvent?.Invoke(request);
             });
+
+            FriendsProxy.On<GameRequestEntity>("GameRequestCanceled", request => { GameRequestCanceledEvent?.Invoke(request); });
+        }
+
+        public async Task<bool> FriendIsAvailable(int recipientId)
+        {
+            return await FriendsProxy.Invoke<bool>("FriendIsAvailable", recipientId);
         }
 
         public async Task<List<UserEntity>> GetAllFriends()
@@ -131,6 +141,11 @@ namespace InterfaceGraphique.CommunicationInterface
         public async Task<bool> SendGameRequest(GameRequestEntity gameRequest)
         {
             return await FriendsProxy.Invoke<bool>("SendGameRequest", gameRequest);
+        }
+
+        public async Task<bool> CancelGameRequest(GameRequestEntity gameRequest)
+        {
+            return await FriendsProxy.Invoke<bool>("CancelGameRequest", gameRequest);
         }
 
         public async Task Logout()

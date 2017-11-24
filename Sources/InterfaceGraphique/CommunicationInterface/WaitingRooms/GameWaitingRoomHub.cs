@@ -86,7 +86,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
         public void OnOpponentFound(GameEntity game)
         {
             this.CurrentGameId = game.GameId;
-            this.OpponentFoundEvent.Invoke(this, game);
+            this.OpponentFoundEvent?.Invoke(this, game);
         }
 
         public void OnGameStarting(GameEntity game)

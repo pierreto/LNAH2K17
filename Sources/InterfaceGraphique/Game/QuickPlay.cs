@@ -159,6 +159,7 @@ namespace InterfaceGraphique
         private async Task OnMainMenuClicked(object sender, EventArgs e)
         {
             Program.FormManager.CurrentForm = Program.MainMenu;
+            this.currentGameState.gameHasEnded = true;
             if (currentGameState.IsOnlineTournementMode)
             {
                 await Program.unityContainer.Resolve<TournamentViewModel>().WaitingRoomHub.LeaveTournament();
