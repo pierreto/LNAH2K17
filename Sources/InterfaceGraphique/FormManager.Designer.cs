@@ -60,7 +60,7 @@
             this.gameRequestPopup.Controls.Add(this.playerName);
             this.gameRequestPopup.ForeColor = System.Drawing.Color.White;
             this.gameRequestPopup.Location = new System.Drawing.Point(402, 120);
-            this.gameRequestPopup.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.gameRequestPopup.Margin = new System.Windows.Forms.Padding(2);
             this.gameRequestPopup.Name = "gameRequestPopup";
             this.gameRequestPopup.Size = new System.Drawing.Size(288, 217);
             this.gameRequestPopup.TabIndex = 14;
@@ -70,7 +70,7 @@
             this.buttonRefus.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.buttonRefus.Font = new System.Drawing.Font("Segoe UI Black", 13F, System.Drawing.FontStyle.Bold);
             this.buttonRefus.Location = new System.Drawing.Point(138, 142);
-            this.buttonRefus.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonRefus.Margin = new System.Windows.Forms.Padding(2);
             this.buttonRefus.Name = "buttonRefus";
             this.buttonRefus.Size = new System.Drawing.Size(108, 31);
             this.buttonRefus.TabIndex = 3;
@@ -82,7 +82,7 @@
             this.buttonAccept.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
             this.buttonAccept.Font = new System.Drawing.Font("Segoe UI Black", 13F, System.Drawing.FontStyle.Bold);
             this.buttonAccept.Location = new System.Drawing.Point(34, 142);
-            this.buttonAccept.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonAccept.Margin = new System.Windows.Forms.Padding(2);
             this.buttonAccept.Name = "buttonAccept";
             this.buttonAccept.Size = new System.Drawing.Size(102, 31);
             this.buttonAccept.TabIndex = 2;
@@ -96,7 +96,7 @@
             this.textBox2.Font = new System.Drawing.Font("Segoe UI Black", 13F, System.Drawing.FontStyle.Bold);
             this.textBox2.ForeColor = System.Drawing.Color.White;
             this.textBox2.Location = new System.Drawing.Point(34, 70);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox2.Margin = new System.Windows.Forms.Padding(2);
             this.textBox2.Multiline = true;
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(224, 53);
@@ -111,7 +111,7 @@
             this.playerName.Font = new System.Drawing.Font("Segoe UI Black", 13F, System.Drawing.FontStyle.Bold);
             this.playerName.ForeColor = System.Drawing.Color.White;
             this.playerName.Location = new System.Drawing.Point(90, 35);
-            this.playerName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.playerName.Margin = new System.Windows.Forms.Padding(2);
             this.playerName.Name = "playerName";
             this.playerName.Size = new System.Drawing.Size(102, 24);
             this.playerName.TabIndex = 0;

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using Microsoft.Practices.Unity;
 using System.Threading.Tasks;
 
 namespace InterfaceGraphique.Controls.WPF.Friends
@@ -49,6 +50,10 @@ namespace InterfaceGraphique.Controls.WPF.Friends
         public async Task Init()
         {
             List<FriendRequestEntity> users = await friendsHub.GetAllPendingRequests();
+            if (users.Count > 0)
+            {
+                Program.unityContainer.Resolve<FriendListViewModel>().HasNewRequest = true;
+            }
             foreach (FriendRequestEntity user in users)
             {
                 Items.Add(new FriendListItemViewModel(new UserEntity { Id = user.Requestor.Id, Username = user.Requestor.Username, Profile = user.Requestor.Profile, IsSelected = false, IsConnected = user.Requestor.IsConnected }, null) { RequestedFriend = true });

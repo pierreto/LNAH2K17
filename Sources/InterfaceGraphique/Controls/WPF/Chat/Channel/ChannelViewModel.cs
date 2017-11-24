@@ -80,7 +80,7 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
             get
             {
                 ChannelEntity cE = ActiveChannel.Instance.ChannelEntity;
-                if (Program.unityContainer.Resolve<ChatViewModel>().MainChannel == cE)
+                if (Program.unityContainer.Resolve<ChatViewModel>().MainChannel == cE || cE.IsPrivate)
                 {
                     //Disable user from deleting main channel
                     IsOpenOptions = false;

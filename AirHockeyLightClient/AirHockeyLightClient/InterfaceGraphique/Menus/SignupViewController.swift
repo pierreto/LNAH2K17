@@ -24,8 +24,10 @@ class SignupViewController: UIViewController {
     
     @IBOutlet weak var createAccountButton: UIButton!
     @IBOutlet weak var loadingSpinner: UIActivityIndicatorView!
+    @IBOutlet weak var navigationBar: UINavigationItem!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var stackView: UIStackView!
+    
     // Mark: Actions
     @IBAction func createAccount(_ sender: Any) {
         createAccount()
@@ -228,11 +230,15 @@ class SignupViewController: UIViewController {
     private func loading() {
         self.loadingSpinner.startAnimating()
         self.view.alpha = 0.7
+        self.view.isUserInteractionEnabled = false
+        self.navigationBar.hidesBackButton = true
     }
     
     private func loadingDone() {
         self.loadingSpinner.stopAnimating()
         self.view.alpha = 1.0
+        self.view.isUserInteractionEnabled = true
+        self.navigationBar.hidesBackButton = false
     }
 
 }

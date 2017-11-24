@@ -53,6 +53,7 @@ class Login: NSObject {
                             HubManager.sharedConnection.getChatHub().subscribe()
                             
                             // Retrieve the users friends
+                            HubManager.sharedConnection.getFriendsHub().initialize()
                             HubManager.sharedConnection.getFriendsHub().getAllFriends()
                             
                             // Upload local maps to server (under users id)

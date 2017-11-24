@@ -20,22 +20,37 @@ import UIKit
 /// @date 2017-11-05
 ///////////////////////////////////////////////////////////////////////////
 class OnlineMenuViewController: UIViewController {
+    
+    @IBOutlet weak var loadingSpinner: UIActivityIndicatorView!
+    @IBOutlet weak var navigationBar: UINavigationItem!
+    
     @IBAction func disconnectAction(_ sender: Any) {
-        let parameters: [String: Any] = [
-            "Username" : HubManager.sharedConnection.getUsername()!
-        ]
-        Alamofire.request("http://" + HubManager.sharedConnection.getIpAddress()! + ":63056/api/logout", method: .post, parameters: parameters, encoding: JSONEncoding.default)
-            .responseJSON { response in
-                if (!(HubManager.sharedConnection.getIpAddress()?.isEmpty)!) {
-                    HubManager.sharedConnection.Logout()
-                    self.performSegue(withIdentifier: "disconnectSegway", sender: self)
-                }
-        }
+        self.loading()
         
+        _ = HubManager.sharedConnection.DisconnectUser().then(execute: { response -> Void in
+            _ = HubManager.sharedConnection.StopConnection().then(execute: { response -> Void in
+                self.loadingDone()
+                self.performSegue(withIdentifier: "disconnectSegue", sender: self)
+            })
+        })
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.setNavigationBarHidden(false, animated: true)
         FacadeModele.instance.changerEditorState(etat: .ONLINE_EDITION)
+    }
+    
+    private func loading() {
+        self.loadingSpinner.startAnimating()
+        self.view.alpha = 0.7
+        self.view.isUserInteractionEnabled = false
+        self.navigationBar.hidesBackButton = true
+    }
+    
+    private func loadingDone() {
+        self.loadingSpinner.stopAnimating()
+        self.view.alpha = 1.0
+        self.view.isUserInteractionEnabled = true
+        self.navigationBar.hidesBackButton = false
     }
 }

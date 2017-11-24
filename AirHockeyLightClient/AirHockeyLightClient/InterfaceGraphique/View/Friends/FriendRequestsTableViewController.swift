@@ -61,12 +61,14 @@ class FriendRequestsTableViewController: UITableViewController {
     }
     
     func addRequest(newRequest: FriendRequestEntity) {
-        self.pendingRequestsData.append(newRequest)
-        
-        DispatchQueue.main.async(execute: { () -> Void in
-            // Reload tableView
-            self.pendingRequests.reloadData()
-        })
+        if newRequest.getStatus() == RequestStatus.PENDING {
+            self.pendingRequestsData.append(newRequest)
+            
+            DispatchQueue.main.async(execute: { () -> Void in
+                // Reload tableView
+                self.pendingRequests.reloadData()
+            })
+        }
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

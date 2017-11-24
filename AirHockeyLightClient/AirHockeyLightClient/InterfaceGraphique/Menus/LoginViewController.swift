@@ -20,6 +20,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var signupButton: UIButton!
     @IBOutlet weak var loadingSpinner: UIActivityIndicatorView!
+    @IBOutlet weak var navigationBar: UINavigationItem!
     
     @IBOutlet weak var scrollView: UIScrollView!
     
@@ -161,11 +162,15 @@ class LoginViewController: UIViewController {
     private func loading() {
         self.loadingSpinner.startAnimating()
         self.view.alpha = 0.7
+        self.view.isUserInteractionEnabled = false
+        self.navigationBar.hidesBackButton = true
     }
     
     private func loadingDone() {
         self.loadingSpinner.stopAnimating()
         self.view.alpha = 1.0
+        self.view.isUserInteractionEnabled = true
+        self.navigationBar.hidesBackButton = false
     }
     
     override func viewWillDisappear(_ animated : Bool) {
@@ -174,6 +179,7 @@ class LoginViewController: UIViewController {
         if self.isMovingFromParentViewController {
 
         }
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
     }
     
     override func viewWillAppear(_ animated: Bool){
@@ -181,6 +187,7 @@ class LoginViewController: UIViewController {
         passwordInput.text = ""
         HubManager.sharedConnection.setUsername(username: "")
         NotificationCenter.default.post(name: Notification.Name(rawValue: LoginNotification.LogoutNotification), object: nil)
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         
     }
 }

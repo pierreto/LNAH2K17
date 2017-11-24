@@ -29,7 +29,6 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             //this.addUser = addUser;
             InitializeComponent();
             this.DataContext = Program.unityContainer.Resolve<FriendListViewModel>();
-
         }
 
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -50,11 +49,19 @@ namespace InterfaceGraphique.Controls.WPF.Friends
 
                     }
                 }
-           
-
-
             }
+        }
 
+        private void TabItem_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Program.unityContainer.Resolve<FriendListViewModel>().HasNewFriendRequest = false;
+            System.Diagnostics.Debug.WriteLine("Clicked on notif tab");
+        }
+
+        private void TabItem_MouseDown_1(object sender, MouseButtonEventArgs e)
+        {
+            Program.unityContainer.Resolve<FriendListViewModel>().HasNewFriend = false;
+            System.Diagnostics.Debug.WriteLine("Clicked on friends tab");
         }
     }
 }

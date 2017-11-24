@@ -1,7 +1,9 @@
-﻿using System;
+﻿using AirHockeyServer.Hubs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Microsoft.Practices.Unity;
 
 namespace AirHockeyServer.Services.MatchMaking
 {
@@ -20,7 +22,7 @@ namespace AirHockeyServer.Services.MatchMaking
             // Note: this is not thread safe.
             if (_instance == null)
             {
-                _instance = new TournamentMatchMaker();
+                _instance = new TournamentMatchMaker(WebApiApplication.UnityContainer.Resolve<ConnectionMapper>());
             }
 
             return _instance;
