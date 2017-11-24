@@ -150,7 +150,6 @@ namespace InterfaceGraphique.Editor.EditorState
         public override async Task LeaveEdition()
         {
             await this.editionHub.LeaveRoom();
-            Editeur.mapManager.SaveIcon();
         }
 
         public override void HandleCoefficientChanges(float coefficientFriction, float coefficientAcceleration, float coefficientRebond)

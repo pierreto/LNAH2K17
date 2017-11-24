@@ -13,19 +13,20 @@ using InterfaceGraphique.Services;
 using MaterialDesignThemes.Wpf;
 using Microsoft.Practices.ObjectBuilder2;
 using System.Security.Cryptography;
+using InterfaceGraphique.Editor;
 
 namespace InterfaceGraphique.Controls.WPF.Editor
 {
     public class EditorViewModel : ViewModelBase
     {
         private MapService mapService;
+        private MapManager mapManager;
 
         private ObservableCollection<MapEntity> onlineEditedMapInfos;
         private ICommand serverListViewCommand;
         private ICommand modeViewCommand;
         private ICommand joinEditionCommand;
 
-        private MapEntity currentMap;
         private MapEntity selectedMap;
 
         private string password;
@@ -53,17 +54,13 @@ namespace InterfaceGraphique.Controls.WPF.Editor
             }
         }
 
-        public EditorViewModel(MapService mapService)
+        public EditorViewModel(MapService mapService,MapManager mapManager)
         {
             this.mapService = mapService;
             this.onlineEditedMapInfos = new ObservableCollection<MapEntity>();
-
+            this.mapManager = mapManager;
         }
 
-        public void ClearCurrentMap()
-        {
-            currentMap = null;
-        }
 
         public async Task InitializeViewModelAsync()
         {
@@ -138,7 +135,6 @@ namespace InterfaceGraphique.Controls.WPF.Editor
             else
             {
                 await Program.Editeur.JoinEdition(this.selectedMap);
-                currentMap = this.selectedMap;
                 Program.EditorHost.Close();
             }
 
@@ -194,7 +190,6 @@ namespace InterfaceGraphique.Controls.WPF.Editor
             if (selectedMap.Password.Equals(encryptedPassword))
             {
                 await Program.Editeur.JoinEdition(this.selectedMap);
-                currentMap = this.selectedMap;
                 Program.EditorHost.Close();
             }
             else
@@ -217,7 +212,7 @@ namespace InterfaceGraphique.Controls.WPF.Editor
 
         private bool CanJoinEdition()
         {
-
+            MapMetaData currentMap = mapManager.CurrentMapInfo;
             return this.selectedMap != null && this.selectedMap.CurrentNumberOfPlayer < 4 &&
                    (currentMap == null || currentMap.Id != this.selectedMap.Id);
         }
