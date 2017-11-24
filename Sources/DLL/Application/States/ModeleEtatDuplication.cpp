@@ -196,8 +196,10 @@ void ModeleEtatDuplication::playerMouseMove(int x, int y) {
 				node->setSelectedWithoutGhostEffect(true);
 			}
 
-
-			selectionCallback_("", false, true);
+			if(ModeleEtatJeu::obtenirInstance()->currentOnlineClientType()==ModeleEtatJeu::ONLINE_EDITION)
+			{
+				selectionCallback_("", false, true);
+			}
 
 			VisiteurDeplacement deplacementInit = VisiteurDeplacement(mousePos - centreDuplication, false);
 			arbre->accepterVisiteur(&deplacementInit);

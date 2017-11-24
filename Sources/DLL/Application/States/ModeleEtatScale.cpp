@@ -148,14 +148,17 @@ void ModeleEtatScale::playerMouseMove(int x, int y) {
 }
 void ModeleEtatScale::sendToServer()
 {
-	TransformEventCallback callback = ModeleEtatJeu::obtenirInstance()->getTransformEventCallback();
-
-	for (NoeudAbstrait* node : visiteurScale_.getSelectedNodes())
+	if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
 	{
+		TransformEventCallback callback = ModeleEtatJeu::obtenirInstance()->getTransformEventCallback();
 
-		if (callback)
+		for (NoeudAbstrait* node : visiteurScale_.getSelectedNodes())
 		{
-			callback(node->getUUID(), glm::value_ptr(node->obtenirPositionRelative()), node->obtenirRotation().y, glm::value_ptr(node->obtenirScale()));
+
+			if (callback)
+			{
+				callback(node->getUUID(), glm::value_ptr(node->obtenirPositionRelative()), node->obtenirRotation().y, glm::value_ptr(node->obtenirScale()));
+			}
 		}
 	}
 }
@@ -173,6 +176,7 @@ void ModeleEtatScale::sendToServer()
 ////////////////////////////////////////////////////////////////////////
 void ModeleEtatScale::mouseUpL()
 {
+
 	sendToServer();
 
 	ModeleEtat::mouseUpL();
