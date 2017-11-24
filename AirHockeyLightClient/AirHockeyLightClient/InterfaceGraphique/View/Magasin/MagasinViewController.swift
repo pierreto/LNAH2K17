@@ -76,7 +76,7 @@ class MagasinViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     private func loadStoreItems() {
-        self.storeService.getStoreItems().then { items -> Void in
+        _ = self.storeService.getStoreItems().then { items -> Void in
             self.storeItems = items
             
             DispatchQueue.main.async(execute: { () -> Void in
@@ -116,7 +116,7 @@ class MagasinViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     private func loadUserStoreItems() {
-        self.storeService.getUserStoreItems().then { items -> Void in
+        _ = self.storeService.getUserStoreItems().then { items -> Void in
             // Mettre à jour les items achetés par l'utilisateur
             for item in items {
                 self.storeItems.first(where: { $0.getId() == item.getId() })?.setIsBoughtByUser(isBoughtByUser: true)
@@ -207,7 +207,7 @@ class MagasinViewController: UIViewController, UICollectionViewDelegate, UIColle
         
         // Envoyer la requête d'achat au serveur
         print("Send buying http request")
-        self.storeService.buyElement(items: selectedItems, userId: HubManager.sharedConnection.getId()!)
+        _ = self.storeService.buyElement(items: selectedItems, userId: HubManager.sharedConnection.getId()!)
         
         // Mettre à jour l'UI
         self.resetCart((Any).self)

@@ -100,6 +100,7 @@ class ChatHub: BaseHub {
     ////////////////////////////////////////////////////////////////////////
     public override func logout() {
         do {
+            print("logout chat hub")
             var roomNames = MasterViewController.sharedMasterViewController.channels.map({ (cE: ChannelEntity) -> String in
                 cE.getName()
             })
