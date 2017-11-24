@@ -9,6 +9,8 @@ using AirHockeyServer.Pocos;
 using System.Threading.Tasks;
 using AirHockeyServer.Mapping;
 using AirHockeyServer.Repositories.Interfaces;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace AirHockeyServer.Repositories
 {
@@ -71,6 +73,26 @@ namespace AirHockeyServer.Repositories
             }
         }
 
+        public async Task<IEnumerable<MapEntity>> GetFullMaps()
+        {
+            try
+            {
+                using (MyDataContext DC = new MyDataContext())
+                {
+                    var query = from map in DC.MapsTable select map;
+                    var maps = await Task<List<MapPoco>>.Run(
+                        () => query.ToList());
+
+                    return MapperManager.Map<List<MapPoco>, List<MapEntity>>(maps);
+                }
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("[MapRepository.GetFullMaps] " + e.ToString());
+                return null;
+            }
+        }
+
         public async Task<int?> CreateNewMap(MapEntity map)
         {
             try
@@ -78,6 +100,14 @@ namespace AirHockeyServer.Repositories
                 using (MyDataContext DC = new MyDataContext())
                 {
                     MapPoco newMap = MapperManager.Map<MapEntity, MapPoco>(map);
+                    if (newMap.Private)
+                    {
+                        var sha1 = new SHA1CryptoServiceProvider();
+                        newMap.Password =
+                                Convert.ToBase64String(
+                                    sha1.ComputeHash(
+                                        Encoding.UTF8.GetBytes(newMap.Password)));
+                    }
                     DC.MapsTable.InsertOnSubmit(newMap);
                     await Task.Run(() => DC.SubmitChanges());
 

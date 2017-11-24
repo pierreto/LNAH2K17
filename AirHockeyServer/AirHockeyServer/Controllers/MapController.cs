@@ -57,6 +57,21 @@ namespace AirHockeyServer.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("api/maps/sync")]
+        public async Task<HttpResponseMessage> ReturnFullMaps()
+        {
+            try
+            {
+                IEnumerable<MapEntity> maps = await MapService.GetFullMaps();
+                return HttpResponseGenerator.CreateSuccesResponseMessage(HttpStatusCode.OK, maps);
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
+        }
+
         [HttpPost]
         [Route("api/maps/save")]
         public async Task<HttpResponseMessage> SaveMap([FromBody]MapEntity map)
@@ -89,7 +104,7 @@ namespace AirHockeyServer.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpDelete]
         [Route("api/maps/remove/{id}")]
         public async Task<HttpResponseMessage> RemoveMap(int id)
         {

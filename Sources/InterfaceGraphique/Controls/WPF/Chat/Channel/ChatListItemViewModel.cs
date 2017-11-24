@@ -29,6 +29,16 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
             }
         }
 
+        public bool IsJoinable
+        {
+            get => ChannelEntity.IsJoinable && IsSelected;
+            set
+            {
+                ChannelEntity.IsJoinable = value;
+                this.OnPropertyChanged();
+            }
+        }
+
         public bool IsSelected
         {
             get => ChannelEntity.IsSelected;
@@ -104,31 +114,54 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
                 return joinChannelCommand;
             }
         }
+        private ICommand mouseLeaveCommand;
+        public ICommand MouseLeaveCommand
+        {
+            get
+            {
+                if (mouseLeaveCommand == null)
+                {
+                    mouseLeaveCommand = new RelayCommand(MouseLeave);
+                }
+                return mouseLeaveCommand;
+            }
+        }
+        private ICommand selectChannelCommand;
+        public ICommand SelectChannelCommand
+        {
+            get
+            {
+                if (selectChannelCommand == null)
+                {
+                    selectChannelCommand = new RelayCommand(SelectChannel);
+                }
+                return selectChannelCommand;
+            }
+        }
         #endregion
 
         #region Command Methods
+        public void MouseLeave()
+        {
+            if (ChannelEntity.IsJoinable)
+            {
+                IsSelected = false;
+                OnPropertyChanged(nameof(IsJoinable));
+            }
+        }
+
         public void OpenChannel()
         {
-            if (Program.unityContainer.Resolve<ChatViewModel>().JoinMenuOpen)
+            if (ChannelEntity.IsJoinable)
             {
-                foreach (var item in Program.unityContainer.Resolve<JoinChannelListViewModel>().Items)
-                {
-                    item.IsSelected = false;
-                }
-                bool channelJoined = false;
-                foreach (var item in Program.unityContainer.Resolve<ChatListViewModel>().Items)
-                {
-                    if (item.ChannelEntity.Name == ChannelEntity.Name)
-                    {
-                        channelJoined = true;
-                    }
-                }
-                if (!channelJoined)
-                {
-                    ActiveChannel.Instance.JoinChannelEntity = ChannelEntity;
-                }
+                IsSelected = true;
+                OnPropertyChanged(nameof(IsJoinable));
             }
-            else
+        }
+
+        public void SelectChannel()
+        {
+            if (!ChannelEntity.IsJoinable)
             {
                 foreach (var item in Program.unityContainer.Resolve<ChatListViewModel>().Items)
                 {
@@ -138,13 +171,12 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
                 NewContentAvailable = false;
                 Program.unityContainer.Resolve<ChannelViewModel>().OnPropertyChanged("ChannelSelected");
             }
-            System.Diagnostics.Debug.WriteLine(ChannelEntity.Name);
-            IsSelected = true;
         }
-
         public async Task JoinChannel()
         {
-            await Program.unityContainer.Resolve<JoinChannelViewModel>().JoinChannel();
+            System.Diagnostics.Debug.WriteLine("Channel Namedfsadaddasdasdsa: " +Name);
+            await Program.unityContainer.Resolve<JoinChannelViewModel>().JoinChannel(Name);
+            
         }
         #endregion
 

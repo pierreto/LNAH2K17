@@ -10,6 +10,17 @@
 
 import UIKit
 
+extension String {
+    func sha1() -> String {
+        let data = self.data(using: String.Encoding.utf8)!
+        var digest = [UInt8](repeating: 0, count:Int(CC_SHA1_DIGEST_LENGTH))
+        data.withUnsafeBytes {
+            _ = CC_SHA1($0, CC_LONG(data.count), &digest)
+        }
+        return Data(bytes: digest).base64EncodedString()
+    }
+}
+
 ///////////////////////////////////////////////////////////////////////////
 /// @class UnlockMapViewController
 /// @brief Contrôleur de la vue pour déverrouiller une carte privée
@@ -85,7 +96,7 @@ class UnlockMapViewController: UIViewController {
     
     @IBAction func unlockMap(_ sender: Any) {
         self.deactivateInput()
-        isUnlocked = (self.viewModel?.unlock(map: MapDisplayViewController.instance.currentMap!, unlockPassword: self.unlockPassword.text!))!
+        isUnlocked = (self.viewModel?.unlock(map: MapDisplayViewController.instance.currentMap!, unlockPassword: self.unlockPassword.text!.sha1()))!
         
         if isUnlocked {
             /// Fermer la fenêtre

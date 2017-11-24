@@ -6,11 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using InterfaceGraphique.CommunicationInterface;
 using InterfaceGraphique.CommunicationInterface.RestInterface;
 using InterfaceGraphique.Entities;
 using InterfaceGraphique.Services;
 using MaterialDesignThemes.Wpf;
 using Microsoft.Practices.ObjectBuilder2;
+using System.Security.Cryptography;
 
 namespace InterfaceGraphique.Controls.WPF.Editor
 {
@@ -102,11 +104,24 @@ namespace InterfaceGraphique.Controls.WPF.Editor
             }
         }
 
+        public ICommand removeMapCommand;
+        public ICommand RemoveMapCommand
+        {
+            get
+            {
+                return removeMapCommand ??
+                       (removeMapCommand = new RelayCommandAsync(RemoveMap, (o) => true));
+            }
+        }
+        public async Task RemoveMap()
+        {
+                await Program.client.DeleteAsync(Program.client.BaseAddress + "api/maps/remove/" + User.Instance.UserEntity.Id.ToString());
+            
+        }
         public async Task SwitchToCreationMode()
         {
             Program.EditorHost.SwitchViewToMapModeView();
         }
-
         public ObservableCollection<MapEntity> OnlineEditedMapInfos
         {
             get => onlineEditedMapInfos;
@@ -164,7 +179,13 @@ namespace InterfaceGraphique.Controls.WPF.Editor
 
         private async Task CheckPrivatePassword()
         {
-            if (selectedMap.Password.Equals(Password))
+            var sha1 = new SHA1CryptoServiceProvider();
+            var encryptedPassword =
+                    Convert.ToBase64String(
+                        sha1.ComputeHash(
+                            Encoding.UTF8.GetBytes(Password)));
+
+            if (selectedMap.Password.Equals(encryptedPassword))
             {
                 await Program.Editeur.JoinEdition(this.selectedMap);
                 currentMap = this.selectedMap;

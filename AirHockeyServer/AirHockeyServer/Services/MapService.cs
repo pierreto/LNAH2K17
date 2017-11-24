@@ -104,6 +104,11 @@ namespace AirHockeyServer.Services
             return await MapRepository.GetMaps();
         }
 
+        public async Task<IEnumerable<MapEntity>> GetFullMaps()
+        {
+            return await MapRepository.GetFullMaps();
+        }
+        
         public async Task<bool> SyncMap(MapEntity map)
         {
             return await MapRepository.SyncMap(map);

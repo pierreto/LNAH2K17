@@ -216,7 +216,7 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
             ChannelErrMsg = await chatHub.CreateChannel(cE.Name);
             if(ChannelErrMsg == null)
             {
-                ChatListItemViewModel clivm = new ChatListItemViewModel(cE);
+                ChannelListItemViewModel clivm = new ChannelListItemViewModel(cE);
                 Program.unityContainer.Resolve<ChatListViewModel>().Items.Add(clivm);
                 Program.unityContainer.Resolve<ChatListViewModel>().Items.Move(Program.unityContainer.Resolve<ChatListViewModel>().Items.Count - 1, 1);
                 OnPropertyChanged("Items");
@@ -296,7 +296,7 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
                 {
                     System.Diagnostics.Debug.WriteLine("Created private channel. Name: " + username + "  Id: " + othersId);
                     ChannelEntity cE = new ChannelEntity() { Name = username, PrivateUserId = othersId, IsPrivate = true, Profile = profile };
-                    ChatListItemViewModel clivm = new ChatListItemViewModel(cE);
+                    ChannelListItemViewModel clivm = new ChannelListItemViewModel(cE);
                     Program.unityContainer.Resolve<ChatListViewModel>().Items.Add(clivm);
                     Program.unityContainer.Resolve<ChatListViewModel>().Items.Move(Program.unityContainer.Resolve<ChatListViewModel>().Items.Count - 1, 1);
                     OnPropertyChanged("Items");

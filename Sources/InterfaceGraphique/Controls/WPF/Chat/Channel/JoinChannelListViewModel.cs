@@ -74,7 +74,7 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
         {
             ctxTaskFactory.StartNew(() =>
             {
-                this.Items.Add(new ChatListItemViewModel(new ChannelEntity { Name = channelName }));
+                this.Items.Add(new ChatListItemViewModel(new ChannelEntity { Name = channelName , IsJoinable = true }));
             }).Wait();
         }
 

@@ -49,25 +49,29 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
             {
                 if (joinChannelCommand == null)
                 {
-                    joinChannelCommand = new RelayCommandAsync(JoinChannel, (o) => CanJoin());
+                    joinChannelCommand = new RelayCommandAsync(JoinChannel);
                 }
                 return joinChannelCommand;
             }
         }
+        
         #endregion
-
-        #region Command Methods
         public async Task JoinChannel()
         {
-            await chatHub.JoinChannel(ActiveChannel.Instance.JoinChannelEntity.Name);
-            ChannelEntity cE = new ChannelEntity { Name = ActiveChannel.Instance.JoinChannelEntity.Name };
+
+        }
+
+            #region Command Methods
+            public async Task JoinChannel(string channelName)
+        {
+            await chatHub.JoinChannel(channelName);
+            ChannelEntity cE = new ChannelEntity { Name = channelName };
             Program.unityContainer.Resolve<ChannelViewModel>().ToggleJoinChannel();
-            Program.unityContainer.Resolve<ChatListViewModel>().Items.Add(new ChatListItemViewModel(cE));
+            Program.unityContainer.Resolve<ChatListViewModel>().Items.Add(new ChannelListItemViewModel(cE));
             Program.unityContainer.Resolve<ChatListViewModel>().Items.Move(Program.unityContainer.Resolve<ChatListViewModel>().Items.Count - 1, 1);
             Program.unityContainer.Resolve<ChannelViewModel>().SetAsCurrentChannel(cE);
             Program.unityContainer.Resolve<JoinChannelListViewModel>().Items.Remove(Program.unityContainer.Resolve<JoinChannelListViewModel>().Items.Single(x => x.Name == cE.Name));
             ActiveChannel.Instance.JoinChannelEntity = null;
-
         }
 
         public bool CanJoin()

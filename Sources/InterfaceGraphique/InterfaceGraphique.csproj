@@ -172,6 +172,10 @@
     <Compile Include="Controls\TutorialHost.Designer.cs">
       <DependentUpon>TutorialHost.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\WPF\Chat\Channel\ChannelListItemView.xaml.cs">
+      <DependentUpon>ChannelListItemView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WPF\Chat\Channel\ChannelListItemViewModel.cs" />
     <Compile Include="Controls\WPF\Chat\Channel\ChannelView.xaml.cs">
       <DependentUpon>ChannelView.xaml</DependentUpon>
     </Compile>
@@ -652,6 +656,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Controls\WPF\Authenticate\AuthenticateView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\WPF\Chat\Channel\ChannelListItemView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
