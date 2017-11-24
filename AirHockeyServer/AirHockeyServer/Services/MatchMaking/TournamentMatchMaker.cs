@@ -29,12 +29,6 @@ namespace AirHockeyServer.Services.MatchMaking
         public override void AddOpponent(List<GamePlayerEntity> players)
         {
 
-            if (players.Count == 1)
-            {
-                AddOpponent(players.First());
-                return;
-            }
-
             TournamentEntity tournament = new TournamentEntity()
             {
                 Id = new Random().Next(),
@@ -68,11 +62,7 @@ namespace AirHockeyServer.Services.MatchMaking
 
         public override void AddOpponent(GamePlayerEntity player)
         {
-            WaitingPlayersMutex.WaitOne();
-            WaitingPlayers.Enqueue(player);
-            WaitingPlayersMutex.ReleaseMutex();
-
-            StartPlayersMatching();
+            AddOpponent(new List<GamePlayerEntity>() { player });
         }
 
         ///////////////////////////////////////////////////////////////////////
@@ -103,6 +93,7 @@ namespace AirHockeyServer.Services.MatchMaking
                             foreach (var player in playersToAdd)
                             {
                                 AddConnection(player.Id, Tournaments[i]);
+                                GlobalHost.ConnectionManager.GetHubContext<TournamentWaitingRoomHub>().Clients.Group(Tournaments[i].Id.ToString()).OpponentFoundEvent(Tournaments[i].Players);
                             }
                             Tournaments.Remove(Tournaments[j]);
                             break;
@@ -121,25 +112,7 @@ namespace AirHockeyServer.Services.MatchMaking
                     Tournaments.Remove(tournament);
                     break;
                 }
-
-                WaitingPlayersMutex.WaitOne();
-
-                if (WaitingPlayers.Count > 0)
-                {
-                    var waitingPlayer = WaitingPlayers.Dequeue();
-                    if (waitingPlayer != null)
-                    {
-                        tournament.Players.Add(waitingPlayer);
-                        if (tournament.Players.Count == 4)
-                        {
-                            OpponentFound.Invoke(this, tournament);
-                            Tournaments.Remove(tournament);
-                            break;
-                        }
-                    }
-                }
-
-                WaitingPlayersMutex.ReleaseMutex();
+               
             }
 
             TournamentMutex.ReleaseMutex();

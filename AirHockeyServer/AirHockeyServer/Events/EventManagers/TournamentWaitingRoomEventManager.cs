@@ -76,7 +76,7 @@ namespace AirHockeyServer.Events.EventManagers
 
                 Tournaments[tournament.Id] = tournament;
                 this.RemainingTime[tournament.Id] = 0;
-
+                
                 GlobalHost.ConnectionManager.GetHubContext<TournamentWaitingRoomHub>().Clients.Group(tournament.Id.ToString()).TournamentAllOpponentsFound(tournament);
 
                 System.Timers.Timer timer = CreateTimeoutTimer(tournament);
@@ -157,6 +157,11 @@ namespace AirHockeyServer.Events.EventManagers
                 Tournaments[tournamentId].SemiFinals[1].SelectedMap = Tournaments[tournamentId].SelectedMap;
 
                 Tournaments[tournamentId].State = TournamentState.SemiFinals;
+
+                GameManager.AddGame(Tournaments[tournamentId].SemiFinals[0]);
+                GameManager.AddGame(Tournaments[tournamentId].SemiFinals[1]);
+                GameManager.AddTournament(Tournaments[tournamentId]);
+
                 GlobalHost.ConnectionManager.GetHubContext<TournamentWaitingRoomHub>().Clients.Group(tournamentId.ToString()).TournamentStarting(Tournaments[tournamentId]);
 
                 Tournaments[tournamentId].SemiFinals.ForEach(async semiFinal =>

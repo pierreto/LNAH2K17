@@ -21,7 +21,7 @@ namespace AirHockeyServer.Repositories
             MapRepository = mapRepository;
         }
 
-        public async Task<GameEntity> CreateGame(GameEntity game)
+        public async Task CreateGame(GameEntity game)
         {
             try
             {
@@ -32,13 +32,12 @@ namespace AirHockeyServer.Repositories
 
                     await Task.Run(() => DC.SubmitChanges());
 
-                    return await GetGame(game.GameId);
+                    //return await GetGame(game.GameId);
                 }
             }
             catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine("[GameRepository.CreateGame] " + e.ToString());
-                return null;
             }
         }
 

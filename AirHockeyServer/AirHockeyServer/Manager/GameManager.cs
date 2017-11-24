@@ -44,6 +44,14 @@ namespace AirHockeyServer.Manager
             }
         }
 
+        public void AddTournament(TournamentEntity tournament)
+        {
+            if(tournament != null && !Cache.Tournaments.ContainsKey(tournament.Id))
+            {
+                Cache.Tournaments[tournament.Id] = tournament;
+            }
+        }
+
         public void GoalScored(Guid gameId, int playerId)
         {
             if (Cache.Games.ContainsKey(gameId))
@@ -203,8 +211,13 @@ namespace AirHockeyServer.Manager
                         Cache.Tournaments[tournament.Id] = tournament;
 
                         var gameHub = GlobalHost.ConnectionManager.GetHubContext<GameWaitingRoomHub>();
-                        await gameHub.Groups.Add(ConnectionMapper.GetConnection(finalGame.Players[0].Id), finalGame.GameId.ToString());
-                        await gameHub.Groups.Add(ConnectionMapper.GetConnection(finalGame.Players[1].Id), finalGame.GameId.ToString());
+                        foreach(var player in finalGame.Players)
+                        {
+                            if(!player.IsAi)
+                            {
+                                await gameHub.Groups.Add(ConnectionMapper.GetConnection(player.Id), finalGame.GameId.ToString());
+                            }
+                        }
 
 
                         Timer timer = new Timer();
@@ -274,6 +287,11 @@ namespace AirHockeyServer.Manager
             if(player1.IsAi && player2.IsAi)
             {
                 game.Score = new int[2] { 2, 0 };
+            }
+            if(game.Players.Any(x => x.IsAi))
+            {
+                game.Master = game.Players[0].IsAi ? game.Players[1] : game.Players[0];
+                game.Slave = game.Players[0].IsAi ? game.Players[0] : game.Players[1];
             }
 
             else
