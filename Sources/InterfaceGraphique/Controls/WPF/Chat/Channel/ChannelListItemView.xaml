@@ -1,0 +1,126 @@
+﻿<UserControl x:Class="InterfaceGraphique.Controls.WPF.Chat.Channel.ChannelListItemView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:InterfaceGraphique.Controls.WPF.Chat.Channel"
+             xmlns:convert="clr-namespace:InterfaceGraphique.Controls.WPF.Converters"
+             xmlns:wpf="clr-namespace:InterfaceGraphique.Controls.WPF"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             mc:Ignorable="d" 
+             d:DesignWidth="300">
+    <UserControl.Resources>
+
+        <ResourceDictionary>
+            <wpf:ViewModelLocator x:Key="VMLocator" d:IsDataSource="True" />
+            <Style x:Key="ContentStyle" TargetType="{x:Type ContentControl}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ContentControl}">
+
+                            <!-- Content -->
+                            <Border x:Name="background" Background="{StaticResource DarkGrayBrush}" BorderBrush="{StaticResource VeryDarkGrayBrush}" BorderThickness="0,0,0,2">
+
+                                <!-- Click to open message -->
+                                <Border.InputBindings>
+                                    <MouseBinding MouseAction="LeftClick" Command="{Binding SelectChannelCommand}" />
+                                    <!--<MouseBinding MouseAction="LeftDoubleClick" Command="{Binding JoinChannelCommand}"/>-->
+                                </Border.InputBindings>
+                                <Grid x:Name="container" Background="Transparent">
+                                    <Grid.ColumnDefinitions>
+                                        <!-- New Message Indicator Bar -->
+                                        <!-- Profile picture -->
+                                        <ColumnDefinition Width="Auto" />
+                                        <!-- Main content -->
+                                        <ColumnDefinition Width="5*" />
+                                        <ColumnDefinition Width="2*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- New Message Indicator Bar -->
+                                    <Border Background="White"
+                                            Panel.ZIndex="1"
+                                            Margin="0,10,0,0"
+                                            Width="15"
+                                            Height="15"
+                                            CornerRadius="15"
+                                            VerticalAlignment="Top"
+                                            HorizontalAlignment="Right"
+                                            BorderThickness="5"
+                                            BorderBrush="Red"
+                                            Visibility="{Binding DataContext.NewContentAvailable, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}},
+                                                        Converter={convert:BooleanToVisibilityConverter}, ConverterParameter=True}"
+                                    />
+
+                                    <!-- Profile picture padding -->
+                                    <Border Grid.Column="0" 
+                                    Padding="8 15"
+                                    >
+
+                                        <!-- Profile picture background -->
+                                        <Border Background="{StaticResource UltraDarkGrayBrush}" 
+                                        Height="40"
+                                                BorderThickness="2"
+                                                BorderBrush="{StaticResource TextColorBrush}"
+                                        Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
+                                        CornerRadius="8">
+                                            <!-- Profile picture background -->
+                                            <Rectangle 
+                                                Visibility="{Binding IsPrivate, Converter={convert:BooleanToVisibilityConverter}, ConverterParameter=True}"
+                                        Height="40"
+                                        Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
+                                        RadiusX="8" RadiusY="8">
+                                                <Rectangle.Fill>
+                                                    <!-- Profile picture -->
+                                                    <ImageBrush  RenderOptions.BitmapScalingMode="HighQuality" ImageSource="{Binding Profile, Converter={convert:Base64ImageConverter}}"/>
+                                                </Rectangle.Fill>
+                                            </Rectangle>
+                                        </Border>
+                                    </Border>
+
+                                    <!-- Main content -->
+                                    <Border Grid.Column="1" Padding="15 0 15 0">
+                                        <StackPanel VerticalAlignment="Center">
+                                            <!-- Name-->
+                                            <TextBlock Text="{Binding DataContext.Name, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}"
+                                                Padding="0 0 0 2"
+                                                Foreground="{StaticResource TextColorBrush}"
+                                                FontWeight="Medium"
+                                                FontSize="18"
+                                                TextTrimming="CharacterEllipsis"
+                                                />
+                                        </StackPanel>
+                                    </Border>
+                                    <StackPanel Grid.Column="2" Orientation="Horizontal" Margin="3px" HorizontalAlignment="Right" Visibility="{Binding DataContext.IsJoinable, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Converter={convert:BooleanToVisibilityConverter}, ConverterParameter=True}">
+                                        <Button fa:Awesome.Content="Plus" Margin="0 0 5 0" BorderThickness="0" Background="{StaticResource AddBrush}" Command="{Binding JoinChannelCommand}"></Button>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                            <!-- Hover effect -->
+                            <ControlTemplate.Triggers>
+
+                                <DataTrigger Binding="{Binding DataContext.IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Value="True">
+                                    <Setter Property="Background" TargetName="background" Value="{StaticResource VeryDarkGrayBrush}"/>
+                                </DataTrigger>
+
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Background" TargetName="container" Value="Green"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/InterfaceGraphique;component/Resource/appresources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <ContentControl Style="{StaticResource ContentStyle}">
+        <!--<ContentControl.DataContext>
+            <Binding Path="ChatListItemViewModel" Source="{StaticResource VMLocator}"/>
+        </ContentControl.DataContext>-->
+    </ContentControl>
+
+</UserControl>

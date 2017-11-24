@@ -231,14 +231,27 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
             
             let imageData : Data = UIImagePNGRepresentation(pickedImage)! as Data
             let strBase64 = imageData.base64EncodedString(options: Data.Base64EncodingOptions.init(rawValue: 0))
-            if strBase64.characters.count > 65535 {
+            if strBase64.characters.count > 2000000 {
                 // error dialog
-                profileImage.image = pickedImage
-
-                //print(strBase64)
+                let alert = UIAlertController(title: "L'image ne peut dépasser 2Mo!", message: "Message", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "Fermer", style: UIAlertActionStyle.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
             } else {
                 // update
-                profileImage.image = pickedImage
+                let parameters: [String: Any] = [
+                    "Profile" : strBase64.description
+                    ]
+                Alamofire.request("http://" + HubManager.sharedConnection.getIpAddress()! + ":63056/api/user/" + ((HubManager.sharedConnection.getId())?.description)!, method: .put, parameters: parameters, encoding: JSONEncoding.default)
+                    .responseJSON { response in
+                        if(response.response?.statusCode == 200) {
+                            self.profileImage.image = pickedImage
+                        } else {
+                            //Getting error message from server
+                            if let data = response.data {
+
+                            }
+                        }
+                    }
                 //print(strBase64)
             }
         }

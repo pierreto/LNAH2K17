@@ -153,7 +153,6 @@ namespace InterfaceGraphique
 
             Application.Run(formManager);
 
-
         }
 
         private static void ThreadExceptionHandler(object sender, ThreadExceptionEventArgs e)
@@ -193,7 +192,6 @@ namespace InterfaceGraphique
             }
         }
      
-
         public static void InitAfterConnection()
         {
             mainMenu = new MainMenu();

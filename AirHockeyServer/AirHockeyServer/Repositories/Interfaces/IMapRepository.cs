@@ -14,6 +14,8 @@ namespace AirHockeyServer.Repositories.Interfaces
 
         Task<IEnumerable<MapEntity>> GetMaps();
 
+        Task<IEnumerable<MapEntity>> GetFullMaps();
+
         Task<int?> CreateNewMap(MapEntity map);
 
         Task<MapEntity> GetMap(int idMap);

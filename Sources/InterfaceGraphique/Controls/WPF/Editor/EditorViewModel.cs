@@ -12,6 +12,7 @@ using InterfaceGraphique.Entities;
 using InterfaceGraphique.Services;
 using MaterialDesignThemes.Wpf;
 using Microsoft.Practices.ObjectBuilder2;
+using System.Security.Cryptography;
 
 namespace InterfaceGraphique.Controls.WPF.Editor
 {
@@ -178,7 +179,13 @@ namespace InterfaceGraphique.Controls.WPF.Editor
 
         private async Task CheckPrivatePassword()
         {
-            if (selectedMap.Password.Equals(Password))
+            var sha1 = new SHA1CryptoServiceProvider();
+            var encryptedPassword =
+                    Convert.ToBase64String(
+                        sha1.ComputeHash(
+                            Encoding.UTF8.GetBytes(Password)));
+
+            if (selectedMap.Password.Equals(encryptedPassword))
             {
                 await Program.Editeur.JoinEdition(this.selectedMap);
                 currentMap = this.selectedMap;

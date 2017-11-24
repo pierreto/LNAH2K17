@@ -7,6 +7,7 @@
              xmlns:convert="clr-namespace:InterfaceGraphique.Controls.WPF.Converters"
              xmlns:wpf="clr-namespace:InterfaceGraphique.Controls.WPF"
              xmlns:fa="http://schemas.fontawesome.io/icons/"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
              d:DesignWidth="300">
     <UserControl.Resources>
@@ -23,17 +24,27 @@
 
                                 <!-- Click to open message -->
                                 <Border.InputBindings>
-                                    <MouseBinding MouseAction="LeftClick" Command="{Binding OpenChannelCommand}" />
-                                    <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding JoinChannelCommand}"/>
+                                    <MouseBinding MouseAction="LeftClick" Command="{Binding SelectChannelCommand}" />
+                                    <!--<MouseBinding MouseAction="LeftDoubleClick" Command="{Binding JoinChannelCommand}"/>-->
                                 </Border.InputBindings>
+                                <i:Interaction.Triggers>
 
+                                    <i:EventTrigger EventName="MouseEnter">
+                                        <i:InvokeCommandAction Command="{Binding OpenChannelCommand}"/>
+                                    </i:EventTrigger>
+                                    <i:EventTrigger EventName="MouseLeave" >
+                                        <i:InvokeCommandAction Command="{Binding MouseLeaveCommand}"/>
+                                    </i:EventTrigger>
+
+                                </i:Interaction.Triggers>
                                 <Grid x:Name="container" Background="Transparent">
                                     <Grid.ColumnDefinitions>
                                         <!-- New Message Indicator Bar -->
                                         <!-- Profile picture -->
                                         <ColumnDefinition Width="Auto" />
                                         <!-- Main content -->
-                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="5*" />
+                                        <ColumnDefinition Width="2*" />
                                     </Grid.ColumnDefinitions>
 
                                     <!-- New Message Indicator Bar -->
@@ -90,7 +101,9 @@
                                                 />
                                         </StackPanel>
                                     </Border>
-
+                                    <StackPanel Grid.Column="2" Orientation="Horizontal" Margin="3px" HorizontalAlignment="Right" Visibility="{Binding DataContext.IsJoinable, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Converter={convert:BooleanToVisibilityConverter}, ConverterParameter=True}">
+                                        <Button fa:Awesome.Content="Plus" Margin="0 0 5 0" BorderThickness="0" Background="{StaticResource AddBrush}" Command="{Binding JoinChannelCommand}"></Button>
+                                    </StackPanel>
                                 </Grid>
                             </Border>
                             <!-- Hover effect -->
@@ -114,6 +127,7 @@
                                         </Storyboard>
                                     </BeginStoryboard>
                                 </EventTrigger>
+
                                 <Trigger Property="IsEnabled" Value="False">
                                     <Setter Property="Background" TargetName="container" Value="Green"/>
                                 </Trigger>
