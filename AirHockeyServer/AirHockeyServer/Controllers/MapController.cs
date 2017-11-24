@@ -89,7 +89,7 @@ namespace AirHockeyServer.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpDelete]
         [Route("api/maps/remove/{id}")]
         public async Task<HttpResponseMessage> RemoveMap(int id)
         {

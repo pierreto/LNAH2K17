@@ -45,7 +45,9 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.5*" />
+
+            </Grid.ColumnDefinitions>
 
         <TextBlock HorizontalAlignment="Center" Margin="48,0,0,0" TextWrapping="Wrap" FontWeight="Bold" FontSize="32" Foreground="White" Text="Rejoindre une carte :" Width="312" Grid.ColumnSpan="3" Height="46" VerticalAlignment="Top" Grid.Column="1"/>
 
@@ -54,7 +56,7 @@
         <TextBlock Grid.Column="3" Text="Nombre de joueurs" Foreground="#DDFFFFFF" FontSize="24" Grid.Row="1"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <TextBlock Grid.Column="4" Text="Créateur" Foreground="#DDFFFFFF" FontSize="24" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" />
 
-            <ListBox  ItemsSource="{Binding OnlineEditedMapInfos}" Foreground="#DD000000" d:DataContext="{Binding Source={StaticResource DesignViewModel}}" SelectedItem="{Binding SelectedMap}" Grid.ColumnSpan="5"
+            <ListBox  ItemsSource="{Binding OnlineEditedMapInfos}" Foreground="#DD000000" d:DataContext="{Binding Source={StaticResource DesignViewModel}}" SelectedItem="{Binding SelectedMap}" Grid.ColumnSpan="6"
                   Grid.Column="0" Grid.Row="2" >
                 <ListBox.ItemContainerStyle>
                     <Style TargetType="{x:Type ListBoxItem}">
@@ -72,6 +74,7 @@
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width=".5*" />
                             </Grid.ColumnDefinitions>
                             <Image MaxWidth="64" MaxHeight="64" Grid.Column="0" Source="{Binding Icon, Converter={convert:Base64ImageConverter}}" Cursor="Hand"/>
                             <fa:FontAwesome HorizontalAlignment="Center"  VerticalAlignment="Center" Grid.Column="1" Icon="Lock"  fa:Awesome.Content="Lock" Foreground="#DDF31010"  FontSize="48"  Visibility="{Binding Private, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}" />
@@ -79,6 +82,8 @@
                             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2" Text="{Binding MapName}" Foreground="#DDFFFFFF" FontSize="24" />
                             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Column="3" Text="{Binding CurrentNumberOfPlayer, StringFormat= ' {0}/4'}" Foreground="#DDFFFFFF" FontSize="24"  />
                             <TextBlock HorizontalAlignment="Center"  VerticalAlignment="Center"  Grid.Column="4" Text="{Binding Creator}" Foreground="#DDFFFFFF" FontSize="24" />
+                           <!-- <Button fa:Awesome.Content="Trash" BorderThickness="0" Background="{StaticResource DeleteBrush}" MaxWidth="32" MaxHeight="32"  Command="{Binding RemoveMapCommand}" Grid.Column="5"></Button>-->
+
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
