@@ -227,6 +227,18 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
         return ""
     }
     
+    private func decryptMessage(msg: String) -> String {
+        do {
+            let encrypted = try EncryptedMessage(base64Encoded: msg)
+            let clear = try encrypted.decrypted(with: self.privateKey!, padding: .PKCS1)
+            return try clear.string(encoding: .utf8)
+        } catch {
+            print("Error decrypting message.")
+        }
+        
+        return ""
+    }
+    
     func joinChannel(channelName: String) {
         clientConnection.getChatHub().joinChannel(channelName: channelName)
     }
