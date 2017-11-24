@@ -167,15 +167,18 @@ void ModeleEtatRotation::applyRotation(float angle, bool canSendToServer)
 
 		// Remettre le point central à sa position initiale
 		noeud->appliquerDeplacement(centreRotation_);
+
 		if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
 		{
-			if (canSendToServer)
-			{
-				TransformEventCallback callback = ModeleEtatJeu::obtenirInstance()->getTransformEventCallback();
-				if (callback)
+			if (noeudsSurLaTable()) {
+				if (canSendToServer)
 				{
+					TransformEventCallback callback = ModeleEtatJeu::obtenirInstance()->getTransformEventCallback();
+					if (callback)
+					{
 
-					callback(noeud->getUUID(), glm::value_ptr(noeud->obtenirPositionRelative()), noeud->obtenirRotation().y, glm::value_ptr(noeud->obtenirScale()));
+						callback(noeud->getUUID(), glm::value_ptr(noeud->obtenirPositionRelative()), noeud->obtenirRotation().y, glm::value_ptr(noeud->obtenirScale()));
+					}
 				}
 			}
 		}

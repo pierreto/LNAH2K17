@@ -136,12 +136,14 @@ void ModeleEtatScale::playerMouseMove(int x, int y) {
 
 		if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
 		{
-			SYSTEMTIME st;
-			GetSystemTime(&st);
-			accTime_ += st.wMilliseconds;
-			if (accTime_>1000) {
-				sendToServer();
-				accTime_ = 0;
+			if (noeudsSurLaTable()) {
+				SYSTEMTIME st;
+				GetSystemTime(&st);
+				accTime_ += st.wMilliseconds;
+				if (accTime_ > 1000) {
+					sendToServer();
+					accTime_ = 0;
+				}
 			}
 		}
 	}
