@@ -45,6 +45,12 @@ namespace InterfaceGraphique.Editor
             this.currentMapInfo = new MapMetaData();
         }
 
+        public MapMetaData CurrentMapInfo
+        {
+            get => currentMapInfo;
+            set => currentMapInfo = value;
+        }
+
         public void resetMapInfo()
         {
             string creator = User.Instance.UserEntity?.Username;

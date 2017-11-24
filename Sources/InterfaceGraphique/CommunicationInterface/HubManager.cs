@@ -77,16 +77,6 @@ namespace InterfaceGraphique.CommunicationInterface
                 hub.LeaveRoom();
             }
         }
-        public void LeaveEditorAndGameHubs()
-        {
-            foreach (IBaseHub hub in this.hubs)
-            {
-                if (hub is EditionHub || hub is GameHub || hub is GameWaitingRoomHub)
-                {
-                    hub.LeaveRoom();
-                }
-            }
-        }
 
         public void Logout()
         {

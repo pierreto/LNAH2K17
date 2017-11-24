@@ -125,6 +125,9 @@ class HubManager {
             hub.logout()
         }
         self.connection?.stop()
+        //TODO user = nil ????
+        self.user.setUsername(username: "")
+        NotificationCenter.default.post(name: Notification.Name(rawValue: LoginNotification.LogoutNotification), object: nil)
     }
     
 }
