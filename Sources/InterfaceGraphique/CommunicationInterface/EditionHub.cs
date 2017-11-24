@@ -93,6 +93,8 @@ namespace InterfaceGraphique.CommunicationInterface
         {
             if (map != null)
             {
+                Editeur.mapManager.SaveIcon();
+
                 await hubProxy.Invoke("LeaveRoom", this.map.Id);
             }
         }
@@ -100,9 +102,7 @@ namespace InterfaceGraphique.CommunicationInterface
 
         public async Task Logout()
         {
-           /* hubProxy?.Invoke("Disconnect", this.username).Wait();
-            this.map = null;*/
+            LeaveRoom();
         }
-
     }
 }
