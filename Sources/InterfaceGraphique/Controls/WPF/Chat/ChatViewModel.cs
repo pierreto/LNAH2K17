@@ -20,6 +20,7 @@ namespace InterfaceGraphique.Controls.WPF.Chat
         private TaskFactory ctxTaskFactory;
         private bool docked;
         private bool joinMenuOpen;
+        private bool hasNewMessage;
         private int chatTabHeight;
         private string messageTextBox;
         private ChannelEntity currentChannel;
@@ -53,6 +54,20 @@ namespace InterfaceGraphique.Controls.WPF.Chat
                 OnPropertyChanged(nameof(JoinMenuOpen));
             }
         }
+
+        public bool HasNewMessage
+        {
+            get
+            {
+                return hasNewMessage;
+            }
+            set
+            {
+                hasNewMessage = value;
+                OnPropertyChanged(nameof(HasNewMessage));
+            }
+        }
+
         public int ChatTabHeight
         {
             get { return chatTabHeight; }
@@ -257,6 +272,7 @@ namespace InterfaceGraphique.Controls.WPF.Chat
             }
             else
             {
+                HasNewMessage = false;
                 TabIcon = "AngleDown";
                 Collapsed = System.Windows.Visibility.Visible;
                 Program.FormManager.MaximizeChat();
@@ -290,6 +306,10 @@ namespace InterfaceGraphique.Controls.WPF.Chat
         {
             ctxTaskFactory.StartNew(() =>
             {
+                if(Collapsed != System.Windows.Visibility.Visible)
+                {
+                    HasNewMessage = true;
+                }
                 //If you are not currently on the channel where the message is being sent, you receive a notification
                 if (CurrentChannel != MainChannel)
                 {
@@ -307,6 +327,10 @@ namespace InterfaceGraphique.Controls.WPF.Chat
             ChannelEntity cE = items.Where(s => s.ChannelEntity.Name == channelName).First().ChannelEntity;
             ctxTaskFactory.StartNew(() =>
             {
+                if (Collapsed != System.Windows.Visibility.Visible)
+                {
+                    HasNewMessage = true;
+                }
                 //If you are not currently on the channel where the message is being sent, you receive a notification
                 if (CurrentChannel != cE)
                 {
@@ -328,6 +352,10 @@ namespace InterfaceGraphique.Controls.WPF.Chat
             ChannelEntity cE = items.Where(s => s.ChannelEntity.PrivateUserId == senderId).First().ChannelEntity;
             ctxTaskFactory.StartNew(() =>
             {
+                if (Collapsed != System.Windows.Visibility.Visible)
+                {
+                    HasNewMessage = true;
+                }
                 //If you are not currently on the channel where the message is being sent, you receive a notification
                 if (CurrentChannel != cE)
                 {

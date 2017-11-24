@@ -156,7 +156,7 @@ namespace AirHockeyServer.Repositories
                         existingMap.Json = updatedMap.Json;
                         existingMap.LastBackup = updatedMap.LastBackup;
                     }
-                    if (updatedMap.Icon != null)
+                    if(updatedMap.Icon != null)
                     {
                         existingMap.Icon = updatedMap.Icon;
                     }

@@ -12,6 +12,7 @@ using System.Collections.ObjectModel;
 using InterfaceGraphique.Controls.WPF.Chat.Channel;
 using InterfaceGraphique.Controls.WPF.Store;
 using InterfaceGraphique.Controls.WPF.UserProfile;
+using InterfaceGraphique.Controls.WPF.Chat;
 
 namespace InterfaceGraphique.Controls.WPF.Friends
 {
@@ -286,6 +287,10 @@ namespace InterfaceGraphique.Controls.WPF.Friends
         public async Task ChatWith()
         {
             await Program.unityContainer.Resolve<ChannelViewModel>().CreatePrivateChannel(Username, Id, ProfilePicture);
+            if(Program.unityContainer.Resolve<ChatViewModel>().Collapsed != System.Windows.Visibility.Visible)
+            {
+                Program.unityContainer.Resolve<ChatViewModel>().Minimize();
+            }
             System.Diagnostics.Debug.WriteLine("Chat with: " + Username + " with id: " + Id);
         }
 
