@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.Practices.Unity;
 using InterfaceGraphique.Controls.WPF.Chat.Channel;
 using System.Collections.Generic;
+using System.Text;
 
 namespace InterfaceGraphique.CommunicationInterface
 {
@@ -38,15 +39,18 @@ namespace InterfaceGraphique.CommunicationInterface
             //Message envoye pour le canal principal
             chatHubProxy.On<ChatMessage>("ChatMessageReceived", message =>
             {
+                message.MessageValue = Encoding.UTF8.GetString(Convert.FromBase64String(message.MessageValue));
                 NewMessage?.Invoke(message);
             });
             //On distingue un message recu d'un canal
             chatHubProxy.On<ChatMessage, String>("ChatMessageReceivedChannel", (message, channelName) =>
             {
+                message.MessageValue = Encoding.UTF8.GetString(Convert.FromBase64String(message.MessageValue));
                 NewMessageFromChannel?.Invoke(message, channelName);
             });
             chatHubProxy.On<ChatMessage, int>("ChatMessageReceivedPrivate", (message, senderId) =>
             {
+                message.MessageValue = Encoding.UTF8.GetString(Convert.FromBase64String(message.MessageValue));
                 NewPrivateMessage?.Invoke(message, senderId);
             });
             chatHubProxy.On<string, int, string>("PrivateChannelCreated", (privateName, othersId, othersProfile) =>
@@ -68,6 +72,7 @@ namespace InterfaceGraphique.CommunicationInterface
         public async void SendMessage(ChatMessage message)
         {
             message.Sender = User.Instance.UserEntity.Username;
+            message.MessageValue = Convert.ToBase64String(Encoding.UTF8.GetBytes(message.MessageValue));
             message.TimeStamp = DateTime.Now;
             await chatHubProxy.Invoke("SendBroadcast", message);
         }
@@ -97,6 +102,7 @@ namespace InterfaceGraphique.CommunicationInterface
         public async void SendPrivateMessage(ChatMessage message, int senderId, int receptorId)
         {
             message.Sender = User.Instance.UserEntity.Username;
+            message.MessageValue = Convert.ToBase64String(Encoding.UTF8.GetBytes(message.MessageValue));
             message.TimeStamp = DateTime.Now;
             await chatHubProxy.Invoke("SendPrivateMessage", message, senderId, receptorId);
         }
@@ -104,6 +110,7 @@ namespace InterfaceGraphique.CommunicationInterface
         public async void SendChannel(ChatMessage message, string channelName)
         {
             message.Sender = User.Instance.UserEntity.Username;
+            message.MessageValue = Encoding.UTF8.GetString(Convert.FromBase64String(message.MessageValue));
             message.TimeStamp = DateTime.Now;
             await chatHubProxy.Invoke("SendChannel", channelName, message);
         }
