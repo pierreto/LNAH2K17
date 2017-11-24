@@ -148,7 +148,8 @@ namespace InterfaceGraphique
             lobbyHost = new LobbyHost();
             userProfileMenu = new UserProfileMenu();
             storeMenu = new StoreMenu();
-
+            onlineTournamentMenu = new OnlineTournementMenu();
+            onlineTournament = new OnlineTournament();
             FonctionsNatives.loadSounds();
 
             formManager.CurrentForm = homeMenu;
@@ -197,12 +198,11 @@ namespace InterfaceGraphique
         public static void InitAfterConnection()
         {
             mainMenu = new MainMenu();
+
             editeur = unityContainer.Resolve<Editeur>();
             quickPlayMenu = new QuickPlayMenu();
             tournementMenu = new TournementMenu();
             tournementTree = new TournementTree();
-            onlineTournamentMenu = new OnlineTournementMenu();
-            onlineTournament = new OnlineTournament();
         }
 
         public static void InitializeUnityDependencyInjection()
