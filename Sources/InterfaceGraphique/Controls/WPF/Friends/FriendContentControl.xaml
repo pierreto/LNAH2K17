@@ -31,6 +31,8 @@
                 <Setter Property="Width" Value="{Binding Converter={StaticResource PercentageConverter}, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type dragablz:TabablzControl}},Path=ActualWidth}" />
                 <Setter Property="FontFamily"  Value="pack://application:,,,/fonts/#FontAwesome" />
             </Style>
+            
+            
             <ResourceDictionary.MergedDictionaries >
                 <ResourceDictionary Source="/InterfaceGraphique;component/Resource/appresources.xaml"/>
                 <ResourceDictionary Source="/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
@@ -48,19 +50,32 @@
             <RowDefinition/>
             <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
+
         <dragablz:TabablzControl Grid.Row="0" ItemContainerStyle ="{StaticResource mdTabHeader}" BorderBrush="#FF8C8C8C" Cursor="Hand" FixedHeaderCount="3">
-            <TabItem  Header="&#xf0c0;" Grid.Column="0" HorizontalAlignment="center">
+            <dragablz:TabablzControl.HeaderItemTemplate>
+                <DataTemplate x:Name="Notification">
+                    <Grid>
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding}" />
+                        <Border Width="10" Height="10" CornerRadius="5" Margin="15 0 0 10" Background="Red" Visibility="{Binding DataContext.HasNewFriendRequest, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type dragablz:TabablzControl}}, Converter={converters:BooleanToVisibilityConverter}, ConverterParameter=False}"></Border>
+                    </Grid>
+                </DataTemplate>
+            </dragablz:TabablzControl.HeaderItemTemplate>
+
+            <TabItem Header="&#xf0c0;" HorizontalAlignment="center" BorderBrush="Transparent" MouseDown="TabItem_MouseDown_1">
                 <ContentControl Content="{Binding Source={StaticResource VMLocator}, Path=FriendListViewModel}"/>
             </TabItem>
-            <TabItem  Header="&#xf234;"  Grid.Column="1" HorizontalAlignment="center">
+            <TabItem Header="&#xf234;" HorizontalAlignment="center" BorderBrush="Transparent">
                 <ContentControl Content="{Binding Source={StaticResource VMLocator}, Path=AddUserViewModel}" />
             </TabItem>
-            <TabItem  Header="&#xf0f3;"  Grid.Column="1" HorizontalAlignment="center">
+            <TabItem Header="&#xf0f3;"  HorizontalAlignment="center" BorderBrush="Red" MouseDown="TabItem_MouseDown">
                 <ContentControl Content="{Binding Source={StaticResource VMLocator}, Path=FriendRequestListViewModel}" />
             </TabItem>
         </dragablz:TabablzControl>
         <DockPanel Background="{StaticResource VeryDarkGrayBrush}" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" LastChildFill="True" Height="Auto" Visibility="{Binding Docked, Converter={converters:BooleanToVisibilityConverter}, ConverterParameter=False}" Grid.ColumnSpan="2">
-            <Button Foreground="White" Height="Auto"  fa:Awesome.Content="{Binding TabIcon }" Background="Transparent" Command="{Binding MinimizeCommand}" BorderThickness="0" Focusable="False" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Center" VerticalAlignment="Center"/>
+            <Grid>
+                <Button Foreground="White" Height="Auto"  fa:Awesome.Content="{Binding TabIcon }" Background="Transparent" Command="{Binding MinimizeCommand}" BorderThickness="0" Focusable="False" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Center" VerticalAlignment="Center"/>
+                <Border Visibility="{Binding HasNewRequest, Converter={converters:BooleanToVisibilityConverter}, ConverterParameter=False}" Background="Red" HorizontalAlignment="Center" Width="10" Height="10" CornerRadius="10" Margin="15 0 0 10"></Border>
+            </Grid>
         </DockPanel>
     </Grid>
 

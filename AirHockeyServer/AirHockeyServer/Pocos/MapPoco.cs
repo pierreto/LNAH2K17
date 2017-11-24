@@ -25,7 +25,7 @@ namespace AirHockeyServer.Pocos
         [Column(Name = "json", DbType = "text NOT NULL", CanBeNull = false, UpdateCheck = UpdateCheck.Never)]
         public string Json;
 
-        [Column(Name = "icon", DbType = "text", CanBeNull = true, UpdateCheck = UpdateCheck.Never)]
+        [Column(Name = "icon", CanBeNull = true, UpdateCheck = UpdateCheck.Never)]
         public string Icon;
 
         [Column(Name = "private", DbType = "tinyint(1)", CanBeNull = false)]

@@ -136,26 +136,31 @@ void ModeleEtatScale::playerMouseMove(int x, int y) {
 
 		if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
 		{
-			SYSTEMTIME st;
-			GetSystemTime(&st);
-			accTime_ += st.wMilliseconds;
-			if (accTime_>1000) {
-				sendToServer();
-				accTime_ = 0;
+			if (noeudsSurLaTable()) {
+				SYSTEMTIME st;
+				GetSystemTime(&st);
+				accTime_ += st.wMilliseconds;
+				if (accTime_ > 1000) {
+					sendToServer();
+					accTime_ = 0;
+				}
 			}
 		}
 	}
 }
 void ModeleEtatScale::sendToServer()
 {
-	TransformEventCallback callback = ModeleEtatJeu::obtenirInstance()->getTransformEventCallback();
-
-	for (NoeudAbstrait* node : visiteurScale_.getSelectedNodes())
+	if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
 	{
+		TransformEventCallback callback = ModeleEtatJeu::obtenirInstance()->getTransformEventCallback();
 
-		if (callback)
+		for (NoeudAbstrait* node : visiteurScale_.getSelectedNodes())
 		{
-			callback(node->getUUID(), glm::value_ptr(node->obtenirPositionRelative()), node->obtenirRotation().y, glm::value_ptr(node->obtenirScale()));
+
+			if (callback)
+			{
+				callback(node->getUUID(), glm::value_ptr(node->obtenirPositionRelative()), node->obtenirRotation().y, glm::value_ptr(node->obtenirScale()));
+			}
 		}
 	}
 }
@@ -173,6 +178,7 @@ void ModeleEtatScale::sendToServer()
 ////////////////////////////////////////////////////////////////////////
 void ModeleEtatScale::mouseUpL()
 {
+
 	sendToServer();
 
 	ModeleEtat::mouseUpL();

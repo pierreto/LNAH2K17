@@ -176,13 +176,13 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
 
                         // Open the friend list windows:
                         //Program.FriendListHost.Show();
-                        
+                        Program.unityContainer.Resolve<ChatViewModel>().Init();
                         await Program.unityContainer.Resolve<FriendsHub>().InitializeFriendsHub();
                         await Program.unityContainer.Resolve<FriendListViewModel>().Init();
                         await Program.unityContainer.Resolve<AddUserViewModel>().Init();
                         await Program.unityContainer.Resolve<FriendRequestListViewModel>().Init();
                         await Program.unityContainer.Resolve<AddFriendListViewModel>().InitAddFriends();
-                        Program.unityContainer.Resolve<ChatViewModel>().Init();
+                        
                     }
                     else
                     {
