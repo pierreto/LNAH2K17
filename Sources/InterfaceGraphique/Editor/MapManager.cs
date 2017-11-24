@@ -201,7 +201,7 @@ namespace InterfaceGraphique.Editor
                 // we have to join the online edition mode:
                 if (!this.currentMapInfo.savedOnce)
                 {
-                    Program.Editeur.JoinEdition(map.Value);
+                    await Program.Editeur.JoinEdition(map.Value);
                 }
 
                 // we have to update the properties of the current map:
