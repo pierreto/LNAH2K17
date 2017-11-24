@@ -202,6 +202,7 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
                 "MessageValue": self.messageField.text!,
                 "TimeStamp": dateString
                 ] as [String : Any]
+            
             let chatHub = clientConnection.getChatHub()
             if (channel.name == "Principal") {
                 chatHub.SendBroadcast(message : message)
@@ -212,6 +213,18 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
             // Clear chat box
             self.messageField.text = ""
         }
+    }
+    
+    private func encryptMessage(msg: String) -> String {
+        do {
+            let clear = try ClearMessage(string: msg, using: .utf8)
+            let encrypted = try clear.encrypted(with: self.publicKey!, padding: .PKCS1)
+            return encrypted.base64String
+        } catch {
+            print("Error encrypting message.")
+        }
+        
+        return ""
     }
     
     func joinChannel(channelName: String) {
@@ -305,7 +318,6 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
 
         return cell!
     }
-
     
     func convertDate(dateString: String) -> String {
         /*let dateFormatter = DateFormatter()
@@ -317,6 +329,7 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
         
         return dateString
     }
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchBar.text == nil || searchBar.text == "" {
             isSearching = false
@@ -330,6 +343,7 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
             joinChannelTableView.reloadData()
         }
     }
+    
 }
 
 extension ChatAreaViewController: ChannelSelectionDelegate {
