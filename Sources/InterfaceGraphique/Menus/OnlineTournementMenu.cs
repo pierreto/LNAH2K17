@@ -148,14 +148,9 @@ namespace InterfaceGraphique.Menus
             List<GamePlayerEntity> players = new List<GamePlayerEntity>();
             List<bool> IsVirtualPlayers = new List<bool> { isPlayer1Virtual, isPlayer2Virtual, isPlayer3Virtual, isPlayer4Virtual };
 
-            IsVirtualPlayers.Where(x => x).ToList().ForEach(x => players.Add(new GamePlayerEntity { IsAi = true }));
+            IsVirtualPlayers.Where(x => x).ToList().ForEach(x => players.Add(new GamePlayerEntity { IsAi = true, Username = "AI" }));
 
             players.Add(new GamePlayerEntity(User.Instance.UserEntity));
-
-            while(players.Count < 4)
-            {
-                players.Add(new GamePlayerEntity() { IsAi = false });
-            }
 
             Program.QuickPlay.CurrentGameState.IsOnlineTournementMode = true;
             var vm = Program.unityContainer.Resolve<Controls.WPF.Tournament.TournamentViewModel>();

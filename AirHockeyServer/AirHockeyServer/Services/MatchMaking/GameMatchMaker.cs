@@ -22,6 +22,8 @@ namespace AirHockeyServer.Services.MatchMaking
     ///////////////////////////////////////////////////////////////////////////////
     public class GameMatchMaker : MatchMaker
     {
+        public event EventHandler<MatchFoundArgs> MatchFoundEvent;
+
         ////////////////////////////////////////////////////////////////////////
         ///
         /// @fn static UserEntity GetGameOpponent()
@@ -93,6 +95,38 @@ namespace AirHockeyServer.Services.MatchMaking
             var users = new List<GamePlayerEntity> { new GamePlayerEntity(recipient), new GamePlayerEntity(sender) };
             Thread myThread = new Thread(new ThreadStart(() => ExecuteMatch(users)));
             myThread.Start();
+        }
+
+        public override void RemoveUser(int userId)
+        {
+            _WaitingPlayers = new Queue<GamePlayerEntity>(_WaitingPlayers.Where(x => x.Id != userId));
+        }
+
+        protected void InvokeMatchFound(PlayersMatchEntity match)
+        {
+            MatchFoundEvent?.Invoke(new GamePlayerEntity(), new MatchFoundArgs { PlayersMatch = match });
+        }
+
+        public override void AddOpponent(List<GamePlayerEntity> players)
+        {
+            WaitingPlayersMutex.WaitOne();
+
+            players.ForEach(x => WaitingPlayers.Enqueue(x));
+
+            WaitingPlayersMutex.ReleaseMutex();
+
+            StartPlayersMatching();
+        }
+
+        public override void AddOpponent(GamePlayerEntity player)
+        {
+            WaitingPlayersMutex.WaitOne();
+
+            WaitingPlayers.Enqueue(player);
+
+            WaitingPlayersMutex.ReleaseMutex();
+
+            StartPlayersMatching();
         }
     }
 }
