@@ -101,7 +101,11 @@ namespace InterfaceGraphique.CommunicationInterface
 
         public async Task Logout()
         {
-            LeaveRoom();
+            if (map != null)
+            {
+                await hubProxy.Invoke("LeaveRoom", this.map.Id);
+                Program.Editeur.LeaveOnlineEdition();
+            }
         }
     }
 }
