@@ -71,7 +71,7 @@
                 <ContentControl Content="{Binding Source={StaticResource VMLocator}, Path=FriendRequestListViewModel}" />
             </TabItem>
         </dragablz:TabablzControl>
-        <DockPanel Background="{StaticResource VeryDarkGrayBrush}" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" LastChildFill="True" Height="Auto" Visibility="{Binding Docked, Converter={converters:BooleanToVisibilityConverter}, ConverterParameter=False}" Grid.ColumnSpan="2">
+        <DockPanel Background="{StaticResource UltraDarkGrayBrush}" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" LastChildFill="True" Height="Auto" Visibility="{Binding Docked, Converter={converters:BooleanToVisibilityConverter}, ConverterParameter=False}" Grid.ColumnSpan="2">
             <Grid>
                 <Button Foreground="White" Height="Auto"  fa:Awesome.Content="{Binding TabIcon }" Background="Transparent" Command="{Binding MinimizeCommand}" BorderThickness="0" Focusable="False" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Center" VerticalAlignment="Center"/>
                 <Border Visibility="{Binding HasNewRequest, Converter={converters:BooleanToVisibilityConverter}, ConverterParameter=False}" Background="Red" HorizontalAlignment="Center" Width="10" Height="10" CornerRadius="10" Margin="15 0 0 10"></Border>

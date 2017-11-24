@@ -8,6 +8,7 @@ using InterfaceGraphique.Managers;
 using System.Linq;
 using System.Windows;
 using System.Windows.Data;
+using InterfaceGraphique.Controls.WPF.Chat.Channel;
 
 namespace InterfaceGraphique.Controls.WPF.Friends
 {
@@ -85,7 +86,6 @@ namespace InterfaceGraphique.Controls.WPF.Friends
 
         public async Task Init()
         {
-            Minimize();
             var friends = await friendsHub.GetAllFriends();
             FriendList = new ObservableCollection<FriendListItemViewModel>();
             foreach(var friend in friends)
@@ -170,6 +170,8 @@ namespace InterfaceGraphique.Controls.WPF.Friends
                 {
                     ctxTaskFactory.StartNew(() =>
                     {
+                        Program.unityContainer.Resolve<ChatListViewModel>().Items.Remove(Program.unityContainer.Resolve<ChatListViewModel>().Items.Single(x => x.ChannelEntity.Name == FriendList[i].Username && x.ChannelEntity.IsPrivate));
+                        Program.unityContainer.Resolve<ChatListViewModel>().OnPropertyChanged("Items");
                         FriendListItemViewModel vm = FriendList[i];
                         FriendList.RemoveAt(i);
                         vm.IsConnected = false;

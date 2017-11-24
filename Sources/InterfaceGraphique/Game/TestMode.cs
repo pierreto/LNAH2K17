@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InterfaceGraphique.Controls.WPF.MainMenu;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Practices.Unity;
 
 namespace InterfaceGraphique {
 
@@ -97,7 +99,7 @@ namespace InterfaceGraphique {
         ////////////////////////////////////////////////////////////////////////
         private void InitializeEvents() {
             this.MenuItem_EditorMode.Click += (sender, e) => Program.FormManager.CurrentForm = Program.Editeur;
-            this.MenuItem_MainMenu.Click += (sender, e) => { ResetDefaultTable(); Program.FormManager.CurrentForm = Program.MainMenu; };
+            this.MenuItem_MainMenu.Click += (sender, e) => { Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>()); };
             this.MenuItem_OrbitView.Click += (sender, e) => ToggleOrbit(true);
             this.MenuItem_OrthoView.Click += (sender, e) => ToggleOrbit(false);
             this.MenuItem_Help.Click += (sender, e) => { EditorHelp form = new EditorHelp(); form.ShowTestHelpText(); form.ShowDialog(); };
@@ -381,7 +383,7 @@ namespace InterfaceGraphique {
 
                 case (Keys.Q | Keys.Control):
                     ResetDefaultTable();
-                    Program.FormManager.CurrentForm = Program.MainMenu;
+                    Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>());
                     return true;
             }
             return base.ProcessCmdKey(ref msg, keyData);

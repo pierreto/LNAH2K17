@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Practices.Unity;
 using InterfaceGraphique.CommunicationInterface;
+using InterfaceGraphique.Controls.WPF.MainMenu;
 
 namespace InterfaceGraphique
 {
@@ -57,7 +58,7 @@ namespace InterfaceGraphique
                 this.OnlineTournamentButton.Click += (sender, e) => { SwitchButtonsState(this.OnlineTournamentButton, this.OnlineTournamentButton); };
             }
             this.Button_Play.Click += new EventHandler(ValidateSettings);
-            this.Button_MainMenu.Click += (sender, e) => Program.FormManager.CurrentForm = Program.MainMenu;
+            this.Button_MainMenu.Click += (sender, e) => Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>());
             this.Button_OpenMap.Click += (sender, e) => fileDialog.ShowDialog();
             this.Button_DefaultMap.Click += (sender, e) => { this.Button_DefaultMap.Enabled = false; this.Label_MapName.Text = DefaultValues.mapName; fileDialog.FileName = null; };
             this.Button_DefaultMap.Paint += new PaintEventHandler(StatePaintButton);

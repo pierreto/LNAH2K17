@@ -20,6 +20,7 @@ using InterfaceGraphique.Editor.EditorState;
 using InterfaceGraphique.Services;
 using InterfaceGraphique.Editor;
 using Microsoft.Practices.Unity;
+using InterfaceGraphique.Controls.WPF.MainMenu;
 
 namespace InterfaceGraphique {
 
@@ -191,7 +192,7 @@ namespace InterfaceGraphique {
             this.Fichier_MenuPrincipal.Click += async (sender, e) =>
             {
                 await CurrentState.LeaveEdition();
-                Program.FormManager.CurrentForm = Program.MainMenu;
+                Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>());
             };
             this.Fichier_ModeTest.Click += (sender, e) => Program.FormManager.CurrentForm = Program.TestMode;
             this.Fichier_Propriete.Click += (sender, e) => Program.GeneralProperties.ShowDialog();
@@ -630,7 +631,7 @@ namespace InterfaceGraphique {
 
                 case (Keys.Q | Keys.Control):
                     ResetDefaultTable();
-                    Program.FormManager.CurrentForm = Program.MainMenu;
+                    Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>());
                     return true;
 
                 case Keys.Oemplus:

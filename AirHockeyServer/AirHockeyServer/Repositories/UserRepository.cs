@@ -115,6 +115,7 @@ namespace AirHockeyServer.Repositories
             {
                 using (MyDataContext DC = new MyDataContext())
                 {
+                    userEntity.Profile = "";
                     UserPoco uP = MapperManager.Mapper.Map<UserEntity, UserPoco>(userEntity);
                     DC.GetTable<UserPoco>().InsertOnSubmit(uP);
                     await Task.Run(() => DC.SubmitChanges());
@@ -147,7 +148,7 @@ namespace AirHockeyServer.Repositories
             }
             catch (Exception e)
             {
-                System.Diagnostics.Debug.WriteLine("[UserRepository.PostUser] " + e.ToString());
+                System.Diagnostics.Debug.WriteLine("[UserRepository.UpdateUser] " + e.ToString());
                 throw new UserException("Unable to create user");
             }
         }

@@ -5,20 +5,32 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:wpf="clr-namespace:InterfaceGraphique.Controls.WPF"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="1000" d:DesignWidth="1000">
     <UserControl.Resources>
         <ResourceDictionary>
             <wpf:ViewModelLocator x:Key="VMLocator" d:IsDataSource="True" />
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/InterfaceGraphique;component/Resource/appresources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Border Padding="10" Background="#FF373A3E" >
-        <StackPanel VerticalAlignment="Center" MaxWidth="400">
-            <StackPanel.DataContext>
-                <Binding Path="HomeViewModel" Source="{StaticResource VMLocator}"/>
-            </StackPanel.DataContext>
-
-            <Button Content="Mode En Ligne" HorizontalAlignment="Center" Margin="0,0,0,10" VerticalAlignment="Top" Width="145" Command="{Binding OnlineCommand}"/>
-            <Button Content="Mode Hors Ligne" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="145" Command="{Binding OfflineCommand}"/>
-        </StackPanel>
+    <Border Padding="10" Background="{StaticResource DarkGrayBrush}" >
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="3*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal" Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                <Label FontSize="100" FontWeight="Bold" Foreground="White">LNAH</Label>
+                <Label FontSize="100" FontWeight="Bold" Foreground="Red">2K17</Label>
+            </StackPanel>
+            <StackPanel VerticalAlignment="Top" MaxWidth="400" Grid.Row="1">
+                <StackPanel.DataContext>
+                    <Binding Path="HomeViewModel" Source="{StaticResource VMLocator}"/>
+                </StackPanel.DataContext>
+                <Button Background="{StaticResource GreenBrush}" FontWeight="Bold" FontSize="24" Content="Mode En Ligne" HorizontalAlignment="Center" Margin="0,0,0,20" VerticalAlignment="Top" Width="250" Height="50" Command="{Binding OnlineCommand}" BorderThickness="0"/>
+                <Button Background="{StaticResource BlueBrush}" FontWeight="Bold" FontSize="24" Content="Mode Hors Ligne" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top" Width="250" Height="50" Command="{Binding OfflineCommand}" BorderThickness="0"/>
+            </StackPanel>
+        </Grid>
     </Border>
 </UserControl>

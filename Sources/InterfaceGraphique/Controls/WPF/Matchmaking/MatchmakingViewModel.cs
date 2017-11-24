@@ -11,6 +11,8 @@ using InterfaceGraphique.CommunicationInterface.RestInterface;
 using System.Collections.ObjectModel;
 using InterfaceGraphique.Services;
 using InterfaceGraphique.CommunicationInterface;
+using InterfaceGraphique.Controls.WPF.MainMenu;
+using Microsoft.Practices.Unity;
 
 namespace InterfaceGraphique.Controls.WPF.Matchmaking
 {
@@ -149,12 +151,12 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
         {
             await this.WaitingRoomHub.LeaveGame();
             SetDefaultValues();
-            Program.FormManager.CurrentForm = Program.MainMenu;
+            Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>());
         }
 
         private async Task MainMenu()
         {
-            Program.FormManager.CurrentForm=Program.MainMenu;
+            Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>());
         }
 
         private void StartGame()

@@ -12,6 +12,7 @@ using InterfaceGraphique.Exceptions;
 using InterfaceGraphique.Services;
 using InterfaceGraphique.CommunicationInterface.RestInterface;
 using InterfaceGraphique.Controls.WPF.Chat;
+using InterfaceGraphique.Controls.WPF.MainMenu;
 
 namespace InterfaceGraphique.Controls.WPF.Authenticate
 {
@@ -106,6 +107,7 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
         public AuthenticateViewModel(LoginEntity loginEntity, ChatHub chatHub, StoreService storeService)
         {
             Title = "Authentification";
+            BackText = "Se Connecter";
             this.loginEntity = loginEntity;
             this.chatHub = chatHub;
             StoreService = storeService;
@@ -172,16 +174,17 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
                         //On initie tous les formes qui on besoin de savoir si on est en mode en ligne 
                         Program.InitAfterConnection();
 
-                        Program.FormManager.CurrentForm = Program.MainMenu;
+                        Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>());
 
-                        // Open the friend list windows:
-                        //Program.FriendListHost.Show();
-                        Program.unityContainer.Resolve<ChatViewModel>().Init();
+                        //Should show loading spinner
                         await Program.unityContainer.Resolve<FriendsHub>().InitializeFriendsHub();
                         await Program.unityContainer.Resolve<FriendListViewModel>().Init();
                         await Program.unityContainer.Resolve<AddUserViewModel>().Init();
                         await Program.unityContainer.Resolve<FriendRequestListViewModel>().Init();
                         await Program.unityContainer.Resolve<AddFriendListViewModel>().InitAddFriends();
+                        Program.unityContainer.Resolve<ChatViewModel>().Init();
+                        Program.unityContainer.Resolve<FriendListViewModel>().Minimize();
+                        //Hide loading spinner
                         
                     }
                     else
