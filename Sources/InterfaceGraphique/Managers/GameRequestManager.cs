@@ -49,7 +49,7 @@ namespace InterfaceGraphique.Managers
             Program.unityContainer.Resolve<MatchmakingViewModel>().SetDefaultValues();
             Program.unityContainer.Resolve<MatchmakingViewModel>().Initialize(true);
 
-            Program.FormManager.ShowGameRequestPopup();
+            Program.FormManager.ShowGameRequestPopup(request.Sender.Username);
         }
 
         private void OnGameRequestDeclined(GameRequestEntity request)

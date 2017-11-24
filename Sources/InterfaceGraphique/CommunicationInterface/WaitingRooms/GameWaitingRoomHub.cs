@@ -12,7 +12,7 @@ using InterfaceGraphique.Services;
 
 namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 {
-    public class GameWaitingRoomHub : IBaseHub
+    public class GameWaitingRoomHub : BaseHub, IBaseHub
     {
         private SlaveGameState slaveGameState;
 
@@ -50,12 +50,26 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
         public async void Join()
         {
             GamePlayerEntity player = new GamePlayerEntity(User.Instance.UserEntity);
-            await WaitingRoomProxy.Invoke("Join", player);
+            try
+            {
+                await WaitingRoomProxy.Invoke("Join", player);
+            }
+            catch (Exception e)
+            {
+                HandleError();
+            }
         }
 
         public async Task LeaveGame()
         {
-            await WaitingRoomProxy.Invoke("LeaveGame", User.Instance.UserEntity, CurrentGameId);
+            try
+            {
+                await WaitingRoomProxy.Invoke("LeaveGame", User.Instance.UserEntity, CurrentGameId);
+            }
+            catch (Exception e)
+            {
+                HandleError();
+            }
         }
 
         public async void UpdateSelectedMap(MapEntity map)
@@ -65,7 +79,9 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
                 await WaitingRoomProxy.Invoke("UpdateMap", CurrentGameId, map);
             }
             catch (Exception e)
-            { }
+            {
+                HandleError();
+            }
         }
 
         private void InitializeEvents()
@@ -132,7 +148,14 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
         public async Task Logout()
         {
-            //TODO: IMPLEMENT THE LOGOUT MECANISM
+            try
+            {
+                await WaitingRoomProxy.Invoke("Disconnect");
+            }
+            catch (Exception e)
+            {
+                HandleError();
+            }
         }
 
         public async Task LeaveRoom()

@@ -120,11 +120,12 @@ namespace InterfaceGraphique
             await Program.unityContainer.Resolve<GameRequestManager>().AcceptGameRequest();
         }
 
-        public void ShowGameRequestPopup()
+        public void ShowGameRequestPopup(string senderName)
         {
             this.BeginInvoke(new MethodInvoker(delegate
             {
                 this.gameRequestPopup.Show();
+                this.textBox2.Text = senderName;
                 DisabledButtonsExeptGameRequest(this.Controls);
                 EnablePop();
             }));

@@ -12,7 +12,7 @@ using System.Drawing;
 
 namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 {
-    public class TournamentWaitingRoomHub : IBaseHub
+    public class TournamentWaitingRoomHub : BaseHub, IBaseHub
     {
         protected int CurrentTournamentId { get; set; }
 
@@ -56,30 +56,66 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
         public async void Join()
         {
             List<GamePlayerEntity> players = new List<GamePlayerEntity>() { new GamePlayerEntity(User.Instance.UserEntity) };
-            await WaitingRoomProxy.Invoke("Join", players);
+            try
+            {
+                await WaitingRoomProxy.Invoke("Join", players);
+            }
+            catch (Exception e)
+            {
+                HandleError();
+            }
         }
 
         public async void CreateTournament(List<GamePlayerEntity> players)
         {
-            await WaitingRoomProxy.Invoke("Join", players);
+            try
+            {
+                await WaitingRoomProxy.Invoke("Join", players);
+            }
+            catch (Exception e)
+            {
+                HandleError();
+            }
         }
 
         public async Task Logout()
         {
-            await WaitingRoomProxy.Invoke("Disconnect", User.Instance.UserEntity.Username);
+            try
+            {
+                await WaitingRoomProxy.Invoke("Disconnect");
+            }
+            catch (Exception e)
+            {
+                HandleError();
+            }
         }
 
         public async void UpdateSelectedMap(MapEntity map)
         {
             if (CurrentTournamentId > 0)
             {
-                await WaitingRoomProxy.Invoke<TournamentEntity>("UpdateMap", CurrentTournamentId, map);
+                try
+                {
+                    await WaitingRoomProxy.Invoke<TournamentEntity>("UpdateMap", CurrentTournamentId, map);
+                }
+                catch (Exception e)
+                {
+                    HandleError();
+                }
             }
         }
 
         public async Task LeaveTournament()
         {
-            await WaitingRoomProxy.Invoke("LeaveTournament", User.Instance.UserEntity, CurrentTournamentId);
+            try
+            {
+                await WaitingRoomProxy.Invoke("LeaveTournament", User.Instance.UserEntity, CurrentTournamentId);
+            }
+            catch (Exception e)
+            {
+                HandleError();
+            }
+
             CurrentTournamentId = 0;
         }
 
@@ -93,7 +129,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
             WaitingRoomProxy.On<TournamentEntity>("TournamentFinalResult", tournament => OnFinalResults(tournament));
         }
-        
+
         private void InitializeWaitingRoomEvents()
         {
             WaitingRoomProxy.On<List<GamePlayerEntity>>("OpponentFoundEvent", (opponents) => OnOpponentFoundEvent(opponents));
@@ -161,7 +197,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
             }));
         }
 
-        private void SetGame(GameEntity game,  bool isMaster)
+        private void SetGame(GameEntity game, bool isMaster)
         {
             Program.OnlineTournament.Invoke(new MethodInvoker(async () =>
             {
@@ -173,14 +209,14 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
                     this.MasterGameState.InitializeGameState(game);
                     Program.QuickPlay.CurrentGameState = this.MasterGameState;
 
-                    if(game.Slave.IsAi)
+                    if (game.Slave.IsAi)
                     {
                         FonctionsNatives.setCurrentOpponentType((int)OpponentType.VIRTUAL_PLAYER);
                     }
 
                     Program.FormManager.CurrentForm = Program.QuickPlay;
                     Program.QuickPlay.CurrentGameState.IsOnlineTournementMode = true;
-                    
+
                 }
                 else
                 {

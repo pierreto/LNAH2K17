@@ -11,7 +11,7 @@ using Microsoft.AspNet.SignalR.Client;
 
 namespace InterfaceGraphique.CommunicationInterface
 {
-    public class FriendsHub : IBaseHub
+    public class FriendsHub : BaseHub, IBaseHub
     {
         private static IHubProxy FriendsProxy { get; set; }
         private static HubConnection Connection;
@@ -38,7 +38,14 @@ namespace InterfaceGraphique.CommunicationInterface
         public async Task InitializeFriendsHub()
         {
             this.user = User.Instance.UserEntity;
-            await FriendsProxy.Invoke("JoinHub", this.user);
+            try
+            {
+                await FriendsProxy.Invoke("JoinHub", this.user);
+            }
+            catch (Exception e)
+            {
+                HandleError();
+            }
             InitializeEvents();
         }
 
@@ -94,63 +101,159 @@ namespace InterfaceGraphique.CommunicationInterface
 
         public async Task<bool> FriendIsAvailable(int recipientId)
         {
-            return await FriendsProxy.Invoke<bool>("FriendIsAvailable", recipientId);
+            try
+            {
+                return await FriendsProxy.Invoke<bool>("FriendIsAvailable", recipientId);
+            }
+            catch (Exception e)
+            {
+                HandleError();
+            }
+
+            return false;
         }
 
         public async Task<List<UserEntity>> GetAllFriends()
         {
-            return await FriendsProxy.Invoke<List<UserEntity>>("GetAllFriends", this.user);
+            try
+            {
+                return await FriendsProxy.Invoke<List<UserEntity>>("GetAllFriends", this.user);
+            }
+            catch (Exception e)
+            {
+                HandleError();
+            }
+            return null;
         }
 
         public async Task<List<FriendRequestEntity>> GetAllPendingRequests()
         {
-            return await FriendsProxy.Invoke<List<FriendRequestEntity>>("GetAllPendingRequests", this.user);
+            try
+            {
+
+                return await FriendsProxy.Invoke<List<FriendRequestEntity>>("GetAllPendingRequests", this.user);
+            }
+            catch (Exception e)
+            {
+                HandleError();
+            }
+            return null;
         }
 
         public async Task<FriendRequestEntity> SendFriendRequest(UserEntity friend)
         {
-            return await FriendsProxy.Invoke<FriendRequestEntity>("SendFriendRequest", this.user, friend);
+            try
+            {
+
+                return await FriendsProxy.Invoke<FriendRequestEntity>("SendFriendRequest", this.user, friend);
+            }
+            catch (Exception e)
+            {
+                HandleError();
+            }
+            return null;
         }
 
         public async Task<bool> AcceptFriendRequest(FriendRequestEntity request)
         {
-            var res = await FriendsProxy.Invoke<FriendRequestEntity>("AcceptFriendRequest", request);
+            FriendRequestEntity res = new FriendRequestEntity();
+            try
+            {
+                res = await FriendsProxy.Invoke<FriendRequestEntity>("AcceptFriendRequest", request);
+            }
+            catch (Exception e)
+            {
+                HandleError();
+            }
             return (res != null) ? true : false;
         }
 
         public async Task<bool> RefuseFriendRequest(FriendRequestEntity request)
         {
-            var res = await FriendsProxy.Invoke<FriendRequestEntity>("RefuseFriendRequest", request);
+            FriendRequestEntity res = new FriendRequestEntity();
+            try
+            {
+                res = await FriendsProxy.Invoke<FriendRequestEntity>("RefuseFriendRequest", request);
+            }
+            catch (Exception e)
+            {
+                HandleError();
+            }
             return (res != null) ? true : false;
         }
         public async Task<bool> RemoveFriend(UserEntity ex_friend)
         {
-            return await FriendsProxy.Invoke<bool>("RemoveFriend", this.user, ex_friend);
+            try
+            {
+                return await FriendsProxy.Invoke<bool>("RemoveFriend", this.user, ex_friend);
+            }
+            catch (Exception e)
+            {
+                HandleError();
+            }
+            return false;
         }
 
         public async Task AcceptGameRequest(GameRequestEntity gameRequest)
         {
-            await FriendsProxy.Invoke("AcceptGameRequest", gameRequest);
+            try
+            {
+                await FriendsProxy.Invoke("AcceptGameRequest", gameRequest);
+            }
+            catch (Exception e)
+            {
+                HandleError();
+            }
         }
 
         public async Task DeclineGameRequest(GameRequestEntity gameRequest)
         {
-            await FriendsProxy.Invoke("DeclineGameRequest", gameRequest);
+            try
+            {
+                await FriendsProxy.Invoke("DeclineGameRequest", gameRequest);
+            }
+            catch (Exception e)
+            {
+                HandleError();
+            }
         }
 
         public async Task<bool> SendGameRequest(GameRequestEntity gameRequest)
         {
-            return await FriendsProxy.Invoke<bool>("SendGameRequest", gameRequest);
+            try
+            {
+                return await FriendsProxy.Invoke<bool>("SendGameRequest", gameRequest);
+            }
+            catch (Exception e)
+            {
+                HandleError();
+            }
+
+            return false;
         }
 
-        public async Task<bool> CancelGameRequest(GameRequestEntity gameRequest)
+        public async Task CancelGameRequest(GameRequestEntity gameRequest)
         {
-            return await FriendsProxy.Invoke<bool>("CancelGameRequest", gameRequest);
+            try
+            {
+                await FriendsProxy.Invoke("CancelGameRequest", gameRequest);
+            }
+            catch (Exception e)
+            {
+                HandleError();
+            }
         }
 
         public async Task Logout()
         {
-            await FriendsProxy.Invoke("Logout", User.Instance.UserEntity);
+            try
+            {
+                await FriendsProxy.Invoke("Logout", User.Instance.UserEntity);
+            }
+            catch (Exception e)
+            {
+                HandleError();
+            }
         }
 
         public async Task LeaveRoom()

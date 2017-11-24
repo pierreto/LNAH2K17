@@ -51,11 +51,7 @@ namespace InterfaceGraphique
         private void InitializeEvents()
         {
             bool onlineMode = User.Instance.IsConnected;
-            // Button events
-            if (onlineMode)
-            {
-                this.OnlineTournamentButton.Click += (sender, e) => { SwitchButtonsState(this.OnlineTournamentButton, this.OnlineTournamentButton); };
-            }
+
             this.Button_Play.Click += new EventHandler(ValidateSettings);
             this.Button_MainMenu.Click += (sender, e) => Program.FormManager.CurrentForm = Program.MainMenu;
             this.Button_OpenMap.Click += (sender, e) => fileDialog.ShowDialog();
@@ -254,10 +250,6 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void SwitchButtonsState(Button select, Button deselect)
         {
-            if (select == OnlineTournamentButton)
-            {
-                isOnline = true;
-            }
             if (select.ForeColor == Color.White)
             {
                 select.ForeColor = deselect.ForeColor;
