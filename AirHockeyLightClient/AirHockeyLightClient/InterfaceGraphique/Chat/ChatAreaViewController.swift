@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyRSA
 
 protocol AddChannelDelegate: class {
     func addChannel(channelName: String)
@@ -21,12 +22,13 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var addChannelView: UIView!
     @IBOutlet weak var joinChannelView: UIView!
     @IBOutlet weak var joinChannelTableView: UITableView!
-    
     @IBOutlet weak var channelNameField: UITextField!
     @IBOutlet weak var channelNameErrMsg: UILabel!
-    
     @IBOutlet weak var searchBar: UISearchBar!
-    
+
+    private var publicKey: PublicKey?
+    private var privateKey: PrivateKey?
+
     var isSearching = false
     let joinChannelHiddenX = Float(-241)
     weak var delegate: AddChannelDelegate?
@@ -95,6 +97,13 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
         
         //Search bar
         searchBar.delegate = self
+        
+        do {
+            self.publicKey = try PublicKey(pemNamed: "public")
+            self.privateKey = try PrivateKey(pemNamed: "private")
+        } catch {
+            print("Error loading public and/or private key.")
+        }
     }
 
     /// Enclenché lorsqu'un message est reçu dans le canal principal
