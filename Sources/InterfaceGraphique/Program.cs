@@ -59,7 +59,9 @@ namespace InterfaceGraphique
         public static EditorHost EditorHost { get { return editorHost; } set { editorHost = value; } }
         public static UserProfileMenu UserProfileMenu { get { return userProfileMenu; } set { userProfileMenu = value; } }
         public static StoreMenu StoreMenu { get { return storeMenu; } set { storeMenu = value; } } 
-        public static TutorialHost TutorialHost { get { return tutorialHost; } set { tutorialHost = value; } } 
+        public static TutorialHost TutorialHost { get { return tutorialHost; } set { tutorialHost = value; } }
+
+        public static OnlineTournementMenu OnlineTournamentMenu { get { return onlineTournamentMenu; } set { onlineTournamentMenu = value; } }
 
         private static TestChatMenu testChatMenu;
         private static FormManager formManager;
@@ -80,6 +82,7 @@ namespace InterfaceGraphique
         private static UserProfileMenu userProfileMenu;
         private static StoreMenu storeMenu;
         private static TutorialHost tutorialHost;
+        private static OnlineTournementMenu onlineTournamentMenu;
 
         private static Panel openGLPanel;
         private static TimeSpan dernierTemps;
@@ -143,7 +146,6 @@ namespace InterfaceGraphique
             testChatMenu = new TestChatMenu();
             creditsMenu = new CreditsMenu();
             lobbyHost = new LobbyHost();
-            onlineTournament = new OnlineTournament();
             userProfileMenu = new UserProfileMenu();
             storeMenu = new StoreMenu();
 
@@ -152,7 +154,6 @@ namespace InterfaceGraphique
             formManager.CurrentForm = homeMenu;
 
             Application.Run(formManager);
-
 
         }
 
@@ -193,14 +194,16 @@ namespace InterfaceGraphique
             }
         }
      
-
         public static void InitAfterConnection()
         {
             mainMenu = new MainMenu();
+
             editeur = unityContainer.Resolve<Editeur>();
             quickPlayMenu = new QuickPlayMenu();
             tournementMenu = new TournementMenu();
             tournementTree = new TournementTree();
+            onlineTournamentMenu = new OnlineTournementMenu();
+            onlineTournament = new OnlineTournament();
         }
 
         public static void InitializeUnityDependencyInjection()
@@ -228,16 +231,16 @@ namespace InterfaceGraphique
             unityContainer.RegisterType<ChannelViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<JoinChannelListViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<JoinChannelViewModel>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<FriendListViewModel>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<AddFriendListViewModel>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<FriendRequestListViewModel>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<FriendListItemViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<TournamentViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<AuthenticateViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<ConnectServerViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<SignupViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<HomeViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<EditorViewModel>(new ContainerControlledLifetimeManager());
-            unityContainer.RegisterType<FriendListViewModel>(new ContainerControlledLifetimeManager());
-            unityContainer.RegisterType<AddFriendListViewModel>(new ContainerControlledLifetimeManager());
-            unityContainer.RegisterType<FriendRequestListViewModel>(new ContainerControlledLifetimeManager());
-            unityContainer.RegisterType<FriendListItemViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<UserProfileViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<StoreViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<AddUserViewModel>(new ContainerControlledLifetimeManager());

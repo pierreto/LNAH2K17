@@ -30,11 +30,11 @@ namespace AirHockeyServer.App_Start
 
             GlobalHost.DependencyResolver.Register(
                  typeof(GameWaitingRoomHub),
-                 () => new GameWaitingRoomHub(WebApiApplication.UnityContainer.Resolve<GameService>(), WebApiApplication.UnityContainer.Resolve<Hubs.ConnectionMapper>()));
+                 () => new GameWaitingRoomHub(WebApiApplication.UnityContainer.Resolve<GameService>(), WebApiApplication.UnityContainer.Resolve<Hubs.ConnectionMapper>(), WebApiApplication.UnityContainer.Resolve<FriendService>()));
 
              GlobalHost.DependencyResolver.Register(
                  typeof(TournamentWaitingRoomHub),
-                 () => new TournamentWaitingRoomHub(WebApiApplication.UnityContainer.Resolve<TournamentService>(), WebApiApplication.UnityContainer.Resolve<Hubs.ConnectionMapper>())); 
+                 () => new TournamentWaitingRoomHub(WebApiApplication.UnityContainer.Resolve<TournamentService>(), WebApiApplication.UnityContainer.Resolve<Hubs.ConnectionMapper>(), WebApiApplication.UnityContainer.Resolve<FriendService>())); 
 
               GlobalHost.DependencyResolver.Register(
                  typeof(EditionHub),

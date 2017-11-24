@@ -10,7 +10,7 @@ namespace InterfaceGraphique.Entities
     {
         public int Id { get; set; }
 
-        public List<UserEntity> Players { get; set; }
+        public List<GamePlayerEntity> Players { get; set; }
 
         public List<GameEntity> SemiFinals { get; set; }
 
@@ -18,13 +18,13 @@ namespace InterfaceGraphique.Entities
 
         public MapEntity SelectedMap { get; set; }
 
-        public UserEntity Winner { get; set; }
+        public GamePlayerEntity Winner { get; set; }
 
         public TournamentState State { get; set; }
 
         public TournamentEntity()
         {
-            this.Players = new List<UserEntity>();
+            this.Players = new List<GamePlayerEntity>();
             this.SemiFinals = new List<GameEntity>();
         }
     }

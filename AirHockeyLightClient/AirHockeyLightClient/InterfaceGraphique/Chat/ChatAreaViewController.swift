@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyRSA
 
 protocol AddChannelDelegate: class {
     func addChannel(channelName: String)
@@ -21,12 +22,13 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var addChannelView: UIView!
     @IBOutlet weak var joinChannelView: UIView!
     @IBOutlet weak var joinChannelTableView: UITableView!
-    
     @IBOutlet weak var channelNameField: UITextField!
     @IBOutlet weak var channelNameErrMsg: UILabel!
-    
     @IBOutlet weak var searchBar: UISearchBar!
-    
+
+    private var publicKey: PublicKey?
+    private var privateKey: PrivateKey?
+
     var isSearching = false
     let joinChannelHiddenX = Float(-241)
     weak var delegate: AddChannelDelegate?
@@ -95,6 +97,13 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
         
         //Search bar
         searchBar.delegate = self
+        
+        do {
+            self.publicKey = try PublicKey(pemNamed: "public")
+            self.privateKey = try PrivateKey(pemNamed: "private")
+        } catch {
+            print("Error loading public and/or private key.")
+        }
     }
 
     /// Enclenché lorsqu'un message est reçu dans le canal principal
@@ -193,6 +202,7 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
                 "MessageValue": self.messageField.text!,
                 "TimeStamp": dateString
                 ] as [String : Any]
+            
             let chatHub = clientConnection.getChatHub()
             if (channel.name == "Principal") {
                 chatHub.SendBroadcast(message : message)
@@ -203,6 +213,30 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
             // Clear chat box
             self.messageField.text = ""
         }
+    }
+    
+    private func encryptMessage(msg: String) -> String {
+        do {
+            let clear = try ClearMessage(string: msg, using: .utf8)
+            let encrypted = try clear.encrypted(with: self.publicKey!, padding: .PKCS1)
+            return encrypted.base64String
+        } catch {
+            print("Error encrypting message.")
+        }
+        
+        return ""
+    }
+    
+    private func decryptMessage(msg: String) -> String {
+        do {
+            let encrypted = try EncryptedMessage(base64Encoded: msg)
+            let clear = try encrypted.decrypted(with: self.privateKey!, padding: .PKCS1)
+            return try clear.string(encoding: .utf8)
+        } catch {
+            print("Error decrypting message.")
+        }
+        
+        return ""
     }
     
     func joinChannel(channelName: String) {
@@ -296,7 +330,6 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
 
         return cell!
     }
-
     
     func convertDate(dateString: String) -> String {
         /*let dateFormatter = DateFormatter()
@@ -308,6 +341,7 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
         
         return dateString
     }
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchBar.text == nil || searchBar.text == "" {
             isSearching = false
@@ -321,6 +355,7 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
             joinChannelTableView.reloadData()
         }
     }
+    
 }
 
 extension ChatAreaViewController: ChannelSelectionDelegate {

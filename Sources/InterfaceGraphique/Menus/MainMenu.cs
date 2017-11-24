@@ -83,6 +83,8 @@ namespace InterfaceGraphique
             {
                 this.profileButton.Click += async (sender, e) => await OnProfileButtonClicked(sender, e);
                 this.storeButton.Click += async (sender, e) => await OnStoreButtonClicked(sender, e);
+
+                this.onlineTournamentButton.Click += (sender, e) => Program.FormManager.CurrentForm = Program.OnlineTournamentMenu;
             }
             else
             {

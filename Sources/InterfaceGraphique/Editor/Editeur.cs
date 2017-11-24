@@ -181,26 +181,16 @@ namespace InterfaceGraphique {
             this.Fichier_EnregistrerSous_Serveur.Click += OpenLocalMap;
             this.Fichier_OuvrirLocalement.Click += (sender, e) =>
             {
-                this.editorViewModel.ClearCurrentMap();
                 mapManager.OpenLocalMap();
             };
             this.Fichier_OuvrirEnLigne.Click += async (sender, e) => await OpenOnlineMap();
             this.Fichier_Nouveau.Click += async (sender, e) =>
             { 
                 await CurrentState.LeaveEdition();
-                ResetDefaultTable();
-                this.CurrentState = this.offlineState;
-                this.CurrentState.JoinEdition(null);
-                this.userPanel.Visible = false;
-                this.editorViewModel.ClearCurrentMap();
             };
             this.Fichier_MenuPrincipal.Click += async (sender, e) =>
             {
                 await CurrentState.LeaveEdition();
-                this.userPanel.Visible = false;
-                this.editorViewModel.ClearCurrentMap();
-
-                ResetDefaultTable();
                 Program.FormManager.CurrentForm = Program.MainMenu;
             };
             this.Fichier_ModeTest.Click += (sender, e) => Program.FormManager.CurrentForm = Program.TestMode;
@@ -240,6 +230,16 @@ namespace InterfaceGraphique {
             Program.EditorHost.ShowDialog();
         }
 
+        public async void LeaveOnlineEdition() // Called by the edition hub
+        {
+            this.BeginInvoke(new MethodInvoker(delegate
+            {
+                ResetDefaultTable();
+                this.CurrentState = this.offlineState;
+                this.CurrentState.JoinEdition(null);
+                this.userPanel.Visible = false;
+            }));
+        }
 
         ////////////////////////////////////////////////////////////////////////
         ///
@@ -432,8 +432,6 @@ namespace InterfaceGraphique {
                     this.userPanel.Visible = true;
                 }));
             });
-      
- 
         }
 
         private async Task OpenOnlineMap()

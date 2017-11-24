@@ -172,7 +172,10 @@ class EditionHub: BaseHub {
     
     func leaveRoom() {
         do {
-            try self.hubProxy?.invoke("LeaveRoom", arguments: [self.map?.id as Any])
+            if self.map != nil {
+                try self.hubProxy?.invoke("LeaveRoom", arguments: [self.map?.id as Any])
+                self.map = nil
+            }
         }
         catch {
             print("Error LeaveRoom")
@@ -180,8 +183,8 @@ class EditionHub: BaseHub {
     }
     
     override func logout() {
-        // TODO
-        print("logout")
+        print("logout edition hub")
+        self.leaveRoom()
     }
     
 }

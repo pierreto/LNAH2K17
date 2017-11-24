@@ -13,20 +13,27 @@ namespace AirHockeyServer.Hubs
 {
     public class TournamentWaitingRoomHub : Hub
     {
-        public TournamentWaitingRoomHub(ITournamentService tournamentService, ConnectionMapper connectionMapper)
+        public TournamentWaitingRoomHub(ITournamentService tournamentService, ConnectionMapper connectionMapper, FriendService friendService)
         {
             TournamentService = tournamentService;
             ConnectionMapper = connectionMapper;
+            FriendService = friendService;
         }
-
+        protected FriendService FriendService { get; }
         public ITournamentService TournamentService { get; }
         public ConnectionMapper ConnectionMapper { get; set; }
 
-        public void Join(UserEntity user)
+        public void Join(List<GamePlayerEntity> players)
         {
-            ConnectionMapper.AddConnection(user.Id, Context.ConnectionId);
-            Cache.AddPlayer(user);
-            TournamentService.JoinTournament(user);
+            foreach (var player in players)
+            {
+                if (!player.IsAi)
+                {
+                    ConnectionMapper.AddConnection(player.Id, Context.ConnectionId);
+                    Cache.AddPlayer(FriendService.UsersIdConnected.Find(x => x.Id == player.Id));
+                }
+            }
+            TournamentService.JoinTournament(players);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -45,11 +52,11 @@ namespace AirHockeyServer.Hubs
             TournamentService.UpdateTournament(tournamentId, selectedMap);
         }
 
-        public void LeaveTournament(UserEntity user, int tournamentId)
+        public void LeaveTournament(GamePlayerEntity user, int tournamentId)
         {
             Groups.Remove(ConnectionMapper.GetConnection(user.Id), tournamentId.ToString());
             TournamentService.LeaveTournamentWaitingRoom(user, tournamentId);
-            Cache.RemovePlayer(user);
+            Cache.RemovePlayer(user.Id);
             ConnectionMapper.DeleteConnection(user.Id);
         }
 

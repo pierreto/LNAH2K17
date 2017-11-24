@@ -8,17 +8,6 @@
 
 import UIKit
 
-extension String {
-    func sha1() -> String {
-        let data = self.data(using: String.Encoding.utf8)!
-        var digest = [UInt8](repeating: 0, count:Int(CC_SHA1_DIGEST_LENGTH))
-        data.withUnsafeBytes {
-            _ = CC_SHA1($0, CC_LONG(data.count), &digest)
-        }
-        return Data(bytes: digest).base64EncodedString()
-    }
-}
-
 class LoginViewController: UIViewController {
 
     // Mark: Properties
@@ -31,6 +20,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var signupButton: UIButton!
     @IBOutlet weak var loadingSpinner: UIActivityIndicatorView!
+    @IBOutlet weak var navigationBar: UINavigationItem!
     
     @IBOutlet weak var scrollView: UIScrollView!
     
@@ -172,11 +162,15 @@ class LoginViewController: UIViewController {
     private func loading() {
         self.loadingSpinner.startAnimating()
         self.view.alpha = 0.7
+        self.view.isUserInteractionEnabled = false
+        self.navigationBar.hidesBackButton = true
     }
     
     private func loadingDone() {
         self.loadingSpinner.stopAnimating()
         self.view.alpha = 1.0
+        self.view.isUserInteractionEnabled = true
+        self.navigationBar.hidesBackButton = false
     }
     
     override func viewWillDisappear(_ animated : Bool) {
@@ -185,6 +179,7 @@ class LoginViewController: UIViewController {
         if self.isMovingFromParentViewController {
 
         }
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
     }
     
     override func viewWillAppear(_ animated: Bool){
@@ -192,6 +187,7 @@ class LoginViewController: UIViewController {
         passwordInput.text = ""
         HubManager.sharedConnection.setUsername(username: "")
         NotificationCenter.default.post(name: Notification.Name(rawValue: LoginNotification.LogoutNotification), object: nil)
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         
     }
 }

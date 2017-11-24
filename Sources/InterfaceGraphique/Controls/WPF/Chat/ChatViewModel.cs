@@ -191,6 +191,10 @@ namespace InterfaceGraphique.Controls.WPF.Chat
             }
         }
         #endregion
+        public void Init()
+        {
+            Minimize();
+        }
 
         #region Command Methods
         private async Task SendMessage()

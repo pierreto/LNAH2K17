@@ -53,7 +53,6 @@ namespace InterfaceGraphique.CommunicationInterface
                         TypeNameHandling = TypeNameHandling.Objects
                     });
                 rcmd.ExecuteCommand();
-                //NewCommand?.Invoke(rcmd);
             });
 
             hubProxy.On<OnlineUser>("NewUser", user =>
@@ -93,16 +92,16 @@ namespace InterfaceGraphique.CommunicationInterface
         {
             if (map != null)
             {
+                Editeur.mapManager.SaveIcon();
                 await hubProxy.Invoke("LeaveRoom", this.map.Id);
+                Program.Editeur.LeaveOnlineEdition();
             }
         }
 
 
         public async Task Logout()
         {
-           /* hubProxy?.Invoke("Disconnect", this.username).Wait();
-            this.map = null;*/
+            LeaveRoom();
         }
-
     }
 }

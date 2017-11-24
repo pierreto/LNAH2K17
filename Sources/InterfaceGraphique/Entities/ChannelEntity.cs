@@ -21,6 +21,8 @@ namespace InterfaceGraphique.Entities
 
         public bool IsPrivate { get; set; }
 
+        public bool IsJoinable { get; set; }
+
         public int PrivateUserId { get; set; }
 
         public string Profile { get; set; }

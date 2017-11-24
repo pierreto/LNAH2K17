@@ -13,11 +13,11 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
         #region Private Properties
         private ChatHub chatHub;
         private TaskFactory ctxTaskFactory;
-        private ObservableCollection<ChatListItemViewModel> items;
+        private ObservableCollection<ChannelListItemViewModel> items;
         #endregion
 
         #region Public Properties
-        public ObservableCollection<ChatListItemViewModel> Items
+        public ObservableCollection<ChannelListItemViewModel> Items
         {
             get
             {
@@ -40,9 +40,9 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
             ChannelEntity cE = new ChannelEntity() { Name = "Principal", IsSelected = true };
             ActiveChannel.Instance.ChannelEntity = cE;
             Program.unityContainer.Resolve<ChatViewModel>().MainChannel = cE;
-            Items = new ObservableCollection<ChatListItemViewModel>
+            Items = new ObservableCollection<ChannelListItemViewModel>
             {
-                new ChatListItemViewModel(cE)
+                new ChannelListItemViewModel(cE)
                 {
 
                 }
@@ -54,7 +54,7 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
         {
             ctxTaskFactory.StartNew(() =>
             {
-                this.Items.Add(new ChatListItemViewModel(new ChannelEntity { Name = othersName, PrivateUserId = othersId, IsPrivate = true, Profile = othersProfile }));
+                this.Items.Add(new ChannelListItemViewModel(new ChannelEntity { Name = othersName, PrivateUserId = othersId, IsPrivate = true, Profile = othersProfile }));
             }).Wait();
         }
 

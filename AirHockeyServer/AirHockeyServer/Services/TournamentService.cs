@@ -19,18 +19,19 @@ namespace AirHockeyServer.Services
 
         public TournamentWaitingRoomEventManager TournamentWaitingRoomEVentManager { get; set; }
 
-        public void JoinTournament(UserEntity user)
+        public void JoinTournament(List<GamePlayerEntity> players)
         {
-            TournamentMatchMakerService.Instance().AddOpponent(user);
+            TournamentMatchMakerService.Instance().AddOpponent(players);
         }
 
-        public void LeaveTournamentWaitingRoom(UserEntity user, int tournamentId)
+        public void LeaveTournamentWaitingRoom(GamePlayerEntity user, int tournamentId)
         {
             TournamentMatchMakerService.Instance().RemoveUser(user.Id);
             if(tournamentId == 0)
             {
                 // the user is waiting for players
-                TournamentWaitingRoomEVentManager.RemoveUser(user.Id);
+                //TournamentWaitingRoomEVentManager.RemoveUser(user.Id);
+                TournamentMatchMakerService.Instance().RemoveUser(user.Id);
             }
         }
 

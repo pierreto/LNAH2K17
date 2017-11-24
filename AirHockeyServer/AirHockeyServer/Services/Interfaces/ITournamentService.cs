@@ -9,10 +9,10 @@ namespace AirHockeyServer.Services.Interfaces
 {
     public interface ITournamentService
     {
-        void JoinTournament(UserEntity user);
+        void JoinTournament(List<GamePlayerEntity> players);
 
         void UpdateTournament(int tournamentId, MapEntity selectedMap);
 
-        void LeaveTournamentWaitingRoom(UserEntity user, int tournamentId);
+        void LeaveTournamentWaitingRoom(GamePlayerEntity user, int tournamentId);
     }
 }

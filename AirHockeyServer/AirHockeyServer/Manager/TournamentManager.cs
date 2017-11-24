@@ -70,7 +70,7 @@ namespace AirHockeyServer.Manager
                         // do final
                         GameEntity finalGame = new GameEntity
                         {
-                            Players = new UserEntity[] { tournament.SemiFinals[0].Winner, tournament.SemiFinals[1].Winner },
+                            Players = new GamePlayerEntity[] { tournament.SemiFinals[0].Winner, tournament.SemiFinals[1].Winner },
                             GameState = GameState.InProgress,
                             GameId = Guid.NewGuid(),
                             CreationDate = DateTime.Now,
@@ -105,43 +105,6 @@ namespace AirHockeyServer.Manager
 
                 Cache.Tournaments[tournament.Id] = tournament;
             }
-        }
-
-        private void testFlow(int tournamentId)
-        {
-            var hub = GlobalHost.ConnectionManager.GetHubContext<TournamentWaitingRoomHub>();
-            var tournament = Cache.Tournaments[tournamentId];
-
-            tournament.SemiFinals[1].Winner = tournament.SemiFinals[1].Players[0];
-            tournament.SemiFinals[1].GameState = GameState.Ended;
-
-            GameEntity finalGame = new GameEntity
-            {
-                Players = new UserEntity[] { tournament.SemiFinals[0].Winner, tournament.SemiFinals[1].Players[0] },
-                GameState = GameState.InProgress,
-                GameId = Guid.NewGuid(),
-                CreationDate = DateTime.Now,
-                TournamentId = tournament.Id
-            };
-            finalGame.Master = finalGame.Players[0];
-            finalGame.Slave = finalGame.Players[1];
-
-            GameManager.AddGame(finalGame);
-
-            tournament.State = TournamentState.Final;
-            tournament.Final = finalGame;
-
-            Cache.Tournaments[tournament.Id] = tournament;
-
-            hub.Clients.Group(tournament.Id.ToString()).TournamentSemiFinalResults(tournament);
-
-            Timer timer = new Timer();
-            timer.Interval = 1000;
-            timer.Elapsed += (timerSender, e) => FinalCountdown(timerSender, e, tournament, timer);
-
-            this.ElapsedTime.Add(tournament.Id, 0);
-
-            timer.Start();
         }
 
         private void UpdateTournamentGames(GameEntity gameUpdated, int tournamentId)

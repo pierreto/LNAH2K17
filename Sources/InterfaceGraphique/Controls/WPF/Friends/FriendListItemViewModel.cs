@@ -269,6 +269,7 @@ namespace InterfaceGraphique.Controls.WPF.Friends
         }
         public async Task GoToProfile()
         {
+
             HubManager.Instance.LeaveHubs();
 
             Program.FormManager.CurrentForm = Program.UserProfileMenu;

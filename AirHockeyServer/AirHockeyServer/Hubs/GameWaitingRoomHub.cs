@@ -25,7 +25,7 @@ namespace AirHockeyServer.Hubs
     public class GameWaitingRoomHub : Hub 
     {
         protected IGameService GameService { get; }
-
+        protected FriendService FriendService { get; }
         public ConnectionMapper ConnectionMapper { get; set; }
 
         ////////////////////////////////////////////////////////////////////////
@@ -37,10 +37,11 @@ namespace AirHockeyServer.Hubs
         /// @return Aucune (Constructeur).
         ///
         ////////////////////////////////////////////////////////////////////////
-        public GameWaitingRoomHub(IGameService gameService, ConnectionMapper connectionMapper)
+        public GameWaitingRoomHub(IGameService gameService, ConnectionMapper connectionMapper, FriendService friendService)
         {
             GameService = gameService;
             ConnectionMapper = connectionMapper;
+            FriendService = friendService;
         }
         
         /// @fn void JoinGame(UserEntity user)
@@ -49,10 +50,10 @@ namespace AirHockeyServer.Hubs
         /// On appel simplement la classe GameService
         ///
         ////////////////////////////////////////////////////////////////////////
-        public void JoinGame(UserEntity user)
+        public void JoinGame(GamePlayerEntity user)
         {
             ConnectionMapper.AddConnection(user.Id, Context.ConnectionId);
-            Cache.AddPlayer(user);
+            Cache.AddPlayer(FriendService.UsersIdConnected.Find(x => x.Id == user.Id));
 
             GameService.JoinGame(user);
         }
@@ -81,7 +82,7 @@ namespace AirHockeyServer.Hubs
         /// On appel simplement la classe GameService
         ///
         ////////////////////////////////////////////////////////////////////////
-        public void Join(UserEntity user)
+        public void Join(GamePlayerEntity user)
         {
             // TO REMOVE, WAITING FOR AUTHENTIFICATION
             ConnectionMapper.AddConnection(user.Id, Context.ConnectionId);

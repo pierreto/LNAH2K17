@@ -16,7 +16,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
     {
         protected int CurrentTournamentId { get; set; }
 
-        public event EventHandler<List<UserEntity>> OpponentFoundEvent;
+        public event EventHandler<List<GamePlayerEntity>> OpponentFoundEvent;
 
         public event EventHandler<TournamentEntity> TournamentAllOpponentsFound;
 
@@ -24,9 +24,9 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
         public event EventHandler<MapEntity> MapUpdatedEvent;
 
-        public event EventHandler<List<UserEntity>> SemiFinalResultEvent;
+        public event EventHandler<List<GamePlayerEntity>> SemiFinalResultEvent;
 
-        public event EventHandler<UserEntity> WinnerResultEvent;
+        public event EventHandler<GamePlayerEntity> WinnerResultEvent;
 
         public static IHubProxy WaitingRoomProxy { get; set; }
 
@@ -55,7 +55,13 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
         public async void Join()
         {
-            await WaitingRoomProxy.Invoke("Join", User.Instance.UserEntity);
+            List<GamePlayerEntity> players = new List<GamePlayerEntity>() { new GamePlayerEntity(User.Instance.UserEntity) };
+            await WaitingRoomProxy.Invoke("Join", players);
+        }
+
+        public async void CreateTournament(List<GamePlayerEntity> players)
+        {
+            await WaitingRoomProxy.Invoke("Join", players);
         }
 
         public async Task Logout()
@@ -90,7 +96,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
         
         private void InitializeWaitingRoomEvents()
         {
-            WaitingRoomProxy.On<List<UserEntity>>("OpponentFoundEvent", (opponents) => OnOpponentFoundEvent(opponents));
+            WaitingRoomProxy.On<List<GamePlayerEntity>>("OpponentFoundEvent", (opponents) => OnOpponentFoundEvent(opponents));
 
             WaitingRoomProxy.On<TournamentEntity>("TournamentAllOpponentsFound", (tournament) => OnAllOpponentsFound(tournament));
 
@@ -99,7 +105,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
             WaitingRoomProxy.On<MapEntity>("TournamentMapUpdatedEvent", map => OnMapUpdated(map));
         }
 
-        public void OnOpponentFoundEvent(List<UserEntity> opponents)
+        public void OnOpponentFoundEvent(List<GamePlayerEntity> opponents)
         {
             this.OpponentFoundEvent.Invoke(this, opponents);
         }
@@ -122,7 +128,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
         public void OnSemiFinalResults(TournamentEntity tournament)
         {
-            SemiFinalResultEvent.Invoke(this, new List<UserEntity>() { tournament.SemiFinals[0].Winner, tournament.SemiFinals[1].Winner });
+            SemiFinalResultEvent.Invoke(this, new List<GamePlayerEntity>() { tournament.SemiFinals[0].Winner, tournament.SemiFinals[1].Winner });
         }
 
         public void OnFinalResults(TournamentEntity tournament)

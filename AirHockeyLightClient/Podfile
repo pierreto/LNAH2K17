@@ -16,4 +16,5 @@ target 'AirHockeyLightClient' do
   pod 'RealmSwift'
   pod 'SwiftyJSON'
   pod 'SwiftR'
+  pod 'SwiftyRSA'
 end

@@ -45,6 +45,12 @@ namespace InterfaceGraphique.Editor
             this.currentMapInfo = new MapMetaData();
         }
 
+        public MapMetaData CurrentMapInfo
+        {
+            get => currentMapInfo;
+            set => currentMapInfo = value;
+        }
+
         public void resetMapInfo()
         {
             string creator = User.Instance.UserEntity?.Username;
@@ -201,7 +207,7 @@ namespace InterfaceGraphique.Editor
                 // we have to join the online edition mode:
                 if (!this.currentMapInfo.savedOnce)
                 {
-                    Program.Editeur.JoinEdition(map.Value);
+                    await Program.Editeur.JoinEdition(map.Value);
                 }
 
                 // we have to update the properties of the current map:

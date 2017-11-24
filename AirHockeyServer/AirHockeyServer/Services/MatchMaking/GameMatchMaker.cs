@@ -22,6 +22,8 @@ namespace AirHockeyServer.Services.MatchMaking
     ///////////////////////////////////////////////////////////////////////////////
     public class GameMatchMaker : MatchMaker
     {
+        public event EventHandler<MatchFoundArgs> MatchFoundEvent;
+
         ////////////////////////////////////////////////////////////////////////
         ///
         /// @fn static UserEntity GetGameOpponent()
@@ -32,13 +34,13 @@ namespace AirHockeyServer.Services.MatchMaking
         /// @return le joueur en attente trouvé
         ///
         ////////////////////////////////////////////////////////////////////////
-        public List<UserEntity> GetGameOpponents()
+        public List<GamePlayerEntity> GetGameOpponents()
         {
             WaitingPlayersMutex.WaitOne();
 
             if (WaitingPlayers.Count > 1)
             {
-                List<UserEntity> users = new List<UserEntity>()
+                List<GamePlayerEntity> users = new List<GamePlayerEntity>()
                 {
                     WaitingPlayers.Dequeue(),
                     WaitingPlayers.Dequeue()
@@ -79,7 +81,7 @@ namespace AirHockeyServer.Services.MatchMaking
             }
         }
 
-        protected void ExecuteMatch(List<UserEntity> players)
+        protected void ExecuteMatch(List<GamePlayerEntity> players)
         {
             PlayersMatchEntity match = new PlayersMatchEntity()
             {
@@ -90,9 +92,41 @@ namespace AirHockeyServer.Services.MatchMaking
 
         public void CreateMatch(UserEntity recipient, UserEntity sender)
         {
-            var users = new List<UserEntity> { recipient, sender };
+            var users = new List<GamePlayerEntity> { new GamePlayerEntity(recipient), new GamePlayerEntity(sender) };
             Thread myThread = new Thread(new ThreadStart(() => ExecuteMatch(users)));
             myThread.Start();
+        }
+
+        public override void RemoveUser(int userId)
+        {
+            _WaitingPlayers = new Queue<GamePlayerEntity>(_WaitingPlayers.Where(x => x.Id != userId));
+        }
+
+        protected void InvokeMatchFound(PlayersMatchEntity match)
+        {
+            MatchFoundEvent?.Invoke(new GamePlayerEntity(), new MatchFoundArgs { PlayersMatch = match });
+        }
+
+        public override void AddOpponent(List<GamePlayerEntity> players)
+        {
+            WaitingPlayersMutex.WaitOne();
+
+            players.ForEach(x => WaitingPlayers.Enqueue(x));
+
+            WaitingPlayersMutex.ReleaseMutex();
+
+            StartPlayersMatching();
+        }
+
+        public override void AddOpponent(GamePlayerEntity player)
+        {
+            WaitingPlayersMutex.WaitOne();
+
+            WaitingPlayers.Enqueue(player);
+
+            WaitingPlayersMutex.ReleaseMutex();
+
+            StartPlayersMatching();
         }
     }
 }

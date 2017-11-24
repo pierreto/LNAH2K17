@@ -66,13 +66,13 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Border Visibility="{Binding DataContext.JoinMenuOpen, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}, Converter={convert:BooleanToCollapsedConverter}, ConverterParameter=false}" BorderBrush="{StaticResource VeryDarkGrayBrush}" BorderThickness="10,0,0,0" Margin="211,0,0,0" Panel.ZIndex="1" Grid.RowSpan="3">
+            <Border Visibility="{Binding DataContext.JoinMenuOpen, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}, Converter={convert:BooleanToCollapsedConverter}, ConverterParameter=false}" BorderBrush="{StaticResource VeryDarkGrayBrush}" BorderThickness="10,0,0,0" Margin="240,0,0,0" Panel.ZIndex="1" Grid.RowSpan="3">
                 <Border.Effect>
                     <DropShadowEffect BlurRadius="20" ShadowDepth="5" />
                 </Border.Effect>
             </Border>
 
-            <channel:JoinChannelView Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" Width="225" HorizontalAlignment="Left" Panel.ZIndex="100" Visibility="{Binding DataContext.JoinMenuOpen, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}, Converter={convert:BooleanToCollapsedConverter}, ConverterParameter=false}">
+            <channel:JoinChannelView Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" Width="250" HorizontalAlignment="Left" Panel.ZIndex="100" Visibility="{Binding DataContext.JoinMenuOpen, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type UserControl}}, Converter={convert:BooleanToCollapsedConverter}, ConverterParameter=false}">
                 <channel:JoinChannelView.DataContext>
                     <Binding Path="JoinChannelViewModel" Source="{StaticResource VMLocator}"/>
                 </channel:JoinChannelView.DataContext>
