@@ -57,7 +57,6 @@ namespace AirHockeyServer.Hubs
             Groups.Remove(ConnectionMapper.GetConnection(user.Id), tournamentId.ToString());
             TournamentService.LeaveTournamentWaitingRoom(user, tournamentId);
             Cache.RemovePlayer(user.Id);
-            ConnectionMapper.DeleteConnection(user.Id);
         }
 
         public void Disconnect(string username)

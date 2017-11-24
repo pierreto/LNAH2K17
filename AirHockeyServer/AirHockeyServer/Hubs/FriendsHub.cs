@@ -153,11 +153,6 @@ namespace AirHockeyServer.Hubs
 
         public async Task<bool> SendGameRequest(GameRequestEntity gameRequest)
         {
-            if(Cache.PlayingPlayers.Exists(x => x.Id == gameRequest.Recipient.Id))
-            {
-                // player is playing
-                return false;
-            }
 
             string friendConnection = ConnectionMapper.GetConnection(gameRequest.Recipient.Id);
 
@@ -174,6 +169,7 @@ namespace AirHockeyServer.Hubs
                 }
 
                 Cache.AddPlayer(gameRequest.Sender);
+                Cache.AddPlayer(gameRequest.Recipient);
                 return true;
             }
 
@@ -186,8 +182,6 @@ namespace AirHockeyServer.Hubs
             string senderConnection = ConnectionMapper.GetConnection(gameRequest.Sender.Id);
             if (senderConnection != null)
             {
-                Cache.AddPlayer(gameRequest.Recipient);
-
                 GameService.CreateGame(gameRequest);
 
                 Clients.Client(senderConnection).AcceptedGameRequest(gameRequest);
@@ -200,7 +194,20 @@ namespace AirHockeyServer.Hubs
             if (!string.IsNullOrEmpty(senderConnection))
             {
                 Cache.RemovePlayer(gameRequest.Sender);
+                Cache.RemovePlayer(gameRequest.Recipient);
                 Clients.Client(senderConnection).DeclinedGameRequest(gameRequest);
+            }
+        }
+
+        public void CancelGameRequest(GameRequestEntity gameRequest)
+        {
+            string friendConnection = ConnectionMapper.GetConnection(gameRequest.Recipient.Id);
+
+            if (!String.IsNullOrEmpty(friendConnection))
+            {
+                Clients.Client(friendConnection).GameRequestCanceled(gameRequest);
+                Cache.RemovePlayer(gameRequest.Sender);
+                Cache.RemovePlayer(gameRequest.Recipient);
             }
         }
 
@@ -208,6 +215,11 @@ namespace AirHockeyServer.Hubs
         {
             this.FriendService.NewUserDisconnected(user);
             Clients.AllExcept(this.Context.ConnectionId).NewFriendHasDisconnectedEvent(user.Id);
+        }
+
+        public bool FriendIsAvailable(int friendId)
+        {
+            return !Cache.PlayingPlayers.Exists(x => x.Id == friendId);
         }
     }
 }
