@@ -8,6 +8,9 @@ namespace InterfaceGraphique.CommunicationInterface
     public interface IBaseHub
     {
         void InitializeHub(HubConnection connection);
+
+        Task LeaveRoom();
+
         Task Logout();
     }
 }

@@ -18,7 +18,7 @@ namespace AirHockeyServer.Controllers
 {
     public class MapController : ApiController
     {
-        
+
         private IEditionService editionService;
         public MapController(IMapService mapService, IEditionService editionService)
         {
@@ -57,6 +57,21 @@ namespace AirHockeyServer.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("api/maps/sync")]
+        public async Task<HttpResponseMessage> ReturnFullMaps()
+        {
+            try
+            {
+                IEnumerable<MapEntity> maps = await MapService.GetFullMaps();
+                return HttpResponseGenerator.CreateSuccesResponseMessage(HttpStatusCode.OK, maps);
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
+        }
+
         [HttpPost]
         [Route("api/maps/save")]
         public async Task<HttpResponseMessage> SaveMap([FromBody]MapEntity map)
@@ -69,7 +84,7 @@ namespace AirHockeyServer.Controllers
             else
             {
                 bool saved = await MapService.SaveMap(map);
-                return saved ? Request.CreateResponse(HttpStatusCode.OK) : 
+                return saved ? Request.CreateResponse(HttpStatusCode.OK) :
                     Request.CreateResponse(HttpStatusCode.InternalServerError);
             }
         }
@@ -97,6 +112,21 @@ namespace AirHockeyServer.Controllers
             {
                 bool result = await MapService.RemoveMap(id);
                 return HttpResponseGenerator.CreateSuccesResponseMessage(HttpStatusCode.OK, result);
+            }
+            catch
+            {
+                return Request.CreateResponse(HttpStatusCode.InternalServerError);
+            }
+        }
+
+        [HttpPost]
+        [Route("api/maps/sync")]
+        public async Task<HttpResponseMessage> SyncMap([FromBody]MapEntity map)
+        {
+            try
+            {
+                bool hasBeenModified = await MapService.SyncMap(map);
+                return HttpResponseGenerator.CreateSuccesResponseMessage(HttpStatusCode.OK, hasBeenModified);
             }
             catch
             {

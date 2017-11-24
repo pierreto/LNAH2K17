@@ -92,7 +92,7 @@ class UnlockMapViewController: UIViewController {
             self.removeAnimate()
             
             let parent = self.parent as! MapDisplayViewController
-            parent.openEditor()
+            parent.closeUnlockMapVC()
         }
         else {
             // Laisse le temps au message d'erreur d'apparaître avant le shake

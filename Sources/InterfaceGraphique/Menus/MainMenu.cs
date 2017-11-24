@@ -14,6 +14,7 @@ using InterfaceGraphique.Controls.WPF.Friends;
 using InterfaceGraphique.Controls.WPF.UserProfile;
 using InterfaceGraphique.Controls.WPF.Store;
 using InterfaceGraphique.Controls.WPF.Tutorial;
+using InterfaceGraphique.Services;
 using Application = System.Windows.Forms.Application;
 using Point = System.Drawing.Point;
 using Size = System.Drawing.Size;
@@ -52,7 +53,11 @@ namespace InterfaceGraphique
         private void InitializeEvents()
         {
 
-            this.boutonPartieRapide.Click += (sender, e) => Program.QuickPlayMenu.ShowDialog();
+            this.boutonPartieRapide.Click += (sender, e) =>
+            {
+                CheckIfNeedToShowMatchTutoriel();
+                Program.QuickPlayMenu.ShowDialog();
+            };
 
             //this.boutonPartieRapide.Click += (sender, e) => Program.FormManager.CurrentForm = Program.LobbyHost;
             this.boutonTournoi.Click += (sender, e) => Program.FormManager.CurrentForm = Program.TournementMenu;
@@ -64,6 +69,7 @@ namespace InterfaceGraphique
             {
                 Program.Editeur.ResetDefaultTable();
                 Program.FormManager.CurrentForm = Program.Editeur;
+                CheckIfNeedToShowEditorTutoriel();
             };
             this.Button_Credits.Click += (sender, e) => Program.FormManager.CurrentForm = Program.CreditsMenu;
             this.buttonQuitter.Click += (sender, e) => { Program.unityContainer.Resolve<ChatViewModel>().UndockedChat?.Close(); System.Windows.Forms.Application.Exit();  };
@@ -85,18 +91,44 @@ namespace InterfaceGraphique
             }
         }
 
-        private async Task ShowTutorialEditor()
+        private async void CheckIfNeedToShowEditorTutoriel()
         {
-            await Program.unityContainer.Resolve<TutorialViewModel>().SwitchToMatchSlides();
+            if (!User.Instance.IsConnected)
+            {
+                await ShowTutorialEditor();
+            }
+            else if (!User.Instance.UserEntity.AlreadyUsedFatEditor)
+            {
+                await ShowTutorialEditor();
+                User.Instance.UserEntity.AlreadyUsedFatEditor = true;
+                await Program.client.PutAsJsonAsync(Program.client.BaseAddress + "api/user/" + User.Instance.UserEntity.Id.ToString(), User.Instance.UserEntity);
+            }
+        }
+        private async void CheckIfNeedToShowMatchTutoriel()
+        {
+            if (!User.Instance.IsConnected  )
+            {
+                await ShowTutorialGame();
+            }else if (!User.Instance.UserEntity.AlreadyPlayedGame)
+            {
+                await ShowTutorialGame();
+                User.Instance.UserEntity.AlreadyPlayedGame = true;
+                await Program.client.PutAsJsonAsync(Program.client.BaseAddress + "api/user/" + User.Instance.UserEntity.Id.ToString(), User.Instance.UserEntity);
+            }
+        }
+
+        public static async Task ShowTutorialEditor()
+        {
+            await Program.unityContainer.Resolve<TutorialViewModel>().SwitchToEditorSlides();
             Form fc = Application.OpenForms["TutorialHost"];
             if (fc == null)
             {
                 Program.TutorialHost.ShowDialog();
             }
         }
-        private async Task ShowTutorialGame()
+        public static async Task ShowTutorialGame()
         {
-            await Program.unityContainer.Resolve<TutorialViewModel>().SwitchToEditorSlides();
+            await Program.unityContainer.Resolve<TutorialViewModel>().SwitchToMatchSlides();
 
             Form fc = Application.OpenForms["TutorialHost"];
             if (fc == null)

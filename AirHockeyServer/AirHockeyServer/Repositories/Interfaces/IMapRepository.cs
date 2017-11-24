@@ -14,11 +14,14 @@ namespace AirHockeyServer.Repositories.Interfaces
 
         Task<IEnumerable<MapEntity>> GetMaps();
 
+        Task<IEnumerable<MapEntity>> GetFullMaps();
+
         Task<int?> CreateNewMap(MapEntity map);
 
         Task<MapEntity> GetMap(int idMap);
 
         Task<bool> RemoveMap(int id);
 
+        Task<bool> SyncMap(MapEntity map);
     }
 }

@@ -118,5 +118,11 @@ namespace InterfaceGraphique.CommunicationInterface
             var roomNames = Program.unityContainer.Resolve<ChatListViewModel>().Items.Where(x=> x.Name != "Principal" && !x.ChannelEntity.IsPrivate).Select(x => x.Name);
             await chatHubProxy.Invoke("Disconnect", roomNames, User.Instance.UserEntity.Id);
         }
+
+        public async Task LeaveRoom()
+        {
+            // do nothing
+            return;
+        }
     }
 }

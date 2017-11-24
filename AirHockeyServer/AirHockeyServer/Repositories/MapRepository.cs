@@ -9,6 +9,8 @@ using AirHockeyServer.Pocos;
 using System.Threading.Tasks;
 using AirHockeyServer.Mapping;
 using AirHockeyServer.Repositories.Interfaces;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace AirHockeyServer.Repositories
 {
@@ -71,6 +73,26 @@ namespace AirHockeyServer.Repositories
             }
         }
 
+        public async Task<IEnumerable<MapEntity>> GetFullMaps()
+        {
+            try
+            {
+                using (MyDataContext DC = new MyDataContext())
+                {
+                    var query = from map in DC.MapsTable select map;
+                    var maps = await Task<List<MapPoco>>.Run(
+                        () => query.ToList());
+
+                    return MapperManager.Map<List<MapPoco>, List<MapEntity>>(maps);
+                }
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("[MapRepository.GetFullMaps] " + e.ToString());
+                return null;
+            }
+        }
+
         public async Task<int?> CreateNewMap(MapEntity map)
         {
             try
@@ -78,6 +100,14 @@ namespace AirHockeyServer.Repositories
                 using (MyDataContext DC = new MyDataContext())
                 {
                     MapPoco newMap = MapperManager.Map<MapEntity, MapPoco>(map);
+                    if (newMap.Private)
+                    {
+                        var sha1 = new SHA1CryptoServiceProvider();
+                        newMap.Password =
+                                Convert.ToBase64String(
+                                    sha1.ComputeHash(
+                                        Encoding.UTF8.GetBytes(newMap.Password)));
+                    }
                     DC.MapsTable.InsertOnSubmit(newMap);
                     await Task.Run(() => DC.SubmitChanges());
 
@@ -159,6 +189,41 @@ namespace AirHockeyServer.Repositories
             catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine("[MapRepository.RemoveMap] " + e.ToString());
+                return false;
+            }
+        }
+
+        public async Task<bool> SyncMap(MapEntity map)
+        {
+            try
+            {
+                using (MyDataContext DC = new MyDataContext())
+                {
+                    var query = from _map in DC.MapsTable where _map.Id == map.Id select _map;
+                    var results = query.ToArray();
+                    var existingMap = results.First();
+
+                    var diff = map.LastBackup.CompareTo(existingMap.LastBackup);
+
+                    if (diff > 0) // map est plus à jour que celle dans la db : on met a jour la db 
+                    {
+                        if (map.Json != null)
+                            existingMap.Json = map.Json;
+                        if (map.Icon != null)
+                            existingMap.Icon = map.Icon;
+                        existingMap.LastBackup = map.LastBackup;
+                        await Task.Run(() => DC.SubmitChanges());
+                        return false; // client leger n'a pas a fetch la map, il a la derniere version a jour
+                    }
+                    else // on garde la version de la db
+                    {
+                        return true; // client leger doit fetch pour etre a jour
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("[MapRepository.SyncMap] " + e.ToString());
                 return false;
             }
         }

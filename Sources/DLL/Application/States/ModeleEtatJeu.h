@@ -42,7 +42,8 @@ public:
 		SLAVE = 0,
 		MASTER = 1,
 		OFFLINE_EDITION = 2,
-		ONLINE_EDITION = 3
+		ONLINE_EDITION = 3,
+		OFFLINE_GAME=4
 	};
 	/// Obtient l'instance unique de la classe.
 	static ModeleEtatJeu* obtenirInstance();
