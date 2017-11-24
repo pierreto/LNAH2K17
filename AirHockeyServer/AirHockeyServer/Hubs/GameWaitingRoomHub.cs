@@ -86,15 +86,18 @@ namespace AirHockeyServer.Hubs
         {
             // TO REMOVE, WAITING FOR AUTHENTIFICATION
             ConnectionMapper.AddConnection(user.Id, Context.ConnectionId);
-
+            Cache.AddPlayer(FriendService.UsersIdConnected.Find(x => x.Id == user.Id));
             GameService.JoinGame(user);
         }
 
         public void LeaveGame(UserEntity user, Guid gameId)
         {
-            Groups.Remove(ConnectionMapper.GetConnection(user.Id), gameId.ToString());
+            string connectionid = ConnectionMapper.GetConnection(user.Id);
+            if(!string.IsNullOrEmpty(connectionid))
+            {
+                Groups.Remove(connectionid, gameId.ToString());
+            }
             GameService.LeaveGame(user);
-            ConnectionMapper.DeleteConnection(user.Id);
             Cache.RemovePlayer(user);
         }
 

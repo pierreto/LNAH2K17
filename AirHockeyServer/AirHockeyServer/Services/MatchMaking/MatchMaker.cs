@@ -10,7 +10,11 @@ namespace AirHockeyServer.Services.MatchMaking
 {
     public abstract class MatchMaker
     {
-        
+        public MatchMaker()
+        {
+            this.WaitingPlayers = new Queue<GamePlayerEntity>();
+        }
+
         protected Mutex WaitingPlayersMutex = new Mutex();
 
         protected Queue<GamePlayerEntity> _WaitingPlayers;
