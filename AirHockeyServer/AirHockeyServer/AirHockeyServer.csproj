@@ -283,6 +283,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Hubs\BaseHub.cs" />
     <Compile Include="Hubs\FriendsHub.cs" />
     <Compile Include="Hubs\EditionBrowserHub.cs" />
     <Compile Include="Hubs\EditionHub.cs" />

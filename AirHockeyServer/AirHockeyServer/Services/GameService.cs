@@ -96,6 +96,11 @@ namespace AirHockeyServer.Services
             GameMatchMakerService.Instance().RemoveUser(user.Id);
         }
 
+        public void LeaveGame(int userId)
+        {
+            GameMatchMakerService.Instance().RemoveUser(userId);
+        }
+
         public void GoalScored(Guid gameId, int playerId)
         {
             GameManager.GoalScored(gameId, playerId);

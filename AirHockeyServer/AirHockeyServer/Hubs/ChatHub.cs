@@ -1,4 +1,5 @@
 ﻿using AirHockeyServer.Entities;
+using AirHockeyServer.Hubs;
 using AirHockeyServer.Services.Interfaces;
 using Microsoft.AspNet.SignalR;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace AirHockeyServer.Services.ChatServiceServer
 {
-    public class ChatHub : Hub
+    public class ChatHub : BaseHub
     {
         // Should be thread-safe?
         private static Dictionary<int, string> ConnectionsMapping = new Dictionary<int, string>();
@@ -20,7 +21,8 @@ namespace AirHockeyServer.Services.ChatServiceServer
 
         public IChannelService ChannelService { get; }
 
-        public ChatHub(IChannelService channelService)
+        public ChatHub(ConnectionMapper connectionMapper, IChannelService channelService)
+            :base(connectionMapper)
         {
             ChannelService = channelService;
         }
@@ -114,6 +116,15 @@ namespace AirHockeyServer.Services.ChatServiceServer
                 LeaveRoom(roomName, userId);
             }
             ConnectionsMapping.Remove(userId);
+
+            base.Disconnect();
+        }
+
+        public override Task OnDisconnected(bool stopCalled)
+        {
+           // TODO ANY SPECIAL ACTION?
+
+            return base.OnDisconnected(stopCalled);
         }
     }
 }

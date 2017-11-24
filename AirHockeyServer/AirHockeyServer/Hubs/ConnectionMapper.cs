@@ -138,5 +138,18 @@ namespace AirHockeyServer.Hubs
             }
             
         }
+
+        public int GetIdFromConnection(string connectionId)
+        {
+            foreach(var pair in this.ConnectionsMapping)
+            {
+                if(pair.Value == connectionId)
+                {
+                    return pair.Key;
+                }
+            }
+
+            return -1;
+        }
     }
 }

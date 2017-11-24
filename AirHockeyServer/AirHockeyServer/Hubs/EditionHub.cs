@@ -13,18 +13,16 @@ using Newtonsoft.Json.Linq;
 
 namespace AirHockeyServer.Hubs
 {
-    public class EditionHub : Hub
+    public class EditionHub : BaseHub
     {
         private EditionService editionService;
         private UserService userService;
         private JsonSerializerSettings serializer;
 
-        public ConnectionMapper ConnectionMapper { get; set; }
-
         public EditionHub(EditionService editionService, ConnectionMapper connectionMapper, UserService userService)
+            : base(connectionMapper)
         {
             this.editionService = editionService;
-            ConnectionMapper = connectionMapper;
             this.serializer = new JsonSerializerSettings
             {
                 TypeNameHandling = TypeNameHandling.Objects
@@ -137,6 +135,19 @@ namespace AirHockeyServer.Hubs
         public static string ObtainEditionGroupIdentifier(int id)
         {
             return "EditionHub" + id;
+        }
+
+        public async Task Disconnect(int gameId)
+        {
+            await LeaveRoom(gameId);
+            base.Disconnect();
+        }
+
+        public override Task OnDisconnected(bool stopCalled)
+        {
+            // TODO ANY SPECIAL ACTION?
+            
+            return base.OnDisconnected(stopCalled);
         }
     }
 }
