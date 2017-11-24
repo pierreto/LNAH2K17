@@ -407,7 +407,7 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
 
                         // Convert byte[] to Base64 String
                         string base64String = Convert.ToBase64String(imageBytes);
-                        if (base64String.Length <= 65535)
+                        if (base64String.Length <= 2000000)
                         {
                             UserEntity uE = new UserEntity { Profile = base64String };
                             var response = await Program.client.PutAsJsonAsync(Program.client.BaseAddress + "api/user/" + User.Instance.UserEntity.Id.ToString(), uE);
@@ -418,7 +418,7 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
                         }
                         else
                         {
-                            MessageBox.Show("La taille maximale de l'image est dépassée!", "Image", MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk);
+                            MessageBox.Show("La taille maximale de l'image est de 2Mo!", "Image", MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk);
                         }
                     }
                 }

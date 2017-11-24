@@ -31,7 +31,7 @@ namespace InterfaceGraphique.CommunicationInterface
             var items = await chatHubProxy.Invoke<List<string>>("Subscribe", User.Instance.UserEntity.Id);
             foreach (var item in items)
             {
-                Program.unityContainer.Resolve<JoinChannelListViewModel>().Items.Add(new ChatListItemViewModel(new ChannelEntity { Name = item }));
+                Program.unityContainer.Resolve<JoinChannelListViewModel>().Items.Add(new ChatListItemViewModel(new ChannelEntity { Name = item, IsJoinable = true }));
             }
 
             // Inscription à l'event "ChatMessageReceived". Quand l'event est lancé du serveur on veut print le message:

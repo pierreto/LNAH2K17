@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="InterfaceGraphique.Controls.WPF.Chat.Channel.ChatListItemView"
+﻿<UserControl x:Class="InterfaceGraphique.Controls.WPF.Chat.Channel.ChannelListItemView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -11,7 +11,7 @@
              mc:Ignorable="d" 
              d:DesignWidth="300">
     <UserControl.Resources>
-        
+
         <ResourceDictionary>
             <wpf:ViewModelLocator x:Key="VMLocator" d:IsDataSource="True" />
             <Style x:Key="ContentStyle" TargetType="{x:Type ContentControl}">
@@ -27,16 +27,6 @@
                                     <MouseBinding MouseAction="LeftClick" Command="{Binding SelectChannelCommand}" />
                                     <!--<MouseBinding MouseAction="LeftDoubleClick" Command="{Binding JoinChannelCommand}"/>-->
                                 </Border.InputBindings>
-                                <i:Interaction.Triggers>
-
-                                    <i:EventTrigger EventName="MouseEnter">
-                                        <i:InvokeCommandAction Command="{Binding OpenChannelCommand}"/>
-                                    </i:EventTrigger>
-                                    <i:EventTrigger EventName="MouseLeave" >
-                                        <i:InvokeCommandAction Command="{Binding MouseLeaveCommand}"/>
-                                    </i:EventTrigger>
-
-                                </i:Interaction.Triggers>
                                 <Grid x:Name="container" Background="Transparent">
                                     <Grid.ColumnDefinitions>
                                         <!-- New Message Indicator Bar -->
@@ -112,21 +102,6 @@
                                 <DataTrigger Binding="{Binding DataContext.IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Value="True">
                                     <Setter Property="Background" TargetName="background" Value="{StaticResource VeryDarkGrayBrush}"/>
                                 </DataTrigger>
-
-                                <EventTrigger RoutedEvent="MouseEnter">
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <ColorAnimation To="{StaticResource VeryDarkGrayColor}" From="{StaticResource DarkGrayColor}" Duration="0:0:0.3" Storyboard.TargetName="container" Storyboard.TargetProperty="Background.Color" />
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </EventTrigger>
-                                <EventTrigger RoutedEvent="MouseLeave">
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <ColorAnimation From="{StaticResource VeryDarkGrayColor}" To="Transparent" Duration="0:0:0.0" Storyboard.TargetName="container" Storyboard.TargetProperty="Background.Color" />
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </EventTrigger>
 
                                 <Trigger Property="IsEnabled" Value="False">
                                     <Setter Property="Background" TargetName="container" Value="Green"/>

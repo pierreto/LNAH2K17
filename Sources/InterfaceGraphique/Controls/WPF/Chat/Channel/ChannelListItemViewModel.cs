@@ -5,7 +5,7 @@ using Microsoft.Practices.Unity;
 
 namespace InterfaceGraphique.Controls.WPF.Chat.Channel
 {
-    public class ChatListItemViewModel : ViewModelBase
+    public class ChannelListItemViewModel : ViewModelBase
     {
         #region Private Properties
         private ChannelEntity channelEntity;
@@ -81,7 +81,7 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
         #endregion
 
         #region Constructor
-        public ChatListItemViewModel(ChannelEntity channelEntity)
+        public ChannelListItemViewModel(ChannelEntity channelEntity)
         {
             System.Diagnostics.Debug.WriteLine(channelEntity.Name);
             ChannelEntity = channelEntity;
@@ -167,6 +167,8 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
                 {
                     item.IsSelected = false;
                 }
+
+                IsSelected = true;
                 ActiveChannel.Instance.ChannelEntity = ChannelEntity;
                 NewContentAvailable = false;
                 Program.unityContainer.Resolve<ChannelViewModel>().OnPropertyChanged("ChannelSelected");
@@ -174,9 +176,9 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
         }
         public async Task JoinChannel()
         {
-            System.Diagnostics.Debug.WriteLine("Channel Namedfsadaddasdasdsa: " +Name);
+            System.Diagnostics.Debug.WriteLine("Channel Namedfsadaddasdasdsa: " + Name);
             await Program.unityContainer.Resolve<JoinChannelViewModel>().JoinChannel(Name);
-            
+
         }
         #endregion
 
