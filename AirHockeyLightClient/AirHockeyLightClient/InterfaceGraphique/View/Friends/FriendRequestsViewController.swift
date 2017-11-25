@@ -35,7 +35,9 @@ class FriendRequestsViewController: UIViewController {
     }
     
     func displayNotification() {
-        self.tabBarItem.badgeValue = " "
+        if !FriendRequestsTableViewController.instance.isOpen {
+            self.tabBarItem.badgeValue = " "
+        }
     }
     
     func resetNotification() {
