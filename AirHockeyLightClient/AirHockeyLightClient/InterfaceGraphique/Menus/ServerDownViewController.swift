@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////////
-/// @file LostConnectionViewController.swift
+/// @file ServerDownViewController.swift
 /// @author Pierre To
 /// @date 2017-11-24
 /// @version 1
@@ -9,94 +9,64 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 import UIKit
-import Reachability
 
 ///////////////////////////////////////////////////////////////////////////
-/// @class LostConnectionViewController
-/// @brief Controlleur de la vue de la perte de connexion
+/// @class ServerDownViewController
+/// @brief Controlleur de la vue de la perte de connexion au serveur
 ///
 /// @author Pierre To
 /// @date 2017-11-24
 ///////////////////////////////////////////////////////////////////////////
-class LostConnectionViewController: UIViewController {
+class ServerDownViewController: UIViewController {
     
     /// Instance singleton
-    static var instance = LostConnectionViewController()
-    
-    // Reachability écoute les modifications de connexion du iPad
-    private var reachability = Reachability()!
+    static var instance = ServerDownViewController()
     
     private var timer = Timer()
-    private var maxReconnectionTime = 7
+    private var maxReturnHomeTimer = 5
     @IBOutlet weak var timerLabel: UILabel!
-    @IBOutlet weak var reconnectLabel: UILabel!
+    @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var returnHomeButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        LostConnectionViewController.instance = self
+        ServerDownViewController.instance = self
         
         self.view.backgroundColor = UIColor.black.withAlphaComponent(0.8)
         self.showAnimate()
         
-        self.maxReconnectionTime = 7
-        self.timerLabel.text = self.maxReconnectionTime.description
-        self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.tryReconnecting), userInfo: nil, repeats: true)
+        self.maxReturnHomeTimer = 5
+        self.timerLabel.text = self.maxReturnHomeTimer.description
+        self.timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.waitToReturnHome), userInfo: nil, repeats: true)
         self.disableUI()
-        
-        reachability.whenReachable = { reachability in
-            if reachability.connection == .wifi {
-                self.returnHomeButton.isEnabled = false
-                self.reconnectLabel.text = "Reconnexion réussie"
-                self.timer.invalidate()
-                self.timerLabel.isHidden = true
-                
-                self.reconnectLabel.alpha = 0.0
-                UIView.animate(withDuration: 2,
-                               animations: {
-                                    self.reconnectLabel.textColor = UIColor.green
-                                    self.reconnectLabel.alpha = 1.0
-                }, completion: {(finished: Bool) in
-                    if finished {
-                        self.enableUI()
-                        self.removeAnimate()
-                    }
-                })
-            }
-        }
-        
-        do {
-            try reachability.startNotifier()
-        } catch {
-            print("Unable to start notifier")
-        }
     }
     
-    @objc private func tryReconnecting() {
-        self.maxReconnectionTime = self.maxReconnectionTime - 1
-        self.timerLabel.text = self.maxReconnectionTime.description
+    @objc private func waitToReturnHome() {
+        self.maxReturnHomeTimer = self.maxReturnHomeTimer - 1
+        self.timerLabel.text = self.maxReturnHomeTimer.description
         
-        if self.maxReconnectionTime == 0 {
+        // Return to home page
+        if self.maxReturnHomeTimer == 0 {
             self.timer.invalidate()
             self.returnHomeButton.isEnabled = false
-            self.reconnectLabel.text = "Échec de reconnexion"
-            self.reconnectLabel.alpha = 0.0
+            self.messageLabel.alpha = 0.0
+            
             UIView.animate(withDuration: 2,
                            animations: {
-                            self.reconnectLabel.textColor = UIColor.red
-                            self.reconnectLabel.alpha = 1.0
+                            self.messageLabel.textColor = UIColor.red
+                            self.messageLabel.alpha = 1.0
             }, completion: {(finished: Bool) in
                 if finished {
                     self.removeAnimate()
                     
                     let topViewController = self.navigationController?.topViewController
                     if !(topViewController is MainViewController) {
-                        self.performSegue(withIdentifier: "returnHomeSegue", sender: self)
+                        self.performSegue(withIdentifier: "returnHomeSegueFromServerDown", sender: self)
                     }
                 }
             })
-
+            
         }
     }
     
@@ -129,7 +99,6 @@ class LostConnectionViewController: UIViewController {
             completion: {
                 (finished: Bool) in
                 if finished {
-                    self.reachability.stopNotifier()
                     self.view.removeFromSuperview()
                 }
         }
@@ -141,18 +110,6 @@ class LostConnectionViewController: UIViewController {
         VerticalSplitViewController.sharedVerticalSplitViewController.chatButton.isEnabled = false
         VerticalSplitViewController.sharedVerticalSplitViewController.friendsButton.isEnabled = false
         VerticalSplitViewController.sharedVerticalSplitViewController.hideAllBottomMenu()
-    }
-    
-    func enableUI() {
-        self.navigationController?.isNavigationBarHidden = false
-        VerticalSplitViewController.sharedVerticalSplitViewController.chatButton.isEnabled = true
-        VerticalSplitViewController.sharedVerticalSplitViewController.friendsButton.isEnabled = true
-        
-        if HubManager.sharedConnection.getConnection()?.state == .connected &&
-           HubManager.sharedConnection.getUsername() != "" &&
-           HubManager.sharedConnection.getUsername() != nil {
-            VerticalSplitViewController.sharedVerticalSplitViewController.showAllBottomButtons()
-        }
     }
     
     override var shouldAutorotate: Bool {

@@ -29,7 +29,16 @@ namespace InterfaceGraphique.CommunicationInterface
 
         public async Task InitializeChat()
         {
-            var items = await chatHubProxy.Invoke<List<string>>("Subscribe", User.Instance.UserEntity.Id);
+            List<string> items = new List<string>();
+            try
+            {
+                items = await chatHubProxy.Invoke<List<string>>("Subscribe", User.Instance.UserEntity.Id);
+            }
+            catch(Exception e)
+            {
+
+            }
+
             foreach (var item in items)
             {
                 Program.unityContainer.Resolve<JoinChannelListViewModel>().Items.Add(new ChatListItemViewModel(new ChannelEntity { Name = item, IsJoinable = true }));

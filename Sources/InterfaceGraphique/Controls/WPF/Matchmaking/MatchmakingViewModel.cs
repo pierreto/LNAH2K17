@@ -45,6 +45,8 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
                 PlayerName = args.Players[1].Username;
                 PlayerPicture = args.Players[1].ProfilePicture;
                 SetVisibility(false);
+                opponentLeftMsg = false;
+                OnPropertyChanged("OpponentLeftMsg");
             };
 
             WaitingRoomHub.MapUpdatedEvent += (sender, args) => OnMapUpdated(sender, args);

@@ -14,5 +14,13 @@ namespace AirHockeyServer.Manager
         void GoalScored(Guid gameId, int playerId);
 
         Task GameEnded(Guid gameId);
+
+        Task PlayerLeaveLiveTournament(int userId);
+
+        Task PlayerLeaveLiveGame(int userId);
+
+        GameEntity CreateTournamentGame(GamePlayerEntity player1, GamePlayerEntity player2, TournamentEntity tournament);
+
+        void AddTournament(TournamentEntity tournament);
     }
 }

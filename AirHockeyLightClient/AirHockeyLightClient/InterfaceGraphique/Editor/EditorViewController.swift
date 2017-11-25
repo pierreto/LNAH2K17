@@ -80,6 +80,7 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
         super.viewWillDisappear(animated)
         
         if self.isMovingFromParentViewController {
+            FacadeModele.instance.sauvegarderIconCarte(map: self.currentMap!)
             FacadeModele.instance.obtenirEtat().nettoyerEtat()
             FacadeModele.instance.obtenirEtatEdition().leaveEdition()
         }
@@ -179,6 +180,10 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
         
         // Jouer le son
         AudioService.instance.playSound(soundName: EDITION_SOUND.SAVE.rawValue)
+    }
+    
+    func takeMapSnapshot() -> UIImage {
+        return self.editorView.snapshot()
     }
     
     /// Permettre la reconnaissance simultanée de plusieurs gestures

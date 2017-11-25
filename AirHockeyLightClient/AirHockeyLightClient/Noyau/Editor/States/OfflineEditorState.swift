@@ -37,8 +37,13 @@ class OfflineEditorState: EditorState {
     override func currentUserDeletedNode(uuid: String) {}
     override func currentUserChangedCoefficient(coefficientFriction: Float, coefficientRebond: Float, coefficientAcceleration: Float) {}
     
-    override func sauvegarderCarte(map: MapEntity, json: String?) {
-        DBManager.instance.sauvegarderCarte(map: map, json: json)
+    override func sauvegarderCarte(map: MapEntity, json: String?, icon: UIImage?) {
+        var iconStrBase64 = map.icon
+        if icon != nil {
+            iconStrBase64 = ImageService.convertImgToBase64(image: ImageService.cropImageToSquare(image: icon!))
+        }
+        
+        DBManager.instance.sauvegarderCarte(map: map, json: json, icon: iconStrBase64!)
     }
     
 }
