@@ -13,6 +13,7 @@ using InterfaceGraphique.Services;
 using InterfaceGraphique.CommunicationInterface;
 using InterfaceGraphique.Controls.WPF.MainMenu;
 using Microsoft.Practices.Unity;
+using InterfaceGraphique.Managers;
 
 namespace InterfaceGraphique.Controls.WPF.Matchmaking
 {
@@ -22,15 +23,27 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
         private bool isStarted;
 
         protected MapService MapService { get; }
-
+        public GameRequestManager GameRequestManager { get; }
         protected MapsRepository MapsRepository { get; set; }
 
-        public MatchmakingViewModel(GameWaitingRoomHub matchmakingHub, MapService mapService)
+        public MatchmakingViewModel(GameWaitingRoomHub matchmakingHub, MapService mapService, GameRequestManager gameRequestManager)
         {
             this.WaitingRoomHub = matchmakingHub;
             MapService = mapService;
+            GameRequestManager = gameRequestManager;
             this.isStarted = false;
             this.MapsRepository = new MapsRepository();
+
+            WaitingRoomHub.RemainingTimeEvent += (sender, args) => { OnRemainingTimeEvent(args); };
+
+            WaitingRoomHub.OpponentFoundEvent += (sender, args) =>
+            {
+                OpponentName = args.Players[0].Username;
+                PlayerName = args.Players[1].Username;
+                SetVisibility(false);
+            };
+
+            WaitingRoomHub.MapUpdatedEvent += (sender, args) => OnMapUpdated(sender, args);
         }
         public override void InitializeViewModel()
         {
@@ -39,11 +52,11 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
 
         public void Initialize(bool isGameRequest = false)
         {
-            SetDefaultValues();
             LoadData();
             InitializeEvents();
             if(!isGameRequest)
             {
+                SetDefaultValues();
                 this.WaitingRoomHub.Join();
             }
         }
@@ -60,16 +73,16 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
 
         private void InitializeEvents()
         {
-            WaitingRoomHub.RemainingTimeEvent += (sender, args) => { OnRemainingTimeEvent(args);  };
+            //WaitingRoomHub.RemainingTimeEvent += (sender, args) => { OnRemainingTimeEvent(args);  };
 
-            WaitingRoomHub.OpponentFoundEvent += (sender, args) =>
-            {
-                OpponentName = args.Players[0].Username;
-                PlayerName = args.Players[1].Username;
-                SetVisibility(false);
-            };
+            //WaitingRoomHub.OpponentFoundEvent += (sender, args) =>
+            //{
+            //    OpponentName = args.Players[0].Username;
+            //    PlayerName = args.Players[1].Username;
+            //    SetVisibility(false);
+            //};
 
-            WaitingRoomHub.MapUpdatedEvent += (sender, args) => OnMapUpdated(sender, args);
+            //WaitingRoomHub.MapUpdatedEvent += (sender, args) => OnMapUpdated(sender, args);
 
         }
 
@@ -150,6 +163,7 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
         public async Task LeaveGame()
         {
             await this.WaitingRoomHub.LeaveGame();
+            await GameRequestManager.CancelGameRequest();
             SetDefaultValues();
             Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>());
         }

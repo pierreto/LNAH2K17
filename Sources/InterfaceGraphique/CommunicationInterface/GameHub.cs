@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace InterfaceGraphique.CommunicationInterface
 {
-    public class GameHub : IBaseHub
+    public class GameHub : BaseHub, IBaseHub
     {
         public event Action<GameDataMessage> NewPositions;
         public event Action<GoalMessage> NewGoal;
@@ -21,7 +21,7 @@ namespace InterfaceGraphique.CommunicationInterface
         private Guid gameGuid;
 
         private IHubProxy gameHubProxy;
-        
+
         public void InitializeHub(HubConnection connection)
         {
             gameHubProxy = GameWaitingRoomHub.WaitingRoomProxy;
@@ -87,51 +87,87 @@ namespace InterfaceGraphique.CommunicationInterface
 
             // We need to give a mapping master<->gameId to the server hub so we can handle
             // disconnections properly:
-            Task.Run(() => gameHubProxy.Invoke("RegisterPlayer", gameGuid));
+            try
+            {
+                Task.Run(() => gameHubProxy.Invoke("RegisterPlayer", gameGuid));
+            }
+            catch (Exception e)
+            {
+                HandleError();
+            }
         }
 
         public async Task SendSlavePosition(float[] slavePosition)
         {
             GameDataMessage gameDataMessage = new GameDataMessage(slavePosition);
-
-            await gameHubProxy.Invoke("SendGameData", gameGuid, gameDataMessage);
+            try
+            {
+                await gameHubProxy.Invoke("SendGameData", gameGuid, gameDataMessage);
+            }
+            catch (Exception e)
+            {
+                HandleError();
+            }
         }
 
         public async Task SendGameData(float[] slavePosition, float[] masterPosition, float[] puckPosition)
         {
-            GameDataMessage gameDataMessage = new GameDataMessage(slavePosition, masterPosition,puckPosition);
-
-            await gameHubProxy.Invoke("SendGameData", gameGuid, gameDataMessage);
+            GameDataMessage gameDataMessage = new GameDataMessage(slavePosition, masterPosition, puckPosition);
+            try
+            {
+                await gameHubProxy.Invoke("SendGameData", gameGuid, gameDataMessage);
+            }
+            catch (Exception e)
+            {
+                HandleError();
+            }
         }
 
         public async Task SendGameOver()
         {
-            await gameHubProxy.Invoke("GameOver", gameGuid);
+            try
+            {
+                await gameHubProxy.Invoke("GameOver", gameGuid);
+            }
+            catch (Exception e)
+            {
+                HandleError();
+            }
         }
 
         public async Task SendGoal(int player)
         {
-            GoalMessage goalMessage = new GoalMessage(player);
-            await gameHubProxy.Invoke("SendGoal", gameGuid, goalMessage);
+            try
+            {
+                GoalMessage goalMessage = new GoalMessage(player);
+                await gameHubProxy.Invoke("SendGoal", gameGuid, goalMessage);
+            }
+            catch (Exception e)
+            {
+                HandleError();
+            }
 
         }
 
         public async Task SendGamePauseOrResume()
         {
-            await gameHubProxy.Invoke("GamePauseOrResume", gameGuid);
+            try
+            {
+                await gameHubProxy.Invoke("GamePauseOrResume", gameGuid);
+            }
+            catch (Exception e)
+            {
+                HandleError();
+            }
         }
 
         public async Task Logout()
         {
-            //await gameHubProxy.Invoke("LeaveRoom", gameGuid);
-
-            //gameHubProxy?.Invoke("Disconnect", User.Instance.UserEntity.Username).Wait();
         }
 
         public async Task LeaveRoom()
         {
-            // do nothing
-            await Logout();
+
         }
     }
 }

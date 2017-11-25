@@ -18,6 +18,16 @@ import UIKit
 /// @date 2017-11-13
 ///////////////////////////////////////////////////////////////////////////
 class FriendRequestsViewController: UIViewController {
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        
+        // Initialize Tab Bar Item
+        tabBarItem = UITabBarItem()
+        tabBarItem.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "FontAwesome", size: 30)!], for: .normal)
+        tabBarItem.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: -5)
+        tabBarItem.title = "\u{f0f3}"
+    }
 
     func enableNavigationBar(activer: Bool) {
         self.navigationItem.hidesBackButton = !activer

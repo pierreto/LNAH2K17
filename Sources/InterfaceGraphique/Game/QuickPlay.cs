@@ -160,6 +160,7 @@ namespace InterfaceGraphique
         private async Task OnMainMenuClicked(object sender, EventArgs e)
         {
             Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>());
+            this.currentGameState.gameHasEnded = true;
             if (currentGameState.IsOnlineTournementMode)
             {
                 await Program.unityContainer.Resolve<TournamentViewModel>().WaitingRoomHub.LeaveTournament();

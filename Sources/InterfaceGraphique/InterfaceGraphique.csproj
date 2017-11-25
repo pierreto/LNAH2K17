@@ -141,6 +141,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommunicationInterface\BaseHub.cs" />
     <Compile Include="CommunicationInterface\ChatHub.cs" />
     <Compile Include="CommunicationInterface\FriendsHub.cs" />
     <Compile Include="CommunicationInterface\EditionHub.cs" />
@@ -359,7 +360,6 @@
     <Compile Include="Entities\LoginMessage.cs" />
     <Compile Include="Entities\MapEntity.cs" />
     <Compile Include="Entities\MemberEntity.cs" />
-    <Compile Include="CommunicationInterface\LoginClient.cs" />
     <Compile Include="Entities\PlayerEndOfGameStatsEntity.cs" />
     <Compile Include="Entities\PlayerStatsEntity.cs" />
     <Compile Include="Entities\StoreItemEntity.cs" />

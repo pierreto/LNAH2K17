@@ -10,8 +10,6 @@ using System.Threading;
 
 namespace InterfaceGraphique.CommunicationInterface
 {
-
-    //CLASSE TRES TEMPORAIRE
     public class HubManager
     {
         private static HubManager instance;

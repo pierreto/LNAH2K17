@@ -11,7 +11,7 @@ using System.Text;
 
 namespace InterfaceGraphique.CommunicationInterface
 {
-    public class ChatHub : IBaseHub
+    public class ChatHub : BaseHub, IBaseHub
     {
 
         public event Action<ChatMessage> NewMessage;
@@ -74,15 +74,33 @@ namespace InterfaceGraphique.CommunicationInterface
             message.Sender = User.Instance.UserEntity.Username;
             message.MessageValue = Convert.ToBase64String(Encoding.UTF8.GetBytes(message.MessageValue));
             message.TimeStamp = DateTime.Now;
-            await chatHubProxy.Invoke("SendBroadcast", message);
+            try
+            {
+                await chatHubProxy.Invoke("SendBroadcast", message);
+            }
+            catch (Exception e)
+            {
+                HandleError();
+            }
         }
 
         public async Task<string> CreateChannel(string channelName)
         {
-            bool res = await chatHubProxy.Invoke<Boolean>("CreateChannel", channelName);
-            if(res) {
+            bool res = false;
+            try
+            {
+                res = await chatHubProxy.Invoke<Boolean>("CreateChannel", channelName);
+            }
+            catch (Exception e)
+            {
+                HandleError();
+            }
+
+            if (res)
+            {
                 return null;
-            } else
+            }
+            else
             {
                 return "Canal déjà crée";
             }
@@ -90,13 +108,28 @@ namespace InterfaceGraphique.CommunicationInterface
 
         public async Task<bool> CreatePrivateChannel(string othersName, int myId, int othersId, string othersProfile)
         {
-            bool res = await chatHubProxy.Invoke<Boolean>("CreatePrivateChannel", othersName, User.Instance.UserEntity.Id, othersId, othersProfile);
-            return res;
+            try
+            {
+                return await chatHubProxy.Invoke<Boolean>("CreatePrivateChannel", othersName, User.Instance.UserEntity.Id, othersId, othersProfile);
+            }
+            catch (Exception e)
+            {
+                HandleError();
+            }
+
+            return false;
         }
 
         public async Task JoinChannel(string channelName)
         {
-            await chatHubProxy.Invoke<String>("JoinChannel", channelName);
+            try
+            {
+                await chatHubProxy.Invoke<String>("JoinChannel", channelName);
+            }
+            catch (Exception e)
+            {
+                HandleError();
+            }
         }
 
         public async void SendPrivateMessage(ChatMessage message, int senderId, int receptorId)
@@ -104,7 +137,15 @@ namespace InterfaceGraphique.CommunicationInterface
             message.Sender = User.Instance.UserEntity.Username;
             message.MessageValue = Convert.ToBase64String(Encoding.UTF8.GetBytes(message.MessageValue));
             message.TimeStamp = DateTime.Now;
-            await chatHubProxy.Invoke("SendPrivateMessage", message, senderId, receptorId);
+
+            try
+            {
+                await chatHubProxy.Invoke("SendPrivateMessage", message, senderId, receptorId);
+            }
+            catch (Exception e)
+            {
+                HandleError();
+            }
         }
 
         public async void SendChannel(ChatMessage message, string channelName)
@@ -112,18 +153,39 @@ namespace InterfaceGraphique.CommunicationInterface
             message.Sender = User.Instance.UserEntity.Username;
             message.MessageValue = Encoding.UTF8.GetString(Convert.FromBase64String(message.MessageValue));
             message.TimeStamp = DateTime.Now;
-            await chatHubProxy.Invoke("SendChannel", channelName, message);
+            try
+            {
+                await chatHubProxy.Invoke("SendChannel", channelName, message);
+            }
+            catch (Exception e)
+            {
+                HandleError();
+            }
         }
 
         public async void LeaveRoom(String roomName)
         {
-            await chatHubProxy.Invoke("LeaveRoom", roomName, User.Instance.UserEntity.Id);
+            try
+            {
+                await chatHubProxy.Invoke("LeaveRoom", roomName, User.Instance.UserEntity.Id);
+            }
+            catch (Exception e)
+            {
+                HandleError();
+            }
         }
 
         public async Task Logout()
         {
-            var roomNames = Program.unityContainer.Resolve<ChatListViewModel>().Items.Where(x=> x.Name != "Principal" && !x.ChannelEntity.IsPrivate).Select(x => x.Name);
-            await chatHubProxy.Invoke("Disconnect", roomNames, User.Instance.UserEntity.Id);
+            var roomNames = Program.unityContainer.Resolve<ChatListViewModel>().Items.Where(x => x.Name != "Principal" && !x.ChannelEntity.IsPrivate).Select(x => x.Name);
+            try
+            {
+                await chatHubProxy.Invoke("Disconnect", roomNames, User.Instance.UserEntity.Id);
+            }
+            catch (Exception e)
+            {
+                HandleError();
+            }
         }
 
         public async Task LeaveRoom()
