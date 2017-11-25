@@ -181,6 +181,10 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
         AudioService.instance.playSound(soundName: EDITION_SOUND.SAVE.rawValue)
     }
     
+    func takeMapSnapshot() -> UIImage {
+        return self.editorView.snapshot()
+    }
+    
     /// Permettre la reconnaissance simultanée de plusieurs gestures
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         if (gestureRecognizer is UIPinchGestureRecognizer || gestureRecognizer is UIRotationGestureRecognizer

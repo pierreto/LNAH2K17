@@ -76,6 +76,7 @@
 		25628B9F1FA79C070010B58D /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25628B9E1FA79C070010B58D /* MapViewModel.swift */; };
 		25628BA11FA79CFF0010B58D /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25628BA01FA79CFF0010B58D /* Map.swift */; };
 		256539A91F9D643A00D81E2C /* MapEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256539A81F9D643A00D81E2C /* MapEntity.swift */; };
+		2585569E1FC9B91300A09B08 /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2585569D1FC9B91300A09B08 /* ImageService.swift */; };
 		258A73B71FB3E5D3003725E6 /* UnlockMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258A73B61FB3E5D3003725E6 /* UnlockMapViewController.swift */; };
 		258EED9C1FC3A3130096115B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 258EED9B1FC3A3130096115B /* QuartzCore.framework */; };
 		258EED9E1FC3A3B00096115B /* MapCarouselViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258EED9D1FC3A3B00096115B /* MapCarouselViewController.swift */; };
@@ -306,6 +307,7 @@
 		25628B9E1FA79C070010B58D /* MapViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		25628BA01FA79CFF0010B58D /* Map.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
 		256539A81F9D643A00D81E2C /* MapEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapEntity.swift; sourceTree = "<group>"; };
+		2585569D1FC9B91300A09B08 /* ImageService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageService.swift; path = Noyau/Services/ImageService.swift; sourceTree = "<group>"; };
 		258A73B61FB3E5D3003725E6 /* UnlockMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UnlockMapViewController.swift; path = InterfaceGraphique/UnlockMapViewController.swift; sourceTree = "<group>"; };
 		258EED971FC3A2B70096115B /* AirHockeyLightClient-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AirHockeyLightClient-Bridging-Header.h"; sourceTree = "<group>"; };
 		258EED9B1FC3A3130096115B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -664,6 +666,7 @@
 				2509B8A01FB93631002DEE9A /* FriendsService.swift */,
 				25EFB29F1FB7505100FFD66F /* MapService.swift */,
 				8F829B441FC2834800FC027B /* StoreService.swift */,
+				2585569D1FC9B91300A09B08 /* ImageService.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -1337,6 +1340,7 @@
 				0EED627F1F982B3B00CD8C56 /* ModeleEtatCreerMuret.swift in Sources */,
 				8F0B94B81F8D7F11007F0E82 /* ModeleEtatPointControl.swift in Sources */,
 				25F809231FA6A2680008F048 /* MapDisplayViewController.swift in Sources */,
+				2585569E1FC9B91300A09B08 /* ImageService.swift in Sources */,
 				25A1BEF71FC23C180017C058 /* AddFriendViewController.swift in Sources */,
 				258EED9E1FC3A3B00096115B /* MapCarouselViewController.swift in Sources */,
 				256539A91F9D643A00D81E2C /* MapEntity.swift in Sources */,
