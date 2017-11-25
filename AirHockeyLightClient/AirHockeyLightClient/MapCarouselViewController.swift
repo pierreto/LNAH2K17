@@ -72,6 +72,10 @@ class MapCarouselViewController: UIViewController, iCarouselDataSource, iCarouse
         })
     }
     
+    func numberOfItems() -> Int {
+        return maps.count
+    }
+    
     func numberOfItems(in carousel: iCarousel) -> Int {
         return maps.count
     }
@@ -177,21 +181,19 @@ class MapCarouselViewController: UIViewController, iCarouselDataSource, iCarouse
     }
     
     func deleteCurrentMap() {
-        if self.maps.count > 0 {
-            let mapService = MapService()
-            mapService.deleteMap(map: self.maps[self.carouselView.currentItemIndex], completionHandler: { success, error in
-                if success! {
-                    self.maps.remove(at: self.carouselView.currentItemIndex) // remove the item from the data model
+        let mapService = MapService()
+        mapService.deleteMap(map: self.maps[self.carouselView.currentItemIndex], completionHandler: { success, error in
+            if success! {
+                self.maps.remove(at: self.carouselView.currentItemIndex) // remove the item from the data model
                     
-                    DispatchQueue.main.async(execute: { () -> Void in
-                        // Reload tableView
-                        self.carouselView.reloadData()
-                    })
-                }
+                DispatchQueue.main.async(execute: { () -> Void in
+                    // Reload tableView
+                    self.carouselView.reloadData()
+                })
+            }
                 
-                return
-            })
-        }
+            return
+        })
     }
     
 }
