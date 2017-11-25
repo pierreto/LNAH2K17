@@ -64,7 +64,7 @@
             <TabItem Header="&#xf0c0;" HorizontalAlignment="center" BorderBrush="Transparent" MouseDown="TabItem_MouseDown_1">
                 <ContentControl Content="{Binding Source={StaticResource VMLocator}, Path=FriendListViewModel}"/>
             </TabItem>
-            <TabItem Header="&#xf234;" HorizontalAlignment="center" BorderBrush="Transparent">
+            <TabItem Header="&#xf234;" HorizontalAlignment="center" BorderBrush="#FF103B6E" Cursor="Arrow">
                 <ContentControl Content="{Binding Source={StaticResource VMLocator}, Path=AddUserViewModel}" />
             </TabItem>
             <TabItem Header="&#xf0f3;"  HorizontalAlignment="center" BorderBrush="Red" MouseDown="TabItem_MouseDown">
