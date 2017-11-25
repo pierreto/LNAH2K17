@@ -645,19 +645,27 @@ std::string FacadeModele::_getMapJson(float coefficients[]) {
 
 
 void FacadeModele::createMapIcon(unsigned char* dest) {
-	/*
-	if (!docJSON_.HasMember("Icon")) {
-		rapidjson::Value iconBytes(rapidjson::kArrayType);
-		docJSON_.AddMember("Icon", iconBytes, docJSON_.GetAllocator());
-	}
-	*/
+	vue::Vue* oldView = vue_;
+
+	glm::ivec2 cloture = vue_->obtenirProjection().obtenirDimensionCloture();
+
+	vue_ = new vue::VueOrtho{
+	vue::Camera{
+	glm::dvec3(0, 200, 0), glm::dvec3(0, 0, 0),
+	glm::dvec3(1, 0, 0),   glm::dvec3(0, 1, 0) },
+	vue::ProjectionOrtho{
+	500, 500,
+	1, 1000, 1, 10000, 1.25,
+	200, 200 }
+	};
+	vue_->redimensionnerFenetre(cloture.x, cloture.y);
+
 
 	glm::ivec2 oldDim = vue_->obtenirProjection().getLargeurFenetre();
 
 	glm::ivec2 newLargeur = glm::ivec2(1184,600);
 
 
-	//vue::VueOrtho*  vueOrtho = dynamic_cast<vue::ProjectionOrtho*>(vue_);
 
 	vue_->setLargeurFenetre(newLargeur.x, newLargeur.y);
 
@@ -683,32 +691,39 @@ void FacadeModele::createMapIcon(unsigned char* dest) {
 
 	FIBITMAP* image = FreeImage_ConvertFromRawBits(outPixels, sizex, newDim.y, 3 * sizex, 24, 0x0000FF, 0xFF0000, 0x00FF00, false);
 
-	FIBITMAP* imageRescaled = FreeImage_Rescale(image, 500, 500, FILTER_BOX);
+	const int ligne = 500;
+	const int colonne = 500;
 
-	BYTE bytes[500 * 500 * 3];
-	FreeImage_ConvertToRawBits(bytes, imageRescaled, 3 * 500, 24, 0x0000FF, 0xFF0000, 0x00FF00, false);
-	//FreeImage_Save(FIF_JPEG, imageRescaled, "test.jpg", 0);
+	FIBITMAP* imageRescaled = FreeImage_Rescale(image, ligne, colonne, FILTER_BOX);
 
-	/*
-	rapidjson::Value tempArray(rapidjson::kArrayType);
-	for(int i =0; i<128*128*3;i++ )
+
+
+	BYTE bytes[ligne * colonne * 3];
+	FreeImage_ConvertToRawBits(bytes, imageRescaled, 3 * ligne, 24, 0x0000FF, 0xFF0000, 0x00FF00, false);
+
+
+
+	int indexLigneImageFinal = 0;
+	for(int debutLigne = ligne*colonne*3 - colonne*3;debutLigne >=0; debutLigne-= colonne*3)
 	{
-		tempArray.PushBack(bytes[i], docJSON_.GetAllocator());
+		for (int i = 0 ; i<colonne*3; i++)
+		{
+			dest[i+ indexLigneImageFinal]= (unsigned char)(bytes[debutLigne+i]);
+		}
+		indexLigneImageFinal += colonne*3;
 	}
 
-	docJSON_["Icon"].PushBack(tempArray, docJSON_.GetAllocator());
-	*/
-
-	for (int i = 500 * 500 * 3; i > 0; i--)
-	{
-		dest[i] = (unsigned char)bytes[i];
-	}
 
 	// Free resources
 	FreeImage_Unload(image);
 	FreeImage_Unload(imageRescaled);
 
-	vue_->setLargeurFenetre(oldDim.x, oldDim.y);
+	//vue_->setLargeurFenetre(oldDim.x, oldDim.y);
+
+
+	delete vue_;
+	vue_ = oldView;
+	
 }
 
 void FacadeModele::getMapIcon(unsigned char* icon) {

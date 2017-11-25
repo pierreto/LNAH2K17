@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using InterfaceGraphique.Exceptions;
 using Microsoft.Practices.Unity;
 using InterfaceGraphique.Services;
+using InterfaceGraphique.Controls.WPF.MainMenu;
 using InterfaceGraphique.Controls.WPF.Matchmaking;
 
 namespace InterfaceGraphique.Managers
@@ -57,7 +58,8 @@ namespace InterfaceGraphique.Managers
             PendingRequest = null;
             Program.FormManager.Invoke(new MethodInvoker(() =>
             {
-                Program.FormManager.CurrentForm = Program.MainMenu;
+                Program.FormManager.CurrentForm = Program.HomeMenu;
+                Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>());
             }));
 
             System.Windows.Forms.MessageBox.Show(

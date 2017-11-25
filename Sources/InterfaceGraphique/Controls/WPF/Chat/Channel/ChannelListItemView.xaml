@@ -20,7 +20,7 @@
                         <ControlTemplate TargetType="{x:Type ContentControl}">
 
                             <!-- Content -->
-                            <Border x:Name="background" Background="{StaticResource DarkGrayBrush}" BorderBrush="{StaticResource VeryDarkGrayBrush}" BorderThickness="0,0,0,2">
+                            <Border x:Name="background" Background="{StaticResource DarkGrayBrush}" BorderBrush="{StaticResource UltraDarkGrayBrush}" BorderThickness="0,0,0,2">
 
                                 <!-- Click to open message -->
                                 <Border.InputBindings>
@@ -100,7 +100,7 @@
                             <ControlTemplate.Triggers>
 
                                 <DataTrigger Binding="{Binding DataContext.IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Value="True">
-                                    <Setter Property="Background" TargetName="background" Value="{StaticResource VeryDarkGrayBrush}"/>
+                                    <Setter Property="Background" TargetName="background" Value="{StaticResource UltraDarkGrayBrush}"/>
                                 </DataTrigger>
 
                                 <Trigger Property="IsEnabled" Value="False">

@@ -9,6 +9,8 @@ using InterfaceGraphique.CommunicationInterface;
 using InterfaceGraphique.CommunicationInterface.RestInterface;
 using InterfaceGraphique.Services;
 using System.IO;
+using InterfaceGraphique.Controls.WPF.MainMenu;
+using Microsoft.Practices.Unity;
 
 namespace InterfaceGraphique.Controls.WPF.Tournament
 {
@@ -100,11 +102,22 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
 
             this.WaitingRoomHub.RemainingTimeEvent += (e, args) => { RemainingTime = args; };
 
-            this.WaitingRoomHub.WinnerResultEvent += (e, args) => { Winner = args.Username; };
+            this.WaitingRoomHub.WinnerResultEvent += (e, args) => OnWinnerResult(e, args) ;
 
             this.WaitingRoomHub.SemiFinalResultEvent += (e, args) => OnSemiFinalResult(e, args);
 
             this.WaitingRoomHub.MapUpdatedEvent += (e, args) => OnMapUpdated(e, args);
+        }
+
+        private void OnWinnerResult(object e, GamePlayerEntity winner)
+        {
+            Winner = winner.Username;
+            WinnerPicture = winner.ProfilePicture;
+            winnerName = winner.Username;
+            isEndOfTournament = true;
+            OnPropertyChanged("IsEndOfTournament");
+
+            EndOfGameTitle = winner.Id == User.Instance.UserEntity.Id ? "Vous Avez Gagné!!!" : "Vous avez perdu :(";
         }
 
         private void OnMapUpdated(object e, MapEntity args)
@@ -256,7 +269,8 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
         {
             await this.WaitingRoomHub.LeaveTournament();
             SetDefaultValues();
-            Program.FormManager.CurrentForm = Program.MainMenu;
+            Program.FormManager.CurrentForm = Program.HomeMenu;
+            Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>());
         }
 
         public override void InitializeViewModel()
@@ -276,6 +290,45 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
             set
             {
                 imageSrc = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool isEndOfTournament;
+        public string IsEndOfTournament
+        {
+            get => isEndOfTournament ? "Visible" : "Hidden";
+        }
+
+        private string endOfGameTitle;
+        public string EndOfGameTitle
+        {
+            get => endOfGameTitle;
+            set
+            {
+                endOfGameTitle = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string winnerPicture;
+        public string WinnerPicture
+        {
+            get => winnerPicture;
+            set
+            {
+                winnerPicture = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string winnerName;
+        public string WinnerName
+        {
+            get => winnerName;
+            set
+            {
+                winnerName = value;
                 OnPropertyChanged();
             }
         }

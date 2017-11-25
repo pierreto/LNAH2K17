@@ -44,7 +44,7 @@ namespace InterfaceGraphique.CommunicationInterface
             }
             catch (Exception e)
             {
-                HandleError();
+                HandleError("FriendsHub -> InitializeFriendsHub");
             }
             InitializeEvents();
         }
@@ -107,7 +107,7 @@ namespace InterfaceGraphique.CommunicationInterface
             }
             catch (Exception e)
             {
-                HandleError();
+                HandleError("FriendsHub -> FriendIsAvailable");
             }
 
             return false;
@@ -121,7 +121,7 @@ namespace InterfaceGraphique.CommunicationInterface
             }
             catch (Exception e)
             {
-                HandleError();
+                HandleError("FriendsHub -> GetAllFriends");
             }
             return null;
         }
@@ -135,7 +135,7 @@ namespace InterfaceGraphique.CommunicationInterface
             }
             catch (Exception e)
             {
-                HandleError();
+                HandleError("FriendsHub -> GetAllPendingRequests");
             }
             return null;
         }
@@ -149,7 +149,7 @@ namespace InterfaceGraphique.CommunicationInterface
             }
             catch (Exception e)
             {
-                HandleError();
+                HandleError("FriendsHub -> SendFriendRequest");
             }
             return null;
         }
@@ -163,7 +163,7 @@ namespace InterfaceGraphique.CommunicationInterface
             }
             catch (Exception e)
             {
-                HandleError();
+                HandleError("FriendsHub -> AcceptFriendRequest");
             }
             return (res != null) ? true : false;
         }
@@ -177,7 +177,7 @@ namespace InterfaceGraphique.CommunicationInterface
             }
             catch (Exception e)
             {
-                HandleError();
+                HandleError("FriendsHub -> RefuseFriendRequest");
             }
             return (res != null) ? true : false;
         }
@@ -189,7 +189,7 @@ namespace InterfaceGraphique.CommunicationInterface
             }
             catch (Exception e)
             {
-                HandleError();
+                HandleError("FriendsHub - > RemoveFriend");
             }
             return false;
         }
@@ -202,7 +202,7 @@ namespace InterfaceGraphique.CommunicationInterface
             }
             catch (Exception e)
             {
-                HandleError();
+                HandleError("FriendsHub -> AcceptGameRequest");
             }
         }
 
@@ -214,7 +214,7 @@ namespace InterfaceGraphique.CommunicationInterface
             }
             catch (Exception e)
             {
-                HandleError();
+                HandleError("FriendsHub -> DeclineGameRequest");
             }
         }
 
@@ -226,7 +226,7 @@ namespace InterfaceGraphique.CommunicationInterface
             }
             catch (Exception e)
             {
-                HandleError();
+                HandleError("FriendsHub -> SendGameRequest");
             }
 
             return false;
@@ -240,7 +240,7 @@ namespace InterfaceGraphique.CommunicationInterface
             }
             catch (Exception e)
             {
-                HandleError();
+                HandleError("FriendsHub -> CancelGameRequest");
             }
         }
 
@@ -252,7 +252,7 @@ namespace InterfaceGraphique.CommunicationInterface
             }
             catch (Exception e)
             {
-                HandleError();
+                HandleError("FriendsHub -> Logout");
             }
         }
 

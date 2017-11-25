@@ -4,14 +4,19 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:wpf="clr-namespace:InterfaceGraphique.Controls.WPF"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
              xmlns:home="clr-namespace:InterfaceGraphique.Controls.WPF.Home"
              xmlns:connectServer="clr-namespace:InterfaceGraphique.Controls.WPF.ConnectServer"
              xmlns:authenticate="clr-namespace:InterfaceGraphique.Controls.WPF.Authenticate"
              xmlns:signup="clr-namespace:InterfaceGraphique.Controls.WPF.Signup"
+             xmlns:mainMenu="clr-namespace:InterfaceGraphique.Controls.WPF.MainMenu"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/InterfaceGraphique;component/Resource/appresources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
             <wpf:ViewModelLocator x:Key="VMLocator" d:IsDataSource="True" />
             <DataTemplate x:Name="HomeTemplate" DataType="{x:Type home:HomeViewModel}">
                 <home:HomeView DataContext="{Binding}"/>
@@ -24,6 +29,9 @@
             </DataTemplate>
             <DataTemplate x:Name="SignupTemplate" DataType="{x:Type signup:SignupViewModel}">
                 <signup:SignupView DataContext="{Binding}"/>
+            </DataTemplate>
+            <DataTemplate x:Name="MainMenuTemplate" DataType="{x:Type mainMenu:MainMenuViewModel}">
+                <mainMenu:MainMenu DataContext="{Binding}"/>
             </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -43,11 +51,14 @@
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" Background="Gray">
-            <Button Content="Retour" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" FontWeight="Bold" Command="{Binding BackCommand}" Visibility="{Binding Visibility}"/>
-            <TextBlock TextWrapping="Wrap" Text="{Binding Title}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="48" FontWeight="Bold" RenderTransformOrigin="0.5,0.5"/>
+        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" Background="{StaticResource UltraDarkGrayBrush}">
+            <StackPanel Orientation="Horizontal">
+                <Button fa:Awesome.Content="ChevronLeft" Background="Transparent" Foreground="{StaticResource TextColorBrush}" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center" FontWeight="Bold" Command="{Binding BackCommand}" Visibility="{Binding Visibility}" BorderThickness="0"/>
+                <Label Content="{Binding BackText}" FontWeight="Bold" FontSize="24" Foreground="{StaticResource TextColorBrush}" VerticalAlignment="Center"></Label>
+            </StackPanel>
+            <TextBlock TextWrapping="Wrap" Text="{Binding Title}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="48" FontWeight="Bold" Foreground="{StaticResource TextColorBrush}" RenderTransformOrigin="0.5,0.5"/>
         </Grid>
 
-        <ContentControl Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="5" Grid.RowSpan="4" Content="{Binding }"/>
+        <ContentControl Grid.Row="{Binding Row}" Grid.Column="0" Grid.ColumnSpan="5" Grid.RowSpan="{Binding RowSpan}" Content="{Binding }"/>
     </Grid>
 </UserControl>

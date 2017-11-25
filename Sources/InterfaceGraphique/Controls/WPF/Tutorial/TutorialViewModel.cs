@@ -55,6 +55,8 @@ namespace InterfaceGraphique.Controls.WPF.Tutorial
             {
                 this.activeSlideIndex = value;
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(CanShowNext));
+                OnPropertyChanged(nameof(CanShowPrevious));
             }
         }
         private Image[] GetImages(string[] filenames)
@@ -91,7 +93,7 @@ namespace InterfaceGraphique.Controls.WPF.Tutorial
             get
             {
                 return previousCommand ??
-                       (previousCommand = new RelayCommandAsync(Previous, (o) => (this.activeSlideIndex -1)>=0));
+                       (previousCommand = new RelayCommandAsync(Previous, (o) => CanShowPrevious));
             }
         }
 
@@ -100,15 +102,26 @@ namespace InterfaceGraphique.Controls.WPF.Tutorial
             this.ActiveSlideIndex--;
         }
 
+        public bool CanShowPrevious
+        {
+            get => (this.activeSlideIndex - 1) >= 0;
+        }
+
         private ICommand nextCommand;
         public ICommand NextCommand
         {
             get
             {
                 return nextCommand ??
-                       (nextCommand = new RelayCommandAsync(Next, (o) => (this.activeSlideIndex+1) < CurrentSlides.Length));
+                       (nextCommand = new RelayCommandAsync(Next, (o) => CanShowNext));
             }
         }
+
+        public bool CanShowNext
+        {
+            get => (this.activeSlideIndex + 1) < CurrentSlides.Length;
+        }
+
         private ICommand editorSlideCommand;
         public ICommand EditorSlideCommand
         {

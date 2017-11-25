@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InterfaceGraphique.Controls.WPF.MainMenu;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Practices.Unity;
 
 namespace InterfaceGraphique {
 
@@ -37,7 +39,7 @@ namespace InterfaceGraphique {
         ///
         ////////////////////////////////////////////////////////////////////////
         private void InitializeEvents() {
-            this.Button_Return.Click += (sender, e) => Program.FormManager.CurrentForm = Program.MainMenu;
+            this.Button_Return.Click += (sender, e) => { Program.FormManager.CurrentForm = Program.HomeMenu; Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>()); };
         }
 
 

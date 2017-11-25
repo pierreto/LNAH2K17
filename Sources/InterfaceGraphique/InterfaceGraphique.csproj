@@ -240,6 +240,10 @@
       <DependentUpon>FriendRequestListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\WPF\Friends\FriendRequestListViewModel.cs" />
+    <Compile Include="Controls\WPF\MainMenu\MainMenu.xaml.cs">
+      <DependentUpon>MainMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WPF\MainMenu\MainMenuViewModel.cs" />
     <Compile Include="Controls\WPF\MinimizableViewModelBase.cs" />
     <Compile Include="Controls\WPF\Navigation\NavigationView.xaml.cs">
       <DependentUpon>NavigationView.xaml</DependentUpon>
@@ -740,6 +744,10 @@
       <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
     <Page Include="Controls\WPF\Editor\EditorServerBrowser.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\WPF\MainMenu\MainMenu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

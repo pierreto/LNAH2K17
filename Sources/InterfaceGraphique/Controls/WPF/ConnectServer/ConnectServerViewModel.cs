@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Microsoft.Practices.Unity;
 using InterfaceGraphique.Controls.WPF.Home;
+using System.Net.Http;
 
 namespace InterfaceGraphique.Controls.WPF.ConnectServer
 {
@@ -71,6 +72,7 @@ namespace InterfaceGraphique.Controls.WPF.ConnectServer
         public ConnectServerViewModel()
         {
             Title = "Connexion";
+            BackText = "LNAH 2K17";
             this.hubManager = HubManager.Instance;
             this.IpAddressInputEnabled = true;
         }
@@ -105,6 +107,7 @@ namespace InterfaceGraphique.Controls.WPF.ConnectServer
                 if (await Task.WhenAny(task, Task.Delay(timeout)) == task)
                 {
                     //Task resolved within delay
+                    Program.client = new HttpClient();
                     Program.client.BaseAddress = new System.Uri("http://" + IpAddress + ":63056/");
                     IpAddress = "";
                     Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<AuthenticateViewModel>());
