@@ -13,7 +13,8 @@ using InterfaceGraphique.Controls.WPF.Chat;
 using InterfaceGraphique.Controls.WPF.Friends;
 using InterfaceGraphique.Managers;
 
-namespace InterfaceGraphique {
+namespace InterfaceGraphique
+{
 
     ///////////////////////////////////////////////////////////////////////////
     /// @class FormManager
@@ -21,17 +22,19 @@ namespace InterfaceGraphique {
     /// @author Julien Charbonneau
     /// @date 2016-09-13
     ///////////////////////////////////////////////////////////////////////////
-    public partial class FormManager : Form {
+    public partial class FormManager : Form
+    {
         private int friendHeight;
         private readonly int COLLAPSED_CHAT_HEIGHT = 40;
         private int chatHeight;
 
-        private bool firstTimeMaximizeChat;
-
-        public dynamic CurrentForm {
+        public dynamic CurrentForm
+        {
             get { return currentForm; }
-            set {
-                if (currentForm != null) {
+            set
+            {
+                if (currentForm != null)
+                {
                     this.Controls.Remove(currentForm);
                     currentForm.UnsuscribeEventHandlers();
                 }
@@ -42,7 +45,7 @@ namespace InterfaceGraphique {
                 currentForm.Location = new Point(0, 0);
                 currentForm.Size = new Size(this.ClientSize.Width, this.ClientSize.Height);
                 currentForm.Visible = true;
-         
+
                 currentForm.InitializeOpenGlPanel();
                 this.Controls.Add(currentForm);
                 currentForm.Focus();
@@ -59,7 +62,7 @@ namespace InterfaceGraphique {
             }
         }
 
-   
+
 
         private dynamic currentForm;
 
@@ -69,14 +72,14 @@ namespace InterfaceGraphique {
         /// Constructeur de la classe FormManager
         ///
         ////////////////////////////////////////////////////////////////////////
-        public FormManager() {
+        public FormManager()
+        {
             InitializeComponent();
             this.elementHost2.Child = Program.unityContainer.Resolve<FriendContentControl>();
             this.friendHeight = this.elementHost2.Height;
 
             elementHost1.Child = Program.unityContainer.Resolve<TestChatView>();
             chatHeight = elementHost1.Height;
-            firstTimeMaximizeChat = false;
 
             this.gameRequestPopup.Hide();
 
@@ -87,7 +90,7 @@ namespace InterfaceGraphique {
             elementHost1.Size = new Size(this.ClientSize.Width * 2 / 3 + 1, COLLAPSED_CHAT_HEIGHT);
             elementHost1.Location = new Point(0, this.ClientSize.Height - chatHeight);
             elementHost2.Size = new Size(this.ClientSize.Width * 1 / 3, COLLAPSED_CHAT_HEIGHT);
-            elementHost2.Location = new Point(this.ClientSize.Width - elementHost2.Width,  this.ClientSize.Height - friendHeight);
+            elementHost2.Location = new Point(this.ClientSize.Width - elementHost2.Width, this.ClientSize.Height - friendHeight);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -106,21 +109,68 @@ namespace InterfaceGraphique {
         private async void OnDeclineGameRequest()
         {
             this.gameRequestPopup.Hide();
+            EnabledButtons(this.Controls);
             await Program.unityContainer.Resolve<GameRequestManager>().DeclineGameRequest();
         }
 
         private async void OnAcceptGameRequest()
         {
             this.gameRequestPopup.Hide();
+            EnabledButtons(this.Controls);
             await Program.unityContainer.Resolve<GameRequestManager>().AcceptGameRequest();
         }
 
-        public void ShowGameRequestPopup()
+        public void ShowGameRequestPopup(string senderName)
         {
             this.BeginInvoke(new MethodInvoker(delegate
             {
                 this.gameRequestPopup.Show();
+                this.textBox2.Text = senderName;
+                DisabledButtonsExeptGameRequest(this.Controls);
+                EnablePop();
             }));
+        }
+
+        private void EnablePop()
+        {
+            this.gameRequestPopup.Enabled = true;
+            this.buttonAccept.Enabled = true;
+            this.buttonRefus.Enabled = true;
+            this.playerName.Enabled = true;
+            this.textBox2.Enabled = true;
+        }
+
+        public void CancelGameRequest()
+        {
+            this.BeginInvoke(new MethodInvoker(delegate
+            {
+                this.gameRequestPopup.Hide();
+                EnabledButtons(this.Controls);
+            }));
+        }
+
+        private void DisabledButtonsExeptGameRequest(Control.ControlCollection controls)
+        {
+            foreach (Control control in controls)
+            {
+                control.Enabled = false;
+                if (control.HasChildren)
+                {
+                    DisabledButtonsExeptGameRequest(control.Controls);
+                }
+            }
+        }
+
+        private void EnabledButtons(Control.ControlCollection controls)
+        {
+            foreach (Control control in controls)
+            {
+                control.Enabled = true;
+                if (control.HasChildren)
+                {
+                    EnabledButtons(control.Controls);
+                }
+            }
         }
 
 
@@ -133,7 +183,8 @@ namespace InterfaceGraphique {
         /// @return     Void
         ///
         ////////////////////////////////////////////////////////////////////////
-        public void MettreAJour(double tempsInterAffichage) {
+        public void MettreAJour(double tempsInterAffichage)
+        {
             CurrentForm.MettreAJour(tempsInterAffichage);
         }
 
@@ -146,7 +197,8 @@ namespace InterfaceGraphique {
         /// @return FormManager
         ///
         ////////////////////////////////////////////////////////////////////////
-        public void InitializeScreenSize() {
+        public void InitializeScreenSize()
+        {
             int screenResolutionX = Screen.PrimaryScreen.Bounds.Width;
             int screenResolutionY = Screen.PrimaryScreen.Bounds.Height;
 
@@ -164,7 +216,8 @@ namespace InterfaceGraphique {
         /// @return FormManager
         ///
         ////////////////////////////////////////////////////////////////////////
-        private void InitializeOpenGLPanel() {
+        private void InitializeOpenGLPanel()
+        {
             this.SizeChanged += new EventHandler(WindowSizeChanged);
 
             Program.OpenGLPanel.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -235,15 +288,7 @@ namespace InterfaceGraphique {
         {
             HideChat();
             elementHost1.Size = new Size(elementHost1.Width, chatHeight);
-            if (firstTimeMaximizeChat)
-            {
-                elementHost1.Location = new Point(elementHost1.Location.X, elementHost1.Location.Y);
-                firstTimeMaximizeChat = false;
-            }
-            else
-            {
-                elementHost1.Location = new Point(elementHost1.Location.X, elementHost1.Location.Y - chatHeight + COLLAPSED_CHAT_HEIGHT);
-            }
+            elementHost1.Location = new Point(elementHost1.Location.X, elementHost1.Location.Y - chatHeight + COLLAPSED_CHAT_HEIGHT);
             ShowChat();
         }
 

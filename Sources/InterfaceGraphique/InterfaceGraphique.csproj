@@ -141,6 +141,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommunicationInterface\BaseHub.cs" />
     <Compile Include="CommunicationInterface\ChatHub.cs" />
     <Compile Include="CommunicationInterface\FriendsHub.cs" />
     <Compile Include="CommunicationInterface\EditionHub.cs" />
@@ -239,6 +240,10 @@
       <DependentUpon>FriendRequestListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\WPF\Friends\FriendRequestListViewModel.cs" />
+    <Compile Include="Controls\WPF\MainMenu\MainMenu.xaml.cs">
+      <DependentUpon>MainMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WPF\MainMenu\MainMenuViewModel.cs" />
     <Compile Include="Controls\WPF\MinimizableViewModelBase.cs" />
     <Compile Include="Controls\WPF\Navigation\NavigationView.xaml.cs">
       <DependentUpon>NavigationView.xaml</DependentUpon>
@@ -355,7 +360,6 @@
     <Compile Include="Entities\LoginMessage.cs" />
     <Compile Include="Entities\MapEntity.cs" />
     <Compile Include="Entities\MemberEntity.cs" />
-    <Compile Include="CommunicationInterface\LoginClient.cs" />
     <Compile Include="Entities\PlayerEndOfGameStatsEntity.cs" />
     <Compile Include="Entities\PlayerStatsEntity.cs" />
     <Compile Include="Entities\StoreItemEntity.cs" />
@@ -740,6 +744,10 @@
       <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
     <Page Include="Controls\WPF\Editor\EditorServerBrowser.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\WPF\MainMenu\MainMenu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

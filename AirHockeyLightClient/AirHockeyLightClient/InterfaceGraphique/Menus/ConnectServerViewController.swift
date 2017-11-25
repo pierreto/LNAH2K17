@@ -12,6 +12,7 @@ class ConnectServerViewController: UIViewController {
     @IBOutlet weak var ipAddressInput: UITextField!
     @IBOutlet weak var ipAddressErrorLabel: UILabel!
     @IBOutlet weak var loadingSpinner: UIActivityIndicatorView!
+    @IBOutlet weak var navigationBar: UINavigationItem!
     
     @IBOutlet weak var connectServerButton: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
@@ -131,16 +132,26 @@ class ConnectServerViewController: UIViewController {
     private func loading() {
         self.loadingSpinner.startAnimating()
         self.view.alpha = 0.7
+        self.view.isUserInteractionEnabled = false
+        self.navigationBar.hidesBackButton = true
     }
     
     private func loadingDone() {
         self.loadingSpinner.stopAnimating()
         self.view.alpha = 1.0
+        self.view.isUserInteractionEnabled = true
+        self.navigationBar.hidesBackButton = false
     }
     
     override func viewWillAppear(_ animated: Bool){
         ipAddressInput.text = "";
         HubManager.sharedConnection.setIpAddress(ipAddress: ipAddressInput.text!)
+        
+        if HubManager.sharedConnection.getConnection()?.state == .connected {
+            print ("Deconnexion du serveur")
+            _ = HubManager.sharedConnection.StopConnection()
+        }
+        
         HubManager.sharedConnection.connected = false;
     }
 }

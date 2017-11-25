@@ -10,6 +10,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Timers;
+using Microsoft.Practices.Unity;
+using InterfaceGraphique.Controls.WPF.MainMenu;
 
 namespace InterfaceGraphique.Controls.WPF.Store
 {
@@ -35,6 +37,7 @@ namespace InterfaceGraphique.Controls.WPF.Store
 
         public async Task Initialize()
         {
+            Load();
             var items = await StoreService.GetStoreItems();
             foreach(var item in items)
             {
@@ -52,6 +55,39 @@ namespace InterfaceGraphique.Controls.WPF.Store
             }
 
             PlayerName = User.Instance.UserEntity.Username;
+            LoadingDone();
+        }
+
+        private void LoadingDone()
+        {
+            NotLoading = true;
+        }
+
+        private void Load()
+        {
+            NotLoading = false;
+        }
+
+        private bool notLoading;
+        public bool NotLoading
+        {
+            get { return notLoading; }
+
+            set
+            {
+                if (notLoading == value)
+                {
+                    return;
+                }
+                notLoading = value;
+                this.OnPropertyChanged(nameof(NotLoading));
+                this.OnPropertyChanged(nameof(Loading));
+            }
+        }
+
+        public bool Loading
+        {
+            get { return !notLoading; }
         }
 
         private ObservableCollection<ItemViewModel> storeItems;
@@ -168,7 +204,8 @@ namespace InterfaceGraphique.Controls.WPF.Store
         private void BackMainMenu()
         {
             EmptyCart();
-            Program.FormManager.CurrentForm = Program.MainMenu;
+            Program.FormManager.CurrentForm = Program.HomeMenu;
+            Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>());
         }
 
         private ICommand clickCommand;

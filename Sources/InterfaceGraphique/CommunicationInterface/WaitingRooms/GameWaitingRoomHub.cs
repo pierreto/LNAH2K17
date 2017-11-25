@@ -12,7 +12,7 @@ using InterfaceGraphique.Services;
 
 namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 {
-    public class GameWaitingRoomHub : IBaseHub
+    public class GameWaitingRoomHub : BaseHub, IBaseHub
     {
         private SlaveGameState slaveGameState;
 
@@ -25,6 +25,8 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
         public event EventHandler<int> RemainingTimeEvent;
 
         public event EventHandler<MapEntity> MapUpdatedEvent;
+
+        public event EventHandler<int> OpponentLeftEvent;
 
         public static IHubProxy WaitingRoomProxy { get; set; }
 
@@ -50,12 +52,26 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
         public async void Join()
         {
             GamePlayerEntity player = new GamePlayerEntity(User.Instance.UserEntity);
-            await WaitingRoomProxy.Invoke("Join", player);
+            try
+            {
+                await WaitingRoomProxy.Invoke("Join", player);
+            }
+            catch (Exception e)
+            {
+                HandleError();
+            }
         }
 
         public async Task LeaveGame()
         {
-            await WaitingRoomProxy.Invoke("LeaveGame", User.Instance.UserEntity, CurrentGameId);
+            try
+            {
+                await WaitingRoomProxy.Invoke("LeaveGame", User.Instance.UserEntity, CurrentGameId);
+            }
+            catch (Exception e)
+            {
+                HandleError();
+            }
         }
 
         public async void UpdateSelectedMap(MapEntity map)
@@ -65,7 +81,9 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
                 await WaitingRoomProxy.Invoke("UpdateMap", CurrentGameId, map);
             }
             catch (Exception e)
-            { }
+            {
+                HandleError();
+            }
         }
 
         private void InitializeEvents()
@@ -81,12 +99,19 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
             WaitingRoomProxy.On<int>("WaitingRoomRemainingTime", remainingTime => OnRemainingTime(remainingTime));
             { };
+
+            WaitingRoomProxy.On<int>("PlayerLeft", playerId => OnOpponentLeft(playerId));
+        }
+
+        private void OnOpponentLeft(int playerId)
+        {
+            this.OpponentLeftEvent?.Invoke(this, playerId);
         }
 
         public void OnOpponentFound(GameEntity game)
         {
             this.CurrentGameId = game.GameId;
-            this.OpponentFoundEvent.Invoke(this, game);
+            this.OpponentFoundEvent?.Invoke(this, game);
         }
 
         public void OnGameStarting(GameEntity game)
@@ -132,7 +157,14 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
         public async Task Logout()
         {
-            //TODO: IMPLEMENT THE LOGOUT MECANISM
+            try
+            {
+                await WaitingRoomProxy.Invoke("Disconnect");
+            }
+            catch (Exception e)
+            {
+                HandleError();
+            }
         }
 
         public async Task LeaveRoom()

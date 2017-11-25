@@ -2,14 +2,16 @@
 using System.Threading.Tasks;
 using AirHockeyServer.Entities;
 using Microsoft.AspNet.SignalR;
+using AirHockeyServer.Hubs;
 
 namespace AirHockeyServer.Services.ChatServiceServer
 {
-    public class EditionBrowserHub : Hub
+    public class EditionBrowserHub : BaseHub
     {
         private EditionService editionService;
         // Should be thread-safe?
-        public EditionBrowserHub(EditionService editionService)
+        public EditionBrowserHub(EditionService editionService, ConnectionMapper connectionMapper)
+            : base(connectionMapper)
         {
             this.editionService = editionService;
 
@@ -42,6 +44,19 @@ namespace AirHockeyServer.Services.ChatServiceServer
         public List<OnlineEditedMapInfo> GetAvailableMapList()
         {
             return this.editionService.AvailableMapInfos;
+        }
+
+        public void Disconnect()
+        {
+            base.Disconnect();
+            // TODO
+        }
+
+        public override Task OnDisconnected(bool stopCalled)
+        {
+            // TODO ANY SPECIAL ACTION?
+
+            return base.OnDisconnected(stopCalled);
         }
     }
 }

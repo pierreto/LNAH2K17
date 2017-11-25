@@ -10,7 +10,10 @@ namespace AirHockeyServer.Services.MatchMaking
 {
     public abstract class MatchMaker
     {
-        public event EventHandler<MatchFoundArgs> MatchFoundEvent;
+        public MatchMaker()
+        {
+            this.WaitingPlayers = new Queue<GamePlayerEntity>();
+        }
 
         protected Mutex WaitingPlayersMutex = new Mutex();
 
@@ -31,15 +34,7 @@ namespace AirHockeyServer.Services.MatchMaking
             }
         }
 
-        public void RemoveUser(int userId)
-        {
-            _WaitingPlayers = new Queue<GamePlayerEntity>(_WaitingPlayers.Where(x => x.Id != userId));
-        }
-
-        protected void InvokeMatchFound(PlayersMatchEntity match)
-        {
-            MatchFoundEvent?.Invoke(new GamePlayerEntity(), new MatchFoundArgs { PlayersMatch = match });
-        }
+        public abstract void RemoveUser(int userId);
 
         ///////////////////////////////////////////////////////////////////////
         ///
@@ -48,27 +43,9 @@ namespace AirHockeyServer.Services.MatchMaking
         /// Cette fonction ajoute un utilisateur dans la file d'attente pour jouer
         ///
         ////////////////////////////////////////////////////////////////////////
-        public void AddOpponent(List<GamePlayerEntity> players)
-        {
-            WaitingPlayersMutex.WaitOne();
+        public abstract void AddOpponent(List<GamePlayerEntity> players);
 
-            players.ForEach(x => WaitingPlayers.Enqueue(x));
-
-            WaitingPlayersMutex.ReleaseMutex();
-
-            StartPlayersMatching();
-        }
-
-        public void AddOpponent(GamePlayerEntity player)
-        {
-            WaitingPlayersMutex.WaitOne();
-
-            WaitingPlayers.Enqueue(player);
-
-            WaitingPlayersMutex.ReleaseMutex();
-
-            StartPlayersMatching();
-        }
+        public abstract void AddOpponent(GamePlayerEntity player);
 
         ///////////////////////////////////////////////////////////////////////
         ///
@@ -79,7 +56,7 @@ namespace AirHockeyServer.Services.MatchMaking
         /// partie est ajouté dans la file d'attente
         ///
         ////////////////////////////////////////////////////////////////////////
-        private void StartPlayersMatching()
+        protected void StartPlayersMatching()
         {
             Thread myThread = new Thread(new ThreadStart(ExecuteMatch));
             myThread.Start();

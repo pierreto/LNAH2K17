@@ -18,6 +18,31 @@ import UIKit
 /// @date 2017-11-13
 ///////////////////////////////////////////////////////////////////////////
 class FriendRequestsViewController: UIViewController {
+    
+    /// Instance singleton
+    static var instance: FriendRequestsViewController?
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        
+        FriendRequestsViewController.instance = self
+        
+        // Initialize Tab Bar Item
+        self.tabBarItem = UITabBarItem()
+        self.tabBarItem.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "FontAwesome", size: 30)!], for: .normal)
+        self.tabBarItem.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: -5)
+        self.tabBarItem.title = "\u{f0f3}"
+    }
+    
+    func displayNotification() {
+        if !FriendRequestsTableViewController.instance.isOpen {
+            self.tabBarItem.badgeValue = " "
+        }
+    }
+    
+    func resetNotification() {
+        self.tabBarItem.badgeValue = ""
+    }
 
     func enableNavigationBar(activer: Bool) {
         self.navigationItem.hidesBackButton = !activer

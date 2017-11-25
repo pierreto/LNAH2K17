@@ -28,9 +28,9 @@ namespace AirHockeyServer.Services
 
         public GameWaitingRoomEventManager GameWaitingRoomEventManager { get; set; }
 
-        public IGameManager GameManager { get; }
+        public IPlayOnlineManager GameManager { get; }
 
-        public GameService(IGameManager gameManager, IGameRepository gameRepository
+        public GameService(IPlayOnlineManager gameManager, IGameRepository gameRepository
             , GameWaitingRoomEventManager gameWaitingRoomEventManager
             )
         {
@@ -38,25 +38,6 @@ namespace AirHockeyServer.Services
             GameManager = gameManager;
             GameRepository = gameRepository;
             GameWaitingRoomEventManager = gameWaitingRoomEventManager;
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn async Task<GameEntity> CreateGame(GameEntity gameEntity)
-        ///
-        /// Cette fonction gère la création d'une partie en ligne. Elle
-        /// commence par créer la partie dans la bd puis ajoute la partie
-        /// pour que le "MatchMakerService" puisse trouver un (des) adversaire(s).
-        /// 
-        /// @return Id du match créé
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        public async Task<GameEntity> CreateGame(GameEntity gameEntity)
-        {
-            gameEntity.GameId = Guid.NewGuid();
-            this.games.Add(gameEntity);
-
-            return gameEntity;
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -86,14 +67,15 @@ namespace AirHockeyServer.Services
             GameWaitingRoomEventManager.SetMap(gameId, map);
         }
 
-        public GameEntity GetGameEntityById(Guid id)
-        {
-            return this.games.First(a => a.GameId.Equals(id));
-        }
-
         public void LeaveGame(UserEntity user)
         {
-            GameMatchMakerService.Instance().RemoveUser(user.Id);
+            LeaveGame(user.Id);
+        }
+
+        public void LeaveGame(int userId)
+        {
+            GameMatchMakerService.Instance().RemoveUser(userId);
+            GameWaitingRoomEventManager.PlayerLeft(userId);
         }
 
         public void GoalScored(Guid gameId, int playerId)

@@ -33,10 +33,10 @@
             // 
             // elementHost1
             // 
-            this.elementHost1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.elementHost1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.elementHost1.Location = new System.Drawing.Point(0, 0);
             this.elementHost1.Name = "elementHost1";
-            this.elementHost1.Size = new System.Drawing.Size(1186, 636);
+            this.elementHost1.Size = new System.Drawing.Size(1184, 648);
             this.elementHost1.TabIndex = 0;
             this.elementHost1.Text = "elementHost1";
             this.elementHost1.Child = null;

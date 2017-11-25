@@ -10,14 +10,14 @@ using Microsoft.Practices.Unity;
 using InterfaceGraphique.Exceptions;
 using InterfaceGraphique.CommunicationInterface.RestInterface;
 using InterfaceGraphique.Controls.WPF.Friends;
+using InterfaceGraphique.Controls.WPF.MainMenu;
+using InterfaceGraphique.Services;
+using InterfaceGraphique.Controls.WPF.Chat;
 
 namespace InterfaceGraphique.Controls.WPF.Signup
 {
     public class SignupViewModel : ViewModelBase
     {
-        //TODO: Mettre ailleurs?
-        static HttpClient client = new HttpClient();
-
         #region Private Properties
         private SignupEntity signupEntity;
         private HubManager hubManager;
@@ -28,6 +28,7 @@ namespace InterfaceGraphique.Controls.WPF.Signup
         private string passwordErrMsg;
         private string confirmPasswordErrMsg;
         private bool inputsEnabled;
+        private bool notLoading;
         #endregion
 
         #region Public Properties
@@ -190,12 +191,34 @@ namespace InterfaceGraphique.Controls.WPF.Signup
                 this.OnPropertyChanged();
             }
         }
+
+        public bool NotLoading
+        {
+            get { return notLoading; }
+
+            set
+            {
+                if (notLoading == value)
+                {
+                    return;
+                }
+                notLoading = value;
+                this.OnPropertyChanged(nameof(NotLoading));
+                this.OnPropertyChanged(nameof(Loading));
+            }
+        }
+
+        public bool Loading
+        {
+            get { return !notLoading; }
+        }
         #endregion
 
         #region Constructor
         public SignupViewModel(SignupEntity signupEntity, ChatHub chatHub)
         {
             Title = "Créer un compte";
+            BackText = "S'authentifier";
             this.chatHub = chatHub;
             this.signupEntity = signupEntity;
             this.hubManager = HubManager.Instance;
@@ -223,33 +246,42 @@ namespace InterfaceGraphique.Controls.WPF.Signup
         {
             try
             {
-                Loading();
+                Load();
                 ResetErrMsg();
                 if (ValidateFields())
                 {
-                    var response = await client.PostAsJsonAsync(Program.client.BaseAddress + "api/signup", signupEntity);
+                    var response = await Program.client.PostAsJsonAsync(Program.client.BaseAddress + "api/signup", signupEntity);
                     if (response.IsSuccessStatusCode)
                     {
                         int userId = response.Content.ReadAsAsync<int>().Result;
 
                         //On set l'instance statique du user.
                         HttpResponseMessage uEResponse = await Program.client.GetAsync(Program.client.BaseAddress + "api/user/" + userId);
-                        User.Instance.UserEntity = await HttpResponseParser.ParseResponse<UserEntity>(uEResponse); User.Instance.IsConnected = true;
+                        User.Instance.UserEntity = await HttpResponseParser.ParseResponse<UserEntity>(uEResponse);
+                        User.Instance.IsConnected = true;
+                        Program.unityContainer.Resolve<MainMenuViewModel>().OnlineMode = true;
 
                         await chatHub.InitializeChat();
 
-                        //On reset le nom d'usagermle mot de passe et la confirmation (Au cas ou il fait un retour a l'arriere ou deconnexion)
-                        Username = Password = ConfirmPassword = "";
+                        //On reset le nom d'usager et le mot de passe (Au cas ou il fait un retour a l'arriere ou deconnexion)
+                        Username = Password = "";
 
-                        //On initie tous les formes qui on besoin de savoir si on est en mode en ligne
+                        //On initie tous les formes qui on besoin de savoir si on est en mode en ligne 
                         Program.InitAfterConnection();
-                        Program.FormManager.CurrentForm = Program.MainMenu;
 
+                        Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>());
+
+                        //Should show loading spinner
+                        Program.unityContainer.Resolve<MainMenuViewModel>().NotLoading = false;
                         await Program.unityContainer.Resolve<FriendsHub>().InitializeFriendsHub();
-                        Program.unityContainer.Resolve<FriendListViewModel>().InitializeViewModel();
-                        Program.unityContainer.Resolve<AddUserViewModel>().InitializeViewModel();
-                        Program.unityContainer.Resolve<FriendRequestListViewModel>().InitializeViewModel();
-                        Program.unityContainer.Resolve<AddFriendListViewModel>().InitializeViewModel();
+                        await Program.unityContainer.Resolve<FriendListViewModel>().Init();
+                        await Program.unityContainer.Resolve<AddUserViewModel>().Init();
+                        await Program.unityContainer.Resolve<FriendRequestListViewModel>().Init();
+                        await Program.unityContainer.Resolve<AddFriendListViewModel>().InitAddFriends();
+                        Program.unityContainer.Resolve<ChatViewModel>().Init();
+                        Program.unityContainer.Resolve<FriendListViewModel>().Minimize();
+                        //Hide loading spinner
+                        Program.unityContainer.Resolve<MainMenuViewModel>().NotLoading = true;
                     }
                     else
                     {
@@ -422,13 +454,15 @@ namespace InterfaceGraphique.Controls.WPF.Signup
             return valid;
         }
 
-        private void Loading()
+        private void Load()
         {
             InputsEnabled = false;
+            NotLoading = false;
         }
 
         private void LoadingDone()
         {
+            NotLoading = true;
             InputsEnabled = true;
             CommandManager.InvalidateRequerySuggested();
         }

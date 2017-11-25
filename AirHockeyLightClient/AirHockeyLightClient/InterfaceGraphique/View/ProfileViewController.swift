@@ -203,7 +203,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     private func loadUserStoreItems() {
-        self.storeService.getUserStoreItems().then { items -> Void in
+        _ = self.storeService.getUserStoreItems().then { items -> Void in
             self.userStoreItems = items
             
             DispatchQueue.main.async(execute: { () -> Void in
@@ -342,7 +342,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
                 // Send Update Item Enable
                 self.loading()
                 self.navigationBar.hidesBackButton = true
-                self.storeService.updateItemEnable(userId: HubManager.sharedConnection.getId()!, item: currentSelectedItem).then(execute: {_ -> Void in
+                _ = self.storeService.updateItemEnable(userId: HubManager.sharedConnection.getId()!, item: currentSelectedItem).then(execute: {_ -> Void in
                     
                     self.loadingDone()
                     self.navigationBar.hidesBackButton = false

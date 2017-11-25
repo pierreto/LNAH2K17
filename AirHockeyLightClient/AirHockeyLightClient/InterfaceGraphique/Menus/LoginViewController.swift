@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Reachability
 
 class LoginViewController: UIViewController {
 
@@ -20,8 +21,14 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var signupButton: UIButton!
     @IBOutlet weak var loadingSpinner: UIActivityIndicatorView!
+    @IBOutlet weak var navigationBar: UINavigationItem!
     
     @IBOutlet weak var scrollView: UIScrollView!
+    
+    // Reachability écoute les modifications de connexion du iPad
+    private var reachability = Reachability()!
+    private var wifiEnable = true
+    private var serverDownTimer = Timer()
     
     // Mark: Actions
     @IBAction func login(_ sender: Any) {
@@ -109,6 +116,57 @@ class LoginViewController: UIViewController {
         fillUI()
         NotificationCenter.default.addObserver(self, selector: #selector(adjustForKeyboard), name:NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(adjustForKeyboard), name:NSNotification.Name.UIKeyboardWillHide, object: nil)
+        
+        // Perte de connexion avec le serveur, tentative de reconnexion
+        HubManager.sharedConnection.getConnection()!.reconnecting = {
+            print("server may be down")
+            
+            if self.wifiEnable {
+                // Start a timer, just in case it reconnects quickly
+                self.serverDownTimer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(self.serverDown), userInfo: nil, repeats: false)
+            }
+        }
+        
+        // Reconnxion au serveur
+        HubManager.sharedConnection.getConnection()!.reconnected = {
+            self.serverDownTimer.invalidate()
+            self.serverDownTimer = Timer()
+        }
+        
+        reachability = Reachability()!
+        
+        reachability.whenReachable = { reachability in
+            if reachability.connection == .wifi {
+                self.wifiEnable = true
+            }
+        }
+        
+        reachability.whenUnreachable = { _ in
+            self.wifiEnable = false
+        }
+        
+        do {
+            try reachability.startNotifier()
+        } catch {
+            print("Unable to start notifier")
+        }
+    }
+    
+    // Le serveur est en arrêt depuis 5 secondes
+    @objc private func serverDown() {
+        self.serverDownTimer.invalidate()
+        self.serverDownTimer = Timer()
+        reachability.stopNotifier()
+        
+        // Afficher le pop up de retour vers la page d'accueil
+        let topViewController = self.navigationController?.topViewController
+        let serverDownVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ServerDownViewControllerID") as! ServerDownViewController
+        
+        topViewController?.addChildViewController(serverDownVC)
+        
+        serverDownVC.view.frame = (topViewController?.view.frame)!
+        topViewController?.view.addSubview(serverDownVC.view)
+        serverDownVC.didMove(toParentViewController: topViewController)
     }
 
     fileprivate func styleUI() {
@@ -161,11 +219,15 @@ class LoginViewController: UIViewController {
     private func loading() {
         self.loadingSpinner.startAnimating()
         self.view.alpha = 0.7
+        self.view.isUserInteractionEnabled = false
+        self.navigationBar.hidesBackButton = true
     }
     
     private func loadingDone() {
         self.loadingSpinner.stopAnimating()
         self.view.alpha = 1.0
+        self.view.isUserInteractionEnabled = true
+        self.navigationBar.hidesBackButton = false
     }
     
     override func viewWillDisappear(_ animated : Bool) {
@@ -174,6 +236,7 @@ class LoginViewController: UIViewController {
         if self.isMovingFromParentViewController {
 
         }
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
     }
     
     override func viewWillAppear(_ animated: Bool){
@@ -181,6 +244,7 @@ class LoginViewController: UIViewController {
         passwordInput.text = ""
         HubManager.sharedConnection.setUsername(username: "")
         NotificationCenter.default.post(name: Notification.Name(rawValue: LoginNotification.LogoutNotification), object: nil)
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         
     }
 }

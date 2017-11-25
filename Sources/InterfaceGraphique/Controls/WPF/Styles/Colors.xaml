@@ -7,15 +7,47 @@
     <Color x:Key="AddColor">#159b1a</Color>
     <SolidColorBrush x:Key="AddBrush" Color="{StaticResource AddColor}" />
 
-    <Color x:Key="DarkGrayColor">#707070</Color>
-    <SolidColorBrush x:Key="DarkGrayBrush" Color="{StaticResource DarkGrayColor}" />
 
-    <Color x:Key="VeryDarkGrayColor">#555555</Color>
-    <SolidColorBrush x:Key="VeryDarkGrayBrush" Color="{StaticResource VeryDarkGrayColor}" />
-
-    <Color x:Key="UltraDarkGrayColor">#333333</Color>
-    <SolidColorBrush x:Key="UltraDarkGrayBrush" Color="{StaticResource UltraDarkGrayColor}" />
 
     <Color x:Key="TextColor">#bababa</Color>
     <SolidColorBrush x:Key="TextColorBrush" Color="{StaticResource TextColor}" />
+
+    <Color x:Key="InputColor">#eeeeee</Color>
+    <SolidColorBrush x:Key="InputBrush" Color="{StaticResource InputColor}" />
+
+    <Color x:Key="SilverColor">#cccccc</Color>
+    <SolidColorBrush x:Key="SilverBrush" Color="{StaticResource SilverColor}" />
+
+    <Color x:Key="DarkSilverColor">#a0a0a0</Color>
+    <SolidColorBrush x:Key="DarkSilverBrush" Color="{StaticResource DarkSilverColor}" />
+
+    <Color x:Key="RedColor">#ff5050</Color>
+    <SolidColorBrush x:Key="RedBrush" Color="{StaticResource RedColor}" />
+
+    <Color x:Key="DarkRedColor">#ff2121</Color>
+    <SolidColorBrush x:Key="DarkRedBrush" Color="{StaticResource DarkRedColor}" />
+
+    <Color x:Key="OrangeColor">#ffbe69</Color>
+    <SolidColorBrush x:Key="OrangeBrush" Color="{StaticResource OrangeColor}" />
+
+    <Color x:Key="DarkOrangeColor">#ffa530</Color>
+    <SolidColorBrush x:Key="DarkOrangeBrush" Color="{StaticResource DarkOrangeColor}" />
+
+    <Color x:Key="BlueColor">#54c3ff</Color>
+    <SolidColorBrush x:Key="BlueBrush" Color="{StaticResource BlueColor}" />
+
+    <Color x:Key="DarkBlueColor">#1eb0ff</Color>
+    <SolidColorBrush x:Key="DarkBlueBrush" Color="{StaticResource DarkBlueColor}" />
+
+    <Color x:Key="GreenColor">#3ccc71</Color>
+    <SolidColorBrush x:Key="GreenBrush" Color="{StaticResource GreenColor}" />
+
+    <Color x:Key="DarkGreenColor">#0fa847</Color>
+    <SolidColorBrush x:Key="DarkGreenBrush" Color="{StaticResource DarkGreenColor}" />
+
+    <Color x:Key="DarkGrayColor">#3e3e3e</Color>
+    <SolidColorBrush x:Key="DarkGrayBrush" Color="{StaticResource DarkGrayColor}" />
+    
+    <Color x:Key="UltraDarkGrayColor">#1e1e1e</Color>
+    <SolidColorBrush x:Key="UltraDarkGrayBrush" Color="{StaticResource UltraDarkGrayColor}" />
 </ResourceDictionary>

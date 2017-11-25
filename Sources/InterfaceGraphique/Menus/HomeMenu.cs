@@ -18,9 +18,6 @@ namespace InterfaceGraphique.Menus
 {
     public partial class HomeMenu: Form
     {
-        //Rendre singleton?
-        static HttpClient client = new HttpClient();
-
         public HomeMenu()
         {
             InitializeComponent();

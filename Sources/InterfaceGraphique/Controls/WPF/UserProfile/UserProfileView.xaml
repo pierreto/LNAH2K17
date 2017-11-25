@@ -26,9 +26,12 @@
                     </Setter.Value>
                 </Setter>
             </Style>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/InterfaceGraphique;component/Resource/appresources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid>
+    <Grid IsEnabled="{Binding NotLoading}">
         <Grid.DataContext>
             <Binding Path="UserProfileViewModel" Source="{StaticResource VMLocator}"/>
         </Grid.DataContext>
@@ -36,6 +39,9 @@
             <ColumnDefinition Width="80*"></ColumnDefinition>
             <ColumnDefinition Width="20*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
+        <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Grid.RowSpan="3" Grid.ColumnSpan="3" Panel.ZIndex="10" Margin="20" Visibility="{Binding Loading, Converter={convert:BooleanToVisibilityConverter}, ConverterParameter=True}">
+            <fa:ImageAwesome Icon="CircleOutlineNotch" Spin="{Binding Loading}" Height="48" Width="48" Foreground="{StaticResource DarkSilverBrush}"/>
+        </Grid>
         <Grid Grid.Row="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="10*"></RowDefinition>

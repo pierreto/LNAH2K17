@@ -40,9 +40,9 @@
 
         <TextBox Foreground="#FFFDFDFD"  Text="{Binding MapName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="22" TextWrapping="Wrap" VerticalAlignment="Center" Width="216" Background="#FF6A6A6A" Grid.Row="1" Grid.Column="1" Margin="0,12,0,8" />
         <TextBlock HorizontalAlignment="Right"  TextWrapping="Wrap" VerticalAlignment="Center" Width="166" Height="28" FontWeight="Bold" FontSize="20" Foreground="White" Grid.Row="1" Margin="0,8,0,6"  ><Run Text="Nom de la carte "/><Run Text=":"/><Run Text=" "/></TextBlock>
-        <TextBlock HorizontalAlignment="Right"  TextWrapping="Wrap" Text="Carte privée :" VerticalAlignment="Center" Width="138" Height="30" FontWeight="Bold" FontSize="20" Foreground="White" Grid.Row="2" RenderTransformOrigin="0.476,1.616" Margin="0,5,0,16" />
+        <TextBlock HorizontalAlignment="Right"  TextWrapping="Wrap" Text="Carte privée :" VerticalAlignment="Center" Width="138" Height="30" FontWeight="Bold" FontSize="20" Foreground="White" Grid.Row="2" />
         <TextBlock HorizontalAlignment="Right"  TextWrapping="Wrap" Text="Mot de passe :" VerticalAlignment="Center" Width="138" Height="30" FontWeight="Bold" FontSize="20" Foreground="White" Grid.Row="3" Visibility="{Binding IsPrivate, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}" />
-        <CheckBox Grid.Row="2" Grid.Column="1" IsChecked="{Binding IsPrivate}" Style="{StaticResource MaterialDesignCheckBox}" HorizontalAlignment="Left" VerticalAlignment="Center" Height="16"  Width="16" BorderBrush="#FFF3F3F3" Margin="0,13,0,22"  >
+        <CheckBox Grid.Row="2" Grid.Column="1" IsChecked="{Binding IsPrivate}" Style="{StaticResource MaterialDesignCheckBox}" HorizontalAlignment="Left" VerticalAlignment="Center" Height="16"  Width="16" BorderBrush="#FFF3F3F3"  >
             <CheckBox.LayoutTransform>
                 <ScaleTransform ScaleX="2" ScaleY="2" />
             </CheckBox.LayoutTransform>

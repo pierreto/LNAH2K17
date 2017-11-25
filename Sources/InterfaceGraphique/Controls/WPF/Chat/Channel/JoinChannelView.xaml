@@ -32,7 +32,7 @@
     <UserControl.DataContext>
         <Binding Path="JoinChannelViewModel" Source="{StaticResource VMLocator}"/>
     </UserControl.DataContext>
-    <Grid Background="DarkGray">
+    <Grid Background="{StaticResource SilverBrush}">
         <Border>
             <Grid>
                 <Grid.RowDefinitions>

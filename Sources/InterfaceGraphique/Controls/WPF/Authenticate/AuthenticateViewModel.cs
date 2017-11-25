@@ -11,6 +11,8 @@ using InterfaceGraphique.Controls.WPF.Friends;
 using InterfaceGraphique.Exceptions;
 using InterfaceGraphique.Services;
 using InterfaceGraphique.CommunicationInterface.RestInterface;
+using InterfaceGraphique.Controls.WPF.Chat;
+using InterfaceGraphique.Controls.WPF.MainMenu;
 
 namespace InterfaceGraphique.Controls.WPF.Authenticate
 {
@@ -24,6 +26,8 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
         private string usernameErrMsg;
         private string passwordErrMsg;
         private bool inputsEnabled;
+        private bool notLoading = true;
+
         #endregion
 
         #region Public Properties
@@ -99,12 +103,34 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
                 this.OnPropertyChanged();
             }
         }
+
+        public bool NotLoading
+        {
+            get { return notLoading; }
+
+            set
+            {
+                if (notLoading == value)
+                {
+                    return;
+                }
+                notLoading = value;
+                this.OnPropertyChanged(nameof(NotLoading));
+                this.OnPropertyChanged(nameof(Loading));
+            }
+        }
+
+        public bool Loading
+        {
+            get { return !notLoading; }
+        }
         #endregion
 
         #region Constructor
         public AuthenticateViewModel(LoginEntity loginEntity, ChatHub chatHub, StoreService storeService)
         {
             Title = "Authentification";
+            BackText = "Se Connecter";
             this.loginEntity = loginEntity;
             this.chatHub = chatHub;
             StoreService = storeService;
@@ -148,7 +174,7 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
         {
             try
             {
-                Loading();
+                Load();
                 if (ValidateLoginEntity())
                 {
                     var response = await Program.client.PostAsJsonAsync(Program.client.BaseAddress + "api/login", loginEntity);
@@ -160,6 +186,7 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
                         HttpResponseMessage uEResponse = await Program.client.GetAsync(Program.client.BaseAddress + "api/user/" + userId);
                         User.Instance.UserEntity = await HttpResponseParser.ParseResponse<UserEntity>(uEResponse);
                         User.Instance.IsConnected = true;
+                        Program.unityContainer.Resolve<MainMenuViewModel>().OnlineMode = true;
 
                         User.Instance.Inventory = await StoreService.GetUserStoreItems(User.Instance.UserEntity.Id);
 
@@ -171,19 +198,25 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
                         //On initie tous les formes qui on besoin de savoir si on est en mode en ligne 
                         Program.InitAfterConnection();
 
-                        Program.FormManager.CurrentForm = Program.MainMenu;
+                        Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>());
 
-                        // Open the friend list windows:
-                        //Program.FriendListHost.Show();
+                        //Should show loading spinner
+                        Program.unityContainer.Resolve<MainMenuViewModel>().NotLoading = false;
                         await Program.unityContainer.Resolve<FriendsHub>().InitializeFriendsHub();
                         await Program.unityContainer.Resolve<FriendListViewModel>().Init();
                         await Program.unityContainer.Resolve<AddUserViewModel>().Init();
                         await Program.unityContainer.Resolve<FriendRequestListViewModel>().Init();
                         await Program.unityContainer.Resolve<AddFriendListViewModel>().InitAddFriends();
+                        Program.unityContainer.Resolve<ChatViewModel>().Init();
+                        Program.unityContainer.Resolve<FriendListViewModel>().Minimize();
+                        //Hide loading spinner
+                        Program.unityContainer.Resolve<MainMenuViewModel>().NotLoading = true;
+
                     }
                     else
                     {
                         //Du cote serveur, on retourne un message d'erreur
+                        LoadingDone();
                         var res = response.Content.ReadAsAsync<string>().Result;
 
                         //On met une erreur seulement sur le password pour indiquer que soit le mdp, soit nom d'usager invalide
@@ -235,16 +268,18 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
             return valid;
         }
 
-        private void Loading()
+        private void Load()
         {
             UsernameErrMsg = "";
             PasswordErrMsg = "";
             InputsEnabled = false;
+            NotLoading = false;
         }
 
         private void LoadingDone()
         {
             InputsEnabled = true;
+            NotLoading = true;
             CommandManager.InvalidateRequerySuggested();
         }
         #endregion

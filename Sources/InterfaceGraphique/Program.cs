@@ -31,6 +31,7 @@ using InterfaceGraphique.Controls.WPF.Tutorial;
 using InterfaceGraphique.Editor.EditorState;
 using InterfaceGraphique.Game.GameState;
 using InterfaceGraphique.Managers;
+using InterfaceGraphique.Controls.WPF.MainMenu;
 
 namespace InterfaceGraphique
 {
@@ -148,8 +149,7 @@ namespace InterfaceGraphique
             lobbyHost = new LobbyHost();
             userProfileMenu = new UserProfileMenu();
             storeMenu = new StoreMenu();
-            onlineTournamentMenu = new OnlineTournementMenu();
-            onlineTournament = new OnlineTournament();
+
             FonctionsNatives.loadSounds();
 
             formManager.CurrentForm = homeMenu;
@@ -203,6 +203,8 @@ namespace InterfaceGraphique
             quickPlayMenu = new QuickPlayMenu();
             tournementMenu = new TournementMenu();
             tournementTree = new TournementTree();
+            onlineTournamentMenu = new OnlineTournementMenu();
+            onlineTournament = new OnlineTournament();
         }
 
         public static void InitializeUnityDependencyInjection()
@@ -230,16 +232,17 @@ namespace InterfaceGraphique
             unityContainer.RegisterType<ChannelViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<JoinChannelListViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<JoinChannelViewModel>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<FriendListViewModel>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<AddFriendListViewModel>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<FriendRequestListViewModel>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<FriendListItemViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<TournamentViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<AuthenticateViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<ConnectServerViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<SignupViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<HomeViewModel>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<MainMenuViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<EditorViewModel>(new ContainerControlledLifetimeManager());
-            unityContainer.RegisterType<FriendListViewModel>(new ContainerControlledLifetimeManager());
-            unityContainer.RegisterType<AddFriendListViewModel>(new ContainerControlledLifetimeManager());
-            unityContainer.RegisterType<FriendRequestListViewModel>(new ContainerControlledLifetimeManager());
-            unityContainer.RegisterType<FriendListItemViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<UserProfileViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<StoreViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<AddUserViewModel>(new ContainerControlledLifetimeManager());
@@ -248,7 +251,6 @@ namespace InterfaceGraphique
             unityContainer.RegisterType<SlaveGameState>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<EditorUsersViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<CreateMapViewModel>(new ContainerControlledLifetimeManager());
-
 
             unityContainer.RegisterType<OnlineEditorState>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<OfflineEditorState>(new ContainerControlledLifetimeManager());

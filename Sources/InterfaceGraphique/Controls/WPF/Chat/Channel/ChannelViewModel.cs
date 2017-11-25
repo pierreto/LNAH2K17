@@ -80,7 +80,7 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
             get
             {
                 ChannelEntity cE = ActiveChannel.Instance.ChannelEntity;
-                if (Program.unityContainer.Resolve<ChatViewModel>().MainChannel == cE)
+                if (Program.unityContainer.Resolve<ChatViewModel>().MainChannel == cE || cE.IsPrivate)
                 {
                     //Disable user from deleting main channel
                     IsOpenOptions = false;
@@ -289,7 +289,7 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
 
         public async Task CreatePrivateChannel(string username, int othersId, string profile)
         {
-            bool res = await chatHub.CreatePrivateChannel(User.Instance.UserEntity.Username, User.Instance.UserEntity.Id, othersId, profile);
+            bool res = await chatHub.CreatePrivateChannel(User.Instance.UserEntity.Username, User.Instance.UserEntity.Id, othersId, User.Instance.UserEntity.Profile);
             if (res)
             {
                 if (!Program.unityContainer.Resolve<ChatListViewModel>().Items.Any(x => x.Name == username && x.ChannelEntity.IsPrivate == true))

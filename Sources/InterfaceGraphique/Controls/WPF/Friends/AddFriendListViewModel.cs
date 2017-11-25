@@ -42,6 +42,7 @@ namespace InterfaceGraphique.Controls.WPF.Friends
         {
             get { return CollectionViewSource.GetDefaultView(Items); }
         }
+
         #endregion
 
         #region Constructor
@@ -77,6 +78,11 @@ namespace InterfaceGraphique.Controls.WPF.Friends
                 var items = Program.unityContainer.Resolve<FriendRequestListViewModel>().Items;
                 items.Add(new FriendListItemViewModel(new UserEntity { Id = request.Requestor.Id, Username = request.Requestor.Username, Profile = request.Requestor.Profile, IsSelected = false ,IsConnected = request.Requestor.IsConnected}, null) { RequestedFriend = true });
                 Program.unityContainer.Resolve<FriendRequestListViewModel>().OnPropertyChanged("Items");
+                Program.unityContainer.Resolve<FriendListViewModel>().HasNewFriendRequest = true;
+                if (Program.unityContainer.Resolve<FriendListViewModel>().Collapsed != System.Windows.Visibility.Visible)
+                {
+                    Program.unityContainer.Resolve<FriendListViewModel>().HasNewRequest = true;
+                }
             }).Wait();
         }
 

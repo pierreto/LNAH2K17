@@ -1,4 +1,5 @@
 ﻿using InterfaceGraphique.CommunicationInterface;
+using InterfaceGraphique.Controls.WPF.MainMenu;
 using InterfaceGraphique.Controls.WPF.Store;
 using InterfaceGraphique.Entities;
 using InterfaceGraphique.Services;
@@ -14,6 +15,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
+using Microsoft.Practices.Unity;
 
 namespace InterfaceGraphique.Controls.WPF.UserProfile
 {
@@ -49,6 +51,7 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
 
         public async Task Initialize(int userId = 0)
         {
+            Load();
             isFriendProfile = userId != 0;
             OnPropertyChanged("IsFriendProfile");
 
@@ -96,6 +99,18 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
                 GameWon = playerStats.GamesWon;
             }
 
+            LoadingDone();
+
+        }
+
+        private void LoadingDone()
+        {
+            NotLoading = true;
+        }
+
+        private void Load()
+        {
+            NotLoading = false;
         }
 
         private ObservableCollection<Achievement> achievements;
@@ -208,6 +223,28 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
             }
         }
 
+        private bool notLoading;
+        public bool NotLoading
+        {
+            get { return notLoading; }
+
+            set
+            {
+                if (notLoading == value)
+                {
+                    return;
+                }
+                notLoading = value;
+                this.OnPropertyChanged(nameof(NotLoading));
+                this.OnPropertyChanged(nameof(Loading));
+            }
+        }
+
+        public bool Loading
+        {
+            get { return !notLoading; }
+        }
+
         private ICommand mainMenuCommand;
         public ICommand MainMenuCommand
         {
@@ -226,7 +263,9 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
 
         private void MainMenu()
         {
-            Program.FormManager.CurrentForm = Program.MainMenu;
+            Program.FormManager.CurrentForm = Program.HomeMenu;
+            Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>());
+            CommandManager.InvalidateRequerySuggested();
         }
 
         private List<ItemViewModel> items;

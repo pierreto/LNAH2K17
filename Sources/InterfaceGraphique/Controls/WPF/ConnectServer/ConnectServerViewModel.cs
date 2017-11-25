@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Microsoft.Practices.Unity;
 using InterfaceGraphique.Controls.WPF.Home;
+using System.Net.Http;
 
 namespace InterfaceGraphique.Controls.WPF.ConnectServer
 {
@@ -19,6 +20,7 @@ namespace InterfaceGraphique.Controls.WPF.ConnectServer
         private string ipAddress;
         private string ipAddressErrMsg;
         private bool ipAddressInputEnabled;
+        private bool notLoading = true;
         #endregion
 
         #region Public Properties
@@ -65,12 +67,34 @@ namespace InterfaceGraphique.Controls.WPF.ConnectServer
                 this.OnPropertyChanged();
             }
         }
+
+        public bool NotLoading
+        {
+            get { return notLoading; }
+
+            set
+            {
+                if (notLoading == value)
+                {
+                    return;
+                }
+                notLoading = value;
+                this.OnPropertyChanged(nameof(NotLoading));
+                this.OnPropertyChanged(nameof(Loading));
+            }
+        }
+
+        public bool Loading
+        {
+            get { return !notLoading; }
+        }
         #endregion
 
         #region Constructor
         public ConnectServerViewModel()
         {
             Title = "Connexion";
+            BackText = "LNAH 2K17";
             this.hubManager = HubManager.Instance;
             this.IpAddressInputEnabled = true;
         }
@@ -96,7 +120,7 @@ namespace InterfaceGraphique.Controls.WPF.ConnectServer
         {
             try
             {
-                Loading();
+                Load();
                 ValidateIpAddress();
                 int timeout = TIMEOUT;
                 var task = hubManager.EstablishConnection(IpAddress);
@@ -105,12 +129,14 @@ namespace InterfaceGraphique.Controls.WPF.ConnectServer
                 if (await Task.WhenAny(task, Task.Delay(timeout)) == task)
                 {
                     //Task resolved within delay
+                    Program.client = new HttpClient();
                     Program.client.BaseAddress = new System.Uri("http://" + IpAddress + ":63056/");
                     IpAddress = "";
                     Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<AuthenticateViewModel>());
                 }
                 else
                 {
+                    LoadingDone();
                     // timeout logic
                     throw new Exception("Too long to connect to IP address: " + IpAddress + ". Make sure it is a valid IP address.");
                 }
@@ -167,14 +193,16 @@ namespace InterfaceGraphique.Controls.WPF.ConnectServer
             }
         }
 
-        private void Loading()
+        private void Load()
         {
             IpAddressInputEnabled = false;
+            NotLoading = false;
         }
 
         private void LoadingDone()
         {
             IpAddressInputEnabled = true;
+            NotLoading = true;
             CommandManager.InvalidateRequerySuggested();
         }
         #endregion

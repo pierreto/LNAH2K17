@@ -20,115 +20,103 @@ namespace AirHockeyServer.Events.EventManagers
 
         protected ConcurrentDictionary<int, int> RemainingTime { get; set; }
 
-        protected TournamentEntity Tournament { get; set; }
-
         protected ConcurrentDictionary<int, TournamentEntity> Tournaments { get; set; }
-        
 
-        public IGameService GameService { get; }
-
-        public ITournamentManager TournamentManager { get; }
+        public PlayOnlineManager GameManager { get; }
 
         public IMapService MapService { get; set; }
         public ConnectionMapper ConnectionMapper { get; set; }
 
-        public TournamentWaitingRoomEventManager(IGameService gameService, ITournamentManager tournamentManager, 
+        public TournamentWaitingRoomEventManager(PlayOnlineManager gameManager,
             IMapService mapService, ConnectionMapper connectionMapper)
         {
             this.RemainingTime = new ConcurrentDictionary<int, int>();
             TournamentMatchMakerService.Instance().OpponentFound += OnOpponentFound;
-            
-            GameService = gameService;
-            TournamentManager = tournamentManager;
+
+            GameManager = gameManager;
             MapService = mapService;
             ConnectionMapper = connectionMapper;
             Tournaments = new ConcurrentDictionary<int, TournamentEntity>();
         }
 
-        public void RemoveUser(int id)
-        {
-            string connection = ConnectionMapper.GetConnection(id);
-            if(connection != null && !string.IsNullOrEmpty(connection) && Tournament != null)
-            {
-                GlobalHost.ConnectionManager.GetHubContext<TournamentWaitingRoomHub>().Groups.Remove(connection, Tournament?.Id.ToString());
-                
-                var user = Tournament?.Players?.Find(x => x.Id == id);
-                Tournament?.Players?.Remove(user);
-            }
-        }
-
-        protected  void OnOpponentFound(object sender, List<GamePlayerEntity> users)
+        protected void OnOpponentFound(object sender, TournamentEntity tournament)
         {
 
-            if (Tournament == null)
-            {
-                Tournament = new TournamentEntity
-                {
-                    Id = new Random().Next(),
-                    State = TournamentState.WaitingForPlayers
-                };
-            }
+            //if (Tournament == null)
+            //{
+            //    Tournament = new TournamentEntity
+            //    {
+            //        Id = new Random().Next(),
+            //        State = TournamentState.WaitingForPlayers
+            //    };
+            //}
 
-            foreach(var user in users)
+            //foreach(var user in users)
+            //{
+            //    if(!user.IsAi)
+            //    {
+            //        var connection = ConnectionMapper.GetConnection(user.Id);
+            //        string tournamentIdString = Tournament.Id.ToString();
+            //        GlobalHost.ConnectionManager.GetHubContext<TournamentWaitingRoomHub>().Groups.Add(connection, tournamentIdString).Wait();
+
+            //        GlobalHost.ConnectionManager.GetHubContext<TournamentWaitingRoomHub>().Clients.Group(Tournament.Id.ToString()).OpponentFoundEvent(Tournament.Players);
+            //    }
+
+            //    Tournament.Players.Add(user);
+            //}
+
+            if (tournament.Players.Count == 4)
             {
-                if(!user.IsAi)
-                {
-                    var connection = ConnectionMapper.GetConnection(user.Id);
-                    string tournamentIdString = Tournament.Id.ToString();
-                    GlobalHost.ConnectionManager.GetHubContext<TournamentWaitingRoomHub>().Groups.Add(connection, tournamentIdString).Wait();
+                GameEntity game1 = GameManager.CreateTournamentGame(tournament.Players[0], tournament.Players[1], tournament);
+                GameEntity game2 = GameManager.CreateTournamentGame(tournament.Players[2], tournament.Players[3], tournament);
+
+                tournament.SemiFinals.Add(game1);
+                tournament.SemiFinals.Add(game2);
+                tournament.State = TournamentState.TournamentConfiguration;
+
+                Tournaments[tournament.Id] = tournament;
+                this.RemainingTime[tournament.Id] = 0;
                 
-                    GlobalHost.ConnectionManager.GetHubContext<TournamentWaitingRoomHub>().Clients.Group(Tournament.Id.ToString()).OpponentFoundEvent(Tournament.Players);
-                }
+                GlobalHost.ConnectionManager.GetHubContext<TournamentWaitingRoomHub>().Clients.Group(tournament.Id.ToString()).TournamentAllOpponentsFound(tournament);
 
-                Tournament.Players.Add(user);
-            }
-
-            if (Tournament.Players.Count == 4)
-            {
-                GameEntity game1 = CreateGame(Tournament.Players[0], Tournament.Players[1]);
-                GameEntity game2 = CreateGame(Tournament.Players[2], Tournament.Players[3]);
-
-                Tournament.SemiFinals.Add(game1);
-                Tournament.SemiFinals.Add(game2);
-                Tournament.State = TournamentState.TournamentConfiguration;
-
-                Tournaments[Tournament.Id] = Tournament;
-                this.RemainingTime[Tournament.Id] = 0;
-
-                GlobalHost.ConnectionManager.GetHubContext<TournamentWaitingRoomHub>().Clients.Group(Tournament.Id.ToString()).TournamentAllOpponentsFound(Tournament);
-
-                System.Timers.Timer timer = CreateTimeoutTimer(Tournament);
-                Tournament = null;
+                System.Timers.Timer timer = CreateTimeoutTimer(tournament);
 
                 timer.Start();
             }
 
         }
 
-        private GameEntity CreateGame(GamePlayerEntity player1, GamePlayerEntity player2)
-        {
-            GameEntity game = new GameEntity()
-            {
-                GameId = Guid.NewGuid(),
-                CreationDate = DateTime.Now,
-                Players = new GamePlayerEntity[2] { player1, player2 },
-                Master = player1,
-                Slave = player2,
-                TournamentId = Tournament.Id
-            };
+        //private GameEntity CreateGame(GamePlayerEntity player1, GamePlayerEntity player2, int tournamentId)
+        //{
+        //    GameEntity game = new GameEntity()
+        //    {
+        //        GameId = Guid.NewGuid(),
+        //        CreationDate = DateTime.Now,
+        //        Players = new GamePlayerEntity[2] { player1, player2 },
+        //        Master = player1,
+        //        Slave = player2,
+        //        TournamentId = tournamentId
+        //    };
 
-            //GameEntity gameCreated = await GameService.CreateGame(game);
+        //    var stringGameId = game.GameId.ToString();
 
-            var stringGameId = game.GameId.ToString();
+        //    foreach (var player in game.Players)
+        //    {
+        //        if (!player.IsAi)
+        //        {
+        //            var connection = ConnectionMapper.GetConnection(player.Id);
+        //            GlobalHost.ConnectionManager.GetHubContext<GameWaitingRoomHub>().Groups.Add(connection, stringGameId).Wait();
+        //        }
+        //    }
 
-            foreach (var player in game.Players)
-            {
-                var connection = ConnectionMapper.GetConnection(player.Id);
-                GlobalHost.ConnectionManager.GetHubContext<GameWaitingRoomHub>().Groups.Add(connection, stringGameId).Wait();
-            }
+        //    if(game.Players.All(x=> x.IsAi))
+        //    {
+        //        game.Score = new int[2] { 0, 3 };
+        //        game.Winner = player2;
+        //    }
 
-            return game;
-        }
+        //    return game;
+        //}
 
         ////////////////////////////////////////////////////////////////////////
         ///
@@ -169,8 +157,20 @@ namespace AirHockeyServer.Events.EventManagers
                 Tournaments[tournamentId].SemiFinals[1].SelectedMap = Tournaments[tournamentId].SelectedMap;
 
                 Tournaments[tournamentId].State = TournamentState.SemiFinals;
-                TournamentManager.AddTournament(Tournaments[tournamentId]);
+
+                GameManager.AddGame(Tournaments[tournamentId].SemiFinals[0]);
+                GameManager.AddGame(Tournaments[tournamentId].SemiFinals[1]);
+                GameManager.AddTournament(Tournaments[tournamentId]);
+
                 GlobalHost.ConnectionManager.GetHubContext<TournamentWaitingRoomHub>().Clients.Group(tournamentId.ToString()).TournamentStarting(Tournaments[tournamentId]);
+
+                Tournaments[tournamentId].SemiFinals.ForEach(async semiFinal =>
+                {
+                    if (semiFinal.Players.All(x => x.IsAi))
+                    {
+                        await GameManager.GameEnded(semiFinal.GameId);
+                    }
+                });
             }
         }
 

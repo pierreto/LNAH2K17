@@ -35,6 +35,13 @@ class MapCarouselViewController: UIViewController, iCarouselDataSource, iCarouse
         self.updateEntries()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        DispatchQueue.main.async(execute: { () -> Void in
+            // Reload tableView
+            self.carouselView.reloadData()
+        })
+    }
+    
     func getCurrentMap() ->  MapEntity {
         return self.maps[self.carouselView.currentItemIndex]
     }
@@ -43,8 +50,10 @@ class MapCarouselViewController: UIViewController, iCarouselDataSource, iCarouse
         // Fetch server maps
         let mapService = MapService()
         mapService.getMaps() { maps, error in
-            for map in maps! {
-                self.maps.append(mapService.buildMapEntity(json: map.1))
+            if maps != nil {
+                for map in maps! {
+                    self.maps.append(mapService.buildMapEntity(json: map.1))
+                }
             }
             
             DispatchQueue.main.async(execute: { () -> Void in
@@ -122,7 +131,6 @@ class MapCarouselViewController: UIViewController, iCarouselDataSource, iCarouse
         tempView.addSubview(creatorLabel)
         tempView.addSubview(idLabel)
  
-        
         mapNameLabel.centerXAnchor.constraint(equalTo: mapInfo.centerXAnchor).isActive = true
         mapNameLabel.centerYAnchor.constraint(equalTo: mapInfo.centerYAnchor).isActive = true
         
@@ -134,7 +142,6 @@ class MapCarouselViewController: UIViewController, iCarouselDataSource, iCarouse
         
         idLabel.centerXAnchor.constraint(equalTo: mapInfo.centerXAnchor).isActive = true
         idLabel.topAnchor.constraint(equalTo: mapInfo.topAnchor, constant: 115).isActive = true
- 
         
         if map.privacy.value == true {
             let isPublicLabel = UILabel()
@@ -149,9 +156,9 @@ class MapCarouselViewController: UIViewController, iCarouselDataSource, iCarouse
             isPublicLabel.bottomAnchor.constraint(equalTo: mapInfo.bottomAnchor, constant: -15).isActive = true
             isPublicLabel.rightAnchor.constraint(equalTo: mapInfo.rightAnchor, constant: -15).isActive = true
         } else {
-            let mapImage = UIImageView(frame: CGRect(x: 10, y: 10, width: 180, height: 180))
-            mapImage.image = UIImage(named: "map.png")
-            tempView.addSubview(mapImage)
+            let mapImageView = UIImageView(frame: CGRect(x: 10, y: 10, width: 180, height: 180))
+            mapImageView.image = (map.icon != nil && map.icon != "") ? ImageService.convertStrBase64ToImage(strBase64: map.icon!) : UIImage(named: "map.png")
+            tempView.addSubview(mapImageView)
         }
         
         return tempView

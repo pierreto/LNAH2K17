@@ -283,15 +283,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Hubs\BaseHub.cs" />
     <Compile Include="Hubs\FriendsHub.cs" />
     <Compile Include="Hubs\EditionBrowserHub.cs" />
     <Compile Include="Hubs\EditionHub.cs" />
     <Compile Include="Hubs\GameWaitingRoomHub.cs" />
     <Compile Include="Hubs\ConnectionMapper.cs" />
     <Compile Include="Hubs\TournamentWaitingRoomHub.cs" />
-    <Compile Include="Manager\GameManager.cs" />
-    <Compile Include="Manager\IGameManager.cs" />
-    <Compile Include="Manager\ITournamentManager.cs" />
+    <Compile Include="Manager\PlayOnlineManager.cs" />
+    <Compile Include="Manager\IPlayOnlineManager.cs" />
     <Compile Include="Manager\TournamentManager.cs" />
     <Compile Include="Mapping\MapperManager.cs" />
     <Compile Include="Pocos\AchievementPoco.cs" />

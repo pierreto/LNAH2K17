@@ -9,6 +9,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 import SwiftR
+import PromiseKit
+import Alamofire
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class HubManager
@@ -29,7 +31,7 @@ class HubManager {
     
     private var connection: SignalR?
     private var hubs = [BaseHub]()
-    private var user = UserEntity()
+    private var user: UserEntity? = UserEntity()
     private var ipAddress: String?
     
     private var _connected: Bool? = false
@@ -60,7 +62,7 @@ class HubManager {
     }
     
     public func getUser() -> UserEntity {
-        return self.user
+        return self.user!
     }
     
     public func getIpAddress() -> String? {
@@ -72,19 +74,19 @@ class HubManager {
     }
     
     public func getUsername() -> String? {
-        return self.user.getUsername()
+        return self.user?.getUsername()
     }
     
     public func setUsername(username: String) {
-        self.user.setUsername(username: username)
+        self.user?.setUsername(username: username)
     }
     
     public func getId() -> Int? {
-        return self.user.getId()
+        return self.user?.getId()
     }
     
     public func setId(id: Int) {
-        self.user.setId(id: id)
+        self.user?.setId(id: id)
     }
     
     ////////////////////////////////////////////////////////////////////////
@@ -119,16 +121,61 @@ class HubManager {
         self.hubs.append(FriendsHub(connection: self.connection))
     }
 
-    /// Déconnecter tous les hubs et terminer la connexion
-    public func Logout() {
+    /// Déconnecter l'usager
+    public func DisconnectUser() -> Promise<Bool> {
+        let parameters: [String: Any] = [
+            "Username" : self.getUsername()!
+        ]
+        
+        // Déconnecter l'usager des différents hubs
         for hub in hubs {
             hub.logout()
         }
-        self.connection?.stop()
-        //TODO user = nil ????
-        self.user = UserEntity()
-        self.user.setUsername(username: "")
-        NotificationCenter.default.post(name: Notification.Name(rawValue: LoginNotification.LogoutNotification), object: nil)
+        
+        if self.ipAddress != nil && !(self.ipAddress?.isEmpty)! {
+            if !(self.getUsername()?.isEmpty)! {
+                return Promise { fullfil, error in
+                    Alamofire.request("http://" + self.getIpAddress()! + ":63056/api/logout", method: .post, parameters: parameters, encoding: JSONEncoding.default)
+                        .responseJSON { response in
+                            if response.response?.statusCode == 200 {
+                                print ("Disconnect user success")
+                                fullfil(true)
+                            }
+                            else {
+                                print ("Disconnect user error")
+                                fullfil(false)
+                            }
+                    }
+                }
+            }
+            else {
+                return Promise { fullfil, error in
+                    fullfil(true)
+                }
+            }
+        }
+        else {
+            return Promise(value: false)
+        }
+    }
+    
+    /// Déconnecter tous les hubs et terminer la connexion
+    public func StopConnection() -> Promise<Bool> {
+        return Promise { fullfil, error in
+            if self.connection?.state == .connected {
+                print ("Will stop connection")
+                self.connection?.stop()
+                self.user = UserEntity()
+                self.hubs = [BaseHub]()
+                self.ipAddress = nil
+                
+                NotificationCenter.default.post(name: Notification.Name(rawValue: LoginNotification.LogoutNotification), object: nil)
+                fullfil(true)
+            } else {
+                print ("Stopping connection error : not connected")
+                fullfil(false)
+            }
+        }
     }
     
 }

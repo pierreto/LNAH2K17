@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:InterfaceGraphique.Controls.WPF.Store"
              xmlns:wpf="clr-namespace:InterfaceGraphique.Controls.WPF"
              xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:convert="clr-namespace:InterfaceGraphique.Controls.WPF.Converters"
              xmlns:t="http://schemas.telerik.com/2008/xaml/presentation" 
              xmlns:fa="http://schemas.fontawesome.io/icons/"
              mc:Ignorable="d" 
@@ -13,9 +14,12 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <wpf:ViewModelLocator x:Key="VMLocator" d:IsDataSource="True" />
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/InterfaceGraphique;component/Resource/appresources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid Margin="20 20 20 20">
+    <Grid Margin="20 20 20 20" IsEnabled="{Binding NotLoading}">
         <Grid.DataContext>
             <Binding Path="StoreViewModel" Source="{StaticResource VMLocator}"/>
         </Grid.DataContext>
@@ -28,6 +32,9 @@
             <ColumnDefinition Width="60*"></ColumnDefinition>
             <!--<ColumnDefinition Width="40*"></ColumnDefinition>-->
         </Grid.ColumnDefinitions>
+        <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Grid.RowSpan="3" Grid.ColumnSpan="3" Panel.ZIndex="10" Margin="20" Visibility="{Binding Loading, Converter={convert:BooleanToVisibilityConverter}, ConverterParameter=True}">
+            <fa:ImageAwesome Icon="CircleOutlineNotch" Spin="{Binding Loading}" Height="48" Width="48" Foreground="{StaticResource DarkSilverBrush}"/>
+        </Grid>
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="20*"></ColumnDefinition>

@@ -8,14 +8,57 @@ using InterfaceGraphique.Managers;
 using System.Linq;
 using System.Windows;
 using System.Windows.Data;
+using InterfaceGraphique.Controls.WPF.Chat.Channel;
 
 namespace InterfaceGraphique.Controls.WPF.Friends
 {
     public class FriendListViewModel : MinimizableViewModelBase
     {
         private FriendsHub friendsHub;
+        private bool hasNewFriendRequest;
+        private bool hasNewFriend;
+        private bool hasNewRequest;
         private TaskFactory ctxTaskFactory;
         private ObservableCollection<FriendListItemViewModel> friendList;
+
+        public bool HasNewRequest
+        {
+            get
+            {
+                return hasNewRequest;
+            }
+            set
+            {
+                hasNewRequest = value;
+                OnPropertyChanged(nameof(HasNewRequest));
+            }
+        }
+
+        public bool HasNewFriend
+        {
+            get
+            {
+                return hasNewFriend;
+            }
+            set
+            {
+                hasNewFriend = value;
+                OnPropertyChanged(nameof(HasNewFriend));
+            }
+        }
+
+        public bool HasNewFriendRequest {
+            get
+            {
+                return hasNewFriendRequest;
+            }
+                set
+            {
+                hasNewFriendRequest = value;
+                OnPropertyChanged(nameof(HasNewFriendRequest));
+            }
+        }
+
 
         public UserEntity SelectedFriend { get; set; }
 
@@ -43,7 +86,6 @@ namespace InterfaceGraphique.Controls.WPF.Friends
 
         public async Task Init()
         {
-            Minimize();
             var friends = await friendsHub.GetAllFriends();
             FriendList = new ObservableCollection<FriendListItemViewModel>();
             foreach(var friend in friends)
@@ -68,6 +110,7 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             else
             {
                 TabIcon = "AngleDown";
+                HasNewRequest = false;
                 Collapsed = System.Windows.Visibility.Visible;
                 Program.FormManager.MaximizeFriendList();
             }
@@ -82,6 +125,7 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             {
                 FriendList.Add(new FriendListItemViewModel(new UserEntity { Id = friend.Id, Username = friend.Username, Profile = friend.Profile, IsSelected = false, IsConnected = friend.IsConnected}, null) { CurrentFriend = true });
                 var items = Program.unityContainer.Resolve<AddFriendListViewModel>().Items;
+                HasNewFriend = true;
                 items.Remove(items.Single(x => x.Id == friend.Id));
             }).Wait();
         }
@@ -126,6 +170,12 @@ namespace InterfaceGraphique.Controls.WPF.Friends
                 {
                     ctxTaskFactory.StartNew(() =>
                     {
+                        ChannelListItemViewModel clivm = Program.unityContainer.Resolve<ChatListViewModel>().Items.FirstOrDefault(x => x.ChannelEntity.Name == FriendList[i].Username && x.ChannelEntity.IsPrivate);
+                        if(clivm != null)
+                        {
+                            Program.unityContainer.Resolve<ChatListViewModel>().Items.Remove(clivm);
+                            Program.unityContainer.Resolve<ChatListViewModel>().OnPropertyChanged("Items");
+                        }
                         FriendListItemViewModel vm = FriendList[i];
                         FriendList.RemoveAt(i);
                         vm.IsConnected = false;
