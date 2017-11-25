@@ -96,6 +96,10 @@ namespace utilitaire {
 		glGenTextures(1, &textureId_);
 		glBindTexture(GL_TEXTURE_CUBE_MAP, textureId_);
 
+
+		//On rotate l'image de bas de 180
+		imagesEnvironnement_[3] = FreeImage_Rotate(imagesEnvironnement_[3], 180);
+
 		// On lie les images aux côtés de la texture en cubemap
 		for (int i = 0; i < 6; ++i) {
 			// Tel que spécifié dans la documentation de FreeImage (voir Pixel Access 
@@ -104,6 +108,7 @@ namespace utilitaire {
 			// l'architecture.  Sur little endian, le format BGR (plutôt que RGB) est 
 			// utilisé.  On utilise donc l'extension GL_EXT_bgra (on pourrait vérifie 
 			// à l'exécution que l'extension est présente)
+
 			if (FreeImage_GetBPP(imagesEnvironnement_[i]) == 24)
 			{
 				glTexImage2D(
