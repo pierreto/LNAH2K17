@@ -230,6 +230,7 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
         {
             Program.FormManager.CurrentForm = Program.HomeMenu;
             Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>());
+            CommandManager.InvalidateRequerySuggested();
         }
 
         private List<ItemViewModel> items;

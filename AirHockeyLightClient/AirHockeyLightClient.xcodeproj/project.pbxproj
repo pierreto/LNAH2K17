@@ -154,6 +154,7 @@
 		8F4B40A51FB9685F00DFDA2F /* Transform.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8F4B40A41FB9685F00DFDA2F /* Transform.wav */; };
 		8F4C1DC41FB412D100B570C8 /* DeleteCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F4C1DC31FB412D100B570C8 /* DeleteCommand.swift */; };
 		8F4D5E3C1FA060150002D5C5 /* Delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 8F4D5E3B1FA060140002D5C5 /* Delete.png */; };
+		8F5299451FC8F2250029CC1E /* LostConnectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5299441FC8F2250029CC1E /* LostConnectionViewController.swift */; };
 		8F64C0131F7754FD00F14AC7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F64C0121F7754FD00F14AC7 /* LaunchScreen.storyboard */; };
 		8F64C0151F77550800F14AC7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F64C0141F77550800F14AC7 /* Main.storyboard */; };
 		8F65B2851FAE264100D8EE20 /* OnlineUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F65B2841FAE264100D8EE20 /* OnlineUser.swift */; };
@@ -387,6 +388,7 @@
 		8F4B40A41FB9685F00DFDA2F /* Transform.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Transform.wav; path = ../../Exe/media/audio/son/Transform.wav; sourceTree = "<group>"; };
 		8F4C1DC31FB412D100B570C8 /* DeleteCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DeleteCommand.swift; path = Noyau/Editor/Commands/DeleteCommand.swift; sourceTree = "<group>"; };
 		8F4D5E3B1FA060140002D5C5 /* Delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Delete.png; path = ../../Sources/Icons/Delete.png; sourceTree = "<group>"; };
+		8F5299441FC8F2250029CC1E /* LostConnectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LostConnectionViewController.swift; path = InterfaceGraphique/Menus/LostConnectionViewController.swift; sourceTree = "<group>"; };
 		8F64C0121F7754FD00F14AC7 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = InterfaceGraphique/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8F64C0141F77550800F14AC7 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = InterfaceGraphique/Main.storyboard; sourceTree = "<group>"; };
 		8F65B2841FAE264100D8EE20 /* OnlineUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OnlineUser.swift; path = User/OnlineUser.swift; sourceTree = "<group>"; };
@@ -879,6 +881,7 @@
 				1D90AAFA1F98205A003E0764 /* ConnectServerViewController.swift */,
 				1D863DB01F9848E70025B89D /* OfflineMenuViewController.swift */,
 				8F65B2971FAF6F0200D8EE20 /* OnlineMenuViewController.swift */,
+				8F5299441FC8F2250029CC1E /* LostConnectionViewController.swift */,
 			);
 			name = Menus;
 			sourceTree = "<group>";
@@ -1259,6 +1262,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-AirHockeyLightClient/Pods-AirHockeyLightClient-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/PromiseKit/PromiseKit.framework",
+				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftR/SwiftR.framework",
@@ -1268,6 +1272,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PromiseKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftR.framework",
@@ -1422,6 +1427,7 @@
 				253E08911F81913A009F301B /* ChannelEntity.swift in Sources */,
 				8F69F4BF1F8AF871004D5129 /* MathHelper.swift in Sources */,
 				8F65B2891FAE321C00D8EE20 /* VisiteurByUUID.swift in Sources */,
+				8F5299451FC8F2250029CC1E /* LostConnectionViewController.swift in Sources */,
 				25FDE43B1FA80D4D0089D9FE /* HubManager.swift in Sources */,
 				8F65B2941FAE612F00D8EE20 /* OfflineEditorState.swift in Sources */,
 				1D019A2E1F911E49004D79B2 /* ISignupViewModel.swift in Sources */,

@@ -19,6 +19,39 @@ namespace InterfaceGraphique.Controls.WPF.MainMenu
     public class MainMenuViewModel : ViewModelBase
     {
 
+        #region Private Properties
+        private bool notLoading;
+        private bool onlineMode;
+        #endregion
+
+        #region Public Properties
+        public bool NotLoading
+        {
+            get
+            {
+                return notLoading;
+            }
+            set
+            {
+                notLoading = value;
+                OnPropertyChanged(nameof(NotLoading));
+            }
+        }
+
+        public bool OnlineMode
+        {
+            get
+            {
+                return onlineMode;
+            }
+            set
+            {
+                onlineMode = value;
+                OnPropertyChanged(nameof(OnlineMode));
+            }
+        }
+        #endregion
+
         #region Constructor
         public MainMenuViewModel()
         {
@@ -42,6 +75,19 @@ namespace InterfaceGraphique.Controls.WPF.MainMenu
             }
         }
 
+        private ICommand partieRapideOnlineCommand;
+        public ICommand PartieRapideOnlineCommand
+        {
+            get
+            {
+                if(partieRapideOnlineCommand == null)
+                {
+                    partieRapideOnlineCommand = new RelayCommand(PartieRapideOnline);
+                }
+                return partieRapideOnlineCommand;
+            }
+        }
+        
         private ICommand tournoiCommand;
         public ICommand TournoiCommand
         {
@@ -176,6 +222,19 @@ namespace InterfaceGraphique.Controls.WPF.MainMenu
             }
         }
 
+        private ICommand homeCommand;
+        public ICommand HomeCommand
+        {
+            get
+            {
+                if (homeCommand == null)
+                {
+                    homeCommand = new RelayCommand(Home);
+                }
+                return homeCommand;
+            }
+        }
+
 
         #endregion
 
@@ -185,21 +244,35 @@ namespace InterfaceGraphique.Controls.WPF.MainMenu
         {
             CheckIfNeedToShowMatchTutoriel();
             Program.QuickPlayMenu.ShowDialog();
+            CommandManager.InvalidateRequerySuggested();
+        }
+
+        public void PartieRapideOnline()
+        {
+            CheckIfNeedToShowMatchTutoriel();
+            Program.FormManager.CurrentForm = Program.LobbyHost;
+
+            var vm = Program.unityContainer.Resolve<Matchmaking.MatchmakingViewModel>();
+            vm.Initialize();
+            vm.SetOnlineGame();
         }
 
         public void Tournoi()
         {
             Program.FormManager.CurrentForm = Program.TournementMenu;
+            CommandManager.InvalidateRequerySuggested();
         }
 
         public void TournoiEnLigne()
         {
             Program.FormManager.CurrentForm = Program.OnlineTournamentMenu;
+            CommandManager.InvalidateRequerySuggested();
         }
 
         public void Configuration()
         {
             Program.ConfigurationMenu.ShowDialog();
+            CommandManager.InvalidateRequerySuggested();
         }
 
         //Section Bleue
@@ -207,23 +280,27 @@ namespace InterfaceGraphique.Controls.WPF.MainMenu
         {
             Program.FormManager.CurrentForm = Program.UserProfileMenu;
             await Program.unityContainer.Resolve<UserProfileViewModel>().Initialize();
+            CommandManager.InvalidateRequerySuggested();
         }
 
         public async Task Magasin()
         {
             Program.FormManager.CurrentForm = Program.StoreMenu;
             await Program.unityContainer.Resolve<StoreViewModel>().Initialize();
+            CommandManager.InvalidateRequerySuggested();
         }
 
         //Section Jaune
         public async Task TutorielEdition()
         {
             await ShowTutorialEditor();
+            CommandManager.InvalidateRequerySuggested();
         }
 
         public async Task TutorielPartie()
         {
             await ShowTutorialGame();
+            CommandManager.InvalidateRequerySuggested();
         }
 
         //Section Verte
@@ -232,6 +309,7 @@ namespace InterfaceGraphique.Controls.WPF.MainMenu
             Program.Editeur.ResetDefaultTable();
             Program.FormManager.CurrentForm = Program.Editeur;
             CheckIfNeedToShowEditorTutoriel();
+            CommandManager.InvalidateRequerySuggested();
         }
 
         //Section Rouge
@@ -241,10 +319,12 @@ namespace InterfaceGraphique.Controls.WPF.MainMenu
             HubManager.Instance.Logout();
             User.Instance.UserEntity = null;
             User.Instance.IsConnected = false;
+            Program.unityContainer.Resolve<MainMenuViewModel>().OnlineMode = false;
             //TODO: KILL HUB CONNECTIONS
             Program.FormManager.CurrentForm = Program.HomeMenu;
             Program.InitializeUnityDependencyInjection();
             Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<HomeViewModel>());
+            CommandManager.InvalidateRequerySuggested();
         }
 
         public async Task Quitter()
@@ -254,6 +334,10 @@ namespace InterfaceGraphique.Controls.WPF.MainMenu
             System.Windows.Forms.Application.Exit();
         }
 
+        public void Home()
+        {
+            Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<HomeViewModel>());
+        }
         #endregion
 
         #region Private Methods

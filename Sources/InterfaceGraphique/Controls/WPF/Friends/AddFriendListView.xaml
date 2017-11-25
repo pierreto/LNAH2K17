@@ -96,14 +96,14 @@
                         <DataTemplate.Triggers>
 
                             <DataTrigger Binding="{Binding IsSelected}" Value="True">
-                                <Setter Property="Background" TargetName="background" Value="{StaticResource DarkGrayBrush}"/>
+                                <Setter Property="Background" TargetName="background" Value="{StaticResource UltraDarkGrayColor}"/>
                             </DataTrigger>
 
                             <EventTrigger RoutedEvent="Mouse.MouseEnter">
 
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <ColorAnimation To="{StaticResource DarkGrayColor}" From="{StaticResource DarkGrayColor}" Duration="0:0:0.3" Storyboard.TargetName="container" Storyboard.TargetProperty="Background.Color" />
+                                        <ColorAnimation To="{StaticResource UltraDarkGrayColor}" From="{StaticResource DarkGrayColor}" Duration="0:0:0.3" Storyboard.TargetName="container" Storyboard.TargetProperty="Background.Color" />
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="AddUser">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
                                         </ObjectAnimationUsingKeyFrames>

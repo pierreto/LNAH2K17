@@ -163,6 +163,7 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
                         HttpResponseMessage uEResponse = await Program.client.GetAsync(Program.client.BaseAddress + "api/user/" + userId);
                         User.Instance.UserEntity = await HttpResponseParser.ParseResponse<UserEntity>(uEResponse);
                         User.Instance.IsConnected = true;
+                        Program.unityContainer.Resolve<MainMenuViewModel>().OnlineMode = true;
 
                         User.Instance.Inventory = await StoreService.GetUserStoreItems(User.Instance.UserEntity.Id);
 
@@ -177,6 +178,7 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
                         Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>());
 
                         //Should show loading spinner
+                        Program.unityContainer.Resolve<MainMenuViewModel>().NotLoading = false;
                         await Program.unityContainer.Resolve<FriendsHub>().InitializeFriendsHub();
                         await Program.unityContainer.Resolve<FriendListViewModel>().Init();
                         await Program.unityContainer.Resolve<AddUserViewModel>().Init();
@@ -185,7 +187,8 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
                         Program.unityContainer.Resolve<ChatViewModel>().Init();
                         Program.unityContainer.Resolve<FriendListViewModel>().Minimize();
                         //Hide loading spinner
-                        
+                        Program.unityContainer.Resolve<MainMenuViewModel>().NotLoading = true;
+
                     }
                     else
                     {
