@@ -34,6 +34,15 @@ class FriendRequestsViewController: UIViewController {
         self.tabBarItem.title = "\u{f0f3}"
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.view.alpha = 0.2
+        UIView.animate(
+            withDuration: 0.5,
+            animations: {
+                self.view.alpha = 1.0
+        })
+    }
+    
     func displayNotification() {
         if !FriendRequestsTableViewController.instance.isOpen {
             self.tabBarItem.badgeValue = " "
