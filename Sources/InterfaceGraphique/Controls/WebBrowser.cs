@@ -19,6 +19,7 @@ namespace InterfaceGraphique.Controls
             InitializeComponent();
         }
 
+        /*
         private void webBrowser1_Navigated(object sender, WebBrowserNavigatedEventArgs e)
         {
             System.Console.WriteLine(e.Url.ToString());
@@ -28,5 +29,6 @@ namespace InterfaceGraphique.Controls
                 User.Instance.UserEntity.FacebookToken = parameters["#access_token"];
             }
         }
+        */
     }
 }

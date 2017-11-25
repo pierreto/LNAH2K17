@@ -187,7 +187,7 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
                             "https://www.facebook.com/dialog/feed?" +
                             "app_id=143581339623947" +
                             "&display=popup" +
-                            "&link=https://www.facebook.com/LNAH-2K17-1793471310724238/");
+                            "&link=http://tcpc.isomorphis.me/game.html");
 
                         // Open the friend list windows:
                         //Program.FriendListHost.Show();

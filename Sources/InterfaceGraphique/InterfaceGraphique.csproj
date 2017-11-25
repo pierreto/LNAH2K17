@@ -155,12 +155,6 @@
     <Compile Include="CommunicationInterface\WaitingRooms\GameWaitingRoomHub.cs" />
     <Compile Include="CommunicationInterface\User.cs" />
     <Compile Include="CommunicationInterface\HubManager.cs" />
-    <Compile Include="Controls\BrowserHost.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Controls\BrowserHost.Designer.cs">
-      <DependentUpon>BrowserHost.cs</DependentUpon>
-    </Compile>
     <Compile Include="Controls\LobbyHost.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -184,9 +178,6 @@
     </Compile>
     <Compile Include="Controls\WebBrowser.Designer.cs">
       <DependentUpon>WebBrowser.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\WPF\Browser\Browser.xaml.cs">
-      <DependentUpon>Browser.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\WPF\Chat\Channel\ChannelView.xaml.cs">
       <DependentUpon>ChannelView.xaml</DependentUpon>
@@ -506,9 +497,6 @@
     <Compile Include="Services\StoreService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="WPFApplication.cs" />
-    <EmbeddedResource Include="Controls\BrowserHost.resx">
-      <DependentUpon>BrowserHost.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Controls\OnlineTournament.resx">
       <DependentUpon>OnlineTournament.cs</DependentUpon>
     </EmbeddedResource>
@@ -663,10 +651,6 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Controls\WPF\Authenticate\AuthenticateView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\WPF\Browser\Browser.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
