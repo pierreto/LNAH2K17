@@ -109,13 +109,8 @@ class ServerDownViewController: UIViewController {
         self.navigationController?.isNavigationBarHidden = true
         VerticalSplitViewController.sharedVerticalSplitViewController.chatButton.isEnabled = false
         VerticalSplitViewController.sharedVerticalSplitViewController.friendsButton.isEnabled = false
+        VerticalSplitViewController.sharedVerticalSplitViewController.hideAllBottomMenu()
     }
-    
-    /*func enableUI() {
-        self.navigationController?.isNavigationBarHidden = false
-        VerticalSplitViewController.sharedVerticalSplitViewController.chatButton.isEnabled = true
-        VerticalSplitViewController.sharedVerticalSplitViewController.friendsButton.isEnabled = true
-    }*/
     
     override var shouldAutorotate: Bool {
         return true
