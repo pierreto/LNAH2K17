@@ -11,9 +11,10 @@ using System.Web;
 
 namespace AirHockeyServer.Hubs
 {
-    public class TournamentWaitingRoomHub : Hub
+    public class TournamentWaitingRoomHub : BaseHub
     {
         public TournamentWaitingRoomHub(ITournamentService tournamentService, ConnectionMapper connectionMapper, FriendService friendService)
+            : base(connectionMapper)
         {
             TournamentService = tournamentService;
             ConnectionMapper = connectionMapper;
@@ -59,9 +60,18 @@ namespace AirHockeyServer.Hubs
             Cache.RemovePlayer(user.Id);
         }
 
-        public void Disconnect(string username)
+        public override void Disconnect()
         {
-            // TODO FIND A WAY TO GET USER
+            // TODO
+            base.Disconnect();
+        }
+
+        public override Task OnDisconnected(bool stopCalled)
+        {
+            //TODO 
+            //TournamentService.LeaveTournamentWaitingRoom(user, tournamentId);
+
+            return base.OnDisconnected(stopCalled);
         }
     }
 }

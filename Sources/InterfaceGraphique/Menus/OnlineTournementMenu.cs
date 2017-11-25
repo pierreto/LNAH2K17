@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using Microsoft.Practices.Unity;
 using InterfaceGraphique.Entities;
 using InterfaceGraphique.CommunicationInterface;
+using InterfaceGraphique.Controls.WPF.MainMenu;
 
 namespace InterfaceGraphique.Menus
 {
@@ -40,7 +41,7 @@ namespace InterfaceGraphique.Menus
         private void InitializeEvents()
         {
             this.Button_Play.Click += new EventHandler(ValidateSettings);
-            this.Button_MainMenu.Click += (sender, e) => Program.FormManager.CurrentForm = Program.MainMenu;
+            this.Button_MainMenu.Click += (sender, e) => { Program.FormManager.CurrentForm = Program.HomeMenu; Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>()); };
 
             this.Button_Player1Human.Click += (sender, e) => { SwitchButtonsState(this.Button_Player1Human, this.Button_Player1Virtual); this.List_VirtualProfile1.Enabled = false; };
             this.Button_Player1Virtual.Click += (sender, e) => { SwitchButtonsState(this.Button_Player1Virtual, this.Button_Player1Human); this.List_VirtualProfile1.Enabled = true; };

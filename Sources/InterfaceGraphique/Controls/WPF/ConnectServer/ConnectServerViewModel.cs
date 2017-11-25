@@ -71,6 +71,7 @@ namespace InterfaceGraphique.Controls.WPF.ConnectServer
         public ConnectServerViewModel()
         {
             Title = "Connexion";
+            BackText = "LNAH 2K17";
             this.hubManager = HubManager.Instance;
             this.IpAddressInputEnabled = true;
         }

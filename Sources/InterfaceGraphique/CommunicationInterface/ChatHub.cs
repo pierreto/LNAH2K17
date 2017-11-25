@@ -80,7 +80,7 @@ namespace InterfaceGraphique.CommunicationInterface
             }
             catch (Exception e)
             {
-                HandleError();
+                HandleError("ChatHub -> SendMessage");
             }
         }
 
@@ -93,7 +93,7 @@ namespace InterfaceGraphique.CommunicationInterface
             }
             catch (Exception e)
             {
-                HandleError();
+                HandleError("ChatHub -> CreateChannel");
             }
 
             if (res)
@@ -114,7 +114,7 @@ namespace InterfaceGraphique.CommunicationInterface
             }
             catch (Exception e)
             {
-                HandleError();
+                HandleError("ChatHub -> CreatePrivateChannel");
             }
 
             return false;
@@ -128,7 +128,7 @@ namespace InterfaceGraphique.CommunicationInterface
             }
             catch (Exception e)
             {
-                HandleError();
+                HandleError("ChatHub -> JoinChannel");
             }
         }
 
@@ -144,7 +144,7 @@ namespace InterfaceGraphique.CommunicationInterface
             }
             catch (Exception e)
             {
-                HandleError();
+                HandleError("ChatHub -> SendPrivateMessage");
             }
         }
 
@@ -159,7 +159,7 @@ namespace InterfaceGraphique.CommunicationInterface
             }
             catch (Exception e)
             {
-                HandleError();
+                HandleError("ChatHub -> SendChannel");
             }
         }
 
@@ -171,7 +171,7 @@ namespace InterfaceGraphique.CommunicationInterface
             }
             catch (Exception e)
             {
-                HandleError();
+                HandleError("ChatHub -> LeaveRoom");
             }
         }
 
@@ -184,7 +184,7 @@ namespace InterfaceGraphique.CommunicationInterface
             }
             catch (Exception e)
             {
-                HandleError();
+                HandleError("ChatHub -> Logout");
             }
         }
 

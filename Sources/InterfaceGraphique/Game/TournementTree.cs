@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Practices.Unity;
+using InterfaceGraphique.Controls.WPF.MainMenu;
 
 namespace InterfaceGraphique {
 
@@ -175,7 +177,8 @@ namespace InterfaceGraphique {
             if (currentRound == 4) {
                 FonctionsNatives.resetNodeTree();
                 FonctionsNatives.resetCameraPosition();
-                Program.FormManager.CurrentForm = Program.MainMenu;
+                Program.FormManager.CurrentForm = Program.HomeMenu;
+                Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>());
             }
             else {
                 if (!isVirtualMatch()) {

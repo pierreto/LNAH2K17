@@ -19,26 +19,27 @@ namespace AirHockeyServer.App_Start
         public void Configuration(IAppBuilder app)
         {
             // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=316888
+            ConnectionMapper connectionMapper = WebApiApplication.UnityContainer.Resolve<ConnectionMapper>();
 
              GlobalHost.DependencyResolver.Register(
                  typeof(ChatHub),
-                 () => new ChatHub(WebApiApplication.UnityContainer.Resolve<ChannelService>()));
+                 () => new ChatHub(connectionMapper, WebApiApplication.UnityContainer.Resolve<ChannelService>()));
 
             GlobalHost.DependencyResolver.Register(
                 typeof(FriendsHub),
-                () => new FriendsHub(WebApiApplication.UnityContainer.Resolve<Services.FriendService>(), WebApiApplication.UnityContainer.Resolve<Hubs.ConnectionMapper>(), WebApiApplication.UnityContainer.Resolve<GameService>()));
+                () => new FriendsHub(WebApiApplication.UnityContainer.Resolve<Services.FriendService>(), connectionMapper, WebApiApplication.UnityContainer.Resolve<GameService>()));
 
             GlobalHost.DependencyResolver.Register(
                  typeof(GameWaitingRoomHub),
-                 () => new GameWaitingRoomHub(WebApiApplication.UnityContainer.Resolve<GameService>(), WebApiApplication.UnityContainer.Resolve<Hubs.ConnectionMapper>(), WebApiApplication.UnityContainer.Resolve<FriendService>()));
+                 () => new GameWaitingRoomHub(WebApiApplication.UnityContainer.Resolve<GameService>(), connectionMapper, WebApiApplication.UnityContainer.Resolve<FriendService>()));
 
              GlobalHost.DependencyResolver.Register(
                  typeof(TournamentWaitingRoomHub),
-                 () => new TournamentWaitingRoomHub(WebApiApplication.UnityContainer.Resolve<TournamentService>(), WebApiApplication.UnityContainer.Resolve<Hubs.ConnectionMapper>(), WebApiApplication.UnityContainer.Resolve<FriendService>())); 
+                 () => new TournamentWaitingRoomHub(WebApiApplication.UnityContainer.Resolve<TournamentService>(), connectionMapper, WebApiApplication.UnityContainer.Resolve<FriendService>())); 
 
               GlobalHost.DependencyResolver.Register(
                  typeof(EditionHub),
-                 () => new EditionHub(WebApiApplication.UnityContainer.Resolve<EditionService>(), WebApiApplication.UnityContainer.Resolve<Hubs.ConnectionMapper>(), WebApiApplication.UnityContainer.Resolve<UserService>())); 
+                 () => new EditionHub(WebApiApplication.UnityContainer.Resolve<EditionService>(), connectionMapper, WebApiApplication.UnityContainer.Resolve<UserService>())); 
 
             app.MapSignalR("/signalr", new HubConfiguration());
         }

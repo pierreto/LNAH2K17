@@ -10,6 +10,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Timers;
+using Microsoft.Practices.Unity;
+using InterfaceGraphique.Controls.WPF.MainMenu;
 
 namespace InterfaceGraphique.Controls.WPF.Store
 {
@@ -168,7 +170,8 @@ namespace InterfaceGraphique.Controls.WPF.Store
         private void BackMainMenu()
         {
             EmptyCart();
-            Program.FormManager.CurrentForm = Program.MainMenu;
+            Program.FormManager.CurrentForm = Program.HomeMenu;
+            Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>());
         }
 
         private ICommand clickCommand;

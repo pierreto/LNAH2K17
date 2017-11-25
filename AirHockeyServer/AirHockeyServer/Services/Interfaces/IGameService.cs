@@ -24,5 +24,6 @@ namespace AirHockeyServer.Services.Interfaces
         Task GameOver(Guid gameId);
 
         Task SaveGame(GameEntity game);
+        void LeaveGame(int userId);
     }
 }

@@ -11,6 +11,8 @@ using InterfaceGraphique.CommunicationInterface.RestInterface;
 using System.Collections.ObjectModel;
 using InterfaceGraphique.Services;
 using InterfaceGraphique.CommunicationInterface;
+using InterfaceGraphique.Controls.WPF.MainMenu;
+using Microsoft.Practices.Unity;
 using InterfaceGraphique.Managers;
 using System.Windows.Media.Imaging;
 
@@ -167,12 +169,14 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
             await this.WaitingRoomHub.LeaveGame();
             await GameRequestManager.CancelGameRequest();
             SetDefaultValues();
-            Program.FormManager.CurrentForm = Program.MainMenu;
+            Program.FormManager.CurrentForm = Program.HomeMenu;
+            Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>());
         }
 
         private async Task MainMenu()
         {
-            Program.FormManager.CurrentForm = Program.MainMenu;
+            Program.FormManager.CurrentForm = Program.HomeMenu;
+            Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>());
         }
 
         private void StartGame()

@@ -24,7 +24,7 @@ namespace AirHockeyServer.Pocos
         [Column(Name = "created")]
         public string Created { get; set; }
 
-        [Column(Name = "profile", CanBeNull = true, UpdateCheck = UpdateCheck.Never)]
+        [Column(Name = "profile")]
         public string Profile { get; set; }
 
         [Column(Name = "alreadyPlayedGame")]

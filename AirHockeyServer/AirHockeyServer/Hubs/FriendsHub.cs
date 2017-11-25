@@ -11,13 +11,14 @@ using AirHockeyServer.Core;
 
 namespace AirHockeyServer.Hubs
 {
-    public class FriendsHub : Hub 
+    public class FriendsHub : BaseHub 
     {
         protected FriendService FriendService { get; }
         public ConnectionMapper ConnectionMapper { get; }
         public GameService GameService { get; }
 
-        public FriendsHub(FriendService friendService, ConnectionMapper connectionMapper, GameService gameService)       
+        public FriendsHub(FriendService friendService, ConnectionMapper connectionMapper, GameService gameService) 
+            :base(connectionMapper)
         {
             FriendService = friendService;
             ConnectionMapper = connectionMapper;
@@ -215,11 +216,20 @@ namespace AirHockeyServer.Hubs
         {
             this.FriendService.NewUserDisconnected(user);
             Clients.AllExcept(this.Context.ConnectionId).NewFriendHasDisconnectedEvent(user.Id);
+
+            base.Disconnect();
         }
 
         public bool FriendIsAvailable(int friendId)
         {
             return !Cache.PlayingPlayers.Exists(x => x.Id == friendId);
+        }
+
+        public override Task OnDisconnected(bool stopCalled)
+        {
+            // TODO ANY SPECIAL ACTION?
+
+            return base.OnDisconnected(stopCalled);
         }
     }
 }
