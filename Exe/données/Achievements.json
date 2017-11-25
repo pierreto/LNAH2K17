@@ -1,0 +1,122 @@
+[
+{
+  "EnabledImageUrl": "\\media\\image\\game_played_1_enabled.png",
+  "DisabledImageUrl": "\\media\\image\\game_played_1_disabled.png",
+  "Name": "1 partie jouée",
+  "AchivementType": "FirstGamePlayed",
+  "Category": "GamePlayed",
+  "Order": 1
+},
+{
+  "EnabledImageUrl": "\\media\\image\\game_played_5_enabled.png",
+  "DisabledImageUrl": "\\media\\image\\game_played_5_disabled.png",
+  "Name": "5 parties jouées",
+  "AchivementType": "FiveGamesPlayed",
+  "Category": "GamePlayed",
+  "Order": 2
+},
+{
+  "EnabledImageUrl": "\\media\\image\\game_played_10_enabled.png",
+  "DisabledImageUrl": "\\media\\image\\game_played_10_disabled.png",
+  "Name": "10 parties jouées",
+  "AchivementType": "TenGamesPlayed",
+  "Category": "GamePlayed",
+  "Order": 3
+},
+{
+  "EnabledImageUrl": "\\media\\image\\tournament_played_1_enabled.png",
+  "DisabledImageUrl": "\\media\\image\\tournament_played_1_disabled.png",
+  "Name": "1 tournoi joué",
+  "AchivementType": "FirstTournamentPlayed",
+  "Category": "TournamentPlayed",
+  "Order": 1
+},
+{
+  "EnabledImageUrl": "\\media\\image\\tournament_played_5_enabled.png",
+  "DisabledImageUrl": "\\media\\image\\tournament_played_5_disabled.png",
+  "Name": "5 tournois joués",
+  "AchivementType": "FiveTournamentsPlayed",
+  "Category": "TournamentPlayed",
+  "Order": 2
+},
+{
+  "EnabledImageUrl": "\\media\\image\\tournament_played_10_enabled.png",
+  "DisabledImageUrl": "\\media\\image\\tournament_played_10_disabled.png",
+  "Name": "10 tournois joués",
+  "AchivementType": "TenTournamentsPlayed",
+  "Category": "TournamentPlayed",
+  "Order": 3
+},
+{
+  "EnabledImageUrl": "\\media\\image\\coin_5_enabled.png",
+  "DisabledImageUrl": "\\media\\image\\coin_5_disabled.png",
+  "Name": "5 points accumulés",
+  "AchivementType": "FivePoints",
+  "Category": "Points",
+  "Order": 1
+},
+{
+  "EnabledImageUrl": "\\media\\image\\coin_30_enabled.png",
+  "DisabledImageUrl": "\\media\\image\\coin_30_disabled.png",
+  "Name": "30 points accumulés",
+  "AchivementType": "ThirtyPoints",
+  "Category": "Points",
+  "Order": 2
+},
+{
+  "EnabledImageUrl": "\\media\\image\\coin_80_enabled.png",
+  "DisabledImageUrl": "\\media\\image\\coin_80_disabled.png",
+  "Name": "80 points accumulés",
+  "AchivementType": "EightyPoints",
+  "Category": "Points",
+  "Order": 3
+},
+{
+  "EnabledImageUrl": "\\media\\image\\tournament_won_1_enabled.png",
+  "DisabledImageUrl": "\\media\\image\\tournament_won_1_disabled.png",
+  "Name": "1 tournoi gagné",
+  "AchivementType": "FirstTournamentWon",
+  "Category": "TournamentWon",
+  "Order": 1
+},
+{
+  "EnabledImageUrl": "\\media\\image\\tournament_won_5_enabled.png",
+  "DisabledImageUrl": "\\media\\image\\tournament_won_5_disabled.png",
+  "Name": "5 tournois gagnés",
+  "AchivementType": "FiveTournamentWon",
+  "Category": "TournamentWon",
+  "Order": 2
+},
+{
+  "EnabledImageUrl": "\\media\\image\\tournament_won_10_enabled.png",
+  "DisabledImageUrl": "\\media\\image\\tournament_won_10_disabled.png",
+  "Name": "10 tournois gagnés",
+  "AchivementType": "TenTournamentWon",
+  "Category": "TournamentWon",
+  "Order": 3
+},
+{
+  "EnabledImageUrl": "\\media\\image\\game_won_1_enabled.png",
+  "DisabledImageUrl": "\\media\\image\\game_won_1_disabled.png",
+  "Name": "1 partie gagnée",
+  "AchivementType": "FirstGameWon",
+  "Category": "GameWon",
+  "Order": 1
+},
+{
+  "EnabledImageUrl": "\\media\\image\\game_won_5_enabled.png",
+  "DisabledImageUrl": "\\media\\image\\game_won_5_disabled.png",
+  "Name": "5 partie gagnées",
+  "AchivementType": "FiveGameWon",
+  "Category": "GameWon",
+  "Order": 2
+},
+{
+  "EnabledImageUrl": "\\media\\image\\game_won_10_enabled.png",
+  "DisabledImageUrl": "\\media\\image\\game_won_10_disabled.png",
+  "Name": "10 partie gagnées",
+  "AchivementType": "TenGameWon",
+  "Category": "GameWon",
+  "Order": 3
+}
+]

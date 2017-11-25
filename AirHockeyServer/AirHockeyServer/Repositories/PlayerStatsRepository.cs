@@ -17,12 +17,10 @@ namespace AirHockeyServer.Repositories
         private Table<StatsPoco> StatsTable;
 
         private Table<AchievementPoco> AchievementsTable { get; set; }
-        public IAchievementInfoService AchievementInfoService { get; set; }
 
-        public PlayerStatsRepository(MapperManager mapperManager, IAchievementInfoService achievementInfoService)
+        public PlayerStatsRepository(MapperManager mapperManager)
             :base(mapperManager)
         {
-            AchievementInfoService = achievementInfoService;
         }
 
         public async Task<StatsEntity> CreatePlayerStats(StatsEntity playerStats)
@@ -159,25 +157,8 @@ namespace AirHockeyServer.Repositories
 
                     var results = await Task.Run(
                         () => queryable.ToArray());
-
-                    List<AchievementEntity> resultEntities = new List<AchievementEntity>();
-                    foreach (AchievementPoco poco in results)
-                    {
-                        AchivementType achievementType = (AchivementType)Enum.Parse(typeof(AchivementType), poco.AchievementType);
-                        resultEntities.Add(new AchievementEntity
-                        {
-                            AchivementType = achievementType,
-                            EnabledImageUrl = AchievementInfoService.GetEnabledImage(achievementType),
-                            DisabledImageUrl = AchievementInfoService.GetDisabledImage(achievementType),
-                            IsEnabled = poco.IsEnabled,
-                            Name = AchievementInfoService.GetName(achievementType),
-                            Category = AchievementInfoService.GetCategory(achievementType),
-                            Order = AchievementInfoService.GetOrder(achievementType)
-                        });
-                    }
-
-
-                    return resultEntities;
+                    
+                    return GetAchievementEntitiesFromPocos(results.ToList());
                 }
             }
             catch (Exception e)
@@ -233,6 +214,17 @@ namespace AirHockeyServer.Repositories
             {
                 System.Diagnostics.Debug.WriteLine("[PlayerStatsRepository.UpdateAchievements] " + e.ToString());
             }
+        }
+
+        private List<AchievementEntity> GetAchievementEntitiesFromPocos(List<AchievementPoco> pocos)
+        {
+            List<AchievementEntity> results = new List<AchievementEntity>();
+            foreach (var poco in pocos)
+            {
+                results.Add(new AchievementEntity(poco));
+            }
+
+            return results;
         }
 
     }

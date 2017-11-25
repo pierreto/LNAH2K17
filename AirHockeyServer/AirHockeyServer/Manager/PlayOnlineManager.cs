@@ -60,12 +60,14 @@ namespace AirHockeyServer.Manager
         {
             if (Cache.Games.ContainsKey(gameId))
             {
-                if (Cache.Games[gameId].Players[0].Id == playerId)
+                if (playerId == 1)
                 {
+                    //MASTER SCORED
                     Cache.Games[gameId].Score[0] += 1;
                 }
                 else
                 {
+                    // SLAVE SCORED
                     Cache.Games[gameId].Score[1] += 1;
                 }
             }
@@ -81,9 +83,7 @@ namespace AirHockeyServer.Manager
             var game = Cache.Games[gameId];
             game.GameState = GameState.Ended;
             game.Winner = game.Score[0] > game.Score[1] ? game.Players[0] : game.Players[1];
-
-            await GameRepository.CreateGame(game);
-
+            
             if (game.TournamentId > -1)
             {
                 await UpdateTournamentState(game.TournamentId, game);
@@ -98,8 +98,10 @@ namespace AirHockeyServer.Manager
 
         private async Task UpdateGame(GameEntity game)
         {
-            await SendGameStats(game);
+            await GameRepository.CreateGame(game);
 
+            await SendGameStats(game);
+            
             await RemoveConnection<GameWaitingRoomHub>(game.Players[0].Id, game.GameId.ToString());
             await RemoveConnection<GameWaitingRoomHub>(game.Players[1].Id, game.GameId.ToString());
         }
@@ -220,6 +222,7 @@ namespace AirHockeyServer.Manager
 
             GlobalHost.ConnectionManager.GetHubContext<TournamentWaitingRoomHub>()
                 .Clients.Group(tournament.Id.ToString()).TournamentFinalResult(tournament);
+            
 
             await PlayerStatsService.IncrementTournamentsWon(tournament.Winner.Id);
             await PlayerStatsService.AddPoints(tournament.Winner.Id, 80);

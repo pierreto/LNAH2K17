@@ -89,15 +89,15 @@ namespace AirHockeyServer.Hubs
             GameService.JoinGame(user);
         }
 
-        public async Task LeaveGame(UserEntity user, Guid gameId)
+        public async Task LeaveGame(int userId, Guid gameId)
         {
-            string connectionid = ConnectionMapper.GetConnection(user.Id);
+            string connectionid = ConnectionMapper.GetConnection(userId);
             if(!string.IsNullOrEmpty(connectionid))
             {
                 await Groups.Remove(connectionid, gameId.ToString());
             }
-            await GameService.LeaveGame(user);
-            Cache.RemovePlayer(user);
+            await GameService.LeaveGame(userId);
+            Cache.RemovePlayer(userId);
         }
 
         public void SendGameData(Guid gameId, GameDataMessage gameData)
