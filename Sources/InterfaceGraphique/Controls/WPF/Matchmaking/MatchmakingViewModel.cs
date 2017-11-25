@@ -12,6 +12,7 @@ using System.Collections.ObjectModel;
 using InterfaceGraphique.Services;
 using InterfaceGraphique.CommunicationInterface;
 using InterfaceGraphique.Managers;
+using System.Windows.Media.Imaging;
 
 namespace InterfaceGraphique.Controls.WPF.Matchmaking
 {
@@ -37,7 +38,9 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
             WaitingRoomHub.OpponentFoundEvent += (sender, args) =>
             {
                 OpponentName = args.Players[0].Username;
+                OpponentPicture = args.Players[0].ProfilePicture;
                 PlayerName = args.Players[1].Username;
+                PlayerPicture = args.Players[1].ProfilePicture;
                 SetVisibility(false);
             };
 
@@ -45,14 +48,14 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
         }
         public override void InitializeViewModel()
         {
-            
+
         }
 
         public void Initialize(bool isGameRequest = false)
         {
             LoadData();
             InitializeEvents();
-            if(!isGameRequest)
+            if (!isGameRequest)
             {
                 SetDefaultValues();
                 this.WaitingRoomHub.Join();
@@ -135,6 +138,7 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
 
             }
             selectedMap = mapsAvailable[1];
+            ImageSrc = mapsAvailable[1].Icon;
             this.OnPropertyChanged("SelectedMap");
 
         }
@@ -168,7 +172,7 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
 
         private async Task MainMenu()
         {
-            Program.FormManager.CurrentForm=Program.MainMenu;
+            Program.FormManager.CurrentForm = Program.MainMenu;
         }
 
         private void StartGame()
@@ -215,6 +219,7 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
                         if (map.Id == value.Id)
                         {
                             selectedMap = map;
+                            ImageSrc = selectedMap.Icon;
                         }
                     }
                     this.OnPropertyChanged();
@@ -245,6 +250,17 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
             }
         }
 
+        private string opponentPicture;
+        public string OpponentPicture
+        {
+            get => opponentPicture;
+            set
+            {
+                opponentPicture = value;
+                this.OnPropertyChanged();
+            }
+        }
+
         private string playerName;
         public string PlayerName
         {
@@ -256,12 +272,28 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
             }
         }
 
+        private string playerPicture;
+        public string PlayerPicture
+        {
+            get => playerPicture;
+            set
+            {
+                playerPicture = value;
+                this.OnPropertyChanged();
+            }
+        }
+
+        private string imageSrc;
         public string ImageSrc
         {
             get
             {
-                var test = Directory.GetCurrentDirectory() + "\\media\\image\\No_image_available.png";
-                return test;
+                return imageSrc;
+            }
+            set
+            {
+                imageSrc = value;
+                OnPropertyChanged();
             }
         }
 
@@ -302,7 +334,7 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
             }
         }
 
-        
+
 
     }
 }
