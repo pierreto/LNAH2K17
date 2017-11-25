@@ -9,13 +9,10 @@ namespace AirHockeyServer.Services.Interfaces
 {
     public interface IGameService
     {
-        Task<GameEntity> CreateGame(GameEntity gameEntity);
 
         void JoinGame(GamePlayerEntity gamePlayer);
 
         void UpdateGame(Guid gameId, MapEntity map);
-
-        GameEntity GetGameEntityById(Guid id);
 
         void LeaveGame(UserEntity user);
 
@@ -24,6 +21,7 @@ namespace AirHockeyServer.Services.Interfaces
         Task GameOver(Guid gameId);
 
         Task SaveGame(GameEntity game);
+
         void LeaveGame(int userId);
     }
 }

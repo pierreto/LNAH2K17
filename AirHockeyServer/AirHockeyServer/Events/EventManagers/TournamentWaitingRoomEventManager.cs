@@ -22,12 +22,12 @@ namespace AirHockeyServer.Events.EventManagers
 
         protected ConcurrentDictionary<int, TournamentEntity> Tournaments { get; set; }
 
-        public GameManager GameManager { get; }
+        public PlayOnlineManager GameManager { get; }
 
         public IMapService MapService { get; set; }
         public ConnectionMapper ConnectionMapper { get; set; }
 
-        public TournamentWaitingRoomEventManager(GameManager gameManager,
+        public TournamentWaitingRoomEventManager(PlayOnlineManager gameManager,
             IMapService mapService, ConnectionMapper connectionMapper)
         {
             this.RemainingTime = new ConcurrentDictionary<int, int>();

@@ -34,15 +34,16 @@ namespace AirHockeyServer.Events.EventManagers
 
         protected ConcurrentDictionary<Guid, GameEntity> Games { get; set; }
         
-        
+        protected List<int> LeftPlayers { get; set; }
 
-        public IGameManager GameManager { get; private set; }
+        public IPlayOnlineManager GameManager { get; private set; }
         public MapService MapService { get; set; }
         public ConnectionMapper ConnectionMapper { get; set; }
 
-        public GameWaitingRoomEventManager(IGameManager gameManager, MapService mapService, ConnectionMapper connectionMapper)
+        public GameWaitingRoomEventManager(IPlayOnlineManager gameManager, MapService mapService, ConnectionMapper connectionMapper)
         {
             this.RemainingTime = new ConcurrentDictionary<Guid, int>();
+            LeftPlayers = new List<int>();
 
             GameMatchMakerService.Instance().MatchFoundEvent += OnMatchFound;
 
@@ -108,6 +109,25 @@ namespace AirHockeyServer.Events.EventManagers
         ////////////////////////////////////////////////////////////////////////
         protected async void WaitingRoomTimeOut(object source, ElapsedEventArgs e, Guid gameId, System.Timers.Timer timer)
         {
+            var gamePlayers = Games[gameId].Players;
+            if (LeftPlayers.Count > 0 && LeftPlayers.Any(x => gamePlayers[0].Id == x || gamePlayers[1].Id == x))
+            {
+                timer.Stop();
+
+                var playerToRemove = LeftPlayers.Find(x => gamePlayers[0].Id == x || gamePlayers[1].Id == x);
+                GlobalHost.ConnectionManager.GetHubContext<GameWaitingRoomHub>().Clients.Group(gameId.ToString()).PlayerLeft(playerToRemove);
+
+                LeftPlayers.Remove(playerToRemove);
+
+                GamePlayerEntity orphanPlayer = playerToRemove == gamePlayers[0].Id ? gamePlayers[1] : gamePlayers[0];
+                GameMatchMakerService.Instance().AddOpponent(orphanPlayer);
+
+                GameEntity removed = new GameEntity();
+                Games.TryRemove(gameId, out removed);
+
+                return;
+            }
+
             if (RemainingTime[gameId] < WAITING_TIMEOUT)
             {
                 RemainingTime[gameId] += 1000;
@@ -133,7 +153,11 @@ namespace AirHockeyServer.Events.EventManagers
                 Games[gameId].SelectedMap = await MapService.GetMap(mapId);
 
                 GameManager.AddGame(Games[gameId]);
+
                 GlobalHost.ConnectionManager.GetHubContext<GameWaitingRoomHub>().Clients.Group(gameId.ToString()).GameStartingEvent(Games[gameId]);
+
+                GameEntity removed = new GameEntity();
+                Games.TryRemove(gameId, out removed);
             }
         }
 
@@ -163,6 +187,26 @@ namespace AirHockeyServer.Events.EventManagers
                 Games[gameId].SelectedMap = map;
             }
         }
-        
+
+        public void PlayerLeft(int userId)
+        {
+            if(!LeftPlayers.Exists( x => userId == x) && IsInvolvedInGame(userId))
+            {
+                LeftPlayers.Add(userId);
+            }
+        }
+
+        private bool IsInvolvedInGame(int userId)
+        {
+            foreach(var game in Games.Values)
+            {
+                if(game.Players[0].Id == userId || game.Players[1].Id == userId)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }

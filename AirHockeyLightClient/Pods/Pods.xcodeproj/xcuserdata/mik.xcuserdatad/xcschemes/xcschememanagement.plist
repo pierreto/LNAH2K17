@@ -8,41 +8,70 @@
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>1</integer>
 		</dict>
 		<key>Pods-AirHockeyLightClient.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>2</integer>
 		</dict>
 		<key>PromiseKit.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
+		<key>ReachabilitySwift.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>8</integer>
 		</dict>
 		<key>Realm.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>4</integer>
 		</dict>
 		<key>RealmSwift.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>5</integer>
 		</dict>
 		<key>SwiftR.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>6</integer>
 		</dict>
 		<key>SwiftyJSON.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
+			<key>orderHint</key>
+			<integer>7</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>0DCF0410784F9375AC53C152639AB912</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>15298D3F97F9967B4FFE396152FA097D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>2818073056341702DB96FA00A6003F36</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -52,7 +81,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>3A4EABFAE4255795846B5A250BBB3311</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>3C53B226A5898A186DD4ABAE35B9CF54</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>3D6AE16BA7FEAF2CFB1745AA36BB89A5</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -62,7 +101,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>8120F30E40E7064367DCBB9E12B07117</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>88E9EC28B8B46C3631E6B242B50F4442</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>9C37B8BBE4BE57C6E540990AE0ACF18C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -73,6 +122,11 @@
 			<true/>
 		</dict>
 		<key>B04393ABEB3AEE5606CA1B73A8A61F04</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>BD16AF21E4D0E95F2916B9A490C576F1</key>
 		<dict>
 			<key>primary</key>
 			<true/>

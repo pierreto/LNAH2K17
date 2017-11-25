@@ -48,7 +48,22 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
             };
 
             WaitingRoomHub.MapUpdatedEvent += (sender, args) => OnMapUpdated(sender, args);
+
+            WaitingRoomHub.OpponentLeftEvent += (sender, args) => OnOpponentLeft(sender, args);
         }
+
+        private void OnOpponentLeft(object sender, int args)
+        {
+            SetDefaultValues();
+
+            selectedMap = mapsAvailable[1];
+            ImageSrc = mapsAvailable[1].Icon;
+            this.OnPropertyChanged("SelectedMap");
+
+            opponentLeftMsg = true;
+            OnPropertyChanged("OpponentLeftMsg");
+        }
+
         public override void InitializeViewModel()
         {
 
@@ -75,7 +90,6 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
         public void Initialize(bool isGameRequest = false)
         {
             LoadData();
-            InitializeEvents();
             if (!isGameRequest)
             {
                 SetDefaultValues();
@@ -87,25 +101,8 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
         {
             RemainingTime = 30;
             SetVisibility(true);
-            MapsAvailable = new ObservableCollection<MapEntity>();
             OpponentName = string.Empty;
             playerName = string.Empty;
-        }
-
-
-        private void InitializeEvents()
-        {
-            //WaitingRoomHub.RemainingTimeEvent += (sender, args) => { OnRemainingTimeEvent(args);  };
-
-            //WaitingRoomHub.OpponentFoundEvent += (sender, args) =>
-            //{
-            //    OpponentName = args.Players[0].Username;
-            //    PlayerName = args.Players[1].Username;
-            //    SetVisibility(false);
-            //};
-
-            //WaitingRoomHub.MapUpdatedEvent += (sender, args) => OnMapUpdated(sender, args);
-
         }
 
         private void OnMapUpdated(object sender, MapEntity args)
@@ -118,6 +115,7 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
                 }
             }
             OnPropertyChanged("SelectedMap");
+            ImageSrc = selectedMap.Icon;
         }
 
         private void SetVisibility(bool isWaitingForOpponentValue)
@@ -194,8 +192,7 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
 
         private async Task MainMenu()
         {
-            Program.FormManager.CurrentForm = Program.HomeMenu;
-            Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>());
+            await LeaveGame();
         }
 
         private void StartGame()
@@ -357,7 +354,25 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
             }
         }
 
+        public bool opponentLeftMsg = false;
+        public string OpponentLeftMsg
+        {
+            get => opponentLeftMsg ? "Visible" : "Hidden";
+        }
 
+        private ICommand hidePopupCommand;
+        public ICommand HidePopupCommand
+        {
+            get
+            {
+                return hidePopupCommand ?? (hidePopupCommand = new RelayCommand(HidePopup));
+            }
+        }
 
+        private void HidePopup()
+        {
+            opponentLeftMsg = false;
+            OnPropertyChanged("OpponentLeftMsg");
+        }
     }
 }
