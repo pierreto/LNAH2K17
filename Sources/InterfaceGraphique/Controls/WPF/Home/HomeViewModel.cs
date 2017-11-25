@@ -51,6 +51,8 @@ namespace InterfaceGraphique.Controls.WPF.Home
 
         private void GoOfflineMenu()
         {
+            Program.InitAfterConnection();
+            Program.unityContainer.Resolve<MainMenuViewModel>().NotLoading = true;
             Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>());
             //Program.FormManager.CurrentForm = Program.MainMenu;
         }

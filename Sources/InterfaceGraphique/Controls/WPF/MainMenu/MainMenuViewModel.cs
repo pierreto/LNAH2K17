@@ -19,6 +19,39 @@ namespace InterfaceGraphique.Controls.WPF.MainMenu
     public class MainMenuViewModel : ViewModelBase
     {
 
+        #region Private Properties
+        private bool notLoading;
+        private bool onlineMode;
+        #endregion
+
+        #region Public Properties
+        public bool NotLoading
+        {
+            get
+            {
+                return notLoading;
+            }
+            set
+            {
+                notLoading = value;
+                OnPropertyChanged(nameof(NotLoading));
+            }
+        }
+
+        public bool OnlineMode
+        {
+            get
+            {
+                return onlineMode;
+            }
+            set
+            {
+                onlineMode = value;
+                OnPropertyChanged(nameof(OnlineMode));
+            }
+        }
+        #endregion
+
         #region Constructor
         public MainMenuViewModel()
         {
@@ -241,6 +274,7 @@ namespace InterfaceGraphique.Controls.WPF.MainMenu
             HubManager.Instance.Logout();
             User.Instance.UserEntity = null;
             User.Instance.IsConnected = false;
+            Program.unityContainer.Resolve<MainMenuViewModel>().OnlineMode = false;
             //TODO: KILL HUB CONNECTIONS
             Program.FormManager.CurrentForm = Program.HomeMenu;
             Program.InitializeUnityDependencyInjection();

@@ -15,7 +15,10 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid Background="{StaticResource DarkGrayBrush}" Margin="0 0 0 0">
+    <UserControl.DataContext>
+        <Binding Path="MainMenuViewModel" Source="{StaticResource VMLocator}"/>
+    </UserControl.DataContext>
+    <Grid Background="{StaticResource DarkGrayBrush}" Margin="0 0 0 0" IsEnabled="{Binding NotLoading}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
@@ -31,18 +34,18 @@
             <Label FontSize="100" FontWeight="Bold" Foreground="Red">2K17</Label>
         </StackPanel>
 
-        <Border Margin="10 10 10 80" Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" Background="{StaticResource SilverBrush}" CornerRadius="6">
+        <Border Margin="30 10 10 80" Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" Background="{StaticResource SilverBrush}" CornerRadius="6">
             <Border.Effect>
                 <DropShadowEffect></DropShadowEffect>
             </Border.Effect>
             <StackPanel Margin="15" VerticalAlignment="Center">
                 <Button Content="Partie Rapide" FontSize="30" FontWeight="Bold" Background="{StaticResource DarkSilverBrush}" BorderThickness="0" Height="80" Margin="0 0 0 8" Foreground="White" Command="{Binding PartieRapideCommand}"></Button>
                 <Button Content="Tournoi" FontSize="30" FontWeight="Bold" Background="{StaticResource DarkSilverBrush}" BorderThickness="0" Height="80" Margin="0 0 0 8" Foreground="White" Command="{Binding TournoiCommand}"></Button>
-                <Button Content="Tournoi en Ligne" FontSize="30" FontWeight="Bold" Background="{StaticResource DarkSilverBrush}" BorderThickness="0" Height="80" Margin="0 0 0 8" Foreground="White" Command="{Binding TournoiEnLigneCommand}"></Button>
+                <Button Content="Tournoi en Ligne" FontSize="30" FontWeight="Bold" Background="{StaticResource DarkSilverBrush}" BorderThickness="0" Height="80" Margin="0 0 0 8" Foreground="White" Command="{Binding TournoiEnLigneCommand}" IsEnabled="{Binding OnlineMode}"></Button>
                 <Button Content="Configuration" FontSize="30" FontWeight="Bold" Background="{StaticResource DarkSilverBrush}" BorderThickness="0" Height="80" Margin="0 0 0 8" Foreground="White" Command="{Binding ConfigurationCommand}"></Button>
             </StackPanel>
         </Border>
-        <Border Margin="10" Grid.Column="1" Grid.Row="1" Background="{StaticResource BlueBrush}" CornerRadius="6">
+        <Border Margin="10" Grid.Column="1" Grid.Row="1" Background="{StaticResource BlueBrush}" CornerRadius="6" IsEnabled="{Binding OnlineMode}">
             <Border.Effect>
                 <DropShadowEffect></DropShadowEffect>
             </Border.Effect>
@@ -51,7 +54,7 @@
                 <Button Content="Magasin" FontSize="30" FontWeight="Bold" Background="{StaticResource DarkBlueBrush}" BorderThickness="0" Height="80" Margin="0 0 0 8" Foreground="White" Command="{Binding MagasinCommand}"></Button>
             </StackPanel>
         </Border>
-        <Border Margin="10" Grid.Column="2" Grid.Row="1" Background="{StaticResource OrangeBrush}" CornerRadius="6">
+        <Border Margin="10 10 30 10" Grid.Column="2" Grid.Row="1" Background="{StaticResource OrangeBrush}" CornerRadius="6">
             <Border.Effect>
                 <DropShadowEffect></DropShadowEffect>
             </Border.Effect>
@@ -68,12 +71,12 @@
                 <Button Content="Édition" FontSize="30" FontWeight="Bold" Background="{StaticResource DarkGreenBrush}" BorderThickness="0" Height="80" Margin="0 0 0 8" Foreground="White" Command="{Binding EditionCommand}"></Button>
             </StackPanel>
         </Border>
-        <Border Margin="10 10 10 80" Grid.Column="2" Grid.Row="2" Background="{StaticResource RedBrush}" CornerRadius="6">
+        <Border Margin="10 10 30 80" Grid.Column="2" Grid.Row="2" Background="{StaticResource RedBrush}" CornerRadius="6">
             <Border.Effect>
                 <DropShadowEffect></DropShadowEffect>
             </Border.Effect>
             <StackPanel Margin="15" VerticalAlignment="Center">
-                <Button Content="Déconnexion" FontSize="30" FontWeight="Bold" Background="{StaticResource DarkRedBrush}" BorderThickness="0" Height="80" Margin="0 0 0 8" Foreground="White" Command="{Binding DeconnexionCommand}"></Button>
+                <Button Content="Déconnexion" FontSize="30" FontWeight="Bold" Background="{StaticResource DarkRedBrush}" BorderThickness="0" Height="80" Margin="0 0 0 8" Foreground="White" Command="{Binding DeconnexionCommand}" IsEnabled="{Binding OnlineMode}"></Button>
                 <Button Content="Quitter" FontSize="30" FontWeight="Bold" Background="{StaticResource DarkRedBrush}" BorderThickness="0" Height="80" Margin="0 0 0 8" Foreground="White" Command="{Binding QuitterCommand}"></Button>
             </StackPanel>
         </Border>
