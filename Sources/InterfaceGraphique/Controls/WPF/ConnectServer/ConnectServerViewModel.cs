@@ -20,6 +20,7 @@ namespace InterfaceGraphique.Controls.WPF.ConnectServer
         private string ipAddress;
         private string ipAddressErrMsg;
         private bool ipAddressInputEnabled;
+        private bool notLoading = true;
         #endregion
 
         #region Public Properties
@@ -66,6 +67,27 @@ namespace InterfaceGraphique.Controls.WPF.ConnectServer
                 this.OnPropertyChanged();
             }
         }
+
+        public bool NotLoading
+        {
+            get { return notLoading; }
+
+            set
+            {
+                if (notLoading == value)
+                {
+                    return;
+                }
+                notLoading = value;
+                this.OnPropertyChanged(nameof(NotLoading));
+                this.OnPropertyChanged(nameof(Loading));
+            }
+        }
+
+        public bool Loading
+        {
+            get { return !notLoading; }
+        }
         #endregion
 
         #region Constructor
@@ -98,7 +120,7 @@ namespace InterfaceGraphique.Controls.WPF.ConnectServer
         {
             try
             {
-                Loading();
+                Load();
                 ValidateIpAddress();
                 int timeout = TIMEOUT;
                 var task = hubManager.EstablishConnection(IpAddress);
@@ -114,6 +136,7 @@ namespace InterfaceGraphique.Controls.WPF.ConnectServer
                 }
                 else
                 {
+                    LoadingDone();
                     // timeout logic
                     throw new Exception("Too long to connect to IP address: " + IpAddress + ". Make sure it is a valid IP address.");
                 }
@@ -170,14 +193,16 @@ namespace InterfaceGraphique.Controls.WPF.ConnectServer
             }
         }
 
-        private void Loading()
+        private void Load()
         {
             IpAddressInputEnabled = false;
+            NotLoading = false;
         }
 
         private void LoadingDone()
         {
             IpAddressInputEnabled = true;
+            NotLoading = true;
             CommandManager.InvalidateRequerySuggested();
         }
         #endregion

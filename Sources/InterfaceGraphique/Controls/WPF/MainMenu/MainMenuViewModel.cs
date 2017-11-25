@@ -35,6 +35,15 @@ namespace InterfaceGraphique.Controls.WPF.MainMenu
             {
                 notLoading = value;
                 OnPropertyChanged(nameof(NotLoading));
+                OnPropertyChanged(nameof(Loading));
+            }
+        }
+
+        public bool Loading
+        {
+            get
+            {
+                return !notLoading;
             }
         }
 

@@ -26,6 +26,8 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
         private string usernameErrMsg;
         private string passwordErrMsg;
         private bool inputsEnabled;
+        private bool notLoading = true;
+
         #endregion
 
         #region Public Properties
@@ -101,6 +103,27 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
                 this.OnPropertyChanged();
             }
         }
+
+        public bool NotLoading
+        {
+            get { return notLoading; }
+
+            set
+            {
+                if (notLoading == value)
+                {
+                    return;
+                }
+                notLoading = value;
+                this.OnPropertyChanged(nameof(NotLoading));
+                this.OnPropertyChanged(nameof(Loading));
+            }
+        }
+
+        public bool Loading
+        {
+            get { return !notLoading; }
+        }
         #endregion
 
         #region Constructor
@@ -151,7 +174,7 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
         {
             try
             {
-                Loading();
+                Load();
                 if (ValidateLoginEntity())
                 {
                     var response = await Program.client.PostAsJsonAsync(Program.client.BaseAddress + "api/login", loginEntity);
@@ -193,6 +216,7 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
                     else
                     {
                         //Du cote serveur, on retourne un message d'erreur
+                        LoadingDone();
                         var res = response.Content.ReadAsAsync<string>().Result;
 
                         //On met une erreur seulement sur le password pour indiquer que soit le mdp, soit nom d'usager invalide
@@ -244,16 +268,18 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
             return valid;
         }
 
-        private void Loading()
+        private void Load()
         {
             UsernameErrMsg = "";
             PasswordErrMsg = "";
             InputsEnabled = false;
+            NotLoading = false;
         }
 
         private void LoadingDone()
         {
             InputsEnabled = true;
+            NotLoading = true;
             CommandManager.InvalidateRequerySuggested();
         }
         #endregion

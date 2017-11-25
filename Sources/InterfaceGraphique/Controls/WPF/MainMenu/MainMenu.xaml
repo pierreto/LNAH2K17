@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:InterfaceGraphique.Controls.WPF.MainMenu"
              xmlns:wpf="clr-namespace:InterfaceGraphique.Controls.WPF"
              xmlns:convert="clr-namespace:InterfaceGraphique.Controls.WPF.Converters"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
              mc:Ignorable="d" 
              d:DesignHeight="900" d:DesignWidth="1000">
     <UserControl.Resources>
@@ -19,7 +20,9 @@
     <UserControl.DataContext>
         <Binding Path="MainMenuViewModel" Source="{StaticResource VMLocator}"/>
     </UserControl.DataContext>
+    
     <Grid Background="{StaticResource DarkGrayBrush}" Margin="0 0 0 0" IsEnabled="{Binding NotLoading}">
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
@@ -30,6 +33,9 @@
             <RowDefinition Height="2*"/>
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
+        <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Grid.RowSpan="3" Grid.ColumnSpan="3" Panel.ZIndex="10" Margin="20" Visibility="{Binding Loading, Converter={convert:BooleanToVisibilityConverter}, ConverterParameter=True}">
+            <fa:ImageAwesome Icon="CircleOutlineNotch" Spin="{Binding Loading}" Height="48" Width="48" Foreground="{StaticResource DarkSilverBrush}"/>
+        </Grid>
         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.ColumnSpan="3" VerticalAlignment="Center" HorizontalAlignment="Center">
             <Label FontSize="100" FontWeight="Bold" Foreground="White" VerticalContentAlignment="Top">LNAH</Label>
             <Label FontSize="100" FontWeight="Bold" Foreground="Red">2K17</Label>

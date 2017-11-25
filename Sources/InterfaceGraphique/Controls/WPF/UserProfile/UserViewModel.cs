@@ -15,6 +15,9 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
             UserName = user.Username;
             Id = user.Id;
             Name = user.Name;
+            Profile = user.Profile;
+            Email = user.Email;
+            Date = user.Date;
         }
 
         public override void InitializeViewModel()
@@ -40,6 +43,39 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
             set
             {
                 name = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string email;
+        public string Email
+        {
+            get => email;
+            set
+            {
+                email = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string date;
+        public string Date
+        {
+            get => date;
+            set
+            {
+                date = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string profile;
+        public string Profile
+        {
+            get => profile;
+            set
+            {
+                profile = value;
                 OnPropertyChanged();
             }
         }

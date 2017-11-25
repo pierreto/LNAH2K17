@@ -51,6 +51,7 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
 
         public async Task Initialize(int userId = 0)
         {
+            Load();
             isFriendProfile = userId != 0;
             OnPropertyChanged("IsFriendProfile");
 
@@ -98,6 +99,18 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
                 GameWon = playerStats.GamesWon;
             }
 
+            LoadingDone();
+
+        }
+
+        private void LoadingDone()
+        {
+            NotLoading = true;
+        }
+
+        private void Load()
+        {
+            NotLoading = false;
         }
 
         private ObservableCollection<Achievement> achievements;
@@ -208,6 +221,28 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
                 tournamentWon = value;
                 OnPropertyChanged();
             }
+        }
+
+        private bool notLoading;
+        public bool NotLoading
+        {
+            get { return notLoading; }
+
+            set
+            {
+                if (notLoading == value)
+                {
+                    return;
+                }
+                notLoading = value;
+                this.OnPropertyChanged(nameof(NotLoading));
+                this.OnPropertyChanged(nameof(Loading));
+            }
+        }
+
+        public bool Loading
+        {
+            get { return !notLoading; }
         }
 
         private ICommand mainMenuCommand;

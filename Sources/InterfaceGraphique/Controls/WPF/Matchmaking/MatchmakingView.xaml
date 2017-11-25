@@ -14,6 +14,9 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <wpf:ViewModelLocator x:Key="VMLocator" d:IsDataSource="True" />
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/InterfaceGraphique;component/Resource/appresources.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -76,7 +79,7 @@
             </StackPanel>
         </Grid>
 
-        <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center" Height="400" Width="600" Visibility="{Binding IsWaitingForOpponent}">
+        <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center"  Visibility="{Binding IsWaitingForOpponent}" Height="{Binding ActualHeight, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}">
             <DockPanel.Style>
                 <Style TargetType="{x:Type DockPanel}">
                     <Setter Property="Background" Value="#cccccc"></Setter>
@@ -84,7 +87,7 @@
                 </Style>
             </DockPanel.Style>
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                <fa:ImageAwesome Icon="Spinner" Spin="True" SpinDuration="4" Height="200"></fa:ImageAwesome>
+                <fa:ImageAwesome Icon="CircleOutlineNotch" Foreground="{StaticResource DarkSilverBrush}" Spin="True" SpinDuration="4" Height="200"/>
                 <TextBlock HorizontalAlignment="Center" FontSize="18" FontWeight="Bold" Height="40">En attente d'un joueur</TextBlock>
                 <Button Command="{Binding Cancel}" Height="40" Width="100" Background="Transparent" BorderBrush="Transparent" >
                     <TextBlock FontWeight="Bold">Annuler</TextBlock>

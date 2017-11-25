@@ -28,6 +28,7 @@ namespace InterfaceGraphique.Controls.WPF.Signup
         private string passwordErrMsg;
         private string confirmPasswordErrMsg;
         private bool inputsEnabled;
+        private bool notLoading;
         #endregion
 
         #region Public Properties
@@ -190,6 +191,27 @@ namespace InterfaceGraphique.Controls.WPF.Signup
                 this.OnPropertyChanged();
             }
         }
+
+        public bool NotLoading
+        {
+            get { return notLoading; }
+
+            set
+            {
+                if (notLoading == value)
+                {
+                    return;
+                }
+                notLoading = value;
+                this.OnPropertyChanged(nameof(NotLoading));
+                this.OnPropertyChanged(nameof(Loading));
+            }
+        }
+
+        public bool Loading
+        {
+            get { return !notLoading; }
+        }
         #endregion
 
         #region Constructor
@@ -224,7 +246,7 @@ namespace InterfaceGraphique.Controls.WPF.Signup
         {
             try
             {
-                Loading();
+                Load();
                 ResetErrMsg();
                 if (ValidateFields())
                 {
@@ -432,13 +454,15 @@ namespace InterfaceGraphique.Controls.WPF.Signup
             return valid;
         }
 
-        private void Loading()
+        private void Load()
         {
             InputsEnabled = false;
+            NotLoading = false;
         }
 
         private void LoadingDone()
         {
+            NotLoading = true;
             InputsEnabled = true;
             CommandManager.InvalidateRequerySuggested();
         }
