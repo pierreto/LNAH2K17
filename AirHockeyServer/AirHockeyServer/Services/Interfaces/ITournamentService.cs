@@ -12,9 +12,7 @@ namespace AirHockeyServer.Services.Interfaces
         void JoinTournament(List<GamePlayerEntity> players);
 
         void UpdateTournament(int tournamentId, MapEntity selectedMap);
-
-        void LeaveTournamentWaitingRoom(GamePlayerEntity user, int tournamentId);
-
-        void LeaveTournament(int userId);
+        
+        Task LeaveTournament(int userId);
     }
 }

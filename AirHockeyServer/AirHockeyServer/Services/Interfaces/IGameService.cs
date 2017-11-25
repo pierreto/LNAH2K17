@@ -14,7 +14,7 @@ namespace AirHockeyServer.Services.Interfaces
 
         void UpdateGame(Guid gameId, MapEntity map);
 
-        void LeaveGame(UserEntity user);
+        Task LeaveGame(UserEntity user);
 
         void GoalScored(Guid gameId, int playerId);
 

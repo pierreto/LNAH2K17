@@ -28,14 +28,14 @@ namespace AirHockeyServer.Services
 
         public GameWaitingRoomEventManager GameWaitingRoomEventManager { get; set; }
 
-        public IPlayOnlineManager GameManager { get; }
+        public IPlayOnlineManager PlayOnlineManager { get; }
 
-        public GameService(IPlayOnlineManager gameManager, IGameRepository gameRepository
+        public GameService(IPlayOnlineManager playOnlineManager, IGameRepository gameRepository
             , GameWaitingRoomEventManager gameWaitingRoomEventManager
             )
         {
             this.games = new List<GameEntity>();
-            GameManager = gameManager;
+            PlayOnlineManager = playOnlineManager;
             GameRepository = gameRepository;
             GameWaitingRoomEventManager = gameWaitingRoomEventManager;
         }
@@ -67,25 +67,27 @@ namespace AirHockeyServer.Services
             GameWaitingRoomEventManager.SetMap(gameId, map);
         }
 
-        public void LeaveGame(UserEntity user)
+        public async Task LeaveGame(UserEntity user)
         {
-            LeaveGame(user.Id);
+            await LeaveGame(user.Id);
         }
 
-        public void LeaveGame(int userId)
+        public async Task LeaveGame(int userId)
         {
             GameMatchMakerService.Instance().RemoveUser(userId);
             GameWaitingRoomEventManager.PlayerLeft(userId);
+            await PlayOnlineManager.PlayerLeaveLiveGame(userId);
+            await PlayOnlineManager.PlayerLeaveLiveTournament(userId);
         }
 
         public void GoalScored(Guid gameId, int playerId)
         {
-            GameManager.GoalScored(gameId, playerId);
+            PlayOnlineManager.GoalScored(gameId, playerId);
         }
 
         public async Task GameOver(Guid gameId)
         {
-            await GameManager.GameEnded(gameId);
+            await PlayOnlineManager.GameEnded(gameId);
         }
 
         public async Task SaveGame(GameEntity game)

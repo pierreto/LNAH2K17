@@ -17,12 +17,11 @@ namespace AirHockeyServer.Hubs
             : base(connectionMapper)
         {
             TournamentService = tournamentService;
-            ConnectionMapper = connectionMapper;
             FriendService = friendService;
         }
         protected FriendService FriendService { get; }
+
         public ITournamentService TournamentService { get; }
-        public ConnectionMapper ConnectionMapper { get; set; }
 
         public void Join(List<GamePlayerEntity> players)
         {
@@ -55,8 +54,13 @@ namespace AirHockeyServer.Hubs
 
         public void LeaveTournament(GamePlayerEntity user, int tournamentId)
         {
-            Groups.Remove(ConnectionMapper.GetConnection(user.Id), tournamentId.ToString());
-            TournamentService.LeaveTournamentWaitingRoom(user, tournamentId);
+            string connection = ConnectionMapper.GetConnection(user.Id);
+            if (!string.IsNullOrEmpty(connection))
+            {
+                Groups.Remove(ConnectionMapper.GetConnection(user.Id), tournamentId.ToString());
+            }
+
+            TournamentService.LeaveTournament(user.Id);
             Cache.RemovePlayer(user.Id);
         }
 
