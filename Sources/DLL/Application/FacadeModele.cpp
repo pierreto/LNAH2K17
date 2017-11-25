@@ -185,10 +185,15 @@ void FacadeModele::initialiserOpenGL(HWND hWnd) {
 	lightManager_->usePresetLighting();
 
 	skybox_ = new utilitaire::BoiteEnvironnement(
-		"media/skybox/nebula_xpos.png", "media/skybox/nebula_xneg.png",
-		"media/skybox/nebula_ypos.png", "media/skybox/nebula_yneg.png",
-		"media/skybox/nebula_zpos.png", "media/skybox/nebula_zneg.png",
-		4096);
+		"media/skybox/leftImage.png", "media/skybox/rightImage.png",
+		"media/skybox/downImage.png", "media/skybox/upImage.png",
+		"media/skybox/frontImage.png", "media/skybox/backImage.png",
+		2048);
+	/*skybox_ = new utilitaire::BoiteEnvironnement(
+		"media/skybox/rightImage.png", "media/skybox/leftImage.png",
+		"media/skybox/upImage.png", "media/skybox/downImage.png",
+		"media/skybox/backImage.png", "media/skybox/frontImage.png",
+		2048);*/
 }
 
 
