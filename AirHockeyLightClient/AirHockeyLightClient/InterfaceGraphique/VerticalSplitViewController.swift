@@ -160,6 +160,27 @@ class VerticalSplitViewController: UIViewController {
         toggleChatButtonVisibility()
     }
 
+    func hideAllBottomMenu() {
+        chatOpen = true
+        friendsOpen = true
+        self.togChat()
+        self.togFriends()
+        chatButtonBottom.constant = -44
+        friendsButtonBottom.constant = -44
+        topViewBottom.constant = -44
+        chatButton.layer.shadowOpacity = 0
+        friendsButton.layer.shadowOpacity = 0
+    }
+    
+    func showAllBottomButtons() {
+        chatButtonBottom.constant = 0
+        friendsButtonBottom.constant = 0
+        topViewBottom.constant = 0
+        chatButton.layer.shadowOpacity = 0.5
+        chatButton.layer.shadowRadius = 5
+        friendsButton.layer.shadowOpacity = 0.5
+        friendsButton.layer.shadowRadius = 5
+    }
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation

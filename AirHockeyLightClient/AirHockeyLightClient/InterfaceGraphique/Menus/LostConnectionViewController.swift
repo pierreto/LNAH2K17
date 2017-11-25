@@ -140,12 +140,14 @@ class LostConnectionViewController: UIViewController {
         self.navigationController?.isNavigationBarHidden = true
         VerticalSplitViewController.sharedVerticalSplitViewController.chatButton.isEnabled = false
         VerticalSplitViewController.sharedVerticalSplitViewController.friendsButton.isEnabled = false
+        VerticalSplitViewController.sharedVerticalSplitViewController.hideAllBottomMenu()
     }
     
     func enableUI() {
         self.navigationController?.isNavigationBarHidden = false
         VerticalSplitViewController.sharedVerticalSplitViewController.chatButton.isEnabled = true
         VerticalSplitViewController.sharedVerticalSplitViewController.friendsButton.isEnabled = true
+        VerticalSplitViewController.sharedVerticalSplitViewController.showAllBottomButtons()
     }
     
     override var shouldAutorotate: Bool {
