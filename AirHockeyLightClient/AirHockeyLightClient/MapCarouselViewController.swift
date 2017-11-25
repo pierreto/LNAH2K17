@@ -27,6 +27,13 @@ class MapCarouselViewController: UIViewController, iCarouselDataSource, iCarouse
     private let LOCK_BUTTON_ICON = "\u{f023}"
     private var maps = [MapEntity]()
     
+    private let BORDER_COLORS = [
+        UIColor(red: 84.0/255.0, green: 195.0/255.0, blue: 255.0/255.0, alpha: 0.9),
+        UIColor(red: 60.0/255.0, green: 204.0/255.0, blue: 113.0/255.0, alpha: 0.9),
+        UIColor(red: 255.0/255.0, green: 190.0/255.0, blue: 105.0/255.0, alpha: 0.9),
+        UIColor(red: 234.0/255.0, green: 74.0/255.0, blue: 76.0/255.0, alpha: 0.9)
+    ]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -164,6 +171,10 @@ class MapCarouselViewController: UIViewController, iCarouselDataSource, iCarouse
             mapImageView.image = (map.icon != nil && map.icon != "") ? ImageService.convertStrBase64ToImage(strBase64: map.icon!) : UIImage(named: "map.png")
             tempView.addSubview(mapImageView)
         }
+        
+        tempView.layer.borderWidth = 5
+        tempView.layer.borderColor = self.BORDER_COLORS[index % self.BORDER_COLORS.count].cgColor
+        tempView.transform = CGAffineTransform(scaleX: 1.8, y: 1.8)
         
         return tempView
     }

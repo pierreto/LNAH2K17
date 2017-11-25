@@ -177,6 +177,7 @@ namespace InterfaceGraphique {
             if (currentRound == 4) {
                 FonctionsNatives.resetNodeTree();
                 FonctionsNatives.resetCameraPosition();
+                Program.QuickPlay.CurrentGameState.IsTournementMode = false;
                 Program.FormManager.CurrentForm = Program.HomeMenu;
                 Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>());
             }

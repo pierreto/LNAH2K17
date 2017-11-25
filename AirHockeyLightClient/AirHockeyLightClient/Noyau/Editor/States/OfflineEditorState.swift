@@ -40,7 +40,7 @@ class OfflineEditorState: EditorState {
     override func sauvegarderCarte(map: MapEntity, json: String?, icon: UIImage?) {
         var iconStrBase64 = map.icon
         if icon != nil {
-            iconStrBase64 = ImageService.convertImgToBase64(image: ImageService.cropImageToSquare(image: icon!))
+            iconStrBase64 = ImageService.convertMapIconToBase64(icon: icon!)
         }
         
         DBManager.instance.sauvegarderCarte(map: map, json: json, icon: iconStrBase64!)

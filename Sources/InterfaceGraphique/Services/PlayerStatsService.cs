@@ -22,5 +22,11 @@ namespace InterfaceGraphique.Services
             HttpResponseMessage response = await Program.client.GetAsync("api/achivements/" + userId);
             return await HttpResponseParser.ParseResponse<List<Achievement>>(response);
         }
+
+        public async Task<List<Achievement>> GetAchievements()
+        {
+            HttpResponseMessage response = await Program.client.GetAsync("api/achivements/");
+            return await HttpResponseParser.ParseResponse<List<Achievement>>(response);
+        }
     }
 }

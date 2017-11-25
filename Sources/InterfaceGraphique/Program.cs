@@ -147,6 +147,7 @@ namespace InterfaceGraphique
             testChatMenu = new TestChatMenu();
             creditsMenu = new CreditsMenu();
             lobbyHost = new LobbyHost();
+            onlineTournament = new OnlineTournament();
             userProfileMenu = new UserProfileMenu();
             storeMenu = new StoreMenu();
 
@@ -204,7 +205,7 @@ namespace InterfaceGraphique
             tournementMenu = new TournementMenu();
             tournementTree = new TournementTree();
             onlineTournamentMenu = new OnlineTournementMenu();
-            onlineTournament = new OnlineTournament();
+            
         }
 
         public static void InitializeUnityDependencyInjection()

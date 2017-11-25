@@ -111,7 +111,9 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
         {
             try
             {
-                await WaitingRoomProxy.Invoke("LeaveTournament", User.Instance.UserEntity, CurrentTournamentId);
+                var test = User.Instance.UserEntity;
+                test.Profile = "";
+                await WaitingRoomProxy.Invoke("LeaveTournament", test, CurrentTournamentId);
             }
             catch (Exception e)
             {

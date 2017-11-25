@@ -114,14 +114,14 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
         {
             this.opponentLeftMsg = true;
             OnPropertyChanged("OpponentLeftMsg");
-            SetDefaultValues();
-            SelectedMap = mapsAvailable[1];
+            //SetDefaultValues();
+            //SelectedMap = mapsAvailable[1];
         }
 
         private void OnWinnerResult(object e, GamePlayerEntity winner)
         {
             Winner = winner.Username;
-            WinnerPicture = winner.ProfilePicture;
+            //WinnerPicture = winner.ProfilePicture;
             winnerName = winner.Username;
             isEndOfTournament = true;
             OnPropertyChanged("IsEndOfTournament");
@@ -345,7 +345,7 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
             }
         }
 
-        public bool opponentLeftMsg = false;
+        private bool opponentLeftMsg;
         public string OpponentLeftMsg
         {
             get => opponentLeftMsg ? "Visible" : "Hidden";
