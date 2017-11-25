@@ -12,6 +12,7 @@ using InterfaceGraphique.Controls.WPF.Chat.Channel;
 using InterfaceGraphique.Controls.WPF.UserProfile;
 using InterfaceGraphique.Controls.WPF.Store;
 using InterfaceGraphique.Controls.WPF.Tutorial;
+using InterfaceGraphique.Controls.WPF.MainMenu;
 
 namespace InterfaceGraphique.Controls.WPF
 {
@@ -29,6 +30,11 @@ namespace InterfaceGraphique.Controls.WPF
         public HomeViewModel HomeViewModel
         {
             get { return container.Resolve<HomeViewModel>(); }
+        }
+
+        public MainMenuViewModel MainMenuViewModel
+        {
+            get { return container.Resolve<MainMenuViewModel>(); }
         }
 
         public ConnectServerViewModel ConnectServerViewModel

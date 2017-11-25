@@ -31,6 +31,7 @@ using InterfaceGraphique.Controls.WPF.Tutorial;
 using InterfaceGraphique.Editor.EditorState;
 using InterfaceGraphique.Game.GameState;
 using InterfaceGraphique.Managers;
+using InterfaceGraphique.Controls.WPF.MainMenu;
 
 namespace InterfaceGraphique
 {
@@ -240,6 +241,7 @@ namespace InterfaceGraphique
             unityContainer.RegisterType<ConnectServerViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<SignupViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<HomeViewModel>(new ContainerControlledLifetimeManager());
+            unityContainer.RegisterType<MainMenuViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<EditorViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<UserProfileViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<StoreViewModel>(new ContainerControlledLifetimeManager());
@@ -249,7 +251,6 @@ namespace InterfaceGraphique
             unityContainer.RegisterType<SlaveGameState>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<EditorUsersViewModel>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<CreateMapViewModel>(new ContainerControlledLifetimeManager());
-
 
             unityContainer.RegisterType<OnlineEditorState>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<OfflineEditorState>(new ContainerControlledLifetimeManager());

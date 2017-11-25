@@ -10,14 +10,12 @@ using Microsoft.Practices.Unity;
 using InterfaceGraphique.Exceptions;
 using InterfaceGraphique.CommunicationInterface.RestInterface;
 using InterfaceGraphique.Controls.WPF.Friends;
+using InterfaceGraphique.Controls.WPF.MainMenu;
 
 namespace InterfaceGraphique.Controls.WPF.Signup
 {
     public class SignupViewModel : ViewModelBase
     {
-        //TODO: Mettre ailleurs?
-        static HttpClient client = new HttpClient();
-
         #region Private Properties
         private SignupEntity signupEntity;
         private HubManager hubManager;
@@ -196,6 +194,7 @@ namespace InterfaceGraphique.Controls.WPF.Signup
         public SignupViewModel(SignupEntity signupEntity, ChatHub chatHub)
         {
             Title = "Créer un compte";
+            BackText = "S'authentifier";
             this.chatHub = chatHub;
             this.signupEntity = signupEntity;
             this.hubManager = HubManager.Instance;
@@ -227,7 +226,7 @@ namespace InterfaceGraphique.Controls.WPF.Signup
                 ResetErrMsg();
                 if (ValidateFields())
                 {
-                    var response = await client.PostAsJsonAsync(Program.client.BaseAddress + "api/signup", signupEntity);
+                    var response = await Program.client.PostAsJsonAsync(Program.client.BaseAddress + "api/signup", signupEntity);
                     if (response.IsSuccessStatusCode)
                     {
                         int userId = response.Content.ReadAsAsync<int>().Result;
@@ -243,7 +242,7 @@ namespace InterfaceGraphique.Controls.WPF.Signup
 
                         //On initie tous les formes qui on besoin de savoir si on est en mode en ligne
                         Program.InitAfterConnection();
-                        Program.FormManager.CurrentForm = Program.MainMenu;
+                        Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>());
 
                         await Program.unityContainer.Resolve<FriendsHub>().InitializeFriendsHub();
                         Program.unityContainer.Resolve<FriendListViewModel>().InitializeViewModel();

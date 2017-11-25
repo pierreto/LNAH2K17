@@ -1,6 +1,8 @@
 ﻿using InterfaceGraphique.Controls.WPF.ConnectServer;
+using InterfaceGraphique.Controls.WPF.MainMenu;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Microsoft.Practices.Unity;
 
 namespace InterfaceGraphique.Controls.WPF.Home
 {
@@ -11,6 +13,8 @@ namespace InterfaceGraphique.Controls.WPF.Home
         public HomeViewModel()
         {
             Title = "LNAH 2K17";
+            Row = 0;
+            RowSpan = 5;
             Visibility = "Hidden";
         }
 
@@ -21,13 +25,13 @@ namespace InterfaceGraphique.Controls.WPF.Home
             {
                 if (onlineCommand == null)
                 {
-                    onlineCommand = new RelayCommandAsync(GoConnectServerMenu);
+                    onlineCommand = new RelayCommand(GoConnectServerMenu);
                 }
                 return onlineCommand;
             }
         }
 
-        private async Task GoConnectServerMenu()
+        private void GoConnectServerMenu()
         {
             Program.HomeMenu.ChangeViewTo(new ConnectServerViewModel());
         }
@@ -39,16 +43,16 @@ namespace InterfaceGraphique.Controls.WPF.Home
             {
                 if (offlineCommand == null)
                 {
-                    offlineCommand = new RelayCommandAsync(GoOfflineMenu);
+                    offlineCommand = new RelayCommand(GoOfflineMenu);
                 }
                 return offlineCommand;
             }
         }
 
-        private async Task GoOfflineMenu()
+        private void GoOfflineMenu()
         {
-            Program.InitAfterConnection();
-            Program.FormManager.CurrentForm = Program.MainMenu;
+            Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>());
+            //Program.FormManager.CurrentForm = Program.MainMenu;
         }
 
         public override void InitializeViewModel()

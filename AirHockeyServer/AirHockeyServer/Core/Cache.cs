@@ -62,9 +62,10 @@ namespace AirHockeyServer.Core
         public static void RemovePlayer(UserEntity user)
         {
             playersMutex.WaitOne();
-            if(PlayingPlayers.Exists(x => x.Id == user.Id))
+            UserEntity removedPlayer = PlayingPlayers.Find(x => x.Id == user.Id);
+            if (removedPlayer != null)
             {
-                PlayingPlayers.Remove(user);
+                PlayingPlayers.Remove(removedPlayer);
             }
             playersMutex.ReleaseMutex();
         }

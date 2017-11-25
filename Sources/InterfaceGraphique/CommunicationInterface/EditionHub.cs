@@ -12,7 +12,7 @@ using Newtonsoft.Json;
 
 namespace InterfaceGraphique.CommunicationInterface
 {
-    public class EditionHub : IBaseHub
+    public class EditionHub : BaseHub, IBaseHub
     {
         public event Action<AbstractEditionCommand> NewCommand;
         public event Action<OnlineUser> NewUser;
@@ -27,7 +27,7 @@ namespace InterfaceGraphique.CommunicationInterface
 
         public EditionHub()
         {
-            serializer = new JsonSerializerSettings {TypeNameHandling = TypeNameHandling.Objects};
+            serializer = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Objects };
         }
 
         public void InitializeHub(HubConnection connection)
@@ -39,7 +39,16 @@ namespace InterfaceGraphique.CommunicationInterface
         public async Task<List<OnlineUser>> JoinPublicRoom(MapEntity mapEntity)
         {
             this.map = mapEntity;
-            return await hubProxy.Invoke<List<OnlineUser>>("JoinPublicRoom", User.Instance.UserEntity.Username, mapEntity);
+            try
+            {
+                return await hubProxy.Invoke<List<OnlineUser>>("JoinPublicRoom", User.Instance.UserEntity.Username, mapEntity);
+            }
+            catch (Exception e)
+            {
+                HandleError();
+            }
+
+            return null;
         }
 
         private void InializeEvents()
@@ -66,24 +75,45 @@ namespace InterfaceGraphique.CommunicationInterface
 
             });
         }
-        
+
         public void JoinPrivateRoom(MapEntity mapEntity, string password)
         {
             this.map = mapEntity;
 
-            hubProxy.Invoke("JoinPrivateRoom", mapEntity, password);
+            try
+            {
+                hubProxy.Invoke("JoinPrivateRoom", mapEntity, password);
+            }
+            catch (Exception e)
+            {
+                HandleError();
+            }
 
         }
 
         public void SendEditorCommand(AbstractEditionCommand command)
         {
             var str = JsonConvert.SerializeObject(command, serializer);
-            hubProxy.Invoke("SendEditionCommand", this.map.Id, str);
+            try
+            {
+                hubProxy.Invoke("SendEditionCommand", this.map.Id, str);
+            }
+            catch (Exception e)
+            {
+                HandleError();
+            }
         }
 
         public void SendSelectionCommand(SelectionCommand command)
         {
-            hubProxy.Invoke("SendSelectionCommand", this.map.Id, command);
+            try
+            {
+                hubProxy.Invoke("SendSelectionCommand", this.map.Id, command);
+            }
+            catch (Exception e)
+            {
+                HandleError();
+            }
         }
 
 
@@ -93,7 +123,14 @@ namespace InterfaceGraphique.CommunicationInterface
             if (map != null)
             {
                 Editeur.mapManager.SaveIcon();
-                await hubProxy.Invoke("LeaveRoom", this.map.Id);
+                try
+                {
+                    await hubProxy.Invoke("LeaveRoom", this.map.Id);
+                }
+                catch (Exception e)
+                {
+                    HandleError();
+                }
                 Program.Editeur.LeaveOnlineEdition();
             }
         }
@@ -103,7 +140,14 @@ namespace InterfaceGraphique.CommunicationInterface
         {
             if (map != null)
             {
-                await hubProxy.Invoke("LeaveRoom", this.map.Id);
+                try
+                {
+                    await hubProxy.Invoke("LeaveRoom", this.map.Id);
+                }
+                catch (Exception e)
+                {
+                    HandleError();
+                }
                 Program.Editeur.LeaveOnlineEdition();
             }
         }

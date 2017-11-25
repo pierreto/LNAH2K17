@@ -17,6 +17,7 @@ using InterfaceGraphique.Entities;
 using InterfaceGraphique.CommunicationInterface;
 using System.IO;
 using InterfaceGraphique.Controls.WPF.Tutorial;
+using InterfaceGraphique.Controls.WPF.MainMenu;
 
 namespace InterfaceGraphique
 {
@@ -158,7 +159,9 @@ namespace InterfaceGraphique
 
         private async Task OnMainMenuClicked(object sender, EventArgs e)
         {
-            Program.FormManager.CurrentForm = Program.MainMenu;
+            Program.FormManager.CurrentForm = Program.HomeMenu;
+            Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>());
+            this.currentGameState.gameHasEnded = true;
             if (currentGameState.IsOnlineTournementMode)
             {
                 await Program.unityContainer.Resolve<TournamentViewModel>().WaitingRoomHub.LeaveTournament();
@@ -477,7 +480,8 @@ namespace InterfaceGraphique
 
                 case (Keys.Q | Keys.Control):
                     ResetDefaultTable();
-                    Program.FormManager.CurrentForm = Program.MainMenu;
+                    Program.FormManager.CurrentForm = Program.HomeMenu;
+                    Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>());
                     return true;
             }
             return base.ProcessCmdKey(ref msg, keyData);

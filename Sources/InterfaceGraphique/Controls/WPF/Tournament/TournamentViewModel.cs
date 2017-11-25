@@ -9,6 +9,8 @@ using InterfaceGraphique.CommunicationInterface;
 using InterfaceGraphique.CommunicationInterface.RestInterface;
 using InterfaceGraphique.Services;
 using System.IO;
+using InterfaceGraphique.Controls.WPF.MainMenu;
+using Microsoft.Practices.Unity;
 
 namespace InterfaceGraphique.Controls.WPF.Tournament
 {
@@ -256,7 +258,8 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
         {
             await this.WaitingRoomHub.LeaveTournament();
             SetDefaultValues();
-            Program.FormManager.CurrentForm = Program.MainMenu;
+            Program.FormManager.CurrentForm = Program.HomeMenu;
+            Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>());
         }
 
         public override void InitializeViewModel()
