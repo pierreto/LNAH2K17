@@ -66,15 +66,14 @@ namespace AirHockeyServer.Hubs
 
         public override void Disconnect()
         {
-            // TODO
+            var userId = ConnectionMapper.GetIdFromConnection(Context.ConnectionId);
+            TournamentService.LeaveTournament(userId);
             base.Disconnect();
         }
 
         public override Task OnDisconnected(bool stopCalled)
         {
-            //TODO 
-            //TournamentService.LeaveTournamentWaitingRoom(user, tournamentId);
-
+            Disconnect();
             return base.OnDisconnected(stopCalled);
         }
     }

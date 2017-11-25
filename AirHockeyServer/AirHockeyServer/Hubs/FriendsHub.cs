@@ -181,7 +181,7 @@ namespace AirHockeyServer.Hubs
         public void AcceptGameRequest(GameRequestEntity gameRequest)
         {
             string senderConnection = ConnectionMapper.GetConnection(gameRequest.Sender.Id);
-            if (senderConnection != null)
+            if (string.IsNullOrEmpty(senderConnection))
             {
                 GameService.CreateGame(gameRequest);
 
