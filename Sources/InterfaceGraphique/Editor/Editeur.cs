@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.IO;
+using InterfaceGraphique.CommunicationInterface;
 using InterfaceGraphique.Entities;
 using InterfaceGraphique.CommunicationInterface.RestInterface;
 using InterfaceGraphique.Controls.WPF.Editor;
@@ -111,9 +112,12 @@ namespace InterfaceGraphique {
             this.CurrentState = this.offlineState;
             this.CurrentState.JoinEdition();
 
+            EnableOrDisableOnlineFeatures();
+
+
         }
 
-        
+
         ////////////////////////////////////////////////////////////////////////
         ///
         /// Cette fonction fait la mise à jour de l'interface
@@ -186,7 +190,13 @@ namespace InterfaceGraphique {
             };
             this.Fichier_OuvrirEnLigne.Click += async (sender, e) => await OpenOnlineMap();
             this.Fichier_Nouveau.Click += async (sender, e) =>
-            { 
+            {
+                if (!User.Instance.IsConnected)
+                {
+                    Program.Editeur.LeaveOnlineEdition();
+
+                }
+
                 await CurrentState.LeaveEdition();
             };
             this.Fichier_MenuPrincipal.Click += async (sender, e) =>
@@ -224,6 +234,14 @@ namespace InterfaceGraphique {
             // Properties panel events
             this.ResetButton.Click += new EventHandler(resetProprietesPanel);
             this.ApplyButton.Click += new EventHandler(applyProprietesPanel);
+
+        }
+
+        public void EnableOrDisableOnlineFeatures()
+        {
+            Fichier_EnregistrerSous_Serveur.Visible = User.Instance.IsConnected;
+            Fichier_OuvrirEnLigne.Visible = User.Instance.IsConnected;
+            Fichier_ModeTest.Visible = !User.Instance.IsConnected;
         }
 
         public void OpenLocalMap(object sender=null, EventArgs e=null)
@@ -651,6 +669,7 @@ namespace InterfaceGraphique {
 
                 case Keys.Delete:
                     FonctionsNatives.deleteSelection();
+                    selectionSupprimee();
                     return true;
                     
                 case Keys.D1:

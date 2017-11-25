@@ -126,14 +126,12 @@ void ModeleEtatDeplacement::playerMouseMove(int x, int y) {
 		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(&visiteurDeplacement_);
 		if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
 		{
-			if (noeudsSurLaTable()) {
-				SYSTEMTIME st;
-				GetSystemTime(&st);
-				accTime += st.wMilliseconds;
-				if (accTime > 1000) {
-					sendToServer();
-					accTime = 0;
-				}
+			SYSTEMTIME st;
+			GetSystemTime(&st);
+			accTime += st.wMilliseconds;
+			if (accTime > 1000) {
+				sendToServer();
+				accTime = 0;
 			}
 		}
 
@@ -195,14 +193,16 @@ void ModeleEtatDeplacement::escape()
 
 void ModeleEtatDeplacement::sendToServer()
 {
-	TransformEventCallback callback = ModeleEtatJeu::obtenirInstance()->getTransformEventCallback();
-
-	for (NoeudAbstrait* node : visiteurDeplacement_.getSelectedNodes())
+	if(noeudsSurLaTable())
 	{
+		TransformEventCallback callback = ModeleEtatJeu::obtenirInstance()->getTransformEventCallback();
 
-		if (callback)
+		for (NoeudAbstrait* node : visiteurDeplacement_.getSelectedNodes())
 		{
-			callback(node->getUUID(), glm::value_ptr(node->obtenirPositionRelative()), node->obtenirRotation().y, glm::value_ptr(node->obtenirScale()));
+			if (callback)
+			{
+				callback(node->getUUID(), glm::value_ptr(node->obtenirPositionRelative()), node->obtenirRotation().y, glm::value_ptr(node->obtenirScale()));
+			}
 		}
 	}
 }
