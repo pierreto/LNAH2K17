@@ -173,6 +173,7 @@ class FriendsHub: BaseHub {
     
     override func logout() {
         print("logout friends hub")
+        self.hubProxy = nil
     }
     
 }

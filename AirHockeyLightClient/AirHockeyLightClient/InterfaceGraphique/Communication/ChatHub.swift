@@ -36,7 +36,7 @@ class ChatHub: BaseHub {
     
     func subscribe(){
         do {
-            try hubProxy!.invoke("Subscribe", arguments: [HubManager.sharedConnection.getId()!]) { (result,error) in
+            try hubProxy?.invoke("Subscribe", arguments: [HubManager.sharedConnection.getId()!]) { (result,error) in
                 if let e = error {
                     print("Error Subscribe ChatHub: \(e)")
                 }
@@ -56,7 +56,7 @@ class ChatHub: BaseHub {
     
     func joinChannel(channelName: String) {
         do {
-            try hubProxy!.invoke("JoinChannel", arguments: [channelName]) { (result,error) in
+            try hubProxy?.invoke("JoinChannel", arguments: [channelName]) { (result,error) in
                 if let e = error {
                     print("Error JoinChannel ChatHub: \(e)")
                 }
@@ -81,7 +81,7 @@ class ChatHub: BaseHub {
     
     func leaveRoom(roomName: String) {
         do {
-            try hubProxy!.invoke("LeaveRoom", arguments: [roomName, HubManager.sharedConnection.getId()!]);
+            try hubProxy?.invoke("LeaveRoom", arguments: [roomName, HubManager.sharedConnection.getId()!]);
         }
         catch {
             print("Error JoinChannel ChatHub")
@@ -106,7 +106,9 @@ class ChatHub: BaseHub {
             })
             //Principal ne pas quitter
             roomNames.remove(at: 0)
-            try hubProxy!.invoke("Disconnect", arguments: [roomNames, HubManager.sharedConnection.getId()!]);
+            try hubProxy?.invoke("Disconnect", arguments: [roomNames, HubManager.sharedConnection.getId()!]);
+            
+            self.hubProxy = nil
         }
         catch {
             print("Error JoinChannel ChatHub")
@@ -126,7 +128,7 @@ class ChatHub: BaseHub {
     ////////////////////////////////////////////////////////////////////////
     public func SendBroadcast(message: Any) {
         do {
-            try hubProxy!.invoke("SendBroadcast", arguments: [message])
+            try hubProxy?.invoke("SendBroadcast", arguments: [message])
         }
         catch {
             print("Error SendBroadcast")
@@ -147,7 +149,7 @@ class ChatHub: BaseHub {
     ////////////////////////////////////////////////////////////////////////
     public func SendChannel(channelName: String, message: [String : Any]) {
         do {
-            try hubProxy!.invoke("SendChannel", arguments: [channelName, message])
+            try hubProxy?.invoke("SendChannel", arguments: [channelName, message])
         }
         catch {
             print("Error SendChannel")
@@ -168,7 +170,7 @@ class ChatHub: BaseHub {
     ////////////////////////////////////////////////////////////////////////
     public func SendPrivate(userId: guid_t, message: Any) {
         do {
-            try hubProxy!.invoke("SendBroadcast", arguments: [userId, message])
+            try hubProxy?.invoke("SendBroadcast", arguments: [userId, message])
         }
         catch {
             print("Error SendPrivate")
@@ -178,7 +180,7 @@ class ChatHub: BaseHub {
     public func CreateChannel(channelName: String, res: @escaping (_ message: String?) -> Void) {
         var msg: String?
         do {
-            try hubProxy!.invoke("CreateChannel", arguments: [channelName]) { (result, error) in
+            try hubProxy?.invoke("CreateChannel", arguments: [channelName]) { (result, error) in
                 if let e = error {
                     print("Error CreateChannel: \(e)")
                 }

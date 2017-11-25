@@ -185,6 +185,7 @@ class EditionHub: BaseHub {
     override func logout() {
         print("logout edition hub")
         self.leaveRoom()
+        self.hubProxy = nil
     }
     
 }

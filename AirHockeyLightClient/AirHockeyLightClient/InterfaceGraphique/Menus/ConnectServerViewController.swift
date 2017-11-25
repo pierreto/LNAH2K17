@@ -35,6 +35,7 @@ class ConnectServerViewController: UIViewController {
     // Mark: Functions
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         let connectServerModel: ConnectServer = ConnectServer()
         viewModel = ConnectServerViewModel(connectServerModel: connectServerModel)
@@ -147,10 +148,8 @@ class ConnectServerViewController: UIViewController {
         ipAddressInput.text = "";
         HubManager.sharedConnection.setIpAddress(ipAddress: ipAddressInput.text!)
         
-        if HubManager.sharedConnection.getConnection()?.state == .connected {
-            print ("Deconnexion du serveur")
-            _ = HubManager.sharedConnection.StopConnection()
-        }
+        // Sur la page de déconnexion au serveur, on ne devrait jamais être connecté
+        _ = HubManager.sharedConnection.StopConnection()
         
         HubManager.sharedConnection.connected = false;
     }

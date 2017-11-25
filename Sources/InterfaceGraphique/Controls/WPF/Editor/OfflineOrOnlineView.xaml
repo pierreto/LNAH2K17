@@ -22,7 +22,7 @@
         </Grid.ColumnDefinitions>
         <Button x:Name="Local" Content="Locale" HorizontalAlignment="Right"  VerticalAlignment="Center" Width="100" Margin="0,0,10,0" Grid.Row="1" Height="30" Click="Local_Click"/>
         <Button x:Name="Online" Content="En ligne" HorizontalAlignment="Left" VerticalAlignment="Center" Width="100" Grid.Column="1" Margin="10,0,0,0" Grid.Row="1" Height="30" Click="Online_Click"/>
-        <TextBlock  HorizontalAlignment="Center" Margin="10,12,10,0" FontSize="24" FontWeight="Bold" Foreground="White" TextWrapping="Wrap" VerticalAlignment="Center" Grid.ColumnSpan="2" Height="38" Width="280" Text="Options d'enregistrement" />
+        <TextBlock  HorizontalAlignment="Center"  FontSize="24" FontWeight="Bold" Foreground="White" TextWrapping="Wrap" VerticalAlignment="Center" Grid.ColumnSpan="2" Height="38" Width="300" Text="Options d'enregistrement" Margin="0,0,0,1" />
 
     </Grid>
 </UserControl>

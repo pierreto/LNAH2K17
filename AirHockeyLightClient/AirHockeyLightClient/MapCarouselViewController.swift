@@ -173,6 +173,11 @@ class MapCarouselViewController: UIViewController, iCarouselDataSource, iCarouse
         parent.handleTableSelection()
     }
     
+    func carouselDidEndScrollingAnimation(_ carousel: iCarousel) {
+        let parent = self.parent as! MapDisplayViewController
+        parent.handleCarouselDidEndScrolling()
+    }
+    
     func carousel(_ carousel: iCarousel, valueFor option: iCarouselOption, withDefault value: CGFloat) -> CGFloat {
         if (option == .spacing) {
             return value * 1.1

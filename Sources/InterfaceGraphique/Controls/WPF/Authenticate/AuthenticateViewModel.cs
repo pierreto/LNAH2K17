@@ -204,8 +204,10 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
 
                         //Should show loading spinner
                         Program.unityContainer.Resolve<MainMenuViewModel>().NotLoading = false;
+
                         await FriendsHub.InitializeFriendsHub();
                         //await FriendsHub.AcceptGameRequest(new GameRequestEntity() { Recipient = new UserEntity() { Id = 0 }, Sender = new UserEntity() { Id = 0 } });
+
                         await Program.unityContainer.Resolve<FriendListViewModel>().Init();
                         await Program.unityContainer.Resolve<AddUserViewModel>().Init();
                         await Program.unityContainer.Resolve<FriendRequestListViewModel>().Init();

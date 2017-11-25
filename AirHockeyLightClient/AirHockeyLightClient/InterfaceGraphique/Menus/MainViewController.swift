@@ -22,9 +22,8 @@ class MainViewController: UIViewController {
     // Mark: Functions
     override func viewDidLoad() {
         super.viewDidLoad()
-        styleUI()
         
-        DBManager.instance.effacerToutesCartes()
+        styleUI()
         
         reachability = Reachability()!
         
@@ -73,6 +72,7 @@ class MainViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(true, animated: false)
+        VerticalSplitViewController.sharedVerticalSplitViewController.hideAllBottomMenu()
     }
     
     override func viewWillDisappear(_ animated: Bool) {

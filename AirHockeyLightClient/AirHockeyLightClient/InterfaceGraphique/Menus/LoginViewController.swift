@@ -123,7 +123,7 @@ class LoginViewController: UIViewController {
             
             if self.wifiEnable {
                 // Start a timer, just in case it reconnects quickly
-                self.serverDownTimer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(self.serverDown), userInfo: nil, repeats: false)
+                self.serverDownTimer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(self.serverDown), userInfo: nil, repeats: false)
             }
         }
         
@@ -152,7 +152,7 @@ class LoginViewController: UIViewController {
         }
     }
     
-    // Le serveur est en arrêt depuis 5 secondes
+    // Le serveur est en arrêt depuis 3 secondes
     @objc private func serverDown() {
         self.serverDownTimer.invalidate()
         self.serverDownTimer = Timer()

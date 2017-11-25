@@ -38,10 +38,12 @@ class OfflineEditorState: EditorState {
     override func currentUserChangedCoefficient(coefficientFriction: Float, coefficientRebond: Float, coefficientAcceleration: Float) {}
     
     override func sauvegarderCarte(map: MapEntity, json: String?, icon: UIImage?) {
-        let cropFrame = CGRect(x: 517, y: 0, width: 1014, height: 1014)
-        let croppedIcon = icon?.crop(rect: cropFrame)
-        let iconStrBase64 = icon != nil ? ImageService.convertImgToBase64(image: croppedIcon!) : ""
-        DBManager.instance.sauvegarderCarte(map: map, json: json, icon: iconStrBase64)
+        var iconStrBase64 = map.icon
+        if icon != nil {
+            iconStrBase64 = ImageService.convertImgToBase64(image: ImageService.cropImageToSquare(image: icon!))
+        }
+        
+        DBManager.instance.sauvegarderCarte(map: map, json: json, icon: iconStrBase64!)
     }
     
 }

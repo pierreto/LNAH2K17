@@ -591,18 +591,18 @@ class FacadeModele {
     }
     
     func sauvegarderCarte(map: MapEntity) {
-        let icon = EditorViewController.instance.takeMapSnapshot()
-        self.updateMapJson() // Mettre à jour la représentation JSON de la carte
-        
-        // Sauvegarder la carte
-        self.etatEdition?.sauvegarderCarte(map: map, json: (self.docJSON?.rawString(options: []))!, icon: icon)
-    }
-    
-    func sauvegarderNouvelleCarte(map: MapEntity) {
-        self.updateMapJson() // Mettre à jour la représentation JSON de la carte
+        // Mettre à jour la représentation JSON de la carte
+        self.updateMapJson()
         
         // Sauvegarder la carte
         self.etatEdition?.sauvegarderCarte(map: map, json: (self.docJSON?.rawString(options: []))!, icon: nil)
+    }
+    
+    func sauvegarderIconCarte(map: MapEntity) {
+        let icon = EditorViewController.instance.takeMapSnapshot()
+
+        // Sauvegarder la carte
+        self.etatEdition?.sauvegarderCarte(map: map, json: (self.docJSON?.rawString(options: []))!, icon: icon)
     }
     
     private func updateMapJson() {

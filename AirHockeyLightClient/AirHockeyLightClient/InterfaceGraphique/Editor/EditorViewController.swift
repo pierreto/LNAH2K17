@@ -80,6 +80,7 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
         super.viewWillDisappear(animated)
         
         if self.isMovingFromParentViewController {
+            FacadeModele.instance.sauvegarderIconCarte(map: self.currentMap!)
             FacadeModele.instance.obtenirEtat().nettoyerEtat()
             FacadeModele.instance.obtenirEtatEdition().leaveEdition()
         }
