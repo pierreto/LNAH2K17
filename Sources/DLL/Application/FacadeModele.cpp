@@ -645,19 +645,27 @@ std::string FacadeModele::_getMapJson(float coefficients[]) {
 
 
 void FacadeModele::createMapIcon(unsigned char* dest) {
-	/*
-	if (!docJSON_.HasMember("Icon")) {
-		rapidjson::Value iconBytes(rapidjson::kArrayType);
-		docJSON_.AddMember("Icon", iconBytes, docJSON_.GetAllocator());
-	}
-	*/
+	vue::Vue* oldView = vue_;
+
+	glm::ivec2 cloture = vue_->obtenirProjection().obtenirDimensionCloture();
+
+	vue_ = new vue::VueOrtho{
+	vue::Camera{
+	glm::dvec3(0, 200, 0), glm::dvec3(0, 0, 0),
+	glm::dvec3(1, 0, 0),   glm::dvec3(0, 1, 0) },
+	vue::ProjectionOrtho{
+	500, 500,
+	1, 1000, 1, 10000, 1.25,
+	200, 200 }
+	};
+	vue_->redimensionnerFenetre(cloture.x, cloture.y);
+
 
 	glm::ivec2 oldDim = vue_->obtenirProjection().getLargeurFenetre();
 
 	glm::ivec2 newLargeur = glm::ivec2(1184,600);
 
 
-	//vue::VueOrtho*  vueOrtho = dynamic_cast<vue::ProjectionOrtho*>(vue_);
 
 	vue_->setLargeurFenetre(newLargeur.x, newLargeur.y);
 
@@ -710,7 +718,12 @@ void FacadeModele::createMapIcon(unsigned char* dest) {
 	FreeImage_Unload(image);
 	FreeImage_Unload(imageRescaled);
 
-	vue_->setLargeurFenetre(oldDim.x, oldDim.y);
+	//vue_->setLargeurFenetre(oldDim.x, oldDim.y);
+
+
+	delete vue_;
+	vue_ = oldView;
+	
 }
 
 void FacadeModele::getMapIcon(unsigned char* icon) {
