@@ -13,11 +13,14 @@ namespace AirHockeyServer.Entities
 
         public bool IsAi { get; set; }
 
+        public string ProfilePicture { get; set; }
+
         public GamePlayerEntity(UserEntity user)
         {
             Username = user.Username;
             Id = user.Id;
             IsAi = false;
+            ProfilePicture = user.Profile;
         }
 
         public GamePlayerEntity()
