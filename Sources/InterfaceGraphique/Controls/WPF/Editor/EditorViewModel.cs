@@ -172,6 +172,7 @@ namespace InterfaceGraphique.Controls.WPF.Editor
         public async Task RefreshMapList()
         {
             await InitializeViewModelAsync();
+            CommandManager.InvalidateRequerySuggested();
         }
 
         private bool CanCheckPrivatePassword()
