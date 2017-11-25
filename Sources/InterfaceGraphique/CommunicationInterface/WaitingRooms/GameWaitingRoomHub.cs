@@ -26,6 +26,8 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
         public event EventHandler<MapEntity> MapUpdatedEvent;
 
+        public event EventHandler<int> OpponentLeftEvent;
+
         public static IHubProxy WaitingRoomProxy { get; set; }
 
         protected HubConnection HubConnection { get; set; }
@@ -97,6 +99,13 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
             WaitingRoomProxy.On<int>("WaitingRoomRemainingTime", remainingTime => OnRemainingTime(remainingTime));
             { };
+
+            WaitingRoomProxy.On<int>("PlayerLeft", playerId => OnOpponentLeft(playerId));
+        }
+
+        private void OnOpponentLeft(int playerId)
+        {
+            this.OpponentLeftEvent?.Invoke(this, playerId);
         }
 
         public void OnOpponentFound(GameEntity game)
