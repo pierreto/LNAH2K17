@@ -159,6 +159,7 @@ namespace InterfaceGraphique
 
         private async Task OnMainMenuClicked(object sender, EventArgs e)
         {
+            Program.FormManager.CurrentForm = Program.HomeMenu;
             Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>());
             this.currentGameState.gameHasEnded = true;
             if (currentGameState.IsOnlineTournementMode)
@@ -479,6 +480,7 @@ namespace InterfaceGraphique
 
                 case (Keys.Q | Keys.Control):
                     ResetDefaultTable();
+                    Program.FormManager.CurrentForm = Program.HomeMenu;
                     Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>());
                     return true;
             }

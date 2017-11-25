@@ -1,6 +1,8 @@
 ﻿using InterfaceGraphique.Controls.WPF.ConnectServer;
+using InterfaceGraphique.Controls.WPF.MainMenu;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Microsoft.Practices.Unity;
 
 namespace InterfaceGraphique.Controls.WPF.Home
 {
@@ -49,7 +51,7 @@ namespace InterfaceGraphique.Controls.WPF.Home
 
         private void GoOfflineMenu()
         {
-            //TODO
+            Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>());
             //Program.FormManager.CurrentForm = Program.MainMenu;
         }
 

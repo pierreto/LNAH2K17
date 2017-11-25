@@ -165,11 +165,13 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
             await this.WaitingRoomHub.LeaveGame();
             await GameRequestManager.CancelGameRequest();
             SetDefaultValues();
+            Program.FormManager.CurrentForm = Program.HomeMenu;
             Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>());
         }
 
         private async Task MainMenu()
         {
+            Program.FormManager.CurrentForm = Program.HomeMenu;
             Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>());
         }
 

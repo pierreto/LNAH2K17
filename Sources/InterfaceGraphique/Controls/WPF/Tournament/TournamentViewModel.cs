@@ -258,6 +258,7 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
         {
             await this.WaitingRoomHub.LeaveTournament();
             SetDefaultValues();
+            Program.FormManager.CurrentForm = Program.HomeMenu;
             Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>());
         }
 

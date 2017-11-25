@@ -99,7 +99,7 @@ namespace InterfaceGraphique {
         ////////////////////////////////////////////////////////////////////////
         private void InitializeEvents() {
             this.MenuItem_EditorMode.Click += (sender, e) => Program.FormManager.CurrentForm = Program.Editeur;
-            this.MenuItem_MainMenu.Click += (sender, e) => { Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>()); };
+            this.MenuItem_MainMenu.Click += (sender, e) => { Program.FormManager.CurrentForm = Program.HomeMenu; Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>()); };
             this.MenuItem_OrbitView.Click += (sender, e) => ToggleOrbit(true);
             this.MenuItem_OrthoView.Click += (sender, e) => ToggleOrbit(false);
             this.MenuItem_Help.Click += (sender, e) => { EditorHelp form = new EditorHelp(); form.ShowTestHelpText(); form.ShowDialog(); };
@@ -383,6 +383,7 @@ namespace InterfaceGraphique {
 
                 case (Keys.Q | Keys.Control):
                     ResetDefaultTable();
+                    Program.FormManager.CurrentForm = Program.HomeMenu;
                     Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>());
                     return true;
             }

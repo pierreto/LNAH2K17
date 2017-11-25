@@ -58,6 +58,7 @@ namespace InterfaceGraphique.Managers
             PendingRequest = null;
             Program.FormManager.Invoke(new MethodInvoker(() =>
             {
+                Program.FormManager.CurrentForm = Program.HomeMenu;
                 Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>());
             }));
 

@@ -170,6 +170,7 @@ namespace InterfaceGraphique.Controls.WPF.Store
         private void BackMainMenu()
         {
             EmptyCart();
+            Program.FormManager.CurrentForm = Program.HomeMenu;
             Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>());
         }
 

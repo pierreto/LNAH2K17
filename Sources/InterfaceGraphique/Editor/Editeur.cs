@@ -192,6 +192,7 @@ namespace InterfaceGraphique {
             this.Fichier_MenuPrincipal.Click += async (sender, e) =>
             {
                 await CurrentState.LeaveEdition();
+                Program.FormManager.CurrentForm = Program.HomeMenu;
                 Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>());
             };
             this.Fichier_ModeTest.Click += (sender, e) => Program.FormManager.CurrentForm = Program.TestMode;
@@ -631,6 +632,7 @@ namespace InterfaceGraphique {
 
                 case (Keys.Q | Keys.Control):
                     ResetDefaultTable();
+                    Program.FormManager.CurrentForm = Program.HomeMenu;
                     Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>());
                     return true;
 

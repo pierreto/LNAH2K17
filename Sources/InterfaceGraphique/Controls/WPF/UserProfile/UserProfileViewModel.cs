@@ -228,6 +228,7 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
 
         private void MainMenu()
         {
+            Program.FormManager.CurrentForm = Program.HomeMenu;
             Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>());
         }
 

@@ -39,7 +39,7 @@ namespace InterfaceGraphique {
         ///
         ////////////////////////////////////////////////////////////////////////
         private void InitializeEvents() {
-            this.Button_Return.Click += (sender, e) => Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>());
+            this.Button_Return.Click += (sender, e) => { Program.FormManager.CurrentForm = Program.HomeMenu; Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>()); };
         }
 
 
