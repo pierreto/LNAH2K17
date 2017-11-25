@@ -41,8 +41,9 @@ class ImageService {
         return UIImage(data: dataDecoded)!
     }
     
-    static public func cropImageToSquare(rect: CGRect) {
-        
+    static public func cropImageToSquare(image: UIImage) -> UIImage {
+        let cropFrame = CGRect(x: 517, y: 0, width: 1014, height: 1014)
+        return image.crop(rect: cropFrame)!
     }
     
 }

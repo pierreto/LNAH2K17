@@ -84,7 +84,7 @@ class Map: NSObject {
         map.currentNumberOfPlayer.value = 0
         
         FacadeModele.instance.initialiserArbre()
-        FacadeModele.instance.sauvegarderNouvelleCarte(map: map)
+        FacadeModele.instance.sauvegarderCarte(map: map)
     }
     
     private func resetErrorMessages() {
