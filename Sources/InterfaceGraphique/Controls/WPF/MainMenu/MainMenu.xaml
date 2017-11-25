@@ -87,7 +87,7 @@
             </Border.Effect>
             <StackPanel Margin="15" VerticalAlignment="Center">
                 <Button Content="Déconnexion" FontSize="30" FontWeight="Bold" Background="{StaticResource DarkRedBrush}" BorderThickness="0" Height="80" Margin="0 0 0 8" Foreground="White" Command="{Binding DeconnexionCommand}" IsEnabled="{Binding OnlineMode}" Visibility="{Binding OnlineMode, Converter={convert:BooleanToCollapsedConverter}, ConverterParameter=true}"></Button>
-                <Button Content="Retour" FontSize="30" FontWeight="Bold" Background="{StaticResource DarkRedBrush}" BorderThickness="0" Height="80" Margin="0 0 0 8" Foreground="White" Command="{Binding DeconnexionCommand}" IsEnabled="{Binding HomeCommand}" Visibility="{Binding OnlineMode, Converter={convert:BooleanToCollapsedConverter}}"></Button>
+                <Button Content="Retour" FontSize="30" FontWeight="Bold" Background="{StaticResource DarkRedBrush}" BorderThickness="0" Height="80" Margin="0 0 0 8" Foreground="White" Command="{Binding HomeCommand}" Visibility="{Binding OnlineMode, Converter={convert:BooleanToCollapsedConverter}}"></Button>
                 <Button Content="Quitter" FontSize="30" FontWeight="Bold" Background="{StaticResource DarkRedBrush}" BorderThickness="0" Height="80" Margin="0 0 0 8" Foreground="White" Command="{Binding QuitterCommand}"></Button>
             </StackPanel>
         </Border>
