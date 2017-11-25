@@ -84,6 +84,7 @@ class MapService {
             "MapName": mapEntity.mapName!,
             "LastBackup": mapEntity.lastBackup!.description,
             "Json": mapEntity.json!,
+            "Icon": mapEntity.icon!,
             "Private": mapEntity.privacy.value!.description,
             "Password": mapEntity.password?.description as Any,
             "CurrentNumberOfPlayer": mapEntity.currentNumberOfPlayer.value!.description
@@ -102,6 +103,7 @@ class MapService {
         let date = dateFormatter.date(from: json["LastBackup"].rawString()!)
         mapEntity.lastBackup = date
         mapEntity.json = json["Json"].rawString()
+        mapEntity.icon = json["Icon"].rawString()
         mapEntity.privacy.value = json["Private"].bool
         mapEntity.password = json["Password"].rawString()
         mapEntity.currentNumberOfPlayer.value = json["CurrentNumberOfPlayer"].int
