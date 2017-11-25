@@ -11,6 +11,7 @@ PODS:
     - PromiseKit/CorePromise
   - PromiseKit/UIKit (4.4.3):
     - PromiseKit/CorePromise
+  - ReachabilitySwift (4.1.0)
   - Realm (3.0.0):
     - Realm/Headers (= 3.0.0)
   - Realm/Headers (3.0.0)
@@ -22,6 +23,7 @@ PODS:
 DEPENDENCIES:
   - Alamofire (~> 4.5)
   - PromiseKit (~> 4.4)
+  - ReachabilitySwift
   - RealmSwift
   - SwiftR
   - SwiftyJSON
@@ -29,11 +31,12 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
   PromiseKit: fbb52a0d154402c57eeb6eccd36dd7724fcf6117
+  ReachabilitySwift: 6849231cd4e06559f3b9ef4a97a0a0f96d41e09f
   Realm: dec0de73be8c57506e39db72694d513c189493b3
   RealmSwift: 44a7090b16d1b22a406c6bf129bdd602db1bbecc
   SwiftR: c639ef7119e84271f7590b4ec1a9e4650c863a2b
   SwiftyJSON: c2842d878f95482ffceec5709abc3d05680c0220
 
-PODFILE CHECKSUM: 9e5a84e606ea8c1c07bc03d317412e55f5520eb4
+PODFILE CHECKSUM: 5e77f31b17d69a346784626fe00bc7c7b6929f6e
 
 COCOAPODS: 1.3.1

@@ -43,8 +43,10 @@ class MapCarouselViewController: UIViewController, iCarouselDataSource, iCarouse
         // Fetch server maps
         let mapService = MapService()
         mapService.getMaps() { maps, error in
-            for map in maps! {
-                self.maps.append(mapService.buildMapEntity(json: map.1))
+            if maps != nil {
+                for map in maps! {
+                    self.maps.append(mapService.buildMapEntity(json: map.1))
+                }
             }
             
             DispatchQueue.main.async(execute: { () -> Void in
