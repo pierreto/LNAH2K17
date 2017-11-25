@@ -15,6 +15,7 @@ using InterfaceGraphique.Controls.WPF.MainMenu;
 using Microsoft.Practices.Unity;
 using InterfaceGraphique.Managers;
 using System.Windows.Media.Imaging;
+using System.Drawing;
 
 namespace InterfaceGraphique.Controls.WPF.Matchmaking
 {
@@ -51,6 +52,24 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
         public override void InitializeViewModel()
         {
 
+        }
+
+        public void SetOnlineGame()
+        {
+            Program.QuickPlay.CurrentGameState.IsTournementMode = false;
+
+            string baseName = "Joueur";
+            StringBuilder player1Name = new StringBuilder(6);
+            StringBuilder player2Name = new StringBuilder(6);
+            player1Name.Append(baseName);
+            player2Name.Append(baseName);
+            FonctionsNatives.setPlayerNames(player1Name, player2Name);
+
+            float[] playerColor = new float[4] { Color.White.R, Color.White.G, Color.White.B, Color.White.A };
+            FonctionsNatives.setPlayerColors(playerColor, playerColor);
+
+            OpponentType opponentType = opponentType = OpponentType.ONLINE_PLAYER;
+            FonctionsNatives.setCurrentOpponentType((int)opponentType);
         }
 
         public void Initialize(bool isGameRequest = false)

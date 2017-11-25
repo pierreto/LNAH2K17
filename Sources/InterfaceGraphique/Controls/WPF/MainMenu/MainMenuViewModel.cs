@@ -75,6 +75,19 @@ namespace InterfaceGraphique.Controls.WPF.MainMenu
             }
         }
 
+        private ICommand partieRapideOnlineCommand;
+        public ICommand PartieRapideOnlineCommand
+        {
+            get
+            {
+                if(partieRapideOnlineCommand == null)
+                {
+                    partieRapideOnlineCommand = new RelayCommand(PartieRapideOnline);
+                }
+                return partieRapideOnlineCommand;
+            }
+        }
+        
         private ICommand tournoiCommand;
         public ICommand TournoiCommand
         {
@@ -218,6 +231,16 @@ namespace InterfaceGraphique.Controls.WPF.MainMenu
         {
             CheckIfNeedToShowMatchTutoriel();
             Program.QuickPlayMenu.ShowDialog();
+        }
+
+        public void PartieRapideOnline()
+        {
+            CheckIfNeedToShowMatchTutoriel();
+            Program.FormManager.CurrentForm = Program.LobbyHost;
+
+            var vm = Program.unityContainer.Resolve<Matchmaking.MatchmakingViewModel>();
+            vm.Initialize();
+            vm.SetOnlineGame();
         }
 
         public void Tournoi()

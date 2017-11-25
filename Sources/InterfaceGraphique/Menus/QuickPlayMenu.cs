@@ -47,10 +47,6 @@ namespace InterfaceGraphique
             this.Button_DefaultMap.Click += (sender, e) => { this.Button_DefaultMap.Enabled = false; this.Text_MapName.Text = DefaultValues.mapName; };
             this.Button_PlayerVirtual.Click += (sender, e) => { SwitchButtonsState(this.Button_PlayerVirtual); this.List_VirtualProfile.Enabled = true; };
             this.Button_PlayerHuman.Click += (sender, e) => { SwitchButtonsState(this.Button_PlayerHuman); this.List_VirtualProfile.Enabled = false; };
-            if (User.Instance.IsConnected)
-            {
-                this.Button_Online_Game.Click += (sender, e) => { SwitchButtonsState(this.Button_Online_Game); this.List_VirtualProfile.Enabled = false; };
-            }
 
             // Paint events
             this.Button_DefaultMap.Paint += new PaintEventHandler(StatePaintButton);
@@ -135,10 +131,6 @@ namespace InterfaceGraphique
             if (this.currentSelectedButton.Equals(Button_PlayerHuman))
             {
                 opponentType = OpponentType.LOCAL_PLAYER;
-            }
-            if (this.currentSelectedButton.Equals(Button_Online_Game))
-            {
-                opponentType = OpponentType.ONLINE_PLAYER;
             }
             FonctionsNatives.setCurrentOpponentType((int)opponentType);
 
