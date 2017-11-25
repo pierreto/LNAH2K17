@@ -95,9 +95,18 @@ namespace InterfaceGraphique
             FonctionsNatives.setLights(2, true);
             FonctionsNatives.resetGame();
 
-            if (User.Instance.IsConnected)
+            if (User.Instance.IsConnected && this.currentGameState.gameHub != null)
             {
                 this.CurrentGameState.gameHub.EndOfGameStatsEvent += OnEndOfGameStats;
+            }
+
+            if(User.Instance.IsConnected)
+            {
+                this.playerName1.Text = User.Instance.UserEntity.Username;
+            }
+            else
+            {
+                this.playerName1.Text = "Joueur 1";
             }
 
             Program.QuickPlay.CurrentGameState.GameInitialized = true;
@@ -162,6 +171,12 @@ namespace InterfaceGraphique
             Program.FormManager.CurrentForm = Program.HomeMenu;
             Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>());
             this.currentGameState.gameHasEnded = true;
+
+            if(!User.Instance.IsConnected)
+            {
+                return;
+            }
+
             if (currentGameState.IsOnlineTournementMode)
             {
                 await Program.unityContainer.Resolve<TournamentViewModel>().WaitingRoomHub.LeaveTournament();
@@ -266,7 +281,6 @@ namespace InterfaceGraphique
 
             currentGameState.IsOnline = false;
             currentGameState.IsOnlineTournementMode = false;
-            currentGameState.IsTournementMode = false;
 
             if (!currentGameState.IsOnlineTournementMode)
             {
@@ -357,7 +371,10 @@ namespace InterfaceGraphique
                     }
                     else
                     {
-                        this.CurrentGameState.gameHub.EndOfGameStatsEvent -= OnEndOfGameStats;
+                        if(currentGameState.gameHub != null)
+                        {
+                            this.CurrentGameState.gameHub.EndOfGameStatsEvent -= OnEndOfGameStats;
+                        }
                     }
 
                     if (isOnlineGame)

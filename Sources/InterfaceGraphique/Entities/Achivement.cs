@@ -9,6 +9,8 @@ namespace InterfaceGraphique.Entities
 {
     public class Achievement
     {
+        public AchivementType AchivementType { get; set; }
+
         public string Category { get; set; }
 
         public int Order { get; set; }
@@ -39,5 +41,30 @@ namespace InterfaceGraphique.Entities
             DisabledImageUrl = disabledImageUrl;
             EnabledImageUrl = enabledImageUrl;
         }
+    }
+
+    public enum AchivementType
+    {
+        FirstGamePlayed,
+        FirstTournamentPlayed,
+
+        FiveGamesPlayed,
+        FiveTournamentsPlayed,
+
+        TenGamesPlayed,
+        TenTournamentPlayed,
+
+        FivePoints,
+        ThirtyPoints,
+        EightyPoints,
+
+        FirstGameWon,
+        FirstTournamentWon,
+
+        FiveGameWon,
+        FiveTournamentWon,
+
+        TenGameWon,
+        TenTournamentWon
     }
 }

@@ -164,6 +164,7 @@
             this.label3.TabIndex = 40;
             this.label3.Text = "Points";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.label3.Visible = false;
             // 
             // pointsNb
             // 

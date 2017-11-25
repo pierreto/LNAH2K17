@@ -41,9 +41,9 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
             WaitingRoomHub.OpponentFoundEvent += (sender, args) =>
             {
                 OpponentName = args.Players[0].Username;
-                OpponentPicture = args.Players[0].ProfilePicture;
+                //OpponentPicture = args.Players[0].ProfilePicture;
                 PlayerName = args.Players[1].Username;
-                PlayerPicture = args.Players[1].ProfilePicture;
+                //PlayerPicture = args.Players[1].ProfilePicture;
                 SetVisibility(false);
                 opponentLeftMsg = false;
                 OnPropertyChanged("OpponentLeftMsg");
