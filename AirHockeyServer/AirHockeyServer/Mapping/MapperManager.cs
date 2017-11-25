@@ -78,7 +78,7 @@ namespace AirHockeyServer.Mapping
                         opt => opt.MapFrom(src => src.GameId))
                     .ForMember(
                         dest => dest.PlayedMap,
-                        opt => opt.MapFrom(src => src.SelectedMap.Id))
+                        opt => opt.MapFrom(src => 0))
                     .ForMember(
                         dest => dest.Winner,
                         opt => opt.MapFrom(src => src.Winner.Id))

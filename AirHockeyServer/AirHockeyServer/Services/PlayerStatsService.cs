@@ -26,9 +26,9 @@ namespace AirHockeyServer.Services
             GameRepository = gameRepository;
         }
 
-        public async Task SetPlayerAchievements(int userId)
+        public async Task CreateAllAchievements(int userId)
         {
-            await PlayerStatsRepository.CreateAchievement(userId);
+            await PlayerStatsRepository.CreateAllAchievements(userId);
         }
 
         public async Task AddPoints(int userId, int pointsNb)
@@ -94,13 +94,11 @@ namespace AirHockeyServer.Services
         {
             List<AchievementEntity> achievements = await GetAchievements(userId);
 
-            if(achievements.Count == 0)
-            {
-                await SetPlayerAchievements(userId);
-                achievements = await GetAchievements(userId);
-            }
-
             var stats = await GetPlayerStats(userId);
+            if(stats == null)
+            {
+                stats = new StatsEntity();
+            }
 
             List<AchievementEntity> typesAdded = new List<AchievementEntity>();
 
@@ -144,7 +142,7 @@ namespace AirHockeyServer.Services
             List<AchievementEntity> achievementAdded)
         {
             var achivement = userAchievements.Find(x => x.AchivementType == achivementType);
-            if (achivement != null && baseVal >= minVal && !achivement.IsEnabled)
+            if ((achivement == null && baseVal >= minVal) || (baseVal >= minVal && achivement != null && !achivement.IsEnabled))
             {
                 achievementAdded.Add(Cache.Achievements[achivementType]);
             }
@@ -153,6 +151,11 @@ namespace AirHockeyServer.Services
         public List<AchievementEntity> GetAchievements()
         {
             return Cache.Achievements.Values.ToList();
+        }
+
+        public async Task CreateAchievements(int userId, List<AchivementType> achievements)
+        {
+            await this.PlayerStatsRepository.CreateAchievements(userId, achievements);
         }
     }
 }

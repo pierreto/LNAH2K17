@@ -26,7 +26,7 @@ namespace AirHockeyServer.Entities
         public AchievementEntity(AchievementPoco poco)
         {
             AchivementType type = (AchivementType) Enum.Parse(AchivementType.GetType(), poco.AchievementType);
-            var entity = Cache.Achievements[AchivementType];
+            var entity = Cache.Achievements[type];
 
             Name = entity.Name;
             DisabledImageUrl = entity.DisabledImageUrl;
@@ -34,6 +34,7 @@ namespace AirHockeyServer.Entities
             IsEnabled = poco.IsEnabled;
             Category = entity.Category;
             Order = entity.Order;
+            AchivementType = type;
         }
 
         public AchievementEntity()
