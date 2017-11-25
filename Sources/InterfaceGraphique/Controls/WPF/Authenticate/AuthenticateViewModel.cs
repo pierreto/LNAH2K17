@@ -202,6 +202,7 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
 
                         //Should show loading spinner
                         Program.unityContainer.Resolve<MainMenuViewModel>().NotLoading = false;
+
                         await Program.unityContainer.Resolve<FriendsHub>().InitializeFriendsHub();
                         await Program.unityContainer.Resolve<FriendListViewModel>().Init();
                         await Program.unityContainer.Resolve<AddUserViewModel>().Init();
