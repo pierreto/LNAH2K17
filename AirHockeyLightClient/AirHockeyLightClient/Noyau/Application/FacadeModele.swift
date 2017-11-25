@@ -590,16 +590,26 @@ class FacadeModele {
         self.docJSON?["Coefficients"] = cJSON
     }
     
-    /// Cette fonction permet d'enregistrer la patinoire en format JSON
     func sauvegarderCarte(map: MapEntity) {
-        // Mettre à jour la représentation JSON de la carte
+        let icon = EditorViewController.instance.takeMapSnapshot()
+        self.updateMapJson() // Mettre à jour la représentation JSON de la carte
+        
+        // Sauvegarder la carte
+        self.etatEdition?.sauvegarderCarte(map: map, json: (self.docJSON?.rawString(options: []))!, icon: icon)
+    }
+    
+    func sauvegarderNouvelleCarte(map: MapEntity) {
+        self.updateMapJson() // Mettre à jour la représentation JSON de la carte
+        
+        // Sauvegarder la carte
+        self.etatEdition?.sauvegarderCarte(map: map, json: (self.docJSON?.rawString(options: []))!, icon: nil)
+    }
+    
+    private func updateMapJson() {
         self.initializeJson()
         let visiteur = VisiteurSauvegarde()
         self.arbre?.accepterVisiteur(visiteur: visiteur)
         self.sauvegarderCoefficients()
-        
-        // Sauvegarder la carte
-        self.etatEdition?.sauvegarderCarte(map: map, json: (self.docJSON?.rawString(options: []))!)
     }
     
     private func initializeJson() {
