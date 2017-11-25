@@ -97,8 +97,8 @@ namespace AirHockeyServer
             UnityContainer.RegisterType<Hubs.ConnectionMapper>(new ContainerControlledLifetimeManager());
 
             // Managers
-            UnityContainer.RegisterType<IGameManager, GameManager>(new ContainerControlledLifetimeManager());
-            UnityContainer.RegisterType<ITournamentManager, TournamentManager>(new ContainerControlledLifetimeManager());
+            UnityContainer.RegisterType<IPlayOnlineManager, PlayOnlineManager>(new ContainerControlledLifetimeManager());
+            //UnityContainer.RegisterType<ITournamentManager, TournamentManager>(new ContainerControlledLifetimeManager());
 
             config.DependencyResolver = new UnityResolver(UnityContainer);
             GameWaitingRoomEventManager gameWaitingRoomEventManager = UnityContainer.Resolve<GameWaitingRoomEventManager>();
