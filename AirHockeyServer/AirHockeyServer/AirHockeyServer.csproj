@@ -290,9 +290,8 @@
     <Compile Include="Hubs\GameWaitingRoomHub.cs" />
     <Compile Include="Hubs\ConnectionMapper.cs" />
     <Compile Include="Hubs\TournamentWaitingRoomHub.cs" />
-    <Compile Include="Manager\GameManager.cs" />
-    <Compile Include="Manager\IGameManager.cs" />
-    <Compile Include="Manager\ITournamentManager.cs" />
+    <Compile Include="Manager\PlayOnlineManager.cs" />
+    <Compile Include="Manager\IPlayOnlineManager.cs" />
     <Compile Include="Manager\TournamentManager.cs" />
     <Compile Include="Mapping\MapperManager.cs" />
     <Compile Include="Pocos\AchievementPoco.cs" />

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AirHockeyServer.Manager
 {
-    public interface IGameManager
+    public interface IPlayOnlineManager
     {
         void AddGame(GameEntity game);
 
