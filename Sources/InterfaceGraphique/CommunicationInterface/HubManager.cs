@@ -15,7 +15,9 @@ namespace InterfaceGraphique.CommunicationInterface
         private static HubManager instance;
         public string IpAddress { get; set; }
         private HubConnection connection;
-        public HubConnection Connection { get; set; }
+        public HubConnection Connection {
+            get;
+            set; }
 
         private List<IBaseHub> hubs;
         public static HubManager Instance
@@ -37,6 +39,8 @@ namespace InterfaceGraphique.CommunicationInterface
         public async Task EstablishConnection(string serverIp)
         {
             this.connection = new HubConnection("http://" + serverIp + ":63056/signalr");
+            connection.TraceLevel = TraceLevels.All;
+            connection.TraceWriter = Console.Out;
 
             this.AddHubs();
 

@@ -28,6 +28,8 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
         public event EventHandler<GamePlayerEntity> WinnerResultEvent;
 
+        public event EventHandler PlayerLeftEvent;
+
         public static IHubProxy WaitingRoomProxy { get; set; }
 
         protected HubConnection HubConnection { get; set; }
@@ -128,6 +130,8 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
             WaitingRoomProxy.On<TournamentEntity>("TournamentSemiFinalResults", tournament => OnSemiFinalResults(tournament));
 
             WaitingRoomProxy.On<TournamentEntity>("TournamentFinalResult", tournament => OnFinalResults(tournament));
+
+            WaitingRoomProxy.On("PlayerLeft", () => OnPlayerLeft());
         }
 
         private void InitializeWaitingRoomEvents()
@@ -154,22 +158,27 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
         public void OnRemainingTime(int remainingTime)
         {
-            this.RemainingTimeEvent.Invoke(this, remainingTime);
+            this.RemainingTimeEvent?.Invoke(this, remainingTime);
         }
 
         public void OnMapUpdated(MapEntity map)
         {
-            this.MapUpdatedEvent.Invoke(this, map);
+            this.MapUpdatedEvent?.Invoke(this, map);
         }
 
         public void OnSemiFinalResults(TournamentEntity tournament)
         {
-            SemiFinalResultEvent.Invoke(this, new List<GamePlayerEntity>() { tournament.SemiFinals[0].Winner, tournament.SemiFinals[1].Winner });
+            SemiFinalResultEvent?.Invoke(this, new List<GamePlayerEntity>() { tournament.SemiFinals[0].Winner, tournament.SemiFinals[1].Winner });
         }
 
         public void OnFinalResults(TournamentEntity tournament)
         {
-            WinnerResultEvent.Invoke(this, tournament.Final.Winner);
+            WinnerResultEvent?.Invoke(this, tournament.Final.Winner);
+        }
+
+        public void OnPlayerLeft()
+        {
+            PlayerLeftEvent?.Invoke(this, null);
         }
 
         public void OnFinalStarting(TournamentEntity tournament)
