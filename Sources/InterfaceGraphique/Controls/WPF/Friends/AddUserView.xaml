@@ -27,7 +27,7 @@
 
     </UserControl.Resources>
     <Grid DataContext="{Binding Source={StaticResource VMLocator}, Path=AddUserViewModel}">
-        <Grid Background="DarkGray">
+        <Grid Background="{StaticResource SilverBrush}">
             <Border>
                 <Grid>
                     <Grid.RowDefinitions>
@@ -39,7 +39,7 @@
                             <Border Grid.Row="0"  Grid.Column="1" Padding="5" CornerRadius="5" BorderThickness="1" BorderBrush="LightGray" SnapsToDevicePixels="True" Background="{StaticResource TextColorBrush}" Width="150" VerticalAlignment="Center">
                                <!--<TextBox x:Name="ChannelName" Text="{Binding FriendUsername, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding InputsEnabled}" Background="Transparent" BorderThickness="0" MaxLength="16" FontSize="14" FontWeight="Bold" VerticalAlignment="Center"/>-->
                                 <TextBox Text="{Binding FriendUsername, UpdateSourceTrigger=PropertyChanged}"
-                                          materialDesign:HintAssist.Hint="Filtre" Background="Transparent" BorderThickness="0" MaxLength="16" FontSize="14" FontWeight="Bold" VerticalAlignment="Center"
+                                          materialDesign:HintAssist.Hint="Ajouter un ami" Background="Transparent" BorderThickness="0" MaxLength="16" FontSize="14" FontWeight="Bold" VerticalAlignment="Center"
                                           IsEnabled="{Binding InputsEnabled}" />
 
 

@@ -9,7 +9,7 @@
              xmlns:fa="http://schemas.fontawesome.io/icons/"
              xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
              mc:Ignorable="d" 
-             d:DesignHeight="546" d:DesignWidth="200" Background="#FF32373C" >
+             d:DesignHeight="546" d:DesignWidth="200" Background="{StaticResource SilverBrush}" >
     
     <UserControl.Resources>
         <ResourceDictionary>

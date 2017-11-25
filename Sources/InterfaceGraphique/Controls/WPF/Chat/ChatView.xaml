@@ -23,14 +23,14 @@
             <!-- Template d'un message -->
             <DataTemplate x:Key="MessagesDataTemplate" DataType="entities:ChatMessage" >
 
-                <Border Name="MessageBorder" MinHeight="40" BorderThickness="0 0 0 2" Background="{StaticResource DarkGrayBrush}" 
+                <Border Name="MessageBorder" MinHeight="40" BorderThickness="0 0 0 2" Background="{StaticResource UltraDarkGrayBrush}" 
                         Margin="0,0,6,4" BorderBrush="#FF3C3F44" CornerRadius="10" SnapsToDevicePixels="True" Padding="4" MinWidth="150" 
                         HorizontalAlignment="{Binding Sender, Converter={convert:SentByMeToAlignmentConverter}}">
                     <Grid>
 
                         <TextBlock VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="7,3,7,0"                                
                                    FontWeight="Bold" FontSize="12"
-                                   TextWrapping="Wrap" Text="{Binding Sender}" Foreground="{StaticResource UltraDarkGrayBrush}"/>
+                                   TextWrapping="Wrap" Text="{Binding Sender}" Foreground="{StaticResource TextColorBrush}"/>
                         <TextBlock VerticalAlignment="Stretch" Margin="7,18,7,0"                                
 
                                    TextWrapping="Wrap" Text="{Binding MessageValue}" FontSize="14" Foreground="{StaticResource TextColorBrush}"/>
@@ -54,7 +54,7 @@
                 <DropShadowEffect BlurRadius="20" ShadowDepth="5" />
             </Border.Effect>
         </Border>
-        <Grid Background="{StaticResource UltraDarkGrayBrush}">
+        <Grid Background="{StaticResource SilverBrush}">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
@@ -77,8 +77,8 @@
                 </channel:JoinChannelView.DataContext>
             </channel:JoinChannelView>
 
-            <Grid HorizontalAlignment="Stretch" Background="{StaticResource UltraDarkGrayBrush}">
-                <TextBlock Text="{Binding CurrentChannel.Name}" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource DarkGrayBrush}" FontSize="18" FontWeight="Bold"></TextBlock>
+            <Grid HorizontalAlignment="Stretch" Background="{StaticResource DarkGrayBrush}">
+                <TextBlock Text="{Binding CurrentChannel.Name}" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource TextColorBrush}" FontSize="18" FontWeight="Bold"></TextBlock>
                 <StackPanel Margin="2" Orientation="Horizontal" HorizontalAlignment="Right" Visibility="{Binding DataContext.Docked, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Converter={convert:BooleanToVisibilityConverter}, ConverterParameter=True}">
                     <Button fa:Awesome.Content="WindowMinimize" VerticalAlignment="Center" HorizontalAlignment="Right" Background="{StaticResource DarkGrayBrush}" Command="{Binding DataContext.MinimizeCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" BorderThickness="0"/>
                     <Button Margin="5,0,4,0" VerticalAlignment="Center" fa:Awesome.Content="WindowRestore" Background="{StaticResource DarkGrayBrush}" BorderThickness="0" HorizontalAlignment="Right" Command="{Binding UnDockCommand}"/>

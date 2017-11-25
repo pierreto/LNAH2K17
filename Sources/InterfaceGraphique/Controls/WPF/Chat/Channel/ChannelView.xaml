@@ -32,7 +32,7 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <!-- Top Bar Channels -->
-                    <Grid Height="50" Background="DarkGray">
+                    <Grid Height="50" Background="{StaticResource SilverBrush}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>

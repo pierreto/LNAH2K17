@@ -39,7 +39,7 @@
         </Grid>
         <DockPanel Background="{StaticResource UltraDarkGrayBrush}" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" LastChildFill="True" Height="Auto" Visibility="{Binding Docked, Converter={convert:BooleanToVisibilityConverter}, ConverterParameter=False}">
             <Grid>
-                <Button Foreground="White" Height="Auto" fa:Awesome.Content="{Binding TabIcon}" Background="Transparent" Command="{Binding MinimizeCommand}" BorderThickness="0, 0, 3, 0" BorderBrush="DarkGray" Focusable="False" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Center" VerticalAlignment="Center"/>
+                <Button Foreground="White" Height="Auto" fa:Awesome.Content="{Binding TabIcon}" Background="Transparent" Command="{Binding MinimizeCommand}" BorderThickness="0, 0, 3, 0" BorderBrush="{StaticResource SilverBrush}" Focusable="False" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Center" VerticalAlignment="Center"/>
                 <Border Visibility="{Binding HasNewMessage, Converter={convert:BooleanToVisibilityConverter}, ConverterParameter=False}" Background="Red" HorizontalAlignment="Center" Width="10" Height="10" CornerRadius="10" Margin="15 0 0 10"></Border>
             </Grid>
         </DockPanel>
