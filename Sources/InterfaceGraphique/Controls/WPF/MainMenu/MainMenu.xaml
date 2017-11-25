@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:InterfaceGraphique.Controls.WPF.MainMenu"
              xmlns:wpf="clr-namespace:InterfaceGraphique.Controls.WPF"
+             xmlns:convert="clr-namespace:InterfaceGraphique.Controls.WPF.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="900" d:DesignWidth="1000">
     <UserControl.Resources>
@@ -76,7 +77,8 @@
                 <DropShadowEffect></DropShadowEffect>
             </Border.Effect>
             <StackPanel Margin="15" VerticalAlignment="Center">
-                <Button Content="Déconnexion" FontSize="30" FontWeight="Bold" Background="{StaticResource DarkRedBrush}" BorderThickness="0" Height="80" Margin="0 0 0 8" Foreground="White" Command="{Binding DeconnexionCommand}" IsEnabled="{Binding OnlineMode}"></Button>
+                <Button Content="Déconnexion" FontSize="30" FontWeight="Bold" Background="{StaticResource DarkRedBrush}" BorderThickness="0" Height="80" Margin="0 0 0 8" Foreground="White" Command="{Binding DeconnexionCommand}" IsEnabled="{Binding OnlineMode}" Visibility="{Binding OnlineMode, Converter={convert:BooleanToCollapsedConverter}, ConverterParameter=true}"></Button>
+                <Button Content="Retour" FontSize="30" FontWeight="Bold" Background="{StaticResource DarkRedBrush}" BorderThickness="0" Height="80" Margin="0 0 0 8" Foreground="White" Command="{Binding DeconnexionCommand}" IsEnabled="{Binding HomeCommand}" Visibility="{Binding OnlineMode, Converter={convert:BooleanToCollapsedConverter}}"></Button>
                 <Button Content="Quitter" FontSize="30" FontWeight="Bold" Background="{StaticResource DarkRedBrush}" BorderThickness="0" Height="80" Margin="0 0 0 8" Foreground="White" Command="{Binding QuitterCommand}"></Button>
             </StackPanel>
         </Border>

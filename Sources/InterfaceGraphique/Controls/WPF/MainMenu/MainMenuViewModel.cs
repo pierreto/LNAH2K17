@@ -209,6 +209,19 @@ namespace InterfaceGraphique.Controls.WPF.MainMenu
             }
         }
 
+        private ICommand homeCommand;
+        public ICommand HomeCommand
+        {
+            get
+            {
+                if (homeCommand == null)
+                {
+                    homeCommand = new RelayCommand(Home);
+                }
+                return homeCommand;
+            }
+        }
+
 
         #endregion
 
@@ -218,21 +231,25 @@ namespace InterfaceGraphique.Controls.WPF.MainMenu
         {
             CheckIfNeedToShowMatchTutoriel();
             Program.QuickPlayMenu.ShowDialog();
+            CommandManager.InvalidateRequerySuggested();
         }
 
         public void Tournoi()
         {
             Program.FormManager.CurrentForm = Program.TournementMenu;
+            CommandManager.InvalidateRequerySuggested();
         }
 
         public void TournoiEnLigne()
         {
             Program.FormManager.CurrentForm = Program.OnlineTournamentMenu;
+            CommandManager.InvalidateRequerySuggested();
         }
 
         public void Configuration()
         {
             Program.ConfigurationMenu.ShowDialog();
+            CommandManager.InvalidateRequerySuggested();
         }
 
         //Section Bleue
@@ -240,23 +257,27 @@ namespace InterfaceGraphique.Controls.WPF.MainMenu
         {
             Program.FormManager.CurrentForm = Program.UserProfileMenu;
             await Program.unityContainer.Resolve<UserProfileViewModel>().Initialize();
+            CommandManager.InvalidateRequerySuggested();
         }
 
         public async Task Magasin()
         {
             Program.FormManager.CurrentForm = Program.StoreMenu;
             await Program.unityContainer.Resolve<StoreViewModel>().Initialize();
+            CommandManager.InvalidateRequerySuggested();
         }
 
         //Section Jaune
         public async Task TutorielEdition()
         {
             await ShowTutorialEditor();
+            CommandManager.InvalidateRequerySuggested();
         }
 
         public async Task TutorielPartie()
         {
             await ShowTutorialGame();
+            CommandManager.InvalidateRequerySuggested();
         }
 
         //Section Verte
@@ -265,6 +286,7 @@ namespace InterfaceGraphique.Controls.WPF.MainMenu
             Program.Editeur.ResetDefaultTable();
             Program.FormManager.CurrentForm = Program.Editeur;
             CheckIfNeedToShowEditorTutoriel();
+            CommandManager.InvalidateRequerySuggested();
         }
 
         //Section Rouge
@@ -279,6 +301,7 @@ namespace InterfaceGraphique.Controls.WPF.MainMenu
             Program.FormManager.CurrentForm = Program.HomeMenu;
             Program.InitializeUnityDependencyInjection();
             Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<HomeViewModel>());
+            CommandManager.InvalidateRequerySuggested();
         }
 
         public async Task Quitter()
@@ -288,6 +311,10 @@ namespace InterfaceGraphique.Controls.WPF.MainMenu
             System.Windows.Forms.Application.Exit();
         }
 
+        public void Home()
+        {
+            Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<HomeViewModel>());
+        }
         #endregion
 
         #region Private Methods
