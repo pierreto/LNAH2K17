@@ -104,6 +104,12 @@ class FriendsHub: BaseHub {
                         }
                     }
                     
+                    /*
+                    if !VerticalSplitViewController.sharedVerticalSplitViewController.friendsOpen {
+                        FriendRequestsViewController.instance?.tabBarItem.badgeValue = requestsJson.count
+                    }
+                    */
+                    
                     FriendRequestsTableViewController.instance.updatePendingRequestsEntries(pendingRequests: pendingRequests)
                 }
             }
