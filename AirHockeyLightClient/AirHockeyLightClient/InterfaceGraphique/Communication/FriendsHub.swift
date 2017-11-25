@@ -96,12 +96,18 @@ class FriendsHub: BaseHub {
                 else {
                     let requestsJson = JSON(result as! [Dictionary<String, Any>])
                     var pendingRequests = [FriendRequestEntity]()
+                    var hasFriendRequests = false
                     
                     for request in requestsJson {
                         let req = self.friendsService.buildFriendRequestEntity(json: request.1)
                         if req.getStatus() == RequestStatus.PENDING {
+                            hasFriendRequests = true
                             pendingRequests.append(req)
                         }
+                    }
+                    
+                    if !VerticalSplitViewController.sharedVerticalSplitViewController.friendsOpen && hasFriendRequests {
+                        FriendRequestsViewController.instance?.displayNotification()
                     }
                     
                     FriendRequestsTableViewController.instance.updatePendingRequestsEntries(pendingRequests: pendingRequests)
@@ -167,6 +173,7 @@ class FriendsHub: BaseHub {
     
     override func logout() {
         print("logout friends hub")
+        self.hubProxy = nil
     }
     
 }

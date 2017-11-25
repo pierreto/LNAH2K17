@@ -24,8 +24,11 @@
             <DataTemplate x:Key="MessagesDataTemplate" DataType="entities:ChatMessage" >
 
                 <Border Name="MessageBorder" MinHeight="40" BorderThickness="0 0 0 2" Background="{StaticResource UltraDarkGrayBrush}" 
-                        Margin="0,0,6,4" BorderBrush="#FF3C3F44" CornerRadius="10" SnapsToDevicePixels="True" Padding="4" MinWidth="150" 
+                        Margin="20,5,10,5" BorderBrush="#FF3C3F44" CornerRadius="10" SnapsToDevicePixels="True" Padding="4" MinWidth="150" MaxWidth="400"
                         HorizontalAlignment="{Binding Sender, Converter={convert:SentByMeToAlignmentConverter}}">
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="10" ShadowDepth="3" />
+                    </Border.Effect>
                     <Grid>
 
                         <TextBlock VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="7,3,7,0"                                
@@ -77,8 +80,8 @@
                 </channel:JoinChannelView.DataContext>
             </channel:JoinChannelView>
 
-            <Grid HorizontalAlignment="Stretch" Background="{StaticResource DarkGrayBrush}">
-                <TextBlock Text="{Binding CurrentChannel.Name}" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource TextColorBrush}" FontSize="18" FontWeight="Bold"></TextBlock>
+            <Grid HorizontalAlignment="Stretch" Background="{StaticResource DarkSilverBrush}">
+                <TextBlock Text="{Binding CurrentChannel.Name}" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{StaticResource DarkGrayBrush}" FontSize="18" FontWeight="Bold"></TextBlock>
                 <StackPanel Margin="2" Orientation="Horizontal" HorizontalAlignment="Right" Visibility="{Binding DataContext.Docked, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Converter={convert:BooleanToVisibilityConverter}, ConverterParameter=True}">
                     <Button fa:Awesome.Content="WindowMinimize" VerticalAlignment="Center" HorizontalAlignment="Right" Background="{StaticResource DarkGrayBrush}" Command="{Binding DataContext.MinimizeCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" BorderThickness="0"/>
                     <Button Margin="5,0,4,0" VerticalAlignment="Center" fa:Awesome.Content="WindowRestore" Background="{StaticResource DarkGrayBrush}" BorderThickness="0" HorizontalAlignment="Right" Command="{Binding UnDockCommand}"/>
@@ -108,7 +111,7 @@
 
             BorderBrush="{DynamicResource MaterialDesignDivider}">
 
-                <Grid Background="{StaticResource DarkGrayBrush}">
+                <Grid Background="{StaticResource DarkSilverBrush}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="209*"/>
                         <ColumnDefinition Width="61*"/>
@@ -127,7 +130,7 @@
                         Background="Transparent" Foreground="White">
                         </TextBox>
                         <!-- Placeholder -->
-                        <TextBlock IsHitTestVisible="False" Text="Entrez un message ..." VerticalAlignment="Center" HorizontalAlignment="Left" Margin="40,0,0,0" Foreground="{StaticResource TextColorBrush}" FontSize="18">
+                        <TextBlock IsHitTestVisible="False" Text="Entrez un message ..." VerticalAlignment="Center" HorizontalAlignment="Left" Margin="40,0,0,0" Foreground="{StaticResource DarkGrayBrush}" FontSize="18">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Visibility" Value="Collapsed"/>

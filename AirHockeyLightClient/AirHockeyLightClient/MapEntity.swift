@@ -24,6 +24,7 @@ class MapEntity : Object {
     dynamic var mapName: String?
     dynamic var lastBackup: Date?
     dynamic var json: String?
+    dynamic var icon: String?
     let privacy = RealmOptional<Bool>()
     dynamic var password: String?
     let currentNumberOfPlayer = RealmOptional<Int>()

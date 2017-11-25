@@ -48,7 +48,6 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
 
         public void SetDefaultValues()
         {
-            MapsAvailable = new ObservableCollection<MapEntity>();
             RemainingTime = 30;
             Players = new List<GamePlayerEntity>();
             Winner = string.Empty;
@@ -107,6 +106,16 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
             this.WaitingRoomHub.SemiFinalResultEvent += (e, args) => OnSemiFinalResult(e, args);
 
             this.WaitingRoomHub.MapUpdatedEvent += (e, args) => OnMapUpdated(e, args);
+
+            this.WaitingRoomHub.PlayerLeftEvent += (e, args) => OnPlayerLeft(e);
+        }
+
+        private void OnPlayerLeft(object e)
+        {
+            this.opponentLeftMsg = true;
+            OnPropertyChanged("OpponentLeftMsg");
+            SetDefaultValues();
+            SelectedMap = mapsAvailable[1];
         }
 
         private void OnWinnerResult(object e, GamePlayerEntity winner)
@@ -151,6 +160,9 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
             {
                 OnPropertyChanged("Player" + i);
             }
+
+            opponentLeftMsg = false;
+            OnPropertyChanged("OpponentLeftMsg");
         }
 
         private int remainingTime = 0;
@@ -331,6 +343,27 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
                 winnerName = value;
                 OnPropertyChanged();
             }
+        }
+
+        public bool opponentLeftMsg = false;
+        public string OpponentLeftMsg
+        {
+            get => opponentLeftMsg ? "Visible" : "Hidden";
+        }
+
+        private ICommand hidePopupCommand;
+        public ICommand HidePopupCommand
+        {
+            get
+            {
+                return hidePopupCommand ?? (hidePopupCommand = new RelayCommand(HidePopup));
+            }
+        }
+
+        private void HidePopup()
+        {
+            opponentLeftMsg = false;
+            OnPropertyChanged("OpponentLeftMsg");
         }
     }
 }

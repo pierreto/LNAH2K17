@@ -19,6 +19,10 @@ import UIKit
 ///////////////////////////////////////////////////////////////////////////
 class FriendsViewController: UIViewController {
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         

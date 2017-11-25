@@ -127,13 +127,14 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
         #endregion
 
         #region Constructor
-        public AuthenticateViewModel(LoginEntity loginEntity, ChatHub chatHub, StoreService storeService)
+        public AuthenticateViewModel(LoginEntity loginEntity, ChatHub chatHub, StoreService storeService, FriendsHub friendsHub)
         {
             Title = "Authentification";
             BackText = "Se Connecter";
             this.loginEntity = loginEntity;
             this.chatHub = chatHub;
             StoreService = storeService;
+            FriendsHub = friendsHub;
             this.hubManager = HubManager.Instance;
             this.inputsEnabled = true;
         }
@@ -147,7 +148,7 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
             {
                 if (authenticateCommand == null)
                 {
-                    authenticateCommand = new RelayCommandAsync(Authenticate);
+                    authenticateCommand = new RelayCommandAsync(Authenticate, (o) => true);
                 }
                 return authenticateCommand;
             }
@@ -167,6 +168,7 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
         }
 
         public StoreService StoreService { get; set; }
+        public FriendsHub FriendsHub { get; }
         #endregion
 
         #region Command Methods
@@ -202,7 +204,8 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
 
                         //Should show loading spinner
                         Program.unityContainer.Resolve<MainMenuViewModel>().NotLoading = false;
-                        await Program.unityContainer.Resolve<FriendsHub>().InitializeFriendsHub();
+                        await FriendsHub.InitializeFriendsHub();
+                        //await FriendsHub.AcceptGameRequest(new GameRequestEntity() { Recipient = new UserEntity() { Id = 0 }, Sender = new UserEntity() { Id = 0 } });
                         await Program.unityContainer.Resolve<FriendListViewModel>().Init();
                         await Program.unityContainer.Resolve<AddUserViewModel>().Init();
                         await Program.unityContainer.Resolve<FriendRequestListViewModel>().Init();

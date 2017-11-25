@@ -1731,14 +1731,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1lr-0t-fPh">
-                                <rect key="frame" x="20" y="0.0" width="663" height="712"/>
+                                <rect key="frame" x="20" y="0.0" width="663.5" height="712"/>
                                 <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Message" id="ikA-gx-hh9" customClass="MessageViewCell" customModule="AirHockeyLightClient" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="663" height="44"/>
+                                        <rect key="frame" x="0.0" y="28" width="663.5" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="ikA-gx-hh9" id="5KZ-A1-rO9">
-                                            <rect key="frame" x="0.0" y="0.0" width="663" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="663.5" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view autoresizesSubviews="NO" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sfH-cR-Ffh" userLabel="MessageContainer">
@@ -1817,7 +1817,7 @@
                                 </prototypes>
                             </tableView>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Entrez un message ..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6c7-wi-h1e">
-                                <rect key="frame" x="20" y="720" width="565" height="40"/>
+                                <rect key="frame" x="20" y="720" width="565.5" height="40"/>
                                 <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="MTS-FN-hob"/>
@@ -1835,7 +1835,7 @@
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eEe-Oz-ati">
-                                <rect key="frame" x="593" y="720" width="90" height="40"/>
+                                <rect key="frame" x="593.5" y="720" width="90" height="40"/>
                                 <color key="backgroundColor" red="0.23529411764705882" green="0.80000000000000004" blue="0.44313725490196076" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="90" id="8HR-eH-PFR"/>
@@ -2149,10 +2149,10 @@
             </objects>
             <point key="canvasLocation" x="-3727" y="87"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Friends Tab Bar Controller-->
         <scene sceneID="yI2-Qi-Hcs">
             <objects>
-                <tabBarController id="AOs-Xx-MEp" sceneMemberID="viewController">
+                <tabBarController id="AOs-Xx-MEp" customClass="FriendsTabBarController" customModule="AirHockeyLightClient" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" id="r2j-kR-MEv">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -2369,6 +2369,106 @@
             </objects>
             <point key="canvasLocation" x="-1499" y="-1134"/>
         </scene>
+        <!--Server Down View Controller-->
+        <scene sceneID="fkF-Ec-pkw">
+            <objects>
+                <viewController storyboardIdentifier="ServerDownViewControllerID" id="0f0-na-vSc" userLabel="Server Down View Controller" customClass="ServerDownViewController" customModule="AirHockeyLightClient" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="v7f-At-iN0"/>
+                        <viewControllerLayoutGuide type="bottom" id="4cF-CR-7XU"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="D0j-F2-Qkt">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Vr-Zw-DfM" userLabel="Server Down View">
+                                <rect key="frame" x="294" y="285" width="436" height="199"/>
+                                <subviews>
+                                    <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IZk-ha-SfR">
+                                        <rect key="frame" x="0.0" y="0.0" width="436" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="cdh-cH-R96"/>
+                                        </constraints>
+                                        <color key="barTintColor" red="0.1176470588" green="0.1176470588" blue="0.1176470588" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <textAttributes key="titleTextAttributes">
+                                            <color key="textColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                        </textAttributes>
+                                        <items>
+                                            <navigationItem title="Serveur en panne" id="fuf-MZ-rNr"/>
+                                        </items>
+                                    </navigationBar>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Retour à la page d'accueil" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JA0-NK-otF" userLabel="messageLabel">
+                                        <rect key="frame" x="92" y="52" width="253" height="27"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="27" id="QFL-kC-9SR"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                        <color key="textColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="5" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Ep-5E-fcp" userLabel="timerLabel">
+                                        <rect key="frame" x="207" y="86" width="21.5" height="27"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="36"/>
+                                        <color key="textColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SJn-Vk-2GT" userLabel="returnHomeButton">
+                                        <rect key="frame" x="92" y="137" width="253" height="45"/>
+                                        <color key="backgroundColor" red="0.3294117647" green="0.76470588240000004" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="253" id="L5B-g8-sOI"/>
+                                            <constraint firstAttribute="height" constant="45" id="rJS-Wu-ueX"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <state key="normal" title="Retourner à l'accueil"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="6"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="login:" destination="9iZ-5D-aWx" eventType="touchUpInside" id="Rji-nO-8uf"/>
+                                            <action selector="returnToHome:" destination="qUZ-Da-6uW" eventType="touchUpInside" id="L4T-6I-WYn"/>
+                                            <action selector="returnToHome:" destination="0f0-na-vSc" eventType="touchUpInside" id="kps-B0-NTW"/>
+                                            <segue destination="CBq-Dz-qxq" kind="show" identifier="returnHomeSegueFromServerDown" id="wfJ-I3-AFc"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.24313725489999999" green="0.24313725489999999" blue="0.24313725489999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="SJn-Vk-2GT" firstAttribute="leading" secondItem="JA0-NK-otF" secondAttribute="leading" id="IbB-NT-MD3"/>
+                                    <constraint firstItem="SJn-Vk-2GT" firstAttribute="centerX" secondItem="0Vr-Zw-DfM" secondAttribute="centerX" id="LDS-3u-qUY"/>
+                                    <constraint firstAttribute="height" constant="199" id="NFc-jB-UCZ"/>
+                                    <constraint firstItem="SJn-Vk-2GT" firstAttribute="trailing" secondItem="JA0-NK-otF" secondAttribute="trailing" id="Npy-46-toM"/>
+                                    <constraint firstAttribute="width" constant="436" id="aG1-YB-DV4"/>
+                                    <constraint firstItem="SJn-Vk-2GT" firstAttribute="centerX" secondItem="IZk-ha-SfR" secondAttribute="centerX" id="cCQ-hA-3tV"/>
+                                    <constraint firstItem="IZk-ha-SfR" firstAttribute="leading" secondItem="0Vr-Zw-DfM" secondAttribute="leading" id="dPJ-D8-eDs"/>
+                                    <constraint firstItem="IZk-ha-SfR" firstAttribute="width" secondItem="0Vr-Zw-DfM" secondAttribute="width" id="hMa-Cm-HvH"/>
+                                    <constraint firstAttribute="trailing" secondItem="IZk-ha-SfR" secondAttribute="trailing" id="jEJ-qC-77F"/>
+                                    <constraint firstItem="IZk-ha-SfR" firstAttribute="top" secondItem="0Vr-Zw-DfM" secondAttribute="top" id="nxr-oy-U8j"/>
+                                    <constraint firstItem="JA0-NK-otF" firstAttribute="top" secondItem="IZk-ha-SfR" secondAttribute="bottom" constant="8" id="uZ0-CR-XYZ"/>
+                                    <constraint firstAttribute="bottom" secondItem="SJn-Vk-2GT" secondAttribute="bottom" constant="17" id="xuy-Mp-lUE"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="0Vr-Zw-DfM" firstAttribute="centerX" secondItem="D0j-F2-Qkt" secondAttribute="centerX" id="oYe-Zm-TKF"/>
+                            <constraint firstItem="4cF-CR-7XU" firstAttribute="top" secondItem="0Vr-Zw-DfM" secondAttribute="bottom" constant="284" id="p2m-Pc-kT6"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="messageLabel" destination="JA0-NK-otF" id="sRx-dq-5Qi"/>
+                        <outlet property="returnHomeButton" destination="SJn-Vk-2GT" id="WPQ-yg-293"/>
+                        <outlet property="timerLabel" destination="0Ep-5E-fcp" id="3wm-28-BCX"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5kP-Jj-Axt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3086.1328125" y="-1545.3125"/>
+        </scene>
         <!--Lost Connection View Controller-->
         <scene sceneID="kIY-Lu-xVZ">
             <objects>
@@ -2382,16 +2482,33 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ov5-M8-oqz" userLabel="Lost Connection View">
-                                <rect key="frame" x="317" y="268" width="390" height="233"/>
+                                <rect key="frame" x="285" y="269" width="454" height="231"/>
                                 <subviews>
+                                    <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QTD-BD-5XT">
+                                        <rect key="frame" x="0.0" y="0.0" width="454" height="74"/>
+                                        <color key="barTintColor" red="0.1176470588" green="0.1176470588" blue="0.1176470588" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <textAttributes key="titleTextAttributes">
+                                            <color key="textColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                        </textAttributes>
+                                        <items>
+                                            <navigationItem title="Perte de connexion" prompt="Roger, do you read me?" id="Kb2-26-75E" userLabel="Perte de connexion"/>
+                                        </items>
+                                    </navigationBar>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tentative de reconnexion" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SwK-He-kZt" userLabel="reconnectLabel">
-                                        <rect key="frame" x="69" y="81" width="253" height="27"/>
+                                        <rect key="frame" x="101" y="85" width="253" height="27"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                         <color key="textColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="7" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sMt-LM-cE3" userLabel="timerLabel">
+                                        <rect key="frame" x="206" y="120" width="42" height="27"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="36"/>
+                                        <color key="textColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dxk-mf-ggP" userLabel="returnHomeButton">
-                                        <rect key="frame" x="69" y="166" width="253" height="45"/>
+                                        <rect key="frame" x="101" y="167" width="253" height="45"/>
                                         <color key="backgroundColor" red="0.3294117647" green="0.76470588240000004" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="45" id="Pvo-Gd-QOD"/>
@@ -2411,37 +2528,19 @@
                                             <segue destination="CBq-Dz-qxq" kind="show" identifier="returnHomeSegue" id="WIO-5C-9AM"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="7" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sMt-LM-cE3" userLabel="timerLabel">
-                                        <rect key="frame" x="174" y="114" width="42" height="27"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="36"/>
-                                        <color key="textColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QTD-BD-5XT">
-                                        <rect key="frame" x="0.0" y="0.0" width="390" height="74"/>
-                                        <color key="barTintColor" red="0.1176470588" green="0.1176470588" blue="0.1176470588" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <textAttributes key="titleTextAttributes">
-                                            <color key="textColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                        </textAttributes>
-                                        <items>
-                                            <navigationItem title="Perte de connection" prompt="Roger, do you read me?" id="Kb2-26-75E"/>
-                                        </items>
-                                    </navigationBar>
                                 </subviews>
                                 <color key="backgroundColor" red="0.24313725489999999" green="0.24313725489999999" blue="0.24313725489999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstItem="SwK-He-kZt" firstAttribute="top" secondItem="QTD-BD-5XT" secondAttribute="bottom" constant="7" id="0Ap-lF-lwe"/>
+                                    <constraint firstItem="SwK-He-kZt" firstAttribute="top" secondItem="QTD-BD-5XT" secondAttribute="bottom" constant="11" id="0Ap-lF-lwe"/>
+                                    <constraint firstItem="QTD-BD-5XT" firstAttribute="leading" secondItem="Ov5-M8-oqz" secondAttribute="leading" id="1NN-GH-Ex8"/>
                                     <constraint firstItem="dxk-mf-ggP" firstAttribute="leading" secondItem="SwK-He-kZt" secondAttribute="leading" id="38v-wS-701"/>
                                     <constraint firstItem="QTD-BD-5XT" firstAttribute="top" secondItem="Ov5-M8-oqz" secondAttribute="top" id="6TJ-J2-4QL"/>
-                                    <constraint firstAttribute="bottom" secondItem="dxk-mf-ggP" secondAttribute="bottom" constant="22" id="IAy-aO-Pd0"/>
-                                    <constraint firstItem="dxk-mf-ggP" firstAttribute="centerX" secondItem="Ov5-M8-oqz" secondAttribute="centerX" id="JwV-pS-Len"/>
+                                    <constraint firstAttribute="bottom" secondItem="dxk-mf-ggP" secondAttribute="bottom" constant="19" id="IAy-aO-Pd0"/>
                                     <constraint firstItem="dxk-mf-ggP" firstAttribute="trailing" secondItem="SwK-He-kZt" secondAttribute="trailing" id="KE9-zz-ZUV"/>
-                                    <constraint firstAttribute="height" constant="233" id="abH-tb-lAu"/>
-                                    <constraint firstItem="dxk-mf-ggP" firstAttribute="centerX" secondItem="QTD-BD-5XT" secondAttribute="centerX" id="e97-jQ-xvb"/>
-                                    <constraint firstAttribute="width" constant="390" id="htu-ei-dra"/>
-                                    <constraint firstAttribute="trailing" secondItem="QTD-BD-5XT" secondAttribute="trailing" id="mma-Y7-rjc"/>
-                                    <constraint firstItem="QTD-BD-5XT" firstAttribute="leading" secondItem="Ov5-M8-oqz" secondAttribute="leading" id="rr3-KU-WLU"/>
+                                    <constraint firstItem="QTD-BD-5XT" firstAttribute="centerX" secondItem="SwK-He-kZt" secondAttribute="centerX" id="aMW-2D-GNZ"/>
+                                    <constraint firstAttribute="height" constant="231" id="abH-tb-lAu"/>
+                                    <constraint firstAttribute="trailing" secondItem="QTD-BD-5XT" secondAttribute="trailing" id="ebu-YN-VK7"/>
+                                    <constraint firstAttribute="width" constant="454" id="htu-ei-dra"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -2959,7 +3058,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" toolbarHidden="NO" id="5ax-Bq-PLF" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Oub-qg-DsX">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Oub-qg-DsX">
                         <rect key="frame" x="0.0" y="20" width="1024" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.11764705882352941" green="0.11764705882352941" blue="0.11764705882352941" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -3139,9 +3238,9 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="5kt-yz-yM5"/>
-        <segue reference="siQ-V2-je8"/>
         <segue reference="WIO-5C-9AM"/>
+        <segue reference="siQ-V2-je8"/>
+        <segue reference="5kt-yz-yM5"/>
         <segue reference="fh0-jW-WVm"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>

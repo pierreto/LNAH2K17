@@ -248,7 +248,9 @@ namespace InterfaceGraphique.Controls.WPF.Chat
             Program.FormManager.HideChat();
             UndockedChat = new Window
             {
-                Title = "Chat",
+                Title = "Clavardage",
+                Width = 800,
+                Height = 400,
                 Content = new TestChatView()
                 {
                     Titre = "UnDocked",

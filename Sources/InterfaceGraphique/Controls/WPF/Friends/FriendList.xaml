@@ -33,11 +33,7 @@
         <Grid.DataContext>
             <Binding Path="FriendListViewModel" Source="{StaticResource VMLocator}"/>
         </Grid.DataContext>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="24*"/>
-            <RowDefinition Height="197*"/>
-        </Grid.RowDefinitions>
-        <ScrollViewer VerticalScrollBarVisibility="Hidden" Grid.Row="1">
+        <ScrollViewer VerticalScrollBarVisibility="Hidden">
             <ItemsControl ItemsSource="{Binding Source={StaticResource cvs}}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>

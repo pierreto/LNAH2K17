@@ -24,7 +24,9 @@ class FriendRequestsTableViewController: UITableViewController {
     
     @IBOutlet weak var pendingRequests: UITableView!
     
+    public var isOpen = false
     private let CHECK_BUTTON_ICON = "\u{f058}"
+    private var notificationCount = 0
     private var friendsHub: FriendsHub?
     private var pendingRequestsData = [FriendRequestEntity]()
     
@@ -33,6 +35,7 @@ class FriendRequestsTableViewController: UITableViewController {
         
         FriendRequestsTableViewController.instance = self
         
+        self.isOpen = true
         self.pendingRequests.delegate = self
         self.pendingRequests.dataSource = self
         
@@ -40,13 +43,24 @@ class FriendRequestsTableViewController: UITableViewController {
         friendsHub?.getAllPendingRequest()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.isOpen = true
+        FriendRequestsViewController.instance?.resetNotification()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.isOpen = false
+    }
+    
     func updatePendingRequestsEntries(pendingRequests:  [FriendRequestEntity]) {
-        self.pendingRequestsData = pendingRequests
-        
-        DispatchQueue.main.async(execute: { () -> Void in
-            // Reload tableView
-            self.pendingRequests.reloadData()
-        })
+        if self.isOpen {
+            self.pendingRequestsData = pendingRequests
+            
+            DispatchQueue.main.async(execute: { () -> Void in
+                // Reload tableView
+                self.pendingRequests.reloadData()
+            })
+        }
     }
     
     @IBAction func acceptRequest(_ sender: Any) {
@@ -62,12 +76,14 @@ class FriendRequestsTableViewController: UITableViewController {
     
     func addRequest(newRequest: FriendRequestEntity) {
         if newRequest.getStatus() == RequestStatus.PENDING {
-            self.pendingRequestsData.append(newRequest)
+            if self.isBeingPresented {
+                self.pendingRequestsData.append(newRequest)
             
-            DispatchQueue.main.async(execute: { () -> Void in
-                // Reload tableView
-                self.pendingRequests.reloadData()
-            })
+                DispatchQueue.main.async(execute: { () -> Void in
+                    // Reload tableView
+                    self.pendingRequests.reloadData()
+                })
+            }
         }
     }
     

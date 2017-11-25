@@ -76,6 +76,7 @@
 		25628B9F1FA79C070010B58D /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25628B9E1FA79C070010B58D /* MapViewModel.swift */; };
 		25628BA11FA79CFF0010B58D /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25628BA01FA79CFF0010B58D /* Map.swift */; };
 		256539A91F9D643A00D81E2C /* MapEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256539A81F9D643A00D81E2C /* MapEntity.swift */; };
+		2585569E1FC9B91300A09B08 /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2585569D1FC9B91300A09B08 /* ImageService.swift */; };
 		258A73B71FB3E5D3003725E6 /* UnlockMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258A73B61FB3E5D3003725E6 /* UnlockMapViewController.swift */; };
 		258EED9C1FC3A3130096115B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 258EED9B1FC3A3130096115B /* QuartzCore.framework */; };
 		258EED9E1FC3A3B00096115B /* MapCarouselViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258EED9D1FC3A3B00096115B /* MapCarouselViewController.swift */; };
@@ -155,6 +156,7 @@
 		8F4C1DC41FB412D100B570C8 /* DeleteCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F4C1DC31FB412D100B570C8 /* DeleteCommand.swift */; };
 		8F4D5E3C1FA060150002D5C5 /* Delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 8F4D5E3B1FA060140002D5C5 /* Delete.png */; };
 		8F5299451FC8F2250029CC1E /* LostConnectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5299441FC8F2250029CC1E /* LostConnectionViewController.swift */; };
+		8F5299471FC923CF0029CC1E /* ServerDownViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5299461FC923CF0029CC1E /* ServerDownViewController.swift */; };
 		8F64C0131F7754FD00F14AC7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F64C0121F7754FD00F14AC7 /* LaunchScreen.storyboard */; };
 		8F64C0151F77550800F14AC7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F64C0141F77550800F14AC7 /* Main.storyboard */; };
 		8F65B2851FAE264100D8EE20 /* OnlineUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F65B2841FAE264100D8EE20 /* OnlineUser.swift */; };
@@ -306,6 +308,7 @@
 		25628B9E1FA79C070010B58D /* MapViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		25628BA01FA79CFF0010B58D /* Map.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
 		256539A81F9D643A00D81E2C /* MapEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapEntity.swift; sourceTree = "<group>"; };
+		2585569D1FC9B91300A09B08 /* ImageService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageService.swift; path = Noyau/Services/ImageService.swift; sourceTree = "<group>"; };
 		258A73B61FB3E5D3003725E6 /* UnlockMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UnlockMapViewController.swift; path = InterfaceGraphique/UnlockMapViewController.swift; sourceTree = "<group>"; };
 		258EED971FC3A2B70096115B /* AirHockeyLightClient-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AirHockeyLightClient-Bridging-Header.h"; sourceTree = "<group>"; };
 		258EED9B1FC3A3130096115B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -389,6 +392,7 @@
 		8F4C1DC31FB412D100B570C8 /* DeleteCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DeleteCommand.swift; path = Noyau/Editor/Commands/DeleteCommand.swift; sourceTree = "<group>"; };
 		8F4D5E3B1FA060140002D5C5 /* Delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Delete.png; path = ../../Sources/Icons/Delete.png; sourceTree = "<group>"; };
 		8F5299441FC8F2250029CC1E /* LostConnectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LostConnectionViewController.swift; path = InterfaceGraphique/Menus/LostConnectionViewController.swift; sourceTree = "<group>"; };
+		8F5299461FC923CF0029CC1E /* ServerDownViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ServerDownViewController.swift; path = InterfaceGraphique/Menus/ServerDownViewController.swift; sourceTree = "<group>"; };
 		8F64C0121F7754FD00F14AC7 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = InterfaceGraphique/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8F64C0141F77550800F14AC7 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = InterfaceGraphique/Main.storyboard; sourceTree = "<group>"; };
 		8F65B2841FAE264100D8EE20 /* OnlineUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OnlineUser.swift; path = User/OnlineUser.swift; sourceTree = "<group>"; };
@@ -664,6 +668,7 @@
 				2509B8A01FB93631002DEE9A /* FriendsService.swift */,
 				25EFB29F1FB7505100FFD66F /* MapService.swift */,
 				8F829B441FC2834800FC027B /* StoreService.swift */,
+				2585569D1FC9B91300A09B08 /* ImageService.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -882,6 +887,7 @@
 				1D863DB01F9848E70025B89D /* OfflineMenuViewController.swift */,
 				8F65B2971FAF6F0200D8EE20 /* OnlineMenuViewController.swift */,
 				8F5299441FC8F2250029CC1E /* LostConnectionViewController.swift */,
+				8F5299461FC923CF0029CC1E /* ServerDownViewController.swift */,
 			);
 			name = Menus;
 			sourceTree = "<group>";
@@ -1337,6 +1343,7 @@
 				0EED627F1F982B3B00CD8C56 /* ModeleEtatCreerMuret.swift in Sources */,
 				8F0B94B81F8D7F11007F0E82 /* ModeleEtatPointControl.swift in Sources */,
 				25F809231FA6A2680008F048 /* MapDisplayViewController.swift in Sources */,
+				2585569E1FC9B91300A09B08 /* ImageService.swift in Sources */,
 				25A1BEF71FC23C180017C058 /* AddFriendViewController.swift in Sources */,
 				258EED9E1FC3A3B00096115B /* MapCarouselViewController.swift in Sources */,
 				256539A91F9D643A00D81E2C /* MapEntity.swift in Sources */,
@@ -1368,6 +1375,7 @@
 				1D019A211F911DF6004D79B2 /* Login.swift in Sources */,
 				25F809251FA6AB680008F048 /* CreateMapViewController.swift in Sources */,
 				3497C3271F9FF3C300C58700 /* VisiteurDuplication.swift in Sources */,
+				8F5299471FC923CF0029CC1E /* ServerDownViewController.swift in Sources */,
 				1DD1CFC01FAFC2F4008853DD /* MasterViewController.swift in Sources */,
 				8FB6A9CA1F81E38300FAFFCF /* Table.swift in Sources */,
 				8F76FC0F1F9CF990001BBC99 /* SCNNodeHelper.swift in Sources */,

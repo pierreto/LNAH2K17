@@ -170,8 +170,12 @@ namespace InterfaceGraphique.Controls.WPF.Friends
                 {
                     ctxTaskFactory.StartNew(() =>
                     {
-                        Program.unityContainer.Resolve<ChatListViewModel>().Items.Remove(Program.unityContainer.Resolve<ChatListViewModel>().Items.Single(x => x.ChannelEntity.Name == FriendList[i].Username && x.ChannelEntity.IsPrivate));
-                        Program.unityContainer.Resolve<ChatListViewModel>().OnPropertyChanged("Items");
+                        ChannelListItemViewModel clivm = Program.unityContainer.Resolve<ChatListViewModel>().Items.FirstOrDefault(x => x.ChannelEntity.Name == FriendList[i].Username && x.ChannelEntity.IsPrivate);
+                        if(clivm != null)
+                        {
+                            Program.unityContainer.Resolve<ChatListViewModel>().Items.Remove(clivm);
+                            Program.unityContainer.Resolve<ChatListViewModel>().OnPropertyChanged("Items");
+                        }
                         FriendListItemViewModel vm = FriendList[i];
                         FriendList.RemoveAt(i);
                         vm.IsConnected = false;

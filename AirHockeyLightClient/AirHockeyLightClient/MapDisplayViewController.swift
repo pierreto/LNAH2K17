@@ -24,19 +24,22 @@ class MapDisplayViewController: UIViewController {
     /// Instance singleton
     static var instance = MapDisplayViewController()
     
-    private let clientConnection = HubManager.sharedConnection
-    
     public var currentMap: MapEntity?
-    public var isDeleting = false
+    
+    private let clientConnection = HubManager.sharedConnection
+    private var isDeleting = false
+    private var addMapBtn: UIBarButtonItem?
+    private var deleteMapBtn: UIBarButtonItem?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         MapDisplayViewController.instance = self
         
-        let addMapBtn = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addMapBtnClicked))
-        let deleteMapBtn = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteMapBtnClicked))
-        self.navigationItem.setRightBarButtonItems([addMapBtn, deleteMapBtn], animated: true)
+        self.addMapBtn = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addMapBtnClicked))
+        self.deleteMapBtn = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteMapBtnClicked))
+        self.deleteMapBtn?.isEnabled = false
+        self.navigationItem.setRightBarButtonItems([addMapBtn!, deleteMapBtn!], animated: true)
     }
     
     // Ouvrir le pop-up pour la création de cartes
@@ -53,17 +56,29 @@ class MapDisplayViewController: UIViewController {
         self.enableNavigationBar(activer: false)
     }
     
+    func updateEntries() {
+        MapCarouselViewController.instance.updateEntries()
+        
+        if MapCarouselViewController.instance.numberOfItems() > 0 {
+            self.deleteMapBtn?.isEnabled = true
+        }
+    }
+    
     func deleteMapBtnClicked(sender: AnyObject)
     {
         self.currentMap = MapCarouselViewController.instance.getCurrentMap()
         self.isDeleting = true
-        
+            
         // Ouvrir le pop-up pour déverrouiller une carte
         if self.currentMap?.privacy.value == true {
             self.openUnlockMapVC()
         } else {
             MapCarouselViewController.instance.deleteCurrentMap()
             self.isDeleting = false
+        }
+        
+        if MapCarouselViewController.instance.numberOfItems() == 0 {
+            self.deleteMapBtn?.isEnabled = false
         }
     }
     
@@ -76,6 +91,19 @@ class MapDisplayViewController: UIViewController {
         } else {
             self.openEditor()
         }
+    }
+    
+    func handleCarouselDidEndScrolling() {
+        self.currentMap = MapCarouselViewController.instance.getCurrentMap()
+        
+        var username: String?
+        if self.clientConnection.getConnection() != nil && self.clientConnection.connected! {
+            username = self.clientConnection.getUsername()
+        } else {
+            username = "N/A"
+        }
+        
+        self.deleteMapBtn?.isEnabled = self.currentMap?.creator == username
     }
     
     func openEditor() {
@@ -120,6 +148,10 @@ class MapDisplayViewController: UIViewController {
         if isDeleting {
             MapCarouselViewController.instance.deleteCurrentMap()
             self.isDeleting = false
+            
+            if MapCarouselViewController.instance.numberOfItems() == 0 {
+                self.deleteMapBtn?.isEnabled = false
+            }
         } else {
             self.openEditor()
         }

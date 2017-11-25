@@ -63,12 +63,17 @@ class Signup: NSObject {
                             // Connect user to chat
                             HubManager.sharedConnection.getChatHub().subscribe()
                             
-                            // Retrieve the users friends
+                            // Retrieve the users friends and friend requests
+                            HubManager.sharedConnection.getFriendsHub().initialize()
                             HubManager.sharedConnection.getFriendsHub().getAllFriends()
+                            HubManager.sharedConnection.getFriendsHub().getAllPendingRequest()
                             
                             // Upload local maps to server (under users id)
                             let mapService = MapService()
                             mapService.exportLocalMapsToServer()
+                            
+                            // Initialize instance of DBManager to start map fetching from server
+                            // DBManager.instance.startMapFetching()
                             
                             fullfil(true)
                         } else {
