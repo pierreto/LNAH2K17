@@ -37,6 +37,14 @@ namespace AirHockeyServer.Controllers
             return CreateHttpResponse(result);
         }
 
+        [HttpGet]
+        [Route("api/achivements")]
+        public HttpResponseMessage GetAchievements()
+        {
+            var result = StatsService.GetAchievements();
+            return CreateHttpResponse(result);
+        }
+
         private HttpResponseMessage CreateHttpResponse(Object result)
         {
             HttpResponseMessage response = new HttpResponseMessage();
