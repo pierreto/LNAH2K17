@@ -22,11 +22,10 @@ namespace AirHockeyServer.Hubs
     /// Cette classe permet de gérer la connection entre les clients et le serveur
     /// lorsqu'un match en ligne est en préparation
     ///////////////////////////////////////////////////////////////////////////////
-    public class GameWaitingRoomHub : Hub 
+    public class GameWaitingRoomHub : BaseHub 
     {
         protected IGameService GameService { get; }
         protected FriendService FriendService { get; }
-        public ConnectionMapper ConnectionMapper { get; set; }
 
         ////////////////////////////////////////////////////////////////////////
         ///
@@ -38,9 +37,9 @@ namespace AirHockeyServer.Hubs
         ///
         ////////////////////////////////////////////////////////////////////////
         public GameWaitingRoomHub(IGameService gameService, ConnectionMapper connectionMapper, FriendService friendService)
+            : base(connectionMapper)
         {
             GameService = gameService;
-            ConnectionMapper = connectionMapper;
             FriendService = friendService;
         }
         
@@ -128,12 +127,17 @@ namespace AirHockeyServer.Hubs
             ConnectionMapper.AddGameID(Context.ConnectionId, gameId);
         }
 
+        public override void Disconnect()
+        {
+            var userId = ConnectionMapper.GetIdFromConnection(Context.ConnectionId);
+            GameService.LeaveGame(userId);
+
+            base.Disconnect();
+        }
+
         public override Task OnDisconnected(bool stopCalled)
         {
-            string gameID = ConnectionMapper.GetGameId(Context.ConnectionId).ToString();
-            Clients.Group(gameID, Context.ConnectionId).DisconnectedOpponent();
-
-            // TODO HAVE TO GET USERID
+            Disconnect();
 
             return base.OnDisconnected(stopCalled);
         }

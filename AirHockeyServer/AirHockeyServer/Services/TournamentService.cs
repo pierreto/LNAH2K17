@@ -29,10 +29,13 @@ namespace AirHockeyServer.Services
             TournamentMatchMakerService.Instance().RemoveUser(user.Id);
             if(tournamentId == 0)
             {
-                // the user is waiting for players
-                //TournamentWaitingRoomEVentManager.RemoveUser(user.Id);
                 TournamentMatchMakerService.Instance().RemoveUser(user.Id);
             }
+        }
+
+        public void LeaveTournament(int userId)
+        {
+            
         }
 
         public void UpdateTournament(int tournamentId, MapEntity map)
