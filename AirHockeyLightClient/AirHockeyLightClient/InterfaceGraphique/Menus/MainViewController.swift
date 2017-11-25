@@ -24,11 +24,13 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         styleUI()
         
+        DBManager.instance.effacerToutesCartes()
+        
         reachability = Reachability()!
         
         reachability.whenReachable = { reachability in
             if reachability.connection == .wifi {
-                print("Reachable via WiFi")
+                // print("Reachable via WiFi")
                 self.onlineButton.isEnabled = true
                 self.lostConnectionLabel.isHidden = true
                 
@@ -37,7 +39,7 @@ class MainViewController: UIViewController {
                     // Sur la page d'accueil, on ne devrait jamais être connecté
                     _ = HubManager.sharedConnection.DisconnectUser().then(execute: { response -> Void in
                         _ = HubManager.sharedConnection.StopConnection().then(execute: { response -> Void in
-                            print("déconnexion de la page d'accueil")
+                            // print("déconnexion de la page d'accueil")
                             VerticalSplitViewController.sharedVerticalSplitViewController.toggleChatButtonVisibility()
                         })
                     })
@@ -46,7 +48,7 @@ class MainViewController: UIViewController {
         }
         
         reachability.whenUnreachable = { _ in
-            print("Wifi not reachable")
+            // print("Wifi not reachable")
             self.onlineButton.isEnabled = false
             self.lostConnectionLabel.isHidden = false
             
@@ -67,7 +69,6 @@ class MainViewController: UIViewController {
         } catch {
             print("Unable to start notifier")
         }
-
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -75,7 +76,7 @@ class MainViewController: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        self.navigationController?.isNavigationBarHidden = false
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
         VerticalSplitViewController.sharedVerticalSplitViewController.chatButton.isEnabled = true
         VerticalSplitViewController.sharedVerticalSplitViewController.friendsButton.isEnabled = true
     }

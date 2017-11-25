@@ -13,8 +13,8 @@ namespace InterfaceGraphique.CommunicationInterface
 {
     public class FriendsHub : BaseHub, IBaseHub
     {
-        private static IHubProxy FriendsProxy { get; set; }
-        private static HubConnection Connection;
+        private IHubProxy FriendsProxy { get; set; }
+        private HubConnection Connection;
         private UserEntity user;
 
         public event Action<FriendRequestEntity> FriendRequestEvent;
@@ -33,20 +33,35 @@ namespace InterfaceGraphique.CommunicationInterface
         {
             Connection = connection;
             FriendsProxy = Connection.CreateHubProxy("FriendsHub");
+            InitializeEvents();
         }
 
         public async Task InitializeFriendsHub()
         {
-            this.user = User.Instance.UserEntity;
+            var me = User.Instance.UserEntity;
+            this.user = new UserEntity()
+            {
+                Username = me.Username,
+                AlreadyPlayedGame = me.AlreadyPlayedGame,
+                AlreadyUsedFatEditor = me.AlreadyUsedFatEditor,
+                AlreadyUsedLightEditor = me.AlreadyUsedLightEditor,
+                Date = me.Date,
+                Email = me.Email,
+                Id = me.Id,
+                IsConnected = me.IsConnected,
+                IsSelected = me.IsSelected,
+                Name = me.Name,
+                //Profile = me.Profile
+            };
             try
             {
-                await FriendsProxy.Invoke("JoinHub", this.user);
+                await FriendsProxy.Invoke("JoinHub", user);
             }
             catch (Exception e)
             {
                 HandleError("FriendsHub -> InitializeFriendsHub");
             }
-            InitializeEvents();
+            
         }
 
         private void InitializeEvents()
