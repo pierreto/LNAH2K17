@@ -93,6 +93,19 @@ class MapDisplayViewController: UIViewController {
         }
     }
     
+    func handleCarouselDidEndScrolling() {
+        self.currentMap = MapCarouselViewController.instance.getCurrentMap()
+        
+        var username: String?
+        if self.clientConnection.getConnection() != nil && self.clientConnection.connected! {
+            username = self.clientConnection.getUsername()
+        } else {
+            username = "N/A"
+        }
+        
+        self.deleteMapBtn?.isEnabled = self.currentMap?.creator == username
+    }
+    
     func openEditor() {
         let editor = storyboard?.instantiateViewController(withIdentifier: "EditorViewController") as! EditorViewController
 

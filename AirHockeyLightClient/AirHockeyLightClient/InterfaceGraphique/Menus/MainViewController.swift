@@ -24,8 +24,6 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         styleUI()
         
-        DBManager.instance.effacerToutesCartes()
-        
         reachability = Reachability()!
         
         reachability.whenReachable = { reachability in
