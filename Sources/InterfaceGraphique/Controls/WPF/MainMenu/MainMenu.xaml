@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:InterfaceGraphique.Controls.WPF.MainMenu"
              xmlns:wpf="clr-namespace:InterfaceGraphique.Controls.WPF"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="1000">
+             d:DesignHeight="900" d:DesignWidth="1000">
     <UserControl.Resources>
         <ResourceDictionary>
             <wpf:ViewModelLocator x:Key="VMLocator" d:IsDataSource="True" />
@@ -26,7 +26,7 @@
             <RowDefinition Height="2*"/>
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.ColumnSpan="3" VerticalAlignment="Top" HorizontalAlignment="Center">
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.ColumnSpan="3" VerticalAlignment="Center" HorizontalAlignment="Center">
             <Label FontSize="100" FontWeight="Bold" Foreground="White" VerticalContentAlignment="Top">LNAH</Label>
             <Label FontSize="100" FontWeight="Bold" Foreground="Red">2K17</Label>
         </StackPanel>
