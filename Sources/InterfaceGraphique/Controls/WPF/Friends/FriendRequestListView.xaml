@@ -15,7 +15,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid Background="{StaticResource SilverBrush}">
+    <Grid Background="{StaticResource DarkGrayBrush}">
         <Grid.DataContext>
             <Binding Path="FriendRequestListViewModel" Source="{StaticResource VMLocator}"/>
         </Grid.DataContext>
