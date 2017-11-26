@@ -132,7 +132,7 @@
                 </ItemsControl>
             </Grid>
         </Grid>
-        <Border Grid.Column="1" Grid.Row="0" BorderBrush="white" BorderThickness="2 0 0 0">
+        <Border Grid.Column="1" Grid.Row="0" BorderBrush="white" BorderThickness="2 0 0 0" Visibility="{Binding IsFriendProfile}">
             <StackPanel Margin="10 25 0 0">
                 <TextBlock Text="Inventaire" Foreground="White" FontSize="25" Margin="0 0 0 10" HorizontalAlignment="Stretch" TextAlignment="Center"></TextBlock>
                 <ListView ItemsSource="{Binding Items}" x:Name="storeItems">
