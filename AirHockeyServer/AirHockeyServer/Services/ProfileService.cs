@@ -39,6 +39,10 @@ namespace AirHockeyServer.Services
                 {
                     achievement.IsEnabled = enabledAchievement.IsEnabled;
                 }
+                else
+                {
+                    achievement.IsEnabled = false;
+                }
             }
 
             int gamesPlayed = await GameRepository.GetUserGamesNb(id);
