@@ -88,8 +88,8 @@
             </DockPanel.Style>
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                 <fa:ImageAwesome Icon="CircleOutlineNotch" Foreground="{StaticResource DarkSilverBrush}" Spin="True" SpinDuration="4" Height="200"/>
-                <TextBlock HorizontalAlignment="Center" FontSize="18" FontWeight="Bold" Height="40">En attente d'un joueur</TextBlock>
-                <Button Command="{Binding Cancel}" Height="40" Width="100" Background="Transparent" BorderBrush="Transparent" >
+                <TextBlock HorizontalAlignment="Center" FontSize="25" FontWeight="Bold" Height="40">En attente d'un joueur</TextBlock>
+                <Button Command="{Binding Cancel}" Height="40" Width="100" Background="Red" BorderBrush="Red" >
                     <TextBlock FontWeight="Bold">Annuler</TextBlock>
                 </Button>
             </StackPanel>

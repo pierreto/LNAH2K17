@@ -32,6 +32,7 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
         public void Initialize(List<GamePlayerEntity> players = null)
         {
             SetDefaultValues();
+            HidePopup();
 
             if (players == null)
             {
