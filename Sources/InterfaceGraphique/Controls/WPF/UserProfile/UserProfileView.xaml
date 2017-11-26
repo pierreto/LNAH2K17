@@ -46,7 +46,6 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="10*"></RowDefinition>
                 <RowDefinition Height="40*"></RowDefinition>
-                <RowDefinition Height="20*"></RowDefinition>
                 <RowDefinition Height="40*"></RowDefinition>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
@@ -87,28 +86,28 @@
                         <TextBlock Text="Date de création du compte" FontSize="14" Foreground="White" FontWeight="Bold" Margin="0,30,0,0"></TextBlock>
                         <TextBlock Text="{Binding DateCreation}" FontSize="14" Foreground="SkyBlue" Margin="0,5,0,0"></TextBlock>
                     </StackPanel>
+                    <Grid Grid.Column="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <TextBlock Text="Points"  FontSize="16" Foreground="White" FontWeight="Bold"></TextBlock>
+                            <TextBlock Text="{Binding PointsNb}" HorizontalAlignment="Center" FontSize="35" Foreground="SkyBlue" FontWeight="Bold" Margin="0,5,0,0"></TextBlock>
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <TextBlock Text="Parties Gagnées"  FontSize="16" Foreground="White" FontWeight="Bold"></TextBlock>
+                            <TextBlock Text="{Binding GameWon}" HorizontalAlignment="Center" FontSize="35" Foreground="SkyBlue" FontWeight="Bold" Margin="0,5,0,0"></TextBlock>
+                        </StackPanel>
+                        <StackPanel Grid.Row="2" Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <TextBlock Text="Tournois Gagnés" FontSize="16" Foreground="White" FontWeight="Bold"></TextBlock>
+                            <TextBlock Text="{Binding TournamentWon}" HorizontalAlignment="Center" FontSize="35" Foreground="SkyBlue" FontWeight="Bold" Margin="0,5,0,0"></TextBlock>
+                        </StackPanel>
+                    </Grid>
                 </Grid>
             </Grid>
             <Grid Grid.Row="2" Margin="0,20,0,0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <StackPanel Grid.Column="0" HorizontalAlignment="Center">
-                    <TextBlock Text="Points"  FontSize="16" Foreground="White" FontWeight="Bold"></TextBlock>
-                    <TextBlock Text="{Binding PointsNb}" HorizontalAlignment="Center" FontSize="35" Foreground="SkyBlue" FontWeight="Bold" Margin="0,5,0,0"></TextBlock>
-                </StackPanel>
-                <StackPanel Grid.Column="1" HorizontalAlignment="Center">
-                    <TextBlock Text="Parties Gagnées"  FontSize="16" Foreground="White" FontWeight="Bold"></TextBlock>
-                    <TextBlock Text="{Binding GameWon}" HorizontalAlignment="Center" FontSize="35" Foreground="SkyBlue" FontWeight="Bold" Margin="0,5,0,0"></TextBlock>
-                </StackPanel>
-                <StackPanel Grid.Column="2" HorizontalAlignment="Center">
-                    <TextBlock Text="Tournois Gagnés" FontSize="16" Foreground="White" FontWeight="Bold"></TextBlock>
-                    <TextBlock Text="{Binding TournamentWon}" HorizontalAlignment="Center" FontSize="35" Foreground="SkyBlue" FontWeight="Bold" Margin="0,5,0,0"></TextBlock>
-                </StackPanel>
-            </Grid>
-            <Grid Grid.Row="3">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"></RowDefinition>
                 </Grid.RowDefinitions>
@@ -133,7 +132,7 @@
                 </ItemsControl>
             </Grid>
         </Grid>
-        <Border Grid.Column="1" Grid.Row="0" BorderBrush="white" BorderThickness="2 0 0 0">
+        <Border Grid.Column="1" Grid.Row="0" BorderBrush="white" BorderThickness="2 0 0 0" Visibility="{Binding IsFriendProfile}">
             <StackPanel Margin="10 25 0 0">
                 <TextBlock Text="Inventaire" Foreground="White" FontSize="25" Margin="0 0 0 10" HorizontalAlignment="Stretch" TextAlignment="Center"></TextBlock>
                 <ListView ItemsSource="{Binding Items}" x:Name="storeItems">

@@ -173,6 +173,8 @@ namespace InterfaceGraphique
             Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>());
             this.currentGameState.gameHasEnded = true;
 
+            ResetEndOfGameStats();
+
             if(!User.Instance.IsConnected)
             {
                 return;
@@ -187,6 +189,14 @@ namespace InterfaceGraphique
                 await Program.unityContainer.Resolve<MatchmakingViewModel>().WaitingRoomHub.LeaveGame();
             }
 
+        }
+
+        private void ResetEndOfGameStats()
+        {
+            this.achievement1.ImageLocation = "";
+            this.achievement2.ImageLocation = "";
+            this.achievement3.ImageLocation = "";
+            this.pointsNb.Text = "+0";
         }
 
 

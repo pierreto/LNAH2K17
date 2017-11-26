@@ -77,7 +77,6 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
             }
             else
             {
-
                 var friend = allUsers.Find(x => x.Id == userId);
 
                 UserName = friend.Username;
@@ -103,12 +102,11 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
             Achievements = new ObservableCollection<Achievement>(achievements.OrderBy(x => x.Category).ThenBy(x => x.Order));
 
             var playerStats = await PlayerStatsService.GetPlayerStats(profileId);
-            if (playerStats != null)
-            {
-                PointsNb = playerStats.Points;
-                TournamentWon = playerStats.TournamentsWon;
-                GameWon = playerStats.GamesWon;
-            }
+
+            PointsNb = playerStats != null ? playerStats.Points : 0;
+            TournamentWon = playerStats != null ? playerStats.TournamentsWon : 0;
+            GameWon = playerStats != null ? playerStats.GamesWon : 0;
+
 
             LoadingDone();
 
@@ -337,7 +335,7 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
         private bool isFriendProfile;
         public string IsFriendProfile
         {
-            get => isFriendProfile ? "Visible" : "Hidden";
+            get => isFriendProfile ? "Hidden" : "Visible";
         }
 
         private ICommand changeProfilePictureCommand;
