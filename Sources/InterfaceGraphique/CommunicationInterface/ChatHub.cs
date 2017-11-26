@@ -160,7 +160,7 @@ namespace InterfaceGraphique.CommunicationInterface
         public async void SendChannel(ChatMessage message, string channelName)
         {
             message.Sender = User.Instance.UserEntity.Username;
-            message.MessageValue = Encoding.UTF8.GetString(Convert.FromBase64String(message.MessageValue));
+            message.MessageValue = Convert.ToBase64String(Encoding.UTF8.GetBytes(message.MessageValue));
             message.TimeStamp = DateTime.Now;
             try
             {
