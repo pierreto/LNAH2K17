@@ -49,10 +49,12 @@ class NoeudPointControl : NoeudCommun {
         // Un point de contrôle n'est pas sélectionnable par défaut
         self.assignerEstSelectionnable(selectionnable: false)
         
-        // Couleur du point de contrôle par défaut
-        self.assignerDefaultColor(color: self.geometry?.firstMaterial?.diffuse.contents as! UIColor)
+        // Couleur par défaut
+        let defaultColor = UIColor(red: 13.0/255.0, green: 171.0/255.0, blue: 231.0/255.0, alpha: 1.0)
+        self.assignerDefaultColor(color: defaultColor)
+        self.geometry?.firstMaterial?.diffuse.contents = defaultColor
         
-        // Couleur du point de contrôle lorsqu'il est sélectionnable
+        // Couleur lorsque sélectionnable
         let selectionnableColor = UIColor(red: 1.0, green: 85.0/255.0, blue: 82.0/255.0, alpha: 1.0)
         self.assignerSelectionnableColor(color: selectionnableColor)
     }
