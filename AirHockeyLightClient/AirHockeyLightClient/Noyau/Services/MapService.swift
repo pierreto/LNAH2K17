@@ -78,7 +78,8 @@ class MapService {
                 .responseJSON { response in
                     switch response.result {
                     case .success(let value):
-                        if value == true {
+                        let mapIsOverriden = value as! Int
+                        if mapIsOverriden == 1 {
                             // TODO: notify user instead
                             print(map.mapName)
                         }
