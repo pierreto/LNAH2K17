@@ -28,7 +28,7 @@ namespace InterfaceGraphique.Controls.WPF.Signup
         private string passwordErrMsg;
         private string confirmPasswordErrMsg;
         private bool inputsEnabled;
-        private bool notLoading;
+        private bool notLoading = true;
         #endregion
 
         #region Public Properties

@@ -338,8 +338,11 @@ namespace InterfaceGraphique.Controls.WPF.MainMenu
 
         public async Task Quitter()
         {
-            var response = await Program.client.PostAsJsonAsync(Program.client.BaseAddress + "api/logout", User.Instance.UserEntity);
-            Program.unityContainer.Resolve<ChatViewModel>().UndockedChat?.Close();
+            if(User.Instance.IsConnected)
+            {
+                var response = await Program.client.PostAsJsonAsync(Program.client.BaseAddress + "api/logout", User.Instance.UserEntity);
+                Program.unityContainer.Resolve<ChatViewModel>().UndockedChat?.Close();
+            }
             System.Windows.Forms.Application.Exit();
         }
 
