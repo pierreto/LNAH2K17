@@ -22,7 +22,6 @@ class MainViewController: UIViewController {
     // Mark: Functions
     override func viewDidLoad() {
         super.viewDidLoad()
-        DBManager.instance.effacerToutesCartes()
         styleUI()
         
         reachability = Reachability()!

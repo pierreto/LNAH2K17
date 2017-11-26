@@ -21,6 +21,7 @@ import SwiftyJSON
 class MapService {
     
     private let clientConnection = HubManager.sharedConnection
+    private var overridenMaps = [String]()
 
     func getMap(id: String) {
         // TODO
@@ -40,6 +41,20 @@ class MapService {
         }
     }
     
+    func returnFullMaps(completionHandler: @escaping (JSON?, Error?) -> ()) {
+        if self.clientConnection.getConnection() != nil && self.clientConnection.connected! {
+            Alamofire.request("http://" + self.clientConnection.getIpAddress()! + ":63056/api/maps/sync", method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON { response in
+                switch response.result {
+                case .success(let value):
+                    let maps = JSON(value)
+                    completionHandler(maps, nil)
+                case .failure(let error):
+                    completionHandler(nil, error)
+                }
+            }
+        }
+    }
+    
     func saveMap(map: MapEntity) {
         let map = self.convertMapEntity(mapEntity: map) as! [String : Any]
         
@@ -49,6 +64,30 @@ class MapService {
                 .responseJSON { response in
                     if(response.response?.statusCode != 200) {
                         print("Error: saving the map has failed.")
+                    }
+            }
+        }
+    }
+    
+    func syncMap(map: MapEntity) {
+        let convertedMap = self.convertMapEntity(mapEntity: map) as! [String : Any]
+        
+        if self.clientConnection.getConnection() != nil && self.clientConnection.connected! {
+            Alamofire.request("http://" + self.clientConnection.getIpAddress()! + ":63056/api/maps/sync",
+                              method: .post, parameters: convertedMap, encoding: JSONEncoding.default)
+                .responseJSON { response in
+                    switch response.result {
+                    case .success(let value):
+                        print(value)
+                        /*
+                        let mapIsOverriden = value as! Int
+                        if mapIsOverriden == 1 {
+                            // TODO: notify user instead
+                            print(map.mapName)
+                        }
+                        */
+                    case .failure(let error):
+                        print("Error: syncing the map has failed.")
                     }
             }
         }
@@ -71,7 +110,11 @@ class MapService {
         DBManager.instance.updateCreatorOfLocalMaps(creator: self.clientConnection.getUsername()!)
         
         for map in DBManager.instance.recupererCartes() {
-            self.saveMap(map: map)
+            if map.id == nil {
+                self.saveMap(map: map)
+            } else {
+                self.syncMap(map: map)
+            }
         }
         
         DBManager.instance.effacerToutesCartes()
@@ -97,7 +140,6 @@ class MapService {
         mapEntity.id = json["Id"].rawString()
         mapEntity.creator = json["Creator"].rawString()
         mapEntity.mapName = json["MapName"].rawString()
-        // TODO : Fuseau horaire différent
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
         let date = dateFormatter.date(from: json["LastBackup"].rawString()!)
