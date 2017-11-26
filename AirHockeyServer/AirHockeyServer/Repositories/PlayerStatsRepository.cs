@@ -1,4 +1,5 @@
-﻿using AirHockeyServer.Entities;
+﻿using AirHockeyServer.Core;
+using AirHockeyServer.Entities;
 using AirHockeyServer.Mapping;
 using AirHockeyServer.Pocos;
 using AirHockeyServer.Repositories.Interfaces;
@@ -115,7 +116,7 @@ namespace AirHockeyServer.Repositories
             }
         }
 
-        public async Task CreateAchievement(int userId)
+        public async Task CreateAllAchievements(int userId)
         {
             try
             {
@@ -213,6 +214,37 @@ namespace AirHockeyServer.Repositories
             catch (Exception e)
             {
                 System.Diagnostics.Debug.WriteLine("[PlayerStatsRepository.UpdateAchievements] " + e.ToString());
+            }
+        }
+
+        public async Task CreateAchievements(int userId, List<AchivementType> achievements)
+        {
+            try
+            {
+                using (MyDataContext DC = new MyDataContext())
+                {
+                    List<AchievementPoco> pocos = new List<AchievementPoco>();
+                    foreach (AchivementType achievement in achievements)
+                    {
+                        AchievementPoco achievementPoco = new AchievementPoco
+                        {
+                            AchievementType = achievement.ToString(),
+                            IsEnabled = true,
+                            UserId = userId
+                        };
+                        pocos.Add(achievementPoco);
+                    }
+                    foreach (var poco in pocos)
+                    {
+                        DC.GetTable<AchievementPoco>().InsertOnSubmit(poco);
+                    }
+
+                    await Task.Run(() => DC.SubmitChanges());
+                }
+            }
+            catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("[PlayerStatsRepository.CreateAchievements] " + e.ToString());
             }
         }
 
