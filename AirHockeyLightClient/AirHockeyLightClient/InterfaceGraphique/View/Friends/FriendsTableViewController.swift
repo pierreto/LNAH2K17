@@ -33,6 +33,8 @@ class FriendsTableViewController: UITableViewController {
         let buttonPosition:CGPoint = (sender as AnyObject).convert(CGPoint.init(x: 5.0, y: 5.0), to:self.tableView)
         let indexPath = self.tableView.indexPathForRow(at: buttonPosition)
         print("Go to profile of : ", friendsData[(indexPath?.row)!].getUsername())
+        HubManager.sharedConnection.searchId = friendsData[(indexPath?.row)!].getId()
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "GoToProfile"), object: self)
     }
     
     @IBAction func startPrivateChannel(_ sender: Any) {
@@ -45,7 +47,6 @@ class FriendsTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         FriendsTableViewController.instance = self
         
         self.friends.delegate = self
@@ -144,7 +145,7 @@ class FriendsTableViewController: UITableViewController {
         circle.backgroundColor = UIColor(red: 0.235, green: 0.8, blue: 0.208, alpha: 1.0)
         
         let innerCircle = currentCell.viewWithTag(6) as! UIView
-        circle.backgroundColor = .white
+        innerCircle.backgroundColor = .white
     }
     
     override func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {

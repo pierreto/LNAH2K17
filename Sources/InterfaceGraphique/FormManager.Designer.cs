@@ -1,4 +1,7 @@
-﻿namespace InterfaceGraphique {
+﻿using System.Drawing;
+using System.IO;
+
+namespace InterfaceGraphique {
     partial class FormManager {
         private System.ComponentModel.IContainer components = null;
 
@@ -127,7 +130,8 @@
             this.Controls.Add(this.elementHost2);
             this.Controls.Add(this.elementHost1);
             this.Name = "FormManager";
-            this.Text = "Air Hockey";
+            this.Text = "LNAH 2K17";
+            this.Icon = new Icon(Directory.GetCurrentDirectory() + "\\media\\icon\\air-hockey-icon-167x167.ico");
             this.gameRequestPopup.ResumeLayout(false);
             this.gameRequestPopup.PerformLayout();
             this.ResumeLayout(false);

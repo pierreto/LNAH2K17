@@ -27,6 +27,13 @@ class MapCarouselViewController: UIViewController, iCarouselDataSource, iCarouse
     private let LOCK_BUTTON_ICON = "\u{f023}"
     private var maps = [MapEntity]()
     
+    private let BORDER_COLORS = [
+        UIColor(red: 84.0/255.0, green: 195.0/255.0, blue: 255.0/255.0, alpha: 0.9),
+        UIColor(red: 60.0/255.0, green: 204.0/255.0, blue: 113.0/255.0, alpha: 0.9),
+        UIColor(red: 255.0/255.0, green: 190.0/255.0, blue: 105.0/255.0, alpha: 0.9),
+        UIColor(red: 234.0/255.0, green: 74.0/255.0, blue: 76.0/255.0, alpha: 0.9)
+    ]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -70,6 +77,10 @@ class MapCarouselViewController: UIViewController, iCarouselDataSource, iCarouse
             // Reload tableView
             self.carouselView.reloadData()
         })
+    }
+    
+    func numberOfItems() -> Int {
+        return maps.count
     }
     
     func numberOfItems(in carousel: iCarousel) -> Int {
@@ -161,12 +172,21 @@ class MapCarouselViewController: UIViewController, iCarouselDataSource, iCarouse
             tempView.addSubview(mapImageView)
         }
         
+        tempView.layer.borderWidth = 5
+        tempView.layer.borderColor = self.BORDER_COLORS[index % self.BORDER_COLORS.count].cgColor
+        tempView.transform = CGAffineTransform(scaleX: 1.8, y: 1.8)
+        
         return tempView
     }
     
     func handleRegister(sender: UIButton) {
         let parent = self.parent as! MapDisplayViewController
         parent.handleTableSelection()
+    }
+    
+    func carouselDidEndScrollingAnimation(_ carousel: iCarousel) {
+        let parent = self.parent as! MapDisplayViewController
+        parent.handleCarouselDidEndScrolling()
     }
     
     func carousel(_ carousel: iCarousel, valueFor option: iCarouselOption, withDefault value: CGFloat) -> CGFloat {
@@ -177,21 +197,19 @@ class MapCarouselViewController: UIViewController, iCarouselDataSource, iCarouse
     }
     
     func deleteCurrentMap() {
-        if self.maps.count > 0 {
-            let mapService = MapService()
-            mapService.deleteMap(map: self.maps[self.carouselView.currentItemIndex], completionHandler: { success, error in
-                if success! {
-                    self.maps.remove(at: self.carouselView.currentItemIndex) // remove the item from the data model
+        let mapService = MapService()
+        mapService.deleteMap(map: self.maps[self.carouselView.currentItemIndex], completionHandler: { success, error in
+            if success! {
+                self.maps.remove(at: self.carouselView.currentItemIndex) // remove the item from the data model
                     
-                    DispatchQueue.main.async(execute: { () -> Void in
-                        // Reload tableView
-                        self.carouselView.reloadData()
-                    })
-                }
+                DispatchQueue.main.async(execute: { () -> Void in
+                    // Reload tableView
+                    self.carouselView.reloadData()
+                })
+            }
                 
-                return
-            })
-        }
+            return
+        })
     }
     
 }

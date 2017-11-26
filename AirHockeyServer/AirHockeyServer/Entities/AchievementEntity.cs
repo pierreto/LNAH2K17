@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AirHockeyServer.Core;
+using AirHockeyServer.Pocos;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -21,6 +23,25 @@ namespace AirHockeyServer.Entities
 
         public int Order { get; set; }
 
+        public AchievementEntity(AchievementPoco poco)
+        {
+            AchivementType type = (AchivementType) Enum.Parse(AchivementType.GetType(), poco.AchievementType);
+            var entity = Cache.Achievements[type];
+
+            Name = entity.Name;
+            DisabledImageUrl = entity.DisabledImageUrl;
+            EnabledImageUrl = entity.EnabledImageUrl;
+            IsEnabled = poco.IsEnabled;
+            Category = entity.Category;
+            Order = entity.Order;
+            AchivementType = type;
+        }
+
+        public AchievementEntity()
+        {
+
+        }
+
     }
 
     public enum AchivementType
@@ -32,7 +53,7 @@ namespace AirHockeyServer.Entities
         FiveTournamentsPlayed,
 
         TenGamesPlayed,
-        TenTournamentPlayed,
+        TenTournamentsPlayed,
 
         FivePoints,
         ThirtyPoints,

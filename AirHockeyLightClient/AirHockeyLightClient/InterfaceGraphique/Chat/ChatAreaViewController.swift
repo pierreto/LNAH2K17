@@ -422,7 +422,38 @@ extension ChatAreaViewController: ChannelSelectionDelegate {
     
     func toggleAddChannelView() {
         cJoinChannelConstraint = -241
-        self.addChannelView.isHidden = !self.addChannelView.isHidden
+        let isHidden = self.addChannelView.isHidden
+        
+        if isHidden {
+            self.addChannelView.isHidden = !isHidden
+        
+            self.addChannelView.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
+            self.addChannelView.alpha = 0.0
+            UIView.animate(
+                withDuration: 0.25,
+                animations: {
+                    self.addChannelView.alpha = 1.0
+                    self.addChannelView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                }
+            )
+        }
+        else {
+            self.addChannelView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            self.addChannelView.alpha = 1.0
+            UIView.animate(
+                withDuration: 0.25,
+                animations: {
+                    self.addChannelView.alpha = 0.0
+                    self.addChannelView.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
+                },
+                completion: {
+                    (finished: Bool) in
+                    if finished {
+                        self.addChannelView.isHidden = !isHidden
+                    }
+                }
+            )
+        }
     }
 }
 

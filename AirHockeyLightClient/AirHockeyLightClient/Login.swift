@@ -47,6 +47,7 @@ class Login: NSObject {
                             if let result = response.result.value {
                                 let id = result as! Int
                                 self.clientConnection.setId(id: id)
+                                self.clientConnection.searchId = id
                             }
                             
                             // Connect user to chat

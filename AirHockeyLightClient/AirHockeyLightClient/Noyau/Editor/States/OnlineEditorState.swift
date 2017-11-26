@@ -94,8 +94,11 @@ class OnlineEditorState: EditorState {
     }
     
     override func sauvegarderCarte(map: MapEntity, json: String?, icon: UIImage?) {
-        // map.icon = ImageService.convertImgToBase64(image: icon!)
-        map.icon = ""
+        var iconStrBase64 = map.icon
+        if icon != nil {
+            iconStrBase64 = ImageService.convertMapIconToBase64(icon: icon!)
+        }
+        map.icon = iconStrBase64
         map.json = json
         map.creator = self.clientConnection.getUsername()
         

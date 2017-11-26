@@ -13,8 +13,8 @@ namespace InterfaceGraphique.CommunicationInterface
 {
     public class FriendsHub : BaseHub, IBaseHub
     {
-        private static IHubProxy FriendsProxy { get; set; }
-        private static HubConnection Connection;
+        private IHubProxy FriendsProxy { get; set; }
+        private HubConnection Connection;
         private UserEntity user;
 
         public event Action<FriendRequestEntity> FriendRequestEvent;
@@ -31,22 +31,37 @@ namespace InterfaceGraphique.CommunicationInterface
 
         public void InitializeHub(HubConnection connection)
         {
+            System.Diagnostics.Debug.WriteLine("InitializeHub");
             Connection = connection;
             FriendsProxy = Connection.CreateHubProxy("FriendsHub");
+            InitializeEvents();
         }
 
         public async Task InitializeFriendsHub()
         {
-            this.user = User.Instance.UserEntity;
+            var me = User.Instance.UserEntity;
+            this.user = new UserEntity()
+            {
+                Username = me.Username,
+                AlreadyPlayedGame = me.AlreadyPlayedGame,
+                AlreadyUsedFatEditor = me.AlreadyUsedFatEditor,
+                AlreadyUsedLightEditor = me.AlreadyUsedLightEditor,
+                Date = me.Date,
+                Email = me.Email,
+                Id = me.Id,
+                IsConnected = me.IsConnected,
+                IsSelected = me.IsSelected,
+                Name = me.Name,
+                //Profile = me.Profile
+            };
             try
             {
-                await FriendsProxy.Invoke("JoinHub", this.user);
+                await FriendsProxy.Invoke("JoinHub", user);
             }
             catch (Exception e)
             {
                 HandleError("FriendsHub -> InitializeFriendsHub");
             }
-            InitializeEvents();
         }
 
         private void InitializeEvents()
@@ -103,7 +118,7 @@ namespace InterfaceGraphique.CommunicationInterface
         {
             try
             {
-                return await FriendsProxy.Invoke<bool>("FriendIsAvailable", recipientId);
+                return await FriendsProxy?.Invoke<bool>("FriendIsAvailable", recipientId);
             }
             catch (Exception e)
             {
@@ -117,7 +132,7 @@ namespace InterfaceGraphique.CommunicationInterface
         {
             try
             {
-                return await FriendsProxy.Invoke<List<UserEntity>>("GetAllFriends", this.user);
+                return await FriendsProxy?.Invoke<List<UserEntity>>("GetAllFriends", this.user);
             }
             catch (Exception e)
             {
@@ -131,7 +146,7 @@ namespace InterfaceGraphique.CommunicationInterface
             try
             {
 
-                return await FriendsProxy.Invoke<List<FriendRequestEntity>>("GetAllPendingRequests", this.user);
+                return await FriendsProxy?.Invoke<List<FriendRequestEntity>>("GetAllPendingRequests", this.user);
             }
             catch (Exception e)
             {
@@ -145,7 +160,7 @@ namespace InterfaceGraphique.CommunicationInterface
             try
             {
 
-                return await FriendsProxy.Invoke<FriendRequestEntity>("SendFriendRequest", this.user, friend);
+                return await FriendsProxy?.Invoke<FriendRequestEntity>("SendFriendRequest", this.user, friend);
             }
             catch (Exception e)
             {
@@ -159,7 +174,7 @@ namespace InterfaceGraphique.CommunicationInterface
             FriendRequestEntity res = new FriendRequestEntity();
             try
             {
-                res = await FriendsProxy.Invoke<FriendRequestEntity>("AcceptFriendRequest", request);
+                res = await FriendsProxy?.Invoke<FriendRequestEntity>("AcceptFriendRequest", request);
             }
             catch (Exception e)
             {
@@ -173,7 +188,7 @@ namespace InterfaceGraphique.CommunicationInterface
             FriendRequestEntity res = new FriendRequestEntity();
             try
             {
-                res = await FriendsProxy.Invoke<FriendRequestEntity>("RefuseFriendRequest", request);
+                res = await FriendsProxy?.Invoke<FriendRequestEntity>("RefuseFriendRequest", request);
             }
             catch (Exception e)
             {
@@ -185,7 +200,7 @@ namespace InterfaceGraphique.CommunicationInterface
         {
             try
             {
-                return await FriendsProxy.Invoke<bool>("RemoveFriend", this.user, ex_friend);
+                return await FriendsProxy?.Invoke<bool>("RemoveFriend", this.user, ex_friend);
             }
             catch (Exception e)
             {
@@ -198,7 +213,7 @@ namespace InterfaceGraphique.CommunicationInterface
         {
             try
             {
-                await FriendsProxy.Invoke("AcceptGameRequest", gameRequest);
+                await FriendsProxy?.Invoke("AcceptGameRequest", gameRequest);
             }
             catch (Exception e)
             {
@@ -210,7 +225,7 @@ namespace InterfaceGraphique.CommunicationInterface
         {
             try
             {
-                await FriendsProxy.Invoke("DeclineGameRequest", gameRequest);
+                await FriendsProxy?.Invoke("DeclineGameRequest", gameRequest);
             }
             catch (Exception e)
             {
@@ -222,7 +237,7 @@ namespace InterfaceGraphique.CommunicationInterface
         {
             try
             {
-                return await FriendsProxy.Invoke<bool>("SendGameRequest", gameRequest);
+                return await FriendsProxy?.Invoke<bool>("SendGameRequest", gameRequest);
             }
             catch (Exception e)
             {
@@ -236,7 +251,7 @@ namespace InterfaceGraphique.CommunicationInterface
         {
             try
             {
-                await FriendsProxy.Invoke("CancelGameRequest", gameRequest);
+                await FriendsProxy?.Invoke("CancelGameRequest", gameRequest);
             }
             catch (Exception e)
             {
@@ -248,7 +263,7 @@ namespace InterfaceGraphique.CommunicationInterface
         {
             try
             {
-                await FriendsProxy.Invoke("Logout", User.Instance.UserEntity);
+                await FriendsProxy?.Invoke("Logout", User.Instance.UserEntity);
             }
             catch (Exception e)
             {

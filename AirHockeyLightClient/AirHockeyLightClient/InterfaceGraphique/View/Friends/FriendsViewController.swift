@@ -23,6 +23,15 @@ class FriendsViewController: UIViewController {
         super.viewDidLoad()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.view.alpha = 0.2
+        UIView.animate(
+            withDuration: 0.5,
+            animations: {
+                self.view.alpha = 1.0
+        })
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         

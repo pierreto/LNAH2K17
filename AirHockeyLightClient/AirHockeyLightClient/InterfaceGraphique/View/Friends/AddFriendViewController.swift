@@ -48,6 +48,15 @@ class AddFriendViewController: UIViewController {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.view.alpha = 0.2
+        UIView.animate(
+            withDuration: 0.5,
+            animations: {
+                self.view.alpha = 1.0
+        })
+    }
+    
     @IBAction func addFriend(_ sender: Any) {
         self.friendsService.sendFriendRequest(friendUsername: self.search.text!)
         self.search.text = ""

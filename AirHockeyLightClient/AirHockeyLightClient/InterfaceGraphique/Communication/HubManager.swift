@@ -29,6 +29,8 @@ class HubManager {
     /// Instance singleton
     static let sharedConnection = HubManager()
     
+    public var searchId: Int?
+    
     private var connection: SignalR?
     private var hubs = [BaseHub]()
     private var user: UserEntity? = UserEntity()
@@ -102,16 +104,28 @@ class HubManager {
     ///
     ////////////////////////////////////////////////////////////////////////
     public func EstablishConnection(ipAddress: String) {
+        print("establishing connection")
+        self.ClearHubs()
+        
         self.connection = SignalR("http://" + ipAddress + ":63056")
         self.AddHubs()
+        
+        self.connection!.start()
+        
         self.connection!.starting = { print("started") }
         self.connection!.connected = { print("connected: \(String(describing: self.connection!.connectionID))") }
         self.connection!.connectionSlow = { print("connectionSlow") }
         self.connection!.reconnecting = { print("reconnecting") }
         self.connection!.reconnected = { print("reconnected") }
         self.connection!.disconnected = { print("disconnected") }
+    }
+    
+    public func ClearHubs() {
+        for hub in self.hubs {
+            hub.hubProxy = nil
+        }
         
-        self.connection!.start()
+        self.hubs = [BaseHub]()
     }
     
     /// Crée les hubs et les ajoute à la connexion
@@ -162,19 +176,14 @@ class HubManager {
     /// Déconnecter tous les hubs et terminer la connexion
     public func StopConnection() -> Promise<Bool> {
         return Promise { fullfil, error in
-            if self.connection?.state == .connected {
-                print ("Will stop connection")
-                self.connection?.stop()
-                self.user = UserEntity()
-                self.hubs = [BaseHub]()
-                self.ipAddress = nil
+            print ("Will stop connection")
+            self.connection?.stop()
+            self.user = UserEntity()
+            self.ClearHubs()
+            self.ipAddress = nil
                 
-                NotificationCenter.default.post(name: Notification.Name(rawValue: LoginNotification.LogoutNotification), object: nil)
-                fullfil(true)
-            } else {
-                print ("Stopping connection error : not connected")
-                fullfil(false)
-            }
+            NotificationCenter.default.post(name: Notification.Name(rawValue: LoginNotification.LogoutNotification), object: nil)
+            fullfil(true)
         }
     }
     

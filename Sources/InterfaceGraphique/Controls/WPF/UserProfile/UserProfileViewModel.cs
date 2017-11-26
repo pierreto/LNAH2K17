@@ -77,7 +77,7 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
             }
             else
             {
-                
+
                 var friend = allUsers.Find(x => x.Id == userId);
 
                 UserName = friend.Username;
@@ -88,7 +88,18 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
                 DateCreation = friend.Date;
             }
 
-            var achievements = await PlayerStatsService.GetPlayerAchivements(profileId);
+            var achievements = await PlayerStatsService.GetAchievements();
+            var userAchievements = await PlayerStatsService.GetPlayerAchivements(profileId);
+
+            achievements.ForEach(x =>
+            {
+                var achievement = userAchievements.Find(w => w.AchivementType == x.AchivementType);
+                if (achievement != null)
+                {
+                    x.IsEnabled = achievement.IsEnabled;
+                }
+            });
+
             Achievements = new ObservableCollection<Achievement>(achievements.OrderBy(x => x.Category).ThenBy(x => x.Order));
 
             var playerStats = await PlayerStatsService.GetPlayerStats(profileId);
@@ -113,13 +124,13 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
             NotLoading = false;
         }
 
-        private ObservableCollection<Achievement> achievements;
+        private ObservableCollection<Achievement> userAchievements;
         public ObservableCollection<Achievement> Achievements
         {
-            get => achievements;
+            get => userAchievements;
             set
             {
-                achievements = value;
+                userAchievements = value;
                 OnPropertyChanged();
             }
         }
@@ -340,7 +351,7 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
 
         private async Task ChangeProfilePicture()
         {
-            if(isFriendProfile)
+            if (isFriendProfile)
             {
                 return;
             }

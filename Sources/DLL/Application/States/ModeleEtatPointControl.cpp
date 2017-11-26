@@ -178,8 +178,11 @@ void ModeleEtatPointControl::playerMouseMove(int x, int y) {
 			SYSTEMTIME st;
 			GetSystemTime(&st);
 			accTime += st.wMilliseconds;
-			if (accTime>500) {
-				sendToServer();
+			if (accTime>1000) {
+				if (noeudsSurLaTable())
+				{
+					sendToServer();
+				}
 				accTime = 0;
 			}
 		}
@@ -188,16 +191,15 @@ void ModeleEtatPointControl::playerMouseMove(int x, int y) {
 }
 void ModeleEtatPointControl::sendToServer()
 {
-
-	for (NoeudAbstrait* node : visiteurDeplacement_.getSelectedNodes())
-	{
-		NoeudPointControl* noeudPointControl = dynamic_cast<NoeudPointControl*>(node);
-		if (controlPointEventCallback_)
+		for (NoeudAbstrait* node : visiteurDeplacement_.getSelectedNodes())
 		{
-			controlPointEventCallback_(noeudPointControl->getUUID(), glm::value_ptr(node->obtenirPositionRelative()));
-			controlPointEventCallback_(noeudPointControl->obtenirNoeudOppose()->getUUID(), glm::value_ptr(noeudPointControl->obtenirNoeudOppose()->obtenirPositionRelative()));
+			NoeudPointControl* noeudPointControl = dynamic_cast<NoeudPointControl*>(node);
+			if (controlPointEventCallback_)
+			{
+				controlPointEventCallback_(noeudPointControl->getUUID(), glm::value_ptr(node->obtenirPositionRelative()));
+				controlPointEventCallback_(noeudPointControl->obtenirNoeudOppose()->getUUID(), glm::value_ptr(noeudPointControl->obtenirNoeudOppose()->obtenirPositionRelative()));
+			}
 		}
-	}
 }
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -214,7 +216,10 @@ void ModeleEtatPointControl::mouseUpL() {
 	
 	// On annule l'action si les objets ne sont plus tous sur la table
 	if (!noeudsSurLaTable())
+	{
 		escape();
+
+	}
 
 	if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
 	{

@@ -66,7 +66,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
         {
             try
             {
-                await WaitingRoomProxy.Invoke("LeaveGame", User.Instance.UserEntity, CurrentGameId);
+                await WaitingRoomProxy.Invoke("LeaveGame", User.Instance.UserEntity.Id, CurrentGameId);
             }
             catch (Exception e)
             {

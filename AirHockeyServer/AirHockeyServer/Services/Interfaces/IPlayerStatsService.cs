@@ -19,10 +19,14 @@ namespace AirHockeyServer.Services.Interfaces
 
         Task<List<AchievementEntity>> GetAchievements(int userId);
 
-        Task SetPlayerAchievements(int userId);
+        Task CreateAllAchievements(int userId);
+
+        Task CreateAchievements(int userId, List<AchivementType> achievement);
 
         Task<List<AchievementEntity>> GetAchievementsToUpdate(int userId);
 
         Task UpdateAchievements(int userId, List<AchivementType> achievements);
+
+        List<AchievementEntity> GetAchievements();
     }
 }

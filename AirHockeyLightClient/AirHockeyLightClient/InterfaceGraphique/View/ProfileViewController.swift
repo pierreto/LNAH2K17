@@ -35,6 +35,8 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     @IBOutlet weak var loadingSpinner: UIActivityIndicatorView!
     @IBOutlet weak var navigationBar: UINavigationItem!
     
+    static var sharedProfileViewController = ProfileViewController()
+    
     let gradientAchievements = CAGradientLayer()
     let gradientItems = CAGradientLayer()
     
@@ -45,6 +47,8 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     var storeService = StoreService()
     var userStoreItems = [StoreItemEntity]()
 
+    var userId: Int?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         achievementCollectionView.delegate = self
@@ -94,15 +98,14 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         self.gamesPlayedLabel.text = "0"
         self.tournamentsWonLabel.text = "0"
         self.tournamentsPlayedLabel.text = "0"
-        
-        // Définir les informations de l'usager courant
+
         self.loadUserProfile()
         self.loadUserStoreItems()
     }
     
     func loadUserProfile() {
         self.loading()
-        Alamofire.request("http://" + HubManager.sharedConnection.getIpAddress()! + ":63056/api/profile/" + ((HubManager.sharedConnection.getId())?.description)!)
+        Alamofire.request("http://" + HubManager.sharedConnection.getIpAddress()! + ":63056/api/profile/" + (HubManager.sharedConnection.searchId?.description)!)
             .responseJSON { response in
                 if let jsonValue = response.result.value {
                     let json = JSON(jsonValue)
@@ -182,9 +185,10 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
                     }
                     self.achievementCollectionView.reloadData()
                     let indexPath = IndexPath(row: Int(INT_MAX)/200, section: 0);
-                    self.achievementCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally , animated: false)
+                    //self.achievementCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally , animated: false)
                 }
                 self.loadingDone()
+                HubManager.sharedConnection.searchId = HubManager.sharedConnection.getId()
         }
     }
     
@@ -387,6 +391,9 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         self.itemCollectionView.isUserInteractionEnabled = true
     }
     
+    public func setUserId(userId: Int) {
+        self.userId = userId
+    }
     /*
     // MARK: - Navigation
 
@@ -396,5 +403,4 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         // Pass the selected object to the new view controller.
     }
     */
-
 }

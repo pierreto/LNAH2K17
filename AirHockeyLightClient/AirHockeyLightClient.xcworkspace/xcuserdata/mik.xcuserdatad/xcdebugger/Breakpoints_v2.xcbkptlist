@@ -9,13 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "AirHockeyLightClient/InterfaceGraphique/View/Friends/FriendRequestsTableViewController.swift"
-            timestampString = "533309766.283645"
+            filePath = "AirHockeyLightClient/InterfaceGraphique/Editor/EditorViewController.swift"
+            timestampString = "533332811.899604"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "47"
-            endingLineNumber = "47"
-            landmarkName = "viewWillAppear(_:)"
+            startingLineNumber = "179"
+            endingLineNumber = "179"
+            landmarkName = "sauvegarderCarteManuellement(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

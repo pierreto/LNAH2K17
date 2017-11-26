@@ -14,14 +14,15 @@ namespace AirHockeyServer.Services.Interfaces
 
         void UpdateGame(Guid gameId, MapEntity map);
 
-        void LeaveGame(UserEntity user);
+        Task LeaveGame(UserEntity user);
+
+        Task LeaveGame(int userId);
 
         void GoalScored(Guid gameId, int playerId);
 
         Task GameOver(Guid gameId);
 
         Task SaveGame(GameEntity game);
-
-        void LeaveGame(int userId);
+        
     }
 }

@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.Integration;
+using InterfaceGraphique.CommunicationInterface;
 using InterfaceGraphique.Controls.WPF.Editor;
 using InterfaceGraphique.Editor;
 using Microsoft.Practices.Unity;
@@ -52,6 +53,7 @@ namespace InterfaceGraphique.Controls.WPF
             this.Width = 440;
             this.Height = 180;
             this.elementHost1.Child = offlineOrOnlineView;
+            offlineOrOnlineView.Online.IsEnabled = User.Instance.IsConnected;
 
         }
         ////////////////////////////////////////////////////////////////////////
