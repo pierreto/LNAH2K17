@@ -3,7 +3,7 @@
   "moveDown_": "S",
   "moveLeft_": "A",
   "moveRight_": "D",
-  "winGoals_": 1,
+  "winGoals_": 2,
   "p2Virtual_": true,
   "debugMode_": true,
   "collDebug_": true,

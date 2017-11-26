@@ -16,16 +16,16 @@ namespace InterfaceGraphique.Controls.WPF.Converters
         {
             string s = value as string;
 
-            //if (s == null || s == "")
+            if (s == null || s == "")
                 return Directory.GetCurrentDirectory() + "\\media\\image\\default_profile_picture.png";
 
-            //BitmapImage bi = new BitmapImage();
+            BitmapImage bi = new BitmapImage();
 
-            //bi.BeginInit();
-            //bi.StreamSource = new MemoryStream(System.Convert.FromBase64String(s));
-            //bi.EndInit();
+            bi.BeginInit();
+            bi.StreamSource = new MemoryStream(System.Convert.FromBase64String(s));
+            bi.EndInit();
 
-            //return bi;
+            return bi;
         }
 
         public override object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

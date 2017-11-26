@@ -230,8 +230,8 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
         if !channelsToJoin.contains(where: { (cE: ChannelEntity) -> Bool in
             (cE.name == name && cE.isPrivate)
         }) {
-            channelsToJoin.append(ChannelEntity(name: name, isPrivate: true, privateUserId: othersId, profile: othersProfile))
-            joinChannelTableView.reloadData()
+            MasterViewController.sharedMasterViewController.channels.append(ChannelEntity(name: name, isPrivate: true, privateUserId: othersId, profile: othersProfile))
+            MasterViewController.sharedMasterViewController.channelTableView.reloadData()
         }
     }
     
