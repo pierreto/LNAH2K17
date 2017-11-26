@@ -159,6 +159,7 @@
 		8F4D5E3C1FA060150002D5C5 /* Delete.png in Resources */ = {isa = PBXBuildFile; fileRef = 8F4D5E3B1FA060140002D5C5 /* Delete.png */; };
 		8F5299451FC8F2250029CC1E /* LostConnectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5299441FC8F2250029CC1E /* LostConnectionViewController.swift */; };
 		8F5299471FC923CF0029CC1E /* ServerDownViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5299461FC923CF0029CC1E /* ServerDownViewController.swift */; };
+		8F60A8341FCA6A0600A3458C /* UserCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F60A8331FCA6A0600A3458C /* UserCollectionViewCell.swift */; };
 		8F64C0131F7754FD00F14AC7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F64C0121F7754FD00F14AC7 /* LaunchScreen.storyboard */; };
 		8F64C0151F77550800F14AC7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8F64C0141F77550800F14AC7 /* Main.storyboard */; };
 		8F65B2851FAE264100D8EE20 /* OnlineUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F65B2841FAE264100D8EE20 /* OnlineUser.swift */; };
@@ -398,6 +399,7 @@
 		8F4D5E3B1FA060140002D5C5 /* Delete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Delete.png; path = ../../Sources/Icons/Delete.png; sourceTree = "<group>"; };
 		8F5299441FC8F2250029CC1E /* LostConnectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LostConnectionViewController.swift; path = InterfaceGraphique/Menus/LostConnectionViewController.swift; sourceTree = "<group>"; };
 		8F5299461FC923CF0029CC1E /* ServerDownViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ServerDownViewController.swift; path = InterfaceGraphique/Menus/ServerDownViewController.swift; sourceTree = "<group>"; };
+		8F60A8331FCA6A0600A3458C /* UserCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserCollectionViewCell.swift; path = InterfaceGraphique/Editor/UserCollectionViewCell.swift; sourceTree = "<group>"; };
 		8F64C0121F7754FD00F14AC7 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = InterfaceGraphique/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8F64C0141F77550800F14AC7 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = InterfaceGraphique/Main.storyboard; sourceTree = "<group>"; };
 		8F65B2841FAE264100D8EE20 /* OnlineUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OnlineUser.swift; path = User/OnlineUser.swift; sourceTree = "<group>"; };
@@ -1032,6 +1034,7 @@
 				8FCDF6181FA1BEDF00631551 /* EditorNotificationScene.swift */,
 				34B965CD1FA26EDE00BD17CC /* GeneralPropertiesViewController.swift */,
 				8F7F0BC71FA6CFDA00C4F022 /* ObjectPropertiesView.swift */,
+				8F60A8331FCA6A0600A3458C /* UserCollectionViewCell.swift */,
 			);
 			name = Editor;
 			sourceTree = "<group>";
@@ -1391,6 +1394,7 @@
 				344A6E241F99112000CFFBEB /* NoeudAccelerateur.swift in Sources */,
 				3415E6C71F85649D00DB1CAD /* UsineAbstraite.swift in Sources */,
 				25F66FB51FA13071006CB47F /* VisiteurSauvegarde.swift in Sources */,
+				8F60A8341FCA6A0600A3458C /* UserCollectionViewCell.swift in Sources */,
 				8F0B94AE1F8D450B007F0E82 /* VisiteurSelectionnable.swift in Sources */,
 				1D3D77B71F981BCA0012EF12 /* MainViewController.swift in Sources */,
 				8F6AE2C21F6592EB00A29E8B /* GameScene.swift in Sources */,

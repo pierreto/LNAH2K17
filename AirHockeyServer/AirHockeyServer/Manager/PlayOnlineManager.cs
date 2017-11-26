@@ -60,15 +60,24 @@ namespace AirHockeyServer.Manager
         {
             if (Cache.Games.ContainsKey(gameId))
             {
-                if (playerId == 1)
+                //if (playerId == 1)
+                //{
+                //    //MASTER SCORED
+                //    Cache.Games[gameId].Score[0] += 1;
+                //}
+                //else
+                //{
+                //    // SLAVE SCORED
+                //    Cache.Games[gameId].Score[1] += 1;
+                //}
+
+                for (int i = 0; i < Cache.Games[gameId].Players.Count(); i++)
                 {
-                    //MASTER SCORED
-                    Cache.Games[gameId].Score[0] += 1;
-                }
-                else
-                {
-                    // SLAVE SCORED
-                    Cache.Games[gameId].Score[1] += 1;
+                    if (Cache.Games[gameId].Players[i].Id == playerId)
+                    {
+                        Cache.Games[gameId].Score[i] += 1;
+                        return;
+                    }
                 }
             }
         }

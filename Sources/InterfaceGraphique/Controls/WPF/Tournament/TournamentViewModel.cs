@@ -50,9 +50,9 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
         {
             RemainingTime = 30;
             Players = new List<GamePlayerEntity>();
-            Winner = string.Empty;
-            SemiFinal1 = string.Empty;
-            SemiFinal2 = string.Empty;
+            Winner = "Vainqueur";
+            SemiFinal1 = "Semi-Finaliste";
+            SemiFinal2 = "Semi-Finaliste";
 
             OnPropertyChanged("OpponentsFound");
             OnPropertyChanged("EnabledMaps");
@@ -89,8 +89,8 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
 
             }
             SelectedMap = mapsAvailable[1];
-
-
+            ImageSrc = selectedMap.Icon;
+            OpponentLeftMsg = "Hidden";
         }
 
         private void InitializeEvents()
@@ -112,10 +112,13 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
 
         private void OnPlayerLeft(object e)
         {
-            this.opponentLeftMsg = true;
-            OnPropertyChanged("OpponentLeftMsg");
-            //SetDefaultValues();
-            //SelectedMap = mapsAvailable[1];
+            OpponentLeftMsg = "Visible";
+            SetDefaultValues();
+            if(mapsAvailable != null)
+            {
+                SelectedMap = mapsAvailable[1];
+                ImageSrc = selectedMap.Icon;
+            }
         }
 
         private void OnWinnerResult(object e, GamePlayerEntity winner)
@@ -144,6 +147,7 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
                     }
                 }
                 OnPropertyChanged("SelectedMap");
+                ImageSrc = selectedMap.Icon;
             }
         }
 
@@ -160,9 +164,6 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
             {
                 OnPropertyChanged("Player" + i);
             }
-
-            opponentLeftMsg = false;
-            OnPropertyChanged("OpponentLeftMsg");
         }
 
         private int remainingTime = 0;
@@ -176,6 +177,7 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
             }
         }
 
+        
         private List<GamePlayerEntity> Players { get; set; }
 
         public string Player1
@@ -258,6 +260,7 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
                         }
                     }
                     this.OnPropertyChanged();
+                    ImageSrc = selectedMap.Icon;
                     WaitingRoomHub.UpdateSelectedMap(value);
                 }
             }
@@ -298,7 +301,7 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
         private string imageSrc = "";
         public string ImageSrc
         {
-            get => Directory.GetCurrentDirectory() + "\\media\\image\\No_image_available.png";
+            get => imageSrc;
             set
             {
                 imageSrc = value;
@@ -345,10 +348,15 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
             }
         }
 
-        private bool opponentLeftMsg;
+        private string opponentLeftMsg;
         public string OpponentLeftMsg
         {
-            get => opponentLeftMsg ? "Visible" : "Hidden";
+            get => opponentLeftMsg;
+            set
+            {
+                opponentLeftMsg = value;
+                OnPropertyChanged();
+            }
         }
 
         private ICommand hidePopupCommand;
@@ -362,8 +370,7 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
 
         private void HidePopup()
         {
-            opponentLeftMsg = false;
-            OnPropertyChanged("OpponentLeftMsg");
+            OpponentLeftMsg = "Hidden";
         }
     }
 }

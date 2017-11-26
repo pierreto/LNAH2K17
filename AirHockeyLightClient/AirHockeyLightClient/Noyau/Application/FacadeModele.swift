@@ -69,23 +69,7 @@ class FacadeModele {
     
     /// Propriétés générales de la zone de jeu (coefficients)
     private var generalProperties: GeneralProperties?
-    
-    /// Les différentes couleurs pour chaque utilisateur en édition
-    // TODO : Mettre ceci dans les infos de l'utilisateur lors de l'édition en ligne
-    /*private let COLOR_USERS : [UIColor] =
-        [
-            UIColor(red: 0.0,       green: 123.0/255.0, blue: 194.0/255.0, alpha: 1.0), // USER 1
-            UIColor(red: 194.0/255, green: 0.0,         blue: 158.0/255.0, alpha: 1.0), // USER 2
-            UIColor(red: 194.0/255, green: 87.0/255.0,  blue: 0.0,         alpha: 1.0), // USER 3
-            UIColor(red: 107.0/255, green: 194.0/255.0, blue: 0.0,         alpha: 1.0)  // USER 4
-        ]
-    private var colorPicker = 0
-    public func getUserColor() -> UIColor {
-        let color = COLOR_USERS[(colorPicker % COLOR_USERS.count)]
-        colorPicker += 1
-        return color
-    }*/
-    
+        
     /// La couleur de l'utilisateur courant (ex. lors de la sélection)
     private var currentUserColor: UIColor = MathHelper.hexToUIColor(hex: "007BC2")
     

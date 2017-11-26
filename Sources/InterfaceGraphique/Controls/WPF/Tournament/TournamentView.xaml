@@ -26,8 +26,8 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="10*"></RowDefinition>
-                <RowDefinition Height="45*"></RowDefinition>
-                <RowDefinition Height="45*"></RowDefinition>
+                <RowDefinition Height="30*"></RowDefinition>
+                <RowDefinition Height="60*"></RowDefinition>
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0">
                 <Button Command="{Binding Cancel}" HorizontalAlignment="Left">
@@ -36,12 +36,44 @@
                     </Button.Content>
                 </Button>
             </StackPanel>
+            
             <Grid Grid.Row="1" Margin="20,0,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <StackPanel Margin="20,0,0,0">
+                        <TextBlock Text="Cartes" FontSize="20" Foreground="White" HorizontalAlignment="Center"/>
+                        <ComboBox Name="mapList" 
+                        Grid.Row="1"
+                        ItemsSource="{Binding MapsAvailable}" 
+                        SelectedItem="{Binding SelectedMap}"
+                        Margin="0,10,0,0"
+                        Width="400"
+                        IsEnabled="{Binding EnabledMaps}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Grid.Column="0" Width="35" Height="35" Source="{Binding Icon, Converter={convert:Base64ImageConverter}}" Margin="10 0 0 0"/>
+                                        <TextBlock Grid.Column="1" Text="{Binding MapName}" Foreground="White" FontSize="18" Margin="15 0 0 0" VerticalAlignment="Center"></TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <Image Source="{Binding ImageSrc, Converter={convert:Base64ImageConverter}}" Height="200" Width="200" Margin="0 20 0 0"></Image>
+                    </StackPanel>
+                </Grid>
+                <StackPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock  HorizontalAlignment="Center" Text="Temps avant le début du tournoi :" TextWrapping="Wrap" FontSize="18" Foreground="White"></TextBlock>
+                    <TextBlock  HorizontalAlignment="Center" Text="{Binding RemainingTime}" FontSize="100" Foreground="White" FontWeight="Bold" />
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="20*"></ColumnDefinition>
                     <ColumnDefinition Width="20*"></ColumnDefinition>
                     <ColumnDefinition Width="20*"></ColumnDefinition>
-                    <ColumnDefinition Width="40*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="0">
                     <Grid.RowDefinitions>
@@ -49,23 +81,22 @@
                         <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
-                        <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <Border Grid.Row="0" BorderThickness="2" BorderBrush="White" Margin="10,10,0,0" Height="60">
-                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" Text="{Binding Player1}" TextAlignment="Center" Width="143"
-                            Foreground="White" FontSize="15"/>
+                    <Border Grid.Row="0" BorderThickness="2" BorderBrush="White" Margin="10 10 10 10" MinWidth="300" MinHeight="100">
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" Text="{Binding Player1}" TextAlignment="Center" 
+                                   Foreground="White" FontSize="20" Padding="10 10 10 10"/>
                     </Border>
-                    <Border Grid.Row="1" BorderThickness="2" BorderBrush="White" Margin="10,10,0,0" Height="60">
-                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" Text="{Binding Player2}" TextAlignment="Center" Width="143"
-                           Foreground="White" FontSize="15"/>
+                    <Border Grid.Row="1" BorderThickness="2" BorderBrush="White" Margin="10 10 10 10" MinWidth="300" MinHeight="100">
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" Text="{Binding Player2}" TextAlignment="Center"
+                           Foreground="White" FontSize="20" Padding="10 10 10 10"/>
                     </Border>
-                    <Border Grid.Row="2" BorderThickness="2" BorderBrush="White" Margin="10,10,0,0" Height="60">
-                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" Text="{Binding Player3}" TextAlignment="Center" Width="143"
-                           Foreground="White" FontSize="15"/>
+                    <Border Grid.Row="2" BorderThickness="2" BorderBrush="White" Margin="10,10,10,10" MinWidth="300" MinHeight="100">
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" Text="{Binding Player3}" TextAlignment="Center"
+                           Foreground="White" FontSize="20" Padding="10 10 10 10"/>
                     </Border>
-                    <Border Grid.Row="3" BorderThickness="2" BorderBrush="White" Margin="10,10,0,0" Height="60">
-                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" Text="{Binding Player4}" TextAlignment="Center" Width="143"
-                           Foreground="White" FontSize="15"/>
+                    <Border Grid.Row="3" BorderThickness="2" BorderBrush="White" Margin="10,10,10,10" MinWidth="300" MinHeight="100">
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" Text="{Binding Player4}" TextAlignment="Center"
+                           Foreground="White" FontSize="20" Padding="10 10 10 10"/>
                     </Border>
                 </Grid>
                 <Grid Grid.Column="1">
@@ -73,67 +104,36 @@
                         <RowDefinition Height="*"></RowDefinition>
                         <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <Border Grid.Row="0" BorderThickness="2" BorderBrush="White" Height="60">
-                        <TextBlock HorizontalAlignment="Center" FontSize="15" TextWrapping="Wrap" Text="{Binding SemiFinal1}" VerticalAlignment="Center" TextAlignment="Center" Width="143"
-                               Foreground="White"/>
+                    <Border Grid.Row="0" BorderThickness="2" BorderBrush="White" Margin="10,10,10,10" VerticalAlignment="Center" MinWidth="300" MinHeight="100">
+                        <TextBlock HorizontalAlignment="Center" FontSize="20" TextWrapping="Wrap" Text="{Binding SemiFinal1}" VerticalAlignment="Center" TextAlignment="Center"
+                               Foreground="White" Padding="10 10 10 10"/>
                     </Border>
-                    <Border Grid.Row="1" BorderThickness="2" BorderBrush="White" Height="60">
-                        <TextBlock HorizontalAlignment="Center" FontSize="15" TextWrapping="Wrap" Text="{Binding SemiFinal2}" VerticalAlignment="Center" TextAlignment="Center" Width="143"
-                               Foreground="White"/>
+                    <Border Grid.Row="1" BorderThickness="2" BorderBrush="White" Margin="10,10,10,10" VerticalAlignment="Center" MinWidth="300" MinHeight="100">
+                        <TextBlock HorizontalAlignment="Center" FontSize="20" TextWrapping="Wrap" Text="{Binding SemiFinal2}" VerticalAlignment="Center" TextAlignment="Center"
+                               Foreground="White" Padding="10 10 10 10"/>
                     </Border>
                 </Grid>
                 <Grid Grid.Column="2">
-                    <Border BorderThickness="2" BorderBrush="White" Margin="10,-70,10,0" Height="60">
-                        <TextBlock HorizontalAlignment="Center" FontSize="15" TextWrapping="Wrap" Text="{Binding Winner}" VerticalAlignment="Center" TextAlignment="Center" Width="143"
-                               Foreground="White"/>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Border Grid.Row="0" BorderThickness="2" BorderBrush="White"  Margin="10,10,10,10" VerticalAlignment="Center" HorizontalAlignment="Center" MinWidth="300" MinHeight="100">
+                        <TextBlock HorizontalAlignment="Center" FontSize="20" TextWrapping="Wrap" Text="{Binding Winner}" VerticalAlignment="Center" TextAlignment="Center"
+                               Foreground="White" Padding="10 10 10 10"/>
                     </Border>
                 </Grid>
-                <StackPanel Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <TextBlock Text="Temps avant le début du tournoi:" Foreground="White" FontSize="15" HorizontalAlignment="Center"></TextBlock>
-                    <TextBlock Text="{Binding RemainingTime}" VerticalAlignment="Center" HorizontalAlignment="Center" 
-                               Foreground="SkyBlue" FontWeight="Bold" FontSize="50" Margin="0,30,0,0"></TextBlock>
-                </StackPanel>
             </Grid>
-            <Grid Grid.Row="2"  Margin="20,0,0,0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="30*"></ColumnDefinition>
-                    <ColumnDefinition Width="70*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <Grid Grid.Column="0">
-                    <StackPanel Margin="20,0,0,0">
-                        <TextBlock Text="Maps" FontSize="15" Foreground="White"></TextBlock>
-                        <ComboBox Name="mapList" 
-                        Grid.Row="1"
-                        ItemsSource="{Binding MapsAvailable}" 
-                        SelectedItem="{Binding SelectedMap, UpdateSourceTrigger=PropertyChanged}"
-                        IsSynchronizedWithCurrentItem="True"
-                        Margin="0,10,0,0"
-                        IsEnabled="{Binding EnabledMaps}">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock>
-                                        <TextBlock.Text >
-                                            <Binding Path="MapName" UpdateSourceTrigger="PropertyChanged" />
-                                        </TextBlock.Text>
-                                    </TextBlock>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
 
-                        <Image Source="{Binding ImageSrc}" Margin="0,20,0,1" Height="100" Width="100"></Image>
-                    </StackPanel>
-                </Grid>
-            </Grid>
         </Grid>
-        <Border Width="200" Height="200" BorderBrush="White" BorderThickness="3" Visibility="{Binding IsEndOfTournament}">
+        
+        <Border Width="400" Height="300" BorderBrush="SkyBlue" BorderThickness="3" Visibility="{Binding IsEndOfTournament}">
             <Grid  Background="#FF373A3E">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="20*"></RowDefinition>
                     <RowDefinition Height="40*"></RowDefinition>
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0"  Text="{Binding EndOfGameTitle}" Foreground="SkyBlue" FontSize="25" FontWeight="Bold"></TextBlock>
+                <TextBlock Grid.Row="0"  Text="{Binding EndOfGameTitle}" TextWrapping="Wrap" Foreground="SkyBlue" FontSize="25" FontWeight="Bold"></TextBlock>
                 <StackPanel Grid.Row="1" Orientation="Vertical">
-                    <Image Source="{Binding WinnerPicture, Converter={convert:Base64ImageConverter}}" Width="100" Height="100"></Image>
                     <TextBlock Text="{Binding WinnerName}" TextAlignment="Center" Foreground="White" FontSize="25" Margin="0 10 0 0"></TextBlock>
                 </StackPanel>
             </Grid>

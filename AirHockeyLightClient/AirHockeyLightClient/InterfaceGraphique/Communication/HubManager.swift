@@ -137,6 +137,9 @@ class HubManager {
 
     /// Déconnecter l'usager
     public func DisconnectUser() -> Promise<Bool> {
+        // Arrêter la mise-à-jour des cartes locales
+        DBManager.instance.deactivateAutomaticMapImport()
+        
         let parameters: [String: Any] = [
             "Username" : self.getUsername()!
         ]

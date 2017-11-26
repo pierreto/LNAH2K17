@@ -49,9 +49,6 @@ class DBManager {
         Realm.Configuration.defaultConfiguration = config
         
         self.realm = try! Realm()
-        
-        // Activer le timer pour la sauvegarde automatique de la carte
-        // self.scheduledTimerWithTimeInterval()
     }
     
     func sauvegarderCarte(map: MapEntity) {
@@ -93,6 +90,27 @@ class DBManager {
         return maps.count == 0
     }
     
+    func isIdUnique(id: String) -> Bool {
+        var isUnique = true
+        try! self.realm.write {
+            for map in self.realm.objects(MapEntity.self) {
+                if map.id == id {
+                    isUnique = false
+                }
+            }
+        }
+        return isUnique
+    }
+    
+    func updateMap(map: MapEntity) {
+        try! realm.write {
+            let updatedMap = self.realm.objects(MapEntity.self).filter("id == %@", map.id!).first
+            updatedMap?.lastBackup = map.lastBackup
+            updatedMap?.json = map.json
+            updatedMap?.currentNumberOfPlayer.value = map.currentNumberOfPlayer.value
+        }
+    }
+    
     func updateCreatorOfLocalMaps(creator: String) {
         try! self.realm.write {
             for map in self.realm.objects(MapEntity.self) {
@@ -101,18 +119,25 @@ class DBManager {
         }
     }
     
-    // Empty method to force initialization of singleton instance
-    func startMapFetching() { }
+    func activateAutomaticMapImport() {
+        self.timer = Timer.scheduledTimer(timeInterval: 30, target: self, selector: #selector(self.importServerMaps), userInfo: nil, repeats: true)
+    }
     
-    private func scheduledTimerWithTimeInterval() {
-        self.timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(self.importServerMaps), userInfo: nil, repeats: true)
+    func deactivateAutomaticMapImport() {
+        self.timer?.invalidate()
     }
     
     @objc private func importServerMaps() {
+        //print("IMPORT")
         let mapService = MapService()
-        mapService.getMaps() { maps, error in
+        mapService.returnFullMaps { maps, error in
             for map in maps! {
-                self.sauvegarderCarte(map: mapService.buildMapEntity(json: map.1))
+                let mapEntity = mapService.buildMapEntity(json: map.1)
+                if self.isIdUnique(id: mapEntity.id!) {
+                    self.sauvegarderCarte(map: mapEntity)
+                } else {
+                    self.updateMap(map: mapEntity)
+                }
             }
         }
     }

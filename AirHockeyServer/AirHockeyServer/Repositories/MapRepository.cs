@@ -205,7 +205,7 @@ namespace AirHockeyServer.Repositories
 
                     var diff = map.LastBackup.CompareTo(existingMap.LastBackup);
 
-                    if (diff > 0) // map est plus à jour que celle dans la db : on met a jour la db 
+                    if (diff >= 0) // map est plus à jour que celle dans la db : on met a jour la db 
                     {
                         if (map.Json != null)
                             existingMap.Json = map.Json;

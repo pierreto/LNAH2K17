@@ -63,7 +63,7 @@ class Login: NSObject {
                             mapService.exportLocalMapsToServer()
                             
                             // Initialize instance of DBManager to start map fetching from server
-                            // DBManager.instance.startMapFetching()
+                            DBManager.instance.activateAutomaticMapImport()
                             
                             fullfil(true)
                         } else {

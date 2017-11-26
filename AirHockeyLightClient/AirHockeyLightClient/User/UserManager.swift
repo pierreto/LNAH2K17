@@ -38,8 +38,12 @@ class UserManager {
         return self.users[username]!
     }
     
-    public func addUser(username: String, hexColor: String) {
-        self.users.updateValue(OnlineUser(username: username, hexColor: hexColor), forKey: username)
+    public func addUser(username: String, hexColor: String, profilePicture: String) {
+        let user = OnlineUser(username: username, hexColor: hexColor, profilePicture: profilePicture)
+        self.users.updateValue(user, forKey: username)
+        
+        // Update users UI
+        FacadeModele.instance.obtenirVue().addUser(user: user)
     }
     
     public func removeUser(username: String) {
@@ -49,6 +53,9 @@ class UserManager {
         // Remove user
         let index = self.users.index(forKey: username)
         self.users.remove(at: index!)
+        
+        // Update users UI
+        FacadeModele.instance.obtenirVue().removeUser(username: username)
     }
     
     public func userExist(username: String) -> Bool {
