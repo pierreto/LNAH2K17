@@ -38,11 +38,16 @@ class EditionHub: BaseHub {
             let newUser = args?[0] as! Dictionary<String, Any>
             let username = newUser["Username"]
             let hexColor = newUser["HexColor"]
-            let profilePicture = newUser["ProfilePicture"]
+            let profilePicture = newUser["ProfilePicture"] as? String
             
             print("Joining user: \(String(describing: (username as! String) + " (" + (hexColor as! String) + ")"))\n")
             
-            FacadeModele.instance.obtenirUserManager()?.addUser(username: username as! String, hexColor: hexColor as! String, profilePicture: profilePicture as! String)
+            if profilePicture != nil {
+                FacadeModele.instance.obtenirUserManager()?.addUser(username: username as! String, hexColor: hexColor as! String, profilePicture: profilePicture!)
+            }
+            else {
+                FacadeModele.instance.obtenirUserManager()?.addUser(username: username as! String, hexColor: hexColor as! String, profilePicture: "")
+            }
         }
         
         /// Réception de l'évènement quand un utilisateur quitte la salle d'édition
@@ -120,10 +125,17 @@ class EditionHub: BaseHub {
                         }
                         
                         let username = user["Username"] as! String
-                        print (user["ProfilePicture"] as! String)
-                        FacadeModele.instance.obtenirUserManager()?.addUser(username: username,
-                                                                            hexColor: user["HexColor"] as! String,
-                                                                            profilePicture: user["ProfilePicture"] as! String)
+                        let profilePicture = user["ProfilePicture"] as? String
+                        if profilePicture != nil {
+                            FacadeModele.instance.obtenirUserManager()?.addUser(username: username,
+                                                                                hexColor: user["HexColor"] as! String,
+                                                                                profilePicture: user["ProfilePicture"] as! String)
+                        }
+                        else {
+                            FacadeModele.instance.obtenirUserManager()?.addUser(username: username,
+                                                                                hexColor: user["HexColor"] as! String,
+                                                                                profilePicture: "")
+                        }
                         
                         if (user["UuidsSelected"] != nil) {
                             // Un utilisateur dans la salle a déjà des noeuds sélectionnés
