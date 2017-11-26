@@ -47,7 +47,7 @@
             </Border.Effect>
             <StackPanel Margin="15" VerticalAlignment="Center">
                 <Button Content="Partie Rapide" FontSize="30" FontWeight="Bold" Background="{StaticResource DarkSilverBrush}" BorderThickness="0" Height="80" Margin="0 0 0 8" Foreground="White" Command="{Binding PartieRapideCommand}"></Button>
-                <Button FontSize="27" FontWeight="Bold" Background="{StaticResource DarkSilverBrush}" BorderThickness="0" Height="80" Margin="0 0 0 8" Foreground="White" Command="{Binding PartieRapideOnlineCommand}">
+                <Button FontSize="27" FontWeight="Bold" Background="{StaticResource DarkSilverBrush}" BorderThickness="0" Height="80" Margin="0 0 0 8" Foreground="White" Command="{Binding PartieRapideOnlineCommand}" IsEnabled="{Binding OnlineMode}">
                     <TextBlock Text="Partie Rapide en Ligne" TextWrapping="Wrap" TextAlignment="Center"></TextBlock>
                 </Button>
                 <Button Content="Tournoi" FontSize="30" FontWeight="Bold" Background="{StaticResource DarkSilverBrush}" BorderThickness="0" Height="80" Margin="0 0 0 8" Foreground="White" Command="{Binding TournoiCommand}"></Button>
