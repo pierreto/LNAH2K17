@@ -31,6 +31,20 @@ class NoeudPortail : NoeudCommun {
     /// Constructeur
     required init(type: String, geometry: SCNGeometry, uuid: String) {
         super.init(type: type, geometry: geometry, uuid: uuid)
+        
+        // Faire une animation de rotation
+        let spin = CABasicAnimation(keyPath: "rotation")
+        spin.fromValue = SCNVector4(x: 0, y: 1, z: 0, w: 0)
+        spin.toValue = SCNVector4(x: 0, y: 1, z: 0, w: Float(2 * Float.pi))
+        spin.duration = 5
+        spin.repeatCount = .infinity
+        self.addAnimation(spin, forKey: "spin around")
+        
+        // Couleur par défaut et lorsque sélectionnable
+        let defaultColor = UIColor(red: 255/255.0, green: 166/255.0, blue: 0/255.0, alpha: 1.0)
+        self.assignerDefaultColor(color: defaultColor)
+        self.assignerSelectionnableColor(color: defaultColor)
+        self.geometry?.firstMaterial?.diffuse.contents = defaultColor
     }
     
     /// Le point de contrôle a un modèle obj

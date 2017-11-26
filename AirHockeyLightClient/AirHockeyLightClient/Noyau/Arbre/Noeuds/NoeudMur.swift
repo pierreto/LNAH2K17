@@ -26,6 +26,12 @@ class NoeudMur : NoeudCommun {
         super.init(type: type, geometry: geometry, uuid: uuid)
         self.collider = SCNNodeHelper.BoiteEnglobante(coinMin: GLKVector3.init(v: (0, 0, 0)),
                                                       coinMax: GLKVector3.init(v: (0, 0, 0)));
+        
+        // Couleur par défaut et lorsque sélectionnable
+        let defaultColor = UIColor(red: 222.0/255.0, green: 187.0/255.0, blue: 141.0/255.0, alpha: 1.0)
+        self.assignerDefaultColor(color: defaultColor)
+        self.assignerSelectionnableColor(color: defaultColor)
+        self.geometry?.firstMaterial?.diffuse.contents = defaultColor
     }
     
     /// Le point de contrôle a un modèle obj
