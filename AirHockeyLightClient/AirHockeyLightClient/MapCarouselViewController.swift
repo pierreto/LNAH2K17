@@ -25,6 +25,7 @@ class MapCarouselViewController: UIViewController, iCarouselDataSource, iCarouse
     @IBOutlet var carouselView: iCarousel!
     
     private let LOCK_BUTTON_ICON = "\u{f023}"
+    private var timer: Timer?
     private var maps = [MapEntity]()
     
     private let BORDER_COLORS = [
@@ -43,10 +44,16 @@ class MapCarouselViewController: UIViewController, iCarouselDataSource, iCarouse
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        self.activateAutomaticMapRefresh()
+        
         DispatchQueue.main.async(execute: { () -> Void in
             // Reload tableView
             self.carouselView.reloadData()
         })
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        self.deactivateAutomaticMapRefresh()
     }
     
     func getCurrentMap() ->  MapEntity {
@@ -72,11 +79,6 @@ class MapCarouselViewController: UIViewController, iCarouselDataSource, iCarouse
         }
         
         self.maps = DBManager.instance.recupererCartes()
-        
-        DispatchQueue.main.async(execute: { () -> Void in
-            // Reload tableView
-            self.carouselView.reloadData()
-        })
     }
     
     func numberOfItems() -> Int {
@@ -209,6 +211,23 @@ class MapCarouselViewController: UIViewController, iCarouselDataSource, iCarouse
             }
                 
             return
+        })
+    }
+    
+    func activateAutomaticMapRefresh() {
+        self.timer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(self.refreshMaps), userInfo: nil, repeats: true)
+    }
+    
+    func deactivateAutomaticMapRefresh() {
+        self.timer?.invalidate()
+    }
+    
+    @objc private func refreshMaps() {
+        //print("REFRESH")
+        self.maps = DBManager.instance.recupererCartes()
+        DispatchQueue.main.async(execute: { () -> Void in
+            // Reload tableView
+            self.carouselView.reloadData()
         })
     }
     
