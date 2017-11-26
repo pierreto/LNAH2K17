@@ -38,6 +38,15 @@ class OnlineMenuViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         FacadeModele.instance.changerEditorState(etat: .ONLINE_EDITION)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(goToProfile(_:)),
+                                               name: NSNotification.Name(rawValue: "GoToProfile"),
+                                               object: nil)
+        
+    }
+    
+    @objc fileprivate func goToProfile(_ notification: NSNotification){
+        self.performSegue(withIdentifier: "goToProfile", sender: self)
     }
     
     private func loading() {

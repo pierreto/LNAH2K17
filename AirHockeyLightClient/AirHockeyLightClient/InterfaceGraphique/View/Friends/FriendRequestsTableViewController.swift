@@ -94,6 +94,7 @@ class FriendRequestsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = self.pendingRequests.dequeueReusableCell(withIdentifier: "Request", for: indexPath)
         
+        cell.backgroundColor = UIColor(red:0.24, green:0.24, blue:0.24, alpha:1.0)
         let imageView = cell.viewWithTag(1) as! UIImageView
         let profile = self.pendingRequestsData[indexPath.row].getRequestor().getProfile()
         var image: UIImage?
@@ -110,6 +111,10 @@ class FriendRequestsTableViewController: UITableViewController {
         
         let checkButton = cell.viewWithTag(3) as! UIButton
         checkButton.setTitle(CHECK_BUTTON_ICON, for: .normal)
+        
+        let bgColorView = UIView()
+        bgColorView.backgroundColor = UIColor(red:0.29, green:0.29, blue:0.29, alpha:1.0)
+        cell.selectedBackgroundView = bgColorView
         
         return cell
     }

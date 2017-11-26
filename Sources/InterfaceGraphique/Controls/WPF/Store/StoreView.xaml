@@ -23,174 +23,191 @@
         <Grid.DataContext>
             <Binding Path="StoreViewModel" Source="{StaticResource VMLocator}"/>
         </Grid.DataContext>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="10*"></RowDefinition>
-            <RowDefinition Height="60*"></RowDefinition>
-            <RowDefinition Height="30*"></RowDefinition>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="60*"></ColumnDefinition>
-            <!--<ColumnDefinition Width="40*"></ColumnDefinition>-->
-        </Grid.ColumnDefinitions>
+
         <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Grid.RowSpan="3" Grid.ColumnSpan="3" Panel.ZIndex="10" Margin="20" Visibility="{Binding Loading, Converter={convert:BooleanToVisibilityConverter}, ConverterParameter=True}">
             <fa:ImageAwesome Icon="CircleOutlineNotch" Spin="{Binding Loading}" Height="48" Width="48" Foreground="{StaticResource DarkSilverBrush}"/>
         </Grid>
-        <Grid Grid.Row="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="20*"></ColumnDefinition>
-                <ColumnDefinition Width="65*"></ColumnDefinition>
-                <ColumnDefinition Width="15*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Command="{Binding Leave}" HorizontalAlignment="Left" VerticalAlignment="Center">
-                <Button.Content>
-                    <fa:FontAwesome Icon="ArrowLeft"></fa:FontAwesome>
-                </Button.Content>
-            </Button>
-            <TextBlock Grid.Column="1" Text="Achat d'items" Foreground="LightGray" FontSize="50" 
-                       FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-            <StackPanel Grid.Column="2"  Margin="10 0 0 0" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <TextBlock Text="{Binding PlayerName}" Foreground="White" FontSize="25"></TextBlock>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Points:" Foreground="White" FontSize="15" VerticalAlignment="Center"></TextBlock>
-                    <TextBlock Text="{Binding Points}" Foreground="White" FontSize="25" FontWeight="Bold" Margin="10 0 0 0"></TextBlock>
-                </StackPanel>
+
+        <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding PurchaseMsg}" Height="200" Width="500" Panel.ZIndex="3">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50*"></RowDefinition>
+                <RowDefinition Height="50*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.Background>
+                <SolidColorBrush Color="Gray" Opacity="1"></SolidColorBrush>
+            </Grid.Background>
+            <TextBlock Grid.Row="0" Text="Félicitations ! Vous venez d'acheter un nouveau maillet ! Voulez-vous partager celà sur Facebook ?" TextWrapping="Wrap" TextAlignment="Center"
+                       HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontSize="16" Margin="20 10 20 10"></TextBlock>
+            <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Button Command="{Binding ShareOnFacebookCommand}">Partager</Button>
+                <Button Command="{Binding HidePopupCommand}" Margin="10 0 0 0">Non merci</Button>
             </StackPanel>
         </Grid>
 
-        <ListView Grid.Row="1" Grid.Column="0" Margin="50 20 50 10"
-                  ItemsSource="{Binding StoreItems, UpdateSourceTrigger=PropertyChanged}" x:Name="storeItems">
-            <ListView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <UniformGrid Rows="3" Columns="4"></UniformGrid>
-                </ItemsPanelTemplate>
-            </ListView.ItemsPanel>
-            <ListView.ItemContainerStyle>
-                <Style TargetType="ListViewItem">
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                    <Setter Property="Margin" Value="10"/>
-                    <Setter Property="Width" Value="280"/>
-                    <Setter Property="Focusable" Value="false"/>
-                </Style>
-            </ListView.ItemContainerStyle>
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*"></RowDefinition>
-                                <RowDefinition Height="*"></RowDefinition>
-                                <RowDefinition Height="*"></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <Grid.Style>
-                                <Style>
-                                    <Setter Property="Grid.Background" Value="Transparent"></Setter>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding IsChecked}" Value="True">
-                                            <Setter Property="Grid.Background" Value="SkyBlue"></Setter>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Grid.Style>
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="MouseLeftButtonDown">
-                                    <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext.ClickCommand}" 
-                                                           CommandParameter="{Binding}"></i:InvokeCommandAction>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                            <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Path=Name}" HorizontalAlignment="Center" Foreground="White" FontSize="15" Padding="0 10 0 10"></TextBlock>
-                            <Grid Grid.Row="1">
-                                <Image HorizontalAlignment="Center" Width="150" Height="150" Source="{Binding Path=ImageUrl}"></Image>
-                                <TextBlock Text="{Binding Path=Price}" Foreground="White" FontWeight="Bold" FontSize="40" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="-100 0 75 0"></TextBlock>
-                            </Grid>
-                            <TextBlock Grid.Row="2" Text="{Binding Description}" TextAlignment="Center" TextWrapping="Wrap" Margin="0 10 0 10"
-                                       Foreground="White" FontSize="15"></TextBlock>
-                        </Grid>
-                        <Grid>
-                            <Grid.Resources>
-                                <SolidColorBrush x:Key="GreyBrush" Color="Gray" Opacity="0.3"/>
-                            </Grid.Resources>
-                            <Grid.Style>
-                                <Style>
-                                    <Setter Property="Grid.Background" Value="{StaticResource GreyBrush}"></Setter>
-                                    <Setter Property="Grid.Visibility" Value="Hidden"></Setter>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding CanBuy}" Value="False">
-                                            <Setter Property="Grid.Visibility" Value="Visible"></Setter>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Grid.Style>
-                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Stretch" Background="SkyBlue"  Text="Vendu" Foreground="White"
-                                       FontSize="30" FontWeight="Bold" TextAlignment="Center" Padding="0 10 0 10">
-                            </TextBlock>
-                        </Grid>
-                    </Grid>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+        <Grid IsEnabled="{Binding DisableStore}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10*"></RowDefinition>
+                <RowDefinition Height="60*"></RowDefinition>
+                <RowDefinition Height="30*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="20*"></ColumnDefinition>
+                    <ColumnDefinition Width="65*"></ColumnDefinition>
+                    <ColumnDefinition Width="15*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Command="{Binding Leave}" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <Button.Content>
+                        <fa:FontAwesome Icon="ArrowLeft"></fa:FontAwesome>
+                    </Button.Content>
+                </Button>
+                <TextBlock Grid.Column="1" Text="Achat d'items" Foreground="LightGray" FontSize="50" 
+                       FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                <StackPanel Grid.Column="2"  Margin="10 0 0 0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock Text="{Binding PlayerName}" Foreground="White" FontSize="25"></TextBlock>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Points:" Foreground="White" FontSize="15" VerticalAlignment="Center"></TextBlock>
+                        <TextBlock Text="{Binding Points}" Foreground="White" FontSize="25" FontWeight="Bold" Margin="10 0 0 0"></TextBlock>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
 
-        <StackPanel Grid.Row="2" HorizontalAlignment="Right" Margin="0 0 20 0">
-            <StackPanel Orientation="Horizontal" Margin="0 10 0 0">
-                <TextBlock Text="Nombre Items: " Foreground="White" FontSize="15"></TextBlock>
-                <TextBlock Text="{Binding Path=CartItemsNumber}" Foreground="White" FontSize="20"></TextBlock>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0 10 0 0">
-                <TextBlock Text="Total de la commande: " Foreground="White" FontSize="15"></TextBlock>
-                <TextBlock Text="{Binding Path=TotalPrice, StringFormat='{}{0} points'}" x:Name="totalPrice" FontSize="20">
-                    <TextBlock.Style>
-                        <Style>
-                            <Setter Property="TextBlock.Foreground" Value="White"></Setter>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding NotEnoughPointsError}" Value="Visible">
-                                    <Setter Property="TextBlock.Foreground" Value="Red"></Setter>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </TextBlock.Style>
-                </TextBlock>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="0 10 0 0">
-                <Button Command="{Binding Reset}" Background="LimeGreen" Width="200" Height="50"
+            <ListView Grid.Row="1" Grid.Column="0" Margin="50 20 50 10"
+                  ItemsSource="{Binding StoreItems, UpdateSourceTrigger=PropertyChanged}" x:Name="storeItems">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Rows="3" Columns="4"></UniformGrid>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        <Setter Property="Margin" Value="10"/>
+                        <Setter Property="Width" Value="280"/>
+                        <Setter Property="Focusable" Value="false"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"></RowDefinition>
+                                    <RowDefinition Height="*"></RowDefinition>
+                                    <RowDefinition Height="*"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Grid.Style>
+                                    <Style>
+                                        <Setter Property="Grid.Background" Value="Transparent"></Setter>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsChecked}" Value="True">
+                                                <Setter Property="Grid.Background" Value="SkyBlue"></Setter>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Grid.Style>
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                                        <i:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}, Path=DataContext.ClickCommand}" 
+                                                           CommandParameter="{Binding}"></i:InvokeCommandAction>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Path=Name}" HorizontalAlignment="Center" Foreground="White" FontSize="15" Padding="0 10 0 10"></TextBlock>
+                                <Grid Grid.Row="1">
+                                    <Image HorizontalAlignment="Center" Width="150" Height="150" Source="{Binding Path=ImageUrl}"></Image>
+                                    <TextBlock Text="{Binding Path=Price}" Foreground="White" FontWeight="Bold" FontSize="40" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="-100 0 75 0"></TextBlock>
+                                </Grid>
+                                <TextBlock Grid.Row="2" Text="{Binding Description}" TextAlignment="Center" TextWrapping="Wrap" Margin="0 10 0 10"
+                                       Foreground="White" FontSize="15"></TextBlock>
+                            </Grid>
+                            <Grid>
+                                <Grid.Resources>
+                                    <SolidColorBrush x:Key="GreyBrush" Color="Gray" Opacity="0.3"/>
+                                </Grid.Resources>
+                                <Grid.Style>
+                                    <Style>
+                                        <Setter Property="Grid.Background" Value="{StaticResource GreyBrush}"></Setter>
+                                        <Setter Property="Grid.Visibility" Value="Hidden"></Setter>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding CanBuy}" Value="False">
+                                                <Setter Property="Grid.Visibility" Value="Visible"></Setter>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Grid.Style>
+                                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Stretch" Background="SkyBlue"  Text="Vendu" Foreground="White"
+                                       FontSize="30" FontWeight="Bold" TextAlignment="Center" Padding="0 10 0 10">
+                                </TextBlock>
+                            </Grid>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <StackPanel Grid.Row="2" HorizontalAlignment="Right" Margin="0 0 20 0">
+                <StackPanel Orientation="Horizontal" Margin="0 10 0 0">
+                    <TextBlock Text="Nombre Items: " Foreground="White" FontSize="15"></TextBlock>
+                    <TextBlock Text="{Binding Path=CartItemsNumber}" Foreground="White" FontSize="20"></TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0 10 0 0">
+                    <TextBlock Text="Total de la commande: " Foreground="White" FontSize="15"></TextBlock>
+                    <TextBlock Text="{Binding Path=TotalPrice, StringFormat='{}{0} points'}" x:Name="totalPrice" FontSize="20">
+                        <TextBlock.Style>
+                            <Style>
+                                <Setter Property="TextBlock.Foreground" Value="White"></Setter>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding NotEnoughPointsError}" Value="Visible">
+                                        <Setter Property="TextBlock.Foreground" Value="Red"></Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0 10 0 0">
+                    <Button Command="{Binding Reset}" Background="LimeGreen" Width="200" Height="50"
                         BorderBrush="LimeGreen" Margin="0 0 10 0" FontSize="20" HorizontalAlignment="Center"
                     Padding="20 0 20 0">
-                    <TextBlock Text="Vider Panier"></TextBlock>
-                    <Button.Style>
-                        <Style>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding CartItemsNumber}" Value="0">
-                                    <Setter Property="Button.IsEnabled" Value="False"></Setter>
-                                    <Setter Property="Button.Foreground" Value="Gray"></Setter>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
-                </Button>
-                <Button Command="{Binding Buy}" Background="Crimson" BorderBrush="Crimson" Width="200" Height="50">
-                    <TextBlock Text="Acheter" FontSize="20" Foreground="White" HorizontalAlignment="Center"> 
+                        <TextBlock Text="Vider Panier"></TextBlock>
+                        <Button.Style>
+                            <Style>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding CartItemsNumber}" Value="0">
+                                        <Setter Property="Button.IsEnabled" Value="False"></Setter>
+                                        <Setter Property="Button.Foreground" Value="Gray"></Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <Button Command="{Binding Buy}" Background="Crimson" BorderBrush="Crimson" Width="200" Height="50">
+                        <TextBlock Text="Acheter" FontSize="20" Foreground="White" HorizontalAlignment="Center"> 
                         <fa:FontAwesome Icon="ShoppingCart" Margin="2 0 0 0" FontSize="20"></fa:FontAwesome>
-                    </TextBlock>
-                    <Button.Style>
-                        <Style>
-                            <Setter Property="Button.IsEnabled" Value="True"></Setter>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding NotEnoughPointsError}" Value="Visible">
-                                    <Setter Property="Button.IsEnabled" Value="False"></Setter>
-                                    <Setter Property="TextBlock.Foreground" Value="Gray"></Setter>
-                                </DataTrigger>
-                                <DataTrigger Binding="{Binding CartItemsNumber}" Value="0">
-                                    <Setter Property="Button.IsEnabled" Value="False"></Setter>
-                                    <Setter Property="TextBlock.Foreground" Value="Gray"></Setter>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
-                </Button>
-            </StackPanel>
-            <TextBlock Text="Nombre de points insuffisants" Visibility="{Binding NotEnoughPointsError}"
+                        </TextBlock>
+                        <Button.Style>
+                            <Style>
+                                <Setter Property="Button.IsEnabled" Value="True"></Setter>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding NotEnoughPointsError}" Value="Visible">
+                                        <Setter Property="Button.IsEnabled" Value="False"></Setter>
+                                        <Setter Property="TextBlock.Foreground" Value="Gray"></Setter>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding CartItemsNumber}" Value="0">
+                                        <Setter Property="Button.IsEnabled" Value="False"></Setter>
+                                        <Setter Property="TextBlock.Foreground" Value="Gray"></Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                </StackPanel>
+                <TextBlock Text="Nombre de points insuffisants" Visibility="{Binding NotEnoughPointsError}"
                        HorizontalAlignment="Center" Foreground="Crimson" FontSize="20" Margin="0 10 0 0"></TextBlock>
-        </StackPanel>
+            </StackPanel>
+        </Grid>
     </Grid>
+    
 </UserControl>

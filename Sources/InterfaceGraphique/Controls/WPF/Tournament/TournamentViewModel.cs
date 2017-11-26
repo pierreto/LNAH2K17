@@ -50,9 +50,9 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
         {
             RemainingTime = 30;
             Players = new List<GamePlayerEntity>();
-            Winner = string.Empty;
-            SemiFinal1 = string.Empty;
-            SemiFinal2 = string.Empty;
+            Winner = "Vainqueur";
+            SemiFinal1 = "Semi-Finaliste";
+            SemiFinal2 = "Semi-Finaliste";
 
             OnPropertyChanged("OpponentsFound");
             OnPropertyChanged("EnabledMaps");
@@ -89,6 +89,7 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
 
             }
             SelectedMap = mapsAvailable[1];
+            ImageSrc = selectedMap.Icon;
             OpponentLeftMsg = "Hidden";
         }
 
@@ -113,7 +114,11 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
         {
             OpponentLeftMsg = "Visible";
             SetDefaultValues();
-            SelectedMap = mapsAvailable[1];
+            if(mapsAvailable != null)
+            {
+                SelectedMap = mapsAvailable[1];
+                ImageSrc = selectedMap.Icon;
+            }
         }
 
         private void OnWinnerResult(object e, GamePlayerEntity winner)
@@ -142,6 +147,7 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
                     }
                 }
                 OnPropertyChanged("SelectedMap");
+                ImageSrc = selectedMap.Icon;
             }
         }
 
@@ -264,6 +270,7 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
                         }
                     }
                     this.OnPropertyChanged();
+                    ImageSrc = selectedMap.Icon;
                     WaitingRoomHub.UpdateSelectedMap(value);
                 }
             }
@@ -305,7 +312,7 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
         private string imageSrc = "";
         public string ImageSrc
         {
-            get => Directory.GetCurrentDirectory() + "\\media\\image\\No_image_available.png";
+            get => imageSrc;
             set
             {
                 imageSrc = value;

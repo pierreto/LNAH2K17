@@ -116,7 +116,8 @@ class MasterViewController: UITableViewController {
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
-        if(indexPath.row == 0) { return false }
+        //Cant delete private channels nor main channel
+        if(indexPath.row == 0 || channels[indexPath.row].isPrivate) { return false }
         return true
     }
     
@@ -192,6 +193,30 @@ extension MasterViewController: AddChannelDelegate {
             self.channelTableView.reloadData()
         })
     }
+    
+    func addPrivateChannel(othersName: String, othersId: Int, othersProfile: String) {
+        let chatHub = clientConnection.getChatHub()
+        chatHub.CreatePrivateChannel(othersName: othersName, myId: HubManager.sharedConnection.getId()!, othersId: othersId, othersProfile: othersProfile) { res in
+            if res == true {
+                MasterViewController.sharedMasterViewController.channels.append(ChannelEntity(name: othersName, isPrivate: true, privateUserId: othersId, profile: othersProfile))
+                self.delegate?.sChannelNameErrMsg = ""
+                self.delegate?.sChannelName = ""
+                self.delegate?.toggleAddChannelView()
+                self.channelTableView.reloadData()
+                let indexPath = IndexPath(row: MasterViewController.sharedMasterViewController.channels.count - 1, section: 0);
+                self.channelTableView.selectRow(at: indexPath, animated: true, scrollPosition: .bottom)
+                self.channelTableView.delegate?.tableView!(self.channelTableView, didSelectRowAt: indexPath)
+            } else {
+                self.delegate?.sChannelNameErrMsg = "Canal déjà créé"
+                print("Canal existe deja")
+            }
+        }
+        DispatchQueue.main.async(execute: { () -> Void in
+            // Reload tableView
+            self.channelTableView.reloadData()
+        })
+    }
+    
     
     func newUnreadMessage() {
         self.channelTableView.reloadData()

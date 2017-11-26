@@ -29,8 +29,8 @@ class FriendRequestsViewController: UIViewController {
         
         // Initialize Tab Bar Item
         self.tabBarItem = UITabBarItem()
-        self.tabBarItem.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "FontAwesome", size: 30)!], for: .normal)
-        self.tabBarItem.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: -5)
+        self.tabBarItem.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "FontAwesome", size: 17)!], for: .normal)
+        self.tabBarItem.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: 0)
         self.tabBarItem.title = "\u{f0f3}"
     }
     

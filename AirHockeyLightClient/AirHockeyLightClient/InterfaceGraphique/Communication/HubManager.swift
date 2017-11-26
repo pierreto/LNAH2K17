@@ -29,6 +29,8 @@ class HubManager {
     /// Instance singleton
     static let sharedConnection = HubManager()
     
+    public var searchId: Int?
+    
     private var connection: SignalR?
     private var hubs = [BaseHub]()
     private var user: UserEntity? = UserEntity()
@@ -135,6 +137,9 @@ class HubManager {
 
     /// Déconnecter l'usager
     public func DisconnectUser() -> Promise<Bool> {
+        // Arrêter la mise-à-jour des cartes locales
+        DBManager.instance.deactivateAutomaticMapImport()
+        
         let parameters: [String: Any] = [
             "Username" : self.getUsername()!
         ]
