@@ -138,7 +138,21 @@
                 </StackPanel>
             </Grid>
         </Border>
-
+        <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center"  Visibility="{Binding EnabledMaps}" Height="{Binding ActualHeight, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}">
+            <DockPanel.Style>
+                <Style TargetType="{x:Type DockPanel}">
+                    <Setter Property="Background" Value="#cccccc"></Setter>
+                    <Setter Property="Opacity" Value="0.8"></Setter>
+                </Style>
+            </DockPanel.Style>
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <fa:ImageAwesome Icon="CircleOutlineNotch" Foreground="{StaticResource DarkSilverBrush}" Spin="True" SpinDuration="4" Height="200"/>
+                <TextBlock HorizontalAlignment="Center" FontSize="18" FontWeight="Bold" Height="40">En attente de joueurs joueur</TextBlock>
+                <Button Command="{Binding Cancel}" Height="40" Width="100" Background="Transparent" BorderBrush="Transparent" >
+                    <TextBlock FontWeight="Bold">Annuler</TextBlock>
+                </Button>
+            </StackPanel>
+        </DockPanel>
         <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding OpponentLeftMsg}" Height="200" Width="400"
               Background="Gray">
             <Grid.RowDefinitions>

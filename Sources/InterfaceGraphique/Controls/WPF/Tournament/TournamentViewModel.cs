@@ -158,6 +158,16 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
             {
                 OnPropertyChanged("Player" + i);
             }
+
+            if(Players.Count == 4)
+            {
+                HideLoading();
+            }
+        }
+
+        private void HideLoading()
+        {
+            OpponentLeftMsg = "Hiddent";
         }
 
         private int remainingTime = 0;
@@ -275,6 +285,7 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
 
         private async Task Leave()
         {
+            HideLoading();
             await this.WaitingRoomHub.LeaveTournament();
             SetDefaultValues();
             Program.FormManager.CurrentForm = Program.HomeMenu;
