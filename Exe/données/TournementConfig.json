@@ -1,8 +1,8 @@
 {
   "player1Profile": "Défaut",
-  "player2Profile": "Défaut",
-  "player3Profile": "Défaut",
-  "player4Profile": "Défaut",
+  "player2Profile": "Medium",
+  "player3Profile": "Easy",
+  "player4Profile": "Hard",
   "player1Name": "Joueur 1",
   "player2Name": "Joueur 2",
   "player3Name": "Joueur 3",
@@ -12,9 +12,9 @@
   "player3Color": "Fuchsia",
   "player4Color": "DarkOrange",
   "isPlayer1Virtual": false,
-  "isPlayer2Virtual": true,
-  "isPlayer3Virtual": true,
-  "isPlayer4Virtual": true,
-  "mapFilePath": "",
-  "mapFileName": "Défaut"
+  "isPlayer2Virtual": false,
+  "isPlayer3Virtual": false,
+  "isPlayer4Virtual": false,
+  "mapFilePath": "C:\\TEMP\\log3900-03\\Exe\\zones\\2portal.json",
+  "mapFileName": "2portal"
 }
