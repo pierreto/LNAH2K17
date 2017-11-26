@@ -99,6 +99,10 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
                 {
                     x.IsEnabled = achievement.IsEnabled;
                 }
+                else
+                {
+                    x.IsEnabled = false;
+                }
             });
 
             Achievements = new ObservableCollection<Achievement>(achievements.OrderBy(x => x.Category).ThenBy(x => x.Order));
