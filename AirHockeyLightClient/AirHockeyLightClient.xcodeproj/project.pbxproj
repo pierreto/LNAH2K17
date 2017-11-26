@@ -82,6 +82,8 @@
 		258EED9E1FC3A3B00096115B /* MapCarouselViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258EED9D1FC3A3B00096115B /* MapCarouselViewController.swift */; };
 		25A1BEF71FC23C180017C058 /* AddFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A1BEF61FC23C180017C058 /* AddFriendViewController.swift */; };
 		25A1BEF91FC242720017C058 /* SearchTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A1BEF81FC242720017C058 /* SearchTextField.swift */; };
+		25A308E91FCA184E00E7BD80 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A308E81FCA184E00E7BD80 /* TutorialViewController.swift */; };
+		25A308F51FCA264900E7BD80 /* 0 (1).png in Resources */ = {isa = PBXBuildFile; fileRef = 25A308F41FCA264900E7BD80 /* 0 (1).png */; };
 		25B0DBFD1FC3C4B4002B364B /* map.png in Resources */ = {isa = PBXBuildFile; fileRef = 25B0DBFC1FC3C4B4002B364B /* map.png */; };
 		25CF7B8B1FBA759800B536DB /* FriendRequestsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF7B8A1FBA759800B536DB /* FriendRequestsViewController.swift */; };
 		25CF7B8D1FBA760600B536DB /* FriendRequestsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25CF7B8C1FBA760600B536DB /* FriendRequestsTableViewController.swift */; };
@@ -316,6 +318,8 @@
 		258EED9D1FC3A3B00096115B /* MapCarouselViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapCarouselViewController.swift; sourceTree = "<group>"; };
 		25A1BEF61FC23C180017C058 /* AddFriendViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AddFriendViewController.swift; path = InterfaceGraphique/View/Friends/AddFriendViewController.swift; sourceTree = "<group>"; };
 		25A1BEF81FC242720017C058 /* SearchTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchTextField.swift; path = InterfaceGraphique/View/Friends/SearchTextField.swift; sourceTree = "<group>"; };
+		25A308E81FCA184E00E7BD80 /* TutorialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TutorialViewController.swift; path = InterfaceGraphique/View/Tutorial/TutorialViewController.swift; sourceTree = "<group>"; };
+		25A308F41FCA264900E7BD80 /* 0 (1).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "0 (1).png"; path = "InterfaceGraphique/View/Tutorial/Images/0 (1).png"; sourceTree = "<group>"; };
 		25B0DBFC1FC3C4B4002B364B /* map.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map.png; sourceTree = "<group>"; };
 		25CF7B8A1FBA759800B536DB /* FriendRequestsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FriendRequestsViewController.swift; path = InterfaceGraphique/View/Friends/FriendRequestsViewController.swift; sourceTree = "<group>"; };
 		25CF7B8C1FBA760600B536DB /* FriendRequestsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FriendRequestsTableViewController.swift; path = InterfaceGraphique/View/Friends/FriendRequestsTableViewController.swift; sourceTree = "<group>"; };
@@ -515,6 +519,7 @@
 				25FDE4391FA80C620089D9FE /* Map */,
 				8F0FFED91F6EB96900366D8E /* Menus */,
 				1DC31A521FC0D05F0000B7DE /* Profile */,
+				25A308EA1FCA185900E7BD80 /* Tutorial */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -661,6 +666,23 @@
 				252D64751FC66D4F0011254F /* iCarousel.m */,
 			);
 			name = iCarousel;
+			sourceTree = "<group>";
+		};
+		25A308EA1FCA185900E7BD80 /* Tutorial */ = {
+			isa = PBXGroup;
+			children = (
+				25A308ED1FCA20F400E7BD80 /* Images */,
+				25A308E81FCA184E00E7BD80 /* TutorialViewController.swift */,
+			);
+			name = Tutorial;
+			sourceTree = "<group>";
+		};
+		25A308ED1FCA20F400E7BD80 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				25A308F41FCA264900E7BD80 /* 0 (1).png */,
+			);
+			name = Images;
 			sourceTree = "<group>";
 		};
 		25EFB29E1FB74FDD00FFD66F /* Services */ = {
@@ -1212,6 +1234,7 @@
 				8FF4B5C71FBD70CE00BB2941 /* backImage.png in Resources */,
 				8F64C0151F77550800F14AC7 /* Main.storyboard in Resources */,
 				8F6AE2C91F6592EB00A29E8B /* Assets.xcassets in Resources */,
+				25A308F51FCA264900E7BD80 /* 0 (1).png in Resources */,
 				34B66FDC1F843CD400A9CCB9 /* fire_texture.png in Resources */,
 				3415E6D91F85A99500DB1CAD /* controlPoint.obj in Resources */,
 				8F4B40901FB94FBB00DFDA2F /* Error.wav in Resources */,
@@ -1271,6 +1294,7 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-AirHockeyLightClient/Pods-AirHockeyLightClient-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/ImageSlideshow/ImageSlideshow.framework",
 				"${BUILT_PRODUCTS_DIR}/PromiseKit/PromiseKit.framework",
 				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
@@ -1281,6 +1305,7 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ImageSlideshow.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PromiseKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
@@ -1425,6 +1450,7 @@
 				3475C22A1F8FAF8D00E8BF86 /* EditorHUDScene.swift in Sources */,
 				34B965CE1FA26EDE00BD17CC /* GeneralPropertiesViewController.swift in Sources */,
 				253E088E1F818DD2009F301B /* JsonHelper.swift in Sources */,
+				25A308E91FCA184E00E7BD80 /* TutorialViewController.swift in Sources */,
 				344A6E2A1F994E0100CFFBEB /* VisiteurSurTable.swift in Sources */,
 				8F829B471FC2848800FC027B /* StoreItemEntity.swift in Sources */,
 				8F0B94AC1F8D3EEE007F0E82 /* VisiteurAbstrait.swift in Sources */,

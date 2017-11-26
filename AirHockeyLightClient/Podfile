@@ -12,9 +12,10 @@ target 'AirHockeyLightClient' do
 
   # Pods for AirHockeyLightClient
   pod 'Alamofire', '~> 4.5'
+  pod 'ImageSlideshow', '1.0'
   pod 'PromiseKit', '~> 4.4'
+  pod 'ReachabilitySwift'
   pod 'RealmSwift'
   pod 'SwiftyJSON'
   pod 'SwiftR'
-  pod 'ReachabilitySwift'
 end
