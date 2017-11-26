@@ -151,6 +151,10 @@ namespace InterfaceGraphique.Controls.WPF.Store
                 }
 
                 EmptyCart();
+
+                purchaseMsg = true;
+                OnPropertyChanged("purchaseMsg");
+                OnPropertyChanged("DisableStore");
             }
             else
             {
@@ -263,6 +267,54 @@ namespace InterfaceGraphique.Controls.WPF.Store
                 playerName = value;
                 OnPropertyChanged();
             }
+        }
+
+        public bool purchaseMsg = false;
+        public string PurchaseMsg
+        {
+            get => purchaseMsg ? "Visible" : "Hidden";
+        }
+
+        public bool DisableStore
+        {
+            get => !purchaseMsg;
+        }
+
+        private ICommand hidePopupCommand;
+        public ICommand HidePopupCommand
+        {
+            get
+            {
+                return hidePopupCommand ?? (hidePopupCommand = new RelayCommand(HidePopup));
+            }
+        }
+
+        private void HidePopup()
+        {
+            purchaseMsg = false;
+            OnPropertyChanged("purchaseMsg");
+            OnPropertyChanged("DisableStore");
+        }
+
+        private ICommand shareOnFacebookCommand;
+        public ICommand ShareOnFacebookCommand
+        {
+            get
+            {
+                return shareOnFacebookCommand ?? (shareOnFacebookCommand = new RelayCommand(ShareOnFacebook));
+            }
+        }
+        private void ShareOnFacebook()
+        {
+            Browser browser = new Browser();
+            browser.Show();
+            browser.webBrowser.Navigate("" +
+                "https://www.facebook.com/dialog/feed?" +
+                "app_id=143581339623947" +
+                "&display=popup" +
+                "&link=http://tcpc.isomorphis.me/store.html");
+
+            HidePopup();
         }
     }
 }

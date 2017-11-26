@@ -18,6 +18,7 @@ using InterfaceGraphique.CommunicationInterface;
 using System.IO;
 using InterfaceGraphique.Controls.WPF.Tutorial;
 using InterfaceGraphique.Controls.WPF.MainMenu;
+using InterfaceGraphique.Controls;
 
 namespace InterfaceGraphique
 {
@@ -279,6 +280,9 @@ namespace InterfaceGraphique
             FonctionsNatives.redimensionnerFenetre(this.Size.Width, this.Size.Height);
             FonctionsNatives.playMusic(false);
 
+            // Invisible hors ligne:
+            this.Button_ShareOnFacebook.Visible = false;
+
             currentGameState.IsOnline = false;
             currentGameState.IsOnlineTournementMode = false;
 
@@ -368,6 +372,7 @@ namespace InterfaceGraphique
                     if (User.Instance.IsConnected)
                     {
                         this.playerName1.Text = User.Instance.UserEntity.Username;
+                        this.Button_ShareOnFacebook.Visible = true;
                     }
                     else
                     {
@@ -508,6 +513,17 @@ namespace InterfaceGraphique
         {
             get => currentGameState;
             set => currentGameState = value;
+        }
+
+        private void Button_ShareOnFacebook_Click(object sender, EventArgs e)
+        {
+            Browser browser = new Browser();
+            browser.Show();
+            browser.webBrowser.Navigate("" +
+                "https://www.facebook.com/dialog/feed?" +
+                "app_id=143581339623947" +
+                "&display=popup" +
+                "&link=http://tcpc.isomorphis.me/game.html");
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
