@@ -57,7 +57,7 @@ namespace AirHockeyServer.Hubs
             string connection = ConnectionMapper.GetConnection(user.Id);
             if (!string.IsNullOrEmpty(connection))
             {
-                Groups.Remove(ConnectionMapper.GetConnection(user.Id), tournamentId.ToString());
+                Groups.Remove(connection, tournamentId.ToString());
             }
 
             TournamentService.LeaveTournament(user.Id);

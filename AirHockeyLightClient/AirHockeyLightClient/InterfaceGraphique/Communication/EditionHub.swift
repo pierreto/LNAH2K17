@@ -38,10 +38,11 @@ class EditionHub: BaseHub {
             let newUser = args?[0] as! Dictionary<String, Any>
             let username = newUser["Username"]
             let hexColor = newUser["HexColor"]
+            let profilePicture = newUser["ProfilePicture"]
             
             print("Joining user: \(String(describing: (username as! String) + " (" + (hexColor as! String) + ")"))\n")
             
-            FacadeModele.instance.obtenirUserManager()?.addUser(username: username as! String, hexColor: hexColor as! String)
+            FacadeModele.instance.obtenirUserManager()?.addUser(username: username as! String, hexColor: hexColor as! String, profilePicture: profilePicture as! String)
         }
         
         /// Réception de l'évènement quand un utilisateur quitte la salle d'édition
@@ -119,8 +120,10 @@ class EditionHub: BaseHub {
                         }
                         
                         let username = user["Username"] as! String
+                        print (user["ProfilePicture"] as! String)
                         FacadeModele.instance.obtenirUserManager()?.addUser(username: username,
-                                                                            hexColor: user["HexColor"] as! String)
+                                                                            hexColor: user["HexColor"] as! String,
+                                                                            profilePicture: user["ProfilePicture"] as! String)
                         
                         if (user["UuidsSelected"] != nil) {
                             // Un utilisateur dans la salle a déjà des noeuds sélectionnés
