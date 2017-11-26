@@ -76,7 +76,7 @@
                   ItemsSource="{Binding StoreItems, UpdateSourceTrigger=PropertyChanged}" x:Name="storeItems">
                 <ListView.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <UniformGrid Rows="3" Columns="4"></UniformGrid>
+                        <UniformGrid Rows="4" Columns="4"></UniformGrid>
                     </ItemsPanelTemplate>
                 </ListView.ItemsPanel>
                 <ListView.ItemContainerStyle>
