@@ -8,6 +8,7 @@ using Microsoft.AspNet.SignalR;
 using AirHockeyServer.Services.ChatServiceServer;
 using AirHockeyServer.Hubs;
 using AirHockeyServer.Services;
+using Microsoft.Owin.Cors;
 
 [assembly: OwinStartup(typeof(AirHockeyServer.App_Start.Startup))]
 
@@ -39,8 +40,9 @@ namespace AirHockeyServer.App_Start
 
               GlobalHost.DependencyResolver.Register(
                  typeof(EditionHub),
-                 () => new EditionHub(WebApiApplication.UnityContainer.Resolve<EditionService>(), connectionMapper, WebApiApplication.UnityContainer.Resolve<UserService>())); 
-
+                 () => new EditionHub(WebApiApplication.UnityContainer.Resolve<EditionService>(), connectionMapper, WebApiApplication.UnityContainer.Resolve<UserService>()));
+            // Server
+            app.UseCors(CorsOptions.AllowAll);
             app.MapSignalR("/signalr", new HubConfiguration());
         }
     }
