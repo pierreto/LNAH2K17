@@ -25,7 +25,22 @@ class TutorialViewController: UIViewController {
     
     @IBOutlet weak var slideshow: ImageSlideshow!
     
-    let localSource = [ImageSource(imageString: "0 (1)")!, ImageSource(imageString: "0 (1)")!, ImageSource(imageString: "0 (1)")!]
+    let localSource = [ImageSource(imageString: "editor_light_1")!,
+                       ImageSource(imageString: "editor_light_2")!,
+                       ImageSource(imageString: "editor_light_3")!,
+                       ImageSource(imageString: "editor_light_4")!,
+                       ImageSource(imageString: "editor_light_5")!,
+                       ImageSource(imageString: "editor_light_6")!,
+                       ImageSource(imageString: "editor_light_7")!,
+                       ImageSource(imageString: "editor_light_8")!,
+                       ImageSource(imageString: "editor_light_9")!,
+                       ImageSource(imageString: "editor_light_10")!,
+                       ImageSource(imageString: "editor_light_11")!,
+                       ImageSource(imageString: "editor_light_12")!,
+                       ImageSource(imageString: "editor_light_13")!,
+                       ImageSource(imageString: "editor_light_14")!,
+                       ImageSource(imageString: "editor_light_15")!,
+                       ImageSource(imageString: "editor_light_16")!]
     
     override func viewDidLoad() {
         super.viewDidLoad()
