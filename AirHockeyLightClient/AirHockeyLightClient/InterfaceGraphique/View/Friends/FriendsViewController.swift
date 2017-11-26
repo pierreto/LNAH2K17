@@ -28,8 +28,8 @@ class FriendsViewController: UIViewController {
         
         // Initialize Tab Bar Item
         tabBarItem = UITabBarItem()
-        tabBarItem.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "FontAwesome", size: 30)!], for: .normal)
-        tabBarItem.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: -5)
+        tabBarItem.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "FontAwesome", size: 17)!], for: .normal)
+        tabBarItem.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: 0)
         tabBarItem.title = "\u{f0c0}"
     }
     
