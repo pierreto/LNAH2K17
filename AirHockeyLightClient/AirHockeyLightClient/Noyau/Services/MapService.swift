@@ -28,7 +28,7 @@ class MapService {
     }
     
     func getMaps(completionHandler: @escaping (JSON?, Error?) -> ()) {
-        if self.clientConnection.getConnection() != nil && self.clientConnection.connected! {
+        if self.clientConnection.getConnection() != nil && self.clientConnection.getConnection()?.state == .connected && self.clientConnection.getIpAddress() != nil {
             Alamofire.request("http://" + self.clientConnection.getIpAddress()! + ":63056/api/maps", method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON { response in
                     switch response.result {
                         case .success(let value):
@@ -42,7 +42,7 @@ class MapService {
     }
     
     func returnFullMaps(completionHandler: @escaping (JSON?, Error?) -> ()) {
-        if self.clientConnection.getConnection() != nil && self.clientConnection.connected! {
+        if self.clientConnection.getConnection() != nil && (self.clientConnection.getConnection()?.state)! == .connected {
             Alamofire.request("http://" + self.clientConnection.getIpAddress()! + ":63056/api/maps/sync", method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON { response in
                 switch response.result {
                 case .success(let value):
@@ -58,7 +58,7 @@ class MapService {
     func saveMap(map: MapEntity) {
         let map = self.convertMapEntity(mapEntity: map) as! [String : Any]
         
-        if self.clientConnection.getConnection() != nil && self.clientConnection.connected! {
+        if self.clientConnection.getConnection() != nil && (self.clientConnection.getConnection()?.state)! == .connected {
             Alamofire.request("http://" + self.clientConnection.getIpAddress()! + ":63056/api/maps/save",
                               method: .post, parameters: map, encoding: JSONEncoding.default)
                 .responseJSON { response in
@@ -72,7 +72,7 @@ class MapService {
     func syncMap(map: MapEntity) {
         let convertedMap = self.convertMapEntity(mapEntity: map) as! [String : Any]
         
-        if self.clientConnection.getConnection() != nil && self.clientConnection.connected! {
+        if self.clientConnection.getConnection() != nil && (self.clientConnection.getConnection()?.state)! == .connected {
             Alamofire.request("http://" + self.clientConnection.getIpAddress()! + ":63056/api/maps/sync",
                               method: .post, parameters: convertedMap, encoding: JSONEncoding.default)
                 .responseJSON { response in
@@ -94,7 +94,7 @@ class MapService {
     }
     
     func deleteMap(map: MapEntity, completionHandler: @escaping (Bool?, Error?) -> ()) {
-        if self.clientConnection.getConnection() != nil && self.clientConnection.connected! {
+        if self.clientConnection.getConnection() != nil && (self.clientConnection.getConnection()?.state)! == .connected {
             Alamofire.request("http://" + self.clientConnection.getIpAddress()! + ":63056/api/maps/remove/" + map.id!,
                               method: .get, parameters: nil, encoding: JSONEncoding.default)
                 .responseJSON { response in

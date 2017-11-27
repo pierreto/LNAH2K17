@@ -37,8 +37,13 @@ class ImageService {
     }
     
     static public func convertStrBase64ToImage(strBase64: String) -> UIImage {
-        let dataDecoded : Data = Data(base64Encoded: strBase64, options: .ignoreUnknownCharacters)!
-        return UIImage(data: dataDecoded)!
+        if(strBase64 != nil && strBase64 != "null" && strBase64 != "") {
+            let dataDecoded : Data = Data(base64Encoded: strBase64, options: .ignoreUnknownCharacters)!
+            return UIImage(data: dataDecoded)!
+        } else {
+            return UIImage(named: "default_profile_picture.png")!
+        }
+
     }
     
     static public func cropImageToSquare(image: UIImage) -> UIImage {
