@@ -21,7 +21,7 @@
             <system:Boolean x:Key="ButtonVisible"></system:Boolean>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid Background="{StaticResource SilverBrush}">
+    <Grid>
         <Grid.DataContext>
             <Binding Path="AddFriendListViewModel" Source="{StaticResource VMLocator}"/>
         </Grid.DataContext>
@@ -32,7 +32,7 @@
                     <DataTemplate>
 
                         <!-- Content -->
-                        <Border x:Name="background" Background="{StaticResource DarkGrayBrush}" BorderBrush="{StaticResource DarkGrayBrush}" BorderThickness="0,0,0,2">
+                        <Border x:Name="background" Background="{StaticResource DarkGrayBrush}" BorderBrush="{StaticResource UltraDarkGrayBrush}"   BorderThickness="0">
 
 
                             <Border.InputBindings>

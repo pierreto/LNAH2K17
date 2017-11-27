@@ -23,6 +23,8 @@ namespace InterfaceGraphique.Controls.WPF.MainMenu
         private bool notLoading;
         private bool onlineMode;
         private string username;
+        bool alreadyOpenedTutorialEditorMode = false;
+        bool alreadyOpenedMatchTutorialOfflineMode = false;
         #endregion
 
         #region Public Properties
@@ -369,31 +371,36 @@ namespace InterfaceGraphique.Controls.WPF.MainMenu
         #endregion
 
         #region Private Methods
+
         private async Task CheckIfNeedToShowEditorTutoriel()
         {
-            if (!User.Instance.IsConnected)
+            if (!User.Instance.IsConnected && !alreadyOpenedTutorialEditorMode)
             {
+
                 await ShowTutorialEditor();
             }
-            else if (!User.Instance.UserEntity.AlreadyUsedFatEditor)
+            else if (User.Instance.IsConnected && !User.Instance.UserEntity.AlreadyUsedFatEditor )
             {
                 await ShowTutorialEditor();
                 User.Instance.UserEntity.AlreadyUsedFatEditor = true;
                 await Program.client.PutAsJsonAsync(Program.client.BaseAddress + "api/user/" + User.Instance.UserEntity.Id.ToString(), User.Instance.UserEntity);
             }
+            alreadyOpenedTutorialEditorMode = true;
+
         }
         private async Task CheckIfNeedToShowMatchTutoriel()
         {
-            if (!User.Instance.IsConnected)
+            if (!User.Instance.IsConnected && !alreadyOpenedMatchTutorialOfflineMode)
             {
                 await ShowTutorialGame();
             }
-            else if (!User.Instance.UserEntity.AlreadyPlayedGame)
+            else if (User.Instance.IsConnected &&  !User.Instance.UserEntity.AlreadyPlayedGame )
             {
                 await ShowTutorialGame();
                 User.Instance.UserEntity.AlreadyPlayedGame = true;
                 await Program.client.PutAsJsonAsync(Program.client.BaseAddress + "api/user/" + User.Instance.UserEntity.Id.ToString(), User.Instance.UserEntity);
             }
+            alreadyOpenedMatchTutorialOfflineMode = true;
         }
 
         public static async Task ShowTutorialEditor()
