@@ -79,9 +79,18 @@ namespace InterfaceGraphique {
         ///
         ////////////////////////////////////////////////////////////////////////
         private void LoadGeneralProperties() {
-            this.Input_CoefFriction.Text = coefficientFriction.ToString();
-            this.Input_CoefRebound.Text = coefficientRebond.ToString();
-            this.Input_CoefAcceleration.Text = coefficientAcceleration.ToString();
+
+            if (!this.IsHandleCreated)
+            {
+                this.CreateHandle();
+            }
+            this.BeginInvoke(new MethodInvoker(delegate
+            {
+                this.Input_CoefFriction.Text = coefficientFriction.ToString();
+                this.Input_CoefRebound.Text = coefficientRebond.ToString();
+                this.Input_CoefAcceleration.Text = coefficientAcceleration.ToString();
+            }));
+        
 
             FonctionsNatives.setCoefficients(coefficientFriction, coefficientAcceleration, coefficientRebond);
      
@@ -125,6 +134,7 @@ namespace InterfaceGraphique {
         ///
         ////////////////////////////////////////////////////////////////////////
         public void SetCoefficientValues(float[] coefficients) {
+     
             coefficientFriction = coefficients[0];
             coefficientRebond = coefficients[1];
             coefficientAcceleration = coefficients[2];
