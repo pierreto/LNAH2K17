@@ -72,11 +72,16 @@ void VisiteurSauvegarde::visiterPointControl(NoeudPointControl* noeud){
 ////////////////////////////////////////////////////////////////////////
 void VisiteurSauvegarde::visiterPortail(NoeudPortail* noeud) {
 	if (std::find(linkedPortals_.begin(), linkedPortals_.end(), noeud) == linkedPortals_.end()) {
-		sauvegarderNoeud(noeud, "Portail");
-		sauvegarderNoeud(noeud->obtenirOppose(), "Portail");
 
-		linkedPortals_.push_back(noeud);
-		linkedPortals_.push_back(noeud->obtenirOppose());
+		if(noeud->obtenirOppose())
+		{
+			sauvegarderNoeud(noeud, "Portail");
+			sauvegarderNoeud(noeud->obtenirOppose(), "Portail");
+
+			linkedPortals_.push_back(noeud);
+			linkedPortals_.push_back(noeud->obtenirOppose());
+		}
+
 	}
 }
 
