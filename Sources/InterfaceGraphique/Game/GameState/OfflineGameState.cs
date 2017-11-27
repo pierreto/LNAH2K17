@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using InterfaceGraphique.Entities;
+using InterfaceGraphique.CommunicationInterface;
 
 namespace InterfaceGraphique.Game.GameState
 {
@@ -123,6 +124,7 @@ namespace InterfaceGraphique.Game.GameState
         {
             Program.QuickPlay.GetReplayButton().Visible = true;
             Program.QuickPlay.EndGame(false);
+            User.Instance.UserEntity.IsPlaying = false;
         }
     }
 }

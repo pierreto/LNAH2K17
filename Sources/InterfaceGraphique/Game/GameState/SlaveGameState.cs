@@ -137,6 +137,8 @@ namespace InterfaceGraphique.Game.GameState
             Program.QuickPlay.UnsuscribeEventHandlers();
             FonctionsNatives.setGameEnded();
 
+            User.Instance.UserEntity.IsPlaying = false;
+
             this.gameHub.NewPositions -= OnNewGamePositions;
             this.gameHub.NewGoal -= OnNewGoal;
             this.gameHub.GameOver -= EndGame;

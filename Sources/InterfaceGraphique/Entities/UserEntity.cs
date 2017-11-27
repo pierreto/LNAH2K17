@@ -30,6 +30,8 @@ namespace InterfaceGraphique.Entities
 
         public bool IsConnected { get; set; }
 
+        public bool IsPlaying { get; set; }
+
         public bool IsSelected { get; set; }
 
         public bool AlreadyPlayedGame { get; set; }
