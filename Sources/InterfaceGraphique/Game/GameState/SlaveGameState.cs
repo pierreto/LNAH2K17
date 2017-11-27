@@ -20,12 +20,13 @@ namespace InterfaceGraphique.Game.GameState
         private bool gameHasEnded = false;
 
         public MapService MapService { get; set; }
+        public GameManager GameManager { get; }
 
-        public SlaveGameState(GameHub gameHub, MapService mapService)
+        public SlaveGameState(GameHub gameHub, MapService mapService, GameManager gameManager)
         {
             this.gameHub = gameHub;
             MapService = mapService;
-         
+            GameManager = gameManager;
         }
 
         public override async void InitializeGameState(GameEntity gameEntity)
@@ -57,11 +58,11 @@ namespace InterfaceGraphique.Game.GameState
 
         private void OnNewGoal(GoalMessage goalMessage)
         {
-            if (goalMessage.PlayerNumber == 1)
+            if(goalMessage.PlayerNumber == GameManager.CurrentOnlineGame.Players.Where(x => x.Id != User.Instance.UserEntity.Id).First().Id)            
             {
                 FonctionsNatives.slaveGoal();
             }
-            else if (goalMessage.PlayerNumber == 2)
+            else if (goalMessage.PlayerNumber == User.Instance.UserEntity.Id)
             {
                 FonctionsNatives.masterGoal();
             }

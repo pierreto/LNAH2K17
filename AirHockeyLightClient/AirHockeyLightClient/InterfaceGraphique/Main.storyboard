@@ -117,7 +117,7 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <segue destination="8q1-PD-X5V" kind="show" id="5kt-yz-yM5"/>
+                                            <action selector="openEdition:" destination="H5p-E5-hIj" eventType="touchUpInside" id="hhd-H5-hX3"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="chm-d1-oTH">
@@ -136,7 +136,7 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <segue destination="X4I-q0-FjO" kind="show" id="hBv-fG-5Py"/>
+                                            <segue destination="X4I-q0-FjO" kind="show" identifier="openTutorial" id="hBv-fG-5Py"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IgC-kw-Li8">
@@ -235,6 +235,7 @@
                         <outlet property="navigationBar" destination="1wR-p8-feV" id="EkP-qs-qQ2"/>
                         <outlet property="username" destination="OYJ-qG-1SJ" id="kXc-J5-wCg"/>
                         <segue destination="CBq-Dz-qxq" kind="show" identifier="disconnectSegue" id="Bbq-77-Iqj"/>
+                        <segue destination="8q1-PD-X5V" kind="show" identifier="openMaps" id="PAW-Ev-DSO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sZF-Co-9Gv" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2025,7 +2026,7 @@
                                 </prototypes>
                             </tableView>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Entrez un message ..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6c7-wi-h1e">
-                                <rect key="frame" x="20" y="252" width="266" height="40"/>
+                                <rect key="frame" x="20" y="720" width="565.5" height="40"/>
                                 <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="MTS-FN-hob"/>
@@ -3293,6 +3294,10 @@
                                     <segue destination="i7g-be-ARE" kind="embed" id="ZEG-SW-BvW"/>
                                 </connections>
                             </containerView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="dzt-9G-Hr7" userLabel="requestIndicator">
+                                <rect key="frame" x="494" y="376" width="37" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -3305,6 +3310,9 @@
                     <navigationItem key="navigationItem" title="Sélection de cartes" id="Cyt-ZN-GS6">
                         <barButtonItem key="backBarButtonItem" title="Sélection de cartes" id="pQC-M4-VZn"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="loadingSpinner" destination="dzt-9G-Hr7" id="Ulx-eJ-hDC"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d2z-FI-Hxt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -3444,11 +3452,11 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="5kt-yz-yM5"/>
-        <segue reference="Bbq-77-Iqj"/>
         <segue reference="fh0-jW-WVm"/>
-        <segue reference="hBv-fG-5Py"/>
         <segue reference="siQ-V2-je8"/>
+        <segue reference="Bbq-77-Iqj"/>
+        <segue reference="hBv-fG-5Py"/>
+        <segue reference="PAW-Ev-DSO"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
 </document>

@@ -108,7 +108,6 @@ class EditorHUDScene: SKScene {
         self.cameraControlButton?.isHidden = !activer;
         self.selectionButton?.isHidden = !activer;
         self.duplicateButton?.isHidden = !activer;
-        self.deselectAllButton?.isHidden = !activer;
         self.pointControlButton?.isHidden = !activer;
         self.portalButton?.isHidden = !activer;
         self.wallButton?.isHidden = !activer;

@@ -77,9 +77,9 @@ class MapService {
                               method: .post, parameters: convertedMap, encoding: JSONEncoding.default)
                 .responseJSON { response in
                     switch response.result {
-                    case .success(let value):
-                        print(value)
+                    case .success(let value): break
                         /*
+                        print(value)
                         let mapIsOverriden = value as! Int
                         if mapIsOverriden == 1 {
                             // TODO: notify user instead
@@ -127,7 +127,7 @@ class MapService {
             "MapName": mapEntity.mapName!,
             "LastBackup": mapEntity.lastBackup!.description,
             "Json": mapEntity.json!,
-            "Icon": mapEntity.icon!,
+            "Icon": mapEntity.icon == nil ? "" : mapEntity.icon!,
             "Private": mapEntity.privacy.value!.description,
             "Password": mapEntity.password?.description as Any,
             "CurrentNumberOfPlayer": mapEntity.currentNumberOfPlayer.value!.description

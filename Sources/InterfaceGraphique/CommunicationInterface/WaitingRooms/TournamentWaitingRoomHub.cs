@@ -222,6 +222,10 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
                     if (game.Slave.IsAi)
                     {
+                        List<string> ArtificialIntelligences = Program.ConfigurationMenu.GetProfileList();
+                        string stringSelectedProfile = ArtificialIntelligences.First();
+                        PlayerProfile selectedProfile = Program.ConfigurationMenu.GetProfile(stringSelectedProfile);
+                        FonctionsNatives.aiActiveProfile(selectedProfile.Speed, selectedProfile.Passivity);
                         FonctionsNatives.setCurrentOpponentType((int)OpponentType.VIRTUAL_PLAYER);
                     }
 

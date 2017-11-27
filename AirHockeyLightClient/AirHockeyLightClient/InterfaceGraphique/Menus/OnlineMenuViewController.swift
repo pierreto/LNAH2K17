@@ -45,7 +45,21 @@ class OnlineMenuViewController: UIViewController {
                                                selector: #selector(goToProfile(_:)),
                                                name: NSNotification.Name(rawValue: "GoToProfile"),
                                                object: nil)
+    }
+    
+    @IBAction func openEdition(_ sender: Any) {
+        let user = HubManager.sharedConnection.getUser()
         
+        if user.getAlreadyUsedLightEditor() {
+            self.performSegue(withIdentifier: "openMaps", sender: self)
+        } else {
+            user.setAlreadyUsedLightEditor(alreadyUsedLightEditor: true)
+            
+            let friendsService = FriendsService()
+            friendsService.setUserAlreadyUsedLightEditor(id: user.getId())
+            
+            self.performSegue(withIdentifier: "openTutorial", sender: self)
+        }
     }
     
     @objc fileprivate func goToProfile(_ notification: NSNotification){
@@ -65,4 +79,5 @@ class OnlineMenuViewController: UIViewController {
         self.view.isUserInteractionEnabled = true
         self.navigationBar.hidesBackButton = false
     }
+
 }
