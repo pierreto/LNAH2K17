@@ -105,8 +105,12 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     func loadUserProfile() {
         self.loading()
+        print("Getting profile of : ", HubManager.sharedConnection.searchId?.description)
         Alamofire.request("http://" + HubManager.sharedConnection.getIpAddress()! + ":63056/api/profile/" + (HubManager.sharedConnection.searchId?.description)!)
             .responseJSON { response in
+            self.achievementUrls = [String]()
+            self.achievementEnabled = [Bool]()
+            self.achievementLabels = [String]()
                 if let jsonValue = response.result.value {
                     let json = JSON(jsonValue)
                     //print("JSON: \(jsonValue)")
@@ -172,6 +176,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
                     
                     //Achievements
                     let achievements = json["AchievementEntities"].array
+                    print(achievements!)
                     for var achievement in achievements! {
                         if achievement["IsEnabled"].description == "true" {
                             self.achievementEnabled.append(true)
@@ -184,7 +189,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
                         self.achievementLabels.append(achievement["Name"].description)
                     }
                     self.achievementCollectionView.reloadData()
-                    let indexPath = IndexPath(row: Int(INT_MAX)/200, section: 0);
+                    //let indexPath = IndexPath(row: Int(INT_MAX)/200, section: 0);
                     //self.achievementCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally , animated: false)
                 }
                 self.loadingDone()
@@ -207,6 +212,8 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     private func loadUserStoreItems() {
+        self.storeService = StoreService()
+        self.userStoreItems = [StoreItemEntity]()
         _ = self.storeService.getUserStoreItems().then { items -> Void in
             self.userStoreItems = items
             
@@ -269,7 +276,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         var count:Int?
         if collectionView == self.achievementCollectionView {
-            count = achievementUrls.count > 0 ? Int(INT_MAX)/100 : 0
+            count = achievementUrls.count
         }
         if collectionView == self.itemCollectionView {
             count = self.userStoreItems.count
@@ -387,11 +394,13 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     private func disableInputs() {
         self.profileImage.isUserInteractionEnabled = false
         self.itemCollectionView.isUserInteractionEnabled = false
+        //self.view.subviews.map { $0.isUserInteractionEnabled = false }
     }
     
     private func enableInputs() {
         self.profileImage.isUserInteractionEnabled = true
         self.itemCollectionView.isUserInteractionEnabled = true
+        
     }
     
     public func setUserId(userId: Int) {
