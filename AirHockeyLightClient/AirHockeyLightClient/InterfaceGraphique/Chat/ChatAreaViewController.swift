@@ -108,6 +108,8 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
         addChannelView.isHidden = true
         delegate = MasterViewController.sharedMasterViewController
         
+        chatTableView.transform = CGAffineTransform(rotationAngle: -(CGFloat)(Double.pi))
+        
         //Search bar
         searchBar.delegate = self
     }
@@ -133,17 +135,8 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
             delegate?.newUnreadMessage()
         }
         //Add messages to the channel
-        chan?.messages.append(ChatMessageEntity(sender:sender!, messageValue: messageValue!, timestamp: (dateString)))
-//        DispatchQueue.main.async(execute: { () -> Void in
-//            //Reload table to see new message
-//            self.chatTableView.reloadData()
-//            //Scroll to the last message on insert
-//            print("NUM MSG: ", (chan?.messages.count)!)
-//            if(chan?.messages.count)! > 1 {
-//                let indexPath = IndexPath(row: (chan?.messages.count)! - 1, section: 0);
-//                self.chatTableView?.scrollToRow(at: indexPath, at: .bottom, animated: true)
-//            }
-//        })
+        chan?.messages.insert(ChatMessageEntity(sender:sender!, messageValue: messageValue!, timestamp: (dateString)), at: 0)
+        self.chatTableView.reloadData()
     }
     
     /// Enclenché lorsqu'un message est reçu dans un autre canal
@@ -165,16 +158,8 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
             delegate = MasterViewController.sharedMasterViewController
             delegate?.newUnreadMessage()
         }
-        chan?.messages.append(ChatMessageEntity(sender:sender!, messageValue: messageValue!, timestamp: (dateString)))
-
-//        DispatchQueue.main.async(execute: { () -> Void in
-//            self.chatTableView.reloadData()
-//            print("NUM MSG: ", (chan?.messages.count)!)
-//            if(chan?.messages.count)! > 1 {
-//                let indexPath = IndexPath(row: (chan?.messages.count)! - 1, section: 0);
-//                self.chatTableView?.scrollToRow(at: indexPath, at: .bottom, animated: true)
-//            }
-//        })
+        chan?.messages.insert(ChatMessageEntity(sender:sender!, messageValue: messageValue!, timestamp: (dateString)), at: 0)
+        self.chatTableView.reloadData()
     }
     
     func receiveMessagePrivate(message: Dictionary<String, String>, senderId: Int) {
@@ -195,7 +180,8 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
             delegate = MasterViewController.sharedMasterViewController
             delegate?.newUnreadMessage()
         }
-        chan?.messages.append(ChatMessageEntity(sender:sender!, messageValue: messageValue!, timestamp: (dateString)))
+        chan?.messages.insert(ChatMessageEntity(sender:sender!, messageValue: messageValue!, timestamp: (dateString)), at: 0)
+        self.chatTableView.reloadData()
     }
     
     //Message envoye par le chatHub lorsqu'il ne reste plus personne dans un canal
@@ -293,6 +279,8 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
         if tableView == self.chatTableView {
             cell = chatTableView.dequeueReusableCell(withIdentifier: "Message", for: indexPath) as! MessageViewCell
             
+            cell!.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi));
+
             let sender = cell!.viewWithTag(1) as! UILabel
             sender.text = channel.messages[indexPath.row].getSender()
             
@@ -405,14 +393,9 @@ extension ChatAreaViewController: ChannelSelectionDelegate {
     
     func channelSelected(newChannel: ChannelEntity) {
         channel = newChannel
-        DispatchQueue.main.async(execute: { () -> Void in
-            self.chatTableView.reloadData()
-            let numberOfRows = self.channel.messages.count
-            if numberOfRows > 0 {
-                    let indexPath = IndexPath(row: numberOfRows, section: 0);
-            self.chatTableView?.scrollToRow(at: indexPath, at: .bottom, animated: false)
-            }
-        })
+        //Reload table to see new message
+        self.chatTableView.reloadData()
+
     }
     
     func toggleAddChannelView() {
