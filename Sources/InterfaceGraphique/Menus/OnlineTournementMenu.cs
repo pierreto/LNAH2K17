@@ -143,6 +143,7 @@ namespace InterfaceGraphique.Menus
         private void LoadGame()
         {
             SaveGameSettings();
+            User.Instance.UserEntity.IsPlaying = true;
 
             // CREATE AI OR ONLINE PLAYERS
             List<GamePlayerEntity> players = new List<GamePlayerEntity>();
