@@ -203,6 +203,12 @@ namespace AirHockeyServer.Manager
             AddGame(finalGame);
             Cache.Tournaments[tournament.Id] = tournament;
 
+            if(finalGame.Players.All(x => x.IsAi))
+            {
+                await GameEnded(finalGame.GameId);
+                return;
+            }
+
             var gameHub = GlobalHost.ConnectionManager.GetHubContext<GameWaitingRoomHub>();
             foreach (var player in finalGame.Players)
             {

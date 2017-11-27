@@ -9,6 +9,7 @@ using AirHockeyServer.Services.ChatServiceServer;
 using AirHockeyServer.Hubs;
 using AirHockeyServer.Services;
 using Microsoft.Owin.Cors;
+using System;
 
 [assembly: OwinStartup(typeof(AirHockeyServer.App_Start.Startup))]
 
@@ -43,6 +44,7 @@ namespace AirHockeyServer.App_Start
                  () => new EditionHub(WebApiApplication.UnityContainer.Resolve<EditionService>(), connectionMapper, WebApiApplication.UnityContainer.Resolve<UserService>()));
             // Server
             app.UseCors(CorsOptions.AllowAll);
+            GlobalHost.Configuration.DisconnectTimeout = TimeSpan.FromSeconds(6);
             app.MapSignalR("/signalr", new HubConfiguration());
         }
     }
