@@ -67,6 +67,10 @@ class HubManager {
         return self.user!
     }
     
+    public func setUser(user: UserEntity) {
+        self.user = user
+    }
+    
     public func getIpAddress() -> String? {
         return self.ipAddress
     }
