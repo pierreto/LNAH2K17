@@ -59,8 +59,6 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate, UICol
         
         self.initView()
         self.initScene()
-        self.initCamera()
-
         self.initFacadeModele()
         
         // Load the SKScene from 'EditorHUDScene.sks'
@@ -85,6 +83,8 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate, UICol
         self.showObjectPropertiesView(activer: false)
         self.objectPropertiesView.objectProperties.isHidden = true;
         self.objectPropertiesView.hideObjectPropertiesButtons()
+        
+        self.initCamera()
     }
     
     override func viewWillDisappear(_ animated : Bool) {
@@ -116,36 +116,8 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate, UICol
     }
     
     func initCamera() {
-        // Setup camera node
-        self.cameraNode = SCNNode()
-        self.cameraNode.camera = SCNCamera()
-        self.cameraNode.camera?.zNear = 0.1
-        self.cameraNode.camera?.zFar = 1000
-        
-        // Setup camera orbit
-        self.cameraOrbit = SCNNode()
-        self.cameraOrbit.addChildNode(self.cameraNode)
-        self.cameraOrbit.position = SCNVector3Make(20, 200, 0)
-        self.cameraOrbit.eulerAngles = SCNVector3Make((-Float.pi/2), (-Float.pi/2), 0)
-        
-        self.editorScene.rootNode.addChildNode(cameraOrbit)
-        
-        // Add pan gesture recognizer
-        // let gesture = UIPanGestureRecognizer(target: self, action: #selector(self.panDetected))
-        // self.editorView.addGestureRecognizer(gesture);
-    }
-    
-    func panDetected(sender: UIPanGestureRecognizer) {
-        let translation = sender.translation(in: sender.view!)
-        let widthRatio = Float(translation.x) / Float(sender.view!.frame.size.width) + self.lastWidthRatio
-        let heightRatio = Float(translation.y) / Float(sender.view!.frame.size.height) + self.lastHeightRatio
-        self.cameraOrbit.eulerAngles.y = -2 * Float.pi * widthRatio
-        self.cameraOrbit.eulerAngles.x = -Float.pi * heightRatio
-        
-        if (sender.state == .ended) {
-            self.lastWidthRatio = widthRatio.truncatingRemainder(dividingBy: 1)
-            self.lastHeightRatio = heightRatio.truncatingRemainder(dividingBy: 1)
-        }
+        self.editorScene.rootNode.childNodes.first?.position = SCNVector3Make(20, 200, 0)
+        self.editorScene.rootNode.childNodes.first?.eulerAngles = SCNVector3Make((Float.pi/2), 0, (Float.pi/2))
     }
     
     func initFacadeModele() {
@@ -191,6 +163,10 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate, UICol
         
         // Jouer le son
         AudioService.instance.playSound(soundName: EDITION_SOUND.SAVE.rawValue)
+    }
+    
+    @IBAction func openTutorial(_ sender: Any) {
+        self.performSegue(withIdentifier: "tutorialSegue", sender: self)
     }
     
     func takeMapSnapshot() -> UIImage {

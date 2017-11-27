@@ -24,7 +24,7 @@ namespace InterfaceGraphique.Entities
 
         public string Email { get; set; }
 
-        public string Date { get; set; }
+        public string Created { get; set; }
 
         public string Profile { get; set; }
 

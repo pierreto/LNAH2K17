@@ -227,8 +227,8 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func newPrivateChannel(name: String, othersId: Int, othersProfile: String){
-        if !channelsToJoin.contains(where: { (cE: ChannelEntity) -> Bool in
-            (cE.name == name && cE.isPrivate)
+        if !MasterViewController.sharedMasterViewController.channels.contains(where: { (cE: ChannelEntity) -> Bool in
+            (cE.name == name && (cE.isPrivate == true))
         }) {
             MasterViewController.sharedMasterViewController.channels.append(ChannelEntity(name: name, isPrivate: true, privateUserId: othersId, profile: othersProfile))
             MasterViewController.sharedMasterViewController.channelTableView.reloadData()

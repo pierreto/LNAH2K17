@@ -27,6 +27,7 @@ class ModeleEtatCameraControl: ModeleEtat {
     override func initialiser() {
         FacadeModele.instance.obtenirVue().editorView.removeGestureRecognizer(FacadeModele.instance.panGestureRecognizer!)
     }
+    
 }
 
 ///////////////////////////////////////////////////////////////////////////////
