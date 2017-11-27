@@ -89,8 +89,11 @@ namespace InterfaceGraphique.Controls.WPF.Friends
 
         private void NewAddableFriendEvent(UserEntity user)
         {
-            Items.Add(user);
-            OnPropertyChanged(nameof(Items));
+            ctxTaskFactory.StartNew(() =>
+            {
+                Items.Add(user);
+                OnPropertyChanged(nameof(Items));
+            }).Wait();
         }
         #endregion
 
