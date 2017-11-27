@@ -19,6 +19,9 @@ import UIKit
 ///////////////////////////////////////////////////////////////////////////
 class AddFriendViewController: UIViewController {
     
+    /// Instance singleton
+    static var instance: AddFriendViewController?
+    
     @IBOutlet weak var search: SearchTextField!
     
     private var filterStrings = [String]()
@@ -26,6 +29,8 @@ class AddFriendViewController: UIViewController {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        
+        AddFriendViewController.instance = self
         
         // Initialize Tab Bar Item
         tabBarItem = UITabBarItem()
@@ -37,6 +42,7 @@ class AddFriendViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Retrieve all users
         let friendsService = FriendsService()
         friendsService.getAllUsers() { users, error in
             let activeUsername = HubManager.sharedConnection.getUsername()
@@ -45,12 +51,12 @@ class AddFriendViewController: UIViewController {
                     self.filterStrings.append(user.getUsername())
                 }
             }
-
+            
             self.search.filterStrings(self.filterStrings)
             return
         }
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         self.view.alpha = 0.2
         UIView.animate(
@@ -58,6 +64,11 @@ class AddFriendViewController: UIViewController {
             animations: {
                 self.view.alpha = 1.0
         })
+    }
+    
+    func addNewAddableUser(username : String) {
+        self.filterStrings.append(username)
+        self.search.filterStrings(self.filterStrings)
     }
     
     @IBAction func addFriend(_ sender: Any) {

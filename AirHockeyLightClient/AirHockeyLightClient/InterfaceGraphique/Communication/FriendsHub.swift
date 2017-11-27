@@ -59,6 +59,16 @@ class FriendsHub: BaseHub {
             
             FriendsTableViewController.instance.removeFriend(exFriend: exFriend)
         }
+        
+        self.hubProxy?.on("NewAddableFriendEvent") { args in
+            let newUserJson = JSON(args?[0] as! Dictionary<String, Any>)
+            let newUser = self.friendsService.buildUserEntity(json: newUserJson)
+            
+            if AddFriendViewController.instance != nil {
+                AddFriendViewController.instance?.addNewAddableUser(username: newUser.getUsername())
+            }
+        }
+        
     }
     
     func getAllFriends() {
