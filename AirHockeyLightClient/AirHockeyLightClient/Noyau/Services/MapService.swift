@@ -127,7 +127,7 @@ class MapService {
             "MapName": mapEntity.mapName!,
             "LastBackup": mapEntity.lastBackup!.description,
             "Json": mapEntity.json!,
-            "Icon": mapEntity.icon!,
+            "Icon": mapEntity.icon == nil ? "" : mapEntity.icon!,
             "Private": mapEntity.privacy.value!.description,
             "Password": mapEntity.password?.description as Any,
             "CurrentNumberOfPlayer": mapEntity.currentNumberOfPlayer.value!.description

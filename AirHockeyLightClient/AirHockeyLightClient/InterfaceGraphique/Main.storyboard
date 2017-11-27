@@ -117,7 +117,7 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <segue destination="8q1-PD-X5V" kind="show" id="5kt-yz-yM5"/>
+                                            <action selector="openEdition:" destination="H5p-E5-hIj" eventType="touchUpInside" id="hhd-H5-hX3"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="chm-d1-oTH">
@@ -136,7 +136,7 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <segue destination="X4I-q0-FjO" kind="show" id="hBv-fG-5Py"/>
+                                            <segue destination="X4I-q0-FjO" kind="show" identifier="openTutorial" id="hBv-fG-5Py"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IgC-kw-Li8">
@@ -226,6 +226,7 @@
                         <outlet property="loadingSpinner" destination="MjL-zR-z6A" id="8bN-yJ-Ic3"/>
                         <outlet property="navigationBar" destination="1wR-p8-feV" id="EkP-qs-qQ2"/>
                         <segue destination="CBq-Dz-qxq" kind="show" identifier="disconnectSegue" id="Bbq-77-Iqj"/>
+                        <segue destination="8q1-PD-X5V" kind="show" identifier="openMaps" id="PAW-Ev-DSO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sZF-Co-9Gv" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3435,11 +3436,11 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Bbq-77-Iqj"/>
-        <segue reference="siQ-V2-je8"/>
-        <segue reference="5kt-yz-yM5"/>
         <segue reference="fh0-jW-WVm"/>
-        <segue reference="jqb-g1-hhV"/>
+        <segue reference="siQ-V2-je8"/>
+        <segue reference="Bbq-77-Iqj"/>
+        <segue reference="hBv-fG-5Py"/>
+        <segue reference="PAW-Ev-DSO"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
 </document>
