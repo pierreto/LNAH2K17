@@ -43,7 +43,7 @@
                 <Label FontSize="100" FontWeight="Bold" Foreground="Red">2K17</Label>
             </StackPanel>
             <Border Margin="0 -30 0 0" HorizontalAlignment="Center"  VerticalAlignment="Top" Background="Transparent" CornerRadius="8" Visibility="{Binding OnlineMode, Converter={convert:BooleanToCollapsedConverter}, ConverterParameter=True}">
-                <Label Content="asddsasad" FontSize="30" FontWeight="Bold" Foreground="{StaticResource DarkSilverBrush}"/>
+                <Label Content="{Binding Username}" FontSize="30" FontWeight="Bold" Foreground="{StaticResource DarkSilverBrush}"/>
             </Border>
         </StackPanel>
 

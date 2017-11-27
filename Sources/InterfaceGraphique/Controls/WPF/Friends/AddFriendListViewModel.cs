@@ -52,6 +52,7 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             this.addUserViewModel = addUserViewModel;
             this.userService = userService;
             this.friendsHub.FriendRequestEvent += FriendRequestEvent;
+            this.friendsHub.NewAddableFriendEvent += NewAddableFriendEvent;
             ctxTaskFactory = new TaskFactory(TaskScheduler.FromCurrentSynchronizationContext());
             Items = new ObservableCollection<UserEntity>();
             ItemsView.Filter = new Predicate<object>(o => Filter(o as UserEntity));
@@ -86,6 +87,11 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             }).Wait();
         }
 
+        private void NewAddableFriendEvent(UserEntity user)
+        {
+            Items.Add(user);
+            OnPropertyChanged(nameof(Items));
+        }
         #endregion
 
         #region Overwritten Methods

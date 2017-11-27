@@ -19,6 +19,7 @@ namespace InterfaceGraphique.CommunicationInterface
 
         public event Action<FriendRequestEntity> FriendRequestEvent;
         public event Action<UserEntity> NewFriendEvent;
+        public event Action<UserEntity> NewAddableFriendEvent;
         public event Action<UserEntity> RemovedFriendEvent;
         public event Action<FriendRequestEntity> CanceledFriendRequestEvent;
 
@@ -74,6 +75,11 @@ namespace InterfaceGraphique.CommunicationInterface
             FriendsProxy.On<UserEntity>("NewFriendEvent", friend =>
             {
                 NewFriendEvent?.Invoke(friend);
+            });
+
+            FriendsProxy.On<UserEntity>("NewAddableFriendEvent", friend =>
+            {
+                NewAddableFriendEvent?.Invoke(friend);
             });
 
             FriendsProxy.On<UserEntity>("RemovedFriendEvent", ex_friend =>
@@ -167,6 +173,19 @@ namespace InterfaceGraphique.CommunicationInterface
                 HandleError("FriendsHub -> SendFriendRequest");
             }
             return null;
+        }
+
+        public async Task SignalSignup()
+        {
+            try
+            {
+
+                await FriendsProxy?.Invoke("SignalSignup", this.user);
+            }
+            catch (Exception e)
+            {
+                HandleError("FriendsHub -> SignalSignup");
+            }
         }
 
         public async Task<bool> AcceptFriendRequest(FriendRequestEntity request)
