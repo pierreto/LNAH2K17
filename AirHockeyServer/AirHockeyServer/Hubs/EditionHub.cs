@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AirHockeyServer.Core;
 using AirHockeyServer.Entities;
 using AirHockeyServer.Entities.Edition.EditionCommand;
 using AirHockeyServer.Entities.EditionCommand;
@@ -57,8 +58,8 @@ namespace AirHockeyServer.Hubs
             {
                 Username = username,
                 HexColor = editionGroup.lockNextColor(),
-                ProfilePicture = user.Profile
-
+                ProfilePicture = user.Profile,
+                CurrentMapId = mapGroupId
             };
             //This shouldnt be managed here... He should be managed at the login point at least
             //But i have no choice for now
@@ -92,7 +93,10 @@ namespace AirHockeyServer.Hubs
         {
             //We update the current selection node list selected by the user
             OnlineUser user = ConnectionMapper.GetUserFromConnectionId(Context.ConnectionId);
-
+            if (user == null)
+            {
+                return;
+            }
 
 
             if (selection.DeselectAll)
@@ -116,17 +120,22 @@ namespace AirHockeyServer.Hubs
 
             JObject jsonObject = JObject.Parse(str);
             jsonObject["$type"] = "InterfaceGraphique.Entities.EditonCommand.SelectionCommand, InterfaceGraphique";
-            Clients.Group(ObtainEditionGroupIdentifier(mapId), Context.ConnectionId).NewCommand(jsonObject.ToString(Formatting.None, null));
+            Clients.Group(user.CurrentMapId, Context.ConnectionId).NewCommand(jsonObject.ToString(Formatting.None, null));
 
         }
 
-        public async Task LeaveRoom(int gameId)
+        public async Task LeaveRoom(int gameIdDEPRECATED)
         {
-            await Groups.Remove(Context.ConnectionId, ObtainEditionGroupIdentifier(gameId) );
 
             OnlineUser userThatLeft = ConnectionMapper.GetUserFromConnectionId(Context.ConnectionId);
-            editionService.UsersPerGame[ObtainEditionGroupIdentifier(gameId)].RemoveUser(userThatLeft);
-            Clients.Group(ObtainEditionGroupIdentifier(gameId), Context.ConnectionId).UserLeaved(userThatLeft.Username);
+            if (userThatLeft == null)
+            {
+                return;
+            }
+            editionService.UsersPerGame[userThatLeft.CurrentMapId].RemoveUser(userThatLeft);
+
+            await Groups.Remove(Context.ConnectionId, userThatLeft.CurrentMapId);
+            Clients.Group(userThatLeft.CurrentMapId, Context.ConnectionId).UserLeaved(userThatLeft.Username);
 
             //For now we do this, but the should be done in another 
             //ConnectionMapper.RemoveUserConnection(Context.ConnectionId);
@@ -137,17 +146,28 @@ namespace AirHockeyServer.Hubs
             return "EditionHub" + id;
         }
 
-        public async Task Disconnect(int gameId)
+        public void DisconnectEditionHub()
         {
-            await LeaveRoom(gameId);
-            base.Disconnect();
+            //cant await...
+            OnlineUser userThatLeft = ConnectionMapper.GetUserFromConnectionId(Context.ConnectionId);
+            if (userThatLeft == null)
+            {
+                return;
+            }
+            editionService.UsersPerGame[userThatLeft.CurrentMapId].RemoveUser(userThatLeft);
+
+            Groups.Remove(Context.ConnectionId, userThatLeft.CurrentMapId);
+            Clients.Group(userThatLeft.CurrentMapId, Context.ConnectionId).UserLeaved(userThatLeft.Username);
         }
+
+
 
         public override Task OnDisconnected(bool stopCalled)
         {
-            // TODO ANY SPECIAL ACTION?
-            
+            DisconnectEditionHub();
+
             return base.OnDisconnected(stopCalled);
         }
+
     }
 }
