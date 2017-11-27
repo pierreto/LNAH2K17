@@ -194,6 +194,7 @@ namespace AirHockeyServer.Manager
         {
             GameEntity finalGame = CreateTournamentGame(tournament.SemiFinals[0].Winner, tournament.SemiFinals[1].Winner, tournament);
 
+            finalGame.SelectedMap = tournament.SelectedMap;
             tournament.State = TournamentState.Final;
             tournament.Final = finalGame;
 
