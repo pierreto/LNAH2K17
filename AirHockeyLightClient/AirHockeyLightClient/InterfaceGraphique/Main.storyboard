@@ -688,6 +688,7 @@
                         <outlet property="gamesPlayedLabel" destination="tLf-kc-jXS" id="Yh8-CB-seb"/>
                         <outlet property="gamesWonLabel" destination="DCH-QY-sKj" id="PLr-Rh-V2a"/>
                         <outlet property="itemCollectionView" destination="0Fm-mG-i9z" id="9Qg-Ub-q07"/>
+                        <outlet property="itemsLabel" destination="4VT-BL-Rr9" id="Tr0-Pn-3tz"/>
                         <outlet property="loadingSpinner" destination="trd-8M-cLh" id="STD-86-fTQ"/>
                         <outlet property="nameLabel" destination="HMI-da-qJS" id="YXs-Ve-xEY"/>
                         <outlet property="navigationBar" destination="hUe-H4-vmt" id="Bwi-ES-zyk"/>
@@ -2026,7 +2027,7 @@
                                 </prototypes>
                             </tableView>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Entrez un message ..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6c7-wi-h1e">
-                                <rect key="frame" x="20" y="720" width="565.5" height="40"/>
+                                <rect key="frame" x="20" y="252" width="266" height="40"/>
                                 <color key="backgroundColor" red="0.93333333333333335" green="0.93333333333333335" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="MTS-FN-hob"/>
@@ -3452,11 +3453,11 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="fh0-jW-WVm"/>
-        <segue reference="siQ-V2-je8"/>
-        <segue reference="Bbq-77-Iqj"/>
-        <segue reference="hBv-fG-5Py"/>
         <segue reference="PAW-Ev-DSO"/>
+        <segue reference="Bbq-77-Iqj"/>
+        <segue reference="fh0-jW-WVm"/>
+        <segue reference="hBv-fG-5Py"/>
+        <segue reference="siQ-V2-je8"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
 </document>

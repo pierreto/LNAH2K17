@@ -16,6 +16,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     @IBOutlet weak var itemCollectionView: UICollectionView!
     
+    @IBOutlet weak var itemsLabel: UILabel!
     @IBOutlet weak var profileImage: UIImageView!
     let imagePicker = UIImagePickerController()
     
@@ -101,6 +102,14 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 
         self.loadUserProfile()
         self.loadUserStoreItems()
+        
+        if(HubManager.sharedConnection.getId() == HubManager.sharedConnection.searchId) {
+            itemCollectionView.isHidden = true
+            itemsLabel.isHidden = true
+        } else {
+            itemCollectionView.isHidden = false
+            itemsLabel.isHidden = false
+        }
     }
     
     func loadUserProfile() {
