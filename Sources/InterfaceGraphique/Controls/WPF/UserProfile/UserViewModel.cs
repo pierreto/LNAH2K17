@@ -17,7 +17,7 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
             Name = user.Name;
             Profile = user.Profile;
             Email = user.Email;
-            Date = user.Date;
+            Date = user.Created;
         }
 
         public override void InitializeViewModel()

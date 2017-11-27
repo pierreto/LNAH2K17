@@ -63,9 +63,11 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
                 UserName = User.Instance.UserEntity.Username;
                 Name = User.Instance.UserEntity.Name;
                 Email = User.Instance.UserEntity.Email;
-                CreationDate = User.Instance.UserEntity.Date;
+                CreationDate = User.Instance.UserEntity.Created;
                 ProfilePicture = User.Instance.UserEntity.Profile;
-                DateCreation = User.Instance.UserEntity.Date;
+
+                string formatDate = FormatCreationDate(User.Instance.UserEntity.Created);
+                DateCreation = formatDate;
                 var items = await StoreService.GetUserStoreItems(User.Instance.UserEntity.Id);
 
                 Items = new List<ItemViewModel>();
@@ -82,9 +84,9 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
                 UserName = friend.Username;
                 Name = friend.Name;
                 Email = friend.Email;
-                CreationDate = friend.Date;
+                CreationDate = friend.Created;
                 ProfilePicture = friend.Profile;
-                DateCreation = friend.Date;
+                DateCreation = friend.Created;
             }
 
             var achievements = await PlayerStatsService.GetAchievements();
@@ -96,6 +98,10 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
                 if (achievement != null)
                 {
                     x.IsEnabled = achievement.IsEnabled;
+                }
+                else
+                {
+                    x.IsEnabled = false;
                 }
             });
 
@@ -110,6 +116,19 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
 
             LoadingDone();
 
+        }
+
+        private string FormatCreationDate(string stringDate)
+        {
+            try
+            {
+                DateTime dateTime = Convert.ToDateTime(stringDate);
+                return dateTime.ToShortDateString();
+            }
+            catch(Exception)
+            {
+                return stringDate;
+            }
         }
 
         private void LoadingDone()

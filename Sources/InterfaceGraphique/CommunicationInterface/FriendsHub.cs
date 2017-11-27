@@ -46,7 +46,7 @@ namespace InterfaceGraphique.CommunicationInterface
                 AlreadyPlayedGame = me.AlreadyPlayedGame,
                 AlreadyUsedFatEditor = me.AlreadyUsedFatEditor,
                 AlreadyUsedLightEditor = me.AlreadyUsedLightEditor,
-                Date = me.Date,
+                Created = me.Created,
                 Email = me.Email,
                 Id = me.Id,
                 IsConnected = me.IsConnected,

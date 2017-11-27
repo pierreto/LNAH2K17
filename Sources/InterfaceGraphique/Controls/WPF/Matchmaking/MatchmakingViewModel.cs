@@ -101,7 +101,7 @@ namespace InterfaceGraphique.Controls.WPF.Matchmaking
 
         public void SetDefaultValues()
         {
-            RemainingTime = 30;
+            RemainingTime = 15;
             SetVisibility(true);
             OpponentName = string.Empty;
             playerName = string.Empty;
