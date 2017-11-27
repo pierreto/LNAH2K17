@@ -32,6 +32,14 @@ class ChatHub: BaseHub {
         self.hubProxy?.on("ChannelDeleted") { args in
              ChatAreaViewController.sharedChatAreaViewController.channelDeleted(channelName: args?[0] as! String)
         }
+
+        self.hubProxy?.on("ChatMessageReceivedPrivate") { args in
+            ChatAreaViewController.sharedChatAreaViewController.receiveMessagePrivate(message: args?[0] as! Dictionary<String, String>, senderId: args?[1] as! Int)
+        }
+
+        self.hubProxy?.on("PrivateChannelCreated") { args in
+            ChatAreaViewController.sharedChatAreaViewController.newPrivateChannel(name: args?[0] as! String, othersId: args?[1] as! Int, othersProfile: args?[2] as! String)
+        }
     }
     
     func subscribe(){
@@ -61,12 +69,13 @@ class ChatHub: BaseHub {
                     print("Error JoinChannel ChatHub: \(e)")
                 }
                 else {
-                    MasterViewController.sharedMasterViewController.channels.append(ChannelEntity(name: channelName))
+                    MasterViewController.sharedMasterViewController.joinChannel(channelName: channelName)
+                    /*MasterViewController.sharedMasterViewController.channels.append(ChannelEntity(name: channelName))
                     MasterViewController.sharedMasterViewController.channelTableView.reloadData()
                     //Set joined channel as selected
                     let indexPath = IndexPath(row: MasterViewController.sharedMasterViewController.channels.count - 1, section: 0);
                     MasterViewController.sharedMasterViewController.channelTableView.selectRow(at: indexPath, animated: true, scrollPosition: .bottom)
-                    MasterViewController.sharedMasterViewController.channelTableView.delegate?.tableView!(MasterViewController.sharedMasterViewController.channelTableView, didSelectRowAt: indexPath)
+                    MasterViewController.sharedMasterViewController.channelTableView.delegate?.tableView!(MasterViewController.sharedMasterViewController.channelTableView, didSelectRowAt: indexPath)*/
                     if let index = ChatAreaViewController.sharedChatAreaViewController.channelsToJoin.index(where: { $0.name == channelName }) {
                         ChatAreaViewController.sharedChatAreaViewController.channelsToJoin.remove(at: index)
                         ChatAreaViewController.sharedChatAreaViewController.joinChannelTableView.reloadData()
@@ -107,7 +116,7 @@ class ChatHub: BaseHub {
             //Principal ne pas quitter
             roomNames.remove(at: 0)
             try hubProxy?.invoke("Disconnect", arguments: [roomNames, HubManager.sharedConnection.getId()!]);
-            
+
             self.hubProxy = nil
         }
         catch {
@@ -168,9 +177,25 @@ class ChatHub: BaseHub {
     /// @return Aucune
     ///
     ////////////////////////////////////////////////////////////////////////
-    public func SendPrivate(userId: guid_t, message: Any) {
+    public func SendPrivate(message:[String : Any], senderId: Int, receptorId: Int) {
         do {
-            try hubProxy?.invoke("SendBroadcast", arguments: [userId, message])
+            try hubProxy?.invoke("SendPrivateMessage", arguments: [message, senderId, receptorId])
+        }
+        catch {
+            print("Error SendPrivate")
+        }
+    }
+
+    public func CreatePrivateChannel(othersName: String, myId: Int, othersId: Int, othersProfile: String, res: @escaping (_ message: Bool?) -> Void) {
+        do {
+            try hubProxy!.invoke("CreatePrivateChannel", arguments: [othersName, myId, othersId, othersProfile]) { (result, error) in
+                if let e = error {
+                    print("Error CreatePrivateChannel: \(e)")
+                }
+                else {
+                    res(result as? Bool)
+                }
+            }
         }
         catch {
             print("Error SendPrivate")

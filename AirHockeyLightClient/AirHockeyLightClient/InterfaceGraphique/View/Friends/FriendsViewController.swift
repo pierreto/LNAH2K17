@@ -23,13 +23,22 @@ class FriendsViewController: UIViewController {
         super.viewDidLoad()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.view.alpha = 0.2
+        UIView.animate(
+            withDuration: 0.5,
+            animations: {
+                self.view.alpha = 1.0
+        })
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
         // Initialize Tab Bar Item
         tabBarItem = UITabBarItem()
-        tabBarItem.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "FontAwesome", size: 30)!], for: .normal)
-        tabBarItem.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: -5)
+        tabBarItem.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "FontAwesome", size: 17)!], for: .normal)
+        tabBarItem.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: 0)
         tabBarItem.title = "\u{f0c0}"
     }
     

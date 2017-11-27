@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Dragablz;
 using Microsoft.Practices.Unity;
 
 namespace InterfaceGraphique.Controls.WPF.Friends
@@ -30,38 +31,49 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             InitializeComponent();
             this.DataContext = Program.unityContainer.Resolve<FriendListViewModel>();
         }
+        /*
+               private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+               {
+                   if (sender !=null)
+                   {
+                       ListBoxItem element = ((sender as ListBox).SelectedItem as ListBoxItem);
+                       ViewModelBase vm;
+                       if (element != null)
+                       {
+                           if (element.Uid.Equals("ListeAmis"))
+                           {
+                               this.DataContext = Program.unityContainer.Resolve<FriendListViewModel>();
+                           }
+                           else
+                           {
+                               this.DataContext = Program.unityContainer.Resolve<AddUserViewModel>();
 
-        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+                           }
+                       }
+                   }
+               }
+
+               private void Request_Clicked(object sender, MouseButtonEventArgs e)
+               {
+                   Program.unityContainer.Resolve<FriendListViewModel>().HasNewFriendRequest = false;
+                   System.Diagnostics.Debug.WriteLine("Clicked on notif tab");
+               }
+
+               private void TabItem_MouseDown_1(object sender, MouseButtonEventArgs e)
+               {
+                   Program.unityContainer.Resolve<FriendListViewModel>().HasNewFriend = false;
+                   System.Diagnostics.Debug.WriteLine("Clicked on friends tab");
+               }*/
+
+        private void Tab_Changed(object sender, SelectionChangedEventArgs e)
         {
-            if (sender !=null)
+            TabablzControl tabablz = (TabablzControl) sender;
+            if (tabablz.SelectedIndex == 2)
             {
-                ListBoxItem element = ((sender as ListBox).SelectedItem as ListBoxItem);
-                ViewModelBase vm;
-                if (element != null)
-                {
-                    if (element.Uid.Equals("ListeAmis"))
-                    {
-                        this.DataContext = Program.unityContainer.Resolve<FriendListViewModel>();
-                    }
-                    else
-                    {
-                        this.DataContext = Program.unityContainer.Resolve<AddUserViewModel>();
-
-                    }
-                }
-            }
-        }
-
-        private void TabItem_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            Program.unityContainer.Resolve<FriendListViewModel>().HasNewFriendRequest = false;
+                            Program.unityContainer.Resolve<FriendListViewModel>().HasNewFriendRequest = false;
             System.Diagnostics.Debug.WriteLine("Clicked on notif tab");
-        }
+            }
 
-        private void TabItem_MouseDown_1(object sender, MouseButtonEventArgs e)
-        {
-            Program.unityContainer.Resolve<FriendListViewModel>().HasNewFriend = false;
-            System.Diagnostics.Debug.WriteLine("Clicked on friends tab");
         }
     }
 }

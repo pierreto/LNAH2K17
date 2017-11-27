@@ -22,6 +22,7 @@ class UserEntity : Entity {
     private var name : String = ""
     private var email : String = ""
     private var profile: String = ""
+    private var alreadyUsedLightEditor: Bool = false
     
     func getId() -> Int {
         return self.id
@@ -63,13 +64,22 @@ class UserEntity : Entity {
         self.profile = profile
     }
     
+    func getAlreadyUsedLightEditor() -> Bool {
+        return self.alreadyUsedLightEditor
+    }
+    
+    func setAlreadyUsedLightEditor(alreadyUsedLightEditor: Bool) {
+        self.alreadyUsedLightEditor = alreadyUsedLightEditor
+    }
+    
     func toDictionary() -> [String: Any] {
         let user = [
             "Id": self.id,
             "Username": self.username,
             "Name": self.name,
             "Email": self.email,
-            "Profile": self.profile
+            "Profile": self.profile,
+            "AlreadyUsedLightEditor": self.alreadyUsedLightEditor
         ] as [String : Any]
         
         return user

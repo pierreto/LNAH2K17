@@ -19,7 +19,7 @@ import SceneKit
 /// @author Mikael Ferland et Pierre To
 /// @date 2017-10-01
 ///////////////////////////////////////////////////////////////////////////
-class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
+class EditorViewController: UIViewController, UIGestureRecognizerDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
 
     /// Instance singleton
     static var instance = EditorViewController()
@@ -41,15 +41,25 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
     var lastWidthRatio: Float = 0
     var lastHeightRatio: Float = 0
     
+    /// Online Users Information
+    @IBOutlet weak var usersCollectionView: UICollectionView!
+    private var users = [OnlineUser]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Affichage des utilisateurs en ligne
+        self.usersCollectionView.delegate = self
+        self.usersCollectionView.dataSource = self
+        if FacadeModele.instance.obtenirEtatEdition() is OnlineEditorState {
+            self.usersCollectionView.isHidden = false
+        }
         
         EditorViewController.instance = self
         
         self.initView()
         self.initScene()
         self.initCamera()
-
         self.initFacadeModele()
         
         // Load the SKScene from 'EditorHUDScene.sks'
@@ -110,31 +120,14 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
         self.cameraNode.camera = SCNCamera()
         self.cameraNode.camera?.zNear = 0.1
         self.cameraNode.camera?.zFar = 1000
-        
+
         // Setup camera orbit
         self.cameraOrbit = SCNNode()
         self.cameraOrbit.addChildNode(self.cameraNode)
-        self.cameraOrbit.position = SCNVector3Make(20, 200, 0)
+        self.cameraOrbit.position = SCNVector3Make(20, 300, 0)
         self.cameraOrbit.eulerAngles = SCNVector3Make((-Float.pi/2), (-Float.pi/2), 0)
         
         self.editorScene.rootNode.addChildNode(cameraOrbit)
-        
-        // Add pan gesture recognizer
-        // let gesture = UIPanGestureRecognizer(target: self, action: #selector(self.panDetected))
-        // self.editorView.addGestureRecognizer(gesture);
-    }
-    
-    func panDetected(sender: UIPanGestureRecognizer) {
-        let translation = sender.translation(in: sender.view!)
-        let widthRatio = Float(translation.x) / Float(sender.view!.frame.size.width) + self.lastWidthRatio
-        let heightRatio = Float(translation.y) / Float(sender.view!.frame.size.height) + self.lastHeightRatio
-        self.cameraOrbit.eulerAngles.y = -2 * Float.pi * widthRatio
-        self.cameraOrbit.eulerAngles.x = -Float.pi * heightRatio
-        
-        if (sender.state == .ended) {
-            self.lastWidthRatio = widthRatio.truncatingRemainder(dividingBy: 1)
-            self.lastHeightRatio = heightRatio.truncatingRemainder(dividingBy: 1)
-        }
     }
     
     func initFacadeModele() {
@@ -182,6 +175,10 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
         AudioService.instance.playSound(soundName: EDITION_SOUND.SAVE.rawValue)
     }
     
+    @IBAction func openTutorial(_ sender: Any) {
+        self.performSegue(withIdentifier: "tutorialSegue", sender: self)
+    }
+    
     func takeMapSnapshot() -> UIImage {
         return self.editorView.snapshot()
     }
@@ -194,6 +191,52 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate {
         } else {
             return false
         }
+    }
+    
+    func addUser(user: OnlineUser) {
+        self.users.append(user)
+        
+        DispatchQueue.main.async(execute: { () -> Void in
+            // Reload table
+            self.usersCollectionView.reloadData()
+        })
+    }
+    
+    func removeUser(username: String) {
+        self.users.remove(at: self.users.index(where: { $0.getUsername() == username })!)
+        
+        DispatchQueue.main.async(execute: { () -> Void in
+            // Reload table
+            self.usersCollectionView.reloadData()
+        })
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.users.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = self.usersCollectionView.dequeueReusableCell(withReuseIdentifier: "userCell", for: indexPath) as! UserCollectionViewCell
+        let user = self.users[indexPath.item]
+        
+        // Profile picture
+        let profilePicture = user.getProfilePicture()
+        if profilePicture != "" {
+            let imageData = NSData(base64Encoded: profilePicture)
+            let image = UIImage(data: imageData! as Data)
+            cell.userProfilePicture.image = image
+        }
+        else {
+            cell.userProfilePicture.image = UIImage(named: "default_profile_picture.png")
+        }
+        
+        // Username
+        cell.username.text = user.getUsername()
+        
+        // Color
+        cell.username.textColor = user.getHexColor()
+        
+        return cell
     }
     
     override var shouldAutorotate: Bool {

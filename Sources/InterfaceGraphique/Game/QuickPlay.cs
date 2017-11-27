@@ -18,6 +18,7 @@ using InterfaceGraphique.CommunicationInterface;
 using System.IO;
 using InterfaceGraphique.Controls.WPF.Tutorial;
 using InterfaceGraphique.Controls.WPF.MainMenu;
+using InterfaceGraphique.Controls;
 
 namespace InterfaceGraphique
 {
@@ -44,6 +45,8 @@ namespace InterfaceGraphique
             currentGameState = new OfflineGameState();
 
             InitializeEvents();
+
+            this.KeyPreview = true;
         }
 
 
@@ -79,7 +82,15 @@ namespace InterfaceGraphique
             currentGameState.KeyDown = Program.ConfigurationMenu.MoveDownKey;
             currentGameState.KeyLeft = Program.ConfigurationMenu.MoveLeftKey;
             currentGameState.KeyRight = Program.ConfigurationMenu.MoveRightKey;
-            currentGameState.NeededGoalsToWin = Program.ConfigurationMenu.NeededGoalsToWin;
+
+            if(Program.unityContainer.Resolve<GameManager>().CurrentOnlineGame == null)
+            {
+                currentGameState.NeededGoalsToWin = Program.ConfigurationMenu.NeededGoalsToWin;
+            }
+            else
+            {
+                currentGameState.NeededGoalsToWin = 2;
+            }
 
             LoadMap();
             ToggleOrbit(true);
@@ -95,12 +106,24 @@ namespace InterfaceGraphique
             FonctionsNatives.setLights(2, true);
             FonctionsNatives.resetGame();
 
-            if (User.Instance.IsConnected)
+            if (User.Instance.IsConnected && this.currentGameState.gameHub != null)
             {
                 this.CurrentGameState.gameHub.EndOfGameStatsEvent += OnEndOfGameStats;
             }
 
+            if(User.Instance.IsConnected)
+            {
+                this.playerName1.Text = User.Instance.UserEntity.Username;
+            }
+            else
+            {
+                this.playerName1.Text = "Joueur 1";
+            }
+
             Program.QuickPlay.CurrentGameState.GameInitialized = true;
+
+            this.Focus();
+           this.BringToFront();
         }
 
 
@@ -129,6 +152,23 @@ namespace InterfaceGraphique
 
         }
 
+        public void Restart()
+        {
+            if (this.currentGameState.gameHub != null)
+            {
+                this.CurrentGameState.gameHub.EndOfGameStatsEvent -= OnEndOfGameStats;
+            }
+
+            var gameManager = Program.unityContainer.Resolve<GameManager>();
+            gameManager.CurrentOnlineGame = null;
+
+            currentGameState = new OfflineGameState();
+            FonctionsNatives.setCurrentOpponentType((int)OpponentType.LOCAL_PLAYER);
+            FonctionsNatives.setOnlineClientType((int)OnlineClientType.OFFLINE_GAME);
+
+            Program.QuickPlay.CurrentGameState.IsOnlineTournementMode = false;
+        }
+
         private void OnEndOfGameStats(PlayerEndOfGameStatsEntity stats)
         {
             if(stats.Id != User.Instance.UserEntity.Id)
@@ -154,7 +194,10 @@ namespace InterfaceGraphique
                 }
             }));
 
-            this.CurrentGameState.gameHub.EndOfGameStatsEvent -= OnEndOfGameStats;
+            if(this.currentGameState.gameHub != null)
+            {
+                this.CurrentGameState.gameHub.EndOfGameStatsEvent -= OnEndOfGameStats;
+            }
         }
 
         private async Task OnMainMenuClicked(object sender, EventArgs e)
@@ -162,6 +205,15 @@ namespace InterfaceGraphique
             Program.FormManager.CurrentForm = Program.HomeMenu;
             Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>());
             this.currentGameState.gameHasEnded = true;
+
+            ResetEndOfGameStats();
+            Restart();
+
+            if (!User.Instance.IsConnected)
+            {
+                return;
+            }
+
             if (currentGameState.IsOnlineTournementMode)
             {
                 await Program.unityContainer.Resolve<TournamentViewModel>().WaitingRoomHub.LeaveTournament();
@@ -171,6 +223,14 @@ namespace InterfaceGraphique
                 await Program.unityContainer.Resolve<MatchmakingViewModel>().WaitingRoomHub.LeaveGame();
             }
 
+        }
+
+        private void ResetEndOfGameStats()
+        {
+            this.achievement1.ImageLocation = "";
+            this.achievement2.ImageLocation = "";
+            this.achievement3.ImageLocation = "";
+            this.pointsNb.Text = "+0";
         }
 
 
@@ -264,9 +324,11 @@ namespace InterfaceGraphique
             FonctionsNatives.redimensionnerFenetre(this.Size.Width, this.Size.Height);
             FonctionsNatives.playMusic(false);
 
+            // Invisible hors ligne:
+            this.Button_ShareOnFacebook.Visible = false;
+
             currentGameState.IsOnline = false;
             currentGameState.IsOnlineTournementMode = false;
-            currentGameState.IsTournementMode = false;
 
             if (!currentGameState.IsOnlineTournementMode)
             {
@@ -287,7 +349,7 @@ namespace InterfaceGraphique
             ResetDefaultTable();
             FonctionsNatives.playMusic(true);
 
-            if (currentGameState.selectedMap != null) // online mode
+            if (currentGameState.selectedMap != null && Program.unityContainer.Resolve<GameManager>().CurrentOnlineGame != null) // online mode
             {
                 float[] coefficients = new float[3];
                 FonctionsNatives.chargerCarte(new StringBuilder(currentGameState.selectedMap.Json), coefficients);
@@ -354,12 +416,20 @@ namespace InterfaceGraphique
                     if (User.Instance.IsConnected)
                     {
                         this.playerName1.Text = User.Instance.UserEntity.Username;
+                        this.Button_ShareOnFacebook.Visible = true;
                     }
                     else
                     {
-                        this.CurrentGameState.gameHub.EndOfGameStatsEvent -= OnEndOfGameStats;
+                        if(currentGameState.gameHub != null)
+                        {
+                            this.CurrentGameState.gameHub.EndOfGameStatsEvent -= OnEndOfGameStats;
+                        }
                     }
 
+                    currentGameState = new OfflineGameState();
+                    FonctionsNatives.setCurrentOpponentType((int)OpponentType.LOCAL_PLAYER);
+                    FonctionsNatives.setOnlineClientType((int)OnlineClientType.OFFLINE_GAME);
+                    
                     if (isOnlineGame)
                     {
                         var gameManager = Program.unityContainer.Resolve<GameManager>();
@@ -369,6 +439,8 @@ namespace InterfaceGraphique
                         this.playerName2.Text = players[0].Id == User.Instance.UserEntity.Id ? players[1].Username : players[0].Username;
                         this.pointsNb.Visible = true;
                         this.label3.Visible = true;
+
+                        gameManager.CurrentOnlineGame = null;
                     }
                 }
             }));
@@ -491,6 +563,17 @@ namespace InterfaceGraphique
         {
             get => currentGameState;
             set => currentGameState = value;
+        }
+
+        private void Button_ShareOnFacebook_Click(object sender, EventArgs e)
+        {
+            Browser browser = new Browser();
+            browser.Show();
+            browser.webBrowser.Navigate("" +
+                "https://www.facebook.com/dialog/feed?" +
+                "app_id=143581339623947" +
+                "&display=popup" +
+                "&link=http://tcpc.isomorphis.me/game.html");
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

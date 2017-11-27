@@ -29,8 +29,8 @@ class AddFriendViewController: UIViewController {
         
         // Initialize Tab Bar Item
         tabBarItem = UITabBarItem()
-        tabBarItem.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "FontAwesome", size: 30)!], for: .normal)
-        tabBarItem.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: -6)
+        tabBarItem.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "FontAwesome", size: 17)!], for: .normal)
+        tabBarItem.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: 0)
         tabBarItem.title = "\u{f234}"
     }
     
@@ -46,6 +46,15 @@ class AddFriendViewController: UIViewController {
             self.search.filterStrings(self.filterStrings)
             return
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.view.alpha = 0.2
+        UIView.animate(
+            withDuration: 0.5,
+            animations: {
+                self.view.alpha = 1.0
+        })
     }
     
     @IBAction func addFriend(_ sender: Any) {

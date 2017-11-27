@@ -28,7 +28,7 @@ namespace InterfaceGraphique.Controls.WPF.Signup
         private string passwordErrMsg;
         private string confirmPasswordErrMsg;
         private bool inputsEnabled;
-        private bool notLoading;
+        private bool notLoading = true;
         #endregion
 
         #region Public Properties
@@ -264,7 +264,7 @@ namespace InterfaceGraphique.Controls.WPF.Signup
                         await chatHub.InitializeChat();
 
                         //On reset le nom d'usager et le mot de passe (Au cas ou il fait un retour a l'arriere ou deconnexion)
-                        Username = Password = "";
+                        
 
                         //On initie tous les formes qui on besoin de savoir si on est en mode en ligne 
                         Program.InitAfterConnection();
@@ -280,8 +280,13 @@ namespace InterfaceGraphique.Controls.WPF.Signup
                         await Program.unityContainer.Resolve<AddFriendListViewModel>().InitAddFriends();
                         Program.unityContainer.Resolve<ChatViewModel>().Init();
                         Program.unityContainer.Resolve<FriendListViewModel>().Minimize();
+                        //Send hub event when subscribed
+                        await Program.unityContainer.Resolve<FriendsHub>().SignalSignup();
                         //Hide loading spinner
+
                         Program.unityContainer.Resolve<MainMenuViewModel>().NotLoading = true;
+
+                        Username = Password = "";
                     }
                     else
                     {

@@ -131,16 +131,19 @@ namespace AirHockeyServer.Events.EventManagers
 
                 GlobalHost.ConnectionManager.GetHubContext<TournamentWaitingRoomHub>().Clients.Group(tournamentId.ToString()).TournamentStarting(Tournaments[tournamentId]);
 
-                Tournaments[tournamentId].SemiFinals.ForEach(async semiFinal =>
-                {
-                    if (semiFinal.Players.All(x => x.IsAi))
-                    {
-                        await PlayOnlineManager.GameEnded(semiFinal.GameId);
-                    }
-                });
+                var tournament = Tournaments[tournamentId];
 
                 TournamentEntity removed = new TournamentEntity();
                 Tournaments.TryRemove(tournamentId, out removed);
+
+                foreach (var game in tournament.SemiFinals)
+                {
+                    if (game.Players.All(x => x.IsAi))
+                    {
+                        await PlayOnlineManager.GameEnded(game.GameId);
+                    }
+                }
+
             }
         }
 

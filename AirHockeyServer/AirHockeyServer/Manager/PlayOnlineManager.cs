@@ -60,13 +60,24 @@ namespace AirHockeyServer.Manager
         {
             if (Cache.Games.ContainsKey(gameId))
             {
-                if (Cache.Games[gameId].Players[0].Id == playerId)
+                //if (playerId == 1)
+                //{
+                //    //MASTER SCORED
+                //    Cache.Games[gameId].Score[0] += 1;
+                //}
+                //else
+                //{
+                //    // SLAVE SCORED
+                //    Cache.Games[gameId].Score[1] += 1;
+                //}
+
+                for (int i = 0; i < Cache.Games[gameId].Players.Count(); i++)
                 {
-                    Cache.Games[gameId].Score[0] += 1;
-                }
-                else
-                {
-                    Cache.Games[gameId].Score[1] += 1;
+                    if (Cache.Games[gameId].Players[i].Id == playerId)
+                    {
+                        Cache.Games[gameId].Score[i] += 1;
+                        return;
+                    }
                 }
             }
         }
@@ -82,8 +93,6 @@ namespace AirHockeyServer.Manager
             game.GameState = GameState.Ended;
             game.Winner = game.Score[0] > game.Score[1] ? game.Players[0] : game.Players[1];
 
-            await GameRepository.CreateGame(game);
-
             if (game.TournamentId > -1)
             {
                 await UpdateTournamentState(game.TournamentId, game);
@@ -98,6 +107,8 @@ namespace AirHockeyServer.Manager
 
         private async Task UpdateGame(GameEntity game)
         {
+            await GameRepository.CreateGame(game);
+
             await SendGameStats(game);
 
             await RemoveConnection<GameWaitingRoomHub>(game.Players[0].Id, game.GameId.ToString());
@@ -115,6 +126,8 @@ namespace AirHockeyServer.Manager
                 if (game.Winner.Id == player.Id)
                 {
                     playerStats.PointsWon = GAME_WON_POINTS;
+                    await PlayerStatsService.AddPoints(game.Winner.Id, GAME_WON_POINTS);
+                    await PlayerStatsService.IncrementGamesWon(game.Winner.Id);
                 }
 
                 playerStats.UnlockedAchievements = await PlayerStatsService.GetAchievementsToUpdate(player.Id);
@@ -130,19 +143,14 @@ namespace AirHockeyServer.Manager
 
             foreach (var stat in stats)
             {
-                if (stat.Id == game.Winner.Id)
-                {
-                    await PlayerStatsService.AddPoints(game.Winner.Id, stat.PointsWon);
-                    await PlayerStatsService.IncrementGamesWon(game.Winner.Id);
-                }
-                await PlayerStatsService.UpdateAchievements(stat.Id, stat.UnlockedAchievements.Select(x => x.AchivementType).ToList());
+                await PlayerStatsService.CreateAchievements(stat.Id, stat.UnlockedAchievements.Select(x => x.AchivementType).ToList());
             }
         }
 
         private async Task RemoveConnection<T>(int userId, string group) where T : IHub
         {
             var connection = ConnectionMapper.GetConnection(userId);
-            if(connection != null)
+            if (connection != null)
             {
                 await GlobalHost.ConnectionManager.GetHubContext<T>().Groups.Remove(connection, group);
             }
@@ -221,20 +229,25 @@ namespace AirHockeyServer.Manager
             GlobalHost.ConnectionManager.GetHubContext<TournamentWaitingRoomHub>()
                 .Clients.Group(tournament.Id.ToString()).TournamentFinalResult(tournament);
 
-            await PlayerStatsService.IncrementTournamentsWon(tournament.Winner.Id);
-            await PlayerStatsService.AddPoints(tournament.Winner.Id, 80);
+            if (!tournament.Winner.IsAi)
+            {
+                await PlayerStatsService.IncrementTournamentsWon(tournament.Winner.Id);
+                await PlayerStatsService.AddPoints(tournament.Winner.Id, 80);
+            }
             await TournamentRepository.CreateTournament(tournament);
 
             List<AchievementEntity> achievementsToUpdate = new List<AchievementEntity>();
             foreach (var player in tournament.Players)
             {
-                achievementsToUpdate = await PlayerStatsService.GetAchievementsToUpdate(player.Id);
-                await PlayerStatsService.UpdateAchievements(player.Id, achievementsToUpdate.Select(x => x.AchivementType).ToList());
-                await RemoveConnection<TournamentWaitingRoomHub>(player.Id, tournament.Id.ToString());
+                if (!player.IsAi)
+                {
+                    achievementsToUpdate = await PlayerStatsService.GetAchievementsToUpdate(player.Id);
+                    await PlayerStatsService.CreateAchievements(player.Id, achievementsToUpdate.Select(x => x.AchivementType).ToList());
+                    await RemoveConnection<TournamentWaitingRoomHub>(player.Id, tournament.Id.ToString());
+                }
             }
 
             Cache.Tournaments.Remove(tournament.Id);
-            
         }
 
         private void UpdateTournamentGames(GameEntity gameUpdated, int tournamentId)
@@ -333,22 +346,29 @@ namespace AirHockeyServer.Manager
         public async Task PlayerLeaveLiveTournament(int userId)
         {
             GameEntity tournamentGame = null;
-            foreach(var game in Cache.Games.Values)
+            foreach (var game in Cache.Games.Values)
             {
-                if((game.Players[0].Id == userId || game.Players[1].Id == userId) && game.TournamentId > 0)
+                if ((game.Players[0].Id == userId || game.Players[1].Id == userId) && game.TournamentId > 0)
                 {
                     tournamentGame = game;
                     break;
                 }
             }
 
-            if(tournamentGame == null)
+            if (tournamentGame == null)
             {
                 return;
             }
 
             tournamentGame.GameState = GameState.Ended;
-            tournamentGame.Winner = userId == tournamentGame.Players[0].Id ? tournamentGame.Players[1] : tournamentGame.Players[2];
+            if (userId == tournamentGame.Players[0].Id)
+            {
+                tournamentGame.Winner = tournamentGame.Players[1];
+            }
+            else
+            {
+                tournamentGame.Winner = tournamentGame.Players[0];
+            }
 
             await UpdateTournamentState(tournamentGame.TournamentId, tournamentGame);
             Cache.Games.Remove(tournamentGame.GameId);

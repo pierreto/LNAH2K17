@@ -27,7 +27,17 @@ namespace AirHockeyServer.Repositories
             {
                 using (MyDataContext DC = new MyDataContext())
                 {
-                    TournamentPoco tournamentToCreate = MapperManager.Map<TournamentEntity, TournamentPoco>(tournament);
+                    TournamentPoco tournamentToCreate = new TournamentPoco()
+                    {
+                        Id = tournament.Id,
+                        Player1 = tournament.Players[0].Id,
+                        Player2 = tournament.Players[1].Id,
+                        Player3 = tournament.Players[2].Id,
+                        Player4 = tournament.Players[3].Id,
+                        Winner = tournament.Winner.Id,
+                        PlayedMap = tournament.SelectedMap.Id.Value
+                    };
+
                     DC.GetTable<TournamentPoco>().InsertOnSubmit(tournamentToCreate);
 
                     await Task.Run(() => DC.SubmitChanges());

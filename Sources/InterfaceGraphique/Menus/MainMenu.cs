@@ -92,11 +92,15 @@ namespace InterfaceGraphique
                 this.storeButton.Visible = false;
             }
         }
+        bool alreadyOpenedTutorialEditorMode = false;
+        bool alreadyOpenedMatchTutorialOfflineMode = false;
 
         private async void CheckIfNeedToShowEditorTutoriel()
         {
-            if (!User.Instance.IsConnected)
+            if (!User.Instance.IsConnected && !alreadyOpenedTutorialEditorMode)
             {
+                alreadyOpenedTutorialEditorMode = true;
+
                 await ShowTutorialEditor();
             }
             else if (!User.Instance.UserEntity.AlreadyUsedFatEditor)
@@ -108,8 +112,9 @@ namespace InterfaceGraphique
         }
         private async void CheckIfNeedToShowMatchTutoriel()
         {
-            if (!User.Instance.IsConnected  )
+            if (!User.Instance.IsConnected && !alreadyOpenedMatchTutorialOfflineMode)
             {
+                alreadyOpenedMatchTutorialOfflineMode=true;
                 await ShowTutorialGame();
             }else if (!User.Instance.UserEntity.AlreadyPlayedGame)
             {
@@ -154,7 +159,7 @@ namespace InterfaceGraphique
         public async Task Logout()
         {
             var response = await client.PostAsJsonAsync(Program.client.BaseAddress + "api/logout", User.Instance.UserEntity);
-            HubManager.Instance.Logout();
+            await HubManager.Instance.Logout();
             User.Instance.UserEntity = null;
             User.Instance.IsConnected = false;
             //TODO: KILL HUB CONNECTIONS

@@ -25,6 +25,9 @@ namespace InterfaceGraphique.Editor.EditorState
         private FonctionsNatives.ControlPointEventCallback controlPoinEventCallback;
         private FonctionsNatives.DeleteEventCallback deleteEventCallback;
 
+
+        private List<DeleteCommand> nodeToDelete;
+
         private bool inTransformation;
 
         public OnlineEditorState(EditionHub editionHub, EditorUsersViewModel editorUsersViewModel)
@@ -44,6 +47,8 @@ namespace InterfaceGraphique.Editor.EditorState
             this.deleteEventCallback = CurrentUserDeletedNode;
 
             this.editorUsersViewModel = editorUsersViewModel;
+
+            this.nodeToDelete = new List<DeleteCommand>();
         }
 
         public override void frameUpdate(double tempsInterAffichage)
@@ -264,11 +269,23 @@ namespace InterfaceGraphique.Editor.EditorState
 
         private void CurrentUserDeletedNode(string uuid)
         {
-            this.editionHub.SendEditorCommand(new DeleteCommand(uuid)
+
+            if (uuid.Equals("END"))
             {
-                Username = User.Instance.UserEntity.Username,
-            });
-            Task.Run(() => Editeur.mapManager.SaveMap());
+                foreach (DeleteCommand deleteCommand in nodeToDelete)
+                {
+                    this.editionHub.SendEditorCommand(deleteCommand);
+                }
+                this.nodeToDelete.Clear();
+                Task.Run(() => Editeur.mapManager.SaveMap());
+            }
+            else
+            {
+                this.nodeToDelete.Add(new DeleteCommand(uuid)
+                {
+                    Username = User.Instance.UserEntity.Username,
+                });
+            }
         }
 
     }

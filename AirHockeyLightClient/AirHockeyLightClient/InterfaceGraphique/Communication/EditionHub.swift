@@ -38,10 +38,16 @@ class EditionHub: BaseHub {
             let newUser = args?[0] as! Dictionary<String, Any>
             let username = newUser["Username"]
             let hexColor = newUser["HexColor"]
+            let profilePicture = newUser["ProfilePicture"] as? String
             
             print("Joining user: \(String(describing: (username as! String) + " (" + (hexColor as! String) + ")"))\n")
             
-            FacadeModele.instance.obtenirUserManager()?.addUser(username: username as! String, hexColor: hexColor as! String)
+            if profilePicture != nil {
+                FacadeModele.instance.obtenirUserManager()?.addUser(username: username as! String, hexColor: hexColor as! String, profilePicture: profilePicture!)
+            }
+            else {
+                FacadeModele.instance.obtenirUserManager()?.addUser(username: username as! String, hexColor: hexColor as! String, profilePicture: "")
+            }
         }
         
         /// Réception de l'évènement quand un utilisateur quitte la salle d'édition
@@ -59,19 +65,19 @@ class EditionHub: BaseHub {
 
         switch (type) {
             case .BOOST_COMMAND :
-                print ("Boost command")
+                //print ("Boost command")
                 editionCommand = BoostCommand(objectUuid: command["ObjectUuid"].string!)
                 break
             case .WALL_COMMAND :
-                print ("Wall command")
+                //print ("Wall command")
                 editionCommand = WallCommand(objectUuid: command["ObjectUuid"].string!)
                 break
             case .PORTAL_COMMAND :
-                print ("Portal command")
+                //print ("Portal command")
                 editionCommand = PortalCommand(objectUuid: command["ObjectUuid"].string!)
                 break
             case .SELECTION_COMMAND :
-                print ("Selection command")
+                //print ("Selection command")
                 editionCommand = SelectionCommand(objectUuid: command["ObjectUuid"].string!)
                 break
             case .TRANSFORM_COMMAND :
@@ -83,11 +89,11 @@ class EditionHub: BaseHub {
                 editionCommand = ControlPointCommand(objectUuid: command["ObjectUuid"].string!)
                 break
             case .DELETE_COMMAND :
-                print ("Delete command")
+                //print ("Delete command")
                 editionCommand = DeleteCommand(objectUuid: command["ObjectUuid"].string!)
                 break
             case .COEFFICIENT_COMMAND :
-                print ("Coefficient command")
+                //print ("Coefficient command")
                 editionCommand = CoefficientCommand(objectUuid: "")
                 break
         }
@@ -119,8 +125,17 @@ class EditionHub: BaseHub {
                         }
                         
                         let username = user["Username"] as! String
-                        FacadeModele.instance.obtenirUserManager()?.addUser(username: username,
-                                                                            hexColor: user["HexColor"] as! String)
+                        let profilePicture = user["ProfilePicture"] as? String
+                        if profilePicture != nil {
+                            FacadeModele.instance.obtenirUserManager()?.addUser(username: username,
+                                                                                hexColor: user["HexColor"] as! String,
+                                                                                profilePicture: user["ProfilePicture"] as! String)
+                        }
+                        else {
+                            FacadeModele.instance.obtenirUserManager()?.addUser(username: username,
+                                                                                hexColor: user["HexColor"] as! String,
+                                                                                profilePicture: "")
+                        }
                         
                         if (user["UuidsSelected"] != nil) {
                             // Un utilisateur dans la salle a déjà des noeuds sélectionnés

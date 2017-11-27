@@ -53,6 +53,7 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             if (users.Count > 0)
             {
                 Program.unityContainer.Resolve<FriendListViewModel>().HasNewRequest = true;
+                Program.unityContainer.Resolve<FriendListViewModel>().HasNewFriendRequest = true;
             }
             foreach (FriendRequestEntity user in users)
             {

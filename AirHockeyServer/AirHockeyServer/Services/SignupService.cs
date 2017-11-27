@@ -33,9 +33,7 @@ namespace AirHockeyServer.Services
                     UserEntity uE2 = await UserService.GetUserByUsername(uE.Username);
                     PasswordEntity pE = new PasswordEntity { UserId = uE2.Id, Password = signupEntity.Password };
                     await PasswordService.PostPassword(pE);
-
-                    await PlayerStatsService.SetPlayerAchievements(uE2.Id);
-
+                    
                     return uE2.Id;
                 }
                 else

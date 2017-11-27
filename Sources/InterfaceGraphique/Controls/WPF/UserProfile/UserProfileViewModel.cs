@@ -63,9 +63,11 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
                 UserName = User.Instance.UserEntity.Username;
                 Name = User.Instance.UserEntity.Name;
                 Email = User.Instance.UserEntity.Email;
-                CreationDate = User.Instance.UserEntity.Date;
+                CreationDate = User.Instance.UserEntity.Created;
                 ProfilePicture = User.Instance.UserEntity.Profile;
-                DateCreation = User.Instance.UserEntity.Date;
+
+                string formatDate = FormatCreationDate(User.Instance.UserEntity.Created);
+                DateCreation = formatDate;
                 var items = await StoreService.GetUserStoreItems(User.Instance.UserEntity.Id);
 
                 Items = new List<ItemViewModel>();
@@ -77,30 +79,56 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
             }
             else
             {
-                
                 var friend = allUsers.Find(x => x.Id == userId);
 
                 UserName = friend.Username;
                 Name = friend.Name;
                 Email = friend.Email;
-                CreationDate = friend.Date;
+                CreationDate = friend.Created;
                 ProfilePicture = friend.Profile;
-                DateCreation = friend.Date;
+                DateCreation = friend.Created;
             }
 
-            var achievements = await PlayerStatsService.GetPlayerAchivements(profileId);
+            var achievements = await PlayerStatsService.GetAchievements();
+            var userAchievements = await PlayerStatsService.GetPlayerAchivements(profileId);
+
+            achievements.ForEach(x =>
+            {
+                var achievement = userAchievements.Find(w => w.AchivementType == x.AchivementType);
+                if (achievement != null)
+                {
+                    x.IsEnabled = achievement.IsEnabled;
+                }
+                else
+                {
+                    x.IsEnabled = false;
+                }
+            });
+
             Achievements = new ObservableCollection<Achievement>(achievements.OrderBy(x => x.Category).ThenBy(x => x.Order));
 
             var playerStats = await PlayerStatsService.GetPlayerStats(profileId);
-            if (playerStats != null)
-            {
-                PointsNb = playerStats.Points;
-                TournamentWon = playerStats.TournamentsWon;
-                GameWon = playerStats.GamesWon;
-            }
+
+            PointsNb = playerStats != null ? playerStats.Points : 0;
+            TournamentWon = playerStats != null ? playerStats.TournamentsWon : 0;
+            GameWon = playerStats != null ? playerStats.GamesWon : 0;
+
 
             LoadingDone();
 
+        }
+
+        private string FormatCreationDate(string stringDate)
+        {
+            try
+            {
+                DateTime dateTime = Convert.ToDateTime(stringDate);
+                return dateTime.ToShortDateString();
+            }
+            catch(Exception)
+            {
+                return stringDate;
+            }
         }
 
         private void LoadingDone()
@@ -113,13 +141,13 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
             NotLoading = false;
         }
 
-        private ObservableCollection<Achievement> achievements;
+        private ObservableCollection<Achievement> userAchievements;
         public ObservableCollection<Achievement> Achievements
         {
-            get => achievements;
+            get => userAchievements;
             set
             {
-                achievements = value;
+                userAchievements = value;
                 OnPropertyChanged();
             }
         }
@@ -326,7 +354,7 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
         private bool isFriendProfile;
         public string IsFriendProfile
         {
-            get => isFriendProfile ? "Visible" : "Hidden";
+            get => isFriendProfile ? "Hidden" : "Visible";
         }
 
         private ICommand changeProfilePictureCommand;
@@ -340,7 +368,7 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
 
         private async Task ChangeProfilePicture()
         {
-            if(isFriendProfile)
+            if (isFriendProfile)
             {
                 return;
             }

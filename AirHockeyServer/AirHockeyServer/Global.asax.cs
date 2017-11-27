@@ -85,7 +85,6 @@ namespace AirHockeyServer
             UnityContainer.RegisterType<IProfileService, ProfileService>(new ContainerControlledLifetimeManager());
             UnityContainer.RegisterType<IRankingService, RankingService>(new ContainerControlledLifetimeManager());
             UnityContainer.RegisterType<IFriendService, FriendService>(new ContainerControlledLifetimeManager());
-            UnityContainer.RegisterType<IAchievementInfoService, AchievementInfoService>(new ContainerControlledLifetimeManager());
             UnityContainer.RegisterType<IStoreService, StoreService>(new ContainerControlledLifetimeManager());
             
             // Core

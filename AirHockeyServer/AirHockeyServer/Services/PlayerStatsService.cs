@@ -1,4 +1,5 @@
-﻿using AirHockeyServer.Entities;
+﻿using AirHockeyServer.Core;
+using AirHockeyServer.Entities;
 using AirHockeyServer.Repositories;
 using AirHockeyServer.Repositories.Interfaces;
 using AirHockeyServer.Services.Interfaces;
@@ -15,22 +16,19 @@ namespace AirHockeyServer.Services
         protected IPlayerStatsRepository PlayerStatsRepository { get; set; }
         public ITournamentRepository TournamentRepository { get; set; }
         public IGameRepository GameRepository { get; set; }
-        public IAchievementInfoService AchievementInfoService { get; }
 
         public PlayerStatsService(IPlayerStatsRepository playerStatsRepository,
             ITournamentRepository tournamentRepository,
-            IGameRepository gameRepository,
-            IAchievementInfoService achievementInfoService)
+            IGameRepository gameRepository)
         {
             PlayerStatsRepository = playerStatsRepository;
             TournamentRepository = tournamentRepository;
             GameRepository = gameRepository;
-            AchievementInfoService = achievementInfoService;
         }
 
-        public async Task SetPlayerAchievements(int userId)
+        public async Task CreateAllAchievements(int userId)
         {
-            await PlayerStatsRepository.CreateAchievement(userId);
+            await PlayerStatsRepository.CreateAllAchievements(userId);
         }
 
         public async Task AddPoints(int userId, int pointsNb)
@@ -96,38 +94,36 @@ namespace AirHockeyServer.Services
         {
             List<AchievementEntity> achievements = await GetAchievements(userId);
 
-            if(achievements.Count == 0)
-            {
-                await SetPlayerAchievements(userId);
-                achievements = await GetAchievements(userId);
-            }
-
             var stats = await GetPlayerStats(userId);
+            if(stats == null)
+            {
+                stats = new StatsEntity();
+            }
 
             List<AchievementEntity> typesAdded = new List<AchievementEntity>();
 
-            AchievementUpdateNeeded(stats.Points, AchivementType.FivePoints, 5, userId, achievements, typesAdded);
-            AchievementUpdateNeeded(stats.Points, AchivementType.ThirtyPoints, 30, userId, achievements, typesAdded);
-            AchievementUpdateNeeded(stats.Points, AchivementType.EightyPoints, 80, userId, achievements, typesAdded);
+            AchievementUpdateNeeded(stats.Points, AchivementType.FivePoints, 5, achievements, typesAdded);
+            AchievementUpdateNeeded(stats.Points, AchivementType.ThirtyPoints, 30, achievements, typesAdded);
+            AchievementUpdateNeeded(stats.Points, AchivementType.EightyPoints, 80, achievements, typesAdded);
 
-            AchievementUpdateNeeded(stats.GamesWon, AchivementType.FirstGameWon, 1, userId, achievements, typesAdded);
-            AchievementUpdateNeeded(stats.GamesWon, AchivementType.FiveGameWon, 5, userId, achievements, typesAdded);
-            AchievementUpdateNeeded(stats.GamesWon, AchivementType.TenGameWon, 10, userId, achievements, typesAdded);
+            AchievementUpdateNeeded(stats.GamesWon, AchivementType.FirstGameWon, 1, achievements, typesAdded);
+            AchievementUpdateNeeded(stats.GamesWon, AchivementType.FiveGameWon, 5, achievements, typesAdded);
+            AchievementUpdateNeeded(stats.GamesWon, AchivementType.TenGameWon, 10, achievements, typesAdded);
 
-            AchievementUpdateNeeded(stats.TournamentsWon, AchivementType.FirstTournamentWon, 1, userId, achievements, typesAdded);
-            AchievementUpdateNeeded(stats.TournamentsWon, AchivementType.FiveTournamentWon, 5, userId, achievements, typesAdded);
-            AchievementUpdateNeeded(stats.TournamentsWon, AchivementType.TenTournamentWon, 10, userId, achievements, typesAdded);
+            AchievementUpdateNeeded(stats.TournamentsWon, AchivementType.FirstTournamentWon, 1, achievements, typesAdded);
+            AchievementUpdateNeeded(stats.TournamentsWon, AchivementType.FiveTournamentWon, 5, achievements, typesAdded);
+            AchievementUpdateNeeded(stats.TournamentsWon, AchivementType.TenTournamentWon, 10, achievements, typesAdded);
 
             int tournamentsNb = await TournamentRepository.GetUserTournamentsNb(userId);
             int gameNb = await GameRepository.GetUserGamesNb(userId);
 
-            AchievementUpdateNeeded(tournamentsNb, AchivementType.FirstTournamentPlayed, 1, userId, achievements, typesAdded);
-            AchievementUpdateNeeded(tournamentsNb, AchivementType.FiveTournamentsPlayed, 5, userId, achievements, typesAdded);
-            AchievementUpdateNeeded(tournamentsNb, AchivementType.TenTournamentPlayed, 10, userId, achievements, typesAdded);
+            AchievementUpdateNeeded(tournamentsNb, AchivementType.FirstTournamentPlayed, 1, achievements, typesAdded);
+            AchievementUpdateNeeded(tournamentsNb, AchivementType.FiveTournamentsPlayed, 5, achievements, typesAdded);
+            AchievementUpdateNeeded(tournamentsNb, AchivementType.TenTournamentsPlayed, 10, achievements, typesAdded);
 
-            AchievementUpdateNeeded(gameNb, AchivementType.FirstGamePlayed, 1, userId, achievements, typesAdded);
-            AchievementUpdateNeeded(gameNb, AchivementType.FiveGamesPlayed, 5, userId, achievements, typesAdded);
-            AchievementUpdateNeeded(gameNb, AchivementType.TenGamesPlayed, 10, userId, achievements, typesAdded);
+            AchievementUpdateNeeded(gameNb, AchivementType.FirstGamePlayed, 1, achievements, typesAdded);
+            AchievementUpdateNeeded(gameNb, AchivementType.FiveGamesPlayed, 5, achievements, typesAdded);
+            AchievementUpdateNeeded(gameNb, AchivementType.TenGamesPlayed, 10, achievements, typesAdded);
 
             return typesAdded;
 
@@ -142,20 +138,24 @@ namespace AirHockeyServer.Services
         private void AchievementUpdateNeeded(int baseVal, 
             AchivementType achivementType, 
             int minVal, 
-            int userId,
-            List<AchievementEntity> achievements,
+            List<AchievementEntity> userAchievements,
             List<AchievementEntity> achievementAdded)
         {
-            var achivement = achievements.Find(x => x.AchivementType == achivementType);
-            if (achivement != null && baseVal >= minVal && !achivement.IsEnabled)
+            var achivement = userAchievements.Find(x => x.AchivementType == achivementType);
+            if ((achivement == null && baseVal >= minVal) || (baseVal >= minVal && achivement != null && !achivement.IsEnabled))
             {
-                AchievementEntity achievement = new AchievementEntity
-                {
-                    AchivementType = achivementType,
-                    EnabledImageUrl = AchievementInfoService.GetEnabledImage(achivementType)
-                };
-                achievementAdded.Add(achievement);
+                achievementAdded.Add(Cache.Achievements[achivementType]);
             }
+        }
+
+        public List<AchievementEntity> GetAchievements()
+        {
+            return Cache.Achievements.Values.ToList();
+        }
+
+        public async Task CreateAchievements(int userId, List<AchivementType> achievements)
+        {
+            await this.PlayerStatsRepository.CreateAchievements(userId, achievements);
         }
     }
 }

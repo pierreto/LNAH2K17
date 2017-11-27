@@ -216,7 +216,7 @@ namespace InterfaceGraphique.Controls.WPF.Chat
         {
             if (CurrentChannel == MainChannel)
             {
-                this.chatHub.SendMessage(new ChatMessage()
+                await this.chatHub.SendMessage(new ChatMessage()
                 {
                     MessageValue = MessageTextBox,
                     SentByMe = false
@@ -224,7 +224,7 @@ namespace InterfaceGraphique.Controls.WPF.Chat
             }
             else if (CurrentChannel != MainChannel && !CurrentChannel.IsPrivate)
             {
-                this.chatHub.SendChannel(new ChatMessage()
+                await this.chatHub.SendChannel(new ChatMessage()
                 {
                     MessageValue = MessageTextBox,
                     SentByMe = false
@@ -233,7 +233,7 @@ namespace InterfaceGraphique.Controls.WPF.Chat
             else
             {
                 System.Diagnostics.Debug.WriteLine("\nSend message from : " + User.Instance.UserEntity.Id + " to " + CurrentChannel.PrivateUserId + "\n");
-                this.chatHub.SendPrivateMessage(new ChatMessage()
+                await this.chatHub.SendPrivateMessage(new ChatMessage()
                 {
                     MessageValue = MessageTextBox,
                     SentByMe = false
@@ -259,7 +259,7 @@ namespace InterfaceGraphique.Controls.WPF.Chat
 
             };
             UndockedChat.Closing += this.OnUnDockedWindowClosing;
-            System.Windows.Forms.Integration.ElementHost.EnableModelessKeyboardInterop(UndockedChat);
+            //System.Windows.Forms.Integration.ElementHost.EnableModelessKeyboardInterop(UndockedChat);
             ChatTabHeight = 0;
             UndockedChat.Show();
         }

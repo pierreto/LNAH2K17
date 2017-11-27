@@ -29,12 +29,14 @@ class HubManager {
     /// Instance singleton
     static let sharedConnection = HubManager()
     
+    public var searchId: Int?
+    
     private var connection: SignalR?
     private var hubs = [BaseHub]()
     private var user: UserEntity? = UserEntity()
     private var ipAddress: String?
     
-    private var _connected: Bool? = false
+    /*private var _connected: Bool? = false
     
     var connected: Bool? {
         get {
@@ -43,7 +45,7 @@ class HubManager {
         set {
             _connected = newValue
         }
-    }
+    }*/
     
     public func getConnection() -> SignalR? {
         return self.connection
@@ -63,6 +65,10 @@ class HubManager {
     
     public func getUser() -> UserEntity {
         return self.user!
+    }
+    
+    public func setUser(user: UserEntity) {
+        self.user = user
     }
     
     public func getIpAddress() -> String? {
@@ -106,6 +112,8 @@ class HubManager {
         self.ClearHubs()
         
         self.connection = SignalR("http://" + ipAddress + ":63056")
+        self.connection!.useWKWebView = true
+        
         self.AddHubs()
         
         self.connection!.start()
@@ -135,6 +143,9 @@ class HubManager {
 
     /// Déconnecter l'usager
     public func DisconnectUser() -> Promise<Bool> {
+        // Arrêter la mise-à-jour des cartes locales
+        DBManager.instance.deactivateAutomaticMapImport()
+        
         let parameters: [String: Any] = [
             "Username" : self.getUsername()!
         ]
@@ -179,6 +190,7 @@ class HubManager {
             self.user = UserEntity()
             self.ClearHubs()
             self.ipAddress = nil
+            DBManager.instance.deactivateAutomaticMapImport()
                 
             NotificationCenter.default.post(name: Notification.Name(rawValue: LoginNotification.LogoutNotification), object: nil)
             fullfil(true)

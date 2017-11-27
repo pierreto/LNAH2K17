@@ -8,6 +8,7 @@ using InterfaceGraphique.CommunicationInterface;
 using InterfaceGraphique.Entities;
 using InterfaceGraphique.Services;
 using System.Drawing;
+using InterfaceGraphique.CommunicationInterface.WaitingRooms;
 
 namespace InterfaceGraphique.Game.GameState
 {
@@ -21,16 +22,19 @@ namespace InterfaceGraphique.Game.GameState
         private const int SERVER_INTERVAL = 5;
 
         public MapService MapService { get; set; }
+        public GameManager GameManager { get; }
 
-        public MasterGameState(GameHub gameHub, MapService mapService)
+        public MasterGameState(GameHub gameHub, MapService mapService, GameManager gameManager)
         {
             this.gameHub = gameHub;
             MapService = mapService;
+            GameManager = gameManager;
             this.callback =
                 (player) =>
                 {
                     Console.WriteLine("Player {0} scored", player);
-                    Task.Run(() =>this.gameHub.SendGoal(player));
+                    int userId = player == 1 ? User.Instance.UserEntity.Id : GameManager.CurrentOnlineGame.Players.Where(x => x.Id != User.Instance.UserEntity.Id).First().Id;
+                    Task.Run(() =>this.gameHub.SendGoal(userId));
                 };
         }
 
@@ -142,7 +146,7 @@ namespace InterfaceGraphique.Game.GameState
             gameHasEnded = true;
             Task.Run(() => gameHub.SendGameOver());
             Program.QuickPlay.EndGame(true);
-
+            
             this.gameHub.NewPositions -= OnNewGamePositions;
             this.gameHub.DisconnectedEvent -= OnDisconnexion;
 

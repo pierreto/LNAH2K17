@@ -66,7 +66,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
         {
             try
             {
-                await WaitingRoomProxy.Invoke("LeaveGame", User.Instance.UserEntity, CurrentGameId);
+                await WaitingRoomProxy.Invoke("LeaveGame", User.Instance.UserEntity.Id, CurrentGameId);
             }
             catch (Exception e)
             {
@@ -74,7 +74,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
             }
         }
 
-        public async void UpdateSelectedMap(MapEntity map)
+        public async Task UpdateSelectedMap(MapEntity map)
         {
             try
             {
@@ -170,6 +170,15 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
         public async Task LeaveRoom()
         {
             await this.LeaveGame();
+        }
+
+        public void OnDisconnect()
+        {
+            Program.FormManager.Invoke(new MethodInvoker(async () =>
+            {
+                Program.QuickPlay.Restart();
+            }));
+
         }
     }
 }

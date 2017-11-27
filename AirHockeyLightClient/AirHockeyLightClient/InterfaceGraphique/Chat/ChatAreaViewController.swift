@@ -10,6 +10,7 @@ import UIKit
 
 protocol AddChannelDelegate: class {
     func addChannel(channelName: String)
+    func addPrivateChannel(othersName: String, othersId: Int, othersProfile: String)
     func newUnreadMessage()
 }
 
@@ -176,6 +177,36 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
         })
     }
     
+    func receiveMessagePrivate(message: Dictionary<String, String>, senderId: Int) {
+        let sender = message["Sender"]
+        let messageValue = message["MessageValue"]?.fromBase64()
+        let timestamp = message["TimeStamp"]
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm:ss"
+        let dateString = dateFormatter.string(from: Date())
+        
+        //let dateString = self.convertDate(dateString: timestamp!)
+        
+        print("Message: \(String(describing: sender! + " (" + dateString + ") : " + messageValue!))\n")
+        let chan = MasterViewController.sharedMasterViewController.channels.first(where: { $0.privateUserId == senderId })
+        if channel.privateUserId != chan?.privateUserId {
+            chan?.hasUnreadMessage = true;
+            delegate = MasterViewController.sharedMasterViewController
+            delegate?.newUnreadMessage()
+        }
+        chan?.messages.append(ChatMessageEntity(sender:sender!, messageValue: messageValue!, timestamp: (dateString)))
+
+        DispatchQueue.main.async(execute: { () -> Void in
+            self.chatTableView.reloadData()
+            print("NUM MSG: ", (chan?.messages.count)!)
+            if(chan?.messages.count)! > 1 {
+                let indexPath = IndexPath(row: (chan?.messages.count)! - 1, section: 0);
+                self.chatTableView?.scrollToRow(at: indexPath, at: .bottom, animated: true)
+            }
+        })
+    }
+    
     //Message envoye par le chatHub lorsqu'il ne reste plus personne dans un canal
     //Cela indique qu'il devrait etre retire des canaux joignables
     func channelDeleted(channelName: String) {
@@ -192,6 +223,15 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
         }) {
             channelsToJoin.append(ChannelEntity(name: channelName))
             joinChannelTableView.reloadData()
+        }
+    }
+    
+    func newPrivateChannel(name: String, othersId: Int, othersProfile: String){
+        if !MasterViewController.sharedMasterViewController.channels.contains(where: { (cE: ChannelEntity) -> Bool in
+            (cE.name == name && (cE.isPrivate == true))
+        }) {
+            MasterViewController.sharedMasterViewController.channels.append(ChannelEntity(name: name, isPrivate: true, privateUserId: othersId, profile: othersProfile))
+            MasterViewController.sharedMasterViewController.channelTableView.reloadData()
         }
     }
     
@@ -213,8 +253,10 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
             let chatHub = clientConnection.getChatHub()
             if (channel.name == "Principal") {
                 chatHub.SendBroadcast(message : message)
-            } else {
+            } else if (!channel.isPrivate){
                 chatHub.SendChannel(channelName: channel.name, message : message)
+            } else {
+                chatHub.SendPrivate(message: message, senderId: HubManager.sharedConnection.getId()!, receptorId: channel.privateUserId)
             }
             
             // Clear chat box
@@ -380,7 +422,38 @@ extension ChatAreaViewController: ChannelSelectionDelegate {
     
     func toggleAddChannelView() {
         cJoinChannelConstraint = -241
-        self.addChannelView.isHidden = !self.addChannelView.isHidden
+        let isHidden = self.addChannelView.isHidden
+        
+        if isHidden {
+            self.addChannelView.isHidden = !isHidden
+        
+            self.addChannelView.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
+            self.addChannelView.alpha = 0.0
+            UIView.animate(
+                withDuration: 0.25,
+                animations: {
+                    self.addChannelView.alpha = 1.0
+                    self.addChannelView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+                }
+            )
+        }
+        else {
+            self.addChannelView.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
+            self.addChannelView.alpha = 1.0
+            UIView.animate(
+                withDuration: 0.25,
+                animations: {
+                    self.addChannelView.alpha = 0.0
+                    self.addChannelView.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
+                },
+                completion: {
+                    (finished: Bool) in
+                    if finished {
+                        self.addChannelView.isHidden = !isHidden
+                    }
+                }
+            )
+        }
     }
 }
 

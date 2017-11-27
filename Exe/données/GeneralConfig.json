@@ -16,17 +16,17 @@
       "Speed": 10,
       "Passivity": 1
     },
-	{
+    {
       "Name": "Hard",
       "Speed": 8,
       "Passivity": 8
     },
-	{
+    {
       "Name": "Medium",
       "Speed": 5,
       "Passivity": 5
     },
-	{
+    {
       "Name": "Easy",
       "Speed": 3,
       "Passivity": 3

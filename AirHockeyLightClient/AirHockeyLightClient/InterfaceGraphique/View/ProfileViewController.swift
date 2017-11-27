@@ -16,6 +16,8 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     @IBOutlet weak var itemCollectionView: UICollectionView!
     
+    @IBOutlet weak var itemsLabel: UILabel!
+    @IBOutlet weak var noItemsLabel: UILabel!
     @IBOutlet weak var profileImage: UIImageView!
     let imagePicker = UIImagePickerController()
     
@@ -35,6 +37,8 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     @IBOutlet weak var loadingSpinner: UIActivityIndicatorView!
     @IBOutlet weak var navigationBar: UINavigationItem!
     
+    static var sharedProfileViewController = ProfileViewController()
+    
     let gradientAchievements = CAGradientLayer()
     let gradientItems = CAGradientLayer()
     
@@ -45,8 +49,11 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     var storeService = StoreService()
     var userStoreItems = [StoreItemEntity]()
 
+    var userId: Int?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        noItemsLabel.isHidden = true
         achievementCollectionView.delegate = self
         achievementCollectionView.dataSource = self
         itemCollectionView.delegate = self
@@ -94,16 +101,27 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         self.gamesPlayedLabel.text = "0"
         self.tournamentsWonLabel.text = "0"
         self.tournamentsPlayedLabel.text = "0"
-        
-        // Définir les informations de l'usager courant
+
         self.loadUserProfile()
         self.loadUserStoreItems()
+        
+        if(HubManager.sharedConnection.getId() == HubManager.sharedConnection.searchId) {
+            itemCollectionView.isHidden = false
+            itemsLabel.isHidden = false
+        } else {
+            itemCollectionView.isHidden = true
+            itemsLabel.isHidden = true
+        }
     }
     
     func loadUserProfile() {
         self.loading()
-        Alamofire.request("http://" + HubManager.sharedConnection.getIpAddress()! + ":63056/api/profile/" + ((HubManager.sharedConnection.getId())?.description)!)
+        print("Getting profile of : ", HubManager.sharedConnection.searchId?.description)
+        Alamofire.request("http://" + HubManager.sharedConnection.getIpAddress()! + ":63056/api/profile/" + (HubManager.sharedConnection.searchId?.description)!)
             .responseJSON { response in
+            self.achievementUrls = [String]()
+            self.achievementEnabled = [Bool]()
+            self.achievementLabels = [String]()
                 if let jsonValue = response.result.value {
                     let json = JSON(jsonValue)
                     //print("JSON: \(jsonValue)")
@@ -169,6 +187,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
                     
                     //Achievements
                     let achievements = json["AchievementEntities"].array
+                    print(achievements!)
                     for var achievement in achievements! {
                         if achievement["IsEnabled"].description == "true" {
                             self.achievementEnabled.append(true)
@@ -181,10 +200,11 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
                         self.achievementLabels.append(achievement["Name"].description)
                     }
                     self.achievementCollectionView.reloadData()
-                    let indexPath = IndexPath(row: Int(INT_MAX)/200, section: 0);
-                    self.achievementCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally , animated: false)
+                    //let indexPath = IndexPath(row: Int(INT_MAX)/200, section: 0);
+                    //self.achievementCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally , animated: false)
                 }
                 self.loadingDone()
+                HubManager.sharedConnection.searchId = HubManager.sharedConnection.getId()
         }
     }
     
@@ -203,6 +223,8 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     }
     
     private func loadUserStoreItems() {
+        self.storeService = StoreService()
+        self.userStoreItems = [StoreItemEntity]()
         _ = self.storeService.getUserStoreItems().then { items -> Void in
             self.userStoreItems = items
             
@@ -221,54 +243,80 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
             imagePicker.allowsEditing = false
             imagePicker.sourceType = .photoLibrary
             
-            present(imagePicker, animated: true, completion: nil)
+            // Mettre l'orientation à portrait pour la sélection de photo
+            OrientationHelper.lockOrientation(.portrait, andRotateTo: .portrait)
+            present(imagePicker, animated: false, completion: nil)
         }
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            profileImage.contentMode = .scaleToFill
-            
-            let imageData : Data = UIImagePNGRepresentation(pickedImage)! as Data
-            let strBase64 = imageData.base64EncodedString(options: Data.Base64EncodingOptions.init(rawValue: 0))
-            if strBase64.characters.count > 2000000 {
-                // error dialog
-                let alert = UIAlertController(title: "L'image ne peut dépasser 2Mo!", message: "Message", preferredStyle: UIAlertControllerStyle.alert)
-                alert.addAction(UIAlertAction(title: "Fermer", style: UIAlertActionStyle.default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
-            } else {
-                // update
-                let parameters: [String: Any] = [
-                    "Profile" : strBase64.description
-                    ]
-                Alamofire.request("http://" + HubManager.sharedConnection.getIpAddress()! + ":63056/api/user/" + ((HubManager.sharedConnection.getId())?.description)!, method: .put, parameters: parameters, encoding: JSONEncoding.default)
-                    .responseJSON { response in
-                        if(response.response?.statusCode == 200) {
-                            self.profileImage.image = pickedImage
-                        } else {
-                            //Getting error message from server
-                            if let data = response.data {
-
-                            }
-                        }
-                    }
-                //print(strBase64)
-            }
+        if let pickedImage = info[UIImagePickerControllerEditedImage] as? UIImage {
+            self.traiterImagePicker(pickedImage: pickedImage)
         }
-        dismiss(animated: true, completion: nil)
+        else if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            self.traiterImagePicker(pickedImage: pickedImage)
+        }
+        
+        OrientationHelper.lockOrientation(.landscape, andRotateTo: .landscapeRight)
+        dismiss(animated: false, completion: nil)
     }
     
-    private func imagePickerControllerDidCancel(picker: UIImagePickerController) {
-        dismiss(animated: true, completion: nil)
+    private func traiterImagePicker(pickedImage: UIImage) {
+        profileImage.contentMode = .scaleToFill
+        
+        let imageData : Data = UIImagePNGRepresentation(pickedImage)! as Data
+        let strBase64 = imageData.base64EncodedString(options: Data.Base64EncodingOptions.init(rawValue: 0))
+        
+        if strBase64.characters.count > 2000000
+        {
+            // error dialog
+            OrientationHelper.lockOrientation(.landscape, andRotateTo: .landscapeRight)
+            dismiss(animated: false, completion: nil)
+            let alert = UIAlertController(title: "Erreur d'importation", message: "L'image ne peut dépasser 2 Mo.", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Fermer", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+        else {
+            // update
+            let parameters: [String: Any] = [
+                "Profile" : strBase64.description
+            ]
+            Alamofire.request("http://" + HubManager.sharedConnection.getIpAddress()! + ":63056/api/user/" + ((HubManager.sharedConnection.getId())?.description)!, method: .put, parameters: parameters, encoding: JSONEncoding.default)
+                .responseJSON { response in
+                    if(response.response?.statusCode == 200) {
+                        print ("image picker success")
+                        self.profileImage.image = pickedImage
+                    } else {
+                        print ("image picker failure")
+                    }
+            }
+            
+            // Remettre l'orientation à paysage
+            OrientationHelper.lockOrientation(.landscape, andRotateTo: .landscapeRight)
+            dismiss(animated: false, completion: nil)
+            //print(strBase64)
+        }
+    }
+    
+    // Si l'utilisateur annule la sélection de photo
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        // Remettre l'orientation à paysage
+        OrientationHelper.lockOrientation(.landscape, andRotateTo: .landscapeRight)
+        dismiss(animated: false, completion: nil)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         var count:Int?
         if collectionView == self.achievementCollectionView {
-            count = achievementUrls.count > 0 ? Int(INT_MAX)/100 : 0
+            count = achievementUrls.count
         }
         if collectionView == self.itemCollectionView {
             count = self.userStoreItems.count
+            if(count == 0) {
+                noItemsLabel.isHidden = false
+            } else {
+                noItemsLabel.isHidden = true
+            }
         }
         return count!
 
@@ -310,48 +358,51 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == self.itemCollectionView {
-            // Deselect other item
-            let selectedIndex = self.userStoreItems.index(where: { $0.getIsGameEnabled() })
-            var previousSelectedItem: StoreItemEntity?
-            if selectedIndex != nil {
-                previousSelectedItem = self.userStoreItems[selectedIndex!]
-                previousSelectedItem?.setIsGameEnabled(isGameEnabled: false)
-                
-                // Send Update Item Enable
-                self.loading()
-                self.navigationBar.hidesBackButton = true
-                self.storeService.updateItemEnable(userId: HubManager.sharedConnection.getId()!, item: previousSelectedItem!).then(execute: {_ -> Void in
+            //Can only change your item
+            if(usernameLabel.text == HubManager.sharedConnection.getUsername()) {
+                // Deselect other item
+                let selectedIndex = self.userStoreItems.index(where: { $0.getIsGameEnabled() })
+                var previousSelectedItem: StoreItemEntity?
+                if selectedIndex != nil {
+                    previousSelectedItem = self.userStoreItems[selectedIndex!]
+                    previousSelectedItem?.setIsGameEnabled(isGameEnabled: false)
                     
-                    self.loadingDone()
-                    self.navigationBar.hidesBackButton = false
-                    
-                    DispatchQueue.main.async(execute: { () -> Void in
-                        // Reload table
-                        self.itemCollectionView.reloadData()
+                    // Send Update Item Enable
+                    self.loading()
+                    self.navigationBar.hidesBackButton = true
+                    self.storeService.updateItemEnable(userId: HubManager.sharedConnection.getId()!, item: previousSelectedItem!).then(execute: {_ -> Void in
+                        
+                        self.loadingDone()
+                        self.navigationBar.hidesBackButton = false
+                        
+                        DispatchQueue.main.async(execute: { () -> Void in
+                            // Reload table
+                            self.itemCollectionView.reloadData()
+                        })
                     })
-                })
 
-            }
-            
-            // Select new item
-            print("Select user item")
-            let currentSelectedItem = self.userStoreItems[indexPath.item]
-            if selectedIndex == nil || previousSelectedItem?.getId() != currentSelectedItem.getId() {
-                currentSelectedItem.setIsGameEnabled(isGameEnabled: true)
+                }
                 
-                // Send Update Item Enable
-                self.loading()
-                self.navigationBar.hidesBackButton = true
-                _ = self.storeService.updateItemEnable(userId: HubManager.sharedConnection.getId()!, item: currentSelectedItem).then(execute: {_ -> Void in
+                // Select new item
+                print("Select user item")
+                let currentSelectedItem = self.userStoreItems[indexPath.item]
+                if selectedIndex == nil || previousSelectedItem?.getId() != currentSelectedItem.getId() {
+                    currentSelectedItem.setIsGameEnabled(isGameEnabled: true)
                     
-                    self.loadingDone()
-                    self.navigationBar.hidesBackButton = false
-                    
-                    DispatchQueue.main.async(execute: { () -> Void in
-                        // Reload table
-                        self.itemCollectionView.reloadData()
+                    // Send Update Item Enable
+                    self.loading()
+                    self.navigationBar.hidesBackButton = true
+                    _ = self.storeService.updateItemEnable(userId: HubManager.sharedConnection.getId()!, item: currentSelectedItem).then(execute: {_ -> Void in
+                        
+                        self.loadingDone()
+                        self.navigationBar.hidesBackButton = false
+                        
+                        DispatchQueue.main.async(execute: { () -> Void in
+                            // Reload table
+                            self.itemCollectionView.reloadData()
+                        })
                     })
-                })
+                }
             }
         }
     }
@@ -380,13 +431,18 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     private func disableInputs() {
         self.profileImage.isUserInteractionEnabled = false
         self.itemCollectionView.isUserInteractionEnabled = false
+        //self.view.subviews.map { $0.isUserInteractionEnabled = false }
     }
     
     private func enableInputs() {
         self.profileImage.isUserInteractionEnabled = true
         self.itemCollectionView.isUserInteractionEnabled = true
+        
     }
     
+    public func setUserId(userId: Int) {
+        self.userId = userId
+    }
     /*
     // MARK: - Navigation
 
@@ -396,5 +452,4 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         // Pass the selected object to the new view controller.
     }
     */
-
 }

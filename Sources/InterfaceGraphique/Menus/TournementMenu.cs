@@ -39,8 +39,6 @@ namespace InterfaceGraphique
             InitializeAvailableColors();
         }
 
-        bool isOnline { get; set; }
-
 
         ////////////////////////////////////////////////////////////////////////
         ///
@@ -283,20 +281,10 @@ namespace InterfaceGraphique
             SaveGameSettings();
             Program.QuickPlay.CurrentGameState.IsTournementMode = true;
             Program.QuickPlay.CurrentGameState.MapFilePath = mapFilePath;
-            if (!isOnline)
-            {
-                Program.TournementTree.CurrentRound = 0;
-                Program.FormManager.CurrentForm = Program.TournementTree;
-            }
-            else
-            {
-                Program.FormManager.CurrentForm = Program.OnlineTournament;
-                var vm = Program.unityContainer.Resolve<Controls.WPF.Tournament.TournamentViewModel>();
-                vm.Initialize();
 
-                // fonctionne ici
-                //Program.FormManager.CurrentForm = Program.QuickPlay;
-            }
+            Program.TournementTree.CurrentRound = 0;
+            Program.FormManager.CurrentForm = Program.TournementTree;
+
         }
 
 
@@ -314,7 +302,7 @@ namespace InterfaceGraphique
             player2Profile = this.List_VirtualProfile2.SelectedItem.ToString();
             player3Profile = this.List_VirtualProfile3.SelectedItem.ToString();
             player4Profile = this.List_VirtualProfile4.SelectedItem.ToString();
-
+            
             player1Name = this.Input_Player1Name.Text;
             player2Name = this.Input_Player2Name.Text;
             player3Name = this.Input_Player3Name.Text;
@@ -444,35 +432,28 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void ValidateSettings(object sender, EventArgs e)
         {
-            if (isOnline)
+
+            if (this.Button_Player1Human.ForeColor == Color.White && this.Button_Player2Human.ForeColor == Color.White && this.Button_Player3Human.ForeColor == Color.White && this.Button_Player4Human.ForeColor == Color.White)
             {
-                LoadGame();
+                string warning = "La partie ne peut être lancée sans qu'il y ait au moins un joueur humain.";
+                ErrorMessageDialog dialog = new ErrorMessageDialog(warning);
+                dialog.ShowDialog();
+            }
+            else if (this.Input_Player1Name.Text == "" || this.Input_Player2Name.Text == "" || this.Input_Player3Name.Text == "" || this.Input_Player4Name.Text == "")
+            {
+                string warning = "La partie ne peut être lancée sans que tous les joueurs aient un nom.";
+                ErrorMessageDialog dialog = new ErrorMessageDialog(warning);
+                dialog.ShowDialog();
+            }
+            else if (PlayerNameTheSame())
+            {
+                string warning = "La partie ne peut être lancée sans que tous les joueurs aient des noms différents.";
+                ErrorMessageDialog dialog = new ErrorMessageDialog(warning);
+                dialog.ShowDialog();
             }
             else
             {
-
-                if (this.Button_Player1Human.ForeColor == Color.White && this.Button_Player2Human.ForeColor == Color.White && this.Button_Player3Human.ForeColor == Color.White && this.Button_Player4Human.ForeColor == Color.White)
-                {
-                    string warning = "La partie ne peut être lancée sans qu'il y ait au moins un joueur humain.";
-                    ErrorMessageDialog dialog = new ErrorMessageDialog(warning);
-                    dialog.ShowDialog();
-                }
-                else if (this.Input_Player1Name.Text == "" || this.Input_Player2Name.Text == "" || this.Input_Player3Name.Text == "" || this.Input_Player4Name.Text == "")
-                {
-                    string warning = "La partie ne peut être lancée sans que tous les joueurs aient un nom.";
-                    ErrorMessageDialog dialog = new ErrorMessageDialog(warning);
-                    dialog.ShowDialog();
-                }
-                else if (PlayerNameTheSame())
-                {
-                    string warning = "La partie ne peut être lancée sans que tous les joueurs aient des noms différents.";
-                    ErrorMessageDialog dialog = new ErrorMessageDialog(warning);
-                    dialog.ShowDialog();
-                }
-                else
-                {
-                    LoadGame();
-                }
+                LoadGame();
             }
         }
 

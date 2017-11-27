@@ -11,7 +11,7 @@ using InterfaceGraphique.Controls.WPF.Store;
 
 namespace InterfaceGraphique.Services
 {
-    public class StoreService
+    public class StoreService : Service
     {
         private HttpClient HttpClient { get; set; }
 
@@ -22,35 +22,64 @@ namespace InterfaceGraphique.Services
 
         public async Task<bool> BuyElements(List<StoreItemEntity> items, int userId)
         {
-            HttpResponseMessage response = await Program.client.PostAsJsonAsync("api/store/" + userId, items);
+            try
+            {
 
-            return response.IsSuccessStatusCode;
+                HttpResponseMessage response = await Program.client.PostAsJsonAsync("api/store/" + userId, items);
+
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception)
+            {
+                await OnException();
+                return false;
+            }
         }
 
         public async Task<List<StoreItemEntity>> GetStoreItems()
         {
-            HttpResponseMessage response = await Program.client.GetAsync("api/store/");
-            return await HttpResponseParser.ParseResponse<List<StoreItemEntity>>(response);
+            try
+            {
+
+                HttpResponseMessage response = await Program.client.GetAsync("api/store/");
+                return await HttpResponseParser.ParseResponse<List<StoreItemEntity>>(response);
+            }
+            catch (Exception)
+            {
+                await OnException();
+                return null;
+            }
         }
 
         public async Task<List<StoreItemEntity>> GetUserStoreItems(int userId)
         {
-            HttpResponseMessage response = await Program.client.GetAsync("api/store/" + userId);
-            return await HttpResponseParser.ParseResponse<List<StoreItemEntity>>(response);
+            try
+            {
+
+                HttpResponseMessage response = await Program.client.GetAsync("api/store/" + userId);
+                return await HttpResponseParser.ParseResponse<List<StoreItemEntity>>(response);
+            }
+            catch (Exception)
+            {
+                await OnException();
+                return null;
+            }
         }
 
         public async Task<bool> UpdateItemEnable(int userId, StoreItemEntity item)
         {
-            HttpResponseMessage response = await Program.client.PutAsJsonAsync("api/store/" + userId + "/" + item.Id, item);
+            try
+            {
 
-            return response.IsSuccessStatusCode;
-        }
+                HttpResponseMessage response = await Program.client.PutAsJsonAsync("api/store/" + userId + "/" + item.Id, item);
 
-        public async Task<bool> UpdateItemsEnable(int userId, List<StoreItemEntity> items)
-        {
-            HttpResponseMessage response = await Program.client.PutAsJsonAsync("api/store/" + userId, items);
-
-            return response.IsSuccessStatusCode;
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception)
+            {
+                await OnException();
+                return false;
+            }
         }
     }
 }

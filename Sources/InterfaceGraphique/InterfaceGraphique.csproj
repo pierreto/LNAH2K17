@@ -69,6 +69,9 @@
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>air-hockey-icon-76x76.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Dragablz, Version=0.0.3.197, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Dragablz.0.0.3.197\lib\net45\Dragablz.dll</HintPath>
@@ -155,6 +158,12 @@
     <Compile Include="CommunicationInterface\WaitingRooms\GameWaitingRoomHub.cs" />
     <Compile Include="CommunicationInterface\User.cs" />
     <Compile Include="CommunicationInterface\HubManager.cs" />
+    <Compile Include="Controls\Browser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\Browser.Designer.cs">
+      <DependentUpon>Browser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\LobbyHost.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -206,6 +215,7 @@
     <Compile Include="Controls\WPF\Converters\BooleanToCollapsedConverter.cs" />
     <Compile Include="Controls\WPF\Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Controls\WPF\Converters\BytesToImageConverter.cs" />
+    <Compile Include="Controls\WPF\Converters\RealBooleanToVisibilityConvert.cs" />
     <Compile Include="Controls\WPF\Converters\SentByMeToAlignmentConverter.cs" />
     <Compile Include="Controls\WPF\Converters\StringToVisibilityConverter.cs" />
     <Compile Include="Controls\WPF\DraggablePopup.cs" />
@@ -503,9 +513,13 @@
     </Compile>
     <Compile Include="Services\MapService.cs" />
     <Compile Include="Services\PlayerStatsService.cs" />
+    <Compile Include="Services\Service.cs" />
     <Compile Include="Services\StoreService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="WPFApplication.cs" />
+    <EmbeddedResource Include="Controls\Browser.resx">
+      <DependentUpon>Browser.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\OnlineTournament.resx">
       <DependentUpon>OnlineTournament.cs</DependentUpon>
     </EmbeddedResource>
@@ -599,6 +613,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.manifest" />
+    <Content Include="air-hockey-icon-76x76.ico" />
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Resource Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.woff" />

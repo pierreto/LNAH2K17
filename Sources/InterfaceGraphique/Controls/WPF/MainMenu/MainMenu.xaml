@@ -36,9 +36,15 @@
         <Grid VerticalAlignment="Center" HorizontalAlignment="Center" Grid.RowSpan="3" Grid.ColumnSpan="3" Panel.ZIndex="10" Margin="20" Visibility="{Binding Loading, Converter={convert:BooleanToVisibilityConverter}, ConverterParameter=True}">
             <fa:ImageAwesome Icon="CircleOutlineNotch" Spin="{Binding Loading}" Height="48" Width="48" Foreground="{StaticResource DarkSilverBrush}"/>
         </Grid>
-        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.ColumnSpan="3" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Label FontSize="100" FontWeight="Bold" Foreground="White" VerticalContentAlignment="Top">LNAH</Label>
-            <Label FontSize="100" FontWeight="Bold" Foreground="Red">2K17</Label>
+
+        <StackPanel  Grid.Row="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" VerticalAlignment="Center" >
+            <StackPanel Orientation="Horizontal" >
+                <Label FontSize="100" FontWeight="Bold" Foreground="White" VerticalContentAlignment="Top">LNAH</Label>
+                <Label FontSize="100" FontWeight="Bold" Foreground="Red">2K17</Label>
+            </StackPanel>
+            <Border Margin="0 -30 0 0" HorizontalAlignment="Center"  VerticalAlignment="Top" Background="Transparent" CornerRadius="8" Visibility="{Binding OnlineMode, Converter={convert:BooleanToCollapsedConverter}, ConverterParameter=True}">
+                <Label Content="{Binding Username}" FontSize="30" FontWeight="Bold" Foreground="{StaticResource DarkSilverBrush}"/>
+            </Border>
         </StackPanel>
 
         <Border Margin="30 10 10 80" Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" Background="{StaticResource SilverBrush}" CornerRadius="6">
@@ -47,7 +53,7 @@
             </Border.Effect>
             <StackPanel Margin="15" VerticalAlignment="Center">
                 <Button Content="Partie Rapide" FontSize="30" FontWeight="Bold" Background="{StaticResource DarkSilverBrush}" BorderThickness="0" Height="80" Margin="0 0 0 8" Foreground="White" Command="{Binding PartieRapideCommand}"></Button>
-                <Button FontSize="27" FontWeight="Bold" Background="{StaticResource DarkSilverBrush}" BorderThickness="0" Height="80" Margin="0 0 0 8" Foreground="White" Command="{Binding PartieRapideOnlineCommand}">
+                <Button FontSize="27" FontWeight="Bold" Background="{StaticResource DarkSilverBrush}" BorderThickness="0" Height="80" Margin="0 0 0 8" Foreground="White" Command="{Binding PartieRapideOnlineCommand}" IsEnabled="{Binding OnlineMode}">
                     <TextBlock Text="Partie Rapide en Ligne" TextWrapping="Wrap" TextAlignment="Center"></TextBlock>
                 </Button>
                 <Button Content="Tournoi" FontSize="30" FontWeight="Bold" Background="{StaticResource DarkSilverBrush}" BorderThickness="0" Height="80" Margin="0 0 0 8" Foreground="White" Command="{Binding TournoiCommand}"></Button>
@@ -87,7 +93,7 @@
             </Border.Effect>
             <StackPanel Margin="15" VerticalAlignment="Center">
                 <Button Content="Déconnexion" FontSize="30" FontWeight="Bold" Background="{StaticResource DarkRedBrush}" BorderThickness="0" Height="80" Margin="0 0 0 8" Foreground="White" Command="{Binding DeconnexionCommand}" IsEnabled="{Binding OnlineMode}" Visibility="{Binding OnlineMode, Converter={convert:BooleanToCollapsedConverter}, ConverterParameter=true}"></Button>
-                <Button Content="Retour" FontSize="30" FontWeight="Bold" Background="{StaticResource DarkRedBrush}" BorderThickness="0" Height="80" Margin="0 0 0 8" Foreground="White" Command="{Binding DeconnexionCommand}" IsEnabled="{Binding HomeCommand}" Visibility="{Binding OnlineMode, Converter={convert:BooleanToCollapsedConverter}}"></Button>
+                <Button Content="Retour" FontSize="30" FontWeight="Bold" Background="{StaticResource DarkRedBrush}" BorderThickness="0" Height="80" Margin="0 0 0 8" Foreground="White" Command="{Binding HomeCommand}" Visibility="{Binding OnlineMode, Converter={convert:BooleanToCollapsedConverter}}"></Button>
                 <Button Content="Quitter" FontSize="30" FontWeight="Bold" Background="{StaticResource DarkRedBrush}" BorderThickness="0" Height="80" Margin="0 0 0 8" Foreground="White" Command="{Binding QuitterCommand}"></Button>
             </StackPanel>
         </Border>

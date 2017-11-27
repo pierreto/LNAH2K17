@@ -55,7 +55,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
             InitializeTournamentsEvents();
         }
 
-        public async void Join()
+        public async Task Join()
         {
             List<GamePlayerEntity> players = new List<GamePlayerEntity>() { new GamePlayerEntity(User.Instance.UserEntity) };
             try
@@ -68,7 +68,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
             }
         }
 
-        public async void CreateTournament(List<GamePlayerEntity> players)
+        public async Task CreateTournament(List<GamePlayerEntity> players)
         {
             try
             {
@@ -92,7 +92,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
             }
         }
 
-        public async void UpdateSelectedMap(MapEntity map)
+        public async Task UpdateSelectedMap(MapEntity map)
         {
             if (CurrentTournamentId > 0)
             {
@@ -111,7 +111,9 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
         {
             try
             {
-                await WaitingRoomProxy.Invoke("LeaveTournament", User.Instance.UserEntity, CurrentTournamentId);
+                var test = User.Instance.UserEntity;
+                test.Profile = "";
+                await WaitingRoomProxy.Invoke("LeaveTournament", test, CurrentTournamentId);
             }
             catch (Exception e)
             {
@@ -220,6 +222,10 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
                     if (game.Slave.IsAi)
                     {
+                        List<string> ArtificialIntelligences = Program.ConfigurationMenu.GetProfileList();
+                        string stringSelectedProfile = ArtificialIntelligences.First();
+                        PlayerProfile selectedProfile = Program.ConfigurationMenu.GetProfile(stringSelectedProfile);
+                        FonctionsNatives.aiActiveProfile(selectedProfile.Speed, selectedProfile.Passivity);
                         FonctionsNatives.setCurrentOpponentType((int)OpponentType.VIRTUAL_PLAYER);
                     }
 

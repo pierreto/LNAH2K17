@@ -21,13 +21,15 @@ class OnlineUser {
     
     private var user = UserEntity()
     private var hexColor : UIColor
+    private var profilePicture: String
     private var uuidsSelected = [String]()
     private var nodesSelected: [NoeudCommun]
     
-    init(username: String, hexColor: String) {
+    init(username: String, hexColor: String, profilePicture: String) {
         self.user.setUsername(username: username)
         self.hexColor = MathHelper.hexToUIColor(hex: hexColor)
         self.nodesSelected = [NoeudCommun]()
+        self.profilePicture = profilePicture
     }
     
     public func getUsername() -> String {
@@ -44,6 +46,14 @@ class OnlineUser {
     
     public func setHexColor(hexColor: UIColor) {
         self.hexColor = hexColor
+    }
+    
+    public func getProfilePicture() -> String {
+        return self.profilePicture
+    }
+    
+    public func setProfilePicture(profilePicture: String) {
+        self.profilePicture = profilePicture
     }
     
     public func getUuidsSelected() -> [String] {

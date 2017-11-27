@@ -79,6 +79,7 @@ class Map: NSObject {
         map.creator = "N/A"
         map.mapName = name
         map.lastBackup = Date()
+        map.icon = ""
         map.privacy.value = isPrivate
         map.password = password
         map.currentNumberOfPlayer.value = 0

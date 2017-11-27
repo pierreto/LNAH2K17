@@ -18,6 +18,8 @@ namespace AirHockeyServer.Core
 
         public static Dictionary<int, StoreItemEntity> StoreItems;
 
+        public static Dictionary<AchivementType, AchievementEntity> Achievements;
+
         static Mutex playersMutex;
         public static List<UserEntity> PlayingPlayers;
 
@@ -42,9 +44,11 @@ namespace AirHockeyServer.Core
             Tournaments = new Dictionary<int, TournamentEntity>();
             StoreItems = new Dictionary<int, StoreItemEntity>();
             PlayingPlayers = new List<UserEntity>();
+            Achievements = new Dictionary<AchivementType, AchievementEntity>();
             playersMutex = new Mutex();
 
             LoadStoreItems();
+            LoadAchievements();
         }
 
         private void LoadStoreItems()
@@ -56,6 +60,18 @@ namespace AirHockeyServer.Core
                 List<StoreItemEntity> items = JsonConvert.DeserializeObject<List<StoreItemEntity>>(json);
 
                 items.ForEach(item => StoreItems.Add(item.Id, item));
+            }
+        }
+
+        private void LoadAchievements()
+        {
+            string path = System.Web.Hosting.HostingEnvironment.MapPath("/") + "\\..\\..\\Exe\\données\\Achievements.json";
+            using (StreamReader reader = new StreamReader(path))
+            {
+                string json = reader.ReadToEnd();
+                List<AchievementEntity> items = JsonConvert.DeserializeObject<List<AchievementEntity>>(json);
+
+                items.ForEach(item => Achievements.Add(item.AchivementType, item));
             }
         }
 
