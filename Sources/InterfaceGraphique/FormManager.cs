@@ -128,7 +128,7 @@ namespace InterfaceGraphique
             this.BeginInvoke(new MethodInvoker(delegate
             {
                 this.gameRequestPopup.Show();
-                this.textBox2.Text = senderName;
+                this.playerName.Text = senderName;
                 DisabledButtonsExeptGameRequest(this.Controls);
                 EnablePop();
             }));

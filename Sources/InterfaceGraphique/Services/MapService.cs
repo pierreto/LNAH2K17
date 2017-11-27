@@ -10,36 +10,76 @@ using InterfaceGraphique.Entities;
 
 namespace InterfaceGraphique.Services
 {
-    public class MapService
+    public class MapService : Service
     {
         public async Task<List<MapEntity>> GetMaps()
         {
-            HttpResponseMessage response = await Program.client.GetAsync("api/maps");
-            return await HttpResponseParser.ParseResponse<List<MapEntity>>(response);
+            try
+            {
+                HttpResponseMessage response = await Program.client.GetAsync("api/maps");
+                return await HttpResponseParser.ParseResponse<List<MapEntity>>(response);
+            }
+            catch (Exception)
+            {
+                await OnException();
+                return null;
+            }
         }
 
         public async Task<MapEntity> GetMap(int id)
         {
-            HttpResponseMessage response = await Program.client.GetAsync("api/maps/get/" + id.ToString());
-            return await HttpResponseParser.ParseResponse<MapEntity>(response);
+            try
+            {
+                HttpResponseMessage response = await Program.client.GetAsync("api/maps/get/" + id.ToString());
+                return await HttpResponseParser.ParseResponse<MapEntity>(response);
+            }
+            catch (Exception)
+            {
+                await OnException();
+                return null;
+            }
         }
 
         public async Task<int?> SaveNewMap(MapEntity map)
         {
-            HttpResponseMessage response = await Program.client.PostAsJsonAsync("api/maps/save", map);
-            return await HttpResponseParser.ParseResponse<int?>(response);
+            try
+            {
+                HttpResponseMessage response = await Program.client.PostAsJsonAsync("api/maps/save", map);
+                return await HttpResponseParser.ParseResponse<int?>(response);
+            }
+            catch (Exception)
+            {
+                await OnException();
+                return null;
+            }
         }
 
         public async Task<bool> SaveMap(MapEntity map)
         {
-            HttpResponseMessage response = await Program.client.PostAsJsonAsync("api/maps/save", map);
-            return response.IsSuccessStatusCode;
+            try
+            {
+                HttpResponseMessage response = await Program.client.PostAsJsonAsync("api/maps/save", map);
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception)
+            {
+                await OnException();
+                return false;
+            }
         }
 
         public async Task<bool> RemoveMap(int id)
         {
-            HttpResponseMessage response = await Program.client.GetAsync("api/maps/remove/" + id.ToString());
-            return response.IsSuccessStatusCode;
+            try
+            {
+                HttpResponseMessage response = await Program.client.GetAsync("api/maps/remove/" + id.ToString());
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception)
+            {
+                await OnException();
+                return false;
+            }
         }
     }
 }

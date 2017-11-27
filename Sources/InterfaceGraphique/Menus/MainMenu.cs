@@ -159,7 +159,7 @@ namespace InterfaceGraphique
         public async Task Logout()
         {
             var response = await client.PostAsJsonAsync(Program.client.BaseAddress + "api/logout", User.Instance.UserEntity);
-            HubManager.Instance.Logout();
+            await HubManager.Instance.Logout();
             User.Instance.UserEntity = null;
             User.Instance.IsConnected = false;
             //TODO: KILL HUB CONNECTIONS

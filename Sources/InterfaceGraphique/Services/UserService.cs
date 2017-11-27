@@ -9,12 +9,20 @@ using System.Threading.Tasks;
 
 namespace InterfaceGraphique.Services
 {
-    public class UserService
+    public class UserService : Service
     {
         public async Task<List<UserEntity>> GetAllUsers()
         {
-            HttpResponseMessage response = await Program.client.GetAsync("api/user");
-            return await HttpResponseParser.ParseResponse<List<UserEntity>>(response);
+            try
+            {
+                HttpResponseMessage response = await Program.client.GetAsync("api/user");
+                return await HttpResponseParser.ParseResponse<List<UserEntity>>(response);
+            }
+            catch (Exception)
+            {
+                await OnException();
+                return null;
+            }
         }
     }
 }
