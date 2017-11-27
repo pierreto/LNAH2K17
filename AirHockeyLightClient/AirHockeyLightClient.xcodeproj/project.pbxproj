@@ -235,6 +235,7 @@
 		8FCDF6191FA1BEDF00631551 /* EditorNotificationScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 8FCDF6171FA1BEDF00631551 /* EditorNotificationScene.sks */; };
 		8FCDF61A1FA1BEDF00631551 /* EditorNotificationScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCDF6181FA1BEDF00631551 /* EditorNotificationScene.swift */; };
 		8FDD1E1F1FB3B87000F5E61F /* ControlPointCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FDD1E1E1FB3B87000F5E61F /* ControlPointCommand.swift */; };
+		8FEA620A1FCC0265007689A7 /* OrientationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FEA62091FCC0265007689A7 /* OrientationHelper.swift */; };
 		8FF4B5C61FBD70CE00BB2941 /* leftImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FF4B5C01FBD70CE00BB2941 /* leftImage.png */; };
 		8FF4B5C71FBD70CE00BB2941 /* backImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FF4B5C11FBD70CE00BB2941 /* backImage.png */; };
 		8FF4B5C81FBD70CE00BB2941 /* downImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 8FF4B5C21FBD70CE00BB2941 /* downImage.png */; };
@@ -496,6 +497,7 @@
 		8FCDF6171FA1BEDF00631551 /* EditorNotificationScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; name = EditorNotificationScene.sks; path = InterfaceGraphique/Editor/EditorNotificationScene.sks; sourceTree = "<group>"; };
 		8FCDF6181FA1BEDF00631551 /* EditorNotificationScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditorNotificationScene.swift; path = InterfaceGraphique/Editor/EditorNotificationScene.swift; sourceTree = "<group>"; };
 		8FDD1E1E1FB3B87000F5E61F /* ControlPointCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ControlPointCommand.swift; path = Noyau/Editor/Commands/ControlPointCommand.swift; sourceTree = "<group>"; };
+		8FEA62091FCC0265007689A7 /* OrientationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OrientationHelper.swift; path = Noyau/Helper/OrientationHelper.swift; sourceTree = "<group>"; };
 		8FF4B5C01FBD70CE00BB2941 /* leftImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = leftImage.png; path = ../../Exe/media/skybox/leftImage.png; sourceTree = "<group>"; };
 		8FF4B5C11FBD70CE00BB2941 /* backImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = backImage.png; path = ../../Exe/media/skybox/backImage.png; sourceTree = "<group>"; };
 		8FF4B5C21FBD70CE00BB2941 /* downImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = downImage.png; path = ../../Exe/media/skybox/downImage.png; sourceTree = "<group>"; };
@@ -653,6 +655,7 @@
 				253E088D1F818DD2009F301B /* JsonHelper.swift */,
 				8F69F4BE1F8AF871004D5129 /* MathHelper.swift */,
 				8F76FC0E1F9CF990001BBC99 /* SCNNodeHelper.swift */,
+				8FEA62091FCC0265007689A7 /* OrientationHelper.swift */,
 			);
 			name = Helper;
 			sourceTree = "<group>";
@@ -1532,6 +1535,7 @@
 				253E088E1F818DD2009F301B /* JsonHelper.swift in Sources */,
 				25A308E91FCA184E00E7BD80 /* TutorialViewController.swift in Sources */,
 				344A6E2A1F994E0100CFFBEB /* VisiteurSurTable.swift in Sources */,
+				8FEA620A1FCC0265007689A7 /* OrientationHelper.swift in Sources */,
 				8F829B471FC2848800FC027B /* StoreItemEntity.swift in Sources */,
 				8F0B94AC1F8D3EEE007F0E82 /* VisiteurAbstrait.swift in Sources */,
 				2509B88F1FB8D159002DEE9A /* FriendRequestEntity.swift in Sources */,
