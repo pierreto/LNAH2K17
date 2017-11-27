@@ -26,7 +26,6 @@ class FriendsHub: BaseHub {
     init(connection: SignalR?) {
         super.init()
         self.hubProxy = connection?.createHubProxy("FriendsHub")
-        self.InitializeEvents()
     }
     
     func initialize() {
@@ -39,7 +38,7 @@ class FriendsHub: BaseHub {
         }
     }
     
-    private func InitializeEvents() {
+    override func initializeHub() {
         self.hubProxy?.on("FriendRequestEvent") { args in
             let newRequestJson = JSON(args?[0] as! Dictionary<String, Any>)
             let newRequest = self.friendsService.buildFriendRequestEntity(json: newRequestJson)
