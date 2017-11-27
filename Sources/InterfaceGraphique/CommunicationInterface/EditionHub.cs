@@ -61,7 +61,7 @@ namespace InterfaceGraphique.CommunicationInterface
                     {
                         TypeNameHandling = TypeNameHandling.Objects
                     });
-                rcmd.ExecuteCommand();
+                NewCommand?.Invoke(rcmd);
             });
 
             hubProxy.On<OnlineUser>("NewUser", user =>

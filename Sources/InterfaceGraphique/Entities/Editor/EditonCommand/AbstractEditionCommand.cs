@@ -20,6 +20,10 @@ namespace InterfaceGraphique.Entities.EditorCommand
             set => objectUuid = value;
         }
 
+        public void ExecuteCommandOnMainThread()
+        {
+            Program.Editeur.ExecuteCommandOnMainThread(ExecuteCommand);
+        }
         public abstract void ExecuteCommand();
     }
 }

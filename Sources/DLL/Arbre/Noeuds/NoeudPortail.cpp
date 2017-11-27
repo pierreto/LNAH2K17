@@ -111,10 +111,9 @@ void NoeudPortail::afficherConcret(const glm::mat4& vueProjection) const
 	}
 	
 	// Affichage du modèle.
-	if(vbo_!=nullptr)
-	{
-		vbo_->dessiner(vueProjection * modele, options_, matrices);
-	}
+
+	vbo_->dessiner(vueProjection * modele, options_, matrices);
+	
 }
 
 
