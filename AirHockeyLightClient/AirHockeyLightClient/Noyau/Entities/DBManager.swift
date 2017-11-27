@@ -120,6 +120,7 @@ class DBManager {
     }
     
     func activateAutomaticMapImport() {
+        self.importServerMaps()
         self.timer = Timer.scheduledTimer(timeInterval: 30, target: self, selector: #selector(self.importServerMaps), userInfo: nil, repeats: true)
     }
     
@@ -128,20 +129,20 @@ class DBManager {
     }
     
     @objc private func importServerMaps() {
-        //print("IMPORT")
         let mapService = MapService()
         mapService.returnFullMaps { maps, error in
-            for map in maps! {
-                let mapEntity = mapService.buildMapEntity(json: map.1)
-                if self.isIdUnique(id: mapEntity.id!) {
-                    self.sauvegarderCarte(map: mapEntity)
-                } else {
-                    self.updateMap(map: mapEntity)
+            if (maps != nil) {
+                for map in maps! {
+                    let mapEntity = mapService.buildMapEntity(json: map.1)
+                    if self.isIdUnique(id: mapEntity.id!) {
+                        self.sauvegarderCarte(map: mapEntity)
+                    } else {
+                        self.updateMap(map: mapEntity)
+                    }
                 }
             }
         }
     }
-    
 }
 
 ///////////////////////////////////////////////////////////////////////////////

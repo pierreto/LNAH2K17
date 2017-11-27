@@ -7,6 +7,11 @@ using Microsoft.AspNet.SignalR.Client;
 using Microsoft.Practices.Unity;
 using InterfaceGraphique.CommunicationInterface.WaitingRooms;
 using System.Threading;
+using System.Windows;
+using System.Windows.Forms;
+using InterfaceGraphique.Controls.WPF.Home;
+using InterfaceGraphique.Controls.WPF.MainMenu;
+using InterfaceGraphique.Controls.WPF.Chat;
 
 namespace InterfaceGraphique.CommunicationInterface
 {
@@ -14,10 +19,13 @@ namespace InterfaceGraphique.CommunicationInterface
     {
         private static HubManager instance;
         public string IpAddress { get; set; }
+
         private HubConnection connection;
-        public HubConnection Connection {
+        public HubConnection Connection
+        {
             get;
-            set; }
+            set;
+        }
 
         private List<IBaseHub> hubs;
         public static HubManager Instance
@@ -46,9 +54,50 @@ namespace InterfaceGraphique.CommunicationInterface
 
             this.InitializeHubs();
 
+            this.connection.Reconnecting += ConnectionClosed;
+
             await this.connection.Start();
 
             IpAddress = serverIp;
+        }
+
+        private void ConnectionClosed()
+        {
+            System.Timers.Timer timer = new System.Timers.Timer();
+            timer.Interval = 3000;
+            timer.Elapsed += (timerSender, e) => EndOfTimer(timer);
+
+            timer.Start();
+        }
+
+        public void EndOfTimer(System.Timers.Timer timer)
+        {
+            timer.Stop();
+
+            if (this.connection.State == ConnectionState.Reconnecting)
+            {
+                HandleDisconnection();
+            }
+
+        }
+
+        public void HandleDisconnection()
+        {
+            System.Windows.Forms.MessageBox.Show(
+                 @"Le lien entre vous et le serveur s'est brisé. Vérifiez votre connection internet. Sinon ce peut être dû à une catastrophe naturelle, des chargés de laboratoires ou autre",
+                 @"Catastrophe",
+                 MessageBoxButtons.OK, MessageBoxIcon.Error);
+            // await LeaveHubs();
+            Program.FormManager.Invoke(new MethodInvoker(() =>
+            {
+                Program.FormManager.CurrentForm = Program.HomeMenu;
+                Program.unityContainer.Resolve<ChatViewModel>().UndockedChat?.Close();
+                Program.unityContainer.Resolve<MainMenuViewModel>().OnlineMode = false;
+                Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<HomeViewModel>());
+                Program.InitializeUnityDependencyInjection();
+                Program.unityContainer.Resolve<GameWaitingRoomHub>().OnDisconnect();
+                Program.unityContainer.Resolve<EditionHub>().OnDisconnect();
+            }));
         }
 
         public void AddHubs()
@@ -72,26 +121,26 @@ namespace InterfaceGraphique.CommunicationInterface
             }
         }
 
-        public void LeaveHubs()
+        public async Task LeaveHubs()
         {
-            foreach(IBaseHub hub in this.hubs)
+            foreach (IBaseHub hub in this.hubs)
             {
-                hub.LeaveRoom();
+                await hub.LeaveRoom();
             }
         }
 
-        public void Logout()
+        public async Task Logout()
         {
             if (this.hubs != null)
             {
                 foreach (IBaseHub hub in this.hubs)
                 {
-                    hub.Logout();
+                    await hub.Logout();
                 }
                 this.connection.Stop();
             }
-    
+
         }
-        
+
     }
 }

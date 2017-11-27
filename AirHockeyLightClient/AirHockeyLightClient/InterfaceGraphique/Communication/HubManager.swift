@@ -36,7 +36,7 @@ class HubManager {
     private var user: UserEntity? = UserEntity()
     private var ipAddress: String?
     
-    private var _connected: Bool? = false
+    /*private var _connected: Bool? = false
     
     var connected: Bool? {
         get {
@@ -45,7 +45,7 @@ class HubManager {
         set {
             _connected = newValue
         }
-    }
+    }*/
     
     public func getConnection() -> SignalR? {
         return self.connection
@@ -65,6 +65,10 @@ class HubManager {
     
     public func getUser() -> UserEntity {
         return self.user!
+    }
+    
+    public func setUser(user: UserEntity) {
+        self.user = user
     }
     
     public func getIpAddress() -> String? {
@@ -186,6 +190,7 @@ class HubManager {
             self.user = UserEntity()
             self.ClearHubs()
             self.ipAddress = nil
+            DBManager.instance.deactivateAutomaticMapImport()
                 
             NotificationCenter.default.post(name: Notification.Name(rawValue: LoginNotification.LogoutNotification), object: nil)
             fullfil(true)

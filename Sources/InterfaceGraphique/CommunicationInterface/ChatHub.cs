@@ -78,7 +78,7 @@ namespace InterfaceGraphique.CommunicationInterface
             });
         }
 
-        public async void SendMessage(ChatMessage message)
+        public async Task SendMessage(ChatMessage message)
         {
             message.Sender = User.Instance.UserEntity.Username;
             message.MessageValue = Convert.ToBase64String(Encoding.UTF8.GetBytes(message.MessageValue));
@@ -141,7 +141,7 @@ namespace InterfaceGraphique.CommunicationInterface
             }
         }
 
-        public async void SendPrivateMessage(ChatMessage message, int senderId, int receptorId)
+        public async Task SendPrivateMessage(ChatMessage message, int senderId, int receptorId)
         {
             message.Sender = User.Instance.UserEntity.Username;
             message.MessageValue = Convert.ToBase64String(Encoding.UTF8.GetBytes(message.MessageValue));
@@ -157,7 +157,7 @@ namespace InterfaceGraphique.CommunicationInterface
             }
         }
 
-        public async void SendChannel(ChatMessage message, string channelName)
+        public async Task SendChannel(ChatMessage message, string channelName)
         {
             message.Sender = User.Instance.UserEntity.Username;
             message.MessageValue = Convert.ToBase64String(Encoding.UTF8.GetBytes(message.MessageValue));
@@ -172,7 +172,7 @@ namespace InterfaceGraphique.CommunicationInterface
             }
         }
 
-        public async void LeaveRoom(String roomName)
+        public async Task LeaveRoom(String roomName)
         {
             try
             {

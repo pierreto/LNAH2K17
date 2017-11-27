@@ -82,7 +82,15 @@ namespace InterfaceGraphique
             currentGameState.KeyDown = Program.ConfigurationMenu.MoveDownKey;
             currentGameState.KeyLeft = Program.ConfigurationMenu.MoveLeftKey;
             currentGameState.KeyRight = Program.ConfigurationMenu.MoveRightKey;
-            currentGameState.NeededGoalsToWin = Program.ConfigurationMenu.NeededGoalsToWin;
+
+            if(Program.unityContainer.Resolve<GameManager>().CurrentOnlineGame == null)
+            {
+                currentGameState.NeededGoalsToWin = Program.ConfigurationMenu.NeededGoalsToWin;
+            }
+            else
+            {
+                currentGameState.NeededGoalsToWin = 2;
+            }
 
             LoadMap();
             ToggleOrbit(true);
@@ -144,6 +152,23 @@ namespace InterfaceGraphique
 
         }
 
+        public void Restart()
+        {
+            if (this.currentGameState.gameHub != null)
+            {
+                this.CurrentGameState.gameHub.EndOfGameStatsEvent -= OnEndOfGameStats;
+            }
+
+            var gameManager = Program.unityContainer.Resolve<GameManager>();
+            gameManager.CurrentOnlineGame = null;
+
+            currentGameState = new OfflineGameState();
+            FonctionsNatives.setCurrentOpponentType((int)OpponentType.LOCAL_PLAYER);
+            FonctionsNatives.setOnlineClientType((int)OnlineClientType.OFFLINE_GAME);
+
+            Program.QuickPlay.CurrentGameState.IsOnlineTournementMode = false;
+        }
+
         private void OnEndOfGameStats(PlayerEndOfGameStatsEntity stats)
         {
             if(stats.Id != User.Instance.UserEntity.Id)
@@ -169,7 +194,10 @@ namespace InterfaceGraphique
                 }
             }));
 
-            this.CurrentGameState.gameHub.EndOfGameStatsEvent -= OnEndOfGameStats;
+            if(this.currentGameState.gameHub != null)
+            {
+                this.CurrentGameState.gameHub.EndOfGameStatsEvent -= OnEndOfGameStats;
+            }
         }
 
         private async Task OnMainMenuClicked(object sender, EventArgs e)
@@ -179,8 +207,9 @@ namespace InterfaceGraphique
             this.currentGameState.gameHasEnded = true;
 
             ResetEndOfGameStats();
+            Restart();
 
-            if(!User.Instance.IsConnected)
+            if (!User.Instance.IsConnected)
             {
                 return;
             }
@@ -320,7 +349,7 @@ namespace InterfaceGraphique
             ResetDefaultTable();
             FonctionsNatives.playMusic(true);
 
-            if (currentGameState.selectedMap != null) // online mode
+            if (currentGameState.selectedMap != null && Program.unityContainer.Resolve<GameManager>().CurrentOnlineGame != null) // online mode
             {
                 float[] coefficients = new float[3];
                 FonctionsNatives.chargerCarte(new StringBuilder(currentGameState.selectedMap.Json), coefficients);
@@ -397,6 +426,10 @@ namespace InterfaceGraphique
                         }
                     }
 
+                    currentGameState = new OfflineGameState();
+                    FonctionsNatives.setCurrentOpponentType((int)OpponentType.LOCAL_PLAYER);
+                    FonctionsNatives.setOnlineClientType((int)OnlineClientType.OFFLINE_GAME);
+                    
                     if (isOnlineGame)
                     {
                         var gameManager = Program.unityContainer.Resolve<GameManager>();
@@ -406,6 +439,8 @@ namespace InterfaceGraphique
                         this.playerName2.Text = players[0].Id == User.Instance.UserEntity.Id ? players[1].Username : players[0].Username;
                         this.pointsNb.Visible = true;
                         this.label3.Visible = true;
+
+                        gameManager.CurrentOnlineGame = null;
                     }
                 }
             }));

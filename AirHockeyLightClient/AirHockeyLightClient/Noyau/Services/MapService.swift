@@ -28,7 +28,7 @@ class MapService {
     }
     
     func getMaps(completionHandler: @escaping (JSON?, Error?) -> ()) {
-        if self.clientConnection.getConnection() != nil && self.clientConnection.connected! {
+        if self.clientConnection.getConnection() != nil && self.clientConnection.getConnection()?.state == .connected && self.clientConnection.getIpAddress() != nil {
             Alamofire.request("http://" + self.clientConnection.getIpAddress()! + ":63056/api/maps", method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON { response in
                     switch response.result {
                         case .success(let value):
@@ -42,7 +42,7 @@ class MapService {
     }
     
     func returnFullMaps(completionHandler: @escaping (JSON?, Error?) -> ()) {
-        if self.clientConnection.getConnection() != nil && self.clientConnection.connected! {
+        if self.clientConnection.getConnection() != nil && (self.clientConnection.getConnection()?.state)! == .connected {
             Alamofire.request("http://" + self.clientConnection.getIpAddress()! + ":63056/api/maps/sync", method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON { response in
                 switch response.result {
                 case .success(let value):
@@ -58,7 +58,7 @@ class MapService {
     func saveMap(map: MapEntity) {
         let map = self.convertMapEntity(mapEntity: map) as! [String : Any]
         
-        if self.clientConnection.getConnection() != nil && self.clientConnection.connected! {
+        if self.clientConnection.getConnection() != nil && (self.clientConnection.getConnection()?.state)! == .connected {
             Alamofire.request("http://" + self.clientConnection.getIpAddress()! + ":63056/api/maps/save",
                               method: .post, parameters: map, encoding: JSONEncoding.default)
                 .responseJSON { response in
@@ -72,14 +72,14 @@ class MapService {
     func syncMap(map: MapEntity) {
         let convertedMap = self.convertMapEntity(mapEntity: map) as! [String : Any]
         
-        if self.clientConnection.getConnection() != nil && self.clientConnection.connected! {
+        if self.clientConnection.getConnection() != nil && (self.clientConnection.getConnection()?.state)! == .connected {
             Alamofire.request("http://" + self.clientConnection.getIpAddress()! + ":63056/api/maps/sync",
                               method: .post, parameters: convertedMap, encoding: JSONEncoding.default)
                 .responseJSON { response in
                     switch response.result {
-                    case .success(let value):
-                        print(value)
+                    case .success(let value): break
                         /*
+                        print(value)
                         let mapIsOverriden = value as! Int
                         if mapIsOverriden == 1 {
                             // TODO: notify user instead
@@ -94,7 +94,7 @@ class MapService {
     }
     
     func deleteMap(map: MapEntity, completionHandler: @escaping (Bool?, Error?) -> ()) {
-        if self.clientConnection.getConnection() != nil && self.clientConnection.connected! {
+        if self.clientConnection.getConnection() != nil && (self.clientConnection.getConnection()?.state)! == .connected {
             Alamofire.request("http://" + self.clientConnection.getIpAddress()! + ":63056/api/maps/remove/" + map.id!,
                               method: .get, parameters: nil, encoding: JSONEncoding.default)
                 .responseJSON { response in
@@ -127,7 +127,7 @@ class MapService {
             "MapName": mapEntity.mapName!,
             "LastBackup": mapEntity.lastBackup!.description,
             "Json": mapEntity.json!,
-            "Icon": mapEntity.icon!,
+            "Icon": mapEntity.icon == nil ? "" : mapEntity.icon!,
             "Private": mapEntity.privacy.value!.description,
             "Password": mapEntity.password?.description as Any,
             "CurrentNumberOfPlayer": mapEntity.currentNumberOfPlayer.value!.description

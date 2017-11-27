@@ -185,16 +185,23 @@ namespace InterfaceGraphique
             Debug.Print(e.ToString());
 
         }
-        private static void AppExit(object sender, EventArgs e)
+        private static async void AppExit(object sender, EventArgs e)
         {
             Debug.Print(e.ToString());
 
-            HubManager.Instance.Logout();
-            if (client.BaseAddress != null)
+            //await HubManager.Instance.LeaveHubs();
+            //await HubManager.Instance.Logout();
+            //if (client.BaseAddress != null)
+            //{
+            //   await client.PostAsJsonAsync(client.BaseAddress + "api/logout", User.Instance.UserEntity);
+            //}
+
+            if(User.Instance.IsConnected)
             {
-             client.PostAsJsonAsync(client.BaseAddress + "api/logout", User.Instance.UserEntity);
+                await Program.unityContainer.Resolve<MainMenuViewModel>().CrashKillExitAllApplication();
             }
         }
+
      
         public static void InitAfterConnection()
         {

@@ -50,15 +50,15 @@ namespace InterfaceGraphique
                 this.Controls.Add(currentForm);
 
 
-                if (User.Instance.IsConnected)
-                {
-                    ShowCompletely();
-                    //HideCompletely();
-                }
-                else
-                {
-                    HideCompletely();
-                }
+                //if (User.Instance.IsConnected)
+                //{
+                //    ShowCompletely();
+                //    //HideCompletely();
+                //}
+                //else
+                //{
+                //    HideCompletely();
+                //}
 
                 //ShowChat();
                 //currentForm.Focus();
@@ -128,7 +128,7 @@ namespace InterfaceGraphique
             this.BeginInvoke(new MethodInvoker(delegate
             {
                 this.gameRequestPopup.Show();
-                this.textBox2.Text = senderName;
+                this.playerName.Text = senderName;
                 DisabledButtonsExeptGameRequest(this.Controls);
                 EnablePop();
             }));
@@ -272,7 +272,7 @@ namespace InterfaceGraphique
             //elementHost1.Size = new Size(0, 0);
         }
 
-        private void ShowCompletely()
+        public void ShowCompletely()
         {
             ShowFriendList();
             ShowChat();

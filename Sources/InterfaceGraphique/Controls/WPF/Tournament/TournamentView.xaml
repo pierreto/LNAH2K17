@@ -138,7 +138,7 @@
                 </StackPanel>
             </Grid>
         </Border>
-        <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center"  Visibility="{Binding EnabledMaps}" Height="{Binding ActualHeight, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}">
+        <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center"  Visibility="{Binding Loading}" Height="{Binding ActualHeight, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}">
             <DockPanel.Style>
                 <Style TargetType="{x:Type DockPanel}">
                     <Setter Property="Background" Value="#cccccc"></Setter>
