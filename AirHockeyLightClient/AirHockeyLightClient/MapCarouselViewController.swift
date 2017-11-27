@@ -223,7 +223,6 @@ class MapCarouselViewController: UIViewController, iCarouselDataSource, iCarouse
     }
     
     @objc private func refreshMaps() {
-        //print("REFRESH")
         self.maps = DBManager.instance.recupererCartes()
         DispatchQueue.main.async(execute: { () -> Void in
             // Reload tableView

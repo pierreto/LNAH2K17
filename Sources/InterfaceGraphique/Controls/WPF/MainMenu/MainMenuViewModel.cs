@@ -22,6 +22,7 @@ namespace InterfaceGraphique.Controls.WPF.MainMenu
         #region Private Properties
         private bool notLoading;
         private bool onlineMode;
+        private string username;
         #endregion
 
         #region Public Properties
@@ -36,6 +37,14 @@ namespace InterfaceGraphique.Controls.WPF.MainMenu
                 notLoading = value;
                 OnPropertyChanged(nameof(NotLoading));
                 OnPropertyChanged(nameof(Loading));
+            }
+        }
+
+        public string Username
+        {
+            get
+            {
+                return User.Instance.UserEntity?.Username;
             }
         }
 

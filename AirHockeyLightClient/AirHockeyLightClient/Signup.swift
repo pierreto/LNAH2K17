@@ -54,29 +54,33 @@ class Signup: NSObject {
                 Alamofire.request("http://" + self.clientConnection.getIpAddress()! + ":63056/api/signup", method: .post, parameters: parameters, encoding: JSONEncoding.default)
                     .responseJSON { response in
                         if(response.response?.statusCode == 200) {
-                            self.clientConnection.setUsername(username: username)
                             if let result = response.result.value {
                                 let id = result as! Int
-                                self.clientConnection.setId(id: id)
-                                self.clientConnection.searchId = id
+                                
+                                let friendsService = FriendsService()
+                                friendsService.getUser(id: id, completionHandler: { user, error in
+                                    // Attach user to hub manager
+                                    HubManager.sharedConnection.setUser(user: user!)
+                                    
+                                    // Connect user to chat
+                                    HubManager.sharedConnection.getChatHub().subscribe()
+                                    
+                                    // Retrieve the users friends and friend requests
+                                    HubManager.sharedConnection.getFriendsHub().initialize()
+                                    HubManager.sharedConnection.getFriendsHub().getAllFriends()
+                                    HubManager.sharedConnection.getFriendsHub().getAllPendingRequest()
+                                    
+                                    // Upload local maps to server (under users id)
+                                    let mapService = MapService()
+                                    mapService.exportLocalMapsToServer()
+                                    
+                                    // Initialize instance of DBManager to start map fetching from server
+                                    DBManager.instance.activateAutomaticMapImport()
+                                    
+                                    fullfil(true)
+                                    return
+                                })
                             }
-                            
-                            // Connect user to chat
-                            HubManager.sharedConnection.getChatHub().subscribe()
-                            
-                            // Retrieve the users friends and friend requests
-                            HubManager.sharedConnection.getFriendsHub().initialize()
-                            HubManager.sharedConnection.getFriendsHub().getAllFriends()
-                            HubManager.sharedConnection.getFriendsHub().getAllPendingRequest()
-                            
-                            // Upload local maps to server (under users id)
-                            let mapService = MapService()
-                            mapService.exportLocalMapsToServer()
-                            
-                            // Initialize instance of DBManager to start map fetching from server
-                            // DBManager.instance.startMapFetching()
-                            
-                            fullfil(true)
                         } else {
                             if let data = response.data {
                                 let responseJSON = JSON(data: data)

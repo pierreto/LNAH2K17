@@ -59,6 +59,7 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate, UICol
         
         self.initView()
         self.initScene()
+        self.initCamera()
         self.initFacadeModele()
         
         // Load the SKScene from 'EditorHUDScene.sks'
@@ -83,8 +84,6 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate, UICol
         self.showObjectPropertiesView(activer: false)
         self.objectPropertiesView.objectProperties.isHidden = true;
         self.objectPropertiesView.hideObjectPropertiesButtons()
-        
-        self.initCamera()
     }
     
     override func viewWillDisappear(_ animated : Bool) {
@@ -116,8 +115,19 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate, UICol
     }
     
     func initCamera() {
-        self.editorScene.rootNode.childNodes.first?.position = SCNVector3Make(20, 200, 0)
-        self.editorScene.rootNode.childNodes.first?.eulerAngles = SCNVector3Make((Float.pi/2), 0, (Float.pi/2))
+        // Setup camera node
+        self.cameraNode = SCNNode()
+        self.cameraNode.camera = SCNCamera()
+        self.cameraNode.camera?.zNear = 0.1
+        self.cameraNode.camera?.zFar = 1000
+
+        // Setup camera orbit
+        self.cameraOrbit = SCNNode()
+        self.cameraOrbit.addChildNode(self.cameraNode)
+        self.cameraOrbit.position = SCNVector3Make(20, 300, 0)
+        self.cameraOrbit.eulerAngles = SCNVector3Make((-Float.pi/2), (-Float.pi/2), 0)
+        
+        self.editorScene.rootNode.addChildNode(cameraOrbit)
     }
     
     func initFacadeModele() {
