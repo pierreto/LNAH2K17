@@ -11,6 +11,7 @@ using InterfaceGraphique.Controls.WPF;
 using InterfaceGraphique.Controls.WPF.Friends;
 using Microsoft.Practices.Unity;
 using InterfaceGraphique.Controls.WPF.UserProfile;
+using Newtonsoft.Json;
 
 namespace InterfaceGraphique.Entities
 {
@@ -40,7 +41,10 @@ namespace InterfaceGraphique.Entities
 
         public bool AlreadyUsedLightEditor { get; set; }
 
+        [JsonIgnore]
         private ICommand sendFriendRequestCommand;
+
+        [JsonIgnore]
         public ICommand SendFriendRequestCommand
         {
             get
@@ -58,8 +62,9 @@ namespace InterfaceGraphique.Entities
             //Retire de notre liste de personnes ajoutables la personne qu'on vien d'envoyer une demande d'amis
             item.Remove(item.Single(x => x.Id == friend.Id));
         }
-
+        [JsonIgnore]
         private ICommand goToProfileCommand;
+        [JsonIgnore]
         public ICommand GoToProfileCommand
         {
             get
@@ -71,7 +76,6 @@ namespace InterfaceGraphique.Entities
                 return goToProfileCommand;
             }
         }
-
         public async Task GoToProfile()
         {
             await HubManager.Instance.LeaveHubs();
