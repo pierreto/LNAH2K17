@@ -108,6 +108,8 @@ class HubManager {
         self.ClearHubs()
         
         self.connection = SignalR("http://" + ipAddress + ":63056")
+        self.connection!.useWKWebView = true
+        
         self.AddHubs()
         
         self.connection!.start()

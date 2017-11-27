@@ -35,6 +35,7 @@
             <RowDefinition Height="40*"/>
             <RowDefinition Height="40*"/>
             <RowDefinition Height="40*"/>
+            <RowDefinition Height="40*"/>
         </Grid.RowDefinitions>
         <TextBlock HorizontalAlignment="Center"  TextWrapping="Wrap" VerticalAlignment="Center" Width="510" Height="46" FontWeight="Bold" FontSize="32" Foreground="White" Text="Création d'une nouvelle carte :" Grid.ColumnSpan="2" Margin="32,-6,31,2"/>
 
@@ -47,7 +48,8 @@
                 <ScaleTransform ScaleX="2" ScaleY="2" />
             </CheckBox.LayoutTransform>
         </CheckBox>
-        <Button Content="Créer la carte" Command="{Binding CreateCommand}" HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="4" Grid.ColumnSpan="2" Height="40" Width="200"/>
+        <TextBlock Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="2" Visibility="{Binding NameFailed, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}"  Foreground="#FFF70404" FontWeight="Bold">Le nom de votre carte est trop long. Veuillez ré-essayer.</TextBlock>
+        <Button Content="Créer la carte" Command="{Binding CreateCommand}" HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="5" Grid.ColumnSpan="2" Height="40" Width="200" Margin="0 0 0 10"/>
         <PasswordBox Foreground="#FFFDFDFD" wpf:PasswordBoxUtil.BindPassword="true"  wpf:PasswordBoxUtil.BoundPassword="{Binding Path=Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                      HorizontalAlignment="Left" Height="22" VerticalAlignment="Center" Width="216" Background="#FF6A6A6A" Grid.Row="3" Visibility="{Binding IsPrivate, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}" Grid.Column="1"  />
 

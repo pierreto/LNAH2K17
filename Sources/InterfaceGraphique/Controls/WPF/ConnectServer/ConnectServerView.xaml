@@ -32,7 +32,7 @@
                     </Grid.ColumnDefinitions>
                     <TextBlock VerticalAlignment="Center" TextAlignment="Right" Grid.Column="0" TextWrapping="Wrap" Text="Adresse IP" Padding="0 0 10 0" FontSize="24" FontWeight="Bold" Foreground="{StaticResource TextColorBrush}" Margin="0,0,0,10"/>
                     <Border Grid.Column="1" Padding="5" CornerRadius="5" BorderThickness="1" BorderBrush="LightGray" SnapsToDevicePixels="True" Background="{StaticResource InputBrush}" Margin="0,0,0,10" Width="200" HorizontalAlignment="Left" Height="45">
-                        <TextBox x:Name="IpAddress" Text="{Binding IpAddress, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IpAddressInputEnabled}" Background="Transparent" BorderThickness="0" Width="200" FontSize="24" FontWeight="Bold"/>
+                        <TextBox x:Name="IpAddress" Text="{Binding IpAddress, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding IpAddressInputEnabled}" Background="Transparent" BorderThickness="0" Width="200" FontSize="24" FontWeight="Bold" MaxLength="15"/>
                     </Border>
                 </Grid>
 

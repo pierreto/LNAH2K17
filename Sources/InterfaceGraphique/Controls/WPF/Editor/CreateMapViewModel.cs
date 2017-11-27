@@ -17,7 +17,17 @@ namespace InterfaceGraphique.Controls.WPF.Editor
         private MapManager mapService;
         private string mapName ="";
         private string password = "";
+        private bool nameFailed = false;
 
+        public bool NameFailed
+        {
+            get => nameFailed;
+            set
+            {
+                nameFailed = value;
+                OnPropertyChanged();
+            }
+        }
   
         private bool isPrivate;
         public bool IsPrivate
@@ -85,20 +95,30 @@ namespace InterfaceGraphique.Controls.WPF.Editor
 
         private async Task CreateMap()
         {
-            await this.mapService.SaveNewOnlineMap(new MapMetaData()
+            if (this.mapName.Length > 127)
             {
+                NameFailed = true;
+            }
+            else
+            {
+                NameFailed = false;
 
-                Creator = User.Instance.UserEntity.Username,
-                Name = this.mapName,
-                Password = this.password,
-                Private = IsPrivate
-            });
-            Program.EditorHost.Close();
+                await this.mapService.SaveNewOnlineMap(new MapMetaData()
+                {
+
+                    Creator = User.Instance.UserEntity.Username,
+                    Name = this.mapName,
+                    Password = this.password,
+                    Private = IsPrivate
+                });
+                Program.EditorHost.Close();
+            }
         }
 
         public override void InitializeViewModel()
         {
             MapName = "";
+            NameFailed = false;
             this.Password = "";
             IsPrivate = false;
         }
