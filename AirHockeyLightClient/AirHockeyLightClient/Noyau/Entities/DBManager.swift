@@ -131,12 +131,14 @@ class DBManager {
     @objc private func importServerMaps() {
         let mapService = MapService()
         mapService.returnFullMaps { maps, error in
-            for map in maps! {
-                let mapEntity = mapService.buildMapEntity(json: map.1)
-                if self.isIdUnique(id: mapEntity.id!) {
-                    self.sauvegarderCarte(map: mapEntity)
-                } else {
-                    self.updateMap(map: mapEntity)
+            if (maps != nil) {
+                for map in maps! {
+                    let mapEntity = mapService.buildMapEntity(json: map.1)
+                    if self.isIdUnique(id: mapEntity.id!) {
+                        self.sauvegarderCarte(map: mapEntity)
+                    } else {
+                        self.updateMap(map: mapEntity)
+                    }
                 }
             }
         }

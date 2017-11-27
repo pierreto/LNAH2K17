@@ -45,6 +45,7 @@ class Login: NSObject {
                         if(response.response?.statusCode == 200) {
                             if let result = response.result.value {
                                 let id = result as! Int
+                                self.clientConnection.searchId = id
                                 
                                 let friendsService = FriendsService()
                                 friendsService.getUser(id: id, completionHandler: { user, error in
