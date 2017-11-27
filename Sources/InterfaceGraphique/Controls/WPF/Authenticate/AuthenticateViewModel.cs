@@ -221,6 +221,7 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
                         Program.unityContainer.Resolve<FriendListViewModel>().Minimize();
                         //Hide loading spinner
                         Program.unityContainer.Resolve<MainMenuViewModel>().NotLoading = true;
+                        Program.FormManager.ShowCompletely();
 
                     }
                     else
