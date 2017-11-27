@@ -55,7 +55,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
             InitializeTournamentsEvents();
         }
 
-        public async void Join()
+        public async Task Join()
         {
             List<GamePlayerEntity> players = new List<GamePlayerEntity>() { new GamePlayerEntity(User.Instance.UserEntity) };
             try
@@ -68,7 +68,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
             }
         }
 
-        public async void CreateTournament(List<GamePlayerEntity> players)
+        public async Task CreateTournament(List<GamePlayerEntity> players)
         {
             try
             {
@@ -92,7 +92,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
             }
         }
 
-        public async void UpdateSelectedMap(MapEntity map)
+        public async Task UpdateSelectedMap(MapEntity map)
         {
             if (CurrentTournamentId > 0)
             {

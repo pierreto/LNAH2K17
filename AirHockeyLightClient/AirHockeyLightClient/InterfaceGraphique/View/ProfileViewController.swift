@@ -17,6 +17,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     @IBOutlet weak var itemCollectionView: UICollectionView!
     
     @IBOutlet weak var itemsLabel: UILabel!
+    @IBOutlet weak var noItemsLabel: UILabel!
     @IBOutlet weak var profileImage: UIImageView!
     let imagePicker = UIImagePickerController()
     
@@ -52,6 +53,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        noItemsLabel.isHidden = true
         achievementCollectionView.delegate = self
         achievementCollectionView.dataSource = self
         itemCollectionView.delegate = self
@@ -104,11 +106,11 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         self.loadUserStoreItems()
         
         if(HubManager.sharedConnection.getId() == HubManager.sharedConnection.searchId) {
-            itemCollectionView.isHidden = true
-            itemsLabel.isHidden = true
-        } else {
             itemCollectionView.isHidden = false
             itemsLabel.isHidden = false
+        } else {
+            itemCollectionView.isHidden = true
+            itemsLabel.isHidden = true
         }
     }
     
@@ -289,6 +291,11 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         }
         if collectionView == self.itemCollectionView {
             count = self.userStoreItems.count
+            if(count == 0) {
+                noItemsLabel.isHidden = false
+            } else {
+                noItemsLabel.isHidden = true
+            }
         }
         return count!
 

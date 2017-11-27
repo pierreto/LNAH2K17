@@ -96,7 +96,15 @@ class UnlockMapViewController: UIViewController {
     
     @IBAction func unlockMap(_ sender: Any) {
         self.deactivateInput()
-        isUnlocked = (self.viewModel?.unlock(map: MapDisplayViewController.instance.currentMap!, unlockPassword: self.unlockPassword.text!.sha1()))!
+        
+        var unlockPassword = ""
+        if HubManager.sharedConnection.getConnection() != nil && (HubManager.sharedConnection.getConnection()?.state)! == .connected {
+            unlockPassword = self.unlockPassword.text!.sha1()
+        } else {
+            unlockPassword = self.unlockPassword.text!
+        }
+        
+        isUnlocked = (self.viewModel?.unlock(map: MapDisplayViewController.instance.currentMap!, unlockPassword: unlockPassword))!
         
         if isUnlocked {
             /// Fermer la fenêtre

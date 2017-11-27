@@ -97,8 +97,8 @@ class CreateMapViewController: UIViewController {
         if (self.viewModel?.save(
             name: self.mapName.text!,
             isPrivate: self.isPrivateMap.isOn,
-            password: self.password.text!.sha1(),
-            passwordConfirmation: self.passwordConfirmation.text!.sha1())  )! {
+            password: self.password.text!,
+            passwordConfirmation: self.passwordConfirmation.text!)  )! {
             
             MapDisplayViewController.instance.updateEntries()
             /// Fermer la fenêtre

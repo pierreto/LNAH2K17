@@ -84,7 +84,7 @@ class MapDisplayViewController: UIViewController {
     }
     
     func refreshCarouselBtnClicked(sender: AnyObject) {
-        print("refresh")
+        MapCarouselViewController.instance.updateEntries()
     }
     
     func updateEntries() {

@@ -155,7 +155,7 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
             {
                 if (deleteChannelCommand == null)
                 {
-                    deleteChannelCommand = new RelayCommand(DeleteChannel);
+                    deleteChannelCommand = new RelayCommandAsync(DeleteChannel);
                 }
                 return deleteChannelCommand;
             }
@@ -227,13 +227,13 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
             }
         }
 
-        private void DeleteChannel()
+        private async Task DeleteChannel()
         {
             var clivm = Program.unityContainer.Resolve<ChatListViewModel>().Items;
             //Remove the selected ChatListItemViewModel containing the current channel
             clivm.Remove(clivm.Single(s => s.ChannelEntity == ActiveChannel.Instance.ChannelEntity));
             OnPropertyChanged("Items");
-            chatHub.LeaveRoom(ActiveChannel.Instance.ChannelEntity.Name);
+            await chatHub.LeaveRoom(ActiveChannel.Instance.ChannelEntity.Name);
             //If possible, set the next channel to the current channel
             if (clivm.Any())
             {

@@ -65,6 +65,7 @@ class MapCarouselViewController: UIViewController, iCarouselDataSource, iCarouse
         let mapService = MapService()
         mapService.getMaps() { maps, error in
             if maps != nil {
+                self.maps = [MapEntity]()
                 for map in maps! {
                     self.maps.append(mapService.buildMapEntity(json: map.1))
                 }
@@ -77,8 +78,6 @@ class MapCarouselViewController: UIViewController, iCarouselDataSource, iCarouse
             
             return
         }
-        
-        self.maps = DBManager.instance.recupererCartes()
     }
     
     func numberOfItems() -> Int {

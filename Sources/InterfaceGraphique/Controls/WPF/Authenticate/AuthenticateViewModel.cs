@@ -176,6 +176,11 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
         {
             try
             {
+                if(User.Instance.UserEntity != null)
+                {
+                    var response = await Program.client.PostAsJsonAsync(Program.client.BaseAddress + "api/logout", User.Instance.UserEntity);
+                }
+
                 Load();
                 if (ValidateLoginEntity())
                 {
@@ -216,6 +221,7 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
                         Program.unityContainer.Resolve<FriendListViewModel>().Minimize();
                         //Hide loading spinner
                         Program.unityContainer.Resolve<MainMenuViewModel>().NotLoading = true;
+                        Program.FormManager.ShowCompletely();
 
                     }
                     else

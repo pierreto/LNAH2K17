@@ -513,6 +513,7 @@
     </Compile>
     <Compile Include="Services\MapService.cs" />
     <Compile Include="Services\PlayerStatsService.cs" />
+    <Compile Include="Services\Service.cs" />
     <Compile Include="Services\StoreService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="WPFApplication.cs" />

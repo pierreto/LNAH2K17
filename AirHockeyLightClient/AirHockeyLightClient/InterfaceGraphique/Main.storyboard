@@ -659,6 +659,15 @@
                                 <rect key="frame" x="493" y="365" width="37" height="37"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </activityIndicatorView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Aucun Item" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IIa-hH-UPF">
+                                <rect key="frame" x="412" y="565" width="200" height="29"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="Bya-rd-Urt"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                                <color key="textColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.24313725490196078" green="0.24313725490196078" blue="0.24313725490196078" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -675,7 +684,9 @@
                             <constraint firstItem="7q9-LS-0yo" firstAttribute="top" secondItem="m7C-8b-wve" secondAttribute="bottom" constant="4" id="hDV-iJ-7Gt"/>
                             <constraint firstItem="7q9-LS-0yo" firstAttribute="centerX" secondItem="07B-QL-mDl" secondAttribute="centerX" id="hb5-ex-roq"/>
                             <constraint firstItem="e6u-ac-xGt" firstAttribute="top" secondItem="FiD-6v-leD" secondAttribute="bottom" constant="20" id="iGl-o5-hTz"/>
+                            <constraint firstItem="IIa-hH-UPF" firstAttribute="top" secondItem="4VT-BL-Rr9" secondAttribute="bottom" constant="65" id="lYf-Lh-5EZ"/>
                             <constraint firstItem="YKK-j6-Y3j" firstAttribute="top" secondItem="7q9-LS-0yo" secondAttribute="bottom" id="oAg-r3-2xx"/>
+                            <constraint firstItem="IIa-hH-UPF" firstAttribute="centerX" secondItem="07B-QL-mDl" secondAttribute="centerX" id="x3U-Xa-dtT"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Profil" id="hUe-H4-vmt">
@@ -692,6 +703,7 @@
                         <outlet property="loadingSpinner" destination="trd-8M-cLh" id="STD-86-fTQ"/>
                         <outlet property="nameLabel" destination="HMI-da-qJS" id="YXs-Ve-xEY"/>
                         <outlet property="navigationBar" destination="hUe-H4-vmt" id="Bwi-ES-zyk"/>
+                        <outlet property="noItemsLabel" destination="IIa-hH-UPF" id="tcA-v0-PWM"/>
                         <outlet property="pointsLabel" destination="O0A-c8-Z7D" id="g1N-5X-um4"/>
                         <outlet property="profileImage" destination="e6u-ac-xGt" id="glc-oh-W4w"/>
                         <outlet property="tournamentsPlayedLabel" destination="vSc-f4-Fp8" id="fxz-nj-Jie"/>
@@ -3260,7 +3272,7 @@
             <objects>
                 <navigationController storyboardIdentifier="NavigationController" automaticallyAdjustsScrollViewInsets="NO" toolbarHidden="NO" id="5ax-Bq-PLF" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Oub-qg-DsX">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Oub-qg-DsX">
                         <rect key="frame" x="0.0" y="20" width="1024" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.11764705882352941" green="0.11764705882352941" blue="0.11764705882352941" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

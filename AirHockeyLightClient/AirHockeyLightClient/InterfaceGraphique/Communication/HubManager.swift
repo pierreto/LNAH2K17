@@ -190,6 +190,7 @@ class HubManager {
             self.user = UserEntity()
             self.ClearHubs()
             self.ipAddress = nil
+            DBManager.instance.deactivateAutomaticMapImport()
                 
             NotificationCenter.default.post(name: Notification.Name(rawValue: LoginNotification.LogoutNotification), object: nil)
             fullfil(true)
