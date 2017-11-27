@@ -39,8 +39,11 @@ class AddFriendViewController: UIViewController {
         
         let friendsService = FriendsService()
         friendsService.getAllUsers() { users, error in
+            let activeUsername = HubManager.sharedConnection.getUsername()
             for user in users! {
-                self.filterStrings.append(user.getUsername())
+                if user.getUsername() != activeUsername {
+                    self.filterStrings.append(user.getUsername())
+                }
             }
 
             self.search.filterStrings(self.filterStrings)
