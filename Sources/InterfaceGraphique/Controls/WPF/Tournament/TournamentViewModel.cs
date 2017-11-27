@@ -120,6 +120,12 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
                 SelectedMap = mapsAvailable[1];
                 ImageSrc = selectedMap.Icon;
             }
+            ShowLoading();
+        }
+
+        private void ShowLoading()
+        {
+            Loading = "Visible";
         }
 
         private void OnWinnerResult(object e, GamePlayerEntity winner)
@@ -170,11 +176,15 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
             {
                 HideLoading();
             }
+            else
+            {
+                ShowLoading();
+            }
         }
 
         private void HideLoading()
         {
-            OpponentLeftMsg = "Hiddent";
+            Loading = "Hidden";
         }
 
         private int remainingTime = 0;
@@ -294,6 +304,8 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
         private async Task Leave()
         {
             HideLoading();
+            isEndOfTournament = false;
+            OnPropertyChanged("IsEndOfTournament");
             await this.WaitingRoomHub.LeaveTournament();
             SetDefaultValues();
             Program.FormManager.CurrentForm = Program.HomeMenu;
@@ -383,6 +395,17 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
         private void HidePopup()
         {
             OpponentLeftMsg = "Hidden";
+        }
+
+        private string loading;
+        public string Loading
+        {
+            get => loading;
+            set
+            {
+                loading = value;
+                OnPropertyChanged();
+            }
         }
     }
 }
