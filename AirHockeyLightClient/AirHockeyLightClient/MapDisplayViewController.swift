@@ -24,12 +24,15 @@ class MapDisplayViewController: UIViewController {
     /// Instance singleton
     static var instance = MapDisplayViewController()
     
+    @IBOutlet weak var loadingSpinner: UIActivityIndicatorView!
+    
     public var currentMap: MapEntity?
     
     private let clientConnection = HubManager.sharedConnection
     private var isDeleting = false
     private var addMapBtn: UIBarButtonItem?
     private var deleteMapBtn: UIBarButtonItem?
+    private var refreshCarouselBtn: UIBarButtonItem?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +42,13 @@ class MapDisplayViewController: UIViewController {
         self.addMapBtn = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addMapBtnClicked))
         self.deleteMapBtn = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteMapBtnClicked))
         self.deleteMapBtn?.isEnabled = false
-        self.navigationItem.setRightBarButtonItems([addMapBtn!, deleteMapBtn!], animated: true)
+        
+        if self.clientConnection.getConnection() != nil && self.clientConnection.getConnection()?.state == .connected {
+            self.refreshCarouselBtn = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refreshCarouselBtnClicked))
+            self.navigationItem.setRightBarButtonItems([self.addMapBtn!, self.deleteMapBtn!, self.refreshCarouselBtn!], animated: true)
+        } else {
+            self.navigationItem.setRightBarButtonItems([self.addMapBtn!, self.deleteMapBtn!], animated: true)
+        }
     }
     
     // Ouvrir le pop-up pour la création de cartes
@@ -54,14 +63,6 @@ class MapDisplayViewController: UIViewController {
         
         // Désactiver la barre de navigation
         self.enableNavigationBar(activer: false)
-    }
-    
-    func updateEntries() {
-        MapCarouselViewController.instance.updateEntries()
-        
-        if MapCarouselViewController.instance.numberOfItems() > 0 {
-            self.deleteMapBtn?.isEnabled = true
-        }
     }
     
     func deleteMapBtnClicked(sender: AnyObject)
@@ -82,14 +83,28 @@ class MapDisplayViewController: UIViewController {
         }
     }
     
-    func handleTableSelection() {
-        self.currentMap = MapCarouselViewController.instance.getCurrentMap()
+    func refreshCarouselBtnClicked(sender: AnyObject) {
+        print("refresh")
+    }
+    
+    func updateEntries() {
+        MapCarouselViewController.instance.updateEntries()
         
-        // Ouvrir le pop-up pour déverrouiller une carte
-        if self.currentMap?.privacy.value == true {
-            self.openUnlockMapVC()
-        } else {
-            self.openEditor()
+        if MapCarouselViewController.instance.numberOfItems() > 0 {
+            self.deleteMapBtn?.isEnabled = true
+        }
+    }
+    
+    func handleTableSelection() {
+        if !self.loadingSpinner.isAnimating {
+            self.currentMap = MapCarouselViewController.instance.getCurrentMap()
+        
+            // Ouvrir le pop-up pour déverrouiller une carte
+            if self.currentMap?.privacy.value == true {
+                self.openUnlockMapVC()
+            } else {
+                self.openEditor()
+            }
         }
     }
     
@@ -107,6 +122,8 @@ class MapDisplayViewController: UIViewController {
     }
     
     func openEditor() {
+        self.loading()
+        
         let editor = storyboard?.instantiateViewController(withIdentifier: "EditorViewController") as! EditorViewController
 
         // Fetch map json
@@ -130,6 +147,7 @@ class MapDisplayViewController: UIViewController {
                             FacadeModele.instance.obtenirEtatEdition().joinEdition(mapEntity: editor.currentMap!)
                             
                             self.navigationController?.pushViewController(editor, animated: true)
+                            self.loadingDone()
                         }
                     } else {
                         print("Failed to fetch map with id from server")
@@ -141,7 +159,20 @@ class MapDisplayViewController: UIViewController {
             FacadeModele.instance.obtenirEtatEdition().joinEdition(mapEntity: editor.currentMap!)
             
             self.navigationController?.pushViewController(editor, animated: true)
+            self.loadingDone()
         }
+    }
+    
+    private func openUnlockMapVC() {
+        let unlockMapVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UnlockMapViewController") as! UnlockMapViewController
+        self.addChildViewController(unlockMapVC)
+        
+        unlockMapVC.view.frame = self.view.frame
+        self.view.addSubview(unlockMapVC.view)
+        unlockMapVC.didMove(toParentViewController: self)
+        
+        // Désactiver la barre de navigation
+        self.enableNavigationBar(activer: false)
     }
     
     func closeUnlockMapVC() {
@@ -157,24 +188,38 @@ class MapDisplayViewController: UIViewController {
         }
     }
     
+    private func loading() {
+        self.loadingSpinner.startAnimating()
+        self.view.alpha = 0.7
+        self.disableInputs()
+    }
+    
+    private func loadingDone() {
+        self.loadingSpinner.stopAnimating()
+        self.view.alpha = 1.0
+        self.enableInputs()
+    }
+    
+    private func disableInputs() {
+        self.addMapBtn?.isEnabled = false
+        self.deleteMapBtn?.isEnabled = false
+        self.refreshCarouselBtn?.isEnabled = false
+        self.enableNavigationBar(activer: false)
+    }
+    
+    private func enableInputs() {
+        self.addMapBtn?.isEnabled = true
+        self.deleteMapBtn?.isEnabled = true
+        self.refreshCarouselBtn?.isEnabled = true
+        self.enableNavigationBar(activer: true)
+    }
+    
     func enableNavigationBar(activer: Bool) {
         self.navigationItem.hidesBackButton = !activer
         
         for button in self.navigationItem.rightBarButtonItems! {
             button.isEnabled = activer
         }
-    }
-    
-    private func openUnlockMapVC() {
-        let unlockMapVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UnlockMapViewController") as! UnlockMapViewController
-        self.addChildViewController(unlockMapVC)
-        
-        unlockMapVC.view.frame = self.view.frame
-        self.view.addSubview(unlockMapVC.view)
-        unlockMapVC.didMove(toParentViewController: self)
-        
-        // Désactiver la barre de navigation
-        self.enableNavigationBar(activer: false)
     }
     
     override var shouldAutorotate: Bool {
