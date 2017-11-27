@@ -69,12 +69,13 @@ class ChatHub: BaseHub {
                     print("Error JoinChannel ChatHub: \(e)")
                 }
                 else {
-                    MasterViewController.sharedMasterViewController.channels.append(ChannelEntity(name: channelName))
+                    MasterViewController.sharedMasterViewController.joinChannel(channelName: channelName)
+                    /*MasterViewController.sharedMasterViewController.channels.append(ChannelEntity(name: channelName))
                     MasterViewController.sharedMasterViewController.channelTableView.reloadData()
                     //Set joined channel as selected
                     let indexPath = IndexPath(row: MasterViewController.sharedMasterViewController.channels.count - 1, section: 0);
                     MasterViewController.sharedMasterViewController.channelTableView.selectRow(at: indexPath, animated: true, scrollPosition: .bottom)
-                    MasterViewController.sharedMasterViewController.channelTableView.delegate?.tableView!(MasterViewController.sharedMasterViewController.channelTableView, didSelectRowAt: indexPath)
+                    MasterViewController.sharedMasterViewController.channelTableView.delegate?.tableView!(MasterViewController.sharedMasterViewController.channelTableView, didSelectRowAt: indexPath)*/
                     if let index = ChatAreaViewController.sharedChatAreaViewController.channelsToJoin.index(where: { $0.name == channelName }) {
                         ChatAreaViewController.sharedChatAreaViewController.channelsToJoin.remove(at: index)
                         ChatAreaViewController.sharedChatAreaViewController.joinChannelTableView.reloadData()
