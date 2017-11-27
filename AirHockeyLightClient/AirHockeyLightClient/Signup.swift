@@ -159,7 +159,7 @@ class Signup: NSObject {
     }
     
     fileprivate func validatePassword(password: String) -> Bool {
-        let validPasswordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,16}$"
+        let validPasswordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{1,16}$"
         let passwordMatches = password.range(of: validPasswordRegex, options: .regularExpression)
         if(password.isEmpty) {
             self.passwordError = "Mot de passe requis"
@@ -168,6 +168,9 @@ class Signup: NSObject {
         if(passwordMatches != nil) {
             self.passwordError = ""
             return true;
+        } else if password.characters.count < 8 {
+            self.passwordError = "Minimum 8 charactères requis"
+            return false;
         } else {
             self.passwordError = "Le mot de passe doit contenir une lettre majuscule, une lettre minuscule et un chiffre"
             return false;

@@ -3465,9 +3465,10 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="ShH-57-1HW"/>
         <segue reference="PAW-Ev-DSO"/>
         <segue reference="Bbq-77-Iqj"/>
-        <segue reference="fh0-jW-WVm"/>
+        <segue reference="Rvm-YK-4H8"/>
         <segue reference="hBv-fG-5Py"/>
         <segue reference="siQ-V2-je8"/>
     </inferredMetricsTieBreakers>
