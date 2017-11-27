@@ -26,7 +26,7 @@ class StoreService {
     func getStoreItems() -> Promise<[StoreItemEntity]> {
         var storeItems = [StoreItemEntity]()
         
-        if self.clientConnection.getConnection() != nil && self.clientConnection.connected! {
+        if self.clientConnection.getConnection() != nil && self.clientConnection.getConnection()?.state == .connected {
             return Promise { fullfil, error in
                 Alamofire.request("http://" + self.clientConnection.getIpAddress()! + ":63056/api/store/", method: .get)
                     .responseJSON { response in
@@ -57,7 +57,7 @@ class StoreService {
     func getUserStoreItems() -> Promise<[StoreItemEntity]> {
         var storeItems = [StoreItemEntity]()
         
-        if self.clientConnection.getConnection() != nil && self.clientConnection.connected! {
+        if self.clientConnection.getConnection() != nil && self.clientConnection.getConnection()?.state == .connected {
             return Promise { fullfil, error in
                 Alamofire.request("http://" + self.clientConnection.getIpAddress()! + ":63056/api/store/"
                     + self.clientConnection.getId()!.description, method: .get)
@@ -88,7 +88,7 @@ class StoreService {
     }
     
     func buyElement(items: [StoreItemEntity], userId: Int) -> Promise<Bool> {
-        if self.clientConnection.getConnection() != nil && self.clientConnection.connected! {
+        if self.clientConnection.getConnection() != nil && self.clientConnection.getConnection()?.state == .connected {
             return Promise { fullfil, error in
                 let storeItems = self.convertStoreItemEntity(items: items)
                 
@@ -118,7 +118,7 @@ class StoreService {
     }
     
     func updateItemEnable(userId: Int, item: StoreItemEntity) -> Promise<Bool> {
-        if self.clientConnection.getConnection() != nil && self.clientConnection.connected! {
+        if self.clientConnection.getConnection() != nil && self.clientConnection.getConnection()?.state == .connected {
             return Promise { fullfil, error in
                 let storeItem = item.toDictionary()
                 

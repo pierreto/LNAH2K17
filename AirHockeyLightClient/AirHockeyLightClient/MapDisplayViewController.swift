@@ -84,7 +84,7 @@ class MapDisplayViewController: UIViewController {
     }
     
     func refreshCarouselBtnClicked(sender: AnyObject) {
-        print("refresh")
+        MapCarouselViewController.instance.updateEntries()
     }
     
     func updateEntries() {
@@ -112,7 +112,7 @@ class MapDisplayViewController: UIViewController {
         self.currentMap = MapCarouselViewController.instance.getCurrentMap()
         
         var username: String?
-        if self.clientConnection.getConnection() != nil && self.clientConnection.connected! {
+        if self.clientConnection.getConnection() != nil && (self.clientConnection.getConnection()?.state)! == .connected {
             username = self.clientConnection.getUsername()
         } else {
             username = "N/A"
@@ -128,7 +128,7 @@ class MapDisplayViewController: UIViewController {
 
         // Fetch map json
         // TODO : bug création de map mode hors-ligne puis aller dans mode en ligne, sélectionner map
-        if self.clientConnection.getConnection() != nil && self.clientConnection.connected! {
+        if self.clientConnection.getConnection() != nil && (self.clientConnection.getConnection()?.state)! == .connected {
             let mapId = self.currentMap?.id
             
             Alamofire.request("http://" + self.clientConnection.getIpAddress()! + ":63056/api/maps/get/" + mapId!, method: .get, parameters: nil, encoding: JSONEncoding.default)

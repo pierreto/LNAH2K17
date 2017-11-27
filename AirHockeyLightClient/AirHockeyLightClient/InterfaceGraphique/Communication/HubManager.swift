@@ -36,7 +36,7 @@ class HubManager {
     private var user: UserEntity? = UserEntity()
     private var ipAddress: String?
     
-    private var _connected: Bool? = false
+    /*private var _connected: Bool? = false
     
     var connected: Bool? {
         get {
@@ -45,7 +45,7 @@ class HubManager {
         set {
             _connected = newValue
         }
-    }
+    }*/
     
     public func getConnection() -> SignalR? {
         return self.connection
