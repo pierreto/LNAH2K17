@@ -72,7 +72,7 @@ namespace InterfaceGraphique.Entities
 
         public async Task GoToProfile()
         {
-            HubManager.Instance.LeaveHubs();
+            await HubManager.Instance.LeaveHubs();
             Program.FormManager.CurrentForm = Program.UserProfileMenu;
             await Program.unityContainer.Resolve<UserProfileViewModel>().Initialize(Id);
             //System.Diagnostics.Debug.WriteLine("Go to profile of : " + Username + " with id: " + Id);

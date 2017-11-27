@@ -61,7 +61,7 @@ namespace InterfaceGraphique.CommunicationInterface
                     {
                         TypeNameHandling = TypeNameHandling.Objects
                     });
-                rcmd.ExecuteCommand();
+                NewCommand?.Invoke(rcmd);
             });
 
             hubProxy.On<OnlineUser>("NewUser", user =>
@@ -150,6 +150,11 @@ namespace InterfaceGraphique.CommunicationInterface
                 }
                 Program.Editeur.LeaveOnlineEdition();
             }
+        }
+
+        public void OnDisconnect()
+        {
+            //TODO
         }
     }
 }

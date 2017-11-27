@@ -56,7 +56,7 @@ class MasterViewController: UITableViewController {
         channelTableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         
         let indexPath = IndexPath(row: 0, section: 0);
-        self.channelTableView.selectRow(at: indexPath, animated: true, scrollPosition: .bottom)
+        self.channelTableView.selectRow(at: indexPath, animated: false, scrollPosition: .bottom)
         self.channelTableView.delegate?.tableView!(self.channelTableView, didSelectRowAt: indexPath)
         
         self.toggleChannelButton.setTitle("\u{f061}", for: .normal)
@@ -109,7 +109,7 @@ class MasterViewController: UITableViewController {
         let selectedChannel = channels[indexPath.row]
         self.delegate?.channelSelected(newChannel: selectedChannel)
         selectedChannel.hasUnreadMessage = false
-        let currentCell = channelTableView.cellForRow(at: indexPath) as! UITableViewCell
+        let currentCell = channelTableView.cellForRow(at: indexPath)!
         currentCell.textLabel?.textColor = UIColor .white
     }
 
@@ -172,16 +172,19 @@ class MasterViewController: UITableViewController {
 
 extension MasterViewController: AddChannelDelegate {
     func addChannel(channelName: String) {
-        let chatHub = clientConnection.getChatHub()
-        chatHub.CreateChannel(channelName: channelName) { res in
+        if(channelName == "" || channelName == nil) {
+            self.delegate?.sChannelNameErrMsg = "Nom invalide"
+        } else {
+            let chatHub = clientConnection.getChatHub()
+            chatHub.CreateChannel(channelName: channelName) { res in
             if res == "" {
-                MasterViewController.sharedMasterViewController.channels.append(ChannelEntity(name: channelName))
+                self.channels.insert(ChannelEntity(name: channelName), at:1)
                 self.delegate?.sChannelNameErrMsg = ""
                 self.delegate?.sChannelName = ""
                 self.delegate?.toggleAddChannelView()
                 self.channelTableView.reloadData()
-                let indexPath = IndexPath(row: MasterViewController.sharedMasterViewController.channels.count - 1, section: 0);
-                self.channelTableView.selectRow(at: indexPath, animated: true, scrollPosition: .bottom)
+                let indexPath = IndexPath(row: 1, section: 0);
+                self.channelTableView.selectRow(at: indexPath, animated: false, scrollPosition: .bottom)
                 self.channelTableView.delegate?.tableView!(self.channelTableView, didSelectRowAt: indexPath)
             } else {
                 self.delegate?.sChannelNameErrMsg = "Canal déjà créé"
@@ -191,30 +194,47 @@ extension MasterViewController: AddChannelDelegate {
         DispatchQueue.main.async(execute: { () -> Void in
             // Reload tableView
             self.channelTableView.reloadData()
+        })
+        }
+
+    }
+    
+    func joinChannel(channelName: String) {
+        self.channels.insert(ChannelEntity(name: channelName), at:1)
+        self.channelTableView.beginUpdates()
+        self.channelTableView.insertRows(at: [IndexPath.init(row: 1, section: 0)], with: .automatic)
+        self.channelTableView.endUpdates()
+        print("Num channels: ", channels.count)
+        DispatchQueue.main.async(execute: { () -> Void in
+            // Reload tableView
+            self.channelTableView.reloadData()
+            self.channelTableView.selectRow(at: IndexPath.init(row: 1, section: 0), animated: false, scrollPosition: .bottom)
+            self.channelTableView.delegate?.tableView!(self.channelTableView, didSelectRowAt: IndexPath.init(row: 1, section: 0))
         })
     }
     
     func addPrivateChannel(othersName: String, othersId: Int, othersProfile: String) {
-        let chatHub = clientConnection.getChatHub()
-        chatHub.CreatePrivateChannel(othersName: othersName, myId: HubManager.sharedConnection.getId()!, othersId: othersId, othersProfile: othersProfile) { res in
-            if res == true {
-                MasterViewController.sharedMasterViewController.channels.append(ChannelEntity(name: othersName, isPrivate: true, privateUserId: othersId, profile: othersProfile))
-                self.delegate?.sChannelNameErrMsg = ""
-                self.delegate?.sChannelName = ""
-                self.delegate?.toggleAddChannelView()
-                self.channelTableView.reloadData()
-                let indexPath = IndexPath(row: MasterViewController.sharedMasterViewController.channels.count - 1, section: 0);
-                self.channelTableView.selectRow(at: indexPath, animated: true, scrollPosition: .bottom)
-                self.channelTableView.delegate?.tableView!(self.channelTableView, didSelectRowAt: indexPath)
-            } else {
-                self.delegate?.sChannelNameErrMsg = "Canal déjà créé"
-                print("Canal existe deja")
+        if !channels.contains(where: { (cE: ChannelEntity) -> Bool in
+            (cE.name == othersName && (cE.isPrivate == true))
+        }) {
+            let chatHub = clientConnection.getChatHub()
+            chatHub.CreatePrivateChannel(othersName: HubManager.sharedConnection.getUsername()!, myId: HubManager.sharedConnection.getId()!, othersId: othersId, othersProfile: HubManager.sharedConnection.getUser().getProfile()) { res in
+                if res == true {
+                    self.channels.insert(ChannelEntity(name: othersName, isPrivate: true, privateUserId: othersId, profile: othersProfile), at: 1)
+                    self.channelTableView.reloadData()
+                    let indexPath = IndexPath(row: 1, section: 0);
+                    self.channelTableView.selectRow(at: indexPath, animated: false, scrollPosition: .bottom)
+                    self.channelTableView.delegate?.tableView!(self.channelTableView, didSelectRowAt: indexPath)
+                } else {
+                    self.delegate?.sChannelNameErrMsg = "Canal déjà créé"
+                    print("Canal existe deja")
+                }
             }
+            DispatchQueue.main.async(execute: { () -> Void in
+                // Reload tableView
+                self.channelTableView.reloadData()
+            })
         }
-        DispatchQueue.main.async(execute: { () -> Void in
-            // Reload tableView
-            self.channelTableView.reloadData()
-        })
     }
     
     

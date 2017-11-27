@@ -53,7 +53,7 @@ class ConnectServerViewController: UIViewController {
             if (data) {
                 self.loadingDone()
                 //TODO: If still connected no need to return to ConnectServerView
-                self.clientConnection.connected = true
+                //self.clientConnection.connected = true
                 OperationQueue.main.addOperation {
                     self.performSegue(withIdentifier: "connectionSuccess", sender: self)
                     self.enableInputs()
@@ -151,6 +151,6 @@ class ConnectServerViewController: UIViewController {
         // Sur la page de déconnexion au serveur, on ne devrait jamais être connecté
         _ = HubManager.sharedConnection.StopConnection()
         
-        HubManager.sharedConnection.connected = false;
+        //HubManager.sharedConnection.connected = false;
     }
 }

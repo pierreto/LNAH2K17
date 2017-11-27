@@ -212,6 +212,11 @@ namespace AirHockeyServer.Hubs
             }
         }
 
+        public async Task SignalSignup(UserEntity user)
+        {
+            Clients.Others.NewAddableFriendEvent(user);
+        }
+
         public async Task Logout(UserEntity user)
         {
             this.FriendService.NewUserDisconnected(user);

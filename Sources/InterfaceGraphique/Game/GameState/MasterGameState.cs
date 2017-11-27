@@ -146,7 +146,7 @@ namespace InterfaceGraphique.Game.GameState
             gameHasEnded = true;
             Task.Run(() => gameHub.SendGameOver());
             Program.QuickPlay.EndGame(true);
-
+            
             this.gameHub.NewPositions -= OnNewGamePositions;
             this.gameHub.DisconnectedEvent -= OnDisconnexion;
 

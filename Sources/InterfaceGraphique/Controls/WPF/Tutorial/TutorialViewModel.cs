@@ -14,6 +14,8 @@ namespace InterfaceGraphique.Controls.WPF.Tutorial
 {
     public class TutorialViewModel : ViewModelBase
     {
+        private string titleTutorial = "";
+
         public Image[] MatchSlides { get; set; }
         public Image[] EditorSlides { get; set; }
 
@@ -24,6 +26,15 @@ namespace InterfaceGraphique.Controls.WPF.Tutorial
             set
             {
                 currentSlides = value;
+                OnPropertyChanged();
+            }
+        }
+        public string TitleTutorial
+        {
+            get => titleTutorial;
+            set
+            {
+                titleTutorial = value;
                 OnPropertyChanged();
             }
         }
@@ -71,17 +82,18 @@ namespace InterfaceGraphique.Controls.WPF.Tutorial
 
         public async Task SwitchToMatchSlides()
         {
+            TitleTutorial = "Tutoriel d'une partie";
             CurrentSlides = MatchSlides;
             ActiveSlideIndex = 0;
-
         }
 
         public async Task SwitchToEditorSlides()
         {
+            TitleTutorial = "Tutoriel d'édition";
             CurrentSlides = EditorSlides;
             ActiveSlideIndex = 0;
-
         }
+
 
         public override void InitializeViewModel()
         {

@@ -701,6 +701,15 @@ namespace InterfaceGraphique {
         {
 
         }
+
+        public void ExecuteCommandOnMainThread(Action executeCommand)
+        {
+            if (InvokeRequired)
+            {
+                this.Invoke(executeCommand);
+                return;
+            }
+        }
     }
 }
  

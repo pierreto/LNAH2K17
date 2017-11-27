@@ -22,6 +22,9 @@ namespace InterfaceGraphique.Controls.WPF.MainMenu
         #region Private Properties
         private bool notLoading;
         private bool onlineMode;
+        private string username;
+        bool alreadyOpenedTutorialEditorMode = false;
+        bool alreadyOpenedMatchTutorialOfflineMode = false;
         #endregion
 
         #region Public Properties
@@ -36,6 +39,14 @@ namespace InterfaceGraphique.Controls.WPF.MainMenu
                 notLoading = value;
                 OnPropertyChanged(nameof(NotLoading));
                 OnPropertyChanged(nameof(Loading));
+            }
+        }
+
+        public string Username
+        {
+            get
+            {
+                return User.Instance.UserEntity?.Username;
             }
         }
 
@@ -78,7 +89,7 @@ namespace InterfaceGraphique.Controls.WPF.MainMenu
             {
                 if (partieRapideCommand == null)
                 {
-                    partieRapideCommand = new RelayCommand(PartieRapide);
+                    partieRapideCommand = new RelayCommandAsync(PartieRapide);
                 }
                 return partieRapideCommand;
             }
@@ -91,7 +102,7 @@ namespace InterfaceGraphique.Controls.WPF.MainMenu
             {
                 if(partieRapideOnlineCommand == null)
                 {
-                    partieRapideOnlineCommand = new RelayCommand(PartieRapideOnline);
+                    partieRapideOnlineCommand = new RelayCommandAsync(PartieRapideOnline);
                 }
                 return partieRapideOnlineCommand;
             }
@@ -198,7 +209,7 @@ namespace InterfaceGraphique.Controls.WPF.MainMenu
             {
                 if (editionCommand == null)
                 {
-                    editionCommand = new RelayCommand(Edition);
+                    editionCommand = new RelayCommandAsync(Edition);
                 }
                 return editionCommand;
             }
@@ -249,16 +260,16 @@ namespace InterfaceGraphique.Controls.WPF.MainMenu
 
         #region Command Methods
         //Section Grise
-        public void PartieRapide()
+        public async Task PartieRapide()
         {
-            CheckIfNeedToShowMatchTutoriel();
+            await CheckIfNeedToShowMatchTutoriel();
             Program.QuickPlayMenu.ShowDialog();
             CommandManager.InvalidateRequerySuggested();
         }
 
-        public void PartieRapideOnline()
+        public async Task PartieRapideOnline()
         {
-            CheckIfNeedToShowMatchTutoriel();
+            await CheckIfNeedToShowMatchTutoriel();
             Program.FormManager.CurrentForm = Program.LobbyHost;
 
             var vm = Program.unityContainer.Resolve<Matchmaking.MatchmakingViewModel>();
@@ -313,19 +324,19 @@ namespace InterfaceGraphique.Controls.WPF.MainMenu
         }
 
         //Section Verte
-        public void Edition()
+        public async Task Edition()
         {
             Program.Editeur.ResetDefaultTable();
             Program.FormManager.CurrentForm = Program.Editeur;
-            CheckIfNeedToShowEditorTutoriel();
+            await CheckIfNeedToShowEditorTutoriel();
             CommandManager.InvalidateRequerySuggested();
         }
 
         //Section Rouge
         public async Task Deconnexion()
         {
-            var response = await Program.client.PostAsJsonAsync(Program.client.BaseAddress + "api/logout", User.Instance.UserEntity);
-            HubManager.Instance.Logout();
+            Program.unityContainer.Resolve<ChatViewModel>().UndockedChat?.Close();
+            await CrashKillExitAllApplication();
             User.Instance.UserEntity = null;
             User.Instance.IsConnected = false;
             Program.unityContainer.Resolve<MainMenuViewModel>().OnlineMode = false;
@@ -334,16 +345,23 @@ namespace InterfaceGraphique.Controls.WPF.MainMenu
             Program.InitializeUnityDependencyInjection();
             Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<HomeViewModel>());
             CommandManager.InvalidateRequerySuggested();
+            Program.FormManager.HideCompletely();
         }
 
         public async Task Quitter()
         {
             if(User.Instance.IsConnected)
             {
-                var response = await Program.client.PostAsJsonAsync(Program.client.BaseAddress + "api/logout", User.Instance.UserEntity);
                 Program.unityContainer.Resolve<ChatViewModel>().UndockedChat?.Close();
             }
             System.Windows.Forms.Application.Exit();
+        }
+
+        public async Task CrashKillExitAllApplication()
+        {
+            var response = await Program.client.PostAsJsonAsync(Program.client.BaseAddress + "api/logout", User.Instance.UserEntity);
+            await HubManager.Instance.LeaveHubs();
+            await HubManager.Instance.Logout();
         }
 
         public void Home()
@@ -353,31 +371,36 @@ namespace InterfaceGraphique.Controls.WPF.MainMenu
         #endregion
 
         #region Private Methods
-        private async void CheckIfNeedToShowEditorTutoriel()
+
+        private async Task CheckIfNeedToShowEditorTutoriel()
         {
-            if (!User.Instance.IsConnected)
+            if (!User.Instance.IsConnected && !alreadyOpenedTutorialEditorMode)
             {
+
                 await ShowTutorialEditor();
             }
-            else if (!User.Instance.UserEntity.AlreadyUsedFatEditor)
+            else if (User.Instance.IsConnected && !User.Instance.UserEntity.AlreadyUsedFatEditor )
             {
                 await ShowTutorialEditor();
                 User.Instance.UserEntity.AlreadyUsedFatEditor = true;
                 await Program.client.PutAsJsonAsync(Program.client.BaseAddress + "api/user/" + User.Instance.UserEntity.Id.ToString(), User.Instance.UserEntity);
             }
+            alreadyOpenedTutorialEditorMode = true;
+
         }
-        private async void CheckIfNeedToShowMatchTutoriel()
+        private async Task CheckIfNeedToShowMatchTutoriel()
         {
-            if (!User.Instance.IsConnected)
+            if (!User.Instance.IsConnected && !alreadyOpenedMatchTutorialOfflineMode)
             {
                 await ShowTutorialGame();
             }
-            else if (!User.Instance.UserEntity.AlreadyPlayedGame)
+            else if (User.Instance.IsConnected &&  !User.Instance.UserEntity.AlreadyPlayedGame )
             {
                 await ShowTutorialGame();
                 User.Instance.UserEntity.AlreadyPlayedGame = true;
                 await Program.client.PutAsJsonAsync(Program.client.BaseAddress + "api/user/" + User.Instance.UserEntity.Id.ToString(), User.Instance.UserEntity);
             }
+            alreadyOpenedMatchTutorialOfflineMode = true;
         }
 
         public static async Task ShowTutorialEditor()

@@ -16,6 +16,8 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     @IBOutlet weak var itemCollectionView: UICollectionView!
     
+    @IBOutlet weak var itemsLabel: UILabel!
+    @IBOutlet weak var noItemsLabel: UILabel!
     @IBOutlet weak var profileImage: UIImageView!
     let imagePicker = UIImagePickerController()
     
@@ -51,6 +53,7 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        noItemsLabel.isHidden = true
         achievementCollectionView.delegate = self
         achievementCollectionView.dataSource = self
         itemCollectionView.delegate = self
@@ -101,6 +104,14 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
 
         self.loadUserProfile()
         self.loadUserStoreItems()
+        
+        if(HubManager.sharedConnection.getId() == HubManager.sharedConnection.searchId) {
+            itemCollectionView.isHidden = false
+            itemsLabel.isHidden = false
+        } else {
+            itemCollectionView.isHidden = true
+            itemsLabel.isHidden = true
+        }
     }
     
     func loadUserProfile() {
@@ -232,45 +243,66 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
             imagePicker.allowsEditing = false
             imagePicker.sourceType = .photoLibrary
             
-            present(imagePicker, animated: true, completion: nil)
+            // Mettre l'orientation à portrait pour la sélection de photo
+            OrientationHelper.lockOrientation(.portrait, andRotateTo: .portrait)
+            present(imagePicker, animated: false, completion: nil)
         }
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            profileImage.contentMode = .scaleToFill
-            
-            let imageData : Data = UIImagePNGRepresentation(pickedImage)! as Data
-            let strBase64 = imageData.base64EncodedString(options: Data.Base64EncodingOptions.init(rawValue: 0))
-            if strBase64.characters.count > 2000000 {
-                // error dialog
-                let alert = UIAlertController(title: "L'image ne peut dépasser 2Mo!", message: "Message", preferredStyle: UIAlertControllerStyle.alert)
-                alert.addAction(UIAlertAction(title: "Fermer", style: UIAlertActionStyle.default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
-            } else {
-                // update
-                let parameters: [String: Any] = [
-                    "Profile" : strBase64.description
-                    ]
-                Alamofire.request("http://" + HubManager.sharedConnection.getIpAddress()! + ":63056/api/user/" + ((HubManager.sharedConnection.getId())?.description)!, method: .put, parameters: parameters, encoding: JSONEncoding.default)
-                    .responseJSON { response in
-                        if(response.response?.statusCode == 200) {
-                            self.profileImage.image = pickedImage
-                        } else {
-                            //Getting error message from server
-                            if let data = response.data {
-
-                            }
-                        }
-                    }
-                //print(strBase64)
-            }
+        if let pickedImage = info[UIImagePickerControllerEditedImage] as? UIImage {
+            self.traiterImagePicker(pickedImage: pickedImage)
         }
-        dismiss(animated: true, completion: nil)
+        else if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            self.traiterImagePicker(pickedImage: pickedImage)
+        }
+        
+        OrientationHelper.lockOrientation(.landscape, andRotateTo: .landscapeRight)
+        dismiss(animated: false, completion: nil)
     }
     
-    private func imagePickerControllerDidCancel(picker: UIImagePickerController) {
-        dismiss(animated: true, completion: nil)
+    private func traiterImagePicker(pickedImage: UIImage) {
+        profileImage.contentMode = .scaleToFill
+        
+        let imageData : Data = UIImagePNGRepresentation(pickedImage)! as Data
+        let strBase64 = imageData.base64EncodedString(options: Data.Base64EncodingOptions.init(rawValue: 0))
+        
+        if strBase64.characters.count > 2000000
+        {
+            // error dialog
+            OrientationHelper.lockOrientation(.landscape, andRotateTo: .landscapeRight)
+            dismiss(animated: false, completion: nil)
+            let alert = UIAlertController(title: "Erreur d'importation", message: "L'image ne peut dépasser 2 Mo.", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Fermer", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+        else {
+            // update
+            let parameters: [String: Any] = [
+                "Profile" : strBase64.description
+            ]
+            Alamofire.request("http://" + HubManager.sharedConnection.getIpAddress()! + ":63056/api/user/" + ((HubManager.sharedConnection.getId())?.description)!, method: .put, parameters: parameters, encoding: JSONEncoding.default)
+                .responseJSON { response in
+                    if(response.response?.statusCode == 200) {
+                        print ("image picker success")
+                        self.profileImage.image = pickedImage
+                    } else {
+                        print ("image picker failure")
+                    }
+            }
+            
+            // Remettre l'orientation à paysage
+            OrientationHelper.lockOrientation(.landscape, andRotateTo: .landscapeRight)
+            dismiss(animated: false, completion: nil)
+            //print(strBase64)
+        }
+    }
+    
+    // Si l'utilisateur annule la sélection de photo
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        // Remettre l'orientation à paysage
+        OrientationHelper.lockOrientation(.landscape, andRotateTo: .landscapeRight)
+        dismiss(animated: false, completion: nil)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -280,6 +312,11 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         }
         if collectionView == self.itemCollectionView {
             count = self.userStoreItems.count
+            if(count == 0) {
+                noItemsLabel.isHidden = false
+            } else {
+                noItemsLabel.isHidden = true
+            }
         }
         return count!
 

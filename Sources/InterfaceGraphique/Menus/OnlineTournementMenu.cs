@@ -73,7 +73,7 @@ namespace InterfaceGraphique.Menus
                     TournamentColors.Enqueue(color);
             }
         }
-            
+
         private Queue<Color> TournamentColors = new Queue<Color>();
         private void CycleAvailableColors(object sender, EventArgs e)
         {

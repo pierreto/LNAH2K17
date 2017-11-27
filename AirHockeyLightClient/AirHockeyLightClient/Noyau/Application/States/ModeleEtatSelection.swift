@@ -37,6 +37,8 @@ class ModeleEtatSelection: ModeleEtat {
     /// Noeuds sélectionnés
     private var noeuds = [NoeudCommun]()
     
+    private var isLastGestureRecognizer: UIGestureRecognizer?
+    
     /// Cette fonction initialise l'état. Elle décide quels objects sont
     /// sélectionnable
     override func initialiser() {
@@ -79,6 +81,8 @@ class ModeleEtatSelection: ModeleEtat {
         
         // Réactiver le contrôle de la caméra
         FacadeModele.instance.obtenirVue().editorView.allowsCameraControl = true
+        
+        self.isLastGestureRecognizer = nil
     }
     
     // Fonctions gérant les entrées de l'utilisateur
@@ -99,6 +103,8 @@ class ModeleEtatSelection: ModeleEtat {
         
         if sender.state == UIGestureRecognizerState.began {
             print("Debut deplacement noeud")
+            
+            self.isLastGestureRecognizer = sender
         }
         else if sender.state == UIGestureRecognizerState.ended {
             print("Fin deplacement noeud")
@@ -123,7 +129,9 @@ class ModeleEtatSelection: ModeleEtat {
             // Déplacer le noeud
             self.deplacer()
             
-            self.showButtonsNoeudSurTable()
+            if (self.isLastGestureRecognizer is UIPanGestureRecognizer) {
+                self.showButtonsNoeudSurTable()
+            }
         }
     }
     
@@ -142,6 +150,8 @@ class ModeleEtatSelection: ModeleEtat {
             self.noeuds = visiteur.obtenirNoeuds()
             // Récupérer le centre de rotation
             self.centreRotation = visiteur.obtenirCentreSelection()
+            
+            self.isLastGestureRecognizer = sender
         }
         else if sender.state == UIGestureRecognizerState.ended {
             print("Fin rotation noeud")
@@ -172,7 +182,9 @@ class ModeleEtatSelection: ModeleEtat {
             // Set the rotation to 0 to avoid compounding the rotations
             sender.rotation = 0.0
             
-            self.showButtonsNoeudSurTable()
+            if (self.isLastGestureRecognizer is UIRotationGestureRecognizer) {
+                self.showButtonsNoeudSurTable()
+            }
         }
     }
     
@@ -185,6 +197,8 @@ class ModeleEtatSelection: ModeleEtat {
             
             // Sauvegarder la valeur du scale des noeuds
             self.saveScale()
+            
+            self.isLastGestureRecognizer = sender
         }
         else if sender.state == UIGestureRecognizerState.ended {
             print("Pinch ended")
@@ -211,7 +225,9 @@ class ModeleEtatSelection: ModeleEtat {
             // Set the scale factor to 1.0 to avoid exponential growth
             sender.scale = 1.0
             
-            self.showButtonsNoeudSurTable()
+            if (self.isLastGestureRecognizer is UIPinchGestureRecognizer) {
+                self.showButtonsNoeudSurTable()
+            }
         }
     }
     
