@@ -32,6 +32,7 @@ class MapDisplayViewController: UIViewController {
     private var isDeleting = false
     private var addMapBtn: UIBarButtonItem?
     private var deleteMapBtn: UIBarButtonItem?
+    private var refreshCarouselBtn: UIBarButtonItem?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,7 +42,13 @@ class MapDisplayViewController: UIViewController {
         self.addMapBtn = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addMapBtnClicked))
         self.deleteMapBtn = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteMapBtnClicked))
         self.deleteMapBtn?.isEnabled = false
-        self.navigationItem.setRightBarButtonItems([addMapBtn!, deleteMapBtn!], animated: true)
+        
+        if self.clientConnection.getConnection() != nil && self.clientConnection.getConnection()?.state == .connected {
+            self.refreshCarouselBtn = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refreshCarouselBtnClicked))
+            self.navigationItem.setRightBarButtonItems([self.addMapBtn!, self.deleteMapBtn!, self.refreshCarouselBtn!], animated: true)
+        } else {
+            self.navigationItem.setRightBarButtonItems([self.addMapBtn!, self.deleteMapBtn!], animated: true)
+        }
     }
     
     // Ouvrir le pop-up pour la création de cartes
@@ -56,14 +63,6 @@ class MapDisplayViewController: UIViewController {
         
         // Désactiver la barre de navigation
         self.enableNavigationBar(activer: false)
-    }
-    
-    func updateEntries() {
-        MapCarouselViewController.instance.updateEntries()
-        
-        if MapCarouselViewController.instance.numberOfItems() > 0 {
-            self.deleteMapBtn?.isEnabled = true
-        }
     }
     
     func deleteMapBtnClicked(sender: AnyObject)
@@ -81,6 +80,18 @@ class MapDisplayViewController: UIViewController {
         
         if MapCarouselViewController.instance.numberOfItems() == 0 {
             self.deleteMapBtn?.isEnabled = false
+        }
+    }
+    
+    func refreshCarouselBtnClicked(sender: AnyObject) {
+        print("refresh")
+    }
+    
+    func updateEntries() {
+        MapCarouselViewController.instance.updateEntries()
+        
+        if MapCarouselViewController.instance.numberOfItems() > 0 {
+            self.deleteMapBtn?.isEnabled = true
         }
     }
     
@@ -192,12 +203,14 @@ class MapDisplayViewController: UIViewController {
     private func disableInputs() {
         self.addMapBtn?.isEnabled = false
         self.deleteMapBtn?.isEnabled = false
+        self.refreshCarouselBtn?.isEnabled = false
         self.enableNavigationBar(activer: false)
     }
     
     private func enableInputs() {
         self.addMapBtn?.isEnabled = true
         self.deleteMapBtn?.isEnabled = true
+        self.refreshCarouselBtn?.isEnabled = true
         self.enableNavigationBar(activer: true)
     }
     
