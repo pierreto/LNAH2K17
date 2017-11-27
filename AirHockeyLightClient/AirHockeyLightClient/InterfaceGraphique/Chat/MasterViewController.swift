@@ -56,7 +56,7 @@ class MasterViewController: UITableViewController {
         channelTableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         
         let indexPath = IndexPath(row: 0, section: 0);
-        self.channelTableView.selectRow(at: indexPath, animated: true, scrollPosition: .bottom)
+        self.channelTableView.selectRow(at: indexPath, animated: false, scrollPosition: .bottom)
         self.channelTableView.delegate?.tableView!(self.channelTableView, didSelectRowAt: indexPath)
         
         self.toggleChannelButton.setTitle("\u{f061}", for: .normal)

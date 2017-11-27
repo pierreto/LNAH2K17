@@ -134,16 +134,16 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
         }
         //Add messages to the channel
         chan?.messages.append(ChatMessageEntity(sender:sender!, messageValue: messageValue!, timestamp: (dateString)))
-        DispatchQueue.main.async(execute: { () -> Void in
-            //Reload table to see new message
-            self.chatTableView.reloadData()
-            //Scroll to the last message on insert
-            print("NUM MSG: ", (chan?.messages.count)!)
-            if(chan?.messages.count)! > 1 {
-                let indexPath = IndexPath(row: (chan?.messages.count)! - 1, section: 0);
-                self.chatTableView?.scrollToRow(at: indexPath, at: .bottom, animated: true)
-            }
-        })
+//        DispatchQueue.main.async(execute: { () -> Void in
+//            //Reload table to see new message
+//            self.chatTableView.reloadData()
+//            //Scroll to the last message on insert
+//            print("NUM MSG: ", (chan?.messages.count)!)
+//            if(chan?.messages.count)! > 1 {
+//                let indexPath = IndexPath(row: (chan?.messages.count)! - 1, section: 0);
+//                self.chatTableView?.scrollToRow(at: indexPath, at: .bottom, animated: true)
+//            }
+//        })
     }
     
     /// Enclenché lorsqu'un message est reçu dans un autre canal
@@ -167,14 +167,14 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
         }
         chan?.messages.append(ChatMessageEntity(sender:sender!, messageValue: messageValue!, timestamp: (dateString)))
 
-        DispatchQueue.main.async(execute: { () -> Void in
-            self.chatTableView.reloadData()
-            print("NUM MSG: ", (chan?.messages.count)!)
-            if(chan?.messages.count)! > 1 {
-                let indexPath = IndexPath(row: (chan?.messages.count)! - 1, section: 0);
-                self.chatTableView?.scrollToRow(at: indexPath, at: .bottom, animated: true)
-            }
-        })
+//        DispatchQueue.main.async(execute: { () -> Void in
+//            self.chatTableView.reloadData()
+//            print("NUM MSG: ", (chan?.messages.count)!)
+//            if(chan?.messages.count)! > 1 {
+//                let indexPath = IndexPath(row: (chan?.messages.count)! - 1, section: 0);
+//                self.chatTableView?.scrollToRow(at: indexPath, at: .bottom, animated: true)
+//            }
+//        })
     }
     
     func receiveMessagePrivate(message: Dictionary<String, String>, senderId: Int) {
@@ -196,15 +196,6 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
             delegate?.newUnreadMessage()
         }
         chan?.messages.append(ChatMessageEntity(sender:sender!, messageValue: messageValue!, timestamp: (dateString)))
-
-        DispatchQueue.main.async(execute: { () -> Void in
-            self.chatTableView.reloadData()
-            print("NUM MSG: ", (chan?.messages.count)!)
-            if(chan?.messages.count)! > 1 {
-                let indexPath = IndexPath(row: (chan?.messages.count)! - 1, section: 0);
-                self.chatTableView?.scrollToRow(at: indexPath, at: .bottom, animated: true)
-            }
-        })
     }
     
     //Message envoye par le chatHub lorsqu'il ne reste plus personne dans un canal
@@ -415,8 +406,12 @@ extension ChatAreaViewController: ChannelSelectionDelegate {
     func channelSelected(newChannel: ChannelEntity) {
         channel = newChannel
         DispatchQueue.main.async(execute: { () -> Void in
-            // Reload tableView
             self.chatTableView.reloadData()
+            let numberOfRows = self.channel.messages.count
+            if numberOfRows > 0 {
+                    let indexPath = IndexPath(row: numberOfRows, section: 0);
+            self.chatTableView?.scrollToRow(at: indexPath, at: .bottom, animated: false)
+            }
         })
     }
     
