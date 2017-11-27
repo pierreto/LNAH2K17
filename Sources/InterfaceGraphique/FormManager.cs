@@ -48,17 +48,20 @@ namespace InterfaceGraphique
 
                 currentForm.InitializeOpenGlPanel();
                 this.Controls.Add(currentForm);
-                currentForm.Focus();
 
 
                 if (User.Instance.IsConnected)
                 {
                     ShowCompletely();
+                    //HideCompletely();
                 }
                 else
                 {
                     HideCompletely();
                 }
+
+                //ShowChat();
+                //currentForm.Focus();
             }
         }
 

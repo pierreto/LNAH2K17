@@ -45,6 +45,8 @@ namespace InterfaceGraphique
             currentGameState = new OfflineGameState();
 
             InitializeEvents();
+
+            this.KeyPreview = true;
         }
 
 
@@ -111,6 +113,9 @@ namespace InterfaceGraphique
             }
 
             Program.QuickPlay.CurrentGameState.GameInitialized = true;
+
+            this.Focus();
+           this.BringToFront();
         }
 
 
