@@ -92,6 +92,13 @@ void ModeleEtatPointControl::initialiser()
 			}
 		}
 	}
+	if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
+	{
+		if (controlPointEventCallback_)
+		{
+			selectionCallback_(nullptr, false, true);
+		}
+	}
 }
 
 

@@ -108,7 +108,10 @@ void VisiteurSuppression::deleteAllSelectedNode(bool sendToServer) {
 		{
 			arbre->effacer(node, ModeleEtatJeu::obtenirInstance()->getDeleteEventCallback(), sendToServer);
 		}
-	
+	}
+	if(sendToServer)
+	{
+		ModeleEtatJeu::obtenirInstance()->getDeleteEventCallback()("END");
 	}
 }
 
