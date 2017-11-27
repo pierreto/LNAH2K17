@@ -20,7 +20,7 @@
                         <ControlTemplate TargetType="{x:Type ContentControl}">
 
                             <!-- Content -->
-                            <Border x:Name="background" Background="{StaticResource DarkGrayBrush}" BorderBrush="{StaticResource UltraDarkGrayBrush}" BorderThickness="0,0,0,2">
+                            <Border x:Name="background" Background="{StaticResource DarkGrayBrush}" BorderBrush="{StaticResource UltraDarkGrayBrush}" BorderThickness="0,0,0,0">
 
                                 <!-- Click to open message -->
                                 <Border.InputBindings>

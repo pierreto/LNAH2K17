@@ -33,6 +33,8 @@ namespace InterfaceGraphique.Controls.WPF
         public async Task SwitchViewToServerBrowser()
         {
             this.WindowState = FormWindowState.Normal;
+            this.MinimumSize = new Size(1100, 800);
+
             this.Width = 1100;
             this.Height = 800;
             this.elementHost1.Child = serverBrowser;
@@ -41,6 +43,8 @@ namespace InterfaceGraphique.Controls.WPF
         public void SwitchViewToMapModeView()
         {
             this.WindowState = FormWindowState.Normal;
+            this.MinimumSize = new Size(640, 325);
+
             this.Width = 640;
             this.Height = 325;
             this.elementHost1.Child = modeView;
@@ -50,6 +54,8 @@ namespace InterfaceGraphique.Controls.WPF
         public void SwitchViewToOfflineOrOnlineView()
         {
             this.WindowState = FormWindowState.Normal;
+            this.MinimumSize = new Size(440, 180);
+
             this.Width = 440;
             this.Height = 180;
             this.elementHost1.Child = offlineOrOnlineView;

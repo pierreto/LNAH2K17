@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
 using InterfaceGraphique.CommunicationInterface;
+using InterfaceGraphique.Controls.WPF.Validation;
 using InterfaceGraphique.Editor;
 using InterfaceGraphique.Entities;
 using InterfaceGraphique.Services;
@@ -51,6 +52,9 @@ namespace InterfaceGraphique.Controls.WPF.Editor
             set
             {
                 mapName = value;
+
+                canCreateMap = InputValidationRule.ValidateInput(this.MapName);
+
                 OnPropertyChanged();
             }
         }
@@ -60,6 +64,31 @@ namespace InterfaceGraphique.Controls.WPF.Editor
             set
             {
                 password = value;
+                if (!IsPrivate) //public mode
+                {
+                    if (InputValidationRule.ValidateInput(this.MapName))
+                    {
+                        canCreateMap = true;
+                    }
+                    else
+                    {
+                        canCreateMap = false;
+
+                    }
+                }
+                else
+                {
+                    if (InputValidationRule.ValidateInput(this.MapName) &&
+                        InputValidationRule.ValidateInput(this.Password))
+                    {
+                        canCreateMap = true;
+                    }
+                    else
+                    {
+                        canCreateMap = false;
+
+                    }
+                }
                 OnPropertyChanged();
             }
         }
@@ -70,39 +99,36 @@ namespace InterfaceGraphique.Controls.WPF.Editor
             get
             {
                 return createCommand ??
-                       (createCommand = new RelayCommandAsync(CreateMap, (o) => CanCreateMap()));
+                       (createCommand = new RelayCommandAsync(CreateMap, (o) => CanCreateMapWithGoodPwd()));
             }
         }
+        public bool canCreateMap = false;
 
-        public bool CanCreateMap()
+        public bool CanCreateMapWithGoodPwd()
         {
+
             if (!IsPrivate) //public mode
             {
-                if (MapName.Length > 0)
-                {
-                    return true;
-                }
+                return canCreateMap;
+
             }
             else
             {
-                if (MapName.Length > 0 && Password.Length >= 5)
-                {
-                    return true;
-                }
+               return canCreateMap &&  this.Password.Length > 0;
             }
-            return false;
+        
         }
 
         private async Task CreateMap()
         {
-            if (this.mapName.Length > 127)
+           /* if (this.mapName.Length > 127)
             {
                 NameFailed = true;
             }
             else
             {
                 NameFailed = false;
-
+               */
                 await this.mapService.SaveNewOnlineMap(new MapMetaData()
                 {
 
@@ -112,7 +138,7 @@ namespace InterfaceGraphique.Controls.WPF.Editor
                     Private = IsPrivate
                 });
                 Program.EditorHost.Close();
-            }
+           // }
         }
 
         public override void InitializeViewModel()

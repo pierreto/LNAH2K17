@@ -5,13 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:InterfaceGraphique.Controls.WPF.Editor"
              xmlns:wpf="clr-namespace:InterfaceGraphique.Controls.WPF"
-             mc:Ignorable="d" d:DesignWidth="300" Background="#FF2F3136" Height="137.636">
+             mc:Ignorable="d" d:DesignWidth="300"  Height="137.636">
     <UserControl.Resources>
         <ResourceDictionary>
 
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid  >
+    <Grid Background="{StaticResource DarkerDarkGrayBrush}" >
         <Grid.RowDefinitions>
             <RowDefinition Height="50*"/>
             <RowDefinition Height="129*"/>

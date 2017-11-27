@@ -323,6 +323,7 @@
     </Compile>
     <Compile Include="Controls\WPF\UserProfile\UserProfileViewModel.cs" />
     <Compile Include="Controls\WPF\UserProfile\UserViewModel.cs" />
+    <Compile Include="Controls\WPF\Validation\InputValidationRule.cs" />
     <Compile Include="Controls\WPF\ViewModelBase.cs" />
     <Compile Include="Controls\WPF\ViewModelLocator.cs" />
     <Compile Include="Editor\EditorState\AbstractEditorState.cs" />
