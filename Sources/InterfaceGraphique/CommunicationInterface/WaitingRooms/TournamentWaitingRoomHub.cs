@@ -30,6 +30,8 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
         public event EventHandler PlayerLeftEvent;
 
+        public event EventHandler TournamentStarting;
+
         public static IHubProxy WaitingRoomProxy { get; set; }
 
         protected HubConnection HubConnection { get; set; }
@@ -199,6 +201,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
         public void OnTournamentStarting(TournamentEntity tournament)
         {
+            TournamentStarting?.Invoke(this, null);
             Program.OnlineTournament.Invoke(new MethodInvoker(() =>
             {
                 var userGame = tournament.SemiFinals.Find(game => game.Players.Any(player => player.Id == User.Instance.UserEntity.Id));
