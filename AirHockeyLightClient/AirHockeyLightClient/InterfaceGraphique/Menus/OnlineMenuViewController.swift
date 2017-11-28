@@ -58,12 +58,28 @@ class OnlineMenuViewController: UIViewController {
             let friendsService = FriendsService()
             friendsService.setUserAlreadyUsedLightEditor(id: user.getId())
             
-            self.performSegue(withIdentifier: "openTutorial", sender: self)
+            self.showTutorialPopUp()
         }
     }
     
     @objc fileprivate func goToProfile(_ notification: NSNotification){
         self.performSegue(withIdentifier: "goToProfile", sender: self)
+    }
+    
+    @IBAction func showTutorial(_ sender: Any) {
+        self.showTutorialPopUp()
+    }
+    
+    func showTutorialPopUp() {
+        let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TutorialViewControllerID") as! TutorialViewController
+        self.addChildViewController(viewController)
+        
+        viewController.view.frame = self.view.frame
+        self.view.addSubview(viewController.view)
+        viewController.didMove(toParentViewController: self)
+        
+        // Désactiver la barre de navigation
+        self.navigationController?.isNavigationBarHidden = true
     }
     
     private func loading() {
