@@ -97,6 +97,7 @@ namespace InterfaceGraphique.CommunicationInterface
                 Program.InitializeUnityDependencyInjection();
                 Program.unityContainer.Resolve<GameWaitingRoomHub>().OnDisconnect();
                 Program.unityContainer.Resolve<EditionHub>().OnDisconnect();
+                Program.Restart();
             }));
         }
 
