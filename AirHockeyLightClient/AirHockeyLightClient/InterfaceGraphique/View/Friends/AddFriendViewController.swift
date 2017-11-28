@@ -80,6 +80,13 @@ class AddFriendViewController: UIViewController {
         }
     }
     
+    func resetFilterEntries() {
+        if self.filterStrings != nil  && self.search != nil {
+            self.filterStrings = [String]()
+            self.search.filterStrings(self.filterStrings)
+        }
+    }
+    
     func filterUserEntries(pendingRequests: [FriendRequestEntity]) {
         if self.isViewLoaded {
             let activeUsername = HubManager.sharedConnection.getUsername()
