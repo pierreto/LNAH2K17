@@ -309,14 +309,14 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             await Program.unityContainer.Resolve<FriendsHub>().SendFriendRequest(friend);
             var item = Program.unityContainer.Resolve<AddFriendListViewModel>().Items;
             //Retire de notre liste de personnes ajoutables la personne qu'on vien d'envoyer une demande d'amis
-            item.Remove(item.Single(x => x.Id == friend.Id));
+            item.Remove(item.FirstOrDefault(x => x.Id == friend.Id));
         }
 
         private async Task AcceptFriendRequest()
         {
             await Program.unityContainer.Resolve<FriendsHub>().AcceptFriendRequest(new FriendRequestEntity { Requestor = new UserEntity { Id = Id, Username = Username, Profile = ProfilePicture }, Friend = new UserEntity { Username = User.Instance.UserEntity.Username, Id = User.Instance.UserEntity.Id, Profile = User.Instance.UserEntity.Profile } });
             var item = Program.unityContainer.Resolve<FriendRequestListViewModel>().Items;
-            item.Remove(item.Single(x => x.Id == Id));
+            item.Remove(item.FirstOrDefault(x => x.Id == Id));
         }
 
         private async Task RefuseFriendRequest()
@@ -324,7 +324,7 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             if (await Program.unityContainer.Resolve<FriendsHub>().RefuseFriendRequest(new FriendRequestEntity { Requestor = new UserEntity { Id = Id, Profile = ProfilePicture }, Friend = new UserEntity { Id = User.Instance.UserEntity.Id, Profile = User.Instance.UserEntity.Profile } }))
             {
                 var item = Program.unityContainer.Resolve<FriendRequestListViewModel>().Items;
-                item.Remove(item.Single(x => x.Id == Id));
+                item.Remove(item.FirstOrDefault(x => x.Id == Id));
                 var friendsToAdd = Program.unityContainer.Resolve<AddFriendListViewModel>().Items;
                 friendsToAdd.Add(new UserEntity { Id = Id, Username = Username, Profile = ProfilePicture, IsSelected = false });
                 Program.unityContainer.Resolve<AddFriendListViewModel>().OnPropertyChanged("Items");

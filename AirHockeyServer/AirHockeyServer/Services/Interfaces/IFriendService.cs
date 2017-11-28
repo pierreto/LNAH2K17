@@ -17,7 +17,7 @@ namespace AirHockeyServer.Services
 
         Task<FriendRequestEntity> AcceptFriendRequest(FriendRequestEntity request);
 
-        Task<FriendRequestEntity> RefuseFriendRequest(FriendRequestEntity request);
+        Task<bool> RefuseFriendRequest(FriendRequestEntity request);
 
         Task<bool> CancelFriendRequest(FriendRequestEntity request);
 

@@ -82,19 +82,32 @@ namespace AirHockeyServer.Repositories
             {
                 using (MyDataContext DC = new MyDataContext())
                 {
-                    UserPoco requestor =
-                        (from user in DC.UsersTable where user.Id == request.Requestor.Id select user).ToArray<UserPoco>().First();
-                    UserPoco friend =
-                        (from user in DC.UsersTable where user.Id == request.Friend.Id select user).ToArray<UserPoco>().First();
+                    var query =
+                        from friend_request in DC.FriendsTable
+                        where (friend_request.FriendID == request.Friend.Id && friend_request.RequestorID == request.Requestor.Id ||
+                               friend_request.RequestorID == request.Friend.Id && friend_request.FriendID == request.Requestor.Id)
+                        select friend_request;
+                    var existing_relation = await Task<List<FriendPoco>>.Run(
+                        () => query.ToList<FriendPoco>());
 
-                    FriendPoco newFriendRequest = MapperManager.Map<FriendRequestEntity, FriendPoco>(request);
-                    newFriendRequest.Requestor = requestor;
-                    newFriendRequest.Friend = friend;
+                    if (existing_relation.Count == 0) // aucune demande en cours (acceptee ou pas) -> on procede a la demande
+                    {
+                        UserPoco requestor =
+                            (from user in DC.UsersTable where user.Id == request.Requestor.Id select user).ToArray<UserPoco>().First();
+                        UserPoco friend =
+                            (from user in DC.UsersTable where user.Id == request.Friend.Id select user).ToArray<UserPoco>().First();
 
-                    DC.FriendsTable.InsertOnSubmit(newFriendRequest);
-                    await Task.Run(() => DC.SubmitChanges());
+                        FriendPoco newFriendRequest = MapperManager.Map<FriendRequestEntity, FriendPoco>(request);
+                        newFriendRequest.Requestor = requestor;
+                        newFriendRequest.Friend = friend;
 
-                    return request;
+                        DC.FriendsTable.InsertOnSubmit(newFriendRequest);
+                        await Task.Run(() => DC.SubmitChanges());
+
+                        return request;
+                    }
+
+                    return null;
                 }
             }
             catch (Exception e)
@@ -104,7 +117,7 @@ namespace AirHockeyServer.Repositories
             }
         }
 
-        private async Task<FriendRequestEntity> ModifyFriendRequest(FriendRequestEntity request, int status)
+        public async Task<FriendRequestEntity> AcceptFriendRequest(FriendRequestEntity request)
         {
             try
             {
@@ -116,7 +129,7 @@ namespace AirHockeyServer.Repositories
                         select friend_request;
 
                     var friendRequest = query.ToArray().First();
-                    friendRequest.Status = status;
+                    friendRequest.Status = 1;
                     await Task.Run(() => DC.SubmitChanges());
                     return MapperManager.Map<FriendPoco, FriendRequestEntity>(friendRequest);
                 }
@@ -126,16 +139,6 @@ namespace AirHockeyServer.Repositories
                 System.Diagnostics.Debug.WriteLine("[FriendRequestRepository.ModifyFriendRequest] " + e.ToString());
                 return null;
             }
-        }
-
-        public async Task<FriendRequestEntity> AcceptFriendRequest(FriendRequestEntity request)
-        {
-            return await ModifyFriendRequest(request, 1); 
-        }
-
-        public async Task<FriendRequestEntity> RefuseFriendRequest(FriendRequestEntity request)
-        {
-            return await ModifyFriendRequest(request, -1);
         }
 
         private async Task<bool> RemoveRelation(int user_id1, int user_id2)
@@ -164,6 +167,11 @@ namespace AirHockeyServer.Repositories
         }
 
         public async Task<bool> CancelFriendRequest(FriendRequestEntity request)
+        {
+            return await RemoveRelation(request.Requestor.Id, request.Friend.Id);
+        }
+
+        public async Task<bool> RefuseFriendRequest(FriendRequestEntity request)
         {
             return await RemoveRelation(request.Requestor.Id, request.Friend.Id);
         }
