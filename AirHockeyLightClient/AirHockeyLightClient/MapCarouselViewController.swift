@@ -187,15 +187,19 @@ class MapCarouselViewController: UIViewController, iCarouselDataSource, iCarouse
     }
     
     func deleteCurrentMap() {
+        let map = self.maps[self.carouselView.currentItemIndex]
         let mapService = MapService()
-        mapService.deleteMap(map: self.maps[self.carouselView.currentItemIndex], completionHandler: { success, error in
+        mapService.deleteMap(map: map, completionHandler: { success, error in
             if success! {
+                DBManager.instance.effacerCarte(mapName: map.mapName!)
                 self.maps.remove(at: self.carouselView.currentItemIndex) // remove the item from the data model
                     
                 DispatchQueue.main.async(execute: { () -> Void in
                     // Reload tableView
                     self.carouselView.reloadData()
                 })
+            } else {
+                print("Error deleteCurrentMap")
             }
                 
             return
