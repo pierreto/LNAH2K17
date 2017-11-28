@@ -20,7 +20,7 @@ import UIKit
 class FriendRequestsTableViewController: UITableViewController {
     
     /// Instance singleton
-    static var instance = FriendRequestsTableViewController()
+    static var instance: FriendRequestsTableViewController?
     
     @IBOutlet weak var pendingRequests: UITableView!
     
@@ -40,18 +40,29 @@ class FriendRequestsTableViewController: UITableViewController {
         
         self.pendingRequests.delegate = self
         self.pendingRequests.dataSource = self
-        
-        friendsHub = HubManager.sharedConnection.getFriendsHub()
-        friendsHub?.getAllPendingRequest()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         self.isOpen = true
         FriendRequestsViewController.instance?.resetNotification()
+        
+        friendsHub = HubManager.sharedConnection.getFriendsHub()
+        friendsHub?.getAllPendingRequest()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         self.isOpen = false
+    }
+    
+    func resetFriendRequests() {
+        if self.pendingRequestsData != nil && self.pendingRequests != nil {
+            self.pendingRequestsData = [FriendRequestEntity]()
+        
+            DispatchQueue.main.async(execute: { () -> Void in
+                // Reload tableView
+                self.pendingRequests.reloadData()
+            })
+        }
     }
     
     func updatePendingRequestsEntries(pendingRequests:  [FriendRequestEntity]) {

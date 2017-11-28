@@ -43,7 +43,11 @@ class FriendsHub: BaseHub {
             let newRequestJson = JSON(args?[0] as! Dictionary<String, Any>)
             let newRequest = self.friendsService.buildFriendRequestEntity(json: newRequestJson)
             
-            FriendRequestsTableViewController.instance.addRequest(newRequest: newRequest)
+            if FriendRequestsTableViewController.instance != nil {
+                FriendRequestsTableViewController.instance?.addRequest(newRequest: newRequest)
+            } else if FriendRequestsViewController.instance != nil {
+                FriendRequestsViewController.instance?.displayNotification()
+            }
         }
         
         self.hubProxy?.on("NewFriendEvent") { args in
@@ -122,7 +126,9 @@ class FriendsHub: BaseHub {
                     if pendingRequests.count > 0 {
                         FriendRequestsViewController.instance?.displayNotification()
                     }
-                    FriendRequestsTableViewController.instance.updatePendingRequestsEntries(pendingRequests: pendingRequests)
+                    if FriendRequestsTableViewController.instance != nil {
+                        FriendRequestsTableViewController.instance?.updatePendingRequestsEntries(pendingRequests: pendingRequests)
+                    }
                     
                     // Update add friend view
                     if AddFriendViewController.instance != nil {
@@ -190,6 +196,19 @@ class FriendsHub: BaseHub {
     
     override func logout() {
         print("logout friends hub")
+        
+        if FriendsTableViewController.instance != nil {
+            FriendsTableViewController.instance.resetFriendsList()
+        }
+        
+        if FriendRequestsTableViewController.instance != nil {
+            FriendRequestsTableViewController.instance?.resetFriendRequests()
+        }
+        
+        if AddFriendViewController.instance != nil {
+            AddFriendViewController.instance?.resetFilterEntries()
+        }
+        
         self.hubProxy = nil
     }
     
