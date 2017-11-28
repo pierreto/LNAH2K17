@@ -78,11 +78,14 @@ namespace AirHockeyServer.Services
 
         public void Logout(LoginEntity loginEntity)
         {
-            if (!loginEntity.LoginFromWebApp)
+            if (loginEntity != null)
             {
-                if (_usernames.Contains(loginEntity.Username))
+                if (!loginEntity.LoginFromWebApp)
                 {
-                    _usernames.Remove(loginEntity.Username);
+                    if (_usernames.Contains(loginEntity.Username))
+                    {
+                        _usernames.Remove(loginEntity.Username);
+                    }
                 }
             }
         }
