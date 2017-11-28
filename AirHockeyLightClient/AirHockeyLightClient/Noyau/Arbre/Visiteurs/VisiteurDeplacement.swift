@@ -98,8 +98,12 @@ class VisiteurDeplacement: VisiteurAbstrait {
         noeud.deplacer(position: pos)
         
         // Envoyer la commande
-        FacadeModele.instance.obtenirEtatEdition().currentUserObjectTransformChanged(uuid: noeud.obtenirUUID(),
-                                                                                     pos: noeud.position, rotation: MathHelper.determinerAngleAxeY(rotation: noeud.rotation), scale: noeud.scale)
+        if (ModeleEtatSelection.instance.isLastGestureRecognizer is UIPanGestureRecognizer) {
+            FacadeModele.instance.obtenirEtatEdition().currentUserObjectTransformChanged(uuid: noeud.obtenirUUID(),
+                                                                                         pos: noeud.position,
+                                                                                         rotation: MathHelper.determinerAngleAxeY(rotation: noeud.rotation),
+                                                                                         scale: noeud.scale)
+        }
     }
     
 }

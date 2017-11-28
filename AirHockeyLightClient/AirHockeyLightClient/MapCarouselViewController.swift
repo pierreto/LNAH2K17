@@ -215,7 +215,7 @@ class MapCarouselViewController: UIViewController, iCarouselDataSource, iCarouse
     }
     
     func activateAutomaticMapRefresh() {
-        self.timer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(self.refreshMaps), userInfo: nil, repeats: true)
+        self.timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(self.refreshMaps), userInfo: nil, repeats: true)
     }
     
     func deactivateAutomaticMapRefresh() {

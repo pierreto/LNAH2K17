@@ -37,7 +37,7 @@ class ModeleEtatSelection: ModeleEtat {
     /// Noeuds sélectionnés
     private var noeuds = [NoeudCommun]()
     
-    private var isLastGestureRecognizer: UIGestureRecognizer?
+    public var isLastGestureRecognizer: UIGestureRecognizer?
     
     /// Cette fonction initialise l'état. Elle décide quels objects sont
     /// sélectionnable
@@ -64,6 +64,8 @@ class ModeleEtatSelection: ModeleEtat {
         
         // Désactiver le contrôle de la caméra
         FacadeModele.instance.obtenirVue().editorView.allowsCameraControl = false
+        
+        self.isLastGestureRecognizer = nil
     }
     
     override func nettoyerEtat() {
@@ -245,6 +247,10 @@ class ModeleEtatSelection: ModeleEtat {
     private func annulerDeplacement() {
         let deplacement = GLKVector3Negate(self.deplacementTotal)
         let visiteur = VisiteurDeplacement(delta: deplacement)
+        
+        // Obliger d'envoyer la commande en cas d'annulation
+        self.isLastGestureRecognizer = FacadeModele.instance.normalPanGestureRecognizer
+        
         FacadeModele.instance.obtenirArbreRendu().accepterVisiteur(visiteur: visiteur)
     }
     
@@ -267,10 +273,12 @@ class ModeleEtatSelection: ModeleEtat {
                 noeud.appliquerDeplacement(deplacement: self.centreRotation)
 
                 // Envoyer la commande
-                FacadeModele.instance.obtenirEtatEdition().currentUserObjectTransformChanged(uuid: noeud.obtenirUUID(),
-                                                                                             pos: noeud.position,
-                                                                                             rotation: MathHelper.determinerAngleAxeY(rotation: noeud.rotation),
-                                                                                             scale: noeud.scale)
+                if (self.isLastGestureRecognizer is UIRotationGestureRecognizer) {
+                    FacadeModele.instance.obtenirEtatEdition().currentUserObjectTransformChanged(uuid: noeud.obtenirUUID(),
+                                                                                                 pos: noeud.position,
+                                                                                                 rotation: MathHelper.determinerAngleAxeY(rotation: noeud.rotation),
+                                                                                                 scale: noeud.scale)
+                }
             }
         }
     }
