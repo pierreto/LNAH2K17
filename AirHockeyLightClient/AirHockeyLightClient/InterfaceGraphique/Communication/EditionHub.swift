@@ -24,7 +24,9 @@ class EditionHub: BaseHub {
     init(connection: SignalR?) {
         super.init()
         self.hubProxy = connection?.createHubProxy("EditionHub")
-        
+    }
+    
+    override func initializeHub() {
         /// Reception de l'évènement d'une commande
         self.hubProxy?.on("NewCommand") { args in
             let strArgs = args?[0] as! String

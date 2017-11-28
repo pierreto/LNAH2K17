@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Practices.Unity;
 using InterfaceGraphique.Controls.WPF.MainMenu;
+using InterfaceGraphique.CommunicationInterface;
 
 namespace InterfaceGraphique {
 
@@ -57,6 +58,7 @@ namespace InterfaceGraphique {
             this.Button_R2P2Score.GotFocus += (sender, e) => this.Label_R1P1Name.Focus();
 
             timer.Tick += new EventHandler(StartRound);
+            User.Instance.UserEntity.IsPlaying = true;
         }
 
 
@@ -88,6 +90,12 @@ namespace InterfaceGraphique {
             this.Button_R1P2Score.ForeColor = Program.TournementMenu.Player2Color;
             this.Button_R1P3Score.ForeColor = Program.TournementMenu.Player3Color;
             this.Button_R1P4Score.ForeColor = Program.TournementMenu.Player4Color;
+
+            if (User.Instance.IsConnected)
+            {
+                User.Instance.UserEntity.IsPlaying = true;
+            }
+
         }
 
 
@@ -178,6 +186,10 @@ namespace InterfaceGraphique {
                 FonctionsNatives.resetNodeTree();
                 FonctionsNatives.resetCameraPosition();
                 Program.QuickPlay.CurrentGameState.IsTournementMode = false;
+                if(User.Instance.IsConnected)
+                {
+                    User.Instance.UserEntity.IsPlaying = false;
+                }
                 Program.FormManager.CurrentForm = Program.HomeMenu;
                 Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>());
             }
@@ -186,6 +198,7 @@ namespace InterfaceGraphique {
                     SetVirtualProfile();
                     SetPlayerNamesAndColors();
                     Program.FormManager.CurrentForm = Program.QuickPlay;
+
                 }
                 else
                     StartVirtualMatch();

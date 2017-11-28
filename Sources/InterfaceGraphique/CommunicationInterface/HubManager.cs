@@ -81,7 +81,7 @@ namespace InterfaceGraphique.CommunicationInterface
 
         }
 
-        public void HandleDisconnection()
+        public static void HandleDisconnection()
         {
             System.Windows.Forms.MessageBox.Show(
                  @"Le lien entre vous et le serveur s'est brisé. Vérifiez votre connection internet. Sinon ce peut être dû à une catastrophe naturelle, des chargés de laboratoires ou autre",

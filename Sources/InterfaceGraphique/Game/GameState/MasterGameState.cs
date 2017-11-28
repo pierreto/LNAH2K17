@@ -68,6 +68,7 @@ namespace InterfaceGraphique.Game.GameState
             if (!gameHasEnded && FonctionsNatives.isGameOver(neededGoalsToWin) == 1)
             {
                 EndGame();
+                User.Instance.UserEntity.IsPlaying = false;
                 gameHasEnded = true;
                 return;
             }

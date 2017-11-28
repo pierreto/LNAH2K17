@@ -126,7 +126,15 @@ namespace AirHockeyServer.Hubs
 
         public OnlineUser GetUserFromConnectionId(string connectionId)
         {
-            return UsersConnectionMapping[connectionId];
+            if (UsersConnectionMapping.ContainsKey(connectionId))
+            {
+                return UsersConnectionMapping[connectionId];
+
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public void DeleteConnection(int userId)

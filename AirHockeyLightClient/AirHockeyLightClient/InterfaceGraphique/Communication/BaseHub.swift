@@ -17,6 +17,9 @@ public class BaseHub {
         return hubProxy!
     }
     
+    func initializeHub() {
+    }
+    
     func logout() {
     }
     

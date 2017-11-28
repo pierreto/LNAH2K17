@@ -59,33 +59,35 @@ class ConnectServer: NSObject {
                 }
             }
             
-            let timer = DispatchTime.now() + 5 // start a timer
+            let timer = DispatchTime.now() + 15 // start a timer
             DispatchQueue.main.asyncAfter(deadline: timer, execute: timerTask)
             
             /// Avertir l'utilisateur en cas d'erreur au moment de la connexion
             clientConnection.getConnection()?.error = { error in
                 self.ipAddressError = "Une erreur est survenue durant la connection"
                 NotificationCenter.default.post(name: Notification.Name(rawValue: LoginNotification.SubmitNotification), object: self)
-                fullfil(false)
                 timerTask.cancel()
+                fullfil(false)
+                
             }
             
             clientConnection.getConnection()?.connectionFailed = { error in
                 print("Connection failed")
                 self.ipAddressError = "La connexion a échouée"
                 NotificationCenter.default.post(name: Notification.Name(rawValue: LoginNotification.SubmitNotification), object: self)
-                fullfil(false)
                 timerTask.cancel()
+                fullfil(false)
+                
             }
             
             /// Connexion au serveur réussie
             clientConnection.getConnection()?.connected = {
                 print("Connected with ip: " + ipAddress)
-                fullfil(true)
                 self.clientConnection.setIpAddress(ipAddress: ipAddress)
                 self.ipAddressError = ""
                 NotificationCenter.default.post(name: Notification.Name(rawValue: LoginNotification.SubmitNotification), object: self)
                 timerTask.cancel()
+                fullfil(true)
             }
         }
     }

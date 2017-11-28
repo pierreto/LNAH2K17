@@ -49,6 +49,7 @@
             this.ClientSize = new System.Drawing.Size(1184, 552);
             this.Controls.Add(this.elementHost1);
             this.Margin = new System.Windows.Forms.Padding(2);
+            this.MinimumSize = new System.Drawing.Size(300, 300);
             this.Name = "EditorHost";
             this.Text = "EditorHost";
             this.ResumeLayout(false);

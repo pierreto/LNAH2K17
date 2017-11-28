@@ -114,6 +114,7 @@ namespace InterfaceGraphique
             if(User.Instance.IsConnected)
             {
                 this.playerName1.Text = User.Instance.UserEntity.Username;
+                User.Instance.UserEntity.IsPlaying = true;
             }
             else
             {
@@ -205,7 +206,7 @@ namespace InterfaceGraphique
             Program.FormManager.CurrentForm = Program.HomeMenu;
             Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>());
             this.currentGameState.gameHasEnded = true;
-
+            
             ResetEndOfGameStats();
             Restart();
 
@@ -214,6 +215,7 @@ namespace InterfaceGraphique
                 return;
             }
 
+            User.Instance.UserEntity.IsPlaying = false;
             if (currentGameState.IsOnlineTournementMode)
             {
                 await Program.unityContainer.Resolve<TournamentViewModel>().WaitingRoomHub.LeaveTournament();

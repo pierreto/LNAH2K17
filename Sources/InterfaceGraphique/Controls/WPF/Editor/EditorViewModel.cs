@@ -13,6 +13,9 @@ using InterfaceGraphique.Services;
 using MaterialDesignThemes.Wpf;
 using Microsoft.Practices.ObjectBuilder2;
 using System.Security.Cryptography;
+using System.Text.RegularExpressions;
+using System.Windows.Controls;
+using InterfaceGraphique.Controls.WPF.Validation;
 using InterfaceGraphique.Editor;
 
 namespace InterfaceGraphique.Controls.WPF.Editor
@@ -177,7 +180,7 @@ namespace InterfaceGraphique.Controls.WPF.Editor
 
         private bool CanCheckPrivatePassword()
         {
-            return Password?.Length >= 5;
+            return InputValidationRule.ValidateInput(this.Password);
         }
 
         private async Task CheckPrivatePassword()
@@ -227,6 +230,8 @@ namespace InterfaceGraphique.Controls.WPF.Editor
                 OnPropertyChanged();
             }
         }
+
+
 
         public override void InitializeViewModel()
         {

@@ -26,7 +26,6 @@ class FriendsHub: BaseHub {
     init(connection: SignalR?) {
         super.init()
         self.hubProxy = connection?.createHubProxy("FriendsHub")
-        self.InitializeEvents()
     }
     
     func initialize() {
@@ -39,7 +38,7 @@ class FriendsHub: BaseHub {
         }
     }
     
-    private func InitializeEvents() {
+    override func initializeHub() {
         self.hubProxy?.on("FriendRequestEvent") { args in
             let newRequestJson = JSON(args?[0] as! Dictionary<String, Any>)
             let newRequest = self.friendsService.buildFriendRequestEntity(json: newRequestJson)
@@ -60,6 +59,16 @@ class FriendsHub: BaseHub {
             
             FriendsTableViewController.instance.removeFriend(exFriend: exFriend)
         }
+        
+        self.hubProxy?.on("NewAddableFriendEvent") { args in
+            let newUserJson = JSON(args?[0] as! Dictionary<String, Any>)
+            let newUser = self.friendsService.buildUserEntity(json: newUserJson)
+            
+            if AddFriendViewController.instance != nil {
+                AddFriendViewController.instance?.addNewAddableUser(username: newUser.getUsername())
+            }
+        }
+        
     }
     
     func getAllFriends() {

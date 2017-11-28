@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:InterfaceGraphique.Controls.WPF.Editor"
              xmlns:wpf="clr-namespace:InterfaceGraphique.Controls.WPF"
              xmlns:converters="clr-namespace:InterfaceGraphique.Controls.WPF.Converters"
+             xmlns:validation="clr-namespace:InterfaceGraphique.Controls.WPF.Validation"
              mc:Ignorable="d" Width="573" Height="313" 
      >
     <UserControl.Resources>
@@ -24,7 +25,7 @@
         </ResourceDictionary>
 
     </UserControl.Resources>
-    <Grid Background="#FF373A3E" DataContext="{Binding Source={StaticResource VMLocator}, Path=CreateMapViewModel}" >
+    <Grid DataContext="{Binding Source={StaticResource VMLocator}, Path=CreateMapViewModel}" Background="{StaticResource DarkerDarkGrayBrush}" >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="3*"/>
@@ -39,7 +40,13 @@
         </Grid.RowDefinitions>
         <TextBlock HorizontalAlignment="Center"  TextWrapping="Wrap" VerticalAlignment="Center" Width="510" Height="46" FontWeight="Bold" FontSize="32" Foreground="White" Text="Création d'une nouvelle carte :" Grid.ColumnSpan="2" Margin="32,-6,31,2"/>
 
-        <TextBox Foreground="#FFFDFDFD"  Text="{Binding MapName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="22" TextWrapping="Wrap" VerticalAlignment="Center" Width="216" Background="#FF6A6A6A" Grid.Row="1" Grid.Column="1" Margin="0,12,0,8" />
+        <TextBox Foreground="#FFFDFDFD"  HorizontalAlignment="Left" Height="22" TextWrapping="Wrap" VerticalAlignment="Center" Width="216" Background="#FF6A6A6A" Grid.Row="1" Grid.Column="1" Margin="0,12,0,8" >
+            <Binding Path="MapName" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                <Binding.ValidationRules>
+                    <validation:InputValidationRule  ValidatesOnTargetUpdated="True" ValidationStep="UpdatedValue" />
+                </Binding.ValidationRules>
+            </Binding>
+        </TextBox>
         <TextBlock HorizontalAlignment="Right"  TextWrapping="Wrap" VerticalAlignment="Center" Width="166" Height="28" FontWeight="Bold" FontSize="20" Foreground="White" Grid.Row="1" Margin="0,8,0,6"  ><Run Text="Nom de la carte "/><Run Text=":"/><Run Text=" "/></TextBlock>
         <TextBlock HorizontalAlignment="Right"  TextWrapping="Wrap" Text="Carte privée :" VerticalAlignment="Center" Width="138" Height="30" FontWeight="Bold" FontSize="20" Foreground="White" Grid.Row="2" />
         <TextBlock HorizontalAlignment="Right"  TextWrapping="Wrap" Text="Mot de passe :" VerticalAlignment="Center" Width="138" Height="30" FontWeight="Bold" FontSize="20" Foreground="White" Grid.Row="3" Visibility="{Binding IsPrivate, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}" />

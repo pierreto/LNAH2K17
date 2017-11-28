@@ -5,13 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Threading;
+using InterfaceGraphique.Editor;
 using InterfaceGraphique.Entities.Editor;
 
 namespace InterfaceGraphique.Controls.WPF.Editor
 {
     public class EditorUsersViewModel : ViewModelBase
     {
+        private MapManager mapManager;
 
+        private string mapName ="";
         private ObservableCollection<OnlineUser> users;
         private readonly Dispatcher _dispatcher;
         protected Dispatcher Dispatcher
@@ -32,11 +35,13 @@ namespace InterfaceGraphique.Controls.WPF.Editor
                 this.Dispatcher.Invoke(DispatcherPriority.DataBind, action);
             }
         }
-        public EditorUsersViewModel()
+        public EditorUsersViewModel(MapManager mapManager)
         {
             _dispatcher = Dispatcher.CurrentDispatcher;
 
             users = new ObservableCollection<OnlineUser>();
+
+            this.mapManager = mapManager;
         }
 
         public override void InitializeViewModel()
@@ -47,6 +52,7 @@ namespace InterfaceGraphique.Controls.WPF.Editor
                     users.Clear();
                 }
             );
+            this.MapName = this.mapManager.CurrentMapInfo.Name;
 
         }
 
@@ -87,6 +93,15 @@ namespace InterfaceGraphique.Controls.WPF.Editor
                 }
             );
         
+        }
+        public string MapName
+        {
+            get { return mapName; }
+            set
+            {
+                mapName = value;
+                OnPropertyChanged();
+            }
         }
     }
 }

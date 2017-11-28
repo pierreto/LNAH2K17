@@ -13,7 +13,7 @@ namespace InterfaceGraphique.CommunicationInterface
     {
         public virtual void HandleError(string className = "")
         {
-            Program.unityContainer.Resolve<HubManager>().HandleDisconnection();
+            HubManager.HandleDisconnection();
         }
     }
 }

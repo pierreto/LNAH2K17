@@ -111,6 +111,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
         {
             try
             {
+                User.Instance.UserEntity.IsPlaying = false;
                 var test = User.Instance.UserEntity;
                 test.Profile = "";
                 await WaitingRoomProxy.Invoke("LeaveTournament", test, CurrentTournamentId);
@@ -176,6 +177,7 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
         public void OnFinalResults(TournamentEntity tournament)
         {
             WinnerResultEvent?.Invoke(this, tournament.Final.Winner);
+            User.Instance.UserEntity.IsPlaying = false;
         }
 
         public void OnPlayerLeft()

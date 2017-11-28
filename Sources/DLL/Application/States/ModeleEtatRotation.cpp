@@ -146,7 +146,7 @@ void ModeleEtatRotation::playerMouseMove(int x, int y) {
 			GetSystemTime(&st);
 			accTime_ += st.wMilliseconds;
 			if (accTime_>1000) {
-				canSendToServer = true && noeudsSurLaTable();
+				canSendToServer = true; //&& noeudsSurLaTable();
 				accTime_ = 0;
 			}
 		}
@@ -173,10 +173,16 @@ void ModeleEtatRotation::applyRotation(float angle, bool canSendToServer)
 		{
 			if (canSendToServer)
 			{
+
 					TransformEventCallback callback = ModeleEtatJeu::obtenirInstance()->getTransformEventCallback();
 					if (callback)
 					{
-						callback(noeud->getUUID(), glm::value_ptr(noeud->obtenirPositionRelative()), noeud->obtenirRotation().y, glm::value_ptr(noeud->obtenirScale()));
+						VisiteurSurTable visiteur;
+						noeud->accepterVisiteur(&visiteur);
+						if (visiteur.sontSurTable())
+						{
+							callback(noeud->getUUID(), glm::value_ptr(noeud->obtenirPositionRelative()), noeud->obtenirRotation().y, glm::value_ptr(noeud->obtenirScale()));
+						}
 					}
 			}
 		}
