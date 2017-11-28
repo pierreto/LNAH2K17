@@ -108,9 +108,11 @@ class ProfileViewController: UIViewController, UICollectionViewDelegate, UIColle
         if(HubManager.sharedConnection.getId() == HubManager.sharedConnection.searchId) {
             itemCollectionView.isHidden = false
             itemsLabel.isHidden = false
+            noItemsLabel.isHidden = false
         } else {
             itemCollectionView.isHidden = true
             itemsLabel.isHidden = true
+            noItemsLabel.isHidden = true
         }
     }
     

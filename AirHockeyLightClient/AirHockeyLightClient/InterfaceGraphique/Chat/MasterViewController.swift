@@ -168,6 +168,14 @@ class MasterViewController: UITableViewController {
     }
     */
 
+    deinit {
+        print("de-init MasterViewController")
+        reset()
+    }
+    
+    func reset() {
+        self.channels = [ChannelEntity]()
+    }
 }
 
 extension MasterViewController: AddChannelDelegate {
