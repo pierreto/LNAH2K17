@@ -254,21 +254,19 @@ namespace InterfaceGraphique {
             Program.EditorHost.ShowDialog();
         }
 
-        public async void LeaveOnlineEdition() // Called by the edition hub
+        public async Task LeaveOnlineEdition() // Called by the edition hub
         {
-            if (!this.IsHandleCreated)
+            if (this.IsHandleCreated)
             {
-                this.CreateHandle();
+                this.BeginInvoke(new MethodInvoker(delegate
+                {
+                    ResetDefaultTable();
+                    this.CurrentState = this.offlineState;
+                    this.CurrentState.JoinEdition(null);
+                    this.userPanel.Visible = false;
+                }));
             }
-            this.BeginInvoke(new MethodInvoker(delegate
-            {
-                ResetDefaultTable();
-                this.CurrentState = this.offlineState;
-                this.CurrentState.JoinEdition(null);
-                this.userPanel.Visible = false;
-            }));
-            
-         
+
         }
 
         ////////////////////////////////////////////////////////////////////////

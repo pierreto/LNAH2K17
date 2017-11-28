@@ -153,6 +153,18 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate, UICol
         self.enableNavigationBar(activer: false)
     }
     
+    @IBAction func showTutorial(_ sender: Any) {
+        let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TutorialViewControllerID") as! TutorialViewController
+        self.addChildViewController(viewController)
+        
+        viewController.view.frame = self.view.frame
+        self.view.addSubview(viewController.view)
+        viewController.didMove(toParentViewController: self)
+        
+        // Désactiver la barre de navigation
+        self.enableNavigationBar(activer: false)
+    }
+    
     func enableNavigationBar(activer: Bool) {
         self.navigationBar.hidesBackButton = !activer
         
@@ -178,10 +190,6 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate, UICol
         
         // Jouer le son
         AudioService.instance.playSound(soundName: EDITION_SOUND.SAVE.rawValue)
-    }
-    
-    @IBAction func openTutorial(_ sender: Any) {
-        self.performSegue(withIdentifier: "tutorialSegue", sender: self)
     }
     
     func takeMapSnapshot() -> UIImage {

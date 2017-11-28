@@ -110,7 +110,26 @@ namespace AirHockeyServer.Controllers
         {
             try
             {
-                bool result = await MapService.RemoveMap(id);
+                bool result;
+                string gameId = EditionHub.ObtainEditionGroupIdentifier(id);
+                if (editionService.UsersPerGame.ContainsKey(gameId))
+                {
+                    int CurrentNumberOfPlayer = editionService.UsersPerGame[gameId].users.Count;
+                    if (CurrentNumberOfPlayer > 0)
+                    {
+                        result = false;
+                    }
+                    else // personne qui edite la map, on peut supprimer
+                    {
+                        result = await MapService.RemoveMap(id);
+                    }
+
+                } // personne qui edite la map, on peut supprimer
+                else
+                {
+                    result = await MapService.RemoveMap(id);
+                }
+
                 return HttpResponseGenerator.CreateSuccesResponseMessage(HttpStatusCode.OK, result);
             }
             catch

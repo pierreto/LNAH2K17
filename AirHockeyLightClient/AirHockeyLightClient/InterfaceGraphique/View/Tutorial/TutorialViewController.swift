@@ -46,11 +46,60 @@ class TutorialViewController: UIViewController {
         super.viewDidLoad()
         TutorialViewController.instance = self
         
+        self.view.backgroundColor = UIColor.black.withAlphaComponent(0.8)
+        self.showAnimate()
+        
         slideshow.pageControlPosition = PageControlPosition.underScrollView
         slideshow.pageControl.currentPageIndicatorTintColor = UIColor.lightGray
         slideshow.pageControl.pageIndicatorTintColor = UIColor.black
         slideshow.contentScaleMode = UIViewContentMode.scaleAspectFit
         slideshow.setImageInputs(localSource)
+    }
+    
+    @IBAction func closeView(_ sender: Any) {
+        self.removeAnimate()
+    }
+    
+    /// Animation à l'ouverture
+    func showAnimate() {
+        self.view.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
+        self.view.alpha = 0.0
+        UIView.animate(
+            withDuration: 0.25,
+            animations: {
+                self.view.alpha = 1.0
+                self.view.transform = CGAffineTransform(scaleX: 1.0, y: 1)
+        }
+        )
+    }
+    
+    /// Animation à la fermeture
+    func removeAnimate() {
+        UIView.animate(
+            withDuration: 0.25,
+            animations: {
+                self.view.transform = CGAffineTransform(scaleX: 1.3, y: 1.3)
+                self.view.alpha = 0.0
+        },
+            completion: {
+                (finished: Bool) in
+                if finished {
+                    if self.parent is OnlineMenuViewController {
+                        (self.parent as! OnlineMenuViewController).navigationController?.isNavigationBarHidden = false
+                    } else if self.parent is OfflineMenuViewController {
+                        (self.parent as! OfflineMenuViewController).navigationController?.isNavigationBarHidden = false
+                    } else if self.parent is EditorViewController {
+                        (self.parent as! EditorViewController).enableNavigationBar(activer: true)
+                        
+                    }
+                    
+                    self.view.removeFromSuperview()
+                }
+        }
+        )
+        
+        // Réactiver la barre de navigation
+        //EditorViewController.instance.enableNavigationBar(activer: true)
     }
     
 }

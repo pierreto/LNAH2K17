@@ -133,6 +133,8 @@ namespace InterfaceGraphique
                 this.playerName.Text = senderName;
                 DisabledButtonsExeptGameRequest(this.Controls);
                 EnablePop();
+                this.gameRequestPopup.BringToFront();
+                this.gameRequestPopup.Select();
             }));
         }
 
