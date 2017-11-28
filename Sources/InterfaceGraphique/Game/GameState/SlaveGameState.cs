@@ -134,6 +134,7 @@ namespace InterfaceGraphique.Game.GameState
         public override void EndGame()
         {
             gameHasEnded = true;
+            Program.QuickPlay.GetReplayButton().Visible = false;
             Program.QuickPlay.EndGame(true);
             Program.QuickPlay.UnsuscribeEventHandlers();
             FonctionsNatives.setGameEnded();

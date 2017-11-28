@@ -145,6 +145,7 @@ namespace InterfaceGraphique.Game.GameState
         ////////////////////////////////////////////////////////////////////////
         public override void EndGame() {
             gameHasEnded = true;
+            Program.QuickPlay.GetReplayButton().Visible = false;
             Task.Run(() => gameHub.SendGameOver());
             Program.QuickPlay.EndGame(true);
             Program.QuickPlay.UnsuscribeEventHandlers();
