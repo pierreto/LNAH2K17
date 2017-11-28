@@ -96,7 +96,7 @@ void ModeleEtatPointControl::initialiser()
 	{
 		if (controlPointEventCallback_)
 		{
-			selectionCallback_(nullptr, false, true);
+			selectionCallback_("", false, true);
 		}
 	}
 }

@@ -252,13 +252,17 @@ namespace InterfaceGraphique {
 
         public async void LeaveOnlineEdition() // Called by the edition hub
         {
-            this.BeginInvoke(new MethodInvoker(delegate
+            if (this.Handle != null)
             {
-                ResetDefaultTable();
-                this.CurrentState = this.offlineState;
-                this.CurrentState.JoinEdition(null);
-                this.userPanel.Visible = false;
-            }));
+                this.BeginInvoke(new MethodInvoker(delegate
+                {
+                    ResetDefaultTable();
+                    this.CurrentState = this.offlineState;
+                    this.CurrentState.JoinEdition(null);
+                    this.userPanel.Visible = false;
+                }));
+            }
+         
         }
 
         ////////////////////////////////////////////////////////////////////////
