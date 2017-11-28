@@ -50,7 +50,7 @@ class FriendRequestsViewController: UIViewController {
     }
     
     func resetNotification() {
-        self.tabBarItem.badgeValue = ""
+        self.tabBarItem.badgeValue = nil
     }
 
     func enableNavigationBar(activer: Bool) {
