@@ -583,7 +583,7 @@ namespace InterfaceGraphique {
         /// @return     Void 
         ///
         ////////////////////////////////////////////////////////////////////////
-        protected override bool ProcessCmdKey(ref Message msg, Keys keyData) {
+        /*protected override bool ProcessCmdKey(ref Message msg, Keys keyData) {
             switch (keyData) {
                 case Keys.Up:
                     FonctionsNatives.fleches(0, GlobalVariables.deplacementVue);
@@ -692,6 +692,118 @@ namespace InterfaceGraphique {
             }
 
             return base.ProcessCmdKey(ref msg, keyData);
+        }*/
+        public bool ProcessCmdKey(Keys keyData)
+        {
+            switch (keyData)
+            {
+                case Keys.Up:
+                    FonctionsNatives.fleches(0, GlobalVariables.deplacementVue);
+                    return true;
+
+                case Keys.Down:
+                    FonctionsNatives.fleches(0, -GlobalVariables.deplacementVue);
+                    return true;
+
+                case Keys.Left:
+                    FonctionsNatives.fleches(-GlobalVariables.deplacementVue, 0);
+                    return true;
+
+                case Keys.Right:
+                    FonctionsNatives.fleches(GlobalVariables.deplacementVue, 0);
+                    return true;
+
+                case Keys.D:
+                    changerEtatEdition(Toolbar_Move, null, MODELE_ETAT.DEPLACEMENT);
+                    return true;
+
+                case Keys.S:
+                    changerEtatEdition(Toolbar_Select, null, MODELE_ETAT.SELECTION);
+                    return true;
+
+                case Keys.R:
+                    changerEtatEdition(Toolbar_Rotate, null, MODELE_ETAT.ROTATION);
+                    return true;
+
+                case Keys.E:
+                    changerEtatEdition(Toolbar_Scale, null, MODELE_ETAT.MISE_A_ECHELLE);
+                    return true;
+
+                case Keys.C:
+                    changerEtatEdition(Toolbar_Duplicate, null, MODELE_ETAT.DUPLIQUER);
+                    return true;
+
+                case Keys.Z:
+                    if (Toolbar_Zoom.Enabled)
+                        changerEtatEdition(Toolbar_Zoom, null, MODELE_ETAT.ZOOM);
+                    return true;
+
+                case Keys.G:
+                    changerEtatEdition(Toolbar_ControlPoint, null, MODELE_ETAT.POINTS_CONTROLE);
+                    return true;
+
+                case Keys.M:
+                    changerEtatEdition(Toolbar_Wall, null, MODELE_ETAT.CREATION_MURET);
+                    return true;
+
+                case Keys.P:
+                    changerEtatEdition(Toolbar_Portal, null, MODELE_ETAT.CREATION_PORTAIL);
+                    return true;
+
+                case Keys.B:
+                    changerEtatEdition(Toolbar_Booster, null, MODELE_ETAT.CREATION_ACCELERATEUR);
+                    return true;
+
+                case Keys.T:
+                    Program.FormManager.CurrentForm = Program.TestMode;
+                    return true;
+
+                case (Keys.N | Keys.Control):
+                    ResetDefaultTable();
+                    return true;
+
+                case (Keys.O | Keys.Control):
+                    mapManager.OpenLocalMap();
+                    return true;
+
+                case (Keys.S | Keys.Control):
+                    Task.Run(async () => await mapManager.SaveMap());
+                    return true;
+
+                case (Keys.Q | Keys.Control):
+                    ResetDefaultTable();
+                    Program.FormManager.CurrentForm = Program.HomeMenu;
+                    Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>());
+                    return true;
+
+                case Keys.Oemplus:
+                    FonctionsNatives.zoomIn();
+                    return true;
+
+                case Keys.OemMinus:
+                    FonctionsNatives.zoomOut();
+                    return true;
+
+                case Keys.Escape:
+                    CurrentState.Escape();
+                    FonctionsNatives.escape();
+                    return true;
+
+                case Keys.Delete:
+                    FonctionsNatives.deleteSelection();
+                    selectionSupprimee();
+                    return true;
+
+                case Keys.D1:
+                    ToggleOrbit(false);
+                    return true;
+
+                case Keys.D2:
+                    ToggleOrbit(true);
+                    return true;
+            }
+
+            return true;
         }
 
         public ToolStripMenuItem EditionSupprimer

@@ -40,16 +40,16 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         public QuickPlay()
         {
+            this.KeyPreview = true;
+
             InitializeComponent();
-
+            Application.AddMessageFilter(new MessageFilter { Main = this });
             currentGameState = new OfflineGameState();
-
+            
             InitializeEvents();
 
             this.KeyPreview = true;
         }
-
-
         ////////////////////////////////////////////////////////////////////////
         ///
         /// Ajoute le panneau openGL à la Form en cours. Les controles sont
@@ -137,6 +137,8 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void InitializeEvents()
         {
+            this.KeyPreview = true;
+
             this.MenuItem_MainMenu.Click += (sender, e) => OnMainMenuClicked(sender, e);
             this.MenuItem_Help.Click += (sender, e) => { EditorHelp form = new EditorHelp(); form.ShowQuickPlayHelpText(); form.ShowDialog(); };
             this.MenuItem_OrbitView.Click += (sender, e) => ToggleOrbit(true);
@@ -436,7 +438,7 @@ namespace InterfaceGraphique
                     {
                         var gameManager = Program.unityContainer.Resolve<GameManager>();
 
-                        var players = gameManager.CurrentOnlineGame.Players;
+                        var players = gameManager.CurrentOnlineGame?.Players;
 
                         this.playerName2.Text = players[0].Id == User.Instance.UserEntity.Id ? players[1].Username : players[0].Username;
                         this.pointsNb.Visible = true;
@@ -495,7 +497,7 @@ namespace InterfaceGraphique
         /// @return     Vrai si la touche est gérée 
         ///
         ////////////////////////////////////////////////////////////////////////
-        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        /*protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             switch (keyData)
             {
@@ -559,8 +561,72 @@ namespace InterfaceGraphique
                     return true;
             }
             return base.ProcessCmdKey(ref msg, keyData);
-        }
+        }*/
+        protected  bool ProcessCmdKey(Keys keyData)
+        {
+            switch (keyData)
+            {
+                case Keys.J:
+                    FonctionsNatives.toggleLights(0);
+                    return true;
 
+                case Keys.K:
+                    FonctionsNatives.toggleLights(1);
+                    return true;
+
+                case Keys.L:
+                    FonctionsNatives.toggleLights(2);
+                    return true;
+
+                case Keys.Escape:
+                    ApplyEsc();
+                    currentGameState.gameHub?.SendGamePauseOrResume();
+                    return true;
+
+                case Keys.Space:
+                    Program.FormManager.CurrentForm = Program.QuickPlay;
+                    return true;
+
+                case Keys.Up:
+                    FonctionsNatives.fleches(0, GlobalVariables.deplacementVue);
+                    return true;
+
+                case Keys.Down:
+                    FonctionsNatives.fleches(0, -GlobalVariables.deplacementVue);
+                    return true;
+
+                case Keys.Left:
+                    FonctionsNatives.fleches(-GlobalVariables.deplacementVue, 0);
+                    return true;
+
+                case Keys.Right:
+                    FonctionsNatives.fleches(GlobalVariables.deplacementVue, 0);
+                    return true;
+
+                case Keys.Oemplus:
+                    FonctionsNatives.zoomIn();
+                    return true;
+
+                case Keys.OemMinus:
+                    FonctionsNatives.zoomOut();
+                    return true;
+
+                case Keys.D1:
+                    ToggleOrbit(false);
+                    return true;
+
+                case Keys.D2:
+                    ToggleOrbit(true);
+                    return true;
+
+                case (Keys.Q | Keys.Control):
+                    ResetDefaultTable();
+                    Program.FormManager.CurrentForm = Program.HomeMenu;
+                    Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>());
+                    return true;
+            }
+            return true;
+        }
         public AbstractGameState CurrentGameState
         {
             get => currentGameState;
@@ -579,7 +645,41 @@ namespace InterfaceGraphique
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+        private class MessageFilter : IMessageFilter
+        {
+            private bool processingKey = false;
+            public QuickPlay Main { get; set; }
+            public bool PreFilterMessage(ref Message msg)
+            {
+                const int WM_KEYDOWN = 0x100;
+                const int WM_KEYUP = 0x101;
+                if (msg.Msg == WM_KEYDOWN)
+                {
+                    var keyData = (Keys)msg.WParam;
+                    if (Program.FormManager.CurrentForm.GetType() == typeof(QuickPlay))
+                    {
+                        Program.QuickPlay.ProcessCmdKey(keyData);
+                    }else if (Program.FormManager.CurrentForm.GetType() == typeof(TestMode))
+                    {
+                        Program.TestMode.ProcessCmdKey(keyData);
+                    }else if (Program.FormManager.CurrentForm.GetType() == typeof(Editeur))
+                    {
+                        Program.Editeur.ProcessCmdKey(keyData);
+                    }
+                    return false; // Process keys before return
+                        
+                }
+                else if (msg.Msg == WM_KEYUP)
+                {
+                //    var keyData = (Keys)msg.WParam;
+         
+                    // Program.QuickPlay.ProcessCmdKey(keyData);
+                    return false; // Process keys before return
+                        
+                }
+                return false;
+            }
+        }
 
     }
 }

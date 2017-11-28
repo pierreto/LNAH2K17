@@ -346,6 +346,7 @@ namespace InterfaceGraphique.Controls.WPF.MainMenu
             Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<HomeViewModel>());
             CommandManager.InvalidateRequerySuggested();
             Program.FormManager.HideCompletely();
+            Program.Restart();
         }
 
         public async Task Quitter()

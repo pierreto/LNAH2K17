@@ -143,11 +143,11 @@ namespace InterfaceGraphique
             configurationMenu = new ConfigurationMenu();
             quickPlay = new QuickPlay();
             testMode = new TestMode();
+            onlineTournament = new OnlineTournament();
             generalProperties = new GeneralProperties();
             testChatMenu = new TestChatMenu();
             creditsMenu = new CreditsMenu();
             lobbyHost = new LobbyHost();
-            onlineTournament = new OnlineTournament();
             userProfileMenu = new UserProfileMenu();
             storeMenu = new StoreMenu();
 
@@ -157,6 +157,12 @@ namespace InterfaceGraphique
 
             Application.Run(formManager);
 
+        }
+
+        public static void Restart()
+        {
+            Application.Restart();
+            Environment.Exit(0);
         }
 
         private static void ThreadExceptionHandler(object sender, ThreadExceptionEventArgs e)

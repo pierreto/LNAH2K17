@@ -137,6 +137,8 @@ namespace AirHockeyServer.Hubs
 
         public override Task OnDisconnected(bool stopCalled)
         {
+            string gameID = ConnectionMapper.GetGameId(Context.ConnectionId).ToString();
+            Clients.Group(gameID, Context.ConnectionId).DisconnectedOpponent();
             Disconnect();
 
             return base.OnDisconnected(stopCalled);

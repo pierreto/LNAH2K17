@@ -126,6 +126,7 @@
             this.List_VirtualProfile4.Size = new System.Drawing.Size(160, 23);
             this.List_VirtualProfile4.TabIndex = 30;
             this.List_VirtualProfile4.TabStop = false;
+            this.List_VirtualProfile4.Visible = false;
             // 
             // Label_Player4
             // 
@@ -208,6 +209,7 @@
             this.List_VirtualProfile3.Size = new System.Drawing.Size(160, 23);
             this.List_VirtualProfile3.TabIndex = 33;
             this.List_VirtualProfile3.TabStop = false;
+            this.List_VirtualProfile3.Visible = false;
             // 
             // Panel_Player2BackColor
             // 
@@ -237,6 +239,7 @@
             this.List_VirtualProfile2.Size = new System.Drawing.Size(160, 23);
             this.List_VirtualProfile2.TabIndex = 28;
             this.List_VirtualProfile2.TabStop = false;
+            this.List_VirtualProfile2.Visible = false;
             // 
             // Button_Player2Human
             // 
@@ -341,6 +344,7 @@
             this.List_VirtualProfile1.Size = new System.Drawing.Size(160, 23);
             this.List_VirtualProfile1.TabIndex = 33;
             this.List_VirtualProfile1.TabStop = false;
+            this.List_VirtualProfile1.Visible = false;
             // 
             // Button_Player1Virtual
             // 
@@ -451,7 +455,7 @@
             this.Controls.Add(this.Panel_Player2BorderColor);
             this.Controls.Add(this.Panel_Player1BorderColor);
             this.Controls.Add(this.Panel_Player3BorderColor);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "OnlineTournementMenu";
             this.Text = "OnlineTournementMenu";
             this.Panel_Player4BackColor.ResumeLayout(false);

@@ -322,7 +322,7 @@ namespace InterfaceGraphique {
         /// @return     Vrai si la touche est gérée 
         ///
         ////////////////////////////////////////////////////////////////////////
-        protected override bool ProcessCmdKey(ref Message msg, Keys keyData) {
+        /*protected override bool ProcessCmdKey(ref Message msg, Keys keyData) {
             switch (keyData) {
                 case Keys.T:
                     Program.FormManager.CurrentForm = Program.Editeur;
@@ -388,8 +388,76 @@ namespace InterfaceGraphique {
                     return true;
             }
             return base.ProcessCmdKey(ref msg, keyData);
-        }
+        }*/
+        public  bool ProcessCmdKey(Keys keyData)
+        {
+            switch (keyData)
+            {
+                case Keys.T:
+                    Program.FormManager.CurrentForm = Program.Editeur;
+                    return true;
 
+                case Keys.J:
+                    FonctionsNatives.toggleLights(0);
+                    return true;
+
+                case Keys.K:
+                    FonctionsNatives.toggleLights(1);
+                    return true;
+
+                case Keys.L:
+                    FonctionsNatives.toggleLights(2);
+                    return true;
+
+                case Keys.Escape:
+                    this.MenuStrip_MenuBar.Visible = !this.MenuStrip_MenuBar.Visible;
+                    FonctionsNatives.escape();
+                    return true;
+
+                case Keys.Space:
+                    Program.FormManager.CurrentForm = Program.TestMode;
+                    return true;
+
+                case Keys.Up:
+                    FonctionsNatives.fleches(0, GlobalVariables.deplacementVue);
+                    return true;
+
+                case Keys.Down:
+                    FonctionsNatives.fleches(0, -GlobalVariables.deplacementVue);
+                    return true;
+
+                case Keys.Left:
+                    FonctionsNatives.fleches(-GlobalVariables.deplacementVue, 0);
+                    return true;
+
+                case Keys.Right:
+                    FonctionsNatives.fleches(GlobalVariables.deplacementVue, 0);
+                    return true;
+
+                case Keys.Oemplus:
+                    FonctionsNatives.zoomIn();
+                    return true;
+
+                case Keys.OemMinus:
+                    FonctionsNatives.zoomOut();
+                    return true;
+
+                case Keys.D1:
+                    ToggleOrbit(false);
+                    return true;
+
+                case Keys.D2:
+                    ToggleOrbit(true);
+                    return true;
+
+                case (Keys.Q | Keys.Control):
+                    ResetDefaultTable();
+                    Program.FormManager.CurrentForm = Program.HomeMenu;
+                    Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>());
+                    return true;
+            }
+            return true;
+        }
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
