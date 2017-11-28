@@ -21,6 +21,12 @@ namespace InterfaceGraphique.Controls.WPF.Friends
         private TaskFactory ctxTaskFactory;
         private ObservableCollection<FriendListItemViewModel> friendList;
 
+
+        public bool CanShowPlay
+        {
+            get => !User.Instance.UserEntity.IsPlaying;
+        }
+
         public bool HasNewRequest
         {
             get

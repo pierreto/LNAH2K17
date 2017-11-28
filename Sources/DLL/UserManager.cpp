@@ -24,10 +24,15 @@ void UserManager::addNewUser(std::string name, std::string hexColor)
 
 void UserManager::removeUser(std::string name)
 {
-	OnlineUser* user = usersMap_.at(name);
-	user->deselectAll();
-	delete user;
-	usersMap_.erase(name);
+	std::map<std::string, OnlineUser*>::iterator it = usersMap_.find(name);
+	if (it != usersMap_.end())
+	{
+		//element found;
+		OnlineUser* user = usersMap_.at(name);
+		user->deselectAll();
+		delete user;
+		usersMap_.erase(name);
+	}
 }
 
 bool UserManager::userExist(std::string name)

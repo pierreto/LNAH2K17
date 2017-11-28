@@ -110,7 +110,7 @@
                                     <StackPanel  Grid.Column="2" Orientation="Horizontal" Margin="3px" HorizontalAlignment="Right" Visibility="{Binding DataContext.CurrentFriend, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Converter={convert:BooleanToVisibilityConverter}, ConverterParameter=True}">
 
                                         <Button fa:Awesome.Content="Gamepad" Margin="0 0 5 0" BorderThickness="0" Command="{Binding PlayGameCommand}"
-                                                Visibility="{Binding CanShowOnline, Converter={convert:BooleanToVisibilityConverter}, ConverterParameter=True}"></Button>
+                                                Visibility="{Binding CanSendPlay, Converter={convert:BooleanToVisibilityConverter}, ConverterParameter=True}"></Button>
                                         <Button fa:Awesome.Content="Comment" Margin="0 0 5 0" BorderThickness="0" Background="{StaticResource UltraDarkGrayBrush}" Command="{Binding ChatWithCommand}"
                                                 Visibility="{Binding CanShowOnline, Converter={convert:BooleanToVisibilityConverter}, ConverterParameter=True}"></Button>
                                         <Button fa:Awesome.Content="Trash" Margin="0 0 5 0" BorderThickness="0" Background="{StaticResource DeleteBrush}" Command="{Binding RemoveFriendCommand}"></Button>

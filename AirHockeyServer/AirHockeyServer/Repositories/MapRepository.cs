@@ -151,12 +151,12 @@ namespace AirHockeyServer.Repositories
                     var query = from map in DC.MapsTable where map.Id == updatedMap.Id select map;
                     var results = query.ToArray();
                     var existingMap = results.First();
-                    if (updatedMap.Json != null)
+                    if (!String.IsNullOrEmpty(updatedMap.Json))
                     {
                         existingMap.Json = updatedMap.Json;
                         existingMap.LastBackup = updatedMap.LastBackup;
                     }
-                    if(updatedMap.Icon != null)
+                    if(!String.IsNullOrEmpty(updatedMap.Icon))
                     {
                         existingMap.Icon = updatedMap.Icon;
                     }
@@ -207,9 +207,9 @@ namespace AirHockeyServer.Repositories
 
                     if (diff >= 0) // map est plus à jour que celle dans la db : on met a jour la db 
                     {
-                        if (map.Json != null)
+                        if (!String.IsNullOrEmpty(map.Json))
                             existingMap.Json = map.Json;
-                        if (map.Icon != null)
+                        if (!String.IsNullOrEmpty(map.Icon))
                             existingMap.Icon = map.Icon;
                         existingMap.LastBackup = map.LastBackup;
                         await Task.Run(() => DC.SubmitChanges());

@@ -9,6 +9,8 @@ using InterfaceGraphique.Entities;
 using InterfaceGraphique.Services;
 using System.Drawing;
 using InterfaceGraphique.CommunicationInterface.WaitingRooms;
+using InterfaceGraphique.Controls.WPF.Friends;
+using Microsoft.Practices.Unity;
 
 namespace InterfaceGraphique.Game.GameState
 {
@@ -69,6 +71,14 @@ namespace InterfaceGraphique.Game.GameState
             {
                 EndGame();
                 User.Instance.UserEntity.IsPlaying = false;
+                Program.unityContainer.Resolve<FriendListViewModel>().OnPropertyChanged("CanShowPlay");
+                if (Program.unityContainer.Resolve<FriendListViewModel>().FriendList != null)
+                {
+                    foreach (FriendListItemViewModel flivm in Program.unityContainer.Resolve<FriendListViewModel>().FriendList)
+                    {
+                        flivm.OnPropertyChanged("CanSendPlay");
+                    }
+                }
                 gameHasEnded = true;
                 return;
             }
