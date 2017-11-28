@@ -151,7 +151,7 @@ void ModeleEtatScale::sendToServer()
 {
 	if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
 	{
-		if (noeudsSurLaTable()) {
+		//if (noeudsSurLaTable()) {
 
 			TransformEventCallback callback = ModeleEtatJeu::obtenirInstance()->getTransformEventCallback();
 
@@ -160,10 +160,16 @@ void ModeleEtatScale::sendToServer()
 
 				if (callback)
 				{
-					callback(node->getUUID(), glm::value_ptr(node->obtenirPositionRelative()), node->obtenirRotation().y, glm::value_ptr(node->obtenirScale()));
+
+					VisiteurSurTable visiteur;
+					node->accepterVisiteur(&visiteur);
+					if (visiteur.sontSurTable())
+					{
+						callback(node->getUUID(), glm::value_ptr(node->obtenirPositionRelative()), node->obtenirRotation().y, glm::value_ptr(node->obtenirScale()));
+					}
 				}
 			}
-		}
+		//}
 	}
 }
 ////////////////////////////////////////////////////////////////////////
