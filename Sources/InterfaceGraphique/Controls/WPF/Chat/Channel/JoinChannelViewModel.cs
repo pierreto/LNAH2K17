@@ -70,7 +70,7 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
             Program.unityContainer.Resolve<ChatListViewModel>().Items.Add(new ChannelListItemViewModel(cE));
             Program.unityContainer.Resolve<ChatListViewModel>().Items.Move(Program.unityContainer.Resolve<ChatListViewModel>().Items.Count - 1, 1);
             Program.unityContainer.Resolve<ChannelViewModel>().SetAsCurrentChannel(cE);
-            Program.unityContainer.Resolve<JoinChannelListViewModel>().Items.Remove(Program.unityContainer.Resolve<JoinChannelListViewModel>().Items.Single(x => x.Name == cE.Name));
+            Program.unityContainer.Resolve<JoinChannelListViewModel>().Items.Remove(Program.unityContainer.Resolve<JoinChannelListViewModel>().Items.FirstOrDefault(x => x.Name == cE.Name));
             ActiveChannel.Instance.JoinChannelEntity = null;
         }
 
