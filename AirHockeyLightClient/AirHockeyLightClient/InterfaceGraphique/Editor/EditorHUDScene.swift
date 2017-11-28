@@ -108,6 +108,8 @@ class EditorHUDScene: SKScene {
         self.cameraControlButton?.isHidden = !activer;
         self.selectionButton?.isHidden = !activer;
         self.duplicateButton?.isHidden = !activer;
+        self.deselectAllButton?.isHidden = !activer;
+        self.deleteButton?.isHidden = !activer
         self.pointControlButton?.isHidden = !activer;
         self.portalButton?.isHidden = !activer;
         self.wallButton?.isHidden = !activer;
@@ -122,6 +124,11 @@ class EditorHUDScene: SKScene {
     /// Affiche/Cache le bouton d'annulation
     func showCancelButton(activer: Bool) {
         self.cancelButton?.isHidden = !activer
+    }
+    
+    func hideButtonWhenNoSelection() {
+        self.deselectAllButton?.isHidden = true
+        self.deleteButton?.isHidden = true
     }
     
     override func didMove(to view: SKView) {
