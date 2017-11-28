@@ -74,7 +74,7 @@ namespace InterfaceGraphique.Controls.WPF.Friends
                 //On enleve le sender de la liste des gens qu'on peut ajouter
                 //etant donne quil sera dans nos notifications
                 System.Diagnostics.Debug.WriteLine(User.Instance.UserEntity.Username + " got a friend request from : " + request.Requestor.Username);
-                Items.Remove(Items.Single(x => x.Username == request.Requestor.Username));
+                Items.Remove(Items.FirstOrDefault(x => x.Username == request.Requestor.Username));
                 //TODO: Add it to notification side
                 var items = Program.unityContainer.Resolve<FriendRequestListViewModel>().Items;
                 items.Add(new FriendListItemViewModel(new UserEntity { Id = request.Requestor.Id, Username = request.Requestor.Username, Profile = request.Requestor.Profile, IsSelected = false ,IsConnected = request.Requestor.IsConnected}, null) { RequestedFriend = true });

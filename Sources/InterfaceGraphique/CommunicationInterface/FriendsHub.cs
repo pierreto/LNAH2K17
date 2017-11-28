@@ -204,16 +204,15 @@ namespace InterfaceGraphique.CommunicationInterface
 
         public async Task<bool> RefuseFriendRequest(FriendRequestEntity request)
         {
-            FriendRequestEntity res = new FriendRequestEntity();
             try
             {
-                res = await FriendsProxy?.Invoke<FriendRequestEntity>("RefuseFriendRequest", request);
+                return await FriendsProxy?.Invoke<bool>("RefuseFriendRequest", request);
             }
             catch (Exception e)
             {
                 HandleError("FriendsHub -> RefuseFriendRequest");
             }
-            return (res != null) ? true : false;
+            return false;
         }
         public async Task<bool> RemoveFriend(UserEntity ex_friend)
         {
