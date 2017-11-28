@@ -145,10 +145,13 @@ namespace InterfaceGraphique.Game.GameState
         ////////////////////////////////////////////////////////////////////////
         public override void EndGame() {
             gameHasEnded = true;
-            Program.QuickPlay.GetReplayButton().Visible = false;
-            Task.Run(() => gameHub.SendGameOver());
-            Program.QuickPlay.EndGame(true);
-            Program.QuickPlay.UnsuscribeEventHandlers();
+            Program.LobbyHost.Invoke(new MethodInvoker(async () =>
+            {
+                Program.QuickPlay.GetReplayButton().Visible = false;
+            }));
+                Task.Run(() => gameHub.SendGameOver());
+                Program.QuickPlay.EndGame(true);
+                Program.QuickPlay.UnsuscribeEventHandlers();
 
             this.gameHub.NewPositions -= OnNewGamePositions;
             this.gameHub.DisconnectedEvent -= OnDisconnexion;

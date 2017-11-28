@@ -134,9 +134,12 @@ namespace InterfaceGraphique.Game.GameState
         public override void EndGame()
         {
             gameHasEnded = true;
-            Program.QuickPlay.GetReplayButton().Visible = false;
-            Program.QuickPlay.EndGame(true);
-            Program.QuickPlay.UnsuscribeEventHandlers();
+            Program.LobbyHost.Invoke(new MethodInvoker(async () =>
+            {
+                Program.QuickPlay.GetReplayButton().Visible = false;
+            }));
+                Program.QuickPlay.EndGame(true);
+                Program.QuickPlay.UnsuscribeEventHandlers();
             FonctionsNatives.setGameEnded();
 
             User.Instance.UserEntity.IsPlaying = false;
