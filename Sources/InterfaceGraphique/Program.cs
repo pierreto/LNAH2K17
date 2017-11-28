@@ -143,6 +143,7 @@ namespace InterfaceGraphique
             configurationMenu = new ConfigurationMenu();
             quickPlay = new QuickPlay();
             testMode = new TestMode();
+            onlineTournament = new OnlineTournament();
             generalProperties = new GeneralProperties();
             testChatMenu = new TestChatMenu();
             creditsMenu = new CreditsMenu();
