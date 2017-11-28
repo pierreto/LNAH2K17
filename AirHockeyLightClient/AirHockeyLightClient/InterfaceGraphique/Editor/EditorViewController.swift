@@ -123,6 +123,7 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate, UICol
 
         // Setup camera orbit
         self.cameraOrbit = SCNNode()
+        self.cameraOrbit.name = "camera"
         self.cameraOrbit.addChildNode(self.cameraNode)
         self.cameraOrbit.position = SCNVector3Make(20, 300, 0)
         self.cameraOrbit.eulerAngles = SCNVector3Make((-Float.pi/2), (-Float.pi/2), 0)
@@ -180,6 +181,29 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate, UICol
     }
     
     func takeMapSnapshot() -> UIImage {
+        /*
+        let camera = self.editorScene.rootNode.childNode(withName: "camera", recursively: true)
+        camera?.removeFromParentNode()
+        
+        // Setup snapshot camera node
+        let snapshotCameraNode = SCNNode()
+        snapshotCameraNode.camera = SCNCamera()
+        snapshotCameraNode.camera?.zNear = 0.1
+        snapshotCameraNode.camera?.zFar = 1000
+        
+        // Setup snapshot camera orbit
+        let snapshotCameraOrbit = SCNNode()
+        snapshotCameraOrbit.name = "snapshotCamera"
+        snapshotCameraOrbit.addChildNode(self.cameraNode)
+        snapshotCameraOrbit.position = SCNVector3Make(20, 300, 0)
+        snapshotCameraOrbit.eulerAngles = SCNVector3Make((-Float.pi/2), (-Float.pi/2), 0)
+        
+        self.editorScene.rootNode.addChildNode(snapshotCameraOrbit)
+        let snapshot = self.editorView.snapshot()
+        snapshotCameraOrbit.removeFromParentNode()
+        self.editorScene.rootNode.addChildNode(camera!)
+        */
+        
         return self.editorView.snapshot()
     }
     
