@@ -395,6 +395,7 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
                             var response = await Program.client.PutAsJsonAsync(Program.client.BaseAddress + "api/user/" + User.Instance.UserEntity.Id.ToString(), uE);
                             if (response.IsSuccessStatusCode)
                             {
+                                User.Instance.UserEntity.Profile = base64String;
                                 ProfilePicture = base64String;
                             }
                         }

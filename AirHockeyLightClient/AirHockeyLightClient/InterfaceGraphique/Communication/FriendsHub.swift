@@ -87,6 +87,11 @@ class FriendsHub: BaseHub {
                     }
                     
                     FriendsTableViewController.instance.updateAllFriends(friends: friends)
+                    
+                    // Update add friend view
+                    if AddFriendViewController.instance != nil {
+                        AddFriendViewController.instance?.filterUserEntries(friends: friends)
+                    }
                 }
             }
         }
@@ -119,7 +124,13 @@ class FriendsHub: BaseHub {
                         FriendRequestsViewController.instance?.displayNotification()
                     }
                     
+                    // Update friend requests view
                     FriendRequestsTableViewController.instance.updatePendingRequestsEntries(pendingRequests: pendingRequests)
+                    
+                    // Update add friend view
+                    if AddFriendViewController.instance != nil {
+                        AddFriendViewController.instance?.filterUserEntries(pendingRequests: pendingRequests)
+                    }
                 }
             }
         }
@@ -134,7 +145,7 @@ class FriendsHub: BaseHub {
             let friendDictionary = newFriend.toDictionary()
             try self.hubProxy?.invoke("SendFriendRequest", arguments: [userDictionary, friendDictionary]) { (result, error) in
                 if let e = error {
-                    print("Error GetAllFriends FriendsHub: \(e)")
+                    print("Error SendFriendRequest FriendsHub: \(e)")
                 }
             }
         }

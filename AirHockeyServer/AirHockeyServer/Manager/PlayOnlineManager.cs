@@ -194,6 +194,7 @@ namespace AirHockeyServer.Manager
         {
             GameEntity finalGame = CreateTournamentGame(tournament.SemiFinals[0].Winner, tournament.SemiFinals[1].Winner, tournament);
 
+            finalGame.SelectedMap = tournament.SelectedMap;
             tournament.State = TournamentState.Final;
             tournament.Final = finalGame;
 
@@ -202,6 +203,12 @@ namespace AirHockeyServer.Manager
 
             AddGame(finalGame);
             Cache.Tournaments[tournament.Id] = tournament;
+            
+            if (finalGame.Players.All(x => x.IsAi))
+            {
+                await GameEnded(finalGame.GameId);
+                return;
+            }
 
             var gameHub = GlobalHost.ConnectionManager.GetHubContext<GameWaitingRoomHub>();
             foreach (var player in finalGame.Players)

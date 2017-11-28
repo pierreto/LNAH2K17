@@ -123,7 +123,7 @@ namespace InterfaceGraphique.Controls.WPF.Friends
             System.Diagnostics.Debug.WriteLine("Je viens d'ajouter " + friend.Username + " a mes amis.");
             ctxTaskFactory.StartNew(() =>
             {
-                FriendList.Add(new FriendListItemViewModel(new UserEntity { Id = friend.Id, Username = friend.Username, Profile = friend.Profile, IsSelected = false, IsConnected = friend.IsConnected}, null) { CurrentFriend = true });
+                FriendList.Add(new FriendListItemViewModel(new UserEntity { Id = friend.Id, Username = friend.Username, Profile = friend.Profile, IsSelected = false, IsConnected = friend.IsConnected}, GameRequestManager) { CurrentFriend = true });
                 var items = Program.unityContainer.Resolve<AddFriendListViewModel>().Items;
                 HasNewFriend = true;
                 items.Remove(items.FirstOrDefault(x => x.Id == friend.Id));

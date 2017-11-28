@@ -76,14 +76,14 @@ class FriendRequestsTableViewController: UITableViewController {
     
     func addRequest(newRequest: FriendRequestEntity) {
         if newRequest.getStatus() == RequestStatus.PENDING {
-            if self.isBeingPresented {
+            // if self.isBeingPresented {
                 self.pendingRequestsData.append(newRequest)
             
                 DispatchQueue.main.async(execute: { () -> Void in
                     // Reload tableView
                     self.pendingRequests.reloadData()
                 })
-            }
+            //}
         }
     }
     
