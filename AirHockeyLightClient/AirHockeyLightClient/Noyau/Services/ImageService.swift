@@ -36,10 +36,16 @@ class ImageService {
         return imageData.base64EncodedString(options: .lineLength64Characters)
     }
     
-    static public func convertStrBase64ToImage(strBase64: String) -> UIImage {
+    static public func convertStrBase64ToImage(strBase64: String?) -> UIImage {
         if(strBase64 != nil && strBase64 != "null" && strBase64 != "") {
-            let dataDecoded : Data = Data(base64Encoded: strBase64, options: .ignoreUnknownCharacters)!
-            return UIImage(data: dataDecoded)!
+            let dataDecoded : Data? = Data(base64Encoded: strBase64!, options: .ignoreUnknownCharacters)
+            
+            if dataDecoded != nil {
+                return UIImage(data: dataDecoded!)!
+            }
+            else {
+                return UIImage(named: "default_profile_picture.png")!
+            }
         } else {
             return UIImage(named: "default_profile_picture.png")!
         }

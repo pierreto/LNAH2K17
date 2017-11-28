@@ -203,8 +203,8 @@ namespace AirHockeyServer.Manager
 
             AddGame(finalGame);
             Cache.Tournaments[tournament.Id] = tournament;
-
-            if(finalGame.Players.All(x => x.IsAi))
+            
+            if (finalGame.Players.All(x => x.IsAi))
             {
                 await GameEnded(finalGame.GameId);
                 return;

@@ -53,7 +53,9 @@ class AddFriendViewController: UIViewController {
             }
             self.search.filterStrings(self.filterStrings)
             
+            // Update users which can be added as friends depending on existing friends and pending requests
             HubManager.sharedConnection.getFriendsHub().getAllPendingRequest()
+            HubManager.sharedConnection.getFriendsHub().getAllFriends()
 
             return
         }
@@ -76,6 +78,16 @@ class AddFriendViewController: UIViewController {
                     self.filterStrings.filter{$0 != req.getFriend().getUsername()}
                 }
             }
+            self.search.filterStrings(self.filterStrings)
+        }
+    }
+    
+    func filterUserEntries(friends: [UserEntity]) {
+        if self.isViewLoaded {
+            for friend in friends {
+                self.filterStrings.filter{$0 != friend.getUsername()}
+            }
+            
             self.search.filterStrings(self.filterStrings)
         }
     }
