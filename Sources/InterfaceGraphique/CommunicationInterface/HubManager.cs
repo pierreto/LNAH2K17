@@ -47,8 +47,8 @@ namespace InterfaceGraphique.CommunicationInterface
         public async Task EstablishConnection(string serverIp)
         {
             this.connection = new HubConnection("http://" + serverIp + ":63056/signalr");
-            connection.TraceLevel = TraceLevels.All;
-            connection.TraceWriter = Console.Out;
+            //connection.TraceLevel = TraceLevels.All;
+            //connection.TraceWriter = Console.Out;
 
             this.AddHubs();
 
