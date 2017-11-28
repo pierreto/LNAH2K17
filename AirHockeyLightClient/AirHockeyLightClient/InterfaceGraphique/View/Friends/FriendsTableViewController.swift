@@ -53,6 +53,17 @@ class FriendsTableViewController: UITableViewController {
         self.friends.dataSource = self
     }
     
+    func resetFriendsList() {
+        if self.friendsData != nil {
+            self.friendsData = [UserEntity]()
+            
+            DispatchQueue.main.async(execute: { () -> Void in
+                // Reload tableView
+                self.friends.reloadData()
+            })
+        }
+    }
+    
     func updateAllFriends(friends: [UserEntity]) {
         self.friendsData = friends
     

@@ -24,8 +24,19 @@ class AddFriendViewController: UIViewController {
     
     @IBOutlet weak var search: SearchTextField!
     
+    @IBOutlet weak var goToProfileButton: UIButton!
+    @IBAction func goToProfileAction(_ sender: Any) {
+        let user = self.friendsToAdd.first(where: {$0.getUsername() == search.text})
+        if user != nil {
+            HubManager.sharedConnection.searchId = user?.getId()
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "GoToProfile"), object: self)
+        }
+    }
+    
+    
     private var filterStrings = [String]()
     private let friendsService = FriendsService()
+    private var friendsToAdd = [UserEntity]()
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -52,6 +63,7 @@ class AddFriendViewController: UIViewController {
         friendsService.getAllUsers() { users, error in
             var newfilterStrings = [String]()
             let activeUsername = HubManager.sharedConnection.getUsername()
+            self.friendsToAdd = users!
             for user in users! {
                 if user.getUsername() != activeUsername {
                     newfilterStrings.append(user.getUsername())
@@ -65,6 +77,13 @@ class AddFriendViewController: UIViewController {
             HubManager.sharedConnection.getFriendsHub().getAllFriends()
             
             return
+        }
+    }
+    
+    func resetFilterEntries() {
+        if self.filterStrings != nil  && self.search != nil {
+            self.filterStrings = [String]()
+            self.search.filterStrings(self.filterStrings)
         }
     }
     

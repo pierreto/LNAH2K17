@@ -30,7 +30,7 @@ class HubManager {
     static let sharedConnection = HubManager()
     
     public var searchId: Int?
-    
+    public var isEditing: Bool?
     private var connection: SignalR?
     private var hubs = [BaseHub]()
     private var user: UserEntity? = UserEntity()

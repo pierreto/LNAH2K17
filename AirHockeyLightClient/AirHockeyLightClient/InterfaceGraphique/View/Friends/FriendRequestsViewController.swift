@@ -44,7 +44,7 @@ class FriendRequestsViewController: UIViewController {
     }
     
     func displayNotification() {
-        if FriendRequestsTableViewController.instance.isOpen == false {
+        if FriendRequestsTableViewController.instance == nil || FriendRequestsTableViewController.instance?.isOpen == false {
             self.tabBarItem.badgeValue = " "
         }
     }
