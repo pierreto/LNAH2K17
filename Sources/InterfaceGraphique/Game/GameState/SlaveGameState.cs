@@ -134,7 +134,7 @@ namespace InterfaceGraphique.Game.GameState
         public override void EndGame()
         {
             gameHasEnded = true;
-            Program.LobbyHost.Invoke(new MethodInvoker(async () =>
+            Program.QuickPlay.Invoke(new MethodInvoker(async () =>
             {
                 Program.QuickPlay.GetReplayButton().Visible = false;
             }));
