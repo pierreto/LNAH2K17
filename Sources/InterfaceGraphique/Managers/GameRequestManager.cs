@@ -13,6 +13,7 @@ using Microsoft.Practices.Unity;
 using InterfaceGraphique.Services;
 using InterfaceGraphique.Controls.WPF.MainMenu;
 using InterfaceGraphique.Controls.WPF.Matchmaking;
+using InterfaceGraphique.Menus;
 
 namespace InterfaceGraphique.Managers
 {
@@ -47,10 +48,43 @@ namespace InterfaceGraphique.Managers
         private void OnGameRequest(GameRequestEntity request)
         {
             PendingRequest = request;
-            Program.unityContainer.Resolve<MatchmakingViewModel>().SetDefaultValues();
-            Program.unityContainer.Resolve<MatchmakingViewModel>().Initialize(true);
+            if (Program.FormManager.CurrentForm.GetType() == typeof(QuickPlay))
+            {
+                // Program.QuickPlay.ProcessCmdKey(keyData);
+                DeclineGameRequest();
 
-            Program.FormManager.ShowGameRequestPopup(request.Sender.Username);
+            }
+            else if (Program.FormManager.CurrentForm.GetType() == typeof(TestMode))
+            {
+                // Program.TestMode.ProcessCmdKey(keyData);
+                DeclineGameRequest();
+
+            }
+            else if (Program.FormManager.CurrentForm.GetType() == typeof(Editeur))
+            {
+                DeclineGameRequest();
+
+            }
+            else if (Program.FormManager.CurrentForm.GetType() == typeof(TournementTree))
+            {
+                DeclineGameRequest();
+            }
+            else if (Program.FormManager.CurrentForm.GetType() == typeof(TournementMenu))
+            {
+                DeclineGameRequest();
+            }
+            else if (Program.FormManager.CurrentForm.GetType() == typeof(OnlineTournementMenu))
+            {
+                DeclineGameRequest();
+            }
+            else
+            {
+                Program.unityContainer.Resolve<MatchmakingViewModel>().SetDefaultValues();
+                Program.unityContainer.Resolve<MatchmakingViewModel>().Initialize(true);
+
+                Program.FormManager.ShowGameRequestPopup(request.Sender.Username);
+            }
+
         }
 
         private void OnGameRequestDeclined(GameRequestEntity request)
