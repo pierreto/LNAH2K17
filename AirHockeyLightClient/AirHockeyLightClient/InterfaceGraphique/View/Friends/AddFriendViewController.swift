@@ -51,8 +51,10 @@ class AddFriendViewController: UIViewController {
                     self.filterStrings.append(user.getUsername())
                 }
             }
-            
             self.search.filterStrings(self.filterStrings)
+            
+            HubManager.sharedConnection.getFriendsHub().getAllPendingRequest()
+
             return
         }
     }
@@ -66,6 +68,18 @@ class AddFriendViewController: UIViewController {
         })
     }
     
+    func filterUserEntries(pendingRequests: [FriendRequestEntity]) {
+        if self.isViewLoaded {
+            let activeUsername = HubManager.sharedConnection.getUsername()
+            for req in pendingRequests {
+                if req.getRequestor().getUsername() == activeUsername {
+                    self.filterStrings.filter{$0 != req.getFriend().getUsername()}
+                }
+            }
+            self.search.filterStrings(self.filterStrings)
+        }
+    }
+    
     func addNewAddableUser(username : String) {
         self.filterStrings.append(username)
         self.search.filterStrings(self.filterStrings)
@@ -73,7 +87,17 @@ class AddFriendViewController: UIViewController {
     
     @IBAction func addFriend(_ sender: Any) {
         self.friendsService.sendFriendRequest(friendUsername: self.search.text!)
-        self.search.text = ""
+        
+        var newFilterStrings = [String]()
+        for user in self.filterStrings {
+            if user != self.search.text! {
+                newFilterStrings.append(user)
+            }
+        }
+        
+        
+        self.filterStrings = newFilterStrings
+        self.search.filterStrings(self.filterStrings)
     }
     
     override var shouldAutorotate: Bool {
