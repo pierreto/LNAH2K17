@@ -63,6 +63,12 @@ namespace InterfaceGraphique.Controls.WPF.Friends
         {
             get => IsConnected && currentFriend;
         }
+
+        public bool CanSendPlay
+        {
+            get => IsConnected && currentFriend && Program.unityContainer.Resolve<FriendListViewModel>().CanShowPlay;
+        }
+
         public bool CanShowOffline
         {
             get => !IsConnected && currentFriend;

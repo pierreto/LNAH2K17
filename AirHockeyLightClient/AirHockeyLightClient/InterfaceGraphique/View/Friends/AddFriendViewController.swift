@@ -46,31 +46,8 @@ class AddFriendViewController: UIViewController {
         // Initialize Tab Bar Item
         tabBarItem = UITabBarItem()
         tabBarItem.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "FontAwesome", size: 17)!], for: .normal)
-        tabBarItem.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: 0)
+        tabBarItem.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: -12)
         tabBarItem.title = "\u{f234}"
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        // Retrieve all users
-        let friendsService = FriendsService()
-        friendsService.getAllUsers() { users, error in
-            let activeUsername = HubManager.sharedConnection.getUsername()
-            self.friendsToAdd = users!
-            for user in users! {
-                if user.getUsername() != activeUsername {
-                    self.filterStrings.append(user.getUsername())
-                }
-            }
-            self.search.filterStrings(self.filterStrings)
-            
-            // Update users which can be added as friends depending on existing friends and pending requests
-            HubManager.sharedConnection.getFriendsHub().getAllPendingRequest()
-            HubManager.sharedConnection.getFriendsHub().getAllFriends()
-
-            return
-        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -80,6 +57,27 @@ class AddFriendViewController: UIViewController {
             animations: {
                 self.view.alpha = 1.0
         })
+        
+        // Retrieve all users
+        let friendsService = FriendsService()
+        friendsService.getAllUsers() { users, error in
+            var newfilterStrings = [String]()
+            let activeUsername = HubManager.sharedConnection.getUsername()
+            self.friendsToAdd = users!
+            for user in users! {
+                if user.getUsername() != activeUsername {
+                    newfilterStrings.append(user.getUsername())
+                }
+            }
+            self.filterStrings = newfilterStrings
+            self.search.filterStrings(self.filterStrings)
+            
+            // Update users which can be added as friends depending on existing friends and pending requests
+            HubManager.sharedConnection.getFriendsHub().getAllPendingRequest()
+            HubManager.sharedConnection.getFriendsHub().getAllFriends()
+            
+            return
+        }
     }
     
     func filterUserEntries(pendingRequests: [FriendRequestEntity]) {
@@ -122,7 +120,7 @@ class AddFriendViewController: UIViewController {
             }
         }
         
-        
+        self.search.text = ""
         self.filterStrings = newFilterStrings
         self.search.filterStrings(self.filterStrings)
     }

@@ -10,6 +10,7 @@ using InterfaceGraphique.Services;
 using System.Drawing;
 using Microsoft.Practices.Unity;
 using InterfaceGraphique.CommunicationInterface.WaitingRooms;
+using InterfaceGraphique.Controls.WPF.Friends;
 
 namespace InterfaceGraphique.Game.GameState
 {
@@ -134,12 +135,23 @@ namespace InterfaceGraphique.Game.GameState
         public override void EndGame()
         {
             gameHasEnded = true;
-            Program.QuickPlay.GetReplayButton().Visible = false;
-            Program.QuickPlay.EndGame(true);
-            Program.QuickPlay.UnsuscribeEventHandlers();
+            Program.QuickPlay.Invoke(new MethodInvoker(async () =>
+            {
+                Program.QuickPlay.GetReplayButton().Visible = false;
+            }));
+                Program.QuickPlay.EndGame(true);
+                Program.QuickPlay.UnsuscribeEventHandlers();
             FonctionsNatives.setGameEnded();
 
             User.Instance.UserEntity.IsPlaying = false;
+            Program.unityContainer.Resolve<FriendListViewModel>().OnPropertyChanged("CanShowPlay");
+            if (Program.unityContainer.Resolve<FriendListViewModel>().FriendList != null)
+            {
+                foreach (FriendListItemViewModel flivm in Program.unityContainer.Resolve<FriendListViewModel>().FriendList)
+                {
+                    flivm.OnPropertyChanged("CanSendPlay");
+                }
+            }
 
             this.gameHub.NewPositions -= OnNewGamePositions;
             this.gameHub.NewGoal -= OnNewGoal;

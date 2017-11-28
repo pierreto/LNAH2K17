@@ -221,6 +221,15 @@ namespace InterfaceGraphique.Controls.WPF.Authenticate
                         Program.unityContainer.Resolve<FriendListViewModel>().Minimize();
                         //Hide loading spinner
                         Program.unityContainer.Resolve<MainMenuViewModel>().NotLoading = true;
+                        Program.unityContainer.Resolve<FriendListViewModel>().OnPropertyChanged("CanShowPlay");
+                        User.Instance.UserEntity.IsPlaying = false;
+                        if (Program.unityContainer.Resolve<FriendListViewModel>().FriendList != null)
+                        {
+                            foreach (FriendListItemViewModel flivm in Program.unityContainer.Resolve<FriendListViewModel>().FriendList)
+                            {
+                                flivm.OnPropertyChanged("CanSendPlay");
+                            }
+                        }
                         Program.FormManager.ShowCompletely();
 
                     }

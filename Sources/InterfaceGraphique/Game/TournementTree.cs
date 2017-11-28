@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using Microsoft.Practices.Unity;
 using InterfaceGraphique.Controls.WPF.MainMenu;
 using InterfaceGraphique.CommunicationInterface;
+using InterfaceGraphique.Controls.WPF.Friends;
 
 namespace InterfaceGraphique {
 
@@ -59,6 +60,13 @@ namespace InterfaceGraphique {
 
             timer.Tick += new EventHandler(StartRound);
             User.Instance.UserEntity.IsPlaying = true;
+            Program.unityContainer.Resolve<FriendListViewModel>().OnPropertyChanged("CanShowPlay");
+            if(Program.unityContainer.Resolve<FriendListViewModel>().FriendList != null) {
+                foreach (FriendListItemViewModel flivm in Program.unityContainer.Resolve<FriendListViewModel>().FriendList)
+                {
+                    flivm.OnPropertyChanged("CanSendPlay");
+                }
+            }
         }
 
 
@@ -94,6 +102,14 @@ namespace InterfaceGraphique {
             if (User.Instance.IsConnected)
             {
                 User.Instance.UserEntity.IsPlaying = true;
+                Program.unityContainer.Resolve<FriendListViewModel>().OnPropertyChanged("CanShowPlay");
+                if (Program.unityContainer.Resolve<FriendListViewModel>().FriendList != null)
+                {
+                    foreach (FriendListItemViewModel flivm in Program.unityContainer.Resolve<FriendListViewModel>().FriendList)
+                    {
+                        flivm.OnPropertyChanged("CanSendPlay");
+                    }
+                }
             }
 
         }
@@ -189,6 +205,14 @@ namespace InterfaceGraphique {
                 if(User.Instance.IsConnected)
                 {
                     User.Instance.UserEntity.IsPlaying = false;
+                    Program.unityContainer.Resolve<FriendListViewModel>().OnPropertyChanged("CanShowPlay");
+                    if (Program.unityContainer.Resolve<FriendListViewModel>().FriendList != null)
+                    {
+                        foreach (FriendListItemViewModel flivm in Program.unityContainer.Resolve<FriendListViewModel>().FriendList)
+                        {
+                            flivm.OnPropertyChanged("CanSendPlay");
+                        }
+                    }
                 }
                 Program.FormManager.CurrentForm = Program.HomeMenu;
                 Program.HomeMenu.ChangeViewTo(Program.unityContainer.Resolve<MainMenuViewModel>());

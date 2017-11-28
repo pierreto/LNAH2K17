@@ -107,6 +107,7 @@ class DBManager {
             updatedMap?.lastBackup = map.lastBackup
             updatedMap?.json = map.json
             updatedMap?.currentNumberOfPlayer.value = map.currentNumberOfPlayer.value
+            updatedMap?.icon = map.icon
         }
     }
     
