@@ -34,6 +34,10 @@ namespace InterfaceGraphique.Game.GameState
             FonctionsNatives.setOnlineClientType((int)OnlineClientType.SLAVE);
             FonctionsNatives.setCurrentOpponentType((int)OpponentType.ONLINE_PLAYER);
 
+            this.gameHub.InitialiseGame(gameEntity.GameId);
+
+            gameHasEnded = false;
+
             StringBuilder player1Name = new StringBuilder(gameEntity.Slave.Username.Length);
             StringBuilder player2Name = new StringBuilder(gameEntity.Master.Username.Length);
             player1Name.Append(gameEntity.Slave.Username);
@@ -42,15 +46,12 @@ namespace InterfaceGraphique.Game.GameState
 
             float[] playerColor = new float[4] { Color.White.R, Color.White.G, Color.White.B, Color.White.A };
             FonctionsNatives.setPlayerColors(playerColor, playerColor);
-
-            gameHasEnded = false;
-
+            
             this.gameHub.NewPositions += OnNewGamePositions;
             this.gameHub.NewGoal += OnNewGoal;
             this.gameHub.GameOver += EndGame;
             this.gameHub.DisconnectedEvent += OnDisconnexion;
 
-            this.gameHub.InitialiseGame(gameEntity.GameId);
             selectedMap = gameEntity.SelectedMap;
 
 
@@ -142,6 +143,7 @@ namespace InterfaceGraphique.Game.GameState
             this.gameHub.NewPositions -= OnNewGamePositions;
             this.gameHub.NewGoal -= OnNewGoal;
             this.gameHub.GameOver -= EndGame;
+            this.gameHub.DisconnectedEvent -= OnDisconnexion;
 
             if (IsOnlineTournementMode)
             {
