@@ -263,8 +263,6 @@ namespace InterfaceGraphique
             unityContainer.RegisterType<OnlineEditorState>(new ContainerControlledLifetimeManager());
             unityContainer.RegisterType<OfflineEditorState>(new ContainerControlledLifetimeManager());
 
-            unityContainer.RegisterType<SlaveGameState>(new ContainerControlledLifetimeManager());
-
             unityContainer.RegisterType<EditorViewModel>(new ContainerControlledLifetimeManager());
 
 

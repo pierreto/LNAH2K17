@@ -23,10 +23,9 @@ class DBManager {
     /// Instance singleton
     static var instance = DBManager()
     
-    // Base de données locale
-    private var realm: Realm
-    
+    private var realm: Realm // Base de données locale
     private var timer: Timer?
+    private var areLocalMapsOverriden = false // alert the user if a local map will be overridden during merge
     
     init() {
         let config = Realm.Configuration(
@@ -117,6 +116,14 @@ class DBManager {
                 map.creator = creator
             }
         }
+    }
+    
+    func setAreLocalMapsOverriden(status: Bool) {
+        self.areLocalMapsOverriden = status
+    }
+    
+    func getAreLocalMapsOverriden() -> Bool {
+        return self.areLocalMapsOverriden
     }
     
     func activateAutomaticMapImport() {

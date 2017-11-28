@@ -22,10 +22,6 @@ class MapService {
     
     private let clientConnection = HubManager.sharedConnection
     private var overridenMaps = [String]()
-
-    func getMap(id: String) {
-        // TODO
-    }
     
     func getMaps(completionHandler: @escaping (JSON?, Error?) -> ()) {
         if self.clientConnection.getConnection() != nil && self.clientConnection.getConnection()?.state == .connected && self.clientConnection.getIpAddress() != nil {
@@ -77,15 +73,12 @@ class MapService {
                               method: .post, parameters: convertedMap, encoding: JSONEncoding.default)
                 .responseJSON { response in
                     switch response.result {
-                    case .success(let value): break
-                        /*
-                        print(value)
-                        let mapIsOverriden = value as! Int
-                        if mapIsOverriden == 1 {
-                            // TODO: notify user instead
-                            print(map.mapName)
+                    case .success(let value):
+                        let mapIsOverriden = value as! Bool
+                        let mapCreator = convertedMap["Creator"] as! String
+                        if mapIsOverriden && (self.clientConnection.getUsername() == mapCreator) {
+                            DBManager.instance.setAreLocalMapsOverriden(status: true)
                         }
-                        */
                     case .failure(let error):
                         print("Error: syncing the map has failed.")
                     }

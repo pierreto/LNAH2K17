@@ -65,7 +65,7 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
         {
             ctxTaskFactory.StartNew(() =>
             {
-                this.Items.Remove(Items.Single(s => s.Name == channelName));
+                this.Items.Remove(Items.FirstOrDefault(s => s.Name == channelName));
             }).Wait();
         }
 

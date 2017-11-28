@@ -51,6 +51,16 @@ class MapDisplayViewController: UIViewController {
         }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        if DBManager.instance.getAreLocalMapsOverriden() {
+            let alert = UIAlertController(title: "Avertissement", message: "Une ou plusieurs de vos cartes ont été mises à jour automatiquement.", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Fermer", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            
+            DBManager.instance.setAreLocalMapsOverriden(status: false)
+        }
+    }
+    
     // Ouvrir le pop-up pour la création de cartes
     func addMapBtnClicked(sender: AnyObject)
     {
