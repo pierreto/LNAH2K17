@@ -87,6 +87,11 @@ class FriendsHub: BaseHub {
                     }
                     
                     FriendsTableViewController.instance.updateAllFriends(friends: friends)
+                    
+                    // Update add friend view
+                    if AddFriendViewController.instance != nil {
+                        AddFriendViewController.instance?.filterUserEntries(friends: friends)
+                    }
                 }
             }
         }
