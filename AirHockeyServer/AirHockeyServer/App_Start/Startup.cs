@@ -9,6 +9,8 @@ using AirHockeyServer.Services.ChatServiceServer;
 using AirHockeyServer.Hubs;
 using AirHockeyServer.Services;
 using Microsoft.Owin.Cors;
+using System;
+using AirHockeyServer.Services.Interfaces;
 
 [assembly: OwinStartup(typeof(AirHockeyServer.App_Start.Startup))]
 
@@ -21,6 +23,7 @@ namespace AirHockeyServer.App_Start
         {
             // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=316888
             ConnectionMapper connectionMapper = WebApiApplication.UnityContainer.Resolve<ConnectionMapper>();
+            ILoginService loginService = WebApiApplication.UnityContainer.Resolve<ILoginService>();
 
              GlobalHost.DependencyResolver.Register(
                  typeof(ChatHub),
@@ -43,6 +46,7 @@ namespace AirHockeyServer.App_Start
                  () => new EditionHub(WebApiApplication.UnityContainer.Resolve<EditionService>(), connectionMapper, WebApiApplication.UnityContainer.Resolve<UserService>()));
             // Server
             app.UseCors(CorsOptions.AllowAll);
+            GlobalHost.Configuration.DisconnectTimeout = TimeSpan.FromSeconds(6);
             app.MapSignalR("/signalr", new HubConfiguration());
         }
     }
