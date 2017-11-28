@@ -217,6 +217,7 @@
             this.Button_PlayAgain.TabStop = false;
             this.Button_PlayAgain.Text = "Rejouer";
             this.Button_PlayAgain.UseVisualStyleBackColor = true;
+            this.Button_PlayAgain.Visible = false;
             // 
             // Label_Score
             // 
