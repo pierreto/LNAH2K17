@@ -11,6 +11,7 @@ using AirHockeyServer.Mapping;
 using AirHockeyServer.Repositories.Interfaces;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 
 namespace AirHockeyServer.Repositories
 {
@@ -99,18 +100,6 @@ namespace AirHockeyServer.Repositories
             {
                 using (MyDataContext DC = new MyDataContext())
                 {
-                    MapPoco newMap = MapperManager.Map<MapEntity, MapPoco>(map);
-                    if (newMap.Private)
-                    {
-                        var sha1 = new SHA1CryptoServiceProvider();
-                        newMap.Password =
-                                Convert.ToBase64String(
-                                    sha1.ComputeHash(
-                                        Encoding.UTF8.GetBytes(newMap.Password)));
-                    }
-                    DC.MapsTable.InsertOnSubmit(newMap);
-                    await Task.Run(() => DC.SubmitChanges());
-
                     // To fetch the db auto-generated Id of the new created map, we have to compare
                     // creation dates without considering milliseconds (or it will fail):
                     map.CreationDate = new DateTime(
@@ -121,6 +110,19 @@ namespace AirHockeyServer.Repositories
                         map.CreationDate.Minute,
                         map.CreationDate.Second,
                         map.CreationDate.Kind);
+
+                    MapPoco newMap = MapperManager.Map<MapEntity, MapPoco>(map);
+
+                    if (newMap.Private)
+                    {
+                        var sha1 = new SHA1CryptoServiceProvider();
+                        newMap.Password =
+                                Convert.ToBase64String(
+                                    sha1.ComputeHash(
+                                        Encoding.UTF8.GetBytes(newMap.Password)));
+                    }
+                    DC.MapsTable.InsertOnSubmit(newMap);
+                    DC.SubmitChanges();
 
                     // We have to fetch the db auto-generated Id of the new created map:
                     var query =
