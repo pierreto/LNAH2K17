@@ -27,7 +27,12 @@ namespace InterfaceGraphique.Entities.EditonCommand
 
         public override void ExecuteCommand()
         {
-            FonctionsNatives.createPortal( objectUuid, StartPosition, StartRotation,StartScale, EndUuid, EndPosition, EndRotation, EndScale);  
+            Program.Editeur.ExecuteCommandOnMainThread(CreatePortal);
+        }
+
+        public void CreatePortal()
+        {
+            FonctionsNatives.createPortal( objectUuid, StartPosition, StartRotation,StartScale, EndUuid, EndPosition, EndRotation, EndScale);
         }
     }
 }

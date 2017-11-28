@@ -181,7 +181,11 @@ namespace InterfaceGraphique {
             this.Toolbar_Wall.Click += (sender, e) => changerEtatEdition(sender, e, MODELE_ETAT.CREATION_MURET);
 
             // Menu dropdown options events
-            this.Fichier_Enregistrer.Click += async (sender, e) => await mapManager.SaveMap();
+            this.Fichier_Enregistrer.Click += async (sender, e) =>
+            {
+                //mapManager.SaveIcon();
+                await mapManager.SaveMap();
+            };
             this.Fichier_EnregistrerSous_Ordinateur.Click += (sender, e) => mapManager.ManageSavingLocalMap();
             this.Fichier_EnregistrerSous_Serveur.Click += OpenLocalMap;
             this.Fichier_OuvrirLocalement.Click += (sender, e) =>

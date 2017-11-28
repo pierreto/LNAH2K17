@@ -169,7 +169,7 @@ namespace InterfaceGraphique.Editor.EditorState
 
         private void OnNewCommand(AbstractEditionCommand editionCommand)
         {
-            editionCommand.ExecuteCommandOnMainThread();
+            editionCommand.ExecuteCommand();
         }
 
         private void CurrentUserCreatedPortal(string startUuid, IntPtr startPos, float startRotation, IntPtr startScale, string endUuid, IntPtr endPosition, float endRotation, IntPtr endScale)

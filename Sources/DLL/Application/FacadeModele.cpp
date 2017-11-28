@@ -687,14 +687,13 @@ void FacadeModele::createMapIcon(unsigned char* dest) {
 	glm::ivec2 newDim = vue_->obtenirProjection().obtenirDimensionCloture();
 
 
-	int sizex = 775;
-	GLubyte* outPixels = new GLubyte[3 * sizex * newDim.y];
+	GLubyte* outPixels = new GLubyte[3 * newDim.x * newDim.y];
 
 	glPixelStorei(GL_PACK_ALIGNMENT, 1);
 
-	glReadPixels(350, 0, sizex, newDim.y, GL_BGR, GL_UNSIGNED_BYTE, outPixels);
+	glReadPixels(0, 0, newDim.x, newDim.y, GL_BGR, GL_UNSIGNED_BYTE, outPixels);
 
-	FIBITMAP* image = FreeImage_ConvertFromRawBits(outPixels, sizex, newDim.y, 3 * sizex, 24, 0x0000FF, 0xFF0000, 0x00FF00, false);
+	FIBITMAP* image = FreeImage_ConvertFromRawBits(outPixels, newDim.x, newDim.y, 3 * newDim.x, 24, 0x0000FF, 0xFF0000, 0x00FF00, false);
 
 	const int ligne = 500;
 	const int colonne = 500;
