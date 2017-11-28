@@ -48,6 +48,11 @@ namespace InterfaceGraphique.Entities.MockObject
             };
         }
         public ObservableCollection<OnlineUser> Users { get; set; }
+
+        public string MapName
+        {
+            get { return "asdffdsafsdfsadfasdfasdfasdfasdfasdfasdfsadf"; }
+        }
     }
 }
 

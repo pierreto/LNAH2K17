@@ -19,6 +19,9 @@ import UIKit
 ///////////////////////////////////////////////////////////////////////////
 class AddFriendViewController: UIViewController {
     
+    /// Instance singleton
+    static var instance: AddFriendViewController?
+    
     @IBOutlet weak var search: SearchTextField!
     
     private var filterStrings = [String]()
@@ -26,6 +29,8 @@ class AddFriendViewController: UIViewController {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        
+        AddFriendViewController.instance = self
         
         // Initialize Tab Bar Item
         tabBarItem = UITabBarItem()
@@ -37,29 +42,62 @@ class AddFriendViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Retrieve all users
         let friendsService = FriendsService()
         friendsService.getAllUsers() { users, error in
+            let activeUsername = HubManager.sharedConnection.getUsername()
             for user in users! {
-                self.filterStrings.append(user.getUsername())
+                if user.getUsername() != activeUsername {
+                    self.filterStrings.append(user.getUsername())
+                }
             }
-
             self.search.filterStrings(self.filterStrings)
+            
+            HubManager.sharedConnection.getFriendsHub().getAllPendingRequest()
+
             return
         }
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
-        self.view.alpha = 0.2
+        self.view.alpha = 0.7
         UIView.animate(
-            withDuration: 0.5,
+            withDuration: 0.4,
             animations: {
                 self.view.alpha = 1.0
         })
     }
     
+    func filterUserEntries(pendingRequests: [FriendRequestEntity]) {
+        if self.isViewLoaded {
+            let activeUsername = HubManager.sharedConnection.getUsername()
+            for req in pendingRequests {
+                if req.getRequestor().getUsername() == activeUsername {
+                    self.filterStrings.filter{$0 != req.getFriend().getUsername()}
+                }
+            }
+            self.search.filterStrings(self.filterStrings)
+        }
+    }
+    
+    func addNewAddableUser(username : String) {
+        self.filterStrings.append(username)
+        self.search.filterStrings(self.filterStrings)
+    }
+    
     @IBAction func addFriend(_ sender: Any) {
         self.friendsService.sendFriendRequest(friendUsername: self.search.text!)
-        self.search.text = ""
+        
+        var newFilterStrings = [String]()
+        for user in self.filterStrings {
+            if user != self.search.text! {
+                newFilterStrings.append(user)
+            }
+        }
+        
+        
+        self.filterStrings = newFilterStrings
+        self.search.filterStrings(self.filterStrings)
     }
     
     override var shouldAutorotate: Bool {

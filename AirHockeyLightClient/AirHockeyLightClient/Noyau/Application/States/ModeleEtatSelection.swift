@@ -37,7 +37,7 @@ class ModeleEtatSelection: ModeleEtat {
     /// Noeuds sélectionnés
     private var noeuds = [NoeudCommun]()
     
-    private var isLastGestureRecognizer: UIGestureRecognizer?
+    public var isLastGestureRecognizer: UIGestureRecognizer?
     
     /// Cette fonction initialise l'état. Elle décide quels objects sont
     /// sélectionnable
@@ -64,6 +64,8 @@ class ModeleEtatSelection: ModeleEtat {
         
         // Désactiver le contrôle de la caméra
         FacadeModele.instance.obtenirVue().editorView.allowsCameraControl = false
+        
+        self.isLastGestureRecognizer = nil
     }
     
     override func nettoyerEtat() {
@@ -105,12 +107,16 @@ class ModeleEtatSelection: ModeleEtat {
             print("Debut deplacement noeud")
             
             self.isLastGestureRecognizer = sender
+            
+            // Creation du visiteur
+            let visiteur = VisiteurObtenirSelection()
+            // Appel du visiteur
+            FacadeModele.instance.obtenirArbreRendu().accepterVisiteur(visiteur: visiteur)
+            // Recuperation des noeuds
+            self.noeuds = visiteur.obtenirNoeuds()
         }
         else if sender.state == UIGestureRecognizerState.ended {
             print("Fin deplacement noeud")
-            
-            // Jouer le son
-            AudioService.instance.playSound(soundName: EDITION_SOUND.TRANSFORM.rawValue)
             
             // Dernier déplacement
             self.deplacer()
@@ -120,7 +126,12 @@ class ModeleEtatSelection: ModeleEtat {
                 self.annulerDeplacement()
             }
             
-            self.reactiverButtons()
+            if self.noeuds.count > 0 {
+                // Jouer le son
+                AudioService.instance.playSound(soundName: EDITION_SOUND.TRANSFORM.rawValue)
+                
+                self.reactiverButtons()
+            }
             
             // Réinitialiser le déplacement total
             self.deplacementTotal = GLKVector3.init(v: (0.0, 0.0, 0.0))
@@ -132,6 +143,10 @@ class ModeleEtatSelection: ModeleEtat {
             if (self.isLastGestureRecognizer is UIPanGestureRecognizer) {
                 self.showButtonsNoeudSurTable()
             }
+            
+            if self.noeuds.count == 0 {
+                FacadeModele.instance.obtenirVue().editorHUDScene?.hideButtonWhenNoSelection()
+            }
         }
     }
     
@@ -142,6 +157,8 @@ class ModeleEtatSelection: ModeleEtat {
         if sender.state == UIGestureRecognizerState.began {
             print("Rotate began")
             
+            self.isLastGestureRecognizer = sender
+            
             // Creation du visiteur
             let visiteur = VisiteurObtenirSelection()
             // Appel du visiteur
@@ -150,14 +167,9 @@ class ModeleEtatSelection: ModeleEtat {
             self.noeuds = visiteur.obtenirNoeuds()
             // Récupérer le centre de rotation
             self.centreRotation = visiteur.obtenirCentreSelection()
-            
-            self.isLastGestureRecognizer = sender
         }
         else if sender.state == UIGestureRecognizerState.ended {
             print("Fin rotation noeud")
-            
-            // Jouer le son
-            AudioService.instance.playSound(soundName: EDITION_SOUND.TRANSFORM.rawValue)
             
             // Dernier rotation
             self.appliquerRotation(rotation: Float(-sender.rotation))
@@ -171,7 +183,13 @@ class ModeleEtatSelection: ModeleEtat {
             }
             
             // Clean state
-            self.reactiverButtons()
+            if self.noeuds.count > 0 {
+                // Jouer le son
+                AudioService.instance.playSound(soundName: EDITION_SOUND.TRANSFORM.rawValue)
+                
+                self.reactiverButtons()
+            }
+            
             self.noeuds.removeAll()
             self.centreRotation = GLKVector3()
             self.angleTotale = 0.0
@@ -184,6 +202,10 @@ class ModeleEtatSelection: ModeleEtat {
             
             if (self.isLastGestureRecognizer is UIRotationGestureRecognizer) {
                 self.showButtonsNoeudSurTable()
+            }
+            
+            if self.noeuds.count == 0 {
+                FacadeModele.instance.obtenirVue().editorHUDScene?.hideButtonWhenNoSelection()
             }
         }
     }
@@ -199,12 +221,16 @@ class ModeleEtatSelection: ModeleEtat {
             self.saveScale()
             
             self.isLastGestureRecognizer = sender
+            
+            // Creation du visiteur
+            let visiteur = VisiteurObtenirSelection()
+            // Appel du visiteur
+            FacadeModele.instance.obtenirArbreRendu().accepterVisiteur(visiteur: visiteur)
+            // Recuperation des noeuds
+            self.noeuds = visiteur.obtenirNoeuds()
         }
         else if sender.state == UIGestureRecognizerState.ended {
             print("Pinch ended")
-            
-            // Jouer le son
-            AudioService.instance.playSound(soundName: EDITION_SOUND.TRANSFORM.rawValue)
             
             // Dernier rotation
             self.appliquerScaling(scale: Float(sender.scale))
@@ -217,7 +243,12 @@ class ModeleEtatSelection: ModeleEtat {
                 self.revertScale()
             }
             
-            self.reactiverButtons()
+            if self.noeuds.count > 0 {
+                // Jouer le son
+                AudioService.instance.playSound(soundName: EDITION_SOUND.TRANSFORM.rawValue)
+                
+                self.reactiverButtons()
+            }
         }
         else {
             self.appliquerScaling(scale: Float(sender.scale))
@@ -227,6 +258,10 @@ class ModeleEtatSelection: ModeleEtat {
             
             if (self.isLastGestureRecognizer is UIPinchGestureRecognizer) {
                 self.showButtonsNoeudSurTable()
+            }
+            
+            if self.noeuds.count == 0 {
+                FacadeModele.instance.obtenirVue().editorHUDScene?.hideButtonWhenNoSelection()
             }
         }
     }
@@ -245,6 +280,13 @@ class ModeleEtatSelection: ModeleEtat {
     private func annulerDeplacement() {
         let deplacement = GLKVector3Negate(self.deplacementTotal)
         let visiteur = VisiteurDeplacement(delta: deplacement)
+        
+        // Assurer qu'ils sont sur la table
+        showButtonsNoeudSurTable()
+        
+        // Obliger d'envoyer la commande en cas d'annulation
+        self.isLastGestureRecognizer = FacadeModele.instance.normalPanGestureRecognizer
+        
         FacadeModele.instance.obtenirArbreRendu().accepterVisiteur(visiteur: visiteur)
     }
     
@@ -267,10 +309,12 @@ class ModeleEtatSelection: ModeleEtat {
                 noeud.appliquerDeplacement(deplacement: self.centreRotation)
 
                 // Envoyer la commande
-                FacadeModele.instance.obtenirEtatEdition().currentUserObjectTransformChanged(uuid: noeud.obtenirUUID(),
-                                                                                             pos: noeud.position,
-                                                                                             rotation: MathHelper.determinerAngleAxeY(rotation: noeud.rotation),
-                                                                                             scale: noeud.scale)
+                if (self.isLastGestureRecognizer is UIRotationGestureRecognizer) {
+                    FacadeModele.instance.obtenirEtatEdition().currentUserObjectTransformChanged(uuid: noeud.obtenirUUID(),
+                                                                                                 pos: noeud.position,
+                                                                                                 rotation: MathHelper.determinerAngleAxeY(rotation: noeud.rotation),
+                                                                                                 scale: noeud.scale)
+                }
             }
         }
     }
@@ -287,6 +331,9 @@ class ModeleEtatSelection: ModeleEtat {
             
             // Remettre le point central à sa position initiale
             noeud.appliquerDeplacement(deplacement: self.centreRotation)
+            
+            // Assurer qu'ils sont sur la table
+            showButtonsNoeudSurTable()
             
             // Envoyer la commande
             FacadeModele.instance.obtenirEtatEdition().currentUserObjectTransformChanged(uuid: noeud.obtenirUUID(),
@@ -328,6 +375,9 @@ class ModeleEtatSelection: ModeleEtat {
         
         for noeud in noeuds {
             noeud.revertScale()
+            
+            // Assurer qu'ils sont sur la table
+            showButtonsNoeudSurTable()
             
             // Envoyer la commande
             FacadeModele.instance.obtenirEtatEdition().currentUserObjectTransformChanged(uuid: noeud.obtenirUUID(),

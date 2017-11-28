@@ -136,10 +136,13 @@ class HubManager {
     
     /// Crée les hubs et les ajoute à la connexion
     public func AddHubs() {
-    //TODO CHECK IF NIL BEFORE ADDING
         self.hubs.append(ChatHub(connection: self.connection))
         self.hubs.append(EditionHub(connection: self.connection))
         self.hubs.append(FriendsHub(connection: self.connection))
+        
+        for hub in self.hubs {
+            hub.initializeHub()
+        }
     }
 
     /// Déconnecter l'usager

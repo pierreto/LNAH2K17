@@ -23,6 +23,7 @@
             this.Panel_InGame = new System.Windows.Forms.Panel();
             this.Panel_EndBack = new System.Windows.Forms.Panel();
             this.Panel_EndFront = new System.Windows.Forms.Panel();
+            this.Button_ShareOnFacebook = new System.Windows.Forms.Button();
             this.achievement3 = new System.Windows.Forms.PictureBox();
             this.achievement2 = new System.Windows.Forms.PictureBox();
             this.playerName2 = new System.Windows.Forms.Label();
@@ -43,7 +44,6 @@
             this.Menu_Informations = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuItem_Help = new System.Windows.Forms.ToolStripMenuItem();
             this.Informations_Tutoriel = new System.Windows.Forms.ToolStripMenuItem();
-            this.Button_ShareOnFacebook = new System.Windows.Forms.Button();
             this.Panel_InGame.SuspendLayout();
             this.Panel_EndBack.SuspendLayout();
             this.Panel_EndFront.SuspendLayout();
@@ -72,7 +72,7 @@
             this.Panel_EndBack.Controls.Add(this.Panel_EndFront);
             this.Panel_EndBack.Location = new System.Drawing.Point(170, 90);
             this.Panel_EndBack.Name = "Panel_EndBack";
-            this.Panel_EndBack.Size = new System.Drawing.Size(384, 338);
+            this.Panel_EndBack.Size = new System.Drawing.Size(384, 384);
             this.Panel_EndBack.TabIndex = 30;
             // 
             // Panel_EndFront
@@ -93,8 +93,24 @@
             this.Panel_EndFront.Controls.Add(this.Label_GameEnded);
             this.Panel_EndFront.Location = new System.Drawing.Point(3, 6);
             this.Panel_EndFront.Name = "Panel_EndFront";
-            this.Panel_EndFront.Size = new System.Drawing.Size(378, 329);
+            this.Panel_EndFront.Size = new System.Drawing.Size(378, 374);
             this.Panel_EndFront.TabIndex = 29;
+            // 
+            // Button_ShareOnFacebook
+            // 
+            this.Button_ShareOnFacebook.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.Button_ShareOnFacebook.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.Button_ShareOnFacebook.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Button_ShareOnFacebook.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Button_ShareOnFacebook.ForeColor = System.Drawing.Color.White;
+            this.Button_ShareOnFacebook.Location = new System.Drawing.Point(141, 259);
+            this.Button_ShareOnFacebook.Name = "Button_ShareOnFacebook";
+            this.Button_ShareOnFacebook.Size = new System.Drawing.Size(100, 30);
+            this.Button_ShareOnFacebook.TabIndex = 44;
+            this.Button_ShareOnFacebook.TabStop = false;
+            this.Button_ShareOnFacebook.Text = "Partager";
+            this.Button_ShareOnFacebook.UseVisualStyleBackColor = true;
+            this.Button_ShareOnFacebook.Click += new System.EventHandler(this.Button_ShareOnFacebook_Click);
             // 
             // achievement3
             // 
@@ -179,7 +195,7 @@
             this.Button_MainMenu.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Button_MainMenu.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Button_MainMenu.ForeColor = System.Drawing.Color.White;
-            this.Button_MainMenu.Location = new System.Drawing.Point(74, 232);
+            this.Button_MainMenu.Location = new System.Drawing.Point(141, 223);
             this.Button_MainMenu.Name = "Button_MainMenu";
             this.Button_MainMenu.Size = new System.Drawing.Size(100, 30);
             this.Button_MainMenu.TabIndex = 32;
@@ -194,7 +210,7 @@
             this.Button_PlayAgain.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Button_PlayAgain.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Button_PlayAgain.ForeColor = System.Drawing.Color.White;
-            this.Button_PlayAgain.Location = new System.Drawing.Point(211, 232);
+            this.Button_PlayAgain.Location = new System.Drawing.Point(141, 295);
             this.Button_PlayAgain.Name = "Button_PlayAgain";
             this.Button_PlayAgain.Size = new System.Drawing.Size(100, 30);
             this.Button_PlayAgain.TabIndex = 31;
@@ -310,22 +326,6 @@
             this.Informations_Tutoriel.Name = "Informations_Tutoriel";
             this.Informations_Tutoriel.Size = new System.Drawing.Size(131, 22);
             this.Informations_Tutoriel.Text = "Tutoriel";
-            // 
-            // Button_ShareOnFacebook
-            // 
-            this.Button_ShareOnFacebook.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.Button_ShareOnFacebook.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.Button_ShareOnFacebook.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Button_ShareOnFacebook.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Button_ShareOnFacebook.ForeColor = System.Drawing.Color.White;
-            this.Button_ShareOnFacebook.Location = new System.Drawing.Point(141, 278);
-            this.Button_ShareOnFacebook.Name = "Button_ShareOnFacebook";
-            this.Button_ShareOnFacebook.Size = new System.Drawing.Size(100, 30);
-            this.Button_ShareOnFacebook.TabIndex = 44;
-            this.Button_ShareOnFacebook.TabStop = false;
-            this.Button_ShareOnFacebook.Text = "Partager";
-            this.Button_ShareOnFacebook.UseVisualStyleBackColor = true;
-            this.Button_ShareOnFacebook.Click += new System.EventHandler(this.Button_ShareOnFacebook_Click);
             // 
             // QuickPlay
             // 

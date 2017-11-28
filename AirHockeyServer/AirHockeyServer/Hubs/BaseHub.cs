@@ -30,7 +30,7 @@ namespace AirHockeyServer.Hubs
 
             Cache.RemovePlayer(userId);
             ConnectionMapper.DeleteConnection(userId);
-            ConnectionMapper.RemoveUserConnection(Context.ConnectionId);
+            //ConnectionMapper.RemoveUserConnection(Context.ConnectionId);
         }
     }
 }

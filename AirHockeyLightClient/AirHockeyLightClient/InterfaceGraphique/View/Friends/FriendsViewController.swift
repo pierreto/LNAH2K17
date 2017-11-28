@@ -24,9 +24,9 @@ class FriendsViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.view.alpha = 0.2
+        self.view.alpha = 0.7
         UIView.animate(
-            withDuration: 0.5,
+            withDuration: 0.4,
             animations: {
                 self.view.alpha = 1.0
         })

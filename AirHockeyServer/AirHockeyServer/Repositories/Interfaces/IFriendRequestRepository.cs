@@ -13,7 +13,7 @@ namespace AirHockeyServer.Repositories.Interfaces
         Task<List<FriendRequestEntity>> GetAllPendingRequests(int user_id);
         Task<FriendRequestEntity> SendFriendRequest(FriendRequestEntity request);
         Task<FriendRequestEntity> AcceptFriendRequest(FriendRequestEntity request);
-        Task<FriendRequestEntity> RefuseFriendRequest(FriendRequestEntity request);
+        Task<bool> RefuseFriendRequest(FriendRequestEntity request);
         Task<bool> CancelFriendRequest(FriendRequestEntity request);
         Task<bool> RemoveFriend(int user, int friend);
     }

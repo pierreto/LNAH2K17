@@ -22,10 +22,6 @@ class MapService {
     
     private let clientConnection = HubManager.sharedConnection
     private var overridenMaps = [String]()
-
-    func getMap(id: String) {
-        // TODO
-    }
     
     func getMaps(completionHandler: @escaping (JSON?, Error?) -> ()) {
         if self.clientConnection.getConnection() != nil && self.clientConnection.getConnection()?.state == .connected && self.clientConnection.getIpAddress() != nil {
@@ -77,15 +73,12 @@ class MapService {
                               method: .post, parameters: convertedMap, encoding: JSONEncoding.default)
                 .responseJSON { response in
                     switch response.result {
-                    case .success(let value): break
-                        /*
-                        print(value)
-                        let mapIsOverriden = value as! Int
-                        if mapIsOverriden == 1 {
-                            // TODO: notify user instead
-                            print(map.mapName)
+                    case .success(let value):
+                        let mapIsOverriden = value as! Bool
+                        let mapCreator = convertedMap["Creator"] as! String
+                        if mapIsOverriden && (self.clientConnection.getUsername() == mapCreator) {
+                            DBManager.instance.setAreLocalMapsOverriden(status: true)
                         }
-                        */
                     case .failure(let error):
                         print("Error: syncing the map has failed.")
                     }
@@ -95,9 +88,9 @@ class MapService {
     
     func deleteMap(map: MapEntity, completionHandler: @escaping (Bool?, Error?) -> ()) {
         if self.clientConnection.getConnection() != nil && (self.clientConnection.getConnection()?.state)! == .connected {
-            Alamofire.request("http://" + self.clientConnection.getIpAddress()! + ":63056/api/maps/remove/" + map.id!,
-                              method: .get, parameters: nil, encoding: JSONEncoding.default)
+            Alamofire.request("http://" + self.clientConnection.getIpAddress()! + ":63056/api/maps/remove/" + (map.id?.description)!, method: .delete, parameters: nil, encoding: JSONEncoding.default)
                 .responseJSON { response in
+                    print(response)
                     completionHandler(response.response?.statusCode == 200, nil)
             }
         } else {

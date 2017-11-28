@@ -231,7 +231,7 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
         {
             var clivm = Program.unityContainer.Resolve<ChatListViewModel>().Items;
             //Remove the selected ChatListItemViewModel containing the current channel
-            clivm.Remove(clivm.Single(s => s.ChannelEntity == ActiveChannel.Instance.ChannelEntity));
+            clivm.Remove(clivm.FirstOrDefault(s => s.ChannelEntity == ActiveChannel.Instance.ChannelEntity));
             OnPropertyChanged("Items");
             await chatHub.LeaveRoom(ActiveChannel.Instance.ChannelEntity.Name);
             //If possible, set the next channel to the current channel

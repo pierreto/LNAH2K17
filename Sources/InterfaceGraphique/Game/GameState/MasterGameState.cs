@@ -68,6 +68,7 @@ namespace InterfaceGraphique.Game.GameState
             if (!gameHasEnded && FonctionsNatives.isGameOver(neededGoalsToWin) == 1)
             {
                 EndGame();
+                User.Instance.UserEntity.IsPlaying = false;
                 gameHasEnded = true;
                 return;
             }
@@ -144,9 +145,11 @@ namespace InterfaceGraphique.Game.GameState
         ////////////////////////////////////////////////////////////////////////
         public override void EndGame() {
             gameHasEnded = true;
+            Program.QuickPlay.GetReplayButton().Visible = false;
             Task.Run(() => gameHub.SendGameOver());
             Program.QuickPlay.EndGame(true);
-            
+            Program.QuickPlay.UnsuscribeEventHandlers();
+
             this.gameHub.NewPositions -= OnNewGamePositions;
             this.gameHub.DisconnectedEvent -= OnDisconnexion;
 

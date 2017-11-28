@@ -16,6 +16,11 @@ namespace InterfaceGraphique.Entities.Editor.EditonCommand
 
         public override void ExecuteCommand()
         {
+            Program.Editeur.ExecuteCommandOnMainThread(Delete);
+        }
+
+        public void Delete()
+        {
             FonctionsNatives.deleteNode(Username, objectUuid);
         }
     }
