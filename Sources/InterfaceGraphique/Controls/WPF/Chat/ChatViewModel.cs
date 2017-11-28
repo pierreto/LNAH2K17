@@ -259,7 +259,7 @@ namespace InterfaceGraphique.Controls.WPF.Chat
 
             };
             UndockedChat.Closing += this.OnUnDockedWindowClosing;
-            //System.Windows.Forms.Integration.ElementHost.EnableModelessKeyboardInterop(UndockedChat);
+            System.Windows.Forms.Integration.ElementHost.EnableModelessKeyboardInterop(UndockedChat);
             ChatTabHeight = 0;
             UndockedChat.Show();
         }
