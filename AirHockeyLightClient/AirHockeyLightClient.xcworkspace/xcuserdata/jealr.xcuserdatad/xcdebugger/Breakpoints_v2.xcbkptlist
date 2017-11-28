@@ -58,11 +58,27 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AirHockeyLightClient/InterfaceGraphique/Chat/MasterViewController.swift"
-            timestampString = "533503854.040575"
+            timestampString = "533598855.748068"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "173"
             endingLineNumber = "173"
+            landmarkName = "deinit"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AirHockeyLightClient/InterfaceGraphique/Chat/MasterViewController.swift"
+            timestampString = "533598855.748171"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "231"
+            endingLineNumber = "231"
             landmarkName = "MasterViewController"
             landmarkType = "21">
          </BreakpointContent>
@@ -74,28 +90,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AirHockeyLightClient/InterfaceGraphique/Chat/MasterViewController.swift"
-            timestampString = "533503854.041127"
+            timestampString = "533598855.748244"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "223"
-            endingLineNumber = "223"
-            landmarkName = "addPrivateChannel(othersName:othersId:othersProfile:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "AirHockeyLightClient/InterfaceGraphique/Chat/MasterViewController.swift"
-            timestampString = "533503854.041412"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "222"
-            endingLineNumber = "222"
-            landmarkName = "addPrivateChannel(othersName:othersId:othersProfile:)"
+            startingLineNumber = "230"
+            endingLineNumber = "230"
+            landmarkName = "joinChannel(channelName:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -106,7 +106,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AirHockeyLightClient/InterfaceGraphique/View/Friends/FriendsTableViewController.swift"
-            timestampString = "533503854.041894"
+            timestampString = "533598855.748314"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "11"
@@ -312,8 +312,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "118"
             endingLineNumber = "118"
-            landmarkName = "loadUserProfile()"
-            landmarkType = "7">
+            landmarkName = "ProfileViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -339,7 +339,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AirHockeyLightClient/InterfaceGraphique/Communication/ChatHub.swift"
-            timestampString = "533546553.003775"
+            timestampString = "533598855.748775"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "79"
@@ -355,7 +355,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AirHockeyLightClient/InterfaceGraphique/Communication/ChatHub.swift"
-            timestampString = "533546553.004276"
+            timestampString = "533598855.748828"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "80"
@@ -371,12 +371,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AirHockeyLightClient/InterfaceGraphique/Chat/MasterViewController.swift"
-            timestampString = "533503854.042074"
+            timestampString = "533598855.748875"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "207"
-            endingLineNumber = "207"
-            landmarkName = "joinChannel(channelName:)"
+            startingLineNumber = "215"
+            endingLineNumber = "215"
+            landmarkName = "addChannel(channelName:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -387,12 +387,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AirHockeyLightClient/InterfaceGraphique/Chat/MasterViewController.swift"
-            timestampString = "533503854.042421"
+            timestampString = "533598855.748923"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "208"
-            endingLineNumber = "208"
-            landmarkName = "joinChannel(channelName:)"
+            startingLineNumber = "216"
+            endingLineNumber = "216"
+            landmarkName = "addChannel(channelName:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -403,7 +403,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AirHockeyLightClient/InterfaceGraphique/Chat/MasterViewController.swift"
-            timestampString = "533503854.042716"
+            timestampString = "533598855.748971"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "109"
@@ -419,7 +419,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AirHockeyLightClient/InterfaceGraphique/Chat/MasterViewController.swift"
-            timestampString = "533503854.043022"
+            timestampString = "533598855.749017"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "110"
@@ -435,7 +435,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AirHockeyLightClient/InterfaceGraphique/Chat/MasterViewController.swift"
-            timestampString = "533503854.04329"
+            timestampString = "533598855.749064"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "113"
@@ -451,7 +451,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AirHockeyLightClient/InterfaceGraphique/Chat/MasterViewController.swift"
-            timestampString = "533503854.043551"
+            timestampString = "533598855.74911"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "111"
@@ -467,7 +467,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AirHockeyLightClient/InterfaceGraphique/Chat/MasterViewController.swift"
-            timestampString = "533503854.043897"
+            timestampString = "533598855.749155"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "113"
@@ -483,7 +483,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AirHockeyLightClient/InterfaceGraphique/Chat/MasterViewController.swift"
-            timestampString = "533503854.044154"
+            timestampString = "533598855.749201"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "89"

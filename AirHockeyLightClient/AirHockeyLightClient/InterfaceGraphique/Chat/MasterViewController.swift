@@ -174,7 +174,15 @@ class MasterViewController: UITableViewController {
     }
     
     func reset() {
-        self.channels = [ChannelEntity]()
+        if( channelTableView != nil) {
+            self.channels = [ChannelEntity]()
+            self.channels.append(ChannelEntity(name: "Principal"))
+            self.channels[0].messages = [ChatMessageEntity]()
+            let indexPath = IndexPath(row: 0, section: 0);
+            self.channelTableView.selectRow(at: indexPath, animated: false, scrollPosition: .bottom)
+            self.channelTableView.reloadData()
+
+        }
     }
 }
 
