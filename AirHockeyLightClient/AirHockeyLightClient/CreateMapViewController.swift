@@ -94,8 +94,10 @@ class CreateMapViewController: UIViewController {
         self.resetUI()
         self.deactivateInputs()
         
+        let trimmedName = self.mapName.text!.trimmingCharacters(in: .whitespacesAndNewlines)
+        
         if (self.viewModel?.save(
-            name: self.mapName.text!,
+            name: trimmedName,
             isPrivate: self.isPrivateMap.isOn,
             password: self.password.text!,
             passwordConfirmation: self.passwordConfirmation.text!)  )! {
