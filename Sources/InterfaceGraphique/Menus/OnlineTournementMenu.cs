@@ -11,6 +11,7 @@ using Microsoft.Practices.Unity;
 using InterfaceGraphique.Entities;
 using InterfaceGraphique.CommunicationInterface;
 using InterfaceGraphique.Controls.WPF.MainMenu;
+using InterfaceGraphique.Controls.WPF.Friends;
 
 namespace InterfaceGraphique.Menus
 {
@@ -144,6 +145,14 @@ namespace InterfaceGraphique.Menus
         {
             SaveGameSettings();
             User.Instance.UserEntity.IsPlaying = true;
+            Program.unityContainer.Resolve<FriendListViewModel>().OnPropertyChanged("CanShowPlay");
+            if (Program.unityContainer.Resolve<FriendListViewModel>().FriendList != null)
+            {
+                foreach (FriendListItemViewModel flivm in Program.unityContainer.Resolve<FriendListViewModel>().FriendList)
+                {
+                    flivm.OnPropertyChanged("CanSendPlay");
+                }
+            }
 
             // CREATE AI OR ONLINE PLAYERS
             List<GamePlayerEntity> players = new List<GamePlayerEntity>();

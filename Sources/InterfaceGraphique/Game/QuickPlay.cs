@@ -19,6 +19,7 @@ using System.IO;
 using InterfaceGraphique.Controls.WPF.Tutorial;
 using InterfaceGraphique.Controls.WPF.MainMenu;
 using InterfaceGraphique.Controls;
+using InterfaceGraphique.Controls.WPF.Friends;
 
 namespace InterfaceGraphique
 {
@@ -115,6 +116,14 @@ namespace InterfaceGraphique
             {
                 this.playerName1.Text = User.Instance.UserEntity.Username;
                 User.Instance.UserEntity.IsPlaying = true;
+                Program.unityContainer.Resolve<FriendListViewModel>().OnPropertyChanged("CanShowPlay");
+                if (Program.unityContainer.Resolve<FriendListViewModel>().FriendList != null)
+                {
+                    foreach (FriendListItemViewModel flivm in Program.unityContainer.Resolve<FriendListViewModel>().FriendList)
+                    {
+                        flivm.OnPropertyChanged("CanSendPlay");
+                    }
+                }
             }
             else
             {
@@ -218,6 +227,14 @@ namespace InterfaceGraphique
             }
 
             User.Instance.UserEntity.IsPlaying = false;
+            Program.unityContainer.Resolve<FriendListViewModel>().OnPropertyChanged("CanShowPlay");
+            if (Program.unityContainer.Resolve<FriendListViewModel>().FriendList != null)
+            {
+                foreach (FriendListItemViewModel flivm in Program.unityContainer.Resolve<FriendListViewModel>().FriendList)
+                {
+                    flivm.OnPropertyChanged("CanSendPlay");
+                }
+            }
             if (currentGameState.IsOnlineTournementMode)
             {
                 await Program.unityContainer.Resolve<TournamentViewModel>().WaitingRoomHub.LeaveTournament();
