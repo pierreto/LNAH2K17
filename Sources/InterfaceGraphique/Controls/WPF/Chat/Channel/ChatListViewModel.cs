@@ -5,6 +5,7 @@ using InterfaceGraphique.CommunicationInterface;
 using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Windows.Data;
+using System.Linq;
 
 namespace InterfaceGraphique.Controls.WPF.Chat.Channel
 {
@@ -54,7 +55,10 @@ namespace InterfaceGraphique.Controls.WPF.Chat.Channel
         {
             ctxTaskFactory.StartNew(() =>
             {
-                this.Items.Add(new ChannelListItemViewModel(new ChannelEntity { Name = othersName, PrivateUserId = othersId, IsPrivate = true, Profile = othersProfile }));
+                if (!Items.Any(channel => channel.IsPrivate && channel.ChannelEntity.Name == othersName))
+                {
+                    this.Items.Add(new ChannelListItemViewModel(new ChannelEntity { Name = othersName, PrivateUserId = othersId, IsPrivate = true, Profile = othersProfile }));
+                }
             }).Wait();
         }
 

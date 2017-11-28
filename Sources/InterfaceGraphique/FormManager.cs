@@ -47,7 +47,9 @@ namespace InterfaceGraphique
                 currentForm.Visible = true;
 
                 currentForm.InitializeOpenGlPanel();
+                currentForm.KeyPreview = true;
                 this.Controls.Add(currentForm);
+                currentForm.KeyPreview = true;
 
 
                 //if (User.Instance.IsConnected)
