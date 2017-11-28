@@ -107,14 +107,6 @@ class MapCarouselViewController: UIViewController, iCarouselDataSource, iCarouse
         let mapImageView = UIImageView(frame: CGRect(x: 10, y: 10, width: 180, height: 180))
         mapImageView.image = (map.icon != nil && map.icon != "") ? ImageService.convertStrBase64ToImage(strBase64: map.icon!) : UIImage(named: "map.png")
         
-        let numberOfPlayersLabel = UILabel()
-        numberOfPlayersLabel.text = (map.currentNumberOfPlayer.value?.description)! + "/4"
-        numberOfPlayersLabel.font = UIFont(name:"HelveticaNeue-Bold", size: 15.0)
-        numberOfPlayersLabel.textAlignment = NSTextAlignment.right
-        numberOfPlayersLabel.numberOfLines = 1
-        numberOfPlayersLabel.textColor = UIColor.black
-        numberOfPlayersLabel.translatesAutoresizingMaskIntoConstraints = false
-        
         let creatorLabel = UILabel()
         creatorLabel.text = map.creator
         creatorLabel.font = UIFont(name:"HelveticaNeue-Bold", size: 15.0)
@@ -142,16 +134,12 @@ class MapCarouselViewController: UIViewController, iCarouselDataSource, iCarouse
         tempView.addSubview(mapInfo)
         tempView.addSubview(button)
         tempView.addSubview(mapNameLabel)
-        tempView.addSubview(numberOfPlayersLabel)
         tempView.addSubview(creatorLabel)
         tempView.addSubview(idLabel)
         tempView.addSubview(mapImageView)
  
         mapNameLabel.centerXAnchor.constraint(equalTo: mapInfo.centerXAnchor).isActive = true
         mapNameLabel.centerYAnchor.constraint(equalTo: mapInfo.centerYAnchor).isActive = true
-        
-        numberOfPlayersLabel.bottomAnchor.constraint(equalTo: mapInfo.bottomAnchor, constant: -15).isActive = true
-        numberOfPlayersLabel.leftAnchor.constraint(equalTo: mapInfo.leftAnchor, constant: 15).isActive = true
         
         creatorLabel.topAnchor.constraint(equalTo: mapInfo.topAnchor, constant: 15).isActive = true
         creatorLabel.rightAnchor.constraint(equalTo: mapInfo.rightAnchor, constant: -15).isActive = true
