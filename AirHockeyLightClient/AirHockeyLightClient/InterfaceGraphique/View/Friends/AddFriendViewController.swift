@@ -94,7 +94,10 @@ class AddFriendViewController: UIViewController {
     
     func addNewAddableUser(username : String) {
         self.filterStrings.append(username)
-        self.search.filterStrings(self.filterStrings)
+        
+        if self.search != nil {
+            self.search.filterStrings(self.filterStrings)
+        }
     }
     
     @IBAction func addFriend(_ sender: Any) {
