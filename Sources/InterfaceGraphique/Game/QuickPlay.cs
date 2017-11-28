@@ -44,7 +44,7 @@ namespace InterfaceGraphique
             this.KeyPreview = true;
 
             InitializeComponent();
-            Application.AddMessageFilter(new MessageFilter { Main = this });
+            //Application.AddMessageFilter(new MessageFilter { Main = this });
             currentGameState = new OfflineGameState();
             
             InitializeEvents();
@@ -514,7 +514,7 @@ namespace InterfaceGraphique
         /// @return     Vrai si la touche est gérée 
         ///
         ////////////////////////////////////////////////////////////////////////
-        /*protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             switch (keyData)
             {
@@ -578,8 +578,8 @@ namespace InterfaceGraphique
                     return true;
             }
             return base.ProcessCmdKey(ref msg, keyData);
-        }*/
-        protected  bool ProcessCmdKey(Keys keyData)
+        }
+        /*protected  bool ProcessCmdKey(Keys keyData)
         {
             switch (keyData)
             {
@@ -643,7 +643,7 @@ namespace InterfaceGraphique
                     return true;
             }
             return true;
-        }
+        }*/
         public AbstractGameState CurrentGameState
         {
             get => currentGameState;
@@ -661,7 +661,7 @@ namespace InterfaceGraphique
                 "&link=http://tcpc.isomorphis.me/game.html");
         }
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+        /*
         private class MessageFilter : IMessageFilter
         {
             private bool processingKey = false;
@@ -675,7 +675,7 @@ namespace InterfaceGraphique
                     var keyData = (Keys)msg.WParam;
                     if (Program.FormManager.CurrentForm.GetType() == typeof(QuickPlay))
                     {
-                        Program.QuickPlay.ProcessCmdKey(keyData);
+                       // Program.QuickPlay.ProcessCmdKey(keyData);
                     }else if (Program.FormManager.CurrentForm.GetType() == typeof(TestMode))
                     {
                         Program.TestMode.ProcessCmdKey(keyData);
@@ -696,7 +696,7 @@ namespace InterfaceGraphique
                 }
                 return false;
             }
-        }
+        }*/
 
     }
 }
