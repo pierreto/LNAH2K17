@@ -583,7 +583,7 @@ namespace InterfaceGraphique {
         /// @return     Void 
         ///
         ////////////////////////////////////////////////////////////////////////
-        /*protected override bool ProcessCmdKey(ref Message msg, Keys keyData) {
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData) {
             switch (keyData) {
                 case Keys.Up:
                     FonctionsNatives.fleches(0, GlobalVariables.deplacementVue);
@@ -643,7 +643,10 @@ namespace InterfaceGraphique {
                     return true;
 
                 case Keys.T:
-                    Program.FormManager.CurrentForm = Program.TestMode;
+                    if (CurrentState.GetType() != typeof(OnlineEditorState))
+                    {
+                         Program.FormManager.CurrentForm = Program.TestMode;
+                    }
                     return true;
 
                 case (Keys.N | Keys.Control):
@@ -692,7 +695,8 @@ namespace InterfaceGraphique {
             }
 
             return base.ProcessCmdKey(ref msg, keyData);
-        }*/
+        }
+        /*
         public bool ProcessCmdKey(Keys keyData)
         {
             switch (keyData)
@@ -804,7 +808,7 @@ namespace InterfaceGraphique {
             }
 
             return true;
-        }
+        }*/
 
         public ToolStripMenuItem EditionSupprimer
         {

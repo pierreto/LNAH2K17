@@ -330,7 +330,7 @@ namespace AirHockeyServer.Manager
             GameEntity liveGame = null;
             foreach (var game in Cache.Games.Values)
             {
-                if ((game.Players[0].Id == userId || game.Players[1].Id == userId) && game.TournamentId == 0)
+                if ((game.Players[0].Id == userId || game.Players[1].Id == userId) && game.TournamentId < 0)
                 {
                     liveGame = game;
                     break;
@@ -343,10 +343,13 @@ namespace AirHockeyServer.Manager
             }
 
             liveGame.GameState = GameState.Ended;
-            liveGame.Winner = userId == liveGame.Players[0].Id ? liveGame.Players[1] : liveGame.Players[2];
+            liveGame.Winner = userId == liveGame.Players[0].Id ? liveGame.Players[1] : liveGame.Players[0];
+
+            var connection = ConnectionMapper.GetConnection(userId);
+            GlobalHost.ConnectionManager.GetHubContext<GameWaitingRoomHub>().Clients.Group(liveGame.GameId.ToString(), connection).DisconnectedOpponent();
 
             await UpdateGame(liveGame);
-
+            
             Cache.Games.Remove(liveGame.GameId);
         }
 

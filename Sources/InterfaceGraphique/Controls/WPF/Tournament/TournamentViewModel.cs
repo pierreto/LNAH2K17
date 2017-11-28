@@ -56,7 +56,7 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
             SemiFinal2 = "Semi-Finaliste";
 
             OnPropertyChanged("OpponentsFound");
-            OnPropertyChanged("EnabledMaps");
+            EnabledMaps = false;
             OnPropertyChanged("Player1");
             OnPropertyChanged("Player2");
             OnPropertyChanged("Player3");
@@ -92,13 +92,14 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
             SelectedMap = mapsAvailable[1];
             ImageSrc = selectedMap.Icon;
             OpponentLeftMsg = "Hidden";
+            leaveEnabled = true;
         }
 
         private void InitializeEvents()
         {
             this.WaitingRoomHub.OpponentFoundEvent += (e, args) => OnOpponentFount(e, args);
 
-            this.WaitingRoomHub.TournamentAllOpponentsFound += (e, args) => { OnPropertyChanged("OpponentsFound"); OnPropertyChanged("EnabledMaps"); };
+            this.WaitingRoomHub.TournamentAllOpponentsFound += (e, args) => { OnPropertyChanged("OpponentsFound"); EnabledMaps = true; };
 
             this.WaitingRoomHub.RemainingTimeEvent += (e, args) => { RemainingTime = args; };
 
@@ -109,6 +110,14 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
             this.WaitingRoomHub.MapUpdatedEvent += (e, args) => OnMapUpdated(e, args);
 
             this.WaitingRoomHub.PlayerLeftEvent += (e, args) => OnPlayerLeft(e);
+
+            this.WaitingRoomHub.TournamentStarting += (e, args) => OnTournamentStarting(e);
+        }
+
+        private void OnTournamentStarting(object e)
+        {
+            LeaveEnabled = false;
+            EnabledMaps = false;
         }
 
         private void OnPlayerLeft(object e)
@@ -134,6 +143,7 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
             //WinnerPicture = winner.ProfilePicture;
             winnerName = winner.Username;
             isEndOfTournament = true;
+            LeaveEnabled = true;
             OnPropertyChanged("IsEndOfTournament");
 
             EndOfGameTitle = winner.Id == User.Instance.UserEntity.Id ? "Vous Avez Gagné!!!" : "Vous avez perdu :(";
@@ -305,6 +315,7 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
         {
             HideLoading();
             isEndOfTournament = false;
+            leaveEnabled = true;
             OnPropertyChanged("IsEndOfTournament");
             await this.WaitingRoomHub.LeaveTournament();
             SetDefaultValues();
@@ -317,9 +328,26 @@ namespace InterfaceGraphique.Controls.WPF.Tournament
             //  throw new NotImplementedException();
         }
 
+        private bool enabledMaps;
         public bool EnabledMaps
         {
-            get => Players.Count == 4;
+            get => enabledMaps;
+            set
+            {
+                enabledMaps = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool leaveEnabled;
+        public bool LeaveEnabled
+        {
+            get => leaveEnabled;
+            set
+            {
+                leaveEnabled = value;
+                OnPropertyChanged();
+            }
         }
 
         private string imageSrc = "";

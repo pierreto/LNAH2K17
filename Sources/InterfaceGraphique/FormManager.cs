@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.Integration;
 using Microsoft.Practices.Unity;
 using InterfaceGraphique.Controls.WPF.Chat;
 using InterfaceGraphique.Controls.WPF.Friends;
@@ -49,8 +50,7 @@ namespace InterfaceGraphique
                 currentForm.InitializeOpenGlPanel();
                 currentForm.KeyPreview = true;
                 this.Controls.Add(currentForm);
-                currentForm.KeyPreview = true;
-
+                Program.OpenGLPanel.Select();
 
                 //if (User.Instance.IsConnected)
                 //{
@@ -305,6 +305,11 @@ namespace InterfaceGraphique
         public void ShowChat()
         {
             this.elementHost1.Show();
+        }
+
+        public bool ChatOrFrendListHasFocus()
+        {
+            return elementHost1.Focused || elementHost2.Focused;
         }
     }
 }

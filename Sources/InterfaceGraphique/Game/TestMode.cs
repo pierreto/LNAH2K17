@@ -322,7 +322,7 @@ namespace InterfaceGraphique {
         /// @return     Vrai si la touche est gérée 
         ///
         ////////////////////////////////////////////////////////////////////////
-        /*protected override bool ProcessCmdKey(ref Message msg, Keys keyData) {
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData) {
             switch (keyData) {
                 case Keys.T:
                     Program.FormManager.CurrentForm = Program.Editeur;
@@ -388,8 +388,8 @@ namespace InterfaceGraphique {
                     return true;
             }
             return base.ProcessCmdKey(ref msg, keyData);
-        }*/
-        public  bool ProcessCmdKey(Keys keyData)
+        }
+        /*public  bool ProcessCmdKey(Keys keyData)
         {
             switch (keyData)
             {
@@ -457,7 +457,7 @@ namespace InterfaceGraphique {
                     return true;
             }
             return true;
-        }
+        }*/
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

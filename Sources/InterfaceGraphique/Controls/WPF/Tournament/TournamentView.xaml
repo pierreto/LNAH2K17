@@ -30,7 +30,7 @@
                 <RowDefinition Height="60*"></RowDefinition>
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0">
-                <Button Command="{Binding Cancel}" HorizontalAlignment="Left">
+                <Button Command="{Binding Cancel}" IsEnabled="{Binding LeaveEnabled}" HorizontalAlignment="Left">
                     <Button.Content>
                         <fa:FontAwesome Icon="ArrowLeft"></fa:FontAwesome>
                     </Button.Content>
