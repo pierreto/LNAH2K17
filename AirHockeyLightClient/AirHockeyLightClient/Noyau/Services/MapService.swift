@@ -95,9 +95,9 @@ class MapService {
     
     func deleteMap(map: MapEntity, completionHandler: @escaping (Bool?, Error?) -> ()) {
         if self.clientConnection.getConnection() != nil && (self.clientConnection.getConnection()?.state)! == .connected {
-            Alamofire.request("http://" + self.clientConnection.getIpAddress()! + ":63056/api/maps/remove/" + map.id!,
-                              method: .get, parameters: nil, encoding: JSONEncoding.default)
+            Alamofire.request("http://" + self.clientConnection.getIpAddress()! + ":63056/api/maps/remove/" + (map.id?.description)!, method: .delete, parameters: nil, encoding: JSONEncoding.default)
                 .responseJSON { response in
+                    print(response)
                     completionHandler(response.response?.statusCode == 200, nil)
             }
         } else {

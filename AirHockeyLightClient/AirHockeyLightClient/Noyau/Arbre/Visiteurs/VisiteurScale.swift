@@ -46,8 +46,12 @@ class VisiteurScale: VisiteurAbstrait {
             noeud.scale = scale
             
             // Envoyer la commande
-            FacadeModele.instance.obtenirEtatEdition().currentUserObjectTransformChanged(uuid: noeud.obtenirUUID(),
-                                                                                         pos: noeud.position, rotation: MathHelper.determinerAngleAxeY(rotation: noeud.rotation), scale: noeud.scale)
+            if ModeleEtatSelection.instance.isLastGestureRecognizer is UIPinchGestureRecognizer {
+                FacadeModele.instance.obtenirEtatEdition().currentUserObjectTransformChanged(uuid: noeud.obtenirUUID(),
+                                                                                             pos: noeud.position,
+                                                                                             rotation: MathHelper.determinerAngleAxeY(rotation: noeud.rotation),
+                                                                                             scale: noeud.scale)
+            }
         }
     }
     
@@ -76,8 +80,12 @@ class VisiteurScale: VisiteurAbstrait {
             noeud.scale = SCNVector3.init(x: 1.0, y: 1.0, z: scaleZ)
             
             // Envoyer la commande
-            FacadeModele.instance.obtenirEtatEdition().currentUserObjectTransformChanged(uuid: noeud.obtenirUUID(),
-                                                                                         pos: noeud.position, rotation: MathHelper.determinerAngleAxeY(rotation: noeud.rotation), scale: noeud.scale)
+            if ModeleEtatSelection.instance.isLastGestureRecognizer is UIPinchGestureRecognizer {
+                FacadeModele.instance.obtenirEtatEdition().currentUserObjectTransformChanged(uuid: noeud.obtenirUUID(),
+                                                                                             pos: noeud.position,
+                                                                                             rotation: MathHelper.determinerAngleAxeY(rotation: noeud.rotation),
+                                                                                             scale: noeud.scale)
+            }
         }
     }
     
@@ -93,8 +101,12 @@ class VisiteurScale: VisiteurAbstrait {
             noeud.scale = scale
             
             // Envoyer la commande
-            FacadeModele.instance.obtenirEtatEdition().currentUserObjectTransformChanged(uuid: noeud.obtenirUUID(),
-                                                                                         pos: noeud.position, rotation: MathHelper.determinerAngleAxeY(rotation: noeud.rotation), scale: noeud.scale)
+            if ModeleEtatSelection.instance.isLastGestureRecognizer is UIPinchGestureRecognizer {
+                FacadeModele.instance.obtenirEtatEdition().currentUserObjectTransformChanged(uuid: noeud.obtenirUUID(),
+                                                                                             pos: noeud.position,
+                                                                                             rotation: MathHelper.determinerAngleAxeY(rotation: noeud.rotation),
+                                                                                             scale: noeud.scale)
+            }
         }
     }
     

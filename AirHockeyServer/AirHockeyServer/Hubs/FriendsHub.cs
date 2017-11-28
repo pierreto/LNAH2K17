@@ -106,7 +106,7 @@ namespace AirHockeyServer.Hubs
             return relation;
         }
 
-        public async Task<FriendRequestEntity> RefuseFriendRequest(FriendRequestEntity request)
+        public async Task<bool> RefuseFriendRequest(FriendRequestEntity request)
         {
             SetIsConnected(request.Friend);
             SetIsConnected(request.Requestor);

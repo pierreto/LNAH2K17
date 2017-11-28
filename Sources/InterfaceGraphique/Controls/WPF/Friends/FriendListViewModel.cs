@@ -126,7 +126,7 @@ namespace InterfaceGraphique.Controls.WPF.Friends
                 FriendList.Add(new FriendListItemViewModel(new UserEntity { Id = friend.Id, Username = friend.Username, Profile = friend.Profile, IsSelected = false, IsConnected = friend.IsConnected}, null) { CurrentFriend = true });
                 var items = Program.unityContainer.Resolve<AddFriendListViewModel>().Items;
                 HasNewFriend = true;
-                items.Remove(items.Single(x => x.Id == friend.Id));
+                items.Remove(items.FirstOrDefault(x => x.Id == friend.Id));
             }).Wait();
         }
 
@@ -134,7 +134,7 @@ namespace InterfaceGraphique.Controls.WPF.Friends
         {
             ctxTaskFactory.StartNew(() =>
             {
-                FriendList.Remove(FriendList.Single(x => x.Username == ex_friend.Username));
+                FriendList.Remove(FriendList.FirstOrDefault(x => x.Username == ex_friend.Username));
                 Program.unityContainer.Resolve<AddFriendListViewModel>().Items.Add(new UserEntity { Id = ex_friend.Id, Username = ex_friend.Username, Profile = ex_friend.Profile, IsSelected = false,IsConnected = ex_friend.IsConnected});
             }).Wait();
         }
