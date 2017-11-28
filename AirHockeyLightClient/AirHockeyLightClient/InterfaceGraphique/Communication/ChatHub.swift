@@ -121,6 +121,10 @@ class ChatHub: BaseHub {
             try hubProxy?.invoke("Disconnect", arguments: [roomNames, HubManager.sharedConnection.getId()!]);
 
             self.hubProxy = nil
+            
+            MasterViewController.sharedMasterViewController.reset()
+            ChatAreaViewController.sharedChatAreaViewController.reset()
+            
         }
         catch {
             print("Error JoinChannel ChatHub")

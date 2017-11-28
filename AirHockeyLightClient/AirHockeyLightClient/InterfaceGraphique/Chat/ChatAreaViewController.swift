@@ -90,8 +90,13 @@ class ChatAreaViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func reset() {
-        self.channelsToJoin = [ChannelEntity]()
-        self.filteredChannelsToJoin = [ChannelEntity]()
+        if chatTableView != nil{
+            self.channelsToJoin = [ChannelEntity]()
+            self.chatTableView.reloadData()
+            joinChannelTableView.reloadData()
+            self.filteredChannelsToJoin = [ChannelEntity]()
+        }
+
     }
     // Mark: functions
     override func viewDidLoad() {
