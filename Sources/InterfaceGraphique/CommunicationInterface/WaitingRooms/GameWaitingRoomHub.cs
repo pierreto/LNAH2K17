@@ -9,6 +9,8 @@ using InterfaceGraphique.Entities;
 using InterfaceGraphique.Game.GameState;
 using Microsoft.AspNet.SignalR.Client;
 using InterfaceGraphique.Services;
+using InterfaceGraphique.Controls.WPF.Friends;
+using Microsoft.Practices.Unity;
 
 namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 {
@@ -67,6 +69,14 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
             try
             {
                 User.Instance.UserEntity.IsPlaying = false;
+                Program.unityContainer.Resolve<FriendListViewModel>().OnPropertyChanged("CanShowPlay");
+                if (Program.unityContainer.Resolve<FriendListViewModel>().FriendList != null)
+                {
+                    foreach (FriendListItemViewModel flivm in Program.unityContainer.Resolve<FriendListViewModel>().FriendList)
+                    {
+                        flivm.OnPropertyChanged("CanSendPlay");
+                    }
+                }
                 await WaitingRoomProxy.Invoke("LeaveGame", User.Instance.UserEntity.Id, CurrentGameId);
             }
             catch (Exception e)

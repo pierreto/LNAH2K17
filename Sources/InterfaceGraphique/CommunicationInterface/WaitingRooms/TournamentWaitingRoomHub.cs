@@ -9,6 +9,8 @@ using Microsoft.AspNet.SignalR.Client;
 using System.Threading;
 using InterfaceGraphique.Game.GameState;
 using System.Drawing;
+using InterfaceGraphique.Controls.WPF.Friends;
+using Microsoft.Practices.Unity;
 
 namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 {
@@ -114,6 +116,14 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
             try
             {
                 User.Instance.UserEntity.IsPlaying = false;
+                Program.unityContainer.Resolve<FriendListViewModel>().OnPropertyChanged("CanShowPlay");
+                if (Program.unityContainer.Resolve<FriendListViewModel>().FriendList != null)
+                {
+                    foreach (FriendListItemViewModel flivm in Program.unityContainer.Resolve<FriendListViewModel>().FriendList)
+                    {
+                        flivm.OnPropertyChanged("CanSendPlay");
+                    }
+                }
                 var test = User.Instance.UserEntity;
                 test.Profile = "";
                 await WaitingRoomProxy.Invoke("LeaveTournament", test, CurrentTournamentId);
@@ -180,6 +190,14 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
         {
             WinnerResultEvent?.Invoke(this, tournament.Final.Winner);
             User.Instance.UserEntity.IsPlaying = false;
+            Program.unityContainer.Resolve<FriendListViewModel>().OnPropertyChanged("CanShowPlay");
+            if (Program.unityContainer.Resolve<FriendListViewModel>().FriendList != null)
+            {
+                foreach (FriendListItemViewModel flivm in Program.unityContainer.Resolve<FriendListViewModel>().FriendList)
+                {
+                    flivm.OnPropertyChanged("CanSendPlay");
+                }
+            }
         }
 
         public void OnPlayerLeft()

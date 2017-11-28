@@ -24,6 +24,7 @@ class FriendRequestsTableViewController: UITableViewController {
     
     @IBOutlet weak var pendingRequests: UITableView!
     
+    public var isLoaded = false
     public var isOpen = false
     private let CHECK_BUTTON_ICON = "\u{f058}"
     private var notificationCount = 0
@@ -35,7 +36,8 @@ class FriendRequestsTableViewController: UITableViewController {
         
         FriendRequestsTableViewController.instance = self
         
-        self.isOpen = true
+        self.isLoaded = true
+        
         self.pendingRequests.delegate = self
         self.pendingRequests.dataSource = self
         
@@ -53,7 +55,7 @@ class FriendRequestsTableViewController: UITableViewController {
     }
     
     func updatePendingRequestsEntries(pendingRequests:  [FriendRequestEntity]) {
-        if self.isOpen {
+        if self.isLoaded {
             self.pendingRequestsData = pendingRequests
             
             DispatchQueue.main.async(execute: { () -> Void in
@@ -76,14 +78,15 @@ class FriendRequestsTableViewController: UITableViewController {
     
     func addRequest(newRequest: FriendRequestEntity) {
         if newRequest.getStatus() == RequestStatus.PENDING {
-            // if self.isBeingPresented {
-                self.pendingRequestsData.append(newRequest)
+            if self.isOpen == false {
+                FriendRequestsViewController.instance?.displayNotification()
+            }
+            self.pendingRequestsData.append(newRequest)
             
-                DispatchQueue.main.async(execute: { () -> Void in
-                    // Reload tableView
-                    self.pendingRequests.reloadData()
-                })
-            //}
+            DispatchQueue.main.async(execute: { () -> Void in
+                // Reload tableView
+                self.pendingRequests.reloadData()
+            })
         }
     }
     
