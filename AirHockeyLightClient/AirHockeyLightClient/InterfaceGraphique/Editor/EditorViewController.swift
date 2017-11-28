@@ -79,6 +79,10 @@ class EditorViewController: UIViewController, UIGestureRecognizerDelegate, UICol
         }
         
         FacadeModele.instance.chargerCarte(map: currentMap!)
+        
+        if currentMap?.mapName != nil {
+            self.navigationBar.title = self.navigationBar.title! + " - " + (currentMap?.mapName)!
+        }
 
         // Cacher les propriétés de l'objet par défaut
         self.showObjectPropertiesView(activer: false)
