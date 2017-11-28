@@ -110,21 +110,18 @@ class FriendsHub: BaseHub {
                 else {
                     let requestsJson = JSON(result as! [Dictionary<String, Any>])
                     var pendingRequests = [FriendRequestEntity]()
-                    var hasFriendRequests = false
                     
                     for request in requestsJson {
                         let req = self.friendsService.buildFriendRequestEntity(json: request.1)
                         if req.getStatus() == RequestStatus.PENDING {
-                            hasFriendRequests = true
                             pendingRequests.append(req)
                         }
                     }
                     
-                    if !VerticalSplitViewController.sharedVerticalSplitViewController.friendsOpen && hasFriendRequests {
+                    // Update friend requests view
+                    if pendingRequests.count > 0 {
                         FriendRequestsViewController.instance?.displayNotification()
                     }
-                    
-                    // Update friend requests view
                     FriendRequestsTableViewController.instance.updatePendingRequestsEntries(pendingRequests: pendingRequests)
                     
                     // Update add friend view

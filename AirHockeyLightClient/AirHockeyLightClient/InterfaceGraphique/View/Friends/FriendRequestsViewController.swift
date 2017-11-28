@@ -30,7 +30,7 @@ class FriendRequestsViewController: UIViewController {
         // Initialize Tab Bar Item
         self.tabBarItem = UITabBarItem()
         self.tabBarItem.setTitleTextAttributes([NSFontAttributeName: UIFont(name: "FontAwesome", size: 17)!], for: .normal)
-        self.tabBarItem.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: 0)
+        self.tabBarItem.titlePositionAdjustment = UIOffset(horizontal: 0, vertical: -12)
         self.tabBarItem.title = "\u{f0f3}"
     }
     
@@ -44,7 +44,7 @@ class FriendRequestsViewController: UIViewController {
     }
     
     func displayNotification() {
-        if !FriendRequestsTableViewController.instance.isOpen {
+        if FriendRequestsTableViewController.instance.isOpen == false {
             self.tabBarItem.badgeValue = " "
         }
     }
