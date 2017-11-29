@@ -148,11 +148,11 @@ namespace InterfaceGraphique
         {
             this.KeyPreview = true;
 
-            this.MenuItem_MainMenu.Click += (sender, e) => OnMainMenuClicked(sender, e);
+            this.MenuItem_MainMenu.Click += async (sender, e) => await OnMainMenuClicked(sender, e);
             this.MenuItem_Help.Click += (sender, e) => { EditorHelp form = new EditorHelp(); form.ShowQuickPlayHelpText(); form.ShowDialog(); };
             this.MenuItem_OrbitView.Click += (sender, e) => ToggleOrbit(true);
             this.MenuItem_OrthoView.Click += (sender, e) => ToggleOrbit(false);
-            this.Button_MainMenu.Click += (sender, e) => OnMainMenuClicked(sender, e);
+            this.Button_MainMenu.Click += async (sender, e) => await OnMainMenuClicked(sender, e);
             this.Button_PlayAgain.Click += (sender, e) => { ResetDefaultTable(); Program.FormManager.CurrentForm = Program.QuickPlay; };
             this.Informations_Tutoriel.Click += async (sender, e) =>
             {

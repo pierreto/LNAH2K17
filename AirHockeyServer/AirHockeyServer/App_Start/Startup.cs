@@ -47,7 +47,14 @@ namespace AirHockeyServer.App_Start
             // Server
             app.UseCors(CorsOptions.AllowAll);
             GlobalHost.Configuration.DisconnectTimeout = TimeSpan.FromSeconds(6);
+
+            GlobalHost.Configuration.MaxIncomingWebSocketMessageSize = null;
+
             app.MapSignalR("/signalr", new HubConfiguration());
+
+            GlobalHost.Configuration.DisconnectTimeout = TimeSpan.FromSeconds(6);
+            GlobalHost.Configuration.MaxIncomingWebSocketMessageSize = null;
+
         }
     }
 }
