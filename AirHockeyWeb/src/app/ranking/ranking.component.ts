@@ -43,14 +43,12 @@ export class RankingComponent implements OnInit, AfterViewInit {
     });
     this.rankingService.getRankings().subscribe(
       res => {
-        console.log(res);
         this.length = res.length;
         this.dataSource.data = res;
         this.appService.loading = false;
       },
       err => {
         this.appService.loading = false;
-        console.log(err);
       }
     );
   }
@@ -64,7 +62,6 @@ export class RankingComponent implements OnInit, AfterViewInit {
       },
       (err) => {
         this.appService.loading = false;
-        console.log(err);
       }
     );
   }

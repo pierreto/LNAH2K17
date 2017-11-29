@@ -5,14 +5,14 @@
     display: flex;
 }
 
-#imagePicker {
-    position: absolute;
-    width: inherit;
-    height: inherit;
-    opacity: 0;
+.profile > input {
+    position: absolute !important;
+    width: inherit !important;
+    height: inherit !important;
+    opacity: 0 !important;
 }
 
-#imagePicker:hover {
+.profile > input:hover {
     cursor: pointer;
 }
 

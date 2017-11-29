@@ -60,7 +60,6 @@ export class SignupComponent implements OnInit {
     this.appService.loginPage = false;
     localStorage['loggedIn'] = false;
     this.user = new User();
-    console.log(this.user);
     this.passwordConfirm = '';
     this.errorMessage = '';
     this.signupOk = true;
