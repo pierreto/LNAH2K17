@@ -456,8 +456,10 @@ namespace InterfaceGraphique
                         var gameManager = Program.unityContainer.Resolve<GameManager>();
 
                         var players = gameManager.CurrentOnlineGame?.Players;
-
-                        this.playerName2.Text = players[0].Id == User.Instance.UserEntity.Id ? players[1].Username : players[0].Username;
+                        if (players != null)
+                        {
+                            this.playerName2.Text = players[0].Id == User.Instance.UserEntity.Id ? players[1].Username : players[0].Username;
+                        }
                         this.pointsNb.Visible = true;
                         this.label3.Visible = true;
 
