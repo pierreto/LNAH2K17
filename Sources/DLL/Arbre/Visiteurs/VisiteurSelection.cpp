@@ -228,8 +228,21 @@ void VisiteurSelection::handleSelection(NoeudAbstrait* node)
 		{
 			if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
 			{
-				ModeleEtatSelection::obtenirInstance()->getSelectionEventCallback()(node->getUUID(), !node->estSelectionne(), false);
-				node->inverserSelection();
+
+				if(NoeudPortail* noeudPortail = dynamic_cast<NoeudPortail*>(node))
+				{
+					if (!noeudPortail->obtenirOppose()->isSelectedByAnotherUser())
+					{
+						ModeleEtatSelection::obtenirInstance()->getSelectionEventCallback()(node->getUUID(), !node->estSelectionne(), false);
+						node->inverserSelection();
+					}
+				}else
+				{
+					ModeleEtatSelection::obtenirInstance()->getSelectionEventCallback()(node->getUUID(), !node->estSelectionne(), false);
+					node->inverserSelection();
+				}
+
+
 
 			}else
 			{
@@ -238,11 +251,27 @@ void VisiteurSelection::handleSelection(NoeudAbstrait* node)
 		}
 		else
 		{
-			node->selectionnerTout();
 			if (ModeleEtatJeu::obtenirInstance()->currentOnlineClientType() == ModeleEtatJeu::ONLINE_EDITION)
 			{
-				ModeleEtatSelection::obtenirInstance()->getSelectionEventCallback()(node->getUUID(), node->estSelectionne(), false);
+				
+				if (NoeudPortail* noeudPortail =  dynamic_cast<NoeudPortail*>(node))
+				{
+					if (!noeudPortail->obtenirOppose()->isSelectedByAnotherUser())
+					{
+						node->selectionnerTout();
+						ModeleEtatSelection::obtenirInstance()->getSelectionEventCallback()(node->getUUID(), node->estSelectionne(), false);
+					}
+				}else
+				{
+					node->selectionnerTout();
+					ModeleEtatSelection::obtenirInstance()->getSelectionEventCallback()(node->getUUID(), node->estSelectionne(), false);
+
+				}
+			}else
+			{
+				node->selectionnerTout();
 			}
+
 		}
 		nbSelections_++;
 	}
