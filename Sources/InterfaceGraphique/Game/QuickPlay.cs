@@ -169,6 +169,9 @@ namespace InterfaceGraphique
             if (this.currentGameState.gameHub != null)
             {
                 this.CurrentGameState.gameHub.EndOfGameStatsEvent -= OnEndOfGameStats;
+
+                this.CurrentGameState.UnsubscribeFromSignalREvent();
+
             }
 
             var gameManager = Program.unityContainer.Resolve<GameManager>();
@@ -420,8 +423,7 @@ namespace InterfaceGraphique
         public void EndGame(bool isOnlineGame)
         {
             Program.QuickPlay.CurrentGameState.GameInitialized = false;
-            this.BeginInvoke(new MethodInvoker(delegate
-            {
+    
                 int[] score = new int[2];
                 FonctionsNatives.getGameScore(score);
 
@@ -432,13 +434,19 @@ namespace InterfaceGraphique
                 }
                 else
                 {
-                    this.Panel_EndBack.Visible = true;
-                    this.Label_Score.Text = score[0] + " - " + score[1];
-                    if (User.Instance.IsConnected)
+                    this.BeginInvoke(new MethodInvoker(delegate
+                    {
+                        this.Panel_EndBack.Visible = true;
+                        this.Label_Score.Text = score[0] + " - " + score[1];
+                    }));
+                if (User.Instance.IsConnected)
+                {
+                    this.BeginInvoke(new MethodInvoker(delegate
                     {
                         this.playerName1.Text = User.Instance.UserEntity.Username;
                         this.Button_ShareOnFacebook.Visible = true;
-                    }
+                    }));
+                }
                     else
                     {
                         if(currentGameState.gameHub != null)
@@ -456,15 +464,21 @@ namespace InterfaceGraphique
                         var gameManager = Program.unityContainer.Resolve<GameManager>();
 
                         var players = gameManager.CurrentOnlineGame?.Players;
-
-                        this.playerName2.Text = players[0].Id == User.Instance.UserEntity.Id ? players[1].Username : players[0].Username;
-                        this.pointsNb.Visible = true;
-                        this.label3.Visible = true;
+                    if (players!=null)
+                    {
+                        this.BeginInvoke(new MethodInvoker(delegate
+                        {
+                            this.playerName2.Text = players[0].Id == User.Instance.UserEntity.Id ? players[1].Username : players[0].Username;
+                            this.pointsNb.Visible = true;
+                            this.label3.Visible = true;
+                        }));
+                    }
+                       
 
                         gameManager.CurrentOnlineGame = null;
                     }
                 }
-            }));
+        
 
         }
         public Button GetReplayButton()

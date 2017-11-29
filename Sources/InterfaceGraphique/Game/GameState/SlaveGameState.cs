@@ -159,10 +159,7 @@ namespace InterfaceGraphique.Game.GameState
                 }
             }
 
-            this.gameHub.NewPositions -= OnNewGamePositions;
-            this.gameHub.NewGoal -= OnNewGoal;
-            this.gameHub.GameOver -= EndGame;
-            this.gameHub.DisconnectedEvent -= OnDisconnexion;
+            UnsubscribeFromSignalREvent();
 
             if (IsOnlineTournementMode)
             {
@@ -171,6 +168,15 @@ namespace InterfaceGraphique.Game.GameState
                     Program.FormManager.CurrentForm = Program.OnlineTournament;
                 }));
             }
+        }
+
+        public override void UnsubscribeFromSignalREvent()
+        {
+            this.gameHub.NewPositions -= OnNewGamePositions;
+            this.gameHub.NewGoal -= OnNewGoal;
+            this.gameHub.GameOver -= EndGame;
+            this.gameHub.DisconnectedEvent -= OnDisconnexion;
+
         }
 
         private void OnNewGamePositions(GameDataMessage gameData)

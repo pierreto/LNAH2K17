@@ -40,6 +40,7 @@ namespace InterfaceGraphique.Game.GameState
         public abstract void EndGame();
         public abstract void MettreAJour(double tempsInterAffichage, int neededGoalsToWin);
 
+        public abstract void UnsubscribeFromSignalREvent();
 
         public bool MoveUpKeyDown
         {

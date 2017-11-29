@@ -128,9 +128,9 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
         public void OnGameStarting(GameEntity game)
         {
             CurrentGameId = new Guid();
+            GameManager.CurrentOnlineGame = game;
             Program.LobbyHost.Invoke(new MethodInvoker(async () =>
             {
-                GameManager.CurrentOnlineGame = game;
                 await GameManager.SetTextures();
 
                 if (User.Instance.UserEntity.Id == game.Master.Id)
