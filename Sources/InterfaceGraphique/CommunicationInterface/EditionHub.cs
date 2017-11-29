@@ -155,7 +155,13 @@ namespace InterfaceGraphique.CommunicationInterface
         public void OnDisconnect()
         {
             //TODO
-            Program.Editeur.LeaveOnlineEdition();
+
+                if (Program.Editeur != null)
+                {
+                    Program.Editeur.LeaveOnlineEdition();
+                }
+            
+        
         }
     }
 }
