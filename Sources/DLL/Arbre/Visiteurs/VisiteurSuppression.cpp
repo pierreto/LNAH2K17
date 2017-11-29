@@ -106,7 +106,17 @@ void VisiteurSuppression::deleteAllSelectedNode(bool sendToServer) {
 	for(NoeudAbstrait* node : nodeToDelete_) {
 		if(node)
 		{
-			arbre->effacer(node, ModeleEtatJeu::obtenirInstance()->getDeleteEventCallback(), sendToServer);
+			if(NoeudPortail* portal = dynamic_cast<NoeudPortail*>(node))
+			{
+				if(!portal->obtenirOppose()->isSelectedByAnotherUser())
+				{
+					arbre->effacer(node, ModeleEtatJeu::obtenirInstance()->getDeleteEventCallback(), sendToServer);
+				}
+			}
+			else
+			{
+				arbre->effacer(node, ModeleEtatJeu::obtenirInstance()->getDeleteEventCallback(), sendToServer);
+			}
 		}
 	}
 	if(sendToServer)
