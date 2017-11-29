@@ -23,7 +23,7 @@ class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         styleUI()
-        
+
         reachability = Reachability()!
         
         reachability.whenReachable = { reachability in

@@ -259,6 +259,8 @@ namespace InterfaceGraphique.Controls.WPF.Signup
                         HttpResponseMessage uEResponse = await Program.client.GetAsync(Program.client.BaseAddress + "api/user/" + userId);
                         User.Instance.UserEntity = await HttpResponseParser.ParseResponse<UserEntity>(uEResponse);
                         User.Instance.IsConnected = true;
+
+
                         Program.unityContainer.Resolve<MainMenuViewModel>().OnlineMode = true;
 
                         await chatHub.InitializeChat();
@@ -285,7 +287,7 @@ namespace InterfaceGraphique.Controls.WPF.Signup
                         //Hide loading spinner
 
                         Program.unityContainer.Resolve<MainMenuViewModel>().NotLoading = true;
-
+                        User.Instance.UserEntity.IsPlaying = false;
                         Username = Password = "";
                     }
                     else
