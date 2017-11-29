@@ -43,7 +43,6 @@ export class ProfileComponent implements OnInit, AfterViewInit {
           (achivement as any).DisabledImageUrl = ((achivement as any).DisabledImageUrl as any).replace(/\\/g, '/');
           (achivement as any).EnabledImageUrl = ((achivement as any).EnabledImageUrl as any).replace(/\\/g, '/');
         }
-        console.log(res);
         this.profile = res;
         setTimeout(() => {
           this.appService.loading = false;
@@ -53,7 +52,6 @@ export class ProfileComponent implements OnInit, AfterViewInit {
         setTimeout(() => {
           this.appService.loading = false;
         });
-        console.log(err);
       }
     );
   }
@@ -69,7 +67,6 @@ export class ProfileComponent implements OnInit, AfterViewInit {
         } else {
           this.profileService.updateProfilePicture(this.appService.id, reader.result.split(',')[1]).subscribe(
             (res) => this.profile.UserEntity.Profile = reader.result.split(',')[1],
-            (err) => console.log(err)
           );
         }
       };

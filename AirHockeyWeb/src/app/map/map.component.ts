@@ -40,8 +40,8 @@ export class MapComponent implements OnInit, AfterViewInit {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.mapService.getMap(id).subscribe(
       (res) => {
-        console.log(res);
         this.map = res;
+        console.log(this.map.Icon);
         this.imageSafe = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/jpg;base64,' + this.map.Icon );
         setTimeout(() => {
           this.appService.loading = false;
@@ -51,7 +51,6 @@ export class MapComponent implements OnInit, AfterViewInit {
         setTimeout(() => {
           this.appService.loading = false;
         });
-        console.log(err);
       }
     );
   }

@@ -79,7 +79,8 @@ class UserEntity : Entity {
             "Name": self.name,
             "Email": self.email,
             "Profile": self.profile,
-            "AlreadyUsedLightEditor": self.alreadyUsedLightEditor
+            "AlreadyUsedLightEditor": self.alreadyUsedLightEditor,
+            "IsIpad": true
         ] as [String : Any]
         
         return user
