@@ -100,14 +100,6 @@ namespace InterfaceGraphique.Game.GameState
 
 
         }
-        public override void UnsubscribeFromSignalREvent()
-        {
-            this.gameHub.NewPositions -= OnNewGamePositions;
-            this.gameHub.DisconnectedEvent -= OnDisconnexion;
-
-        }
-
-
         ////////////////////////////////////////////////////////////////////////
         ///
         /// Cette fonction suit le mouvement de la souris.
@@ -170,7 +162,8 @@ namespace InterfaceGraphique.Game.GameState
                 Program.QuickPlay.EndGame(true);
                 Program.QuickPlay.UnsuscribeEventHandlers();
 
-            UnsubscribeFromSignalREvent();
+            this.gameHub.NewPositions -= OnNewGamePositions;
+            this.gameHub.DisconnectedEvent -= OnDisconnexion;
 
             if (IsOnlineTournementMode)
             {

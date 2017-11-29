@@ -139,9 +139,5 @@ namespace InterfaceGraphique.Game.GameState
                 }
             }
         }
-        public override void UnsubscribeFromSignalREvent()
-        {
-
-        }
     }
 }

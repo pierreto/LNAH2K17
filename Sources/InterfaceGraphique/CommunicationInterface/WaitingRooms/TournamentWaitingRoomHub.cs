@@ -233,9 +233,9 @@ namespace InterfaceGraphique.CommunicationInterface.WaitingRooms
 
         private void SetGame(GameEntity game, bool isMaster)
         {
-            GameManager.CurrentOnlineGame = game;
             Program.OnlineTournament.Invoke(new MethodInvoker(async () =>
             {
+                GameManager.CurrentOnlineGame = game;
                 await GameManager.SetTextures();
 
                 if (isMaster)
