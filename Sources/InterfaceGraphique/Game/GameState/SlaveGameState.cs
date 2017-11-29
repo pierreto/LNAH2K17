@@ -60,13 +60,19 @@ namespace InterfaceGraphique.Game.GameState
 
         private void OnNewGoal(GoalMessage goalMessage)
         {
-            if(goalMessage.PlayerNumber == GameManager.CurrentOnlineGame.Players.Where(x => x.Id != User.Instance.UserEntity.Id).First().Id)            
+            if(goalMessage.PlayerNumber == GameManager.CurrentOnlineGame.Players.Where(x => x.Id != User.Instance.UserEntity.Id).First().Id)
             {
-                FonctionsNatives.slaveGoal();
+                Program.QuickPlay.BeginInvoke(new MethodInvoker(delegate
+                {
+                    FonctionsNatives.slaveGoal();
+                }));
             }
             else if (goalMessage.PlayerNumber == User.Instance.UserEntity.Id)
             {
-                FonctionsNatives.masterGoal();
+                Program.QuickPlay.BeginInvoke(new MethodInvoker(delegate
+                {
+                    FonctionsNatives.masterGoal();
+                }));
             }
         }
 
@@ -171,7 +177,11 @@ namespace InterfaceGraphique.Game.GameState
         {
             if (Program.QuickPlay.CurrentGameState.GameInitialized && !gameHasEnded && gameData.MasterPosition != null && gameData.SlavePosition != null && gameData.PuckPosition != null)
             {
-                FonctionsNatives.setSlaveGameElementPositions(gameData.SlavePosition, gameData.MasterPosition, gameData.PuckPosition);
+                Program.QuickPlay.BeginInvoke(new MethodInvoker(delegate
+                {
+                    FonctionsNatives.setSlaveGameElementPositions(gameData.SlavePosition, gameData.MasterPosition,
+                        gameData.PuckPosition);
+                }));
             }
         }
 

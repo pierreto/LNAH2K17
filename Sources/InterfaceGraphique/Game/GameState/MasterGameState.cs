@@ -176,10 +176,16 @@ namespace InterfaceGraphique.Game.GameState
 
         private void OnNewGamePositions(GameDataMessage gameData)
         {
-            if (Program.QuickPlay.CurrentGameState.GameInitialized && !gameHasEnded && gameData.SlavePosition != null)
+    
+            if (Program.QuickPlay.CurrentGameState.GameInitialized && !gameHasEnded &&
+                gameData.SlavePosition != null)
             {
+                Program.QuickPlay.BeginInvoke(new MethodInvoker(delegate
+                {
                 FonctionsNatives.setMasterGameElementPositions(gameData.SlavePosition);
+                }));
             }
+       
         }
     }
 }
