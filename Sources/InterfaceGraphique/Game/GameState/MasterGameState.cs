@@ -34,7 +34,6 @@ namespace InterfaceGraphique.Game.GameState
             this.callback =
                 (player) =>
                 {
-                    Console.WriteLine("Player {0} scored", player);
                     int userId = player == 1 ? User.Instance.UserEntity.Id : GameManager.CurrentOnlineGame.Players.Where(x => x.Id != User.Instance.UserEntity.Id).First().Id;
                     Task.Run(() =>this.gameHub.SendGoal(userId));
                 };
