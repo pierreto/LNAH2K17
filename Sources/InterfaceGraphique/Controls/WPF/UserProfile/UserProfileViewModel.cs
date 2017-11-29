@@ -60,15 +60,17 @@ namespace InterfaceGraphique.Controls.WPF.UserProfile
 
             if (!isFriendProfile)
             {
-                UserName = User.Instance.UserEntity.Username;
-                Name = User.Instance.UserEntity.Name;
-                Email = User.Instance.UserEntity.Email;
-                CreationDate = User.Instance.UserEntity.Created;
-                ProfilePicture = User.Instance.UserEntity.Profile;
+                var user = allUsers.Find(x => x.Id == User.Instance.UserEntity.Id);
 
-                string formatDate = FormatCreationDate(User.Instance.UserEntity.Created);
+                UserName = user.Username;
+                Name = user.Name;
+                Email = user.Email;
+                CreationDate = user.Created;
+                ProfilePicture = user.Profile;
+
+                string formatDate = FormatCreationDate(user.Created);
                 DateCreation = formatDate;
-                var items = await StoreService.GetUserStoreItems(User.Instance.UserEntity.Id);
+                var items = await StoreService.GetUserStoreItems(user.Id);
 
                 Items = new List<ItemViewModel>();
                 foreach (var item in items)
