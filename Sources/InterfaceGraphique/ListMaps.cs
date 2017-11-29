@@ -21,7 +21,6 @@ namespace InterfaceGraphique
 
         private void DataGridView_Maps_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            Console.WriteLine("DoubleClick");
 
             if (DataGridView_Maps.SelectedRows.Count > 0)
             {
