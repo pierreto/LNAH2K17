@@ -192,8 +192,8 @@ namespace InterfaceGraphique.CommunicationInterface
             FriendRequestEntity res = new FriendRequestEntity();
             try
             {
-                request.Friend.Profile = "";
-                request.Requestor.Profile = "";
+                //request.Friend.Profile = "";
+                //request.Requestor.Profile = "";
                 res = await FriendsProxy?.Invoke<FriendRequestEntity>("AcceptFriendRequest", request);
             }
             catch (Exception e)
@@ -207,8 +207,8 @@ namespace InterfaceGraphique.CommunicationInterface
         {
             try
             {
-                request.Friend.Profile = "";
-                request.Requestor.Profile = "";
+                //request.Friend.Profile = "";
+                //request.Requestor.Profile = "";
                 return await FriendsProxy?.Invoke<bool>("RefuseFriendRequest", request);
             }
             catch (Exception e)
