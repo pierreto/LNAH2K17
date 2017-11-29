@@ -40,10 +40,21 @@ namespace InterfaceGraphique.Controls.WPF.Store
             Load();
             var items = await StoreService.GetStoreItems();
             StoreItems = new ObservableCollection<ItemViewModel>();
-            foreach(var item in items)
+            if (User.Instance.Inventory != null)
             {
-                StoreItems.Add(new ItemViewModel(item, User.Instance.Inventory.Find(x => x.Id == item.Id) == null));
+                foreach (var item in items)
+                {
+                    StoreItems.Add(new ItemViewModel(item, User.Instance.Inventory.Find(x => x.Id == item.Id) == null));
+                }
             }
+            else
+            {
+                foreach (var item in items)
+                {
+                    StoreItems.Add(new ItemViewModel(item, true));
+                }
+            }
+      
 
             var stats = await PlayerStatsService.GetPlayerStats(User.Instance.UserEntity.Id);
             if(stats == null)
