@@ -1,6 +1,6 @@
 <div class="info">
   <div class="profile">
-    <input *ngIf="appService.id==id" class="ng-hide" id="input-file-id" multiple type="file" accept="image" (change)="onFileChange($event)" accept="image/*"/>      
+    <input id="imagePicker" *ngIf="appService.id==id" class="ng-hide" id="input-file-id" multiple type="file" accept="image" (change)="onFileChange($event)" accept="image/*"/>      
     <img *ngIf="profile?.UserEntity.Profile" [src]="'data:image/JPEG;base64,'+profile.UserEntity.Profile"/>
     <img *ngIf="!profile?.UserEntity.Profile" src="assets/media/image/default_profile_picture.png"/>
   </div>
