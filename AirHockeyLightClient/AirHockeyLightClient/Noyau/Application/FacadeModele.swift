@@ -92,6 +92,8 @@ class FacadeModele {
     
     private var userManager: UserManager?
     
+    private var alreadySeenOfflineTutorial: Bool = false
+    
     /// Initialise la vue, l'arbre et l'état
     func initialiser() {
         self.viewController = EditorViewController.instance
@@ -168,6 +170,14 @@ class FacadeModele {
     
     public func getCurrentUserColor() -> UIColor {
         return self.currentUserColor
+    }
+    
+    public func setAlreadySeenOfflineTutorial(alreadySeenOfflineTutorial: Bool) {
+        self.alreadySeenOfflineTutorial = alreadySeenOfflineTutorial
+    }
+    
+    public func getAlreadySeenOfflineTutorial() -> Bool {
+        return self.alreadySeenOfflineTutorial
     }
     
     func initVue() {

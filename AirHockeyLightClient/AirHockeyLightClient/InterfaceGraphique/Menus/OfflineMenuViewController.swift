@@ -16,7 +16,21 @@ class OfflineMenuViewController: UIViewController {
         FacadeModele.instance.changerEditorState(etat: .OFFLINE_EDITION)
     }
     
+    @IBAction func openEdition(_ sender: Any) {
+        if FacadeModele.instance.getAlreadySeenOfflineTutorial() {
+            self.performSegue(withIdentifier: "openOfflineMaps", sender: self)
+        } else {
+            FacadeModele.instance.setAlreadySeenOfflineTutorial(alreadySeenOfflineTutorial: true)
+            self.showTutorialPopUp()
+        }
+    }
+    
     @IBAction func showTutorial(_ sender: Any) {
+        FacadeModele.instance.setAlreadySeenOfflineTutorial(alreadySeenOfflineTutorial: true)
+        self.showTutorialPopUp()
+    }
+    
+    func showTutorialPopUp() {
         let viewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "TutorialViewControllerID") as! TutorialViewController
         self.addChildViewController(viewController)
         
