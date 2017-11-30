@@ -188,8 +188,10 @@ namespace InterfaceGraphique {
             };
             this.Fichier_EnregistrerSous_Ordinateur.Click += (sender, e) => mapManager.ManageSavingLocalMap();
             this.Fichier_EnregistrerSous_Serveur.Click += OpenLocalMap;
-            this.Fichier_OuvrirLocalement.Click += (sender, e) =>
+            this.Fichier_OuvrirLocalement.Click += async (sender, e) =>
             {
+                await CurrentState.LeaveEdition();
+
                 mapManager.OpenLocalMap();
             };
             this.Fichier_OuvrirEnLigne.Click += async (sender, e) => await OpenOnlineMap();
