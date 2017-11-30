@@ -23,7 +23,6 @@ bld/
 [Bb]in/
 [Oo]bj/
 [Ll]og/
-*.exe
 *.exp
 *.dll
 Exe/*.xml
@@ -267,7 +266,6 @@ typings/
 _Pvt_Extensions
 
 # Paket dependency manager
-.paket/paket.exe
 paket-files/
 
 # FAKE - F# Make
