@@ -80,7 +80,13 @@ class VisiteurSelection: VisiteurAbstrait {
     //virtual void visiterRondelle(NoeudRondelle* noeud);
     
     private func handleSelection(noeud: NoeudCommun) {
-        if noeud.estSelectionnable() && !noeud.estSelectionneByAnotherUser() {
+        var opposeSelectionneByAnotherUser = false
+        if noeud is NoeudPortail {
+            let noeudOppose = (noeud as! NoeudPortail).obtenirOppose()
+            opposeSelectionneByAnotherUser = (noeudOppose?.estSelectionneByAnotherUser())!
+        }
+        
+        if noeud.estSelectionnable() && !noeud.estSelectionneByAnotherUser() && !opposeSelectionneByAnotherUser {
             // Selectioner le noeud
             if !noeud.estSelectionne() {
                 noeud.assignerSelection(selectionne: true)
