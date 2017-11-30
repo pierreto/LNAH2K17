@@ -1,0 +1,96 @@
+﻿  FacadeModele.cpp
+Application\FacadeModele.cpp(739): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\ucrt\string.h(136): note: voir la déclaration de 'strcpy'
+  Raycast.cpp
+  ModeleEtat.cpp
+  ModeleEtatCreerBoost.cpp
+  ModeleEtatCreerMuret.cpp
+  ModeleEtatDuplication.cpp
+  ModeleEtatJeu.cpp
+  ModeleEtatPointControl.cpp
+  ModeleEtatRotation.cpp
+  ModeleEtatScale.cpp
+  ModeleEtatZoom.cpp
+  ModeleEtatCreerPortail.cpp
+  ModeleEtatDeplacement.cpp
+  But.cpp
+  NoeudAccelerateur.cpp
+  NoeudBooster.cpp
+  NoeudBut.cpp
+Arbre\Noeuds\NoeudBut.cpp(164): warning C4267: 'argument' : conversion de 'size_t' en 'GLsizei', perte possible de données
+  NoeudMaillet.cpp
+  NoeudMur.cpp
+  NoeudPointControl.cpp
+  Compilation en cours...
+  NoeudPortail.cpp
+  NoeudRondelle.cpp
+  NoeudTable.cpp
+Arbre\Noeuds\NoeudTable.cpp(317): warning C4267: 'argument' : conversion de 'size_t' en 'GLsizei', perte possible de données
+  Table.cpp
+  PhysProperties.cpp
+Arbre\Physique\PhysProperties.cpp(154): warning C4305: '=' : troncation de 'double' à 'float'
+  RigidBody.cpp
+  VisiteurCollisionRondelle.cpp
+Arbre\Visiteurs\VisiteurCollisionRondelle.cpp(79): warning C4305: 'argument' : troncation de 'double' à 'float'
+Arbre\Visiteurs\VisiteurCollisionRondelle.cpp(296): warning C4305: 'argument' : troncation de 'double' à 'float'
+Arbre\Visiteurs\VisiteurCollisionRondelle.cpp(341): warning C4305: 'argument' : troncation de 'double' à 'float'
+  VisiteurDeplacement.cpp
+  VisiteurDuplication.cpp
+  VisiteurInformation.cpp
+  VisiteurObtenirSelection.cpp
+  VisiteurSauvegarde.cpp
+Arbre\Visiteurs\VisiteurSauvegarde.cpp(120): warning C4267: 'argument' : conversion de 'size_t' en 'rapidjson::SizeType', perte possible de données
+  VisiteurSuppression.cpp
+  VisiteurSurTable.cpp
+  VisiteurScale.cpp
+  VisiteurSelection.cpp
+  VisiteurSelectionnable.cpp
+  Audio.cpp
+  ConfigScene.cpp
+  ArbreRendu.cpp
+  Compilation en cours...
+  ArbreRenduINF2990.cpp
+  NoeudAbstrait.cpp
+  NoeudComposite.cpp
+  Logger.cpp
+  FireEffect.cpp
+  FacadeInterfaceNative.cpp
+  ModeleEtatSelection.cpp
+  VirtualPlayer.cpp
+  Light.cpp
+  LightAnimation.cpp
+  LightManager.cpp
+Lighting\LightManager.cpp(361): warning C4267: 'return' : conversion de 'size_t' en 'int', perte possible de données
+  NodeCreator.cpp
+  OnlineUser.cpp
+OnlineUser.cpp(115): warning C4267: 'initialisation' : conversion de 'size_t' en 'int', perte possible de données
+  ArbreRenduTest.cpp
+  BancTests.cpp
+  CollisionTest.cpp
+  ConfigSceneTest.cpp
+  LoggerTest.cpp
+  NoeudAbstraitTest.cpp
+  NoeudTest.cpp
+  Compilation en cours...
+  RigidBodyTest.cpp
+  VisiteurDuplicationTest.cpp
+  VisiteurInformationTest.cpp
+  VisiteurObtenirSelectionTest.cpp
+  VisiteurScaleTest.cpp
+  VisiteurSupressionTest.cpp
+  Panel2D.cpp
+UI\Panel2D.cpp(142): warning C4838: la conversion de 'int' en 'GLfloat' requiert une conversion restrictive
+  Text2D.cpp
+UI\Text2D.cpp(136): warning C4838: la conversion de 'FT_Pos' en 'GLuint' requiert une conversion restrictive
+UI\Text2D.cpp(221): warning C4244: 'initialisation' : conversion de 'int' en 'GLfloat', perte possible de données
+UI\Text2D.cpp(222): warning C4244: 'initialisation' : conversion de 'int' en 'GLfloat', perte possible de données
+  UserManager.cpp
+  VisitorByUUID.cpp
+     Création de la bibliothèque ..\..\Exe\Noyau.lib et de l'objet ..\..\Exe\Noyau.exp
+  Génération de code en cours
+  623 of 5889 functions (10.6%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    167 functions had inline decision re-evaluated but remain unchanged
+  Fin de la génération du code
+  Noyau.vcxproj -> C:\Users\misgh\source\repos\log3900-03\Livrable final\Sources\DLL\..\..\Exe\Noyau.dll
+  Noyau.vcxproj -> ..\..\Exe\Noyau.pdb (Full PDB)

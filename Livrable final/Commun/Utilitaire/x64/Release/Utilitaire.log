@@ -1,0 +1,44 @@
+﻿  AideCollision.cpp
+  CEcritureFichierBinaire.cpp
+  CLectureFichierBinaire.cpp
+  CompteurAffichage.cpp
+  Droite3D.cpp
+  Materiau.cpp
+  Mesh.cpp
+  Modele3D.cpp
+  Noeud.cpp
+  AideGL.cpp
+OpenGL\AideGL.cpp(325): warning C4244: 'initialisation' : conversion de 'const double' en 'float', perte possible de données
+OpenGL\AideGL.cpp(327): warning C4244: 'initialisation' : conversion de 'double' en 'float', perte possible de données
+OpenGL\AideGL.cpp(328): warning C4244: 'initialisation' : conversion de 'double' en 'float', perte possible de données
+OpenGL\AideGL.cpp(333): warning C4244: 'initialisation' : conversion de 'double' en 'float', perte possible de données
+OpenGL\AideGL.cpp(334): warning C4244: 'initialisation' : conversion de 'double' en 'float', perte possible de données
+OpenGL\AideGL.cpp(336): warning C4244: 'initialisation' : conversion de 'const double' en 'float', perte possible de données
+OpenGL\AideGL.cpp(341): warning C4244: 'initialisation' : conversion de 'const double' en 'float', perte possible de données
+  BoiteEnvironnement.cpp
+  EtatOpenGL.cpp
+  OpenGL_Debug.cpp
+  OpenGL_Programme.cpp
+  OpenGL_Nuanceur.cpp
+  OpenGL_VBO.cpp
+  Primitives.cpp
+OpenGL\Primitives.cpp(123): warning C4267: '=' : conversion de 'size_t' en 'unsigned int', perte possible de données
+OpenGL\Primitives.cpp(209): warning C4244: 'initialisation' : conversion de 'unsigned int' en 'float', perte possible de données
+  Plan3D.cpp
+  Segment2D.cpp
+Segment2D.cpp(31): warning C4244: 'argument' : conversion de 'double' en 'float', perte possible de données
+Segment2D.cpp(44): warning C4244: 'argument' : conversion de 'double' en 'float', perte possible de données
+Segment2D.cpp(83): warning C4244: 'return' : conversion de 'double' en 'float', perte possible de données
+  Utilitaire.cpp
+  Compilation en cours...
+  Camera.cpp
+Vue\Camera.cpp(158): warning C4244: 'initialisation' : conversion de 'double' en 'float', perte possible de données
+  Projection.cpp
+  ProjectionOrtho.cpp
+  ProjectionPerspective.cpp
+  Vue.cpp
+  VueOrtho.cpp
+Vue\VueOrtho.cpp(164): warning C4244: 'initialisation' : conversion de 'double' en 'int', perte possible de données
+  VuePerspective.cpp
+Vue\VuePerspective.cpp(161): warning C4244: 'initialisation' : conversion de 'double' en 'int', perte possible de données
+  Utilitaire.vcxproj -> C:\Users\misgh\source\repos\log3900-03\Livrable final\Commun\Utilitaire\x64\Release\Utilitaire.lib
