@@ -93,7 +93,6 @@ class MapService {
                     completionHandler(response.result.value as! Bool, nil)
             }
         } else {
-            DBManager.instance.effacerCarte(mapName: map.mapName!)
             completionHandler(true, nil)
         }
     }
